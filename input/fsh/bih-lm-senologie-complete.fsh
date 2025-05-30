@@ -1,0 +1,100 @@
+Logical: BIH_LM_MolGen_Senologie
+Parent: Element
+Id: LogicalModelSenologie
+Title: "BIH LM MolGen LogicalModel"
+Description: "LogicalModel des BIH-Spezifkation des Moduls Senologie"
+* insert PR_CS_VS_Version
+* ^status = #draft
+* Diagnose 0..1 BackboneElement "Diagnose Mamma"
+  * Diagnosekode 0..1  "Diagnose" "Diagnosestellung nach SNOMED CT"
+  * DiagnoseB3SubTyp 0..*  "B3 Subtyp" "Abgebildet im KDS Modul Biobank"
+  * Grad 0..1 CodeableConcept "Grad" "Grad der Mammaerkrankung"
+
+/*
+Mapping: MolGen-LogicalModel
+Id: FHIR
+Title: "MolGen LogicalModel FHIR Mapping"
+Source: MII_LM_MolGen_LogicalModel
+* Probeninformation
+  * Patient -> "Patient"
+  * Probe -> "Specimen"
+* Anforderung -> "ServiceRequest"
+  * Indikation
+  * Indikation
+    * Indikation -> "ServiceRequest.reasonCode"
+    * Indikation -> "ServiceRequest.reasonReference"
+    * Gesundheitszustand -> "ServiceRequest.supportingInfo"
+    * Krankengeschichte-Familie -> "FamilyMemberHistory"
+    * Anlagetraeger -> "FamilyMemberHistory" 
+    * Anlagetraeger -> "Condition"
+    * Anlagetraeger -> "Observation"
+    * RelevanteVorergebnisse -> "Condition" 
+    * RelevanteVorergebnisse -> "Observation" 
+    * RelevanteVorergebnisse -> "DiagnosticReport"
+    * RelevanteVorergebnisse -> "DocumentReference"
+  * Anforderer -> "Practitioner" 
+  * Anforderer -> "PractitionerRole" 
+  * Anforderer -> "Organization"
+    * Zu-testende-Gene -> "ServiceRequest.code"
+    * Einheitlicher-Bewertungsmassstab -> "ChargeItem"
+    * Anforderungstext -> "ServiceRequest.code.text"
+  * Datum-der-Anforderung -> "ServiceRequest.authoredOn"
+  * Bemerkungen -> "ServiceRequest.note"
+* Methoden
+  * Methode -> "Observation.method"
+  * Relevante-Parameter -> "Observation" 
+  * Relevante-Parameter -> "DocumentReference"
+  * Geraete-Software-Kits -> "Device"
+  * Getestete-Gene -> "Observation.component:gene-studied"
+  * Referenzsequenz -> "Observation.component:transcript-ref-seq"
+  * Read-Depth-Coverage -> "Observation.component:allelic-read-depth"
+  * Intron-Spanning-IVS -> "Observation.component:dna-region" 
+  * Start-und-Endnukleotid -> "Observation.component:exact-start-end"
+  * Sensitivitaet-Detektionslimit -> "Observation.component:detection-limit"
+  * Limitierungen-Bemerkungen -> "Observation.note"
+* Ergebnisse
+  * Zusammenfassung -> "Observation.valueCodeableConcept"
+  * Veraenderungen 
+    * Veraenderung-Proteinebene -> "Observation.component:protein-hgvs"
+    * DNA-Veraenderungen -> "Observation.component:coding-hgvs"
+    * Genomische-DNA-Veraenderung -> "Observation.component:genomic-hgvs"
+    * Transkript-ID -> "Observation.component:transcript-ref-seq"
+    * Referenzgenom -> "Observation.component:reference-sequence-assembly"
+    * Ref-Allel -> "Observation.component:ref-allele"
+    * Alt-Allel -> "Observation.component:alt-allele"
+    * DNA-Mutationstyp -> "Observation.component:coding-change-type"
+    * Mutationskonsequenz-Funktionell -> "Observation.component:amino-acid-change-type"
+    * Proben-Allelfrequenz -> "Observation.component:sample-allelic-frequency"
+    * Ursprung-der-Variante -> "Observation.component:genomic-source-class"
+    * Varianten-ID -> "Observation.component:variation-code"
+    * Chromosom -> "Observation.component:chromosome-identifier"
+    * Exon -> "Observation.component:dna-region"
+    * Zytogenetische-Lokalisation -> "Observation.component:cytogenetic-location"
+    * Kopienzahlvariationen -> "Observation.component:copy-number"
+  * Mutationslast -> "Observation.valueQuantity"
+  * Mikrosatelliteninstabilität -> "Observation.valueCodeableConcept"
+  * Daten -> "DocumentReference"
+* Interpretation 
+  * Klinische-Signifikanz -> "Observation.component:clinical-significance"
+  * Referenzen -> "RelatedArtifact"
+  * ClinicalAnnotationLevelOfEvidence -> "Observation.component:evidence-level"
+  * Assoziierter-Phaenotyp -> "Observation.component:predicted-phenotype"
+  * Assoziierter-Phaenotyp -> "Observation.component:phenotypic-treatment-context"
+  * Vererbungsmodus -> "Observation.component:mode-of-inheritance"
+  * Zusammenfassung -> "Observation.component:conclusion-string"
+  * Empfehlungen -> "Task.code"
+  * Medikationsempfehlung -> "Task.code"
+* Weiteres 
+  * Bericht-ID -> "DiagnosticReport.identifier"
+  * Anhaenge -> "Media" 
+  * Anhaenge -> "DocumentReference"
+  * Berichtstatus -> "DiagnosticReport.status"
+  * Datum-des-Berichts -> "DiagnosticReport.issued"
+  * Labor-Institution-Ansprechpartner -> "Practitioner"
+  * Labor-Institution-Ansprechpartner -> "Organization"
+  * Labor-Institution-Ansprechpartner -> "PractitionerRole"
+    * Laborakkreditierungen -> "Practitioner.qualification" 
+    * Name-Ansprechpartner -> "Practitioner.name"
+    * Adresse -> "Practitioner.address"
+    * Kontakt -> "Practitioner.telecom"
+*/
