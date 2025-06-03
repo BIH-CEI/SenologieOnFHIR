@@ -1,0 +1,300 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-operation",
+  "url": "http://example.org/StructureDefinition/senologie-operation",
+  "version": "2026.0.0-alpha.1",
+  "name": "Senologie_Operation",
+  "title": "BIH LM Senologie Brustwand-operation",
+  "status": "draft",
+  "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Procedure",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Procedure.extension",
+        "path": "Procedure.extension",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.extension.extension",
+        "path": "Procedure.extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Procedure.extension.url",
+        "path": "Procedure.extension.url",
+        "patternUri": "http://fhir.bih-charite.de/StructureDefinition/bih-pr-seno-brustop-intention"
+      },
+      {
+        "id": "Procedure.extension.value[x]",
+        "path": "Procedure.extension.value[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Procedure.extension.value[x]:valueCodeableConcept",
+        "path": "Procedure.extension.value[x]",
+        "sliceName": "valueCodeableConcept",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.category",
+        "path": "Procedure.category",
+        "short": "Art der Operation",
+        "definition": "Art der Operation Brust, Axillär, Lateralität",
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://example.org/ValueSet/vs-senologie-operation-art"
+        }
+      },
+      {
+        "id": "Procedure.code",
+        "path": "Procedure.code",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.subject",
+        "path": "Procedure.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.performed[x]",
+        "path": "Procedure.performed[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.performed[x]:performedDateTime",
+        "path": "Procedure.performed[x]",
+        "sliceName": "performedDateTime",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.reasonReference",
+        "path": "Procedure.reasonReference",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Condition"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.complication",
+        "path": "Procedure.complication",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open",
+          "description": "Slicing der Angabe nach Komplikation nach oBDS, IQTIQ oder ander ",
+          "ordered": false
+        },
+        "short": "Komplikation nach oBDS",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.complication:oBDS",
+        "path": "Procedure.complication",
+        "sliceName": "oBDS",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.complication:oBDS.coding",
+        "path": "Procedure.complication.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.complication:IQTIQ",
+        "path": "Procedure.complication",
+        "sliceName": "IQTIQ",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.complication:IQTIQ.coding",
+        "path": "Procedure.complication.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp",
+        "path": "Procedure.followUp",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open",
+          "description": "Slicing of usedCode by system",
+          "ordered": false
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:drainage",
+        "path": "Procedure.followUp",
+        "sliceName": "drainage",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.followUp:drainage.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:verband",
+        "path": "Procedure.followUp",
+        "sliceName": "verband",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.followUp:verband.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:antibiotika",
+        "path": "Procedure.followUp",
+        "sliceName": "antibiotika",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.followUp:antibiotika.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:mobilisation",
+        "path": "Procedure.followUp",
+        "sliceName": "mobilisation",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.followUp:mobilisation.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:laborkontrolle",
+        "path": "Procedure.followUp",
+        "sliceName": "laborkontrolle",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Procedure.followUp:laborkontrolle.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.usedCode",
+        "path": "Procedure.usedCode",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "Verwendete Codes",
+        "definition": "Verwendete Codes für die Operation, z.B. prätherapeutische Markierung durch Drähte",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.usedCode:praeoperativeMarkierung",
+        "path": "Procedure.usedCode",
+        "sliceName": "praeoperativeMarkierung",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Procedure.usedCode:intraoperativesImagingBrust",
+        "path": "Procedure.usedCode",
+        "sliceName": "intraoperativesImagingBrust",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Procedure.usedCode:intraoperativesImagingPraeparat",
+        "path": "Procedure.usedCode",
+        "sliceName": "intraoperativesImagingPraeparat",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Procedure.usedCode:drainage",
+        "path": "Procedure.usedCode",
+        "sliceName": "drainage",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Procedure.usedCode:drainageGekuerzt",
+        "path": "Procedure.usedCode",
+        "sliceName": "drainageGekuerzt",
+        "min": 0,
+        "max": "1"
+      }
+    ]
+  }
+}

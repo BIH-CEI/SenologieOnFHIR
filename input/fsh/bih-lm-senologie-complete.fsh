@@ -70,9 +70,15 @@ Description: "LogicalModel des BIH-Spezifkation des Moduls Senologie"
 * Tumorkonferenz 0..* BackboneElement "Tumorkonferenz"
   * Datum 1..1 date "Datum" "Datum der Tumorkonferenz"
   * Ort 0..1 CodeableConcept "Ort" "Ort der Tumorkonferenz"
+  * EmpfehlungTumorkonferenz 0..* BackboneElement "Empfehlung" "Empfehlung der Tumorkonferenz"
+    * EmpfehlungText 0..1 string "Empfehlungstext" "Text der Empfehlung der Tumorkonferenz"
+    * Therapieempfehlung 0..* CodeableConcept "Therapieempfehlung" "Therapieempfehlung der Tumorkonferenz"
+    * DiagnostischeEmpfehlung 0..* CodeableConcept "Diagnostische Empfehlung" "Diagnostische Empfehlung der Tumorkonferenz"
+    * Studienempfehlung 0..* CodeableConcept "Studienempfehlung" "Studienempfehlung der Tumorkonferenz"
+    * VorsorgeNachsorgeEmpfehlung 0..* CodeableConcept "Vorsorge- und Nachsorgeempfehlung" "Vorsorge- und Nachsorgeempfehlung der Tumorkonferenz"
+    * Wiedervorstellung 0..1 date "Wiedervorstellung" "Datum der Wiedervorstellung"
 
-    
-  
+
     
 
 /*
