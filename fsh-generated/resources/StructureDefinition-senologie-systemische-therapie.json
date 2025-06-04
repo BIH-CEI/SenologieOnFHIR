@@ -1,24 +1,37 @@
 {
   "resourceType": "StructureDefinition",
-  "id": "senologie-operation",
-  "url": "http://example.org/StructureDefinition/senologie-operation",
+  "id": "senologie-systemische-therapie",
+  "extension": [
+    {
+      "url": "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/spdx-license",
+            "code": "CC-BY-4.0",
+            "display": "Creative Commons Attribution 4.0 International"
+          }
+        ]
+      }
+    }
+  ],
+  "url": "http://example.org/StructureDefinition/senologie-systemische-therapie",
   "version": "2026.0.0-alpha.1",
-  "name": "Senologie_Operation",
-  "title": "BIH LM Senologie Brustwand-operation",
+  "name": "Senologie_SystemischeTherapie",
+  "title": "BIH LM Senologie Brust Systemische Therapie",
   "status": "draft",
-  "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie",
+  "description": "Systemische Therapien im Rahmen der BIH-Spezifikation des Moduls Senologie",
   "fhirVersion": "4.0.1",
   "kind": "resource",
   "abstract": false,
   "type": "Procedure",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie",
   "derivation": "constraint",
   "differential": {
     "element": [
       {
         "id": "Procedure.extension",
-        "path": "Procedure.extension",
-        "mustSupport": true
+        "path": "Procedure.extension"
       },
       {
         "id": "Procedure.extension.extension",
@@ -62,51 +75,15 @@
         "path": "Procedure.category",
         "short": "Art der Operation",
         "definition": "Art der Operation Brust, Axillär, Lateralität",
-        "mustSupport": true,
         "binding": {
           "strength": "required",
           "valueSet": "http://example.org/ValueSet/vs-senologie-operation-art"
         }
       },
       {
-        "id": "Procedure.code",
-        "path": "Procedure.code",
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.subject",
-        "path": "Procedure.subject",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": [
-              "http://hl7.org/fhir/StructureDefinition/Patient"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.performed[x]",
-        "path": "Procedure.performed[x]",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "type",
-              "path": "$this"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "mustSupport": true
-      },
-      {
         "id": "Procedure.performed[x]:performedDateTime",
         "path": "Procedure.performed[x]",
         "sliceName": "performedDateTime",
-        "min": 0,
-        "max": "1",
         "type": [
           {
             "code": "dateTime"
@@ -124,14 +101,7 @@
               "http://hl7.org/fhir/StructureDefinition/Condition"
             ]
           }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.outcome",
-        "path": "Procedure.outcome",
-        "short": "Outcome der Operation, v.a. bei Revision",
-        "mustSupport": true
+        ]
       },
       {
         "id": "Procedure.complication",

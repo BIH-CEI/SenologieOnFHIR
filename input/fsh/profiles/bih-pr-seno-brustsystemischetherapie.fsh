@@ -1,16 +1,14 @@
-Profile: Senologie_Operation
-Parent: Procedure
-Id: senologie-operation
-Title: "BIH LM Senologie Brustwand-operation"
+Profile: Senologie_SystemischeTherapie
+Parent: MII_PR_Onko_Systemische_Therapie
+Id: senologie-systemische-therapie
+Title: "BIH LM Senologie Brust Systemische Therapie"
 
-
-Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
+Description: "Systemische Therapien im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * insert PR_CS_VS_Version
 * ^status = #draft
 
 * extension MS
-// hier Slicing einfügen
-// intention mit oBDS abgleichen
+
 * extension.url = "http://fhir.bih-charite.de/StructureDefinition/bih-pr-seno-brustop-intention"
 * extension.valueCodeableConcept MS
 
@@ -19,9 +17,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * category ^short = "Art der Operation"
 * category ^definition = "Art der Operation Brust, Axillär, Lateralität"
 
-// * Kodierung der Operation
 * code MS 
-// hier kann nur ein Code vergeben werden. Einzelne Prozeduren sind als einzelne FHIR-Procedures zu konvertieren. Ggfs. hier eine übergeordnete Prozedur anlegen, um Intent o.ä. nachzuhalten
 * performed[x] MS
 * performedDateTime MS
 * subject MS 
@@ -37,10 +33,6 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * complication contains oBDS 0..* and IQTIQ 0..* 
 * complication[oBDS].coding MS
 * complication[IQTIQ].coding MS
-
-
-* outcome MS
-* outcome ^short = "Outcome der Operation, v.a. bei Revision"
 
 
 * reasonReference MS 
