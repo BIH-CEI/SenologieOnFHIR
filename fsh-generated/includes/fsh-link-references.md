@@ -3,7 +3,7 @@
 [Senologie_Implantat]: StructureDefinition-senologie-implantat.html
 [Senologie_Operation]: StructureDefinition-senologie-operation.html
 [Senologie_Operation_Art]: ValueSet-vs-senologie-operation-art.html
-[Senologie_SystemischeTherapieMedikation]: ValueSet-vs-senologie-systemische-therapie-medikation.html
+[VS_Senologie_SystemischeTherapieMedikation]: ValueSet-vs-senologie-systemische-therapie-medikation.html
 [MyPatient]: StructureDefinition-MyPatient.html
 [PatientExample]: Patient-PatientExample.html
 [Senologie_SystemischeTherapieMedikation]: StructureDefinition-senologie-systemische-therapie-medikation.html

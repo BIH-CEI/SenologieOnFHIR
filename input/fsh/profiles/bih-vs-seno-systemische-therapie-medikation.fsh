@@ -1,4 +1,4 @@
-ValueSet: Senologie_SystemischeTherapieMedikation
+ValueSet: VS_Senologie_SystemischeTherapieMedikation
 Id: vs-senologie-systemische-therapie-medikation
 Title: "BIH LM Senologie Systemische Therapie Medikation"
 Description: "Medikationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
