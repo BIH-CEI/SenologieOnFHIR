@@ -16,7 +16,7 @@ Description: "Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senolog
  // entweder Brustimplantat
 * manufacturer MS
 * manufacturer ^short = "Hersteller des Implantats"
-* manufacturer ^definition = "Hersteller des Implantats, hier als String und somit abweichend von der Auswahlfeld "
+* manufacturer ^definition = "Hersteller des Implantats, hier als String und somit abweichend vom Auswahlfeld"
 
 * lotNumber MS
 * lotNumber ^short = "REF-Nummer des Implantats"

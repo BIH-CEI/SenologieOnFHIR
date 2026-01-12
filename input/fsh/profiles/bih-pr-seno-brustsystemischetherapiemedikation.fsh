@@ -9,5 +9,5 @@ Description: "Systemische Therapien im Rahmen der BIH-Spezifikation des Moduls S
 * medicationCodeableConcept MS
 * medicationCodeableConcept ^short = "Medikament"
 
-* medicationCodeableConcept.coding contains snomed 0..* 
+* medicationCodeableConcept.coding contains snomed 0..*
 * medicationCodeableConcept.coding[snomed] from vs-senologie-systemische-therapie-medikation

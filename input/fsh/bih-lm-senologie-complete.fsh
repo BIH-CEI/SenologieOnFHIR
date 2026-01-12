@@ -2,7 +2,7 @@ Logical: BIH_LM_Senologie
 Parent: Element
 Id: LogicalModelSenologie
 Title: "BIH LM Senologie LogicalModel"
-Description: "LogicalModel des BIH-Spezifikation des Moduls Senologie"
+Description: "LogicalModel der BIH-Spezifikation des Moduls Senologie"
 * insert PR_CS_VS_Version
 * ^status = #draft
 
@@ -13,7 +13,7 @@ Description: "LogicalModel des BIH-Spezifikation des Moduls Senologie"
   * Seite 0..1 CodeableConcept "Seite" "Seite der Mammaerkrankung"
   * DatumErstdiagnose 0..1 date "Datum der Erstdiagnose" "Datum der Erstdiagnose der Mammaerkrankung"
   * Diagnosesicherung 0..1 CodeableConcept "Diagnosesicherung" "Diagnosesicherung der Mammaerkrankung"
-  * Metastasierungsstadium 0..1 CodeableConcept "Metastasierungsstadium" "Metastasierungsstadium der Mammaerkrankung"  
+  * Metastasierungsstadium 0..1 CodeableConcept "Metastasierungsstadium" "Metastasierungsstadium der Mammaerkrankung"
 * Vorstellung 0..1 BackboneElement "Vorstellungsgrund"
   * Typ 0..1 CodeableConcept "Art der Vorstellung" "Erst- oder Verlaufsvorstellung"
   * Erstvorstellung 0..1 date "Datum der Erstvorstellung" "Datum der Erstvorstellung"

@@ -1,7 +1,7 @@
 Profile: Senologie_Operation
 Parent: Procedure
 Id: senologie-operation
-Title: "BIH LM Senologie Brustwand-operation"
+Title: "BIH LM Senologie Brustwand-Operation"
 
 
 Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
@@ -15,26 +15,26 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * extension.valueCodeableConcept MS
 
 * category MS
-* category from vs-senologie-operation-art 
+* category from vs-senologie-operation-art
 * category ^short = "Art der Operation"
 * category ^definition = "Art der Operation Brust, Axillär, Lateralität"
 
 // * Kodierung der Operation
-* code MS 
+* code MS
 // hier kann nur ein Code vergeben werden. Einzelne Prozeduren sind als einzelne FHIR-Procedures zu konvertieren. Ggfs. hier eine übergeordnete Prozedur anlegen, um Intent o.ä. nachzuhalten
 * performed[x] MS
 * performedDateTime MS
-* subject MS 
+* subject MS
 * subject only Reference(Patient)
 * bodySite
-* complication MS 
+* complication MS
 * complication ^short = "Komplikation nach oBDS"
 * complication ^slicing.discriminator.type = #value
 * complication ^slicing.discriminator.path = "system"
 * complication ^slicing.rules = #open
-* complication ^slicing.description = "Slicing der Angabe nach Komplikation nach oBDS, IQTIQ oder ander "
+* complication ^slicing.description = "Slicing der Angabe nach Komplikation nach oBDS, IQTIQ oder andere"
 * complication ^slicing.ordered = false
-* complication contains oBDS 0..* and IQTIQ 0..* 
+* complication contains oBDS 0..* and IQTIQ 0..*
 * complication[oBDS].coding MS
 * complication[IQTIQ].coding MS
 
@@ -43,7 +43,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * outcome ^short = "Outcome der Operation, v.a. bei Revision"
 
 
-* reasonReference MS 
+* reasonReference MS
 * reasonReference only Reference(Condition)
 
 

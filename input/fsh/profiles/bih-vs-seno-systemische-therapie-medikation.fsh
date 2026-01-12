@@ -6,7 +6,7 @@ Description: "Medikationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * ^status = #draft
 
 
-* $SCT#732257004 
+* $SCT#732257004
 * $SCT#715958001
 * $SCT#761851004
 * $SCT#386906001

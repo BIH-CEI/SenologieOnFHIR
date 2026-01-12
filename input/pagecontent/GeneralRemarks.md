@@ -1,8 +1,8 @@
 # Senologie-KDS
 
 Allgemeine Beschreibung
-Beginnend bei der Darstellung der Operation wollen wir gemeinsam mit dem Brustzentrum der Charité und 
-einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch annotiert und operablen Datensatz.
+Beginnend bei der Darstellung der Operation wollen wir gemeinsam mit dem Brustzentrum der Charité
+einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch annotierten und operablen Datensatz erstellen.
 
 ## Formular-First Darstellung
 
