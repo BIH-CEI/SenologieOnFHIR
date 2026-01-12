@@ -1,9 +1,9 @@
 RuleSet: Publisher
-* ^publisher = "Medizininformatik Initiative"
+* ^publisher = "Berlin Institute of Health at Charité (BIH)"
 * ^contact.telecom.system = #url
-* ^contact.telecom.value = "https://www.medizininformatik-initiative.de"
+* ^contact.telecom.value = "https://www.bihealth.org"
 
 RuleSet: SP_Publisher
-* publisher = "Medizininformatik Initiative"
+* publisher = "Berlin Institute of Health at Charité (BIH)"
 * contact.telecom.system = #url
-* contact.telecom.value = "https://www.medizininformatik-initiative.de"
+* contact.telecom.value = "https://www.bihealth.org"
