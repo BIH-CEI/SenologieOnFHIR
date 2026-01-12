@@ -5,5 +5,3 @@
 [Senologie_Operation]: StructureDefinition-senologie-operation.html
 [Senologie_Operation_Art]: ValueSet-vs-senologie-operation-art.html
 [VS_Senologie_SystemischeTherapieMedikation]: ValueSet-vs-senologie-systemische-therapie-medikation.html
-[MyPatient]: StructureDefinition-MyPatient.html
-[PatientExample]: Patient-PatientExample.html
