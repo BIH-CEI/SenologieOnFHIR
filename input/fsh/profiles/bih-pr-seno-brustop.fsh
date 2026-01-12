@@ -11,7 +11,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 * extension MS
 // hier Slicing einfügen
 // intention mit oBDS abgleichen
-* extension.url = "http://fhir.bih-charite.de/StructureDefinition/bih-pr-seno-brustop-intention"
+* extension.url = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/bih-pr-seno-brustop-intention"
 * extension.valueCodeableConcept MS
 
 * category MS

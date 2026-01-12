@@ -2,7 +2,7 @@
 
 Allgemeine Beschreibung
 Beginnend bei der Darstellung der Operation wollen wir gemeinsam mit dem Brustzentrum der Charité und 
-einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch annotiert und operabelen Datensatz .
+einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch annotiert und operablen Datensatz.
 
 ## Formular-First Darstellung
 
@@ -14,7 +14,7 @@ Auch wenn im klinischen Alltag ein operativer Eingriff als eine Operation bezeic
 ist zur datengenaue Darstellung die Unterscheidung in mehrere Sub-Eingriffe zwingend erforderlich. 
 Dies umfasst bspw. : 
 * gleiche oder ähnliche Eingriffe an beiden Seiten (links, rechts) als getrennte Eingriffe
-* intraoperatives Entfernen der Lymphkoten bei Nachweislicher Lymphmetastasierung als getrennten Eingriff von der Resektion
-* Rekonstruktion (autolog oder implantantbasiert) als getrennten Eingriff von Resektion
+* intraoperatives Entfernen der Lymphknoten bei nachweislicher Lymphmetastasierung als getrennten Eingriff von der Resektion
+* Rekonstruktion (autolog oder implantatbasiert) als getrennten Eingriff von Resektion
 
-Es kann zur Vereinfachung eine übergeordnete Procedure definiert werden, auf die von den SubProzeduren über Procedure.partOf verwiesen wird. Diese Hauptprozedur sollte dann von extern referenziert werden. Ausnahme: Observations und Nebenwirkungen/Revisionen, die sich explizit auf einen bestimmten Subprozedur beziehen (z.B. Implantatrevision)
+Es kann zur Vereinfachung eine übergeordnete Procedure definiert werden, auf die von den SubProzeduren über Procedure.partOf verwiesen wird. Diese Hauptprozedur sollte dann von extern referenziert werden. Ausnahme: Observations und Nebenwirkungen/Revisionen, die sich explizit auf eine bestimmte Subprozedur beziehen (z.B. Implantatrevision)
