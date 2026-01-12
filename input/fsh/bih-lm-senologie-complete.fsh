@@ -1,7 +1,7 @@
-Logical: BIH_LM_MolGen_Senologie
+Logical: BIH_LM_Senologie
 Parent: Element
 Id: LogicalModelSenologie
-Title: "BIH LM MolGen LogicalModel"
+Title: "BIH LM Senologie LogicalModel"
 Description: "LogicalModel des BIH-Spezifikation des Moduls Senologie"
 * insert PR_CS_VS_Version
 * ^status = #draft
