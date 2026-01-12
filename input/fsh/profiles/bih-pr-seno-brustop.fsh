@@ -68,6 +68,6 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 
 * usedCode contains praeoperativeMarkierung 0..1 and intraoperativesImagingBrust 0..1 and intraoperativesImagingPraeparat 0..1 and drainage 0..1 and drainageGekuerzt 0..1
 * usedCode ^short = "Verwendete Codes"
-* usedCode ^definition = "Verwendete Codes für die Operation, z.B. prätherapeutische Markierung durch Drähte"
+* usedCode ^definition = "Verwendete Codes für die Operation, z.B. präoperative Markierung durch Drähte"
 
 // ggfs eine OP = mehrere Sub-Prozeduren
