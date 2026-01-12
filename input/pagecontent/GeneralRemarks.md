@@ -7,7 +7,7 @@ einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch ann
 ## Formular-First Darstellung
 
 Die Abbildung der Datenpunkte über Formulare orientiert sich am tatsächlichen klinischen Workflow. 
-Die Formulare werden als solche gespeichert. Im Hintergrund werden die Ergebnisse jedoch in Domänenbasierte Ressourcen umgewandelt - aus einer Operationsdokumetation werden daher einzelne Prozeduren, Implantate etc. extrahiert. 
+Die Formulare werden als solche gespeichert. Im Hintergrund werden die Ergebnisse jedoch in Domänenbasierte Ressourcen umgewandelt - aus einer Operationsdokumentation werden daher einzelne Prozeduren, Implantate etc. extrahiert. 
 
 ## Operationen als Unterprozeduren
 Auch wenn im klinischen Alltag ein operativer Eingriff als eine Operation bezeichnet wird, 
