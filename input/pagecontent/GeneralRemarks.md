@@ -6,13 +6,13 @@ einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch ann
 
 ## Formular-First Darstellung
 
-Die Abbildung der Datenpunkte über Formulare orientiert sich am tatsächlichen klinischen Workflow. 
-Die Formulare werden als solche gespeichert. Im Hintergrund werden die Ergebnisse jedoch in Domänenbasierte Ressourcen umgewandelt - aus einer Operationsdokumentation werden daher einzelne Prozeduren, Implantate etc. extrahiert. 
+Die Abbildung der Datenpunkte über Formulare orientiert sich am tatsächlichen klinischen Workflow.
+Die Formulare werden als solche gespeichert. Im Hintergrund werden die Ergebnisse jedoch in Domänenbasierte Ressourcen umgewandelt - aus einer Operationsdokumentation werden daher einzelne Prozeduren, Implantate etc. extrahiert.
 
 ## Operationen als Unterprozeduren
-Auch wenn im klinischen Alltag ein operativer Eingriff als eine Operation bezeichnet wird, 
-ist zur datengenaue Darstellung die Unterscheidung in mehrere Sub-Eingriffe zwingend erforderlich. 
-Dies umfasst bspw. : 
+Auch wenn im klinischen Alltag ein operativer Eingriff als eine Operation bezeichnet wird,
+ist zur datengenauen Darstellung die Unterscheidung in mehrere Sub-Eingriffe zwingend erforderlich.
+Dies umfasst bspw.:
 * gleiche oder ähnliche Eingriffe an beiden Seiten (links, rechts) als getrennte Eingriffe
 * intraoperatives Entfernen der Lymphknoten bei nachweislicher Lymphmetastasierung als getrennten Eingriff von der Resektion
 * Rekonstruktion (autolog oder implantatbasiert) als getrennten Eingriff von Resektion
