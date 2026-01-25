@@ -1,0 +1,6 @@
+{
+  "resourceType": "AidboxQuery",
+  "id": "senologie-diagnose",
+  "params": {},
+  "query": "SELECT id as condition_id, resource#>>'{subject,reference}' as patient_id, (SELECT c->>'code' FROM jsonb_array_elements(resource->'code'->'coding') c WHERE c->>'system' = 'http://snomed.info/sct' LIMIT 1) as snomed_code, (SELECT c->>'display' FROM jsonb_array_elements(resource->'code'->'coding') c WHERE c->>'system' = 'http://snomed.info/sct' LIMIT 1) as snomed_display, (SELECT c->>'code' FROM jsonb_array_elements(resource->'code'->'coding') c WHERE c->>'system' = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' LIMIT 1) as icd10_code, resource#>>'{bodySite,0,coding,0,code}' as laterality_code, resource#>>'{bodySite,0,coding,0,display}' as laterality, resource#>>'{clinicalStatus,coding,0,code}' as clinical_status, resource#>>'{verificationStatus,coding,0,code}' as verification_status, resource->>'recordedDate' as recorded_date, resource#>>'{stage,0,summary,coding,0,display}' as stage FROM condition"
+}

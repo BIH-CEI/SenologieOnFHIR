@@ -1,0 +1,31 @@
+{
+  "name": "Senologie Diagnose Analysis",
+  "description": "SQL queries for breast cancer diagnosis data",
+  "id": "senologie-diagnose",
+  "cells": [
+    {
+      "type": "markdown",
+      "source": "# Senologie Diagnose Analysis\n\nSQL queries based on the ViewDefinition schema."
+    },
+    {
+      "type": "sql",
+      "source": "SELECT \n  id as condition_id,\n  resource#>>'{code,coding,0,display}' as diagnosis,\n  resource#>>'{clinicalStatus,coding,0,code}' as status,\n  resource->>'recordedDate' as recorded_date\nFROM condition"
+    },
+    {
+      "type": "markdown",
+      "source": "## Diagnosis Distribution"
+    },
+    {
+      "type": "sql",
+      "source": "SELECT \n  (SELECT cd->>'display' \n   FROM jsonb_array_elements(resource->'code'->'coding') cd \n   WHERE cd->>'system' = 'http://snomed.info/sct' LIMIT 1) as diagnosis,\n  COUNT(*) as count\nFROM condition \nGROUP BY 1"
+    },
+    {
+      "type": "markdown",
+      "source": "## Full ViewDefinition Query"
+    },
+    {
+      "type": "sql",
+      "source": "SELECT \n  c.id as condition_id,\n  (SELECT cd->>'code' FROM jsonb_array_elements(c.resource->'code'->'coding') cd \n   WHERE cd->>'system' = 'http://snomed.info/sct' LIMIT 1) as snomed_code,\n  (SELECT cd->>'display' FROM jsonb_array_elements(c.resource->'code'->'coding') cd \n   WHERE cd->>'system' = 'http://snomed.info/sct' LIMIT 1) as diagnosis,\n  (SELECT cd->>'code' FROM jsonb_array_elements(c.resource->'code'->'coding') cd \n   WHERE cd->>'system' = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' LIMIT 1) as icd10_code,\n  c.resource#>>'{bodySite,0,coding,0,display}' as laterality,\n  c.resource#>>'{clinicalStatus,coding,0,code}' as clinical_status,\n  c.resource#>>'{verificationStatus,coding,0,code}' as verification_status,\n  c.resource->>'recordedDate' as recorded_date\nFROM condition c"
+    }
+  ]
+}
