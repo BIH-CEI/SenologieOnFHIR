@@ -26,12 +26,12 @@ Usage: #definition
 * item[=].text = "Diagnose"
 * item[=].type = #group
 
-// Diagnosekode SNOMED
+// Diagnosekode
 * item[=].item[+].linkId = "diagnose.code"
-* item[=].item[=].text = "Diagnose (SNOMED CT)"
+* item[=].item[=].text = "Diagnose"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-sct"
+* item[=].item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose"
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
 * item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
 * item[=].item[=].extension[=].valueExpression.expression = "%resource.code.coding.where(system='http://snomed.info/sct').first()"
@@ -97,8 +97,7 @@ Usage: #definition
 
 // Metastasierung
 * item[=].item[+].linkId = "diagnose.metastasen"
-* item[=].item[=].text = "Fernmetastasen"
+* item[=].item[=].text = "Metastasierungsstatus"
 * item[=].item[=].type = #choice
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1229901006 "M0"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1229903009 "M1"
+* item[=].item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-metastasierung"
 * item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.stage:metastasis.summary"

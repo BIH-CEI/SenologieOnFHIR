@@ -10,6 +10,8 @@
 [Senologie_Operation_Art]: ValueSet-vs-senologie-operation-art.html
 [VS_Senologie_SystemischeTherapieMedikation]: ValueSet-vs-senologie-systemische-therapie-medikation.html
 [Senologie_Diagnose]: StructureDefinition-senologie-diagnose.html
+[CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
+[CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
 [Questionnaire-Senologie-Diagnose]: Questionnaire-Questionnaire-Senologie-Diagnose.html
 [VS_Senologie_Diagnose_B3]: ValueSet-vs-senologie-diagnose-b3.html
 [VS_Senologie_Diagnose]: ValueSet-vs-senologie-diagnose.html

@@ -1,11 +1,15 @@
+Alias: $CS_LOKAL = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose-lokal
+
 ValueSet: VS_Senologie_Diagnose
 Id: vs-senologie-diagnose
 Title: "VS Senologie Diagnose"
-Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook mit SNOMED CT Mapping"
+Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook - SNOMED CT und lokale Codes"
 
 * ^status = #draft
 * ^version = "0.1.0"
 * ^experimental = true
+
+// === SNOMED CT Codes ===
 
 // Maligne Erkrankungen
 * $SCT#254837009 "Malignant neoplasm of breast"
@@ -29,23 +33,23 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook m
 
 // Symptome/Befunde
 * $SCT#53430007 "Mastalgia"
-* $SCT#290076002 "Non-bloody nipple discharge"
-* $SCT#289909001 "Bloody nipple discharge"
 
 // Implantat-bezogen
 * $SCT#237473006 "Ruptured breast implant"
-* $SCT#449868002 "Capsular contracture of breast"
 
-// Anatomische Varianten
-* $SCT#34911000 "Macromastia"
-* $SCT#22970007 "Asymmetry of breasts"
+// Andere
 * $SCT#4754008 "Gynecomastia"
-
-// Risiko
 * $SCT#718220008 "At high risk for hereditary breast and ovarian cancer syndrome"
 
-// Unklare Befunde
-* $SCT#169229003 "Finding of uncertain significance"
+// === Lokale Codes (kein SNOMED Mapping) ===
+* $CS_LOKAL#bz-diagnose-bc-recurrence "Mammakarzinom Rezidiv"
+* $CS_LOKAL#bz-diagnose-sonstiges "Sonstiges"
+* $CS_LOKAL#bz-makromastie "Makromastie"
+* $CS_LOKAL#bz-mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
+* $CS_LOKAL#bz-mamillensekretion-blutig "Blutige Mamillensekretion"
+* $CS_LOKAL#bz-befund-unklarer-dignitaet "Befund unklarer Dignität"
+* $CS_LOKAL#bz-anisomastie "Anisomastie"
+* $CS_LOKAL#bz-kapselfibrose "Kapselfibrose"
 
 
 ValueSet: VS_Senologie_Diagnose_B3
@@ -79,13 +83,16 @@ Description: "Lateralität der Mamma-Erkrankung"
 * $SCT#51440002 "Bilateral"
 
 
+Alias: $CS_META = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-metastasierung
+
 ValueSet: VS_Senologie_Metastasierung
 Id: vs-senologie-metastasierung
 Title: "VS Senologie Metastasierung"
-Description: "Metastasierungsstatus"
+Description: "Metastasierungsstatus - lokale Codes basierend auf Dotbase"
 
 * ^status = #draft
 * ^version = "0.1.0"
 
-* $SCT#1229901006 "M0 category"
-* $SCT#1229903009 "M1 category"
+* $CS_META#nicht-metastasiert "Nicht metastasiert"
+* $CS_META#primaer-metastasiert "Primär metastasiert"
+* $CS_META#sekundaer-metastasiert "Sekundär metastasiert"
