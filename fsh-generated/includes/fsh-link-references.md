@@ -1,3 +1,7 @@
+[Example-Diagnose-DCIS]: Condition-Example-Diagnose-DCIS.html
+[Example-Diagnose-Mammakarzinom]: Condition-Example-Diagnose-Mammakarzinom.html
+[Example-Diagnose-Rezidiv]: Condition-Example-Diagnose-Rezidiv.html
+[example-patient]: Patient-example-patient.html
 [Senologie_SystemischeTherapie]: StructureDefinition-senologie-systemische-therapie.html
 [Senologie_SystemischeTherapieMedikation]: StructureDefinition-senologie-systemische-therapie-medikation.html
 [Senologie_Implantat]: StructureDefinition-senologie-implantat.html
@@ -5,3 +9,9 @@
 [BIH_LM_Senologie]: StructureDefinition-LogicalModelSenologie.html
 [Senologie_Operation_Art]: ValueSet-vs-senologie-operation-art.html
 [VS_Senologie_SystemischeTherapieMedikation]: ValueSet-vs-senologie-systemische-therapie-medikation.html
+[Senologie_Diagnose]: StructureDefinition-senologie-diagnose.html
+[Questionnaire-Senologie-Diagnose]: Questionnaire-Questionnaire-Senologie-Diagnose.html
+[VS_Senologie_Diagnose_B3]: ValueSet-vs-senologie-diagnose-b3.html
+[VS_Senologie_Diagnose]: ValueSet-vs-senologie-diagnose.html
+[VS_Senologie_Metastasierung]: ValueSet-vs-senologie-metastasierung.html
+[VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
