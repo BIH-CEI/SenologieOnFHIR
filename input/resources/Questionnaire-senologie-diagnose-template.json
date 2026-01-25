@@ -1,0 +1,301 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "Questionnaire-Senologie-Diagnose",
+  "url": "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-diagnose",
+  "version": "0.1.0",
+  "name": "QuestionnaireSenologieDiagnose",
+  "title": "Fragebogen: Senologie Diagnose",
+  "status": "draft",
+  "subjectType": ["Patient"],
+  "contained": [
+    {
+      "resourceType": "Condition",
+      "id": "condition-template",
+      "meta": {
+        "profile": ["http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose"]
+      },
+      "clinicalStatus": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            "code": "active",
+            "_code": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueExpression": {
+                    "language": "text/fhirpath",
+                    "expression": "iif(%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.rezidiv').answer.valueBoolean, 'recurrence', 'active')"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "verificationStatus": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueExpression": {
+                  "language": "text/fhirpath",
+                  "expression": "%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.sicherung').answer.valueCoding"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "code": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueExpression": {
+                  "language": "text/fhirpath",
+                  "expression": "%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.code').answer.valueCoding"
+                }
+              }
+            ]
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueExpression": {
+                  "language": "text/fhirpath",
+                  "expression": "%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.icd10').answer.valueCoding"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "bodySite": [
+        {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueExpression": {
+                    "language": "text/fhirpath",
+                    "expression": "%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.seite').answer.valueCoding"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%patient.reference"
+            }
+          }
+        ]
+      },
+      "recordedDate": "2024-01-01",
+      "_recordedDate": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.datum').answer.valueDate"
+            }
+          }
+        ]
+      },
+      "stage": [
+        {
+          "summary": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueExpression": {
+                      "language": "text/fhirpath",
+                      "expression": "%resource.item.where(linkId='diagnose').item.where(linkId='diagnose.stadium').answer.valueCoding"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+            "code": "patient"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#condition-template"
+      }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "diagnose",
+      "text": "Diagnose",
+      "type": "group",
+      "item": [
+        {
+          "linkId": "diagnose.code",
+          "text": "Diagnose (SNOMED)",
+          "type": "choice",
+          "required": true,
+          "answerValueSet": "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%resource.code.coding.where(system='http://snomed.info/sct').first()"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "diagnose.icd10",
+          "text": "ICD-10-GM Code",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "linkId": "diagnose.seite",
+          "text": "Seite",
+          "type": "choice",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "80248007",
+                "display": "Links"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "73056007",
+                "display": "Rechts"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "51440002",
+                "display": "Beidseits"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "diagnose.datum",
+          "text": "Datum der Erstdiagnose",
+          "type": "date",
+          "required": true
+        },
+        {
+          "linkId": "diagnose.sicherung",
+          "text": "Diagnosesicherung",
+          "type": "choice",
+          "required": true,
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-primaertumor-diagnosesicherung"
+        },
+        {
+          "linkId": "diagnose.rezidiv",
+          "text": "Handelt es sich um ein Rezidiv?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "linkId": "diagnose.fruehereDiagnose",
+          "text": "Referenz auf frühere Diagnose",
+          "type": "reference",
+          "enableWhen": [
+            {
+              "question": "diagnose.rezidiv",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ]
+        },
+        {
+          "linkId": "diagnose.stadium",
+          "text": "Stadium",
+          "type": "choice",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "258228008",
+                "display": "Stadium 0"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "258215001",
+                "display": "Stadium I"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "258219007",
+                "display": "Stadium II"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "258224005",
+                "display": "Stadium III"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "258228008",
+                "display": "Stadium IV"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "diagnose.metastasen",
+          "text": "Metastasierungsstatus",
+          "type": "choice",
+          "answerValueSet": "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-metastasierung"
+        }
+      ]
+    }
+  ]
+}

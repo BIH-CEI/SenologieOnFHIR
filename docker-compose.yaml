@@ -46,5 +46,19 @@ services:
       timeout: 3s
       retries: 10
 
+  extraction-webhook:
+    build:
+      context: ./scripts
+      dockerfile: Dockerfile.webhook
+    depends_on:
+      aidbox:
+        condition: service_healthy
+    environment:
+      AIDBOX_URL: http://aidbox:8888
+      AIDBOX_USER: root
+      AIDBOX_PASSWORD: secret
+    ports:
+      - "8080:8080"
+
 volumes:
   aidbox-pg-data:

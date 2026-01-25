@@ -10,9 +10,7 @@ Usage: #definition
 * status = #draft
 * subjectType = #Patient
 
-// SDC Extensions for extraction
-* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap"
-* extension[=].valueCanonical = "http://fhir.bih-charite.de/kds-senologie/StructureMap/extract-diagnose"
+// === SDC Extensions ===
 
 // Launch context for population
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -26,7 +24,10 @@ Usage: #definition
 * item[=].text = "Diagnose"
 * item[=].type = #group
 
-// Diagnosekode
+// Definition-based extraction context - target resource type
+* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose"
+
+// Diagnosekode (SNOMED)
 * item[=].item[+].linkId = "diagnose.code"
 * item[=].item[=].text = "Diagnose"
 * item[=].item[=].type = #choice
@@ -52,14 +53,14 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueCoding = $SCT#80248007 "Links"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#73056007 "Rechts"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#51440002 "Beidseits"
-* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.bodySite"
+* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.bodySite.coding"
 
 // Datum Erstdiagnose
 * item[=].item[+].linkId = "diagnose.datum"
 * item[=].item[=].text = "Datum der Erstdiagnose"
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
-* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.extension:Feststellungsdatum"
+* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.recordedDate"
 
 // Diagnosesicherung
 * item[=].item[+].linkId = "diagnose.sicherung"
@@ -74,6 +75,7 @@ Usage: #definition
 * item[=].item[=].text = "Handelt es sich um ein Rezidiv?"
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = true
+* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.clinicalStatus.coding.code"
 
 // Frühere Diagnose (conditional)
 * item[=].item[+].linkId = "diagnose.fruehereDiagnose"
@@ -82,7 +84,6 @@ Usage: #definition
 * item[=].item[=].enableWhen[+].question = "diagnose.rezidiv"
 * item[=].item[=].enableWhen[=].operator = #=
 * item[=].item[=].enableWhen[=].answerBoolean = true
-* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.extension:occurredFollowing"
 
 // Stadium/Grad
 * item[=].item[+].linkId = "diagnose.stadium"
@@ -93,11 +94,11 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueCoding = $SCT#258219007 "Stadium II"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#258224005 "Stadium III"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#258228008 "Stadium IV"
-* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.stage.summary"
+* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.stage.summary.coding"
 
 // Metastasierung
 * item[=].item[+].linkId = "diagnose.metastasen"
 * item[=].item[=].text = "Metastasierungsstatus"
 * item[=].item[=].type = #choice
 * item[=].item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-metastasierung"
-* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.stage:metastasis.summary"
+* item[=].item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose#Condition.extension:fernmetastasen"
