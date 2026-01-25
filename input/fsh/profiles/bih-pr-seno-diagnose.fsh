@@ -1,8 +1,8 @@
-Profile: Senologie_Diagnose
+Profile: Senologie_Diagnose_Maligne
 Parent: MII_PR_Onko_Diagnose_Primaertumor
-Id: senologie-diagnose
-Title: "BIH PR Seno Diagnose"
-Description: "Diagnose im Rahmen der BIH-Spezifikation des Moduls Senologie (Mamma-Erkrankungen). Basiert auf MII PR Onko Diagnose Primärtumor."
+Id: senologie-diagnose-maligne
+Title: "BIH PR Seno Diagnose Maligne"
+Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Basiert auf MII PR Onko Diagnose Primärtumor mit oBDS-konformer Diagnosesicherung und Staging."
 
 * insert PR_CS_VS_Version
 * ^status = #draft

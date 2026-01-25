@@ -1,5 +1,5 @@
 Instance: Example-Diagnose-DCIS
-InstanceOf: Senologie_Diagnose
+InstanceOf: Senologie_Diagnose_Maligne
 Title: "Beispiel: DCIS rechts"
 Description: "Duktales Carcinoma in situ der rechten Brust, mammographisch entdeckt"
 Usage: #example

@@ -6,7 +6,8 @@
 [Senologie_Operation]: StructureDefinition-senologie-operation.html
 [BIH_LM_Senologie]: StructureDefinition-LogicalModelSenologie.html
 [Senologie_Operation_Art]: ValueSet-vs-senologie-operation-art.html
-[Senologie_Diagnose]: StructureDefinition-senologie-diagnose.html
+[Senologie_Diagnose_Benigne]: StructureDefinition-senologie-diagnose-benigne.html
+[Senologie_Diagnose_Maligne]: StructureDefinition-senologie-diagnose-maligne.html
 [CSSenologieDiagnosesicherung]: CodeSystem-cs-senologie-diagnosesicherung.html
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html

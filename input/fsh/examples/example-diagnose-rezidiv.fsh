@@ -1,5 +1,5 @@
 Instance: Example-Diagnose-Rezidiv
-InstanceOf: Senologie_Diagnose
+InstanceOf: Senologie_Diagnose_Maligne
 Title: "Beispiel: Mammakarzinom-Rezidiv"
 Description: "Lokalrezidiv eines Mammakarzinoms nach brusterhaltender Therapie"
 Usage: #example

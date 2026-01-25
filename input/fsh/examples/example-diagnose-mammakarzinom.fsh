@@ -1,5 +1,5 @@
 Instance: Example-Diagnose-Mammakarzinom
-InstanceOf: Senologie_Diagnose
+InstanceOf: Senologie_Diagnose_Maligne
 Title: "Beispiel: Mammakarzinom links"
 Description: "Primäres Mammakarzinom der linken Brust, Stadium II, histologisch gesichert"
 Usage: #example
