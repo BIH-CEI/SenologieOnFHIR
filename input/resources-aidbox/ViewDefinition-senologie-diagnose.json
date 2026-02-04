@@ -1,0 +1,120 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-diagnose",
+  "url": "http://fhir.bih-charite.de/kds-senologie/ViewDefinition/senologie-diagnose",
+  "name": "senologie_diagnose",
+  "title": "Senologie Diagnose View",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition für Mamma-Diagnosen - flache Tabelle für Analysen",
+  "resource": "Condition",
+  "select": [
+    {
+      "column": [
+        {
+          "path": "id",
+          "name": "condition_id",
+          "type": "id"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "subject.reference",
+          "name": "patient_id",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().code",
+          "name": "snomed_code",
+          "type": "code"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().display",
+          "name": "snomed_display",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code",
+          "name": "icd10_code",
+          "type": "code"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "bodySite.first().coding.first().code",
+          "name": "laterality_code",
+          "type": "code"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "bodySite.first().coding.first().display",
+          "name": "laterality",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "clinicalStatus.coding.first().code",
+          "name": "clinical_status",
+          "type": "code"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "verificationStatus.coding.first().code",
+          "name": "verification_status",
+          "type": "code"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "extension.where(url='http://hl7.org/fhir/StructureDefinition/condition-assertedDate').value",
+          "name": "asserted_date",
+          "type": "dateTime"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "recordedDate",
+          "name": "recorded_date",
+          "type": "date"
+        }
+      ]
+    },
+    {
+      "column": [
+        {
+          "path": "stage.first().summary.coding.first().display",
+          "name": "stage",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}
