@@ -1,0 +1,239 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "Questionnaire-Senologie-Operative-Komplikation",
+  "url": "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-operative-komplikation",
+  "version": "0.1.0",
+  "name": "QuestionnaireSenologieOperativeKomplikation",
+  "title": "Fragebogen: Operative Komplikation(en)",
+  "status": "draft",
+  "subjectType": ["Patient"],
+  "description": "SDC Questionnaire für postoperative Komplikationen mit Clavien-Dindo-Klassifikation — orientiert an dotbase 'Operative Komplikation(en) V2.0'. Template-Based Extraction erzeugt eine Observation-Ressource.",
+  "contained": [
+    {
+      "resourceType": "Observation",
+      "id": "komplikation-template",
+      "meta": {
+        "profile": ["http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-operative-komplikation"]
+      },
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "789279006",
+            "display": "Clavien-Dindo classification of surgical complications"
+          }
+        ]
+      },
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%patient.reference"
+            }
+          }
+        ]
+      },
+      "focus": [
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%procedure.reference"
+              }
+            }
+          ]
+        }
+      ],
+      "effectiveDateTime": "2024-01-01",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueExpression": {
+              "language": "text/fhirpath",
+              "expression": "%resource.item.where(linkId='komplikation').item.where(linkId='komplikation.datum').answer.valueDate"
+            }
+          }
+        ]
+      },
+      "method": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueExpression": {
+                  "language": "text/fhirpath",
+                  "expression": "%resource.item.where(linkId='komplikation').item.where(linkId='komplikation.zeitpunkt').answer.valueCoding"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueExpression": {
+                  "language": "text/fhirpath",
+                  "expression": "%resource.item.where(linkId='komplikation').item.where(linkId='komplikation.clavienDindo').answer.valueCoding"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "component": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "116224001",
+                "display": "Complication of procedure"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueExpression": {
+                      "language": "text/fhirpath",
+                      "expression": "%resource.item.where(linkId='komplikation').item.where(linkId='komplikation.art').answer.valueCoding"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "note": [
+        {
+          "text": "",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueExpression": {
+                  "language": "text/fhirpath",
+                  "expression": "%resource.item.where(linkId='komplikation').item.where(linkId='komplikation.kommentar').answer.valueString"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+      "extension": [
+        { "url": "name", "valueCoding": { "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext", "code": "patient" } },
+        { "url": "type", "valueCode": "Patient" }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+      "extension": [
+        { "url": "name", "valueCoding": { "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext", "code": "procedure" } },
+        { "url": "type", "valueCode": "Procedure" },
+        { "url": "description", "valueString": "Die auslösende Operation (Procedure-Ressource)" }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": { "reference": "#komplikation-template" }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "komplikation",
+      "text": "Operative Komplikation",
+      "type": "group",
+      "item": [
+        {
+          "linkId": "komplikation.datum",
+          "text": "Datum der Komplikation",
+          "type": "date",
+          "required": true
+        },
+        {
+          "linkId": "komplikation.zeitpunkt",
+          "text": "Zeitpunkt der Komplikation",
+          "type": "choice",
+          "required": true,
+          "answerOption": [
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "277671009", "display": "Intraoperativ" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "262485006", "display": "Postoperativ" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "32485007",  "display": "Stationär" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "373864002", "display": "Ambulant" } }
+          ]
+        },
+        {
+          "linkId": "komplikation.art",
+          "text": "Art der Komplikation",
+          "type": "choice",
+          "required": true,
+          "answerOption": [
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "35566002",  "display": "Hämatom" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "441862004", "display": "Serom" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "225553008", "display": "Wundheilungsstörung (Dehiszenz)" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "433202001", "display": "Wundinfektion (Surgical site infection)" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "131148009", "display": "Blutung" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "74474003",  "display": "Gastrointestinale Blutung" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "84114007",  "display": "Herzinsuffizienz" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "233604007", "display": "Pneumonie" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "59282003",  "display": "Lungenembolie" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "74964007",  "display": "Sonstige" } }
+          ]
+        },
+        {
+          "linkId": "komplikation.clavienDindo",
+          "text": "Clavien-Dindo-Klassifikation",
+          "type": "choice",
+          "required": true,
+          "answerOption": [
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367519000", "display": "Grad I" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367520006", "display": "Grad II" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367521005", "display": "Grad IIIa" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367522003", "display": "Grad IIIb" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367523008", "display": "Grad IVa" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367524002", "display": "Grad IVb" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "1367527009", "display": "Grad V" } }
+          ]
+        },
+        {
+          "linkId": "komplikation.konsequenz",
+          "text": "Konsequenz",
+          "type": "choice",
+          "repeats": true,
+          "answerOption": [
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "255231005", "display": "Revision" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "180190000", "display": "Drainage" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "116859006", "display": "Transfusion" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "281789004", "display": "Antibiotikatherapie" } },
+            { "valueCoding": { "system": "http://snomed.info/sct", "code": "74964007",  "display": "Sonstige" } }
+          ]
+        },
+        {
+          "linkId": "komplikation.kommentar",
+          "text": "Kommentar",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}
