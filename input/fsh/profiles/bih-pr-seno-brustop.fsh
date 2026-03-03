@@ -8,11 +8,11 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * ^status = #draft
 
 // Inherited from MII Onko Mamma Operation (via MII Onko Operation):
-// - extension:Intention (replaces inline extension.url from line 14)
+// - extension:Intention (OP-Intention)
 // - usedCode:PraeoperativeMarkierung
 // - usedCode:IntraoperativesImaging
 // - code with OPS + SCT coding slices
-// - complication with oBDS + ICD-10 slices
+// - complication with compl_obds + compl_icd10 slices (pattern:$this discriminator)
 
 * category MS
 * category from vs-senologie-operation-art
@@ -26,16 +26,10 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * subject only Reference(Patient)
 * bodySite
 
+// Komplikationen — inherited slicing from MII Onko Operation (pattern:$this)
 * complication MS
-* complication ^short = "Komplikation nach oBDS"
-* complication ^slicing.discriminator.type = #value
-* complication ^slicing.discriminator.path = "system"
-* complication ^slicing.rules = #open
-* complication ^slicing.description = "Slicing der Angabe nach Komplikation nach oBDS, IQTIQ oder andere"
-* complication ^slicing.ordered = false
-* complication contains oBDS 0..* and IQTIQ 0..*
-* complication[oBDS].coding MS
-* complication[IQTIQ].coding MS
+* complication ^short = "Komplikation (oBDS / ICD-10)"
+* complication ^comment = "Verwendet geerbte Slices compl_obds und compl_icd10 vom MII Onko Operation Parent"
 
 * outcome MS
 * outcome ^short = "Outcome der Operation, v.a. bei Revision"
@@ -43,12 +37,11 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * reasonReference MS
 * reasonReference ^short = "Bezogene Diagnose"
 
+// Follow-up — no parent slicing, so our own is fine
 * followUp MS
-* followUp ^slicing.discriminator.type = #value
-* followUp ^slicing.discriminator.path = "system"
+* followUp ^slicing.discriminator.type = #pattern
+* followUp ^slicing.discriminator.path = "$this"
 * followUp ^slicing.rules = #open
-* followUp ^slicing.description = "Slicing of followUp by system"
-* followUp ^slicing.ordered = false
 * followUp contains drainage 0..* and verband 0..* and antibiotika 0..* and mobilisation 0..* and laborkontrolle 0..*
 * followUp[drainage].coding MS
 * followUp[verband].coding MS
@@ -56,10 +49,8 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * followUp[mobilisation].coding MS
 * followUp[laborkontrolle].coding MS
 
+// usedCode — inherited slicing from MII Mamma Operation (pattern:$this)
+// Inherited: IntraoperativesImaging, PraeoperativeMarkierung
 * usedCode MS
-* usedCode ^slicing.discriminator.type = #value
-* usedCode ^slicing.discriminator.path = "system"
-* usedCode ^slicing.rules = #open
-* usedCode contains drainage 0..1 and drainageGekuerzt 0..1
 * usedCode ^short = "Verwendete Codes"
-* usedCode ^definition = "Verwendete Codes für die Operation, z.B. Drainage-Typ"
+* usedCode ^definition = "Verwendete Codes für die Operation — erbt IntraoperativesImaging und PraeoperativeMarkierung von MII Mamma"
