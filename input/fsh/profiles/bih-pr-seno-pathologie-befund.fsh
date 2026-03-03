@@ -45,8 +45,7 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 // Detailed findings via Observations (replaces HistologyFindings + B3LesionDetails extensions)
 * result MS
 * result ^short = "Detaillierte Befund-Komponenten"
-* result only Reference(Observation)
-* result ^comment = "References zu Observation-Ressourcen für ER, PR, HER2, Ki-67, Histologie, B3-Läsion, etc."
+* result ^comment = "Erbt MII Patho Grouper-Slices (intraoperative, macroscopic, microscopic) — ER, PR, HER2, Ki-67, Histologie, B3-Läsion als Observations"
 
 // Freitext-Befund
 * conclusion ^short = "Gesamtbeurteilung des Pathologen"
