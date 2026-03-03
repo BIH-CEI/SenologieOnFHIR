@@ -1,0 +1,15 @@
+#!/bin/sh
+# Pre-commit hook: auto-render staged .puml files
+# Install: ln -sf ../../scripts/pre-commit .git/hooks/pre-commit
+
+STAGED_PUML=$(git diff --cached --name-only --diff-filter=ACM | grep '\.puml$' || true)
+[ -z "$STAGED_PUML" ] && exit 0
+
+# Render all (fast enough for a few diagrams)
+sh scripts/render-plantuml.sh
+
+# Stage rendered images
+for puml in $STAGED_PUML; do
+    base=$(basename "$puml" .puml)
+    [ -f "input/images/${base}.png" ] && git add "input/images/${base}.png"
+done
