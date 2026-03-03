@@ -6,7 +6,10 @@ Dieses Modul beschreibt die FHIR-Profile für die strukturierte Dokumentation de
 
 ### Ressourcenmodell
 
-{% include img.html img="senologie-ressourcenmodell.png" caption="FHIR Ressourcenmodell Senologie — Klinischer Versorgungspfad Mammakarzinom" width="100%" %}
+<div>
+<img src="senologie-ressourcenmodell.png" alt="FHIR Ressourcenmodell Senologie" style="width:100%"/>
+<p><em>FHIR Ressourcenmodell Senologie — Klinischer Versorgungspfad Mammakarzinom</em></p>
+</div>
 
 ### Übersicht
 
