@@ -1,8 +1,8 @@
 Profile: Senologie_Systemtherapie_Procedure
-Parent: Procedure
+Parent: MII_PR_Onko_Systemische_Therapie
 Id: senologie-systemtherapie-procedure
 Title: "BIH Senologie Systemtherapie (übergeordnet)"
-Description: "Procedure für übergeordnete Dokumentation einer Systemtherapie-Serie aus dotbase Questionnaire 'Systemtherapie Therapiedokumentation'"
+Description: "Procedure für übergeordnete Dokumentation einer Systemtherapie-Serie aus dotbase Questionnaire 'Systemtherapie Therapiedokumentation'. Erbt Intention und outcome von MII Onko Systemtherapie."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -18,7 +18,6 @@ Description: "Procedure für übergeordnete Dokumentation einer Systemtherapie-S
 * code.text = "Systemtherapie"
 
 * subject MS
-* subject only Reference(Patient)
 
 // Zeitraum der gesamten Therapie
 * performedPeriod MS
@@ -29,20 +28,20 @@ Description: "Procedure für übergeordnete Dokumentation einer Systemtherapie-S
 * performedPeriod.end ^short = "Therapie-Ende"
 * performedPeriod.end ^comment = "Aus dotbase: 'Systemtherapie Ende' → Datum"
 
-// Therapieintention (neoadjuvant, adjuvant, palliativ)
-* reasonCode MS
-* reasonCode ^short = "Therapieintention"
-* reasonCode ^comment = "Aus dotbase: 'Systemtherapie Beginn' → Intention"
+// Inherited from MII Onko Systemtherapie parent:
+// - extension:Intention (replaces reasonCode-based intention)
+// - outcome (replaces EX_Senologie_TherapyStatus)
+// - usedCode (Protokolle)
+
+// Therapie-Status am Ende → now carried by inherited Procedure.outcome
+* outcome MS
+* outcome ^short = "Therapie-Status am Ende"
+* outcome ^comment = "Aus dotbase: 'Systemtherapie Ende' → Status (abgeschlossen, abgebrochen, etc.) — ersetzt ehemalige TherapyStatus-Extension"
 
 // Bezug zu Diagnose
 * reasonReference MS
 * reasonReference only Reference(Condition)
 * reasonReference ^short = "Bezogene Diagnose"
-
-// Status der Therapie (abgeschlossen, abgebrochen, etc.)
-* extension contains EX_Senologie_TherapyStatus named therapyStatus 0..1
-* extension[therapyStatus] ^short = "Therapie-Status am Ende"
-* extension[therapyStatus] ^comment = "Aus dotbase: 'Systemtherapie Ende' → Status (abgeschlossen, abgebrochen, etc.)"
 
 // Freitext Notizen
 * note ^short = "Besonderheiten/Details zur Therapie"
@@ -50,5 +49,3 @@ Description: "Procedure für übergeordnete Dokumentation einer Systemtherapie-S
 
 // Die einzelnen MedicationStatement Gaben werden über basedOn referenziert
 * partOf ^short = "Teil einer übergeordneten Maßnahme"
-
-// Inverse: MedicationStatements referenzieren auf diese Procedure

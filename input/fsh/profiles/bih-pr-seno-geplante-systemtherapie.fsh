@@ -36,10 +36,10 @@ Description: "MedicationRequest für geplante Systemtherapie aus dotbase Questio
 * extension[therapyLine] ^short = "Therapielinie"
 * extension[therapyLine] ^comment = "Aus dotbase: 'Therapielinie' (1, 2, 3, etc.)"
 
-// Therapieprotokoll Details
-* extension contains EX_Senologie_TherapyProtocol named therapyProtocol 0..1
-* extension[therapyProtocol] ^short = "Therapieprotokoll"
-* extension[therapyProtocol] ^comment = "Aus dotbase: 'Therapieprotokoll' - geplantes Schema/Protokoll"
+// Therapieprotokoll Details → now in courseOfTherapyType
+* courseOfTherapyType MS
+* courseOfTherapyType ^short = "Therapieprotokoll"
+* courseOfTherapyType ^comment = "Aus dotbase: 'Therapieprotokoll' - geplantes Schema/Protokoll — ersetzt ehemalige TherapyProtocol-Extension"
 
 // Freitext für weitere Spezifika
 * note ^short = "Planungsdetails"

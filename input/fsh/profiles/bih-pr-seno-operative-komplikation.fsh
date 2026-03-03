@@ -1,45 +1,60 @@
 Profile: Senologie_Operative_Komplikation
-Parent: AdverseEvent
+Parent: Observation
 Id: senologie-operative-komplikation
 Title: "BIH Senologie Operative Komplikation"
-Description: "AdverseEvent für postoperative Komplikationen aus dotbase Questionnaire 'Operative Komplikation(en) V2.0'"
+Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation aus dotbase Questionnaire 'Operative Komplikation(en) V2.0'. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent)."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
 
-// Basis Mapping aus dotbase
-* event MS
-* event.coding ^short = "Art der Komplikation"
-* event.coding ^comment = "Aus dotbase: 'Art der Komplikation' (SNOMED 116224001)"
-* event.text ^comment = "Bezeichnung der Komplikation + optional Detail Text bei 'Sonstige Komplikation'"
+// Status
+* status MS
+* status = #final (exactly)
+* status ^short = "Abgeschlossene Komplikationsbewertung"
 
-* date MS
-* date ^short = "Datum der Komplikation"
-* date ^comment = "Aus dotbase: 'Datum der Komplikation'"
+// Code: Clavien-Dindo classification
+* code MS
+* code.coding MS
+* code.coding = $SCT#789279006 "Clavien-Dindo classification of surgical complications"
+* code.coding ^short = "Clavien-Dindo-Klassifikation"
 
-// Referenz zur OP - AdverseEvent.study allows only Reference(ResearchStudy)
-// Verknüpfung zur Operation erfolgt über suspectEntity.instance oder referenceDocument
-* suspectEntity ^short = "Vermutete Ursache (Operation)"
-* suspectEntity ^comment = "Verknüpfung zur Procedure-Ressource über suspectEntity.instance"
+// Wert: Clavien-Dindo Grade
+* valueCodeableConcept MS
+* valueCodeableConcept ^short = "Clavien-Dindo Grad"
+* valueCodeableConcept ^comment = "Grade I–V (SNOMED 1367519000–1367527009)"
 
-// Severity / Clavien-Dindo
-* severity MS
-* severity ^short = "Schweregrad"
-* severity ^comment = "Aus dotbase: 'Clavien-Dindo-Klassifikation' → mapped zu FHIR severity (mild/moderate/severe)"
+* subject MS
+* subject only Reference(Patient)
 
-* extension contains EX_Senologie_ClavienDindoGrade named claviendindoGrade 0..1
-* extension[claviendindoGrade] ^short = "Clavien-Dindo-Klassifikation (detailliert)"
-* extension[claviendindoGrade] ^comment = "Detaillierte Grade: Grade I, II, IIIa, IIIb, IVa, IVb, V aus dotbase"
+// Datum der Komplikation
+* effectiveDateTime MS
+* effectiveDateTime ^short = "Datum der Komplikation"
+* effectiveDateTime ^comment = "Aus dotbase: 'Datum der Komplikation'"
 
-// Zeitpunkt (intraoperativ vs. postoperativ)
-* extension contains EX_Senologie_ComplicationTiming named complicationTiming 0..1
-* extension[complicationTiming] ^short = "Zeitpunkt der Komplikation"
-* extension[complicationTiming] ^comment = "Aus dotbase: 'Zeitpunkt der Komplikation' (intraop/postop/stationär/ambulant)"
+// Zeitpunkt der Komplikation (replaces EX_Senologie_ComplicationTiming)
+* method MS
+* method ^short = "Zeitpunkt der Komplikation"
+* method ^comment = "Aus dotbase: 'Zeitpunkt der Komplikation' (intraoperativ, postoperativ, stationär, ambulant) — ersetzt ehemalige ComplicationTiming-Extension"
+
+// Bezug zur verursachenden Operation (replaces AdverseEvent.suspectEntity)
+* focus MS
+* focus only Reference(Procedure)
+* focus ^short = "Verursachende Operation"
+* focus ^comment = "Reference zur Procedure-Ressource der auslösenden OP"
+
+// Komplikationsart als component
+* component MS
+* component ^slicing.discriminator.type = #pattern
+* component ^slicing.discriminator.path = "code"
+* component ^slicing.rules = #open
+* component contains komplikationsart 0..1
+
+* component[komplikationsart].code = $SCT#116224001 "Complication of procedure"
+* component[komplikationsart].code ^short = "Art der Komplikation"
+* component[komplikationsart].valueCodeableConcept MS
+* component[komplikationsart].valueCodeableConcept ^short = "Art der Komplikation"
+* component[komplikationsart].valueCodeableConcept ^comment = "Aus dotbase: 'Art der Komplikation' (SNOMED-kodiert)"
 
 // Konsequenzen
-* outcome ^short = "Konsequenzen der Komplikation"
-* outcome ^comment = "Aus dotbase: 'Konsequenz' (multiple-choice: zB. Revision, Reintubation, Transfusion, etc.)"
-
-// Freitext für weitere Details
-* resultingCondition ^short = "Resultierende Erkrankung/Zustand"
-* resultingCondition ^comment = "Aus dotbase: 'Kommentar' Freitext"
+* note ^short = "Konsequenzen / Kommentar"
+* note ^comment = "Aus dotbase: 'Konsequenz' + 'Kommentar' Freitext"

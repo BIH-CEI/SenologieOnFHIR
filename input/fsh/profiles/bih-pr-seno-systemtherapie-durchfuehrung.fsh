@@ -1,8 +1,8 @@
 Profile: Senologie_Systemtherapie_Medikation
-Parent: MedicationStatement
+Parent: MII_PR_Onko_Systemische_Therapie_Medikation
 Id: senologie-systemtherapie-medikation
 Title: "BIH Senologie Systemtherapie Medikation (einzelne Gabe)"
-Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase Questionnaire 'Systemtherapie Therapiedokumentation'"
+Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase Questionnaire 'Systemtherapie Therapiedokumentation'. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -14,7 +14,7 @@ Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase Qu
 
 * medicationCodeableConcept MS
 * medicationCodeableConcept ^short = "Substanz/Medikament"
-* medicationCodeableConcept ^comment = "Aus dotbase: 'Substanz' (choice mit verschiedenen Medikamenten, SNOMED)"
+* medicationCodeableConcept ^comment = "Aus dotbase: 'Substanz' (choice mit verschiedenen Medikamenten, SNOMED) — ATC/UNII coding geerbt von MII Onko"
 
 * subject MS
 * subject only Reference(Patient)
@@ -28,18 +28,21 @@ Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase Qu
 * effectiveDateTime ^short = "Wann wurde die Substanz gegeben"
 * effectiveDateTime ^comment = "Aus dotbase: 'Datum'"
 
+// Inherited from MII Onko Systemtherapie Medikation:
+// - partOf:systemischeTherapie (link to parent Systemtherapie Procedure)
+// - medicationCodeableConcept.coding with UNII slice
+
 // Bezug zur übergeordneten Systemtherapie-Procedure
 * partOf MS
-* partOf only Reference(Procedure)
 * partOf ^short = "Zugehörig zu dieser Systemtherapie-Procedure"
-* partOf ^comment = "Reference zu Senologie_Systemtherapie_Procedure"
+* partOf ^comment = "Reference zu Senologie_Systemtherapie_Procedure via geerbtems partOf:systemischeTherapie"
 
-// Zyklus-Information
+// Senologie-spezifisch: Zyklus-Information (no MII equivalent)
 * extension contains EX_Senologie_TherapyCycle named therapyCycle 0..1
 * extension[therapyCycle] ^short = "Therapie-Zyklus"
 * extension[therapyCycle] ^comment = "Aus dotbase: 'Zyklus' (1, 2, 3, etc.)"
 
-// Tag innerhalb des Zyklus
+// Senologie-spezifisch: Tag innerhalb des Zyklus (no MII equivalent)
 * extension contains EX_Senologie_DayInCycle named dayInCycle 0..1
 * extension[dayInCycle] ^short = "Tag im Zyklus"
 * extension[dayInCycle] ^comment = "Aus dotbase: 'Tag' (Tag 1-N innerhalb eines Zyklus)"

@@ -1,0 +1,206 @@
+@startuml Senologie FHIR Ressourcenmodell
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam classHeaderBackgroundColor #F8F8F8
+skinparam packageStyle rectangle
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+  BackgroundColor<<imaging>> #E3F2FD
+  BorderColor<<imaging>> #1565C0
+  BackgroundColor<<body>> #F3E5F5
+  BorderColor<<body>> #6A1B9A
+  BackgroundColor<<procedure>> #E8F5E9
+  BorderColor<<procedure>> #2E7D32
+  BackgroundColor<<specimen>> #FFF8E1
+  BorderColor<<specimen>> #F9A825
+  BackgroundColor<<pathology>> #FCE4EC
+  BorderColor<<pathology>> #C62828
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+  BackgroundColor<<risk>> #E0F7FA
+  BorderColor<<risk>> #00838F
+  BackgroundColor<<tumorboard>> #EDE7F6
+  BorderColor<<tumorboard>> #4527A0
+  BackgroundColor<<therapy>> #E8EAF6
+  BorderColor<<therapy>> #283593
+}
+
+title **MII KDS Senologie — FHIR Ressourcenmodell**\n//Klinischer Versorgungspfad Mammakarzinom//
+
+' === CONDITION ===
+class "**Condition**\n//Diagnose Mamma//" <<condition>> {
+  code : ICD-10-GM / SNOMED
+  clinicalStatus
+  verificationStatus
+  bodySite : Seite (L/R)
+  stage : TNM (klinisch)
+}
+
+' === BODY STRUCTURE ===
+class "**BodyStructure**\n//Tumorlokalisation//" <<body>> {
+  location : Brust (SNOMED)
+  locationQualifier : Seite
+  locationQualifier : Quadrant
+  locationQualifier : Uhrzeitposition
+  description : Freitext
+  ..
+  //R5-Backport//
+  includedStructure.bodysite
+  includedStructure.qualifier[]
+}
+
+' === IMAGING ===
+class "**DiagnosticReport**\n//Bildgebung Befund//" <<imaging>> {
+  category : imaging
+  code : Modalität
+  conclusion
+  effectiveDateTime
+}
+
+class "**Observation**\n//Bildgebung//" <<imaging>> {
+  Mamillenabstand (mm)
+  BI-RADS Kategorie
+  Tumorgröße (radiologisch)
+  method : imaging
+}
+
+' === PROCEDURE ===
+class "**Procedure**\n//OP / Excision//" <<procedure>> {
+  code : BET / Mastektomie / ...
+  bodySite
+  performed[x]
+  outcome
+  complication
+}
+
+class "**Observation**\n//Operative Komplikation//" <<procedure>> {
+  code : Clavien-Dindo
+  valueCodeableConcept : Grad I–V
+  method : Zeitpunkt
+  focus → Procedure
+}
+
+' === SPECIMEN ===
+class "**Specimen**\n//Pathologisches Präparat//" <<specimen>> {
+  type : Biopsie / Resektat / ...
+  collection.collectedDateTime
+  collection.bodySite → BodyStructure
+  collection.method
+  processing.procedure
+}
+
+' === PATHOLOGY ===
+class "**DiagnosticReport**\n//Pathologie Befund//" <<pathology>> {
+  category : pathology
+  code : Histopathologie
+  effectiveDateTime
+  conclusion
+}
+
+class "**Observation**\n//Histologie & Staging//" <<observation>> {
+  .. Makroskopie ..
+  Mamillenabstand (mm)
+  Tumorgröße (pathologisch)
+  Resektionsränder (6 Richtungen)
+  .. Mikroskopie ..
+  Histologischer Subtyp
+  Grading (Elston-Ellis)
+  .. TNM (pathologisch) ..
+  pT / pN / M / R / L / V / Pn
+  .. Rezeptorstatus ..
+  ER (%) / PR (%) / HER2 / Ki-67
+  PDL-1 (TPS/CPS/IC)
+}
+
+' === RISK ASSESSMENT ===
+class "**RiskAssessment**\n//Genexpressionstest//" <<risk>> {
+  method : Oncotype DX / MammaPrint /
+  \t\tProSigna / EndoPredict
+  prediction.qualitativeRisk
+  prediction.probabilityDecimal
+  prediction.outcome : Fernrezidiv
+  basis → Score-Observation
+}
+
+' === TUMORBOARD ===
+class "**ClinicalImpression**\n//Tumorboard Empfehlung//" <<tumorboard>> {
+  description : Empfehlung
+  finding : Befundzusammenfassung
+  date
+  assessor : Tumorboard
+}
+
+' === THERAPY ===
+class "**CarePlan**\n//Geplante Systemtherapie//" <<therapy>> {
+  intent : plan
+  category : Chemotherapie / ...
+  activity.detail
+}
+
+class "**Procedure**\n//Strahlentherapie//" <<therapy>> {
+  code : Bestrahlung
+  bodySite : Zielregion
+  outcome
+}
+
+class "**MedicationAdministration**\n//Systemtherapie Gabe//" <<therapy>> {
+  medication[x]
+  dosage
+  effectivePeriod
+}
+
+' ============ RELATIONSHIPS ============
+
+"**Condition**\n//Diagnose Mamma//" -right-> "**BodyStructure**\n//Tumorlokalisation//" : evidence.\nbodySite
+
+"**DiagnosticReport**\n//Bildgebung Befund//" -up-> "**Condition**\n//Diagnose Mamma//" : < basedOn
+"**DiagnosticReport**\n//Bildgebung Befund//" -right-> "**BodyStructure**\n//Tumorlokalisation//" : subject\n(Läsion in vivo)
+"**DiagnosticReport**\n//Bildgebung Befund//" -down-> "**Observation**\n//Bildgebung//" : result
+
+"**Observation**\n//Bildgebung//" --> "**BodyStructure**\n//Tumorlokalisation//" : focus
+
+"**Procedure**\n//OP / Excision//" -up-> "**BodyStructure**\n//Tumorlokalisation//" : target\n(Ziel der OP)
+"**Procedure**\n//OP / Excision//" -left-> "**Condition**\n//Diagnose Mamma//" : reasonReference
+"**Observation**\n//Operative Komplikation//" -up-> "**Procedure**\n//OP / Excision//" : focus
+
+"**Specimen**\n//Pathologisches Präparat//" -up-> "**BodyStructure**\n//Tumorlokalisation//" : collection.\nbodySite
+"**Specimen**\n//Pathologisches Präparat//" -up-> "**Procedure**\n//OP / Excision//" : < fpiSpecimen\n(erzeugt durch)
+
+"**DiagnosticReport**\n//Pathologie Befund//" --> "**Specimen**\n//Pathologisches Präparat//" : specimen
+"**DiagnosticReport**\n//Pathologie Befund//" -down-> "**Observation**\n//Histologie & Staging//" : result
+"**DiagnosticReport**\n//Pathologie Befund//" -left-> "**Condition**\n//Diagnose Mamma//" : < supportingInfo
+
+"**Observation**\n//Histologie & Staging//" --> "**Specimen**\n//Pathologisches Präparat//" : specimen
+
+"**RiskAssessment**\n//Genexpressionstest//" -up-> "**Condition**\n//Diagnose Mamma//" : condition
+"**RiskAssessment**\n//Genexpressionstest//" -left-> "**Observation**\n//Histologie & Staging//" : basis
+
+"**ClinicalImpression**\n//Tumorboard Empfehlung//" -up-> "**Condition**\n//Diagnose Mamma//" : problem
+"**ClinicalImpression**\n//Tumorboard Empfehlung//" --> "**DiagnosticReport**\n//Pathologie Befund//" : investigation
+
+"**CarePlan**\n//Geplante Systemtherapie//" -up-> "**ClinicalImpression**\n//Tumorboard Empfehlung//" : basedOn
+"**Procedure**\n//Strahlentherapie//" -up-> "**CarePlan**\n//Geplante Systemtherapie//" : basedOn
+"**MedicationAdministration**\n//Systemtherapie Gabe//" -up-> "**CarePlan**\n//Geplante Systemtherapie//" : basedOn\n(request)
+
+legend right
+  |= Farbe |= Domäne |
+  |<#FFF3E0> | Diagnose |
+  |<#F3E5F5> | Tumorlokalisation |
+  |<#E3F2FD> | Bildgebung |
+  |<#E8F5E9> | Operation |
+  |<#FFF8E1> | Specimen |
+  |<#FCE4EC> | Pathologie |
+  |<#ECEFF1> | Befunde / Observations |
+  |<#E0F7FA> | Risikobewertung |
+  |<#EDE7F6> | Tumorboard |
+  |<#E8EAF6> | Therapie |
+endlegend
+
+@enduml

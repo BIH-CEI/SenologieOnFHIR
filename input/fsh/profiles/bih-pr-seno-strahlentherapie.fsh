@@ -1,8 +1,8 @@
 Profile: Senologie_Strahlentherapie
-Parent: Procedure
+Parent: MII_PR_Onko_Strahlentherapie_Bestrahlung_Strahlentherapie
 Id: senologie-strahlentherapie
 Title: "BIH Senologie Strahlentherapie"
-Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahlentherapie ESP-PECS'"
+Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahlentherapie ESP-PECS'. Erbt Gesamtdosis, Boost und Seitenlokalisation von MII Onko Bestrahlung."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -18,7 +18,6 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * code.text = "Bestrahlung"
 
 * subject MS
-* subject only Reference(Patient)
 
 * performedPeriod MS
 * performedPeriod.start ^short = "Therapie-Beginn"
@@ -26,30 +25,22 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * performedPeriod.end ^short = "Therapie-Ende"
 * performedPeriod.end ^comment = "Aus dotbase: 'Ende' (date)"
 
-// Bestrahlungsregion/Seite
+// Inherited from MII Bestrahlung parent:
+// - extension:Gesamtdosis (replaces EX_Senologie_TotalDoseGy)
+// - extension:Boost (replaces EX_Senologie_BoostApplied)
+// - bodySite with extension:Seitenlokalisation (replaces EX_Senologie_RadiationTarget + RadiationTargetOrgan)
+
+// Bestrahlungsregion/Seite (inherited bodySite + Seitenlokalisation)
+* bodySite MS
 * bodySite ^short = "Bestrahlungsregion"
-* bodySite ^comment = "Aus dotbase: 'Seite lokoregionale Bestrahlung' (Links/Rechts/Beidseits)"
+* bodySite ^comment = "Bestrahlungsziel inkl. Seitenlokalisation — aus dotbase: 'Seite lokoregionale Bestrahlung', 'Lokoregionäre Bestrahlung', 'Organ'"
 
-// Lokoregionäre Bestrahlung (Brust/Brustwand/regional Lymphknoten)
-* extension contains EX_Senologie_RadiationTarget named radiationTarget 0..1
-* extension[radiationTarget] ^short = "Bestrahlungsziel"
-* extension[radiationTarget] ^comment = "Aus dotbase: 'Lokoregionäre Bestrahlung' (Brust, Brustwand, regionale LK, etc.)"
+// Behandlungsintention (from MII Onko top-level Strahlentherapie)
+* extension contains MII_EX_Onko_Strahlentherapie_Intention named Intention 0..1
+* extension[Intention] ^short = "Behandlungsintention"
+* extension[Intention] ^comment = "Aus dotbase: 'Zeitpunkt' (adjuvant, neoadjuvant, palliativ)"
 
-// Boost (zusätzliche Dosierung in kleinerem Feld)
-* extension contains EX_Senologie_BoostApplied named boostApplied 0..1
-* extension[boostApplied] ^short = "Boost durchgeführt"
-* extension[boostApplied] ^comment = "Aus dotbase: 'Boost' (Ja/Nein/Optional)"
-
-// Betroffenes Organ (bei Palliativbestrahlung)
-* extension contains EX_Senologie_RadiationTargetOrgan named radiationTargetOrgan 0..1
-* extension[radiationTargetOrgan] ^short = "Bestrahltes Organ (bei Fernmetastasen)"
-* extension[radiationTargetOrgan] ^comment = "Aus dotbase: 'Organ' (bei Fernmetastasen-Bestrahlung)"
-
-// Dosimetrie
-* extension contains EX_Senologie_TotalDoseGy named totalDoseGy 0..1
-* extension[totalDoseGy] ^short = "Gesamtdosis in Gray"
-* extension[totalDoseGy] ^comment = "Aus dotbase: 'Gesamtdosis Gy' (integer in Gy)"
-
+// Senologie-spezifisch: Anzahl Bestrahlungssitzungen (no MII equivalent)
 * extension contains EX_Senologie_SessionCount named sessionCount 0..1
 * extension[sessionCount] ^short = "Anzahl der Bestrahlungssitzungen"
 * extension[sessionCount] ^comment = "Aus dotbase: 'Anzahl Sitzungen' (decimal)"
@@ -58,12 +49,11 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * note ^short = "Detaillierte Beschreibung"
 * note ^comment = "Aus dotbase: 'Freitext' - Technik, Besonderheiten, etc."
 
-// Behandlungsintention
-* extension contains EX_Senologie_TreatmentIntention named treatmentIntention 0..1
-* extension[treatmentIntention] ^short = "Behandlungsintention"
-* extension[treatmentIntention] ^comment = "Aus dotbase: 'Zeitpunkt' (adjuvant, neoadjuvant, palliativ)"
-
 // Bezug zu Diagnose
 * reasonReference MS
 * reasonReference only Reference(Condition)
 * reasonReference ^short = "Bezogene Diagnose"
+
+// partOf bleibt offen für Verknüpfung zu MII Strahlentherapie-Session
+* partOf MS
+* partOf ^short = "Zugehörige Strahlentherapie-Session"
