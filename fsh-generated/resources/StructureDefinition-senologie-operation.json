@@ -1,178 +1,59 @@
 {
   "resourceType": "StructureDefinition",
   "id": "senologie-operation",
+  "extension": [
+    {
+      "url": "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/spdx-license",
+            "code": "CC-BY-4.0",
+            "display": "Creative Commons Attribution 4.0 International"
+          }
+        ]
+      }
+    }
+  ],
   "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-operation",
   "version": "0.1.0",
   "name": "Senologie_Operation",
   "title": "BIH LM Senologie Brustwand-Operation",
   "status": "draft",
-  "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie",
+  "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation.",
   "fhirVersion": "4.0.1",
   "kind": "resource",
   "abstract": false,
   "type": "Procedure",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-operation",
   "derivation": "constraint",
   "differential": {
     "element": [
-      {
-        "id": "Procedure.extension",
-        "path": "Procedure.extension",
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.extension.extension",
-        "path": "Procedure.extension.extension",
-        "max": "0"
-      },
-      {
-        "id": "Procedure.extension.url",
-        "path": "Procedure.extension.url",
-        "patternUri": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/bih-pr-seno-brustop-intention"
-      },
-      {
-        "id": "Procedure.extension.value[x]",
-        "path": "Procedure.extension.value[x]",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "type",
-              "path": "$this"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        }
-      },
-      {
-        "id": "Procedure.extension.value[x]:valueCodeableConcept",
-        "path": "Procedure.extension.value[x]",
-        "sliceName": "valueCodeableConcept",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept"
-          }
-        ],
-        "mustSupport": true
-      },
       {
         "id": "Procedure.category",
         "path": "Procedure.category",
         "short": "Art der Operation",
         "definition": "Art der Operation Brust, Axillär, Lateralität",
-        "mustSupport": true,
         "binding": {
           "strength": "required",
           "valueSet": "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-operation-art"
         }
       },
       {
-        "id": "Procedure.code",
-        "path": "Procedure.code",
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.subject",
-        "path": "Procedure.subject",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": [
-              "http://hl7.org/fhir/StructureDefinition/Patient"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.performed[x]",
-        "path": "Procedure.performed[x]",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "type",
-              "path": "$this"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.performed[x]:performedDateTime",
-        "path": "Procedure.performed[x]",
-        "sliceName": "performedDateTime",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "dateTime"
-          }
-        ],
-        "mustSupport": true
-      },
-      {
         "id": "Procedure.reasonReference",
         "path": "Procedure.reasonReference",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": [
-              "http://hl7.org/fhir/StructureDefinition/Condition"
-            ]
-          }
-        ],
-        "mustSupport": true
+        "short": "Bezogene Diagnose"
       },
       {
         "id": "Procedure.outcome",
         "path": "Procedure.outcome",
-        "short": "Outcome der Operation, v.a. bei Revision",
-        "mustSupport": true
+        "short": "Outcome der Operation, v.a. bei Revision"
       },
       {
         "id": "Procedure.complication",
         "path": "Procedure.complication",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "system"
-            }
-          ],
-          "rules": "open",
-          "description": "Slicing der Angabe nach Komplikation nach oBDS, IQTIQ oder andere",
-          "ordered": false
-        },
-        "short": "Komplikation nach oBDS",
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.complication:oBDS",
-        "path": "Procedure.complication",
-        "sliceName": "oBDS",
-        "min": 0,
-        "max": "*"
-      },
-      {
-        "id": "Procedure.complication:oBDS.coding",
-        "path": "Procedure.complication.coding",
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.complication:IQTIQ",
-        "path": "Procedure.complication",
-        "sliceName": "IQTIQ",
-        "min": 0,
-        "max": "*"
-      },
-      {
-        "id": "Procedure.complication:IQTIQ.coding",
-        "path": "Procedure.complication.coding",
-        "mustSupport": true
+        "short": "Komplikation (oBDS / ICD-10)",
+        "comment": "Verwendet geerbte Slices compl_obds und compl_icd10 vom MII Onko Operation Parent"
       },
       {
         "id": "Procedure.followUp",
@@ -180,13 +61,11 @@
         "slicing": {
           "discriminator": [
             {
-              "type": "value",
-              "path": "system"
+              "type": "pattern",
+              "path": "$this"
             }
           ],
-          "rules": "open",
-          "description": "Slicing of usedCode by system",
-          "ordered": false
+          "rules": "open"
         },
         "mustSupport": true
       },
@@ -253,53 +132,8 @@
       {
         "id": "Procedure.usedCode",
         "path": "Procedure.usedCode",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "system"
-            }
-          ],
-          "rules": "open"
-        },
         "short": "Verwendete Codes",
-        "definition": "Verwendete Codes für die Operation, z.B. präoperative Markierung durch Drähte",
-        "mustSupport": true
-      },
-      {
-        "id": "Procedure.usedCode:praeoperativeMarkierung",
-        "path": "Procedure.usedCode",
-        "sliceName": "praeoperativeMarkierung",
-        "min": 0,
-        "max": "1"
-      },
-      {
-        "id": "Procedure.usedCode:intraoperativesImagingBrust",
-        "path": "Procedure.usedCode",
-        "sliceName": "intraoperativesImagingBrust",
-        "min": 0,
-        "max": "1"
-      },
-      {
-        "id": "Procedure.usedCode:intraoperativesImagingPraeparat",
-        "path": "Procedure.usedCode",
-        "sliceName": "intraoperativesImagingPraeparat",
-        "min": 0,
-        "max": "1"
-      },
-      {
-        "id": "Procedure.usedCode:drainage",
-        "path": "Procedure.usedCode",
-        "sliceName": "drainage",
-        "min": 0,
-        "max": "1"
-      },
-      {
-        "id": "Procedure.usedCode:drainageGekuerzt",
-        "path": "Procedure.usedCode",
-        "sliceName": "drainageGekuerzt",
-        "min": 0,
-        "max": "1"
+        "definition": "Verwendete Codes für die Operation — erbt IntraoperativesImaging und PraeoperativeMarkierung von MII Mamma"
       }
     ]
   }

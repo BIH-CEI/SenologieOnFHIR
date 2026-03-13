@@ -1,0 +1,155 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-geplante-systemtherapie",
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-geplante-systemtherapie",
+  "version": "0.1.0",
+  "name": "Senologie_Geplante_Systemtherapie",
+  "title": "BIH Senologie Geplante Systemtherapie",
+  "status": "draft",
+  "description": "MedicationRequest für geplante Systemtherapie aus dotbase Questionnaire 'Geplante Systemtherapie'",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "MedicationRequest",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationRequest",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "MedicationRequest.extension",
+        "path": "MedicationRequest.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "MedicationRequest.extension:therapyLine",
+        "path": "MedicationRequest.extension",
+        "sliceName": "therapyLine",
+        "short": "Therapielinie",
+        "comment": "Aus dotbase: 'Therapielinie' (1, 2, 3, etc.)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-therapy-line"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "MedicationRequest.status",
+        "path": "MedicationRequest.status",
+        "short": "Geplant/In Bearbeitung",
+        "fixedCode": "draft",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.intent",
+        "path": "MedicationRequest.intent",
+        "fixedCode": "plan",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.medication[x]",
+        "path": "MedicationRequest.medication[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "MedicationRequest.medication[x]:medicationCodeableConcept",
+        "path": "MedicationRequest.medication[x]",
+        "sliceName": "medicationCodeableConcept",
+        "short": "Substanz/Medikament",
+        "comment": "Aus dotbase: 'Therapieprotokoll' - geplante Substanzen",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.subject",
+        "path": "MedicationRequest.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.reasonCode",
+        "path": "MedicationRequest.reasonCode",
+        "short": "Therapieintention",
+        "comment": "Aus dotbase: 'Intention' (z.B. neoadjuvant, adjuvant, palliativ)"
+      },
+      {
+        "id": "MedicationRequest.reasonReference",
+        "path": "MedicationRequest.reasonReference",
+        "short": "Bezogene Diagnose",
+        "comment": "Reference zur Condition-Ressource der Diagnose",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Condition"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.courseOfTherapyType",
+        "path": "MedicationRequest.courseOfTherapyType",
+        "short": "Therapieprotokoll",
+        "comment": "Aus dotbase: 'Therapieprotokoll' - geplantes Schema/Protokoll — ersetzt ehemalige TherapyProtocol-Extension",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.note",
+        "path": "MedicationRequest.note",
+        "short": "Planungsdetails",
+        "comment": "Aus dotbase: 'Details' Freitext"
+      },
+      {
+        "id": "MedicationRequest.dosageInstruction",
+        "path": "MedicationRequest.dosageInstruction",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationRequest.dosageInstruction.timing",
+        "path": "MedicationRequest.dosageInstruction.timing",
+        "short": "Geplante Gabe-Rhythmik"
+      },
+      {
+        "id": "MedicationRequest.dosageInstruction.doseAndRate.dose[x]",
+        "path": "MedicationRequest.dosageInstruction.doseAndRate.dose[x]",
+        "short": "Geplante Dosis"
+      }
+    ]
+  }
+}

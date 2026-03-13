@@ -1,0 +1,223 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-bildgebung-befund",
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-bildgebung-befund",
+  "version": "0.1.0",
+  "name": "Senologie_Bildgebung_Befund",
+  "title": "BIH Senologie Bildgebung Befund",
+  "status": "draft",
+  "description": "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "DiagnosticReport",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "DiagnosticReport.basedOn",
+        "path": "DiagnosticReport.basedOn",
+        "short": "Veranlasste ImagingStudy"
+      },
+      {
+        "id": "DiagnosticReport.status",
+        "path": "DiagnosticReport.status",
+        "short": "Abschlossener Befundbericht",
+        "fixedCode": "final",
+        "mustSupport": true
+      },
+      {
+        "id": "DiagnosticReport.category",
+        "path": "DiagnosticReport.category",
+        "short": "Diagnostik / Bildgebung",
+        "mustSupport": true
+      },
+      {
+        "id": "DiagnosticReport.category.coding",
+        "path": "DiagnosticReport.category.coding",
+        "patternCoding": {
+          "code": "RAD",
+          "system": "http://terminology.hl7.org/CodeSystem/v2-0074",
+          "display": "Radiology"
+        }
+      },
+      {
+        "id": "DiagnosticReport.code",
+        "path": "DiagnosticReport.code",
+        "comment": "Aus dotbase: 'Modalität' (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes",
+        "mustSupport": true
+      },
+      {
+        "id": "DiagnosticReport.code.coding",
+        "path": "DiagnosticReport.code.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "Art der Bildgebung"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mammography",
+        "path": "DiagnosticReport.code.coding",
+        "sliceName": "mammography",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mammography.system",
+        "path": "DiagnosticReport.code.coding.system",
+        "min": 1,
+        "fixedUri": "http://loinc.org"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mammography.code",
+        "path": "DiagnosticReport.code.coding.code",
+        "fixedCode": "18781-5"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mammography.display",
+        "path": "DiagnosticReport.code.coding.display",
+        "fixedString": "Mammography of bilateral breasts"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:ultrasound",
+        "path": "DiagnosticReport.code.coding",
+        "sliceName": "ultrasound",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:ultrasound.system",
+        "path": "DiagnosticReport.code.coding.system",
+        "min": 1,
+        "fixedUri": "http://loinc.org"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:ultrasound.code",
+        "path": "DiagnosticReport.code.coding.code",
+        "fixedCode": "18740-1"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:ultrasound.display",
+        "path": "DiagnosticReport.code.coding.display",
+        "fixedString": "Ultrasound of bilateral breasts"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mri",
+        "path": "DiagnosticReport.code.coding",
+        "sliceName": "mri",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mri.system",
+        "path": "DiagnosticReport.code.coding.system",
+        "min": 1,
+        "fixedUri": "http://loinc.org"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mri.code",
+        "path": "DiagnosticReport.code.coding.code",
+        "fixedCode": "36581-3"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:mri.display",
+        "path": "DiagnosticReport.code.coding.display",
+        "fixedString": "MRI of breast"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:tomosynthesis",
+        "path": "DiagnosticReport.code.coding",
+        "sliceName": "tomosynthesis",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:tomosynthesis.system",
+        "path": "DiagnosticReport.code.coding.system",
+        "min": 1,
+        "fixedUri": "http://radlex.org"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:tomosynthesis.code",
+        "path": "DiagnosticReport.code.coding.code",
+        "fixedCode": "RID40755"
+      },
+      {
+        "id": "DiagnosticReport.code.coding:tomosynthesis.display",
+        "path": "DiagnosticReport.code.coding.display",
+        "fixedString": "Digital breast tomosynthesis"
+      },
+      {
+        "id": "DiagnosticReport.subject",
+        "path": "DiagnosticReport.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "DiagnosticReport.effective[x]",
+        "path": "DiagnosticReport.effective[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "DiagnosticReport.effective[x]:effectiveDateTime",
+        "path": "DiagnosticReport.effective[x]",
+        "sliceName": "effectiveDateTime",
+        "short": "Datum der Untersuchung",
+        "comment": "Aus dotbase: 'Datum' pro Modalität",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "DiagnosticReport.resultsInterpreter",
+        "path": "DiagnosticReport.resultsInterpreter",
+        "short": "Befundender Arzt"
+      },
+      {
+        "id": "DiagnosticReport.result",
+        "path": "DiagnosticReport.result",
+        "short": "Einzel-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status)",
+        "comment": "References zu einzelnen Observation-Ressourcen für Herdbefund, Mikrokalk, LK-Status, BI-RADS, ACR pro Seite"
+      },
+      {
+        "id": "DiagnosticReport.conclusion",
+        "path": "DiagnosticReport.conclusion",
+        "short": "Gesamtzusammenfassung des Befundes",
+        "comment": "Aus dotbase: 'Details (ausführlich)' Freitext"
+      },
+      {
+        "id": "DiagnosticReport.presentedForm",
+        "path": "DiagnosticReport.presentedForm",
+        "short": "Befund als Document/Text"
+      }
+    ]
+  }
+}

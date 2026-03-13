@@ -31,6 +31,18 @@
       "id": "de_medizininformatikinitiative_kerndatensatz_onkologie"
     },
     {
+      "packageId": "de.medizininformatikinitiative.kerndatensatz.patho",
+      "version": "2026.0.0",
+      "uri": "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.patho/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.patho",
+      "id": "de_medizininformatikinitiative_kerndatensatz_patho"
+    },
+    {
+      "packageId": "de.medizininformatikinitiative.kerndatensatz.bildgebung",
+      "version": "2026.0.0",
+      "uri": "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.bildgebung",
+      "id": "de_medizininformatikinitiative_kerndatensatz_bildgebung"
+    },
+    {
       "packageId": "de.gematik.isik",
       "version": "5.0.0",
       "uri": "http://fhir.org/packages/de.gematik.isik/ImplementationGuide/de.gematik.isik",
@@ -39,6 +51,14 @@
   ],
   "definition": {
     "resource": [
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-session-count"
+        },
+        "name": "Anzahl Bestrahlungssitzungen",
+        "description": "Anzahl der Bestrahlungssitzungen — MII Onko hat kein Fraktionszahl-Element",
+        "exampleBoolean": false
+      },
       {
         "reference": {
           "reference": "Condition/Example-Diagnose-DCIS"
@@ -84,7 +104,7 @@
           "reference": "StructureDefinition/senologie-operation"
         },
         "name": "BIH LM Senologie Brustwand-Operation",
-        "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie",
+        "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation.",
         "exampleBoolean": false
       },
       {
@@ -121,6 +141,126 @@
       },
       {
         "reference": {
+          "reference": "StructureDefinition/senologie-genexpressions-score"
+        },
+        "name": "BIH PR Seno Genexpressions-Score",
+        "description": "Observation für den numerischen Score-Wert eines Genexpressionstests (Oncotype DX Recurrence Score, MammaPrint Index, Prosigna ROR Score, EndoPredict EPclin Score)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-genexpressionstest"
+        },
+        "name": "BIH PR Seno Genexpressionstest",
+        "description": "RiskAssessment für genomische Risikoscores bei Mammakarzinom (Oncotype DX, MammaPrint, Prosigna, EndoPredict). Bildet die Risikoklassifikation ab und referenziert die Score-Observation.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-bildgebung-befund"
+        },
+        "name": "BIH Senologie Bildgebung Befund",
+        "description": "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-bildgebung-observation"
+        },
+        "name": "BIH Senologie Bildgebung Observation",
+        "description": "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-geplante-systemtherapie"
+        },
+        "name": "BIH Senologie Geplante Systemtherapie",
+        "description": "MedicationRequest für geplante Systemtherapie aus dotbase Questionnaire 'Geplante Systemtherapie'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-op-planung"
+        },
+        "name": "BIH Senologie OP Planung",
+        "description": "ServiceRequest für OP Planung aus dotbase Questionnaire 'OP Planung ärztlich V1.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-operative-komplikation"
+        },
+        "name": "BIH Senologie Operative Komplikation",
+        "description": "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation aus dotbase Questionnaire 'Operative Komplikation(en) V2.0'. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent).",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-pathologie-befund"
+        },
+        "name": "BIH Senologie Pathologie Befund",
+        "description": "DiagnosticReport für pathologische Befunde aus dotbase Questionnaire 'Pathologie'. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-pathologie-praeparat"
+        },
+        "name": "BIH Senologie Pathologisches Präparat",
+        "description": "Specimen für pathologische Präparate aus dotbase (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-strahlentherapie"
+        },
+        "name": "BIH Senologie Strahlentherapie",
+        "description": "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahlentherapie ESP-PECS'. Erbt Gesamtdosis, Boost und Seitenlokalisation von MII Onko Bestrahlung.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-systemtherapie-procedure"
+        },
+        "name": "BIH Senologie Systemtherapie (übergeordnet)",
+        "description": "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt Intention, outcome und usedCode von MII Onko Systemtherapie.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-systemtherapie-medikation"
+        },
+        "name": "BIH Senologie Systemtherapie Medikation (einzelne Gabe)",
+        "description": "MedicationStatement für einzelne Medikamentengaben aus dotbase. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-tumorboard-empfehlung"
+        },
+        "name": "BIH Senologie Tumorboard Empfehlung",
+        "description": "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard) aus dotbase Questionnaire 'Empfehlung der interdisziplinären Tumorkonferenz V2.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-tumorlokalisation"
+        },
+        "name": "BIH Senologie Tumorlokalisation",
+        "description": "BodyStructure für die Tumorlokalisation in der Brust (Seite, Quadrant, Uhrzeitposition, Mamillenabstand)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-tumor-conference-consent"
+        },
+        "name": "CA-Behandlung/Tumorkonferenz-Zustimmung",
+        "description": "CA-Behandlung / Tumorkonferenz-Zustimmung (Ja/Nein) — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
           "reference": "CodeSystem/cs-senologie-diagnosesicherung"
         },
         "name": "CodeSystem Diagnosesicherung",
@@ -133,6 +273,14 @@
         },
         "name": "CS Senologie Diagnose Lokal",
         "description": "Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "CodeSystem/cs-senologie-genexpressionstest"
+        },
+        "name": "CS Senologie Genexpressionstest",
+        "description": "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom",
         "exampleBoolean": false
       },
       {
@@ -152,13 +300,6 @@
       },
       {
         "reference": {
-          "reference": "AidboxTopicDestination/extract-webhook"
-        },
-        "exampleBoolean": false,
-        "name": "extract-webhook"
-      },
-      {
-        "reference": {
           "reference": "Questionnaire/Questionnaire-Senologie-Diagnose"
         },
         "exampleBoolean": false,
@@ -166,26 +307,67 @@
       },
       {
         "reference": {
-          "reference": "AidboxSubscriptionTopic/questionnaireresponse-completed"
+          "reference": "StructureDefinition/ex-senologie-operations-duration"
         },
-        "description": "Triggers when a QuestionnaireResponse is completed, enabling automatic extraction",
-        "exampleBoolean": false,
-        "name": "QuestionnaireResponse Completed"
+        "name": "Geplante OP-Dauer",
+        "description": "Geplante OP-Dauer in Minuten — ServiceRequest hat kein duration-Element",
+        "exampleBoolean": false
       },
       {
         "reference": {
-          "reference": "ViewDefinition/senologie-diagnose"
+          "reference": "StructureDefinition/ex-senologie-operating-table-setup"
         },
-        "description": "SQL-on-FHIR ViewDefinition für Mamma-Diagnosen - flache Tabelle für Analysen",
-        "exampleBoolean": false,
-        "name": "Senologie Diagnose View"
+        "name": "OP-Lagerung/Tischanordnung",
+        "description": "OP-Lagerung und Tischanordnung — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
       },
       {
         "reference": {
-          "reference": "AidboxQuery/senologie-diagnose"
+          "reference": "StructureDefinition/ex-senologie-pre-op-antibiotikatherapie"
         },
-        "exampleBoolean": false,
-        "name": "senologie-diagnose"
+        "name": "Präoperative Antibiotikatherapie",
+        "description": "Präoperative Antibiotikatherapie — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-pre-op-blutabnahme"
+        },
+        "name": "Präoperative Blutabnahme",
+        "description": "Präoperative Blutabnahme geplant — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-pre-op-markierung"
+        },
+        "name": "Präoperative Markierung",
+        "description": "Präoperative Markierung geplant — ServiceRequest hat kein usedCode",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-day-in-cycle"
+        },
+        "name": "Tag im Zyklus",
+        "description": "Tag innerhalb eines Therapie-Zyklus — MII Onko hat kein day-in-cycle",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-therapy-cycle"
+        },
+        "name": "Therapie-Zyklus",
+        "description": "Nummer des Therapie-Zyklus (1, 2, 3, etc.) — MII Onko hat kein cycle tracking",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-therapy-line"
+        },
+        "name": "Therapielinie",
+        "description": "Therapielinie (1. Linie, 2. Linie, etc.) — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
       },
       {
         "reference": {
@@ -221,10 +403,26 @@
       },
       {
         "reference": {
+          "reference": "ValueSet/vs-senologie-genexpressionstest"
+        },
+        "name": "VS Senologie Genexpressionstest",
+        "description": "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
           "reference": "ValueSet/vs-senologie-metastasierung"
         },
         "name": "VS Senologie Metastasierung",
         "description": "Metastasierungsstatus - lokale Codes basierend auf Dotbase",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-risikoklasse"
+        },
+        "name": "VS Senologie Risikoklasse",
+        "description": "Risikokategorien für Genexpressionstests (low, intermediate, high)",
         "exampleBoolean": false
       },
       {
@@ -241,6 +439,11 @@
       "title": "Table of Contents",
       "generation": "html",
       "page": [
+        {
+          "nameUrl": "index.html",
+          "title": "Home",
+          "generation": "markdown"
+        },
         {
           "nameUrl": "GeneralRemarks.html",
           "title": "General Remarks",

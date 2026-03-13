@@ -1,0 +1,71 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-systemtherapie-procedure",
+  "extension": [
+    {
+      "url": "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/spdx-license",
+            "code": "CC-BY-4.0",
+            "display": "Creative Commons Attribution 4.0 International"
+          }
+        ]
+      }
+    }
+  ],
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-systemtherapie-procedure",
+  "version": "0.1.0",
+  "name": "Senologie_Systemtherapie_Procedure",
+  "title": "BIH Senologie Systemtherapie (übergeordnet)",
+  "status": "draft",
+  "description": "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt Intention, outcome und usedCode von MII Onko Systemtherapie.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Procedure",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Procedure.partOf",
+        "path": "Procedure.partOf",
+        "short": "Teil einer übergeordneten Maßnahme"
+      },
+      {
+        "id": "Procedure.status",
+        "path": "Procedure.status",
+        "short": "Durchgeführt",
+        "fixedCode": "completed"
+      },
+      {
+        "id": "Procedure.code.coding",
+        "path": "Procedure.code.coding",
+        "short": "Systemtherapie-Typ"
+      },
+      {
+        "id": "Procedure.code.text",
+        "path": "Procedure.code.text",
+        "patternString": "Systemtherapie"
+      },
+      {
+        "id": "Procedure.reasonReference",
+        "path": "Procedure.reasonReference",
+        "short": "Bezogene Diagnose"
+      },
+      {
+        "id": "Procedure.outcome",
+        "path": "Procedure.outcome",
+        "short": "Therapie-Status am Ende",
+        "comment": "Aus dotbase: Status (abgeschlossen, abgebrochen, etc.) — ersetzt ehemalige TherapyStatus-Extension"
+      },
+      {
+        "id": "Procedure.note",
+        "path": "Procedure.note",
+        "short": "Besonderheiten/Details zur Therapie"
+      }
+    ]
+  }
+}

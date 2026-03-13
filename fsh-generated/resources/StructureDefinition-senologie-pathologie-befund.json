@@ -1,0 +1,87 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-pathologie-befund",
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-pathologie-befund",
+  "version": "0.1.0",
+  "name": "Senologie_Pathologie_Befund",
+  "title": "BIH Senologie Pathologie Befund",
+  "status": "draft",
+  "description": "DiagnosticReport für pathologische Befunde aus dotbase Questionnaire 'Pathologie'. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "DiagnosticReport",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-report",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "DiagnosticReport.status",
+        "path": "DiagnosticReport.status",
+        "short": "Abgeschlossener Pathologie-Bericht",
+        "fixedCode": "final"
+      },
+      {
+        "id": "DiagnosticReport.category",
+        "path": "DiagnosticReport.category",
+        "short": "Pathologie / Histopathologie"
+      },
+      {
+        "id": "DiagnosticReport.code.coding",
+        "path": "DiagnosticReport.code.coding",
+        "short": "Art der pathologischen Untersuchung"
+      },
+      {
+        "id": "DiagnosticReport.code.text",
+        "path": "DiagnosticReport.code.text",
+        "patternString": "Pathologischer Befund"
+      },
+      {
+        "id": "DiagnosticReport.effective[x]",
+        "path": "DiagnosticReport.effective[x]",
+        "short": "Datum der Präparateentnahme",
+        "comment": "Aus dotbase: 'Datum Präparateentnahme'"
+      },
+      {
+        "id": "DiagnosticReport.issued",
+        "path": "DiagnosticReport.issued",
+        "short": "Datum der Befunderstellung",
+        "mustSupport": true
+      },
+      {
+        "id": "DiagnosticReport.performer",
+        "path": "DiagnosticReport.performer",
+        "short": "Pathologisches Institut / befundender Pathologe",
+        "comment": "Aus dotbase: 'Pathologisches Institut' (choice) — ersetzt ehemalige PathologyLab-Extension"
+      },
+      {
+        "id": "DiagnosticReport.resultsInterpreter",
+        "path": "DiagnosticReport.resultsInterpreter",
+        "short": "Befundender Pathologe"
+      },
+      {
+        "id": "DiagnosticReport.specimen",
+        "path": "DiagnosticReport.specimen",
+        "short": "Pathologisches Präparat",
+        "comment": "Soll Senologie_Pathologie_Praeparat referenzieren — enthält Art, Lokalisation, Seite, Uhrzeitposition, Mamillenabstand und Entnahme-Zeitpunkt"
+      },
+      {
+        "id": "DiagnosticReport.result",
+        "path": "DiagnosticReport.result",
+        "short": "Detaillierte Befund-Komponenten",
+        "comment": "Erbt MII Patho Grouper-Slices (intraoperative, macroscopic, microscopic) — ER, PR, HER2, Ki-67, Histologie, B3-Läsion als Observations"
+      },
+      {
+        "id": "DiagnosticReport.conclusion",
+        "path": "DiagnosticReport.conclusion",
+        "short": "Gesamtbeurteilung des Pathologen",
+        "comment": "Aus dotbase: 'Details' (text)"
+      },
+      {
+        "id": "DiagnosticReport.presentedForm",
+        "path": "DiagnosticReport.presentedForm",
+        "short": "Befund als Document/Text"
+      }
+    ]
+  }
+}
