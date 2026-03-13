@@ -7,7 +7,7 @@ Usage: #example
 // Rezidiv-Status
 * clinicalStatus = http://terminology.hl7.org/CodeSystem/condition-clinical#recurrence
 * verificationStatus.coding[+] = http://terminology.hl7.org/CodeSystem/condition-ver-status#confirmed
-* verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologisch"
+* verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primärtumors"
 
 // Diagnosekode - kann auch post-koordiniert sein
 * code.coding[sct] = $SCT#254837009 "Malignant neoplasm of breast"
@@ -28,7 +28,7 @@ Usage: #example
 
 // Metastasierungsstadium
 * stage[metastasis].summary.text = "M0 - keine Fernmetastasen"
-* stage[metastasis].type = $SCT#385349001 "Metastasis stage finding"
+* stage[metastasis].type = $SCT#385349001 "Clinical stage (observable entity)"
 
 * subject = Reference(Patient/example-patient)
 * recordedDate = "2024-11-08"

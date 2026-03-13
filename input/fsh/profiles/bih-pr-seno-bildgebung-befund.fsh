@@ -65,5 +65,6 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 
 * presentedForm ^short = "Befund als Document/Text"
 
-// Standort der Untersuchung - TODO: define as named Extension resource
-// * extension contains examinationLocation 0..1
+// Standort der Untersuchung
+* extension contains EX_Senologie_ExaminationLocation named examinationLocation 0..1
+* extension[examinationLocation] ^short = "Standort der bildgebenden Untersuchung"

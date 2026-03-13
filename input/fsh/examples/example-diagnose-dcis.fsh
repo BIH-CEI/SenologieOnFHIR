@@ -6,7 +6,7 @@ Usage: #example
 
 * clinicalStatus = http://terminology.hl7.org/CodeSystem/condition-clinical#active
 * verificationStatus.coding[+] = http://terminology.hl7.org/CodeSystem/condition-ver-status#confirmed
-* verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologisch"
+* verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primärtumors"
 
 // Diagnosekode SNOMED - DCIS
 * code.coding[sct] = $SCT#109889007 "Ductal carcinoma in situ of breast"
@@ -23,7 +23,7 @@ Usage: #example
 * extension[Feststellungsdatum].valueDateTime = "2024-06-20"
 
 // Stadium - Stage 0 for DCIS
-* stage[+].summary = $SCT#258228008 "Stage 0"
+* stage[+].summary = $SCT#261613009 "Stage 0"
 * stage[=].type = $SCT#254292007 "Tumor staging"
 
 * subject = Reference(Patient/example-patient)

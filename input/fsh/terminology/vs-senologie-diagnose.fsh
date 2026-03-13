@@ -78,6 +78,34 @@ Description: "Lateralität der Mamma-Erkrankung"
 * ^status = #draft
 * ^version = "0.1.0"
 
+// === SNOMED CT only (für code.coding[sct] Binding im Maligne-Profil) ===
+ValueSet: VS_Senologie_Diagnose_SCT
+Id: vs-senologie-diagnose-sct
+Title: "VS Senologie Diagnose SNOMED CT"
+Description: "SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für sct-Slice)"
+
+* ^status = #draft
+* ^version = "0.1.0"
+* ^experimental = true
+
+* $SCT#254837009 "Malignant neoplasm of breast"
+* $SCT#109889007 "Ductal carcinoma in situ of breast"
+* $SCT#439401001 "Breast lesion with uncertain malignant potential"
+
+
+// === Lokale Codes only (für code.coding[senologie] Binding) ===
+ValueSet: VS_Senologie_Diagnose_Lokal
+Id: vs-senologie-diagnose-lokal
+Title: "VS Senologie Diagnose Lokal"
+Description: "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senologie-Slice)"
+
+* ^status = #draft
+* ^version = "0.1.0"
+* ^experimental = true
+
+* include codes from system http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose-lokal
+
+
 * $SCT#24028007 "Right"
 * $SCT#7771000 "Left"
 * $SCT#51440002 "Bilateral"

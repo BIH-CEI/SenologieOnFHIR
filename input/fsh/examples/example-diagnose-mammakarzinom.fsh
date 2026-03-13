@@ -6,7 +6,7 @@ Usage: #example
 
 * clinicalStatus = http://terminology.hl7.org/CodeSystem/condition-clinical#active
 * verificationStatus.coding[+] = http://terminology.hl7.org/CodeSystem/condition-ver-status#confirmed
-* verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologisch"
+* verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primärtumors"
 
 // Diagnosekode SNOMED
 * code.coding[sct] = $SCT#254837009 "Malignant neoplasm of breast"
@@ -17,8 +17,7 @@ Usage: #example
 * code.text = "Mammakarzinom links, oberer äußerer Quadrant"
 
 // Seite
-* bodySite.coding[+] = $SCT#80248007 "Left breast structure"
-* bodySite.coding[+] = $SCT#77831004 "Upper outer quadrant of breast"
+* bodySite.coding = $SCT#80248007 "Left breast structure"
 
 // Feststellungsdatum (inherited extension)
 * extension[Feststellungsdatum].valueDateTime = "2024-03-15"

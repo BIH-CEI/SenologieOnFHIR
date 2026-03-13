@@ -70,6 +70,15 @@ Description: "Tag innerhalb eines Therapie-Zyklus — MII Onko hat kein day-in-c
 // === Geplante Systemtherapie (1 Extension) ===
 // Used by: Senologie_Geplante_Systemtherapie (MedicationRequest)
 
+// === Bildgebung (1 Extension) ===
+// Used by: Senologie_Bildgebung_Befund (DiagnosticReport)
+
+Extension: EX_Senologie_ExaminationLocation
+Id: ex-senologie-examination-location
+Title: "Standort der Untersuchung"
+Description: "Standort/Einrichtung der bildgebenden Untersuchung — DiagnosticReport hat kein location-Element"
+* value[x] only string or Reference(Location)
+
 Extension: EX_Senologie_TherapyLine
 Id: ex-senologie-therapy-line
 Title: "Therapielinie"

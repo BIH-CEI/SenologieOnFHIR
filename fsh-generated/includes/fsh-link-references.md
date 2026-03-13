@@ -29,12 +29,13 @@
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
-[QuestionnaireSenologieDiagnose]: Questionnaire-Questionnaire-Senologie-Diagnose.html
+[QuestionnaireSenologieDiagnose]: Questionnaire-senologie-diagnose-maligne.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
 [EX_Senologie_OperatingTableSetup]: StructureDefinition-ex-senologie-operating-table-setup.html
 [EX_Senologie_PreOpAntibiotikatherapie]: StructureDefinition-ex-senologie-pre-op-antibiotikatherapie.html
 [EX_Senologie_PreOpBlutabnahme]: StructureDefinition-ex-senologie-pre-op-blutabnahme.html
 [EX_Senologie_PreOpMarkierung]: StructureDefinition-ex-senologie-pre-op-markierung.html
+[EX_Senologie_ExaminationLocation]: StructureDefinition-ex-senologie-examination-location.html
 [EX_Senologie_DayInCycle]: StructureDefinition-ex-senologie-day-in-cycle.html
 [EX_Senologie_TherapyCycle]: StructureDefinition-ex-senologie-therapy-cycle.html
 [EX_Senologie_TherapyLine]: StructureDefinition-ex-senologie-therapy-line.html
@@ -42,6 +43,8 @@
 [VSSenologieICD10]: ValueSet-vs-senologie-icd10.html
 [VS_Senologie_Diagnose_B3]: ValueSet-vs-senologie-diagnose-b3.html
 [VS_Senologie_Diagnose]: ValueSet-vs-senologie-diagnose.html
+[VS_Senologie_Diagnose_Lokal]: ValueSet-vs-senologie-diagnose-lokal.html
+[VS_Senologie_Diagnose_SCT]: ValueSet-vs-senologie-diagnose-sct.html
 [VS_Senologie_Genexpressionstest]: ValueSet-vs-senologie-genexpressionstest.html
 [VS_Senologie_Metastasierung]: ValueSet-vs-senologie-metastasierung.html
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html

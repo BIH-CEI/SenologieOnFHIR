@@ -17,7 +17,7 @@
       "alias": "Bundle"
     },
     {
-      "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose",
+      "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne",
       "mode": "target",
       "alias": "Condition"
     }
@@ -41,14 +41,22 @@
       "rule": [
         {
           "name": "bundleType",
-          "source": [{"context": "src"}],
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
           "target": [
             {
               "context": "tgt",
               "contextType": "variable",
               "element": "type",
               "transform": "copy",
-              "parameter": [{"valueString": "transaction"}]
+              "parameter": [
+                {
+                  "valueString": "transaction"
+                }
+              ]
             }
           ]
         },
@@ -75,13 +83,21 @@
               "element": "resource",
               "variable": "condition",
               "transform": "create",
-              "parameter": [{"valueString": "Condition"}]
+              "parameter": [
+                {
+                  "valueString": "Condition"
+                }
+              ]
             }
           ],
           "rule": [
             {
               "name": "setRequest",
-              "source": [{"context": "grp"}],
+              "source": [
+                {
+                  "context": "grp"
+                }
+              ],
               "target": [
                 {
                   "context": "entry",
@@ -94,14 +110,22 @@
                   "contextType": "variable",
                   "element": "method",
                   "transform": "copy",
-                  "parameter": [{"valueString": "POST"}]
+                  "parameter": [
+                    {
+                      "valueString": "POST"
+                    }
+                  ]
                 },
                 {
                   "context": "req",
                   "contextType": "variable",
                   "element": "url",
                   "transform": "copy",
-                  "parameter": [{"valueString": "Condition"}]
+                  "parameter": [
+                    {
+                      "valueString": "Condition"
+                    }
+                  ]
                 }
               ]
             },
@@ -140,7 +164,11 @@
                       "element": "coding",
                       "variable": "coding",
                       "transform": "copy",
-                      "parameter": [{"valueId": "ans.valueCoding"}]
+                      "parameter": [
+                        {
+                          "valueId": "ans.valueCoding"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -178,7 +206,11 @@
                       "contextType": "variable",
                       "element": "coding",
                       "transform": "copy",
-                      "parameter": [{"valueId": "ans.valueCoding"}]
+                      "parameter": [
+                        {
+                          "valueId": "ans.valueCoding"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -186,7 +218,11 @@
             },
             {
               "name": "clinicalStatus",
-              "source": [{"context": "grp"}],
+              "source": [
+                {
+                  "context": "grp"
+                }
+              ],
               "target": [
                 {
                   "context": "condition",
@@ -205,14 +241,22 @@
                   "contextType": "variable",
                   "element": "system",
                   "transform": "copy",
-                  "parameter": [{"valueString": "http://terminology.hl7.org/CodeSystem/condition-clinical"}]
+                  "parameter": [
+                    {
+                      "valueString": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+                    }
+                  ]
                 },
                 {
                   "context": "csc",
                   "contextType": "variable",
                   "element": "code",
                   "transform": "copy",
-                  "parameter": [{"valueString": "active"}]
+                  "parameter": [
+                    {
+                      "valueString": "active"
+                    }
+                  ]
                 }
               ]
             },
@@ -242,7 +286,11 @@
                       "contextType": "variable",
                       "element": "recordedDate",
                       "transform": "copy",
-                      "parameter": [{"valueId": "ans.valueDate"}]
+                      "parameter": [
+                        {
+                          "valueId": "ans.valueDate"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -250,14 +298,24 @@
             },
             {
               "name": "subject",
-              "source": [{"context": "src", "element": "subject", "variable": "subj"}],
+              "source": [
+                {
+                  "context": "src",
+                  "element": "subject",
+                  "variable": "subj"
+                }
+              ],
               "target": [
                 {
                   "context": "condition",
                   "contextType": "variable",
                   "element": "subject",
                   "transform": "copy",
-                  "parameter": [{"valueId": "subj"}]
+                  "parameter": [
+                    {
+                      "valueId": "subj"
+                    }
+                  ]
                 }
               ]
             }

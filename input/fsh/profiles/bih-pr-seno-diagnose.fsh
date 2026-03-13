@@ -23,13 +23,13 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 // SNOMED slice - bind to Senologie ValueSet (24 Hauptdiagnosen)
 * code.coding[sct] MS
 * code.coding[sct] ^short = "SNOMED CT Diagnose"
-// TODO: * code.coding[sct] from http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-sct (required)
+* code.coding[sct] from http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-sct (required)
 
 // Senologie-specific slice for non-SNOMED codes
 * code.coding contains senologie 0..1 MS
 * code.coding[senologie] ^short = "Senologie-spezifischer Code"
 * code.coding[senologie].system = "http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose"
-// TODO: * code.coding[senologie] from http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-lokal (required)
+* code.coding[senologie] from http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-lokal (required)
 
 // Grad der Mammaerkrankung
 * stage MS
@@ -42,6 +42,6 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 * stage ^slicing.discriminator.path = "type"
 * stage ^slicing.rules = #open
 * stage contains metastasis 0..1 MS
-* stage[metastasis].type = $SCT#385349001 "Metastasis stage finding"
+* stage[metastasis].type = $SCT#385349001 "Clinical stage (observable entity)"
 * stage[metastasis].summary MS
 * stage[metastasis].summary ^short = "Metastasierungsstadium"
