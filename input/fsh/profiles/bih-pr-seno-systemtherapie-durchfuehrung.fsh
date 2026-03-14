@@ -11,10 +11,16 @@ Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase. E
 * status = #completed (exactly)
 * status ^short = "Durchgeführt"
 
-// Inherited medicationCodeableConcept with UNII slice from parent — avoid re-slicing
+// Inherited medicationCodeableConcept with ATC+UNII slices from MII Onko parent
 * medication[x] MS
 * medication[x] ^short = "Substanz/Medikament"
-* medication[x] ^comment = "Aus dotbase: 'Substanz' — ATC/UNII coding geerbt von MII Onko"
+* medication[x] ^comment = "Aus dotbase: 'Substanz' — SNOMED CT Binding auf Senologie-Medikationsliste, ATC/UNII geerbt von MII Onko"
+
+// SNOMED CT Slice für Senologie-spezifische Medikamenten-Codierung
+* medicationCodeableConcept.coding contains sct 0..1 MS
+* medicationCodeableConcept.coding[sct].system = $SCT (exactly)
+* medicationCodeableConcept.coding[sct] ^short = "SNOMED CT Wirkstoff"
+* medicationCodeableConcept.coding[sct] from vs-senologie-systemtherapie-medikation (extensible)
 
 * subject MS
 * subject only Reference(Patient)

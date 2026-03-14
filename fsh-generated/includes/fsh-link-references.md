@@ -25,6 +25,8 @@
 [Senologie_Tumorlokalisation]: StructureDefinition-senologie-tumorlokalisation.html
 [EX_Senologie_TumorConferenceConsent]: StructureDefinition-ex-senologie-tumor-conference-consent.html
 [CSSenologieDiagnosesicherung]: CodeSystem-cs-senologie-diagnosesicherung.html
+[CM-Senologie-Medikation-SCT-ASK]: ConceptMap-CM-Senologie-Medikation-SCT-ASK.html
+[CM-Senologie-Medikation-SCT-ATC]: ConceptMap-CM-Senologie-Medikation-SCT-ATC.html
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
@@ -49,3 +51,4 @@
 [VS_Senologie_Metastasierung]: ValueSet-vs-senologie-metastasierung.html
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
+[VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
