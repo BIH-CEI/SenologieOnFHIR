@@ -1,0 +1,119 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-familienanamnese",
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-familienanamnese",
+  "version": "0.1.0",
+  "name": "Senologie_Familienanamnese",
+  "title": "BIH Senologie Familienanamnese",
+  "status": "draft",
+  "description": "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom aus dotbase Questionnaire 'Familienanamnese'",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "FamilyMemberHistory",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "FamilyMemberHistory.status",
+        "path": "FamilyMemberHistory.status",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.patient",
+        "path": "FamilyMemberHistory.patient",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.relationship",
+        "path": "FamilyMemberHistory.relationship",
+        "short": "Verwandtschaftsgrad",
+        "comment": "Aus dotbase: Mutter, Schwester, Tante, Großmutter etc.",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.age[x]",
+        "path": "FamilyMemberHistory.age[x]",
+        "short": "Alter des Familienmitglieds",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.note",
+        "path": "FamilyMemberHistory.note",
+        "short": "Weitere familiäre Belastung (Freitext)"
+      },
+      {
+        "id": "FamilyMemberHistory.condition",
+        "path": "FamilyMemberHistory.condition",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "Erkrankung des Familienmitglieds",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.condition:mammakarzinom",
+        "path": "FamilyMemberHistory.condition",
+        "sliceName": "mammakarzinom",
+        "short": "Mammakarzinom in der Familie",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.condition:mammakarzinom.code",
+        "path": "FamilyMemberHistory.condition.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "254837009",
+              "system": "http://snomed.info/sct",
+              "display": "Malignant neoplasm of breast"
+            }
+          ]
+        }
+      },
+      {
+        "id": "FamilyMemberHistory.condition:mammakarzinom.onset[x]",
+        "path": "FamilyMemberHistory.condition.onset[x]",
+        "short": "Erkrankungsalter",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.condition:ovarialkarzinom",
+        "path": "FamilyMemberHistory.condition",
+        "sliceName": "ovarialkarzinom",
+        "short": "Ovarialkarzinom in der Familie",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "FamilyMemberHistory.condition:ovarialkarzinom.code",
+        "path": "FamilyMemberHistory.condition.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "363443007",
+              "system": "http://snomed.info/sct",
+              "display": "Malignant tumor of ovary"
+            }
+          ]
+        }
+      },
+      {
+        "id": "FamilyMemberHistory.condition:ovarialkarzinom.onset[x]",
+        "path": "FamilyMemberHistory.condition.onset[x]",
+        "short": "Erkrankungsalter",
+        "mustSupport": true
+      }
+    ]
+  }
+}
