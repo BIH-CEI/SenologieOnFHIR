@@ -1,0 +1,124 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-studienteilnahme",
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-studienteilnahme",
+  "version": "0.1.0",
+  "name": "Senologie_Studienteilnahme",
+  "title": "BIH Senologie Studienteilnahme",
+  "status": "draft",
+  "description": "ResearchSubject für klinische Studienteilnahme in der Senologie aus dotbase Questionnaire 'Studien'. Bildet Studienname, Screeningstatus, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "ResearchSubject",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ResearchSubject",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "ResearchSubject.extension",
+        "path": "ResearchSubject.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "ResearchSubject.extension:Screeningstatus",
+        "path": "ResearchSubject.extension",
+        "sliceName": "Screeningstatus",
+        "short": "Screeningstatus",
+        "comment": "Aus dotbase: Screeningstatus der Studienteilnahme",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-screeningstatus"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ResearchSubject.extension:Kontakt",
+        "path": "ResearchSubject.extension",
+        "sliceName": "Kontakt",
+        "short": "Kontaktperson für die Studie",
+        "comment": "Aus dotbase: Kontakt",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-studienkontakt"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ResearchSubject.extension:Aufklaerungsdatum",
+        "path": "ResearchSubject.extension",
+        "sliceName": "Aufklaerungsdatum",
+        "short": "Aufklärungsdatum",
+        "comment": "Datum der Aufklärung der Patientin über die Studie",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-aufklaerungsdatum"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ResearchSubject.status",
+        "path": "ResearchSubject.status",
+        "short": "Teilnahmestatus",
+        "comment": "Aus dotbase: Teilnahmestatus der Patientin. Mapping auf ResearchSubject.status (candidate | screening | eligible | on-study | on-study-intervention | on-study-observation | withdrawn | follow-up | off-study | not-registered)",
+        "mustSupport": true
+      },
+      {
+        "id": "ResearchSubject.period",
+        "path": "ResearchSubject.period",
+        "short": "Teilnahmezeitraum",
+        "mustSupport": true
+      },
+      {
+        "id": "ResearchSubject.study",
+        "path": "ResearchSubject.study",
+        "short": "Referenz auf die klinische Studie",
+        "comment": "Enthält den Studiennamen als display oder Referenz auf eine ResearchStudy-Ressource",
+        "mustSupport": true
+      },
+      {
+        "id": "ResearchSubject.individual",
+        "path": "ResearchSubject.individual",
+        "short": "Patientin",
+        "mustSupport": true
+      },
+      {
+        "id": "ResearchSubject.assignedArm",
+        "path": "ResearchSubject.assignedArm",
+        "short": "Studienarm",
+        "comment": "Aus dotbase: Studienarm der Patientin",
+        "mustSupport": true
+      },
+      {
+        "id": "ResearchSubject.consent",
+        "path": "ResearchSubject.consent",
+        "short": "Einwilligung / Aufklärung",
+        "mustSupport": true
+      }
+    ]
+  }
+}

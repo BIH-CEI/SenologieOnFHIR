@@ -1,0 +1,105 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-begleitmedikation",
+  "url": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-begleitmedikation",
+  "version": "0.1.0",
+  "name": "Senologie_Begleitmedikation",
+  "title": "BIH Senologie Begleitmedikation",
+  "status": "draft",
+  "description": "Begleitmedikation der Patientin – aktuelle Dauermedikation und sonstige Medikamente, die nicht Teil der onkologischen Systemtherapie sind (z. B. Antihypertensiva, Schilddrüsenhormone, Antikoagulantien).",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "MedicationStatement",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "MedicationStatement.status",
+        "path": "MedicationStatement.status",
+        "short": "Status der Medikationsaussage",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.medication[x]",
+        "path": "MedicationStatement.medication[x]",
+        "short": "Medikament",
+        "comment": "Codierung bevorzugt über SNOMED CT (Pharmaceutical / biologic product). Freitext über .text möglich.",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "mustSupport": true,
+        "binding": {
+          "strength": "extensible",
+          "valueSet": "http://snomed.info/sct?fhir_vs=isa/373873005"
+        }
+      },
+      {
+        "id": "MedicationStatement.medication[x].text",
+        "path": "MedicationStatement.medication[x].text",
+        "short": "Medikationsname (Freitext)",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.subject",
+        "path": "MedicationStatement.subject",
+        "short": "Patientin",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.effective[x]",
+        "path": "MedicationStatement.effective[x]",
+        "short": "Einnahmezeitraum",
+        "type": [
+          {
+            "code": "Period"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.dateAsserted",
+        "path": "MedicationStatement.dateAsserted",
+        "short": "Datum der Angabe",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.reasonReference",
+        "path": "MedicationStatement.reasonReference",
+        "short": "Grund / zugehörige Diagnose"
+      },
+      {
+        "id": "MedicationStatement.dosage",
+        "path": "MedicationStatement.dosage",
+        "short": "Dosierung",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.dosage.text",
+        "path": "MedicationStatement.dosage.text",
+        "short": "Dosierschema (Freitext)"
+      },
+      {
+        "id": "MedicationStatement.dosage.doseAndRate",
+        "path": "MedicationStatement.dosage.doseAndRate",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationStatement.dosage.doseAndRate.dose[x]",
+        "path": "MedicationStatement.dosage.doseAndRate.dose[x]",
+        "short": "Dosis"
+      }
+    ]
+  }
+}

@@ -1,5 +1,8 @@
 [EX_Senologie_SessionCount]: StructureDefinition-ex-senologie-session-count.html
+[EX_Senologie_Aufklaerungsdatum]: StructureDefinition-ex-senologie-aufklaerungsdatum.html
+[Example-ResearchStudy-ADAPT-HER2]: ResearchStudy-Example-ResearchStudy-ADAPT-HER2.html
 [Example-Strahlentherapie]: Procedure-Example-Strahlentherapie.html
+[Example-Begleitmedikation-Metoprolol]: MedicationStatement-Example-Begleitmedikation-Metoprolol.html
 [Example-Operation-BET]: Procedure-Example-Operation-BET.html
 [Example-Bildgebung-BiRADS-Rechts]: Observation-Example-Bildgebung-BiRADS-Rechts.html
 [Example-Bildgebung-BiRADS-Links]: Observation-Example-Bildgebung-BiRADS-Links.html
@@ -13,6 +16,7 @@
 [Example-Patho-Conclusion]: Observation-Example-Patho-Conclusion.html
 [example-patient]: Patient-example-patient.html
 [Example-Pathologie-Praeparat]: Specimen-Example-Pathologie-Praeparat.html
+[Example-Studienteilnahme]: ResearchSubject-Example-Studienteilnahme.html
 [Senologie_Implantat]: StructureDefinition-senologie-implantat.html
 [Senologie_Operation]: StructureDefinition-senologie-operation.html
 [BIH_LM_Senologie]: StructureDefinition-LogicalModelSenologie.html
@@ -21,6 +25,7 @@
 [Senologie_Diagnose_Maligne]: StructureDefinition-senologie-diagnose-maligne.html
 [Senologie_Genexpressions_Score]: StructureDefinition-senologie-genexpressions-score.html
 [Senologie_Genexpressionstest]: StructureDefinition-senologie-genexpressionstest.html
+[Senologie_Begleitmedikation]: StructureDefinition-senologie-begleitmedikation.html
 [Senologie_Bildgebung_Befund]: StructureDefinition-senologie-bildgebung-befund.html
 [Senologie_Bildgebung_Observation]: StructureDefinition-senologie-bildgebung-observation.html
 [Senologie_Familienanamnese]: StructureDefinition-senologie-familienanamnese.html
@@ -32,6 +37,7 @@
 [Senologie_Pathologie_Befund]: StructureDefinition-senologie-pathologie-befund.html
 [Senologie_Pathologie_Praeparat]: StructureDefinition-senologie-pathologie-praeparat.html
 [Senologie_Strahlentherapie]: StructureDefinition-senologie-strahlentherapie.html
+[Senologie_Studienteilnahme]: StructureDefinition-senologie-studienteilnahme.html
 [Senologie_Systemtherapie_Procedure]: StructureDefinition-senologie-systemtherapie-procedure.html
 [Senologie_Systemtherapie_Medikation]: StructureDefinition-senologie-systemtherapie-medikation.html
 [Senologie_Tumorboard_Empfehlung]: StructureDefinition-senologie-tumorboard-empfehlung.html
@@ -46,10 +52,12 @@
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
 [QuestionnaireSenologieDiagnose]: Questionnaire-senologie-diagnose-maligne.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
+[EX_Senologie_Studienkontakt]: StructureDefinition-ex-senologie-studienkontakt.html
 [EX_Senologie_OperatingTableSetup]: StructureDefinition-ex-senologie-operating-table-setup.html
 [EX_Senologie_PreOpAntibiotikatherapie]: StructureDefinition-ex-senologie-pre-op-antibiotikatherapie.html
 [EX_Senologie_PreOpBlutabnahme]: StructureDefinition-ex-senologie-pre-op-blutabnahme.html
 [EX_Senologie_PreOpMarkierung]: StructureDefinition-ex-senologie-pre-op-markierung.html
+[EX_Senologie_Screeningstatus]: StructureDefinition-ex-senologie-screeningstatus.html
 [EX_Senologie_ExaminationLocation]: StructureDefinition-ex-senologie-examination-location.html
 [EX_Senologie_DayInCycle]: StructureDefinition-ex-senologie-day-in-cycle.html
 [EX_Senologie_TherapyCycle]: StructureDefinition-ex-senologie-therapy-cycle.html
@@ -63,5 +71,6 @@
 [VS_Senologie_Genexpressionstest]: ValueSet-vs-senologie-genexpressionstest.html
 [VS_Senologie_Metastasierung]: ValueSet-vs-senologie-metastasierung.html
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html
+[VS_Senologie_Screeningstatus]: ValueSet-vs-senologie-screeningstatus.html
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
