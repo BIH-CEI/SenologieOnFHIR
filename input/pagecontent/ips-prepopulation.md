@@ -91,7 +91,9 @@ Für die Prepopulation kommen mehrere Quellen in Frage:
 | **ePA Medikationsliste** | Bundesmedikationsplan in der ePA | Medikations-Prepopulation |
 | **HL7 SDC Population** | SDC-Mechanismen für Questionnaire-Vorbelegung | Technische Umsetzung |
 
-Die MIO PKA ist die wahrscheinlichste Quelle für den deutschen Versorgungskontext, da sie über die ePA verfügbar sein wird. Sie basiert auf dem IPS-Profil und enthält die relevanten Sektionen (Diagnosen, Medikation, Allergien, Prozeduren).
+Die MIO PKA (Patientenkurzakte / Notfalldatensatz) ist als deutsche IPS-Umsetzung spezifiziert, aber in der Praxis noch kaum verbreitet. Die ePA 3.0 (Opt-out, ab 2025) schafft die infrastrukturelle Grundlage, jedoch fehlt bislang die breite Befüllung durch KIS und PVS. Für Zuverlegungen und neue Patientinnen wäre die ePA der natürliche Kanal, in der Praxis kommen Vorbefunde aktuell überwiegend als Arztbrief-PDF.
+
+Langfristig werden die **DE Basisprofile**, **ISiK** und die **ePA-Spezifikation** die Prepopulation standardisieren. Dieses Modul definiert keine eigene Prepopulation-Logik, sondern dokumentiert lediglich, welche Felder prinzipiell vorbelegbar sind — die technische Umsetzung wird durch die übergeordneten Standards geregelt.
 
 ### Referenzen
 
