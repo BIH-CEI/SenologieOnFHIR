@@ -108,19 +108,50 @@ Das MII PRO-Modul (Patient-Reported Outcomes, `de.medizininformatikinitiative.ke
 
 ---
 
-## OF-6: Begleitmedikation — Abgrenzung zur Systemtherapie
+## OF-6: Medikationsdokumentation — Profilarchitektur und Abgrenzung
 
 {:.stu-note}
-Wie wird die Grenze zwischen Begleitmedikation und Systemtherapie-Medikation gezogen?
+Wie sollen antineoplastische Medikation und Begleitmedikation profiliert werden, und von welchen Basisprofilen soll geerbt werden?
 
-Das Senologie-Modul unterscheidet:
-- **Systemtherapie-Medikation** (Senologie_Systemtherapie_Medikation) — Krebstherapeutika mit Zyklus-Tracking
-- **Begleitmedikation** (Senologie_Begleitmedikation) — alle anderen Medikamente
+### Fachliche Abgrenzung
+
+Die korrekte Unterscheidung ist nicht "Systemtherapie vs. Begleitmedikation", sondern:
+
+- **Antineoplastische Medikation** — alles, was gegen den Tumor gerichtet ist: Chemotherapie, endokrine Therapie (Tamoxifen, Aromataseinhibitoren), zielgerichtete Therapie (Trastuzumab), Immuntherapie, antiresorptive Therapie. Diese Medikation ist **oBDS-meldepflichtig**, unabhängig davon, ob sie über Monate oder Jahre verabreicht wird.
+- **Sonstige Medikation** — Vorerkrankungen (Antihypertensiva, Schilddrüsenhormone), supportive Therapie (Antiemetika, G-CSF) und sonstige Dauermedikation. Nicht meldepflichtig.
+
+### Zweck der Begleitmedikation im senologischen Kontext
+
+Die Dokumentation der Begleitmedikation dient **nicht** dem Medikationsmanagement (kein Anschluss an AMTS, kein Dispensing, keine Verordnung). Sie dient ausschließlich der:
+
+- **Therapieplanung** — Wechselwirkungen mit geplanter Chemotherapie erkennen
+- **Tumorkonferenz** — relevante Vormedikation als Entscheidungsgrundlage
+- **Narkoseplanung** — anästhesierelevante Medikation vor OP
+
+Es handelt sich um einen **Snapshot** der aktuellen Medikation zum Zeitpunkt der Anamnese, nicht um einen vollständigen Medikationsplan. Dies stellt die Frage, ob ein eigenes FHIR-Profil überhaupt nötig ist oder ob ein einfaches Formularfeld ausreicht.
+
+### Profil vs. Formular
+
+Die konkreten **Medikamentenlisten** (ValueSets) werden durch die Formulare gesteuert, nicht durch die Profile. Ein OP-Dokumentationsformular bietet andere Medikamente an als ein Systemtherapie-Formular. Die Profile definieren nur die Struktur und das Binding-Level (extensible).
+
+### Vererbungsfrage
+
+Für antineoplastische Medikation erbt das aktuelle Profil von `MII_PR_Onko_Systemische_Therapie_Medikation` — das stellt oBDS-Konformität sicher.
+
+Für sonstige Medikation ist die Vererbungskette unklar:
+
+- **Option A)** Base FHIR MedicationStatement
+- **Option B)** DE Basisprofil Medikation
+- **Option C)** ISiK MedicationStatement
+- **Option D)** Kein eigenes Profil — Begleitmedikation liegt außerhalb des Scope dieses Moduls
+
+Die Wahl beeinflusst, welche Pflichtfelder und Terminologiebindungen gelten und wie gut die Daten in bestehende KIS-Strukturen integrierbar sind.
 
 **Offene Teilfragen:**
-- Gehört supportive Therapie (Antiemetika, G-CSF, Bisphosphonate) zur Systemtherapie oder Begleitmedikation?
-- Wie wird endokrine Therapie (Tamoxifen, Aromataseinhibitoren) eingeordnet, die oft über Jahre als "Dauermedikation" läuft?
-- Soll die Abgrenzung über das Profil (verschiedene MedicationStatement-Profile) oder über eine Kategorie-Kodierung (MedicationStatement.category) erfolgen?
+- Soll das aktuelle Profil `Systemtherapie_Medikation` in `Antineoplastische_Medikation` umbenannt werden, um die fachliche Semantik korrekt abzubilden?
+- Gehört supportive Therapie (Antiemetika, G-CSF) zur antineoplastischen oder sonstigen Medikation?
+- Von welchem Basisprofil soll die sonstige Medikation erben (Base FHIR, DE Basisprofil, ISiK)?
+- Oder gehört die sonstige Medikation gar nicht in den Scope dieses Moduls?
 
 ---
 

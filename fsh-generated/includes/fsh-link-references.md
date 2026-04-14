@@ -1,5 +1,6 @@
 [EX_Senologie_SessionCount]: StructureDefinition-ex-senologie-session-count.html
 [EX_Senologie_Aufklaerungsdatum]: StructureDefinition-ex-senologie-aufklaerungsdatum.html
+[Example-Bildgebung-Skelettszintigraphie]: DiagnosticReport-Example-Bildgebung-Skelettszintigraphie.html
 [Example-ResearchStudy-ADAPT-HER2]: ResearchStudy-Example-ResearchStudy-ADAPT-HER2.html
 [Example-Strahlentherapie]: Procedure-Example-Strahlentherapie.html
 [Example-Begleitmedikation-Metoprolol]: MedicationStatement-Example-Begleitmedikation-Metoprolol.html
@@ -28,6 +29,7 @@
 [Senologie_Begleitmedikation]: StructureDefinition-senologie-begleitmedikation.html
 [Senologie_Bildgebung_Befund]: StructureDefinition-senologie-bildgebung-befund.html
 [Senologie_Bildgebung_Observation]: StructureDefinition-senologie-bildgebung-observation.html
+[Senologie_Bildgebung_Sonstige]: StructureDefinition-senologie-bildgebung-sonstige.html
 [Senologie_Familienanamnese]: StructureDefinition-senologie-familienanamnese.html
 [Senologie_Geplante_Systemtherapie]: StructureDefinition-senologie-geplante-systemtherapie.html
 [Senologie_Gynaekologische_Anamnese]: StructureDefinition-senologie-gynaekologische-anamnese.html

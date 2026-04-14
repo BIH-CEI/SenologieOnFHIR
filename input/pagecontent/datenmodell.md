@@ -15,7 +15,7 @@ Das [logische Modell](StructureDefinition-LogicalModelSenologie.html) (BIH_LM_Se
 | Familienanamnese | Brust-/Eierstockkrebs bei Verwandten | [FamilyMemberHistory](StructureDefinition-senologie-familienanamnese.html) |
 | Klinische Untersuchung | Palpation, Hautveränderungen, Mamillen, Lymphknoten | [Observation](StructureDefinition-senologie-klinische-untersuchung.html) |
 | Bildgebung Mamma | Mammographie, Sonographie, MRT, Tomosynthese mit BI-RADS/ACR | [DiagnosticReport](StructureDefinition-senologie-bildgebung-befund.html), [Observation](StructureDefinition-senologie-bildgebung-observation.html) |
-| Bildgebung Sonstige | Weitere Bildgebungsmodalitäten | *geplant* |
+| Bildgebung Sonstige | Staging-Bildgebung (Skelettszintigraphie, CT, PET-CT etc.) | [DiagnosticReport](StructureDefinition-senologie-bildgebung-sonstige.html) |
 | Pathologie | Histologie, Rezeptorstatus (ER, PR, HER2, Ki-67), B3-Läsionen | [DiagnosticReport](StructureDefinition-senologie-pathologie-befund.html), [Specimen](StructureDefinition-senologie-pathologie-praeparat.html) |
 | Tumorlokalisation | Quadrant, Uhrzeigerposition, Mamillenabstand | [BodyStructure](StructureDefinition-senologie-tumorlokalisation.html) |
 | Genexpressionstest | Oncotype DX, MammaPrint, Prosigna, EndoPredict | [RiskAssessment](StructureDefinition-senologie-genexpressionstest.html), [Observation](StructureDefinition-senologie-genexpressions-score.html) |

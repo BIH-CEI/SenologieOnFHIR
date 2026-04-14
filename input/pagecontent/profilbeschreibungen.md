@@ -33,6 +33,11 @@ Gesamtbefund einer Brustbildgebung (Mammographie, Sonographie, MRT, Tomosynthese
 
 Einzelbefunde der Bildgebung: BI-RADS-Kategorie (0–6), ACR-Dichte (A–D), Herdbefunde, Mikrokalzifikationen, Lymphknotenstatus. Kodierung über LOINC, SNOMED CT und RadLex.
 
+### Bildgebung Sonstige
+**[Senologie_Bildgebung_Sonstige](StructureDefinition-senologie-bildgebung-sonstige.html)** (DiagnosticReport)
+
+Nicht-mammaspezifische Bildgebung im Rahmen des Stagings oder der Verlaufskontrolle (Skelettszintigraphie, CT Thorax/Abdomen, PET-CT, Röntgen Thorax, Lebersonographie). Offene Modalitätskodierung über LOINC und SNOMED CT — die konkreten Modalitäten werden durch das Formular gesteuert.
+
 ---
 
 ## Pathologie
