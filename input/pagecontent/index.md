@@ -2,7 +2,7 @@
 
 Willkommen beim Implementation Guide für den **Kerndatensatz Senologie**.
 
-Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der **Brustkrebsversorgung** an zertifizierten Brustzentren und darüber hinaus. Er wird gemeinsam mit dem Brustzentrum der Charité – Universitätsmedizin Berlin entwickelt und vom Berlin Institute of Health (BIH) herausgegeben.
+Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der **Brustkrebsversorgung** an zertifizierten Brustzentren und darüber hinaus. Die technische Umsetzung erfolgt durch das **Berlin Institute of Health at Charité (BIH)**, die inhaltliche Abstimmung mit der **[Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/)**.
 
 ### Zielsetzung
 
