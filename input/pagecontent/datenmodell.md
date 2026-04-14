@@ -4,9 +4,19 @@ Das Senologie-Modul basiert auf einem logischen Modell, das die klinischen Daten
 
 ### Profilvererbung
 
-Die Senologie-Profile erben entweder von MII-Kerndatensatzprofilen (wo onkologische Basisstrukturen benötigt werden) oder direkt von FHIR R4 Basisressourcen:
+Die Senologie-Profile erben entweder von MII-Kerndatensatzprofilen (wo onkologische Basisstrukturen benötigt werden) oder direkt von FHIR R4 Basisressourcen. Die Darstellung folgt dem klinischen Ablauf: Information → Entscheidung → Handlung.
 
-{% include img.html img="profil-vererbung.png" caption="Vererbungshierarchie der Senologie-Profile" width="100%" %}
+#### Information (Anamnese, Risiko, Bildgebung, Pathologie)
+
+{% include img.html img="profil-vererbung-information.png" caption="Vererbung — Informationserhebung" width="100%" %}
+
+#### Diagnose & Workflow (Entscheidung)
+
+{% include img.html img="profil-vererbung-diagnose.png" caption="Vererbung — Diagnose und Workflow" width="100%" %}
+
+#### Therapie (Handlung)
+
+{% include img.html img="profil-vererbung-therapie.png" caption="Vererbung — Therapeutische Maßnahmen" width="100%" %}
 
 ### Referenzmodell
 

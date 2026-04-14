@@ -8,122 +8,111 @@
 !define OTHER_COLOR #F5F5F5
 
 skinparam class {
-  BorderColor #616161
   FontSize 11
 }
+top to bottom direction
 
 title Referenzmodell – Senologie-Profile
 
-' === Diagnose ===
-class "Diagnose Maligne\n(Condition)" as diag DIAG_COLOR
-class "Diagnose Benigne\n(Condition)" as diag_b DIAG_COLOR
-
-' === Bildgebung ===
-class "Bildgebung Befund\n(DiagnosticReport)" as bild BILDG_COLOR
-class "Bildgebung Observation\n(Observation)" as bildo BILDG_COLOR
-class "Bildgebung Sonstige\n(DiagnosticReport)" as bilds BILDG_COLOR
-class "Tumorlokalisation\n(BodyStructure)" as loc BILDG_COLOR
-
-' === Pathologie ===
-class "Pathologie Befund\n(DiagnosticReport)" as patho PATHO_COLOR
-class "Pathologie Präparat\n(Specimen)" as spec PATHO_COLOR
-
-' === Therapie ===
-class "Operation\n(Procedure)" as op THER_COLOR
-class "OP Planung\n(ServiceRequest)" as plan PLAN_COLOR
-class "Systemtherapie\n(Procedure)" as sysp THER_COLOR
-class "Systemtherapie\nMedikation\n(MedicationStatement)" as sysm THER_COLOR
-class "Geplante\nSystemtherapie\n(MedicationRequest)" as sysg PLAN_COLOR
-class "Strahlentherapie\n(Procedure)" as rt THER_COLOR
-
-' === Komplikation / Devices ===
-class "Operative\nKomplikation\n(Observation)" as komp OTHER_COLOR
-class "Implantat\n(Device)" as impl OTHER_COLOR
-
-' === Anamnese ===
-class "Klinische\nUntersuchung\n(Observation)" as klin ANAM_COLOR
-class "Gynäkologische\nAnamnese\n(Observation)" as gyn ANAM_COLOR
-class "Familienanamnese\n(FamilyMemberHistory)" as fam ANAM_COLOR
-
-' === Risiko ===
-class "Genexpressionstest\n(RiskAssessment)" as gen OTHER_COLOR
-class "Genexpressions-\nScore\n(Observation)" as score OTHER_COLOR
-
-' === Planung ===
-class "Tumorboard\nEmpfehlung\n(CarePlan)" as tb PLAN_COLOR
-class "Begleitmedikation\n(MedicationStatement)" as bmed OTHER_COLOR
-class "Studienteilnahme\n(ResearchSubject)" as study OTHER_COLOR
-
-' === Zentral: Patient ===
 class "**Patient**" as pat #E0E0E0
 
-' === Referenzen ===
+' === Diagnose ===
+package "Diagnose" {
+  class "Diagnose\nMaligne" as diag DIAG_COLOR
+  class "Diagnose\nBenigne" as diag_b DIAG_COLOR
+}
 
-' Alles referenziert Patient
-pat <-- diag : subject
-pat <-- diag_b : subject
-pat <-- bild : subject
-pat <-- bilds : subject
-pat <-- patho : subject
-pat <-- op : subject
-pat <-- sysp : subject
-pat <-- rt : subject
-pat <-- klin : subject
-pat <-- gyn : subject
-pat <-- fam : patient
-pat <-- tb : subject
-pat <-- study : individual
-pat <-- bmed : subject
+' === Bildgebung ===
+package "Bildgebung" {
+  class "Bildgebung\nBefund" as bild BILDG_COLOR
+  class "Bildgebung\nObservation" as bildo BILDG_COLOR
+  class "Bildgebung\nSonstige" as bilds BILDG_COLOR
+  class "Tumor-\nlokalisation" as loc BILDG_COLOR
+}
 
-' Bildgebung
-bild --> bildo : result
-bild --> loc : " "
+' === Pathologie ===
+package "Pathologie" {
+  class "Pathologie\nBefund" as patho PATHO_COLOR
+  class "Pathologie\nPräparat" as spec PATHO_COLOR
+}
 
-' Pathologie
-patho --> spec : specimen
+' === Therapie ===
+package "Operative Therapie" {
+  class "Operation" as op THER_COLOR
+  class "OP Planung" as plan PLAN_COLOR
+  class "Komplikation" as komp OTHER_COLOR
+  class "Implantat" as impl OTHER_COLOR
+}
 
-' Therapie referenziert Diagnose
-op --> diag : reasonReference
-sysp --> diag : reasonReference
-rt --> diag : reasonReference
-sysg --> diag : reasonReference
+package "Systemische Therapie" {
+  class "Systemtherapie\nProcedure" as sysp THER_COLOR
+  class "Systemtherapie\nMedikation" as sysm THER_COLOR
+  class "Geplante\nSystemtherapie" as sysg PLAN_COLOR
+}
 
-' OP-Zusammenhänge
-plan --> op : " basedOn"
-komp --> op : focus
-op --> impl : " focalDevice"
+package "Strahlentherapie" {
+  class "Strahlen-\ntherapie" as rt THER_COLOR
+}
 
-' Subprozeduren
-op --> op : partOf\n(Subprozedur)
+' === Anamnese ===
+package "Anamnese" {
+  class "Klinische\nUntersuchung" as klin ANAM_COLOR
+  class "Gynäkologische\nAnamnese" as gyn ANAM_COLOR
+  class "Familien-\nanamnese" as fam ANAM_COLOR
+}
 
-' Systemtherapie
-sysm --> sysp : partOf
-sysm --> diag : " "
+' === Risiko ===
+package "Genexpression" {
+  class "Genexpressions-\ntest" as gen OTHER_COLOR
+  class "Genexpressions-\nScore" as score OTHER_COLOR
+}
 
-' Genexpressionstest
-gen --> score : basis
-gen --> diag : " "
+' === Planung ===
+package "Planung" {
+  class "Tumorboard\nEmpfehlung" as tb PLAN_COLOR
+  class "Begleit-\nmedikation" as bmed OTHER_COLOR
+  class "Studien-\nteilnahme" as study OTHER_COLOR
+}
 
-' Tumorboard
-tb --> diag : addresses
-tb --> op : activity
-tb --> sysp : activity
-tb --> rt : activity
+' === Referenzen: subject → Patient ===
+pat <-down- diag : subject
+pat <-down- diag_b : subject
+pat <-down- bild : subject
+pat <-down- patho : subject
+pat <-down- op : subject
+pat <-down- sysp : subject
+pat <-down- rt : subject
 
-note bottom of pat
-  Alle Profile referenzieren Patient.
-  Zur Übersichtlichkeit sind nur
-  ausgewählte Referenzen dargestellt.
-end note
+' === Bildgebung intern ===
+bild -down-> bildo : result
+bild -right-> loc
 
-note right of op
-  Subprozeduren (z.B. Resektion,
-  Axilladissektion, Rekonstruktion)
-  referenzieren die Hauptprozedur
-  über partOf. Bei beidseitigen
-  Eingriffen oder mehreren Tumoren
-  entstehen mehrere Subprozeduren.
-end note
+' === Pathologie intern ===
+patho -down-> spec : specimen
+
+' === Therapie → Diagnose ===
+op -left-> diag : reasonReference
+sysp -left-> diag : reasonReference
+rt -left-> diag : reasonReference
+sysg -left-> diag : reasonReference
+
+' === OP-Zusammenhänge ===
+plan -down-> op : basedOn
+komp -up-> op : focus
+op -down-> impl : focalDevice
+op -right-> op : partOf\n(Subprozedur)
+
+' === Systemtherapie intern ===
+sysm -up-> sysp : partOf
+
+' === Genexpressionstest ===
+gen -down-> score : basis
+
+' === Tumorboard ===
+tb -down-> diag : addresses
+tb -down-> op : activity
+tb -down-> sysp : activity
+tb -down-> rt : activity
 
 legend right
   |= Farbe |= Domäne |

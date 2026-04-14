@@ -1,116 +1,95 @@
 @startuml profil-vererbung
-!define FHIR_COLOR #E8F4FD
 !define MII_COLOR #FFF3E0
 !define SENO_COLOR #E8F5E9
 
 skinparam class {
-  BackgroundColor FHIR_COLOR
-  BorderColor #1565C0
+  FontSize 11
+}
+skinparam linetype ortho
+top to bottom direction
+
+title Profilvererbung – Senologie-Profile
+
+package "Diagnose" {
+  class "MII_PR_Onko_Diagnose\nPrimaertumor\n//(Condition)//" as mii_diag MII_COLOR
+  class "**Senologie_Diagnose\nMaligne**" as s_diag SENO_COLOR
+  class "**Senologie_Diagnose\nBenigne**\n//erbt direkt von Condition//" as s_diag_b SENO_COLOR
+
+  s_diag --|> mii_diag
 }
 
-skinparam package {
-  BackgroundColor #FAFAFA
-  BorderColor #BDBDBD
+package "Operative Therapie" {
+  class "MII_PR_Onko_Mamma\nOperation\n//(Procedure)//" as mii_op MII_COLOR
+
+  class "**Senologie_Operation**" as s_op SENO_COLOR
+  class "**Senologie_OP_Planung**\n//erbt von ServiceRequest//" as s_plan SENO_COLOR
+  class "**Senologie_Implantat**\n//erbt von Device//" as s_impl SENO_COLOR
+  class "**Senologie_Operative\nKomplikation**\n//erbt von Observation//" as s_komp SENO_COLOR
+
+  s_op --|> mii_op
 }
 
-title Profilvererbung – Senologie-Modul
+package "Systemische Therapie" {
+  class "MII_PR_Onko_Systemische\nTherapie\n//(Procedure)//" as mii_sys MII_COLOR
+  class "MII_PR_Onko_Systemische\nTherapie_Medikation\n//(MedicationStatement)//" as mii_med MII_COLOR
 
-package "FHIR R4 Basis" as fhir <<Rectangle>> {
-  class "Condition" as cond FHIR_COLOR
-  class "DiagnosticReport" as dr FHIR_COLOR
-  class "Observation" as obs FHIR_COLOR
-  class "Procedure" as proc FHIR_COLOR
-  class "MedicationStatement" as ms FHIR_COLOR
-  class "MedicationRequest" as mr FHIR_COLOR
-  class "ServiceRequest" as sr FHIR_COLOR
-  class "CarePlan" as cp FHIR_COLOR
-  class "RiskAssessment" as ra FHIR_COLOR
-  class "FamilyMemberHistory" as fmh FHIR_COLOR
-  class "Device" as dev FHIR_COLOR
-  class "ResearchSubject" as rs FHIR_COLOR
+  class "**Senologie_Systemtherapie\nProcedure**" as s_sysp SENO_COLOR
+  class "**Senologie_Systemtherapie\nMedikation**" as s_sysm SENO_COLOR
+  class "**Senologie_Geplante\nSystemtherapie**\n//erbt von MedicationRequest//" as s_sysg SENO_COLOR
+  class "**Senologie_Begleit\nmedikation**\n//erbt von MedicationStatement//" as s_bmed SENO_COLOR
+
+  s_sysp --|> mii_sys
+  s_sysm --|> mii_med
 }
 
-package "MII Kerndatensatz" as mii <<Rectangle>> {
-  class "MII_PR_Onko_Diagnose\n_Primaertumor" as mii_diag MII_COLOR
-  class "MII_PR_Onko_Mamma\n_Operation" as mii_op MII_COLOR
-  class "MII_PR_Onko_Systemische\n_Therapie" as mii_sys MII_COLOR
-  class "MII_PR_Onko_Systemische\n_Therapie_Medikation" as mii_med MII_COLOR
-  class "MII_PR_Onko_Strahlentherapie" as mii_rt MII_COLOR
-  class "MII_PR_Patho_Report" as mii_patho MII_COLOR
-  class "MII_PR_Patho_Specimen" as mii_spec MII_COLOR
-  class "MII_PR_Bildgebung\n_Koerperstruktur" as mii_body MII_COLOR
+package "Strahlentherapie" {
+  class "MII_PR_Onko\nStrahlentherapie\n//(Procedure)//" as mii_rt MII_COLOR
+  class "**Senologie\nStrahlentherapie**" as s_rt SENO_COLOR
+
+  s_rt --|> mii_rt
 }
 
-package "Senologie-Modul" as seno <<Rectangle>> {
-  class "Senologie_Diagnose\n_Maligne" as s_diag SENO_COLOR
-  class "Senologie_Diagnose\n_Benigne" as s_diag_b SENO_COLOR
-  class "Senologie_Operation" as s_op SENO_COLOR
-  class "Senologie_OP_Planung" as s_plan SENO_COLOR
-  class "Senologie_Systemtherapie\n_Procedure" as s_sysp SENO_COLOR
-  class "Senologie_Systemtherapie\n_Medikation" as s_sysm SENO_COLOR
-  class "Senologie_Geplante\n_Systemtherapie" as s_sysg SENO_COLOR
-  class "Senologie_Strahlentherapie" as s_rt SENO_COLOR
-  class "Senologie_Pathologie\n_Befund" as s_patho SENO_COLOR
-  class "Senologie_Pathologie\n_Praeparat" as s_spec SENO_COLOR
-  class "Senologie_Bildgebung\n_Befund" as s_bild SENO_COLOR
-  class "Senologie_Bildgebung\n_Observation" as s_bildo SENO_COLOR
-  class "Senologie_Bildgebung\n_Sonstige" as s_bilds SENO_COLOR
-  class "Senologie_Tumorlokalisation" as s_loc SENO_COLOR
-  class "Senologie_Klinische\n_Untersuchung" as s_klin SENO_COLOR
-  class "Senologie_Gynaekologische\n_Anamnese" as s_gyn SENO_COLOR
-  class "Senologie_Familienanamnese" as s_fam SENO_COLOR
-  class "Senologie_Operative\n_Komplikation" as s_komp SENO_COLOR
-  class "Senologie_Genexpressionstest" as s_gen SENO_COLOR
-  class "Senologie_Genexpressions\n_Score" as s_score SENO_COLOR
-  class "Senologie_Tumorboard\n_Empfehlung" as s_tb SENO_COLOR
-  class "Senologie_Implantat" as s_impl SENO_COLOR
-  class "Senologie_Begleitmedikation" as s_bmed SENO_COLOR
-  class "Senologie_Studienteilnahme" as s_study SENO_COLOR
+package "Bildgebung" {
+  class "MII_PR_Bildgebung\nKoerperstruktur\n//(BodyStructure)//" as mii_body MII_COLOR
+
+  class "**Senologie_Bildgebung\nBefund**\n//erbt von DiagnosticReport//" as s_bild SENO_COLOR
+  class "**Senologie_Bildgebung\nObservation**\n//erbt von Observation//" as s_bildo SENO_COLOR
+  class "**Senologie_Bildgebung\nSonstige**\n//erbt von DiagnosticReport//" as s_bilds SENO_COLOR
+  class "**Senologie\nTumorlokalisation**" as s_loc SENO_COLOR
+
+  s_loc --|> mii_body
 }
 
-' MII erbt von FHIR
-mii_diag --|> cond
-mii_op --|> proc
-mii_sys --|> proc
-mii_med --|> ms
-mii_rt --|> proc
-mii_patho --|> dr
-mii_spec --|> "Specimen" as specimen FHIR_COLOR
-mii_body --|> "BodyStructure" as bs FHIR_COLOR
+package "Pathologie" {
+  class "MII_PR_Patho\nReport\n//(DiagnosticReport)//" as mii_patho MII_COLOR
+  class "MII_PR_Patho\nSpecimen\n//(Specimen)//" as mii_spec MII_COLOR
 
-' Senologie erbt von MII
-s_diag --|> mii_diag
-s_op --|> mii_op
-s_sysp --|> mii_sys
-s_sysm --|> mii_med
-s_rt --|> mii_rt
-s_patho --|> mii_patho
-s_spec --|> mii_spec
-s_loc --|> mii_body
+  class "**Senologie_Pathologie\nBefund**" as s_patho SENO_COLOR
+  class "**Senologie_Pathologie\nPraeparat**" as s_spec SENO_COLOR
 
-' Senologie erbt von FHIR direkt
-s_diag_b --|> cond
-s_plan --|> sr
-s_bild --|> dr
-s_bildo --|> obs
-s_bilds --|> dr
-s_klin --|> obs
-s_gyn --|> obs
-s_fam --|> fmh
-s_komp --|> obs
-s_gen --|> ra
-s_score --|> obs
-s_tb --|> cp
-s_impl --|> dev
-s_sysg --|> mr
-s_bmed --|> ms
-s_study --|> rs
+  s_patho --|> mii_patho
+  s_spec --|> mii_spec
+}
+
+package "Anamnese & Risiko" {
+  class "**Senologie_Klinische\nUntersuchung**\n//erbt von Observation//" as s_klin SENO_COLOR
+  class "**Senologie_Gynaekologische\nAnamnese**\n//erbt von Observation//" as s_gyn SENO_COLOR
+  class "**Senologie\nFamilienanamnese**\n//erbt von FamilyMemberHistory//" as s_fam SENO_COLOR
+  class "**Senologie\nGenexpressionstest**\n//erbt von RiskAssessment//" as s_gen SENO_COLOR
+  class "**Senologie_Genexpressions\nScore**\n//erbt von Observation//" as s_score SENO_COLOR
+}
+
+package "Planung & Workflow" {
+  class "**Senologie_Tumorboard\nEmpfehlung**\n//erbt von CarePlan//" as s_tb SENO_COLOR
+  class "**Senologie\nStudienteilnahme**\n//erbt von ResearchSubject//" as s_study SENO_COLOR
+}
 
 legend right
-  |= Farbe |= Bedeutung |
-  | <back:E8F4FD> </back> | FHIR R4 Basis |
-  | <back:FFF3E0> </back> | MII Kerndatensatz |
-  | <back:E8F5E9> </back> | Senologie-Modul |
+  |= Farbe |= Ebene |
+  | <back:FFF3E0> </back> | MII Kerndatensatz (Parent) |
+  | <back:E8F5E9> </back> | Senologie-Profil |
+  | //kursiv// | FHIR R4 Basisressource |
+  Pfeile zeigen Vererbung (erbt von)
 endlegend
 
 @enduml

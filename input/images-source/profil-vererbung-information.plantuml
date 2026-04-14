@@ -1,0 +1,56 @@
+@startuml profil-vererbung-information
+!define MII_COLOR #FFF3E0
+!define SENO_COLOR #E8F5E9
+
+skinparam class {
+  FontSize 11
+}
+top to bottom direction
+
+title Profilvererbung – Information\n(Anamnese, Risiko, Bildgebung, Pathologie)
+
+package "Anamnese" {
+  class "**Senologie_Klinische\nUntersuchung**\n//Observation//" as s_klin SENO_COLOR
+  class "**Senologie_Gynaekologische\nAnamnese**\n//Observation//" as s_gyn SENO_COLOR
+  class "**Senologie\nFamilienanamnese**\n//FamilyMemberHistory//" as s_fam SENO_COLOR
+  class "**Senologie\nBegleitmedikation**\n//MedicationStatement//" as s_bmed SENO_COLOR
+}
+
+package "Risiko" {
+  class "MII_PR_MolGen\nPolygenerRisikoScore\n//RiskAssessment//" as mii_prs MII_COLOR
+  class "**Senologie\nGenexpressionstest**" as s_gen SENO_COLOR
+  class "**Senologie_Genexpressions\nScore**\n//Observation//" as s_score SENO_COLOR
+
+  s_gen --|> mii_prs
+}
+
+package "Bildgebung" {
+  class "MII_PR_Bildgebung\nKoerperstruktur\n//BodyStructure//" as mii_body MII_COLOR
+
+  class "**Senologie_Bildgebung\nBefund**\n//DiagnosticReport//" as s_bild SENO_COLOR
+  class "**Senologie_Bildgebung\nObservation**\n//Observation//" as s_bildo SENO_COLOR
+  class "**Senologie_Bildgebung\nSonstige**\n//DiagnosticReport//" as s_bilds SENO_COLOR
+  class "**Senologie\nTumorlokalisation**" as s_loc SENO_COLOR
+
+  s_loc --|> mii_body
+}
+
+package "Pathologie" {
+  class "MII_PR_Patho\nReport\n//DiagnosticReport//" as mii_patho MII_COLOR
+  class "MII_PR_Patho\nSpecimen\n//Specimen//" as mii_spec MII_COLOR
+
+  class "**Senologie_Pathologie\nBefund**" as s_patho SENO_COLOR
+  class "**Senologie_Pathologie\nPraeparat**" as s_spec SENO_COLOR
+
+  s_patho --|> mii_patho
+  s_spec --|> mii_spec
+}
+
+legend right
+  |= Farbe |= Ebene |
+  | <back:FFF3E0> </back> | MII Kerndatensatz (Parent) |
+  | <back:E8F5E9> </back> | Senologie-Profil |
+  | //kursiv// | FHIR R4 Basisressource |
+endlegend
+
+@enduml

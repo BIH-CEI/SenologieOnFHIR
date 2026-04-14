@@ -1,0 +1,49 @@
+@startuml profil-vererbung-therapie
+!define MII_COLOR #FFF3E0
+!define SENO_COLOR #E8F5E9
+
+skinparam class {
+  FontSize 11
+}
+top to bottom direction
+
+title Profilvererbung – Therapie\n(Handlung)
+
+package "Operative Therapie" {
+  class "MII_PR_Onko_Mamma\nOperation\n//Procedure//" as mii_op MII_COLOR
+
+  class "**Senologie_Operation**" as s_op SENO_COLOR
+  class "**Senologie_OP_Planung**\n//ServiceRequest//" as s_plan SENO_COLOR
+  class "**Senologie_Operative\nKomplikation**\n//Observation//" as s_komp SENO_COLOR
+  class "**Senologie_Implantat**\n//Device//" as s_impl SENO_COLOR
+
+  s_op --|> mii_op
+}
+
+package "Systemische Therapie" {
+  class "MII_PR_Onko_Systemische\nTherapie\n//Procedure//" as mii_sys MII_COLOR
+  class "MII_PR_Onko_Systemische\nTherapie_Medikation\n//MedicationStatement//" as mii_med MII_COLOR
+
+  class "**Senologie_Systemtherapie\nProcedure**" as s_sysp SENO_COLOR
+  class "**Senologie_Systemtherapie\nMedikation**" as s_sysm SENO_COLOR
+  class "**Senologie_Geplante\nSystemtherapie**\n//MedicationRequest//" as s_sysg SENO_COLOR
+
+  s_sysp --|> mii_sys
+  s_sysm --|> mii_med
+}
+
+package "Strahlentherapie" {
+  class "MII_PR_Onko\nStrahlentherapie\n//Procedure//" as mii_rt MII_COLOR
+  class "**Senologie\nStrahlentherapie**" as s_rt SENO_COLOR
+
+  s_rt --|> mii_rt
+}
+
+legend right
+  |= Farbe |= Ebene |
+  | <back:FFF3E0> </back> | MII Kerndatensatz (Parent) |
+  | <back:E8F5E9> </back> | Senologie-Profil |
+  | //kursiv// | FHIR R4 Basisressource |
+endlegend
+
+@enduml

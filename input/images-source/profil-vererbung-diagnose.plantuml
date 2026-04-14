@@ -1,0 +1,42 @@
+@startuml profil-vererbung-diagnose
+!define MII_COLOR #FFF3E0
+!define SENO_COLOR #E8F5E9
+
+skinparam class {
+  FontSize 11
+}
+top to bottom direction
+
+title Profilvererbung – Diagnose & Workflow\n(Entscheidung)
+
+package "Diagnose" {
+  class "MII_PR_Onko_Diagnose\nPrimaertumor\n//Condition//" as mii_diag MII_COLOR
+  class "**Senologie_Diagnose\nMaligne**" as s_diag SENO_COLOR
+  class "**Senologie_Diagnose\nBenigne**\n//Condition//" as s_diag_b SENO_COLOR
+
+  s_diag --|> mii_diag
+}
+
+package "Workflow" {
+  class "**Senologie_Tumorboard\nEmpfehlung**\n//CarePlan//" as s_tb SENO_COLOR
+  class "**Senologie\nStudienteilnahme**\n//ResearchSubject//" as s_study SENO_COLOR
+  class "//Encounter//\n(ISiK, OF-1)" as enc #F5F5F5
+  class "//EpisodeOfCare//\n(offen, OF-1)" as eoc #F5F5F5
+}
+
+note bottom of enc
+  Encounter und EpisodeOfCare
+  sind offene Fragen (OF-1/OF-2).
+  Encounter wird voraussichtlich
+  über ISiK abgebildet.
+end note
+
+legend right
+  |= Farbe |= Ebene |
+  | <back:FFF3E0> </back> | MII Kerndatensatz (Parent) |
+  | <back:E8F5E9> </back> | Senologie-Profil |
+  | <back:F5F5F5> </back> | Offen / geplant |
+  | //kursiv// | FHIR R4 Basisressource |
+endlegend
+
+@enduml
