@@ -61,6 +61,10 @@ GET Observation?code=clavien-dindo
   &_include=Observation:focus  # zugehörige Prozedur
 ```
 
+### Automatisierung durch CQL
+
+Die Auswertungen (insbesondere Qualitätsindikatoren und Leitlinien-Compliance) können in zukünftigen Versionen dieses IGs durch die [Clinical Quality Language (CQL)](http://cql.hl7.org/) automatisiert werden. CQL ermöglicht die formale Definition von Qualitätsmaßen und Entscheidungslogik direkt auf FHIR-Ressourcen, sodass Kennzahlen reproduzierbar und maschinenlesbar berechnet werden können.
+
 ### Datenschutz und Governance
 
 Die Sekundärnutzung erfolgt ausschließlich über die etablierten MII-Governance-Strukturen:

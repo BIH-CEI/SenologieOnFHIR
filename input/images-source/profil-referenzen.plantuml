@@ -1,0 +1,139 @@
+@startuml profil-referenzen
+!define DIAG_COLOR #FFCDD2
+!define BILDG_COLOR #C8E6C9
+!define PATHO_COLOR #D1C4E9
+!define THER_COLOR #BBDEFB
+!define ANAM_COLOR #FFF9C4
+!define PLAN_COLOR #FFE0B2
+!define OTHER_COLOR #F5F5F5
+
+skinparam class {
+  BorderColor #616161
+  FontSize 11
+}
+
+title Referenzmodell – Senologie-Profile
+
+' === Diagnose ===
+class "Diagnose Maligne\n(Condition)" as diag DIAG_COLOR
+class "Diagnose Benigne\n(Condition)" as diag_b DIAG_COLOR
+
+' === Bildgebung ===
+class "Bildgebung Befund\n(DiagnosticReport)" as bild BILDG_COLOR
+class "Bildgebung Observation\n(Observation)" as bildo BILDG_COLOR
+class "Bildgebung Sonstige\n(DiagnosticReport)" as bilds BILDG_COLOR
+class "Tumorlokalisation\n(BodyStructure)" as loc BILDG_COLOR
+
+' === Pathologie ===
+class "Pathologie Befund\n(DiagnosticReport)" as patho PATHO_COLOR
+class "Pathologie Präparat\n(Specimen)" as spec PATHO_COLOR
+
+' === Therapie ===
+class "Operation\n(Procedure)" as op THER_COLOR
+class "OP Planung\n(ServiceRequest)" as plan PLAN_COLOR
+class "Systemtherapie\n(Procedure)" as sysp THER_COLOR
+class "Systemtherapie\nMedikation\n(MedicationStatement)" as sysm THER_COLOR
+class "Geplante\nSystemtherapie\n(MedicationRequest)" as sysg PLAN_COLOR
+class "Strahlentherapie\n(Procedure)" as rt THER_COLOR
+
+' === Komplikation / Devices ===
+class "Operative\nKomplikation\n(Observation)" as komp OTHER_COLOR
+class "Implantat\n(Device)" as impl OTHER_COLOR
+
+' === Anamnese ===
+class "Klinische\nUntersuchung\n(Observation)" as klin ANAM_COLOR
+class "Gynäkologische\nAnamnese\n(Observation)" as gyn ANAM_COLOR
+class "Familienanamnese\n(FamilyMemberHistory)" as fam ANAM_COLOR
+
+' === Risiko ===
+class "Genexpressionstest\n(RiskAssessment)" as gen OTHER_COLOR
+class "Genexpressions-\nScore\n(Observation)" as score OTHER_COLOR
+
+' === Planung ===
+class "Tumorboard\nEmpfehlung\n(CarePlan)" as tb PLAN_COLOR
+class "Begleitmedikation\n(MedicationStatement)" as bmed OTHER_COLOR
+class "Studienteilnahme\n(ResearchSubject)" as study OTHER_COLOR
+
+' === Zentral: Patient ===
+class "**Patient**" as pat #E0E0E0
+
+' === Referenzen ===
+
+' Alles referenziert Patient
+pat <-- diag : subject
+pat <-- diag_b : subject
+pat <-- bild : subject
+pat <-- bilds : subject
+pat <-- patho : subject
+pat <-- op : subject
+pat <-- sysp : subject
+pat <-- rt : subject
+pat <-- klin : subject
+pat <-- gyn : subject
+pat <-- fam : patient
+pat <-- tb : subject
+pat <-- study : individual
+pat <-- bmed : subject
+
+' Bildgebung
+bild --> bildo : result
+bild --> loc : " "
+
+' Pathologie
+patho --> spec : specimen
+
+' Therapie referenziert Diagnose
+op --> diag : reasonReference
+sysp --> diag : reasonReference
+rt --> diag : reasonReference
+sysg --> diag : reasonReference
+
+' OP-Zusammenhänge
+plan --> op : " basedOn"
+komp --> op : focus
+op --> impl : " focalDevice"
+
+' Subprozeduren
+op --> op : partOf\n(Subprozedur)
+
+' Systemtherapie
+sysm --> sysp : partOf
+sysm --> diag : " "
+
+' Genexpressionstest
+gen --> score : basis
+gen --> diag : " "
+
+' Tumorboard
+tb --> diag : addresses
+tb --> op : activity
+tb --> sysp : activity
+tb --> rt : activity
+
+note bottom of pat
+  Alle Profile referenzieren Patient.
+  Zur Übersichtlichkeit sind nur
+  ausgewählte Referenzen dargestellt.
+end note
+
+note right of op
+  Subprozeduren (z.B. Resektion,
+  Axilladissektion, Rekonstruktion)
+  referenzieren die Hauptprozedur
+  über partOf. Bei beidseitigen
+  Eingriffen oder mehreren Tumoren
+  entstehen mehrere Subprozeduren.
+end note
+
+legend right
+  |= Farbe |= Domäne |
+  | <back:FFCDD2> </back> | Diagnose |
+  | <back:C8E6C9> </back> | Bildgebung |
+  | <back:D1C4E9> </back> | Pathologie |
+  | <back:BBDEFB> </back> | Therapie |
+  | <back:FFF9C4> </back> | Anamnese |
+  | <back:FFE0B2> </back> | Planung |
+  | <back:F5F5F5> </back> | Sonstige |
+endlegend
+
+@enduml

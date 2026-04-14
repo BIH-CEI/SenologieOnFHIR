@@ -32,6 +32,8 @@ Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Te
 
 ### Therapie
 
+**Hinweis zur Medikamenten-Kodierung:** In SDC-Questionnaires kann pro Formularfeld nur **ein Coding** hinterlegt werden. Die Medikation wird daher primär in **SNOMED CT** kodiert, da SNOMED CT als Referenzterminologie die breiteste Abdeckung bietet. Für die Krebsregistermeldung (oBDS) wird ATC benötigt — die Übersetzung erfolgt über die [ConceptMap SNOMED CT → ATC](ConceptMap-cm-senologie-medikation-sct-atc.html). So wird eine doppelte Kodierung im Formular vermieden und die Meldedaten werden automatisch abgeleitet.
+
 | ValueSet | Kodiersysteme | Codes | Beschreibung |
 |---|---|---|---|
 | [VS Senologie Systemtherapie Medikation](ValueSet-vs-senologie-systemtherapie-medikation.html) | SNOMED CT | 19 | Antineoplastische Medikamente (CDK4/6-Inhibitoren, Anthrazykline, Taxane, Platinverbindungen etc.) |
@@ -69,16 +71,16 @@ Lokale Diagnosecodes für Konzepte ohne SNOMED-CT-Entsprechung:
 {:.stu-note}
 Für die folgenden Konzepte konnte kein passendes SNOMED-CT-Konzept identifiziert werden. Es wird geprüft, ob diese als Extension Requests an SNOMED International bzw. das BfArM NRC eingereicht werden können.
 
-| Code | Bedeutung | SNOMED-Status |
-|---|---|---|
-| `bz-diagnose-bc-recurrence` | Mammakarzinom Rezidiv | Kein exakter Match — SNOMED hat `363346000 |Malignant neoplasm of breast`, aber keinen spezifischen Rezidiv-Code für Mamma |
-| `bz-diagnose-sonstiges` | Sonstiges | Generisch — kein SNOMED-Äquivalent sinnvoll |
-| `bz-makromastie` | Makromastie | SNOMED `23119300 |Macromastia` existiert — **Migrationskandidat** |
-| `bz-mamillensekretion-nicht-blutig` | Nicht blutige Mamillensekretion | SNOMED `76564002 |Nipple discharge` — Spezifizierung "nicht blutig" fehlt |
-| `bz-mamillensekretion-blutig` | Blutige Mamillensekretion | SNOMED `21460003 |Bloody nipple discharge` existiert — **Migrationskandidat** |
-| `bz-befund-unklarer-dignitaet` | Befund unklarer Dignität | SNOMED `439401001 |Disorder of uncertain malignant potential` — bereits im VS referenziert |
-| `bz-anisomastie` | Anisomastie | Kein SNOMED-Match |
-| `bz-kapselfibrose` | Kapselfibrose (Implantat) | SNOMED `449921004 |Capsular contracture of breast implant` existiert — **Migrationskandidat** |
+| Code | Bedeutung | SNOMED-CT-Äquivalent | Status |
+|---|---|---|---|
+| `bz-diagnose-bc-recurrence` | Mammakarzinom Rezidiv | `1306515008 | Recurrent primary malignant neoplasm of breast` | **Migrationskandidat** |
+| `bz-diagnose-sonstiges` | Sonstiges | — (generisch, kein SNOMED-Äquivalent sinnvoll) | Bleibt lokal |
+| `bz-makromastie` | Makromastie | `43336006 | Gigantomastia` | **Migrationskandidat** |
+| `bz-mamillensekretion-nicht-blutig` | Nicht blutige Mamillensekretion | `54302000 | Discharge from nipple` (Spezifizierung "nicht blutig" fehlt in SNOMED) | Teilweise |
+| `bz-mamillensekretion-blutig` | Blutige Mamillensekretion | `290113009 | Bloody nipple discharge` | **Migrationskandidat** |
+| `bz-befund-unklarer-dignitaet` | Befund unklarer Dignität | `269497004 | Neoplasm of uncertain behavior of breast` | **Migrationskandidat** |
+| `bz-anisomastie` | Anisomastie | Kein exakter Match (nächster: `163438002 | O/E - breast asymmetry`, aber klinisches Finding, keine Diagnose) | Bleibt lokal |
+| `bz-kapselfibrose` | Kapselfibrose (Implantat) | `237474000 | Contracture of breast following insertion of breast implant` | **Migrationskandidat** |
 
 ### CS Senologie Metastasierung
 
@@ -105,10 +107,12 @@ Für die folgenden Konzepte konnte kein passendes SNOMED-CT-Konzept identifizier
 
 | Kategorie | Lokal | Davon migrationsfähig zu SNOMED | Verbleibend lokal |
 |---|---|---|---|
-| Diagnosen | 8 | 3 (Makromastie, blutige Mamillensekretion, Kapselfibrose) | 5 |
+| Diagnosen | 8 | 5 (Rezidiv, Makromastie, blutige Mamillensekretion, unklare Dignität, Kapselfibrose) | 3 |
 | Metastasierung | 3 | 0 (oBDS-spezifisch) | 3 |
 | Diagnosesicherung | 12 | 0 (oBDS-spezifisch) | 12 |
 | Genexpressionstests | 4 | 0 (proprietäre Testnamen) | 4 |
-| **Gesamt** | **27** | **3** | **24** |
+| **Gesamt** | **27** | **5** | **22** |
 
-Die verbleibenden 24 lokalen Codes sind entweder oBDS-spezifisch (15), proprietäre Testnamen (4) oder haben kein SNOMED-Äquivalent (5).
+Die verbleibenden 22 lokalen Codes sind entweder oBDS-spezifisch (15), proprietäre Testnamen (4) oder haben kein SNOMED-Äquivalent (3).
+
+*Alle SNOMED-CT-Codes wurden am 14.04.2026 gegen Snowstorm 10.8.2 (SNOMED CT International Edition) validiert.*

@@ -8,22 +8,12 @@ Description: "Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basieren
 * ^caseSensitive = true
 * ^content = #complete
 
-* #bz-diagnose-bc-recurrence "Mammakarzinom Rezidiv"
-    "Rezidiv eines Mammakarzinoms - verwende clinicalStatus=recurrence mit SNOMED 254837009"
 * #bz-diagnose-sonstiges "Sonstiges"
     "Sonstige Diagnose, nicht anderweitig klassifiziert"
-* #bz-makromastie "Makromastie"
-    "Makromastie (Mammahypertrophie)"
 * #bz-mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
-    "Sekretion aus der Brustwarze, nicht blutig"
-* #bz-mamillensekretion-blutig "Blutige Mamillensekretion"
-    "Sekretion aus der Brustwarze, blutig"
-* #bz-befund-unklarer-dignitaet "Befund unklarer Dignität"
-    "Mammabefund unklarer Dignität"
+    "Sekretion aus der Brustwarze, nicht blutig (SNOMED 54302000 deckt nur 'Discharge from nipple' ohne Spezifizierung)"
 * #bz-anisomastie "Anisomastie"
-    "Asymmetrie der Brüste"
-* #bz-kapselfibrose "Kapselfibrose"
-    "Kapselkontraktur nach Brustimplantat"
+    "Asymmetrie der Brüste (kein exaktes SNOMED-Äquivalent als Diagnose)"
 
 
 CodeSystem: CS_Senologie_Metastasierung

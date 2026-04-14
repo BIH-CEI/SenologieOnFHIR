@@ -2,6 +2,18 @@
 
 Das Senologie-Modul basiert auf einem logischen Modell, das die klinischen Datenpunkte der Brustkrebsversorgung strukturiert. Dieses Modell wird auf FHIR-Ressourcen abgebildet, die als Profile in diesem IG spezifiziert sind.
 
+### Profilvererbung
+
+Die Senologie-Profile erben entweder von MII-Kerndatensatzprofilen (wo onkologische Basisstrukturen benötigt werden) oder direkt von FHIR R4 Basisressourcen:
+
+{% include img.html img="profil-vererbung.png" caption="Vererbungshierarchie der Senologie-Profile" width="100%" %}
+
+### Referenzmodell
+
+Die Profile sind über FHIR-Referenzen miteinander verknüpft. Der Patient bildet den zentralen Ankerpunkt, die Diagnose ist die klinische Klammer für Therapie und Planung:
+
+{% include img.html img="profil-referenzen.png" caption="Referenzbeziehungen zwischen Senologie-Profilen" width="100%" %}
+
 ### Logisches Modell
 
 Das [logische Modell](StructureDefinition-LogicalModelSenologie.html) (BIH_LM_Senologie) beschreibt die klinische Domäne unabhängig von der technischen FHIR-Repräsentation. Es orientiert sich am Dokumentationsworkflow des Brustzentrums und der S3-Leitlinie.

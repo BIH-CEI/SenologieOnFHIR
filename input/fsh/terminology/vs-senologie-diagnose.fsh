@@ -28,8 +28,8 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook -
 * $SCT#10745131000119107 "Abscess of breast associated with lactation"
 * $SCT#237444008 "Granulomatous mastitis"
 
-// B3 Läsionen
-* $SCT#439401001 "Breast lesion with uncertain malignant potential"
+// B3 Läsionen / unklare Dignität
+* $SCT#269497004 "Neoplasm of uncertain behavior of breast"
 
 // Symptome/Befunde
 * $SCT#53430007 "Mastalgia"
@@ -41,15 +41,16 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook -
 * $SCT#4754008 "Gynecomastia"
 * $SCT#718220008 "At high risk for hereditary breast and ovarian cancer syndrome"
 
-// === Lokale Codes (kein SNOMED Mapping) ===
-* $CS_LOKAL#bz-diagnose-bc-recurrence "Mammakarzinom Rezidiv"
+// Migriert von lokal zu SNOMED CT (validiert gegen Snowstorm 10.8.2, 2026-04-14)
+* $SCT#1306515008 "Recurrent primary malignant neoplasm of breast"
+* $SCT#43336006 "Gigantomastia"
+* $SCT#290113009 "Bloody nipple discharge"
+* $SCT#237474000 "Contracture of breast following insertion of breast implant"
+
+// === Lokale Codes (kein exaktes SNOMED Mapping) ===
 * $CS_LOKAL#bz-diagnose-sonstiges "Sonstiges"
-* $CS_LOKAL#bz-makromastie "Makromastie"
 * $CS_LOKAL#bz-mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
-* $CS_LOKAL#bz-mamillensekretion-blutig "Blutige Mamillensekretion"
-* $CS_LOKAL#bz-befund-unklarer-dignitaet "Befund unklarer Dignität"
 * $CS_LOKAL#bz-anisomastie "Anisomastie"
-* $CS_LOKAL#bz-kapselfibrose "Kapselfibrose"
 
 
 ValueSet: VS_Senologie_Diagnose_B3
@@ -90,7 +91,7 @@ Description: "SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für 
 
 * $SCT#254837009 "Malignant neoplasm of breast"
 * $SCT#109889007 "Ductal carcinoma in situ of breast"
-* $SCT#439401001 "Breast lesion with uncertain malignant potential"
+* $SCT#269497004 "Neoplasm of uncertain behavior of breast"
 
 
 // === Lokale Codes only (für code.coding[senologie] Binding) ===

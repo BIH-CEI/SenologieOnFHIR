@@ -92,3 +92,12 @@ Für jede Meldepflicht kann geprüft werden, ob die erforderlichen Daten vollst�
 | Implantatdaten vollständig | Device-Profil mit Pflichtfeldern |
 
 Fehlende Daten werden durch die FHIR-Validierung erkannt und können vor der Meldung ergänzt werden.
+
+### Technische Umsetzung: XML-Meldungen und Zukunftsperspektive
+
+Sowohl das Krebsregister (oBDS) als auch das Implantateregister (DIMDI) empfangen Meldungen derzeit noch im **XML-Format**. Die FHIR-Ressourcen aus diesem IG müssen daher in die jeweiligen XML-Schemata transformiert werden.
+
+Für den Übergang gibt es zwei Ansätze:
+
+- **Kurzfristig**: Ein Adapter transformiert die FHIR-Ressourcen in das jeweilige XML-Meldeformat. Dieser Adapter muss bei Änderungen der Meldeformate gepflegt werden.
+- **Mittelfristig**: Eine Umstellung der Krebs- und Implantateregister auf FHIR-basierte Meldungen ist wahrscheinlich. In diesem Fall kann die Transformation über Open-Source-Tooling erfolgen — z.B. über [FHIR StructureMaps](http://hl7.org/fhir/mapping-language.html) in Kombination mit einem [Matchbox](https://github.com/ahdis/matchbox)-Docker-Container als lokale ETL-Strecke. Dieser Ansatz ist standardkonform, transparent und unabhängig von proprietärer Software.

@@ -197,3 +197,44 @@ Das Senologie-Modul setzt auf SDC-Questionnaires als primäres Erfassungsinstrum
 - Soll der IG die Questionnaires normativ spezifizieren oder nur als Beispiele mitliefern?
 - Wie wird sichergestellt, dass Daten, die nicht über Formulare erfasst werden (Import, ETL), dieselbe Qualität haben?
 - Welcher Reifegrad der SDC-Unterstützung wird von implementierenden Systemen erwartet?
+
+---
+
+## OF-9: Genexpressionstests — Kodierung als DeviceDefinition?
+
+{:.stu-note}
+Sollen Genexpressionstests (Oncotype DX, MammaPrint, Prosigna, EndoPredict) als DeviceDefinition modelliert werden statt als lokales CodeSystem?
+
+Diese Tests sind **kommerziell regulierte IVD-Medizinprodukte** mit Hersteller, Modellbezeichnung und ggf. UDI-DI. In FHIR könnte die Modellierung über DeviceDefinition erfolgen:
+
+- `DeviceDefinition` als Katalog-Eintrag (Hersteller, Modell, IVD-Klassifikation)
+- `Observation.device` referenziert die DeviceDefinition
+- `Observation.value` enthält den numerischen Score
+- `RiskAssessment.basis` referenziert die Observation
+
+Aktuell werden die Tests über ein lokales CodeSystem (`CS_Senologie_Genexpressionstest`) kodiert und als `Observation.method` bzw. `RiskAssessment.method` referenziert.
+
+**Argumente für DeviceDefinition:**
+- Fachlich korrekt — IVD-Tests sind Medizinprodukte
+- Hersteller- und Produktinformationen strukturiert abbildbar
+- Zukunftssicher für UDI-Integration und Implantateregister-ähnliche Meldepflichten
+
+**Argumente für den Status quo (CodeSystem):**
+- DeviceDefinition ist in R4 maturity level 0
+- Kaum Implementierungserfahrung in der Community
+- Der HL7 IVD IG ist noch nicht ausgereift
+- Für den klinischen Use Case (Score + Risikoklasse) reicht ein Code
+
+---
+
+## OF-10: Arzneimittel-Terminologie und ASK-Integration
+
+{:.stu-note}
+Wird die ConceptMap SNOMED CT → ASK (Arzneistoffkatalog) benötigt, und wie soll die Medikamenten-Integration technisch erfolgen?
+
+Das Modul enthält ConceptMaps für SNOMED CT → ATC und SNOMED CT → ASK. Die ASK-Integration wurde als Proof of Concept erstellt, es ist jedoch unklar, ob sie in der Praxis benötigt wird.
+
+**Offene Teilfragen:**
+- Wird ASK als Zielterminologie für die Medikamentendokumentation benötigt, oder reicht ATC?
+- Wie erfolgt die konkrete Anbindung an Arzneimitteldatenbanken (AMTS, KIS-Hausliste)?
+- Sollen die ConceptMaps normativ oder informativ sein?

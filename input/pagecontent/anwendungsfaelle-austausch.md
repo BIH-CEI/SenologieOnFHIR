@@ -8,11 +8,12 @@ Das Senologie-Modul ermöglicht den interoperablen Datenaustausch zwischen den b
 
 #### 1. Klinisches Informationssystem ↔ Dokumentationssystem
 
-Das Dokumentationssystem (z.B. dotbase) erfasst detaillierte Senologie-Daten über Formulare. Diese werden als FHIR-Ressourcen an das KIS übermittelt und dort mit bestehenden Patientendaten verknüpft.
+Der Datenaustausch zwischen KIS und Dokumentationssystem ist **bidirektional**:
 
-- **Richtung**: Dokumentationssystem → KIS
-- **Daten**: Diagnosen, OP-Berichte, Befunde, Therapieverläufe
-- **Mechanismus**: FHIR REST API oder Messaging
+- **KIS → Dokumentationssystem**: Stammdaten (Patient, Fall/Encounter, Versicherung) werden aus dem KIS übernommen und stehen im Dokumentationssystem zur Verfügung. Dies vermeidet Doppelerfassung und stellt Konsistenz sicher.
+- **Dokumentationssystem → KIS**: Senologie-spezifische Daten (Diagnosen, OP-Berichte, Befunde, Therapieverläufe) werden als FHIR-Ressourcen zurück ans KIS übermittelt.
+
+Die technischen Schnittstellen für diesen Austausch werden durch **ISiK** geregelt — insbesondere die ISiK-Module Basismodul (Patient, Encounter, Condition), Dokumentenaustausch und Terminplanung. Dieses Modul definiert lediglich die senologiespezifischen Inhalte, nicht die Transportmechanismen.
 
 #### 2. Klinisches Informationssystem ↔ Datenintegrationszentrum
 
@@ -24,7 +25,7 @@ Das DIZ erhält die klinischen Daten zur Aufbereitung für die Forschungsdatenbe
 
 #### 3. Standortübergreifender Austausch (MII)
 
-Im Rahmen der MII werden standortübergreifende Abfragen über die Datenintegrationszentren ermöglicht. Das Senologie-Modul stellt als Erweiterung des MII-Kerndatensatzes die strukturelle Kompatibilität sicher.
+Standortübergreifende Abfragen werden über die Datenintegrationszentren ermöglicht. Das Senologie-Modul nutzt MII-Kerndatensatzprofile als technische Basis, um strukturelle Kompatibilität mit der MII-Infrastruktur sicherzustellen — es ist jedoch ein eigenständiger Kerndatensatz der Senologie, kein MII-Modul.
 
 - **Richtung**: DIZ ↔ DIZ (föderiert)
 - **Daten**: Aggregierte oder pseudonymisierte Einzeldaten
