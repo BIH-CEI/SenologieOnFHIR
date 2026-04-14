@@ -1,8 +1,8 @@
-# MII KDS Modul Senologie
+# Kerndatensatz Senologie
 
-Willkommen beim Implementation Guide für das **Kerndatensatz-Modul Senologie** der Medizininformatik-Initiative (MII).
+Willkommen beim Implementation Guide für den **Kerndatensatz Senologie**.
 
-Dieses Modul definiert FHIR-Profile für die strukturierte Dokumentation der **Brustkrebsversorgung** an zertifizierten Brustzentren. Es wird gemeinsam mit dem Brustzentrum der Charité – Universitätsmedizin Berlin entwickelt und vom Berlin Institute of Health (BIH) herausgegeben.
+Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der **Brustkrebsversorgung** an zertifizierten Brustzentren und darüber hinaus. Er wird gemeinsam mit dem Brustzentrum der Charité – Universitätsmedizin Berlin entwickelt und vom Berlin Institute of Health (BIH) herausgegeben.
 
 ### Zielsetzung
 
@@ -23,13 +23,19 @@ Das Modul bildet den gesamten klinischen Workflow der Senologie ab:
 
 ### Einordnung in die MII
 
-Das Modul baut auf bestehenden MII-Kerndatensatzmodulen auf und spezialisiert diese für die Senologie:
+Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz — kein MII-Modul. Er orientiert sich an den Anforderungen der [Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/) und der S3-Leitlinie Mammakarzinom.
+
+<div style="margin: 1em 0;">
+<a href="https://www.senologie.org/"><img src="dgs-logo.png" alt="Deutsche Gesellschaft für Senologie" style="height:60px"/></a>
+</div>
+
+### Technische Abhängigkeiten
 
 | Abhängigkeit | Verwendung |
 |---|---|
-| [MII KDS Onkologie](https://simplifier.net/medizininformatikinitiative-modulonkologie) | Diagnose, Operation, Systemtherapie, Strahlentherapie |
-| [MII KDS Pathologie](https://simplifier.net/medizininformatikinitiative-modulpathologie) | Pathologiebefund, Präparat |
-| [MII KDS Bildgebung](https://simplifier.net/medizininformatikinitiative-modulbildgebung) | Tumorlokalisation (BodyStructure) |
+| [MII Onkologie](https://simplifier.net/medizininformatikinitiative-modulonkologie) | Diagnose, Operation, Systemtherapie, Strahlentherapie |
+| [MII Pathologie](https://simplifier.net/medizininformatikinitiative-modulpathologie) | Pathologiebefund, Präparat |
+| [MII Bildgebung](https://simplifier.net/medizininformatikinitiative-modulbildgebung) | Tumorlokalisation (BodyStructure) |
 | [ISiK 5.0](https://simplifier.net/isik) | Basisprofil-Kompatibilität |
 | [HL7 SDC](http://hl7.org/fhir/uv/sdc/) | Formularbasierte Datenerfassung |
 
