@@ -18,7 +18,7 @@ Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase. E
 
 // SNOMED CT Slice für Senologie-spezifische Medikamenten-Codierung
 * medicationCodeableConcept.coding contains sct 0..1 MS
-* medicationCodeableConcept.coding[sct].system = $SCT (exactly)
+* medicationCodeableConcept.coding[sct] ^patternCoding.system = $SCT
 * medicationCodeableConcept.coding[sct] ^short = "SNOMED CT Wirkstoff"
 * medicationCodeableConcept.coding[sct] from vs-senologie-systemtherapie-medikation (extensible)
 

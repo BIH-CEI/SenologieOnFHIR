@@ -26,8 +26,7 @@ Description: "Mapping von SNOMED CT Lateralitaetscodes zu oBDS Seitenlokalisatio
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-seitenlokalisation"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_Seitenlokalisation
@@ -80,8 +79,7 @@ Description: "Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, 
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_Intention
@@ -134,8 +132,7 @@ Description: "Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X,
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-grading"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_Grading
@@ -182,8 +179,7 @@ Description: "Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.uicc.org/resources/r-classification"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $UICC_R
@@ -212,8 +208,7 @@ Description: "Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapiestellung"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_Stellung
@@ -260,8 +255,7 @@ Description: "Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, H
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapieart"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_Therapieart
@@ -310,8 +304,7 @@ Description: "Mapping von SNOMED CT Koerperstruktur-Codes zu oBDS Fernmetastasen
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-fm-lokalisation"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-fernmetastasen"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_FM
@@ -400,8 +393,7 @@ Description: "Mapping von SNOMED CT Tumorstatusbewertungen zu oBDS Gesamtbeurtei
 * url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
 * version = "0.1.0"
 * status = #draft
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 * group[+].source = $SCT
 * group[=].target = $OBDS_Verlauf

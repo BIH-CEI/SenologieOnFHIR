@@ -10,7 +10,7 @@ Usage: #definition
 * publisher = "Berlin Institute of Health at Charité (BIH)"
 
 * sourceUri = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-systemtherapie-medikation"
-* targetUri = "http://fhir.de/CodeSystem/ask"
+// targetUri omitted — no corresponding ASK ValueSet available; group.target references the CodeSystem
 
 * group[+]
   * source = "http://snomed.info/sct"

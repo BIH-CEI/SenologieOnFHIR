@@ -15,8 +15,7 @@ Description: "Übersetzung der SNOMED-CT-kodierten Brustquadranten in ICD-O-3 To
 * name = "CM_SCT_To_ICDO3_Mamma_Topographie"
 * status = #draft
 
-* sourceUri = "http://snomed.info/sct"
-* targetUri = "http://terminology.hl7.org/CodeSystem/icd-o-3"
+// sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
 
 // Brustwarze und Warzenhof
 * group[+].source = "http://snomed.info/sct"

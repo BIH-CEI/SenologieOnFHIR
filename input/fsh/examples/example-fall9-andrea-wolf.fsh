@@ -203,21 +203,25 @@ Usage: #example
 
 // Chemotherapie
 * activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
 * activity[chemotherapy].detail.code.text = "Adjuvant: EC q3w x4 → Paclitaxel wöchentlich x12"
 * activity[chemotherapy].detail.status = #scheduled
 
 // Operative Therapie
 * activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
 * activity[operativeTherapy].detail.code.text = "BET links + Axilladissektion Level I-III"
 * activity[operativeTherapy].detail.status = #scheduled
 
 // Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Bestrahlung Restbrust 50 Gy + Boost 10 Gy + Lymphabflusswege"
 * activity[radiotherapy].detail.status = #scheduled
 
 // Endokrine Therapie
 * activity[endocrineTherapy].detail.kind = #MedicationRequest
+* activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
 * activity[endocrineTherapy].detail.code.text = "Tamoxifen (prämenopausal), nach 2 J. Umstellung auf AI + GnRH"
 * activity[endocrineTherapy].detail.status = #scheduled
 

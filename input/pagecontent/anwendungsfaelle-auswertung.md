@@ -38,7 +38,7 @@ Das Modul unterstützt die Rekrutierung und Datenbereitstellung für klinische S
 
 #### 4. Leitlinien-Compliance
 
-Durch die [Annotation der S3-Leitlinie](s3-kap-3-allgemeines.html) mit FHIR-Datenpunkten kann die Leitlinien-Adhärenz systematisch überprüft werden:
+Durch die Annotation der S3-Leitlinie mit FHIR-Datenpunkten kann die Leitlinien-Adhärenz systematisch überprüft werden:
 
 - Werden alle empfohlenen Diagnostikschritte durchgeführt?
 - Entspricht die Therapieempfehlung der Tumorkonferenz den Leitlinien?

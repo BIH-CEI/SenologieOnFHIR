@@ -235,22 +235,27 @@ Usage: #example
 * addresses = Reference(Condition/Fall5-Diagnose-Mammakarzinom)
 
 * activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
 * activity[chemotherapy].detail.code.text = "Neoadjuvant: EC x4, dann Docetaxel + Trastuzumab x4"
 * activity[chemotherapy].detail.status = #scheduled
 
 * activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
 * activity[operativeTherapy].detail.code.text = "BET rechts + Sentinel-LK-Biopsie"
 * activity[operativeTherapy].detail.status = #scheduled
 
 * activity[targetedTherapy].detail.kind = #MedicationRequest
+* activity[targetedTherapy].detail.code = $SCT#764166006 "Targeted therapy (procedure)"
 * activity[targetedTherapy].detail.code.text = "Trastuzumab Erhaltung 1 Jahr"
 * activity[targetedTherapy].detail.status = #scheduled
 
 * activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Ganzbrustbestrahlung"
 * activity[radiotherapy].detail.status = #scheduled
 
 * activity[endocrineTherapy].detail.kind = #MedicationRequest
+* activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
 * activity[endocrineTherapy].detail.code.text = "Letrozol für 5 Jahre"
 * activity[endocrineTherapy].detail.status = #scheduled
 
@@ -274,14 +279,17 @@ Usage: #example
 * addresses = Reference(Condition/Fall5-Diagnose-Mammakarzinom)
 
 * activity[targetedTherapy].detail.kind = #MedicationRequest
+* activity[targetedTherapy].detail.code = $SCT#764166006 "Targeted therapy (procedure)"
 * activity[targetedTherapy].detail.code.text = "Trastuzumab Erhaltung fortsetzen bis 1 Jahr Gesamtdauer"
 * activity[targetedTherapy].detail.status = #scheduled
 
 * activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 
 * activity[endocrineTherapy].detail.kind = #MedicationRequest
+* activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
 * activity[endocrineTherapy].detail.code.text = "Letrozol 2,5 mg/d starten"
 * activity[endocrineTherapy].detail.status = #scheduled
 

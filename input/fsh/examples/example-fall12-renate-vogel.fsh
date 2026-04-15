@@ -194,11 +194,13 @@ Usage: #example
 
 // Operative Therapie
 * activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
 * activity[operativeTherapy].detail.code.text = "Offene Biopsie / Nachresektion links OIQ"
 * activity[operativeTherapy].detail.status = #scheduled
 
 // Follow-up
 * activity[followUp].detail.kind = #Appointment
+* activity[followUp].detail.code = $SCT#390906007 "Follow-up encounter (procedure)"
 * activity[followUp].detail.code.text = "Engmaschige Nachsorge: Mammographie + Sono alle 6 Monate für 2 Jahre"
 * activity[followUp].detail.status = #scheduled
 

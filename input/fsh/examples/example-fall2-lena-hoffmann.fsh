@@ -282,26 +282,31 @@ Usage: #example
 
 // Chemotherapie
 * activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
 * activity[chemotherapy].detail.code.text = "Neoadjuvant: Carboplatin/Paclitaxel wöchentlich x12, dann AC q3w x4"
 * activity[chemotherapy].detail.status = #scheduled
 
 // Immuntherapie
 * activity[immunotherapy].detail.kind = #MedicationRequest
+* activity[immunotherapy].detail.code = $SCT#76334006 "Immunotherapy (procedure)"
 * activity[immunotherapy].detail.code.text = "Pembrolizumab 200 mg q3w (KEYNOTE-522 Schema)"
 * activity[immunotherapy].detail.status = #scheduled
 
 // Operative Therapie
 * activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
 * activity[operativeTherapy].detail.code.text = "Modifiziert radikale Mastektomie rechts + Axilladissektion Level I-III"
 * activity[operativeTherapy].detail.status = #scheduled
 
 // Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Bestrahlung Thoraxwand + supraklavikulär 50 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 
 // Klinische Studie
 * activity[clinicalTrial].detail.kind = #ServiceRequest
+* activity[clinicalTrial].detail.code = $SCT#110465008 "Clinical trial (procedure)"
 * activity[clinicalTrial].detail.code.text = "Einschluss KEYNOTE-522"
 * activity[clinicalTrial].detail.status = #scheduled
 
@@ -326,11 +331,13 @@ Usage: #example
 
 // Chemotherapie 2. Linie
 * activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
 * activity[chemotherapy].detail.code.text = "Sacituzumab govitecan (Trodelvy) 10 mg/kg d1,8 q3w"
 * activity[chemotherapy].detail.status = #scheduled
 
 // Follow-up / Palliativversorgung
 * activity[followUp].detail.kind = #Appointment
+* activity[followUp].detail.code = $SCT#390906007 "Follow-up encounter (procedure)"
 * activity[followUp].detail.code.text = "Anbindung Palliativmedizin, psychoonkologische Betreuung"
 * activity[followUp].detail.status = #scheduled
 

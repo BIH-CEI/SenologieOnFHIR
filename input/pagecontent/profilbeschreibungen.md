@@ -113,7 +113,7 @@ Präoperative Planung mit geplanter Dauer, Tumorkonferenzbeschluss, Markierung, 
 Postoperative Komplikationen nach Clavien-Dindo-Klassifikation (Grad I–V) mit Zeitpunkt und Bezug zur ursächlichen Operation.
 
 ### Brustimplantat
-**[Senologie_Implantat](StructureDefinition-senologie-brustimplantat.html)** (Device)
+**[Senologie_Implantat](StructureDefinition-senologie-implantat.html)** (Device)
 
 Implantatdokumentation mit Typ, Hersteller, REF-Nummer und Seriennummer.
 

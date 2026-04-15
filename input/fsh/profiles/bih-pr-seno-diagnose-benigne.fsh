@@ -24,23 +24,23 @@ Description: "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankun
 
 // ICD-10-GM slice
 * code.coding contains icd10gm 0..1 MS
+* code.coding[icd10gm] ^patternCoding.system = $ICD10GM
 * code.coding[icd10gm] ^short = "ICD-10-GM Code (D24, N60-N64)"
 * code.coding[icd10gm].system 1..1
-* code.coding[icd10gm].system = $ICD10GM
 * code.coding[icd10gm].code 1..1
 
 // SNOMED CT slice
 * code.coding contains sct 0..1 MS
+* code.coding[sct] ^patternCoding.system = $SCT
 * code.coding[sct] ^short = "SNOMED CT Diagnose (benigne)"
 * code.coding[sct].system 1..1
-* code.coding[sct].system = $SCT
 * code.coding[sct].code 1..1
 
 // Senologie local codes (optional)
 * code.coding contains senologie 0..1 MS
+* code.coding[senologie] ^patternCoding.system = "http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose-lokal"
 * code.coding[senologie] ^short = "Senologie-spezifischer Code"
 * code.coding[senologie].system 1..1
-* code.coding[senologie].system = "http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose-lokal"
 
 // === Lateralität ===
 * bodySite MS

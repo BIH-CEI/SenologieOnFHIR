@@ -214,18 +214,22 @@ Usage: #example
 * addresses = Reference(Condition/Fall7-Diagnose-Mammakarzinom)
 
 * activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
 * activity[chemotherapy].detail.code.text = "Neoadjuvant: Carboplatin/Paclitaxel weekly x12, dann EC q3w x4"
 * activity[chemotherapy].detail.status = #scheduled
 
 * activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
 * activity[operativeTherapy].detail.code.text = "BET rechts + Sentinel-LK-Biopsie"
 * activity[operativeTherapy].detail.status = #scheduled
 
 * activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 
 * activity[endocrineTherapy].detail.kind = #MedicationRequest
+* activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
 * activity[endocrineTherapy].detail.code.text = "Keine endokrine Therapie (triple-negativ)"
 * activity[endocrineTherapy].detail.status = #not-started
 * activity[endocrineTherapy].detail.doNotPerform = true

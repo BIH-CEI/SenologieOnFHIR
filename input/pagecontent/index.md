@@ -43,7 +43,7 @@ Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis
 
 Die Profilierung orientiert sich an:
 
-- **S3-Leitlinie Mammakarzinom** (AWMF 032-045OL) — [Leitlinien-Annotation](s3-kap-3-allgemeines.html)
+- **S3-Leitlinie Mammakarzinom** (AWMF 032-045OL) -- Leitlinien-Annotation
 - **Onkologischer Basisdatensatz (oBDS)** — Krebsregistermeldungen
 - **DKG-Zertifizierungskriterien** für Brustzentren
 

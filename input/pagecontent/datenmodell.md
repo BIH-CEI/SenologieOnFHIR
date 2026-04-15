@@ -8,33 +8,21 @@ Die Senologie-Profile erben entweder von MII-Kerndatensatzprofilen (wo onkologis
 
 #### Information (Anamnese, Risiko, Bildgebung, Pathologie)
 
-<div>
-<img src="profil-vererbung-information.png" alt="Vererbung — Informationserhebung" style="width:100%"/>
-<p><em>Vererbung — Informationserhebung</em></p>
-</div>
+*Diagramm wird in einer zukünftigen Version ergänzt.*
 
 #### Diagnose & Workflow (Entscheidung)
 
-<div>
-<img src="profil-vererbung-diagnose.png" alt="Vererbung — Diagnose und Workflow" style="width:100%"/>
-<p><em>Vererbung — Diagnose und Workflow</em></p>
-</div>
+*Diagramm wird in einer zukünftigen Version ergänzt.*
 
 #### Therapie (Handlung)
 
-<div>
-<img src="profil-vererbung-therapie.png" alt="Vererbung — Therapeutische Maßnahmen" style="width:100%"/>
-<p><em>Vererbung — Therapeutische Maßnahmen</em></p>
-</div>
+*Diagramm wird in einer zukünftigen Version ergänzt.*
 
 ### Referenzmodell
 
 Die Profile sind über FHIR-Referenzen miteinander verknüpft. Der Patient bildet den zentralen Ankerpunkt, die Diagnose ist die klinische Klammer für Therapie und Planung:
 
-<div>
-<img src="profil-referenzen.png" alt="Referenzbeziehungen zwischen Senologie-Profilen" style="width:100%"/>
-<p><em>Referenzbeziehungen zwischen Senologie-Profilen</em></p>
-</div>
+*Diagramm wird in einer zukünftigen Version ergänzt.*
 
 ### Logisches Modell
 
@@ -59,7 +47,7 @@ Das [logische Modell](StructureDefinition-LogicalModelSenologie.html) (BIH_LM_Se
 | Systemische Therapie | Chemotherapie, Hormontherapie, zielgerichtete Therapie, Immuntherapie | [Procedure](StructureDefinition-senologie-systemtherapie-procedure.html), [MedicationStatement](StructureDefinition-senologie-systemtherapie-medikation.html), [MedicationRequest](StructureDefinition-senologie-geplante-systemtherapie.html) |
 | Strahlentherapie | Bestrahlung mit Dosis, Boost, Fraktionierung | [Procedure](StructureDefinition-senologie-strahlentherapie.html) |
 | Tumorkonferenz | Interdisziplinäre Therapieempfehlungen | [CarePlan](StructureDefinition-senologie-tumorboard-empfehlung.html) |
-| Implantat | Brustimplantate (Typ, Hersteller, Seriennummer) | [Device](StructureDefinition-senologie-brustimplantat.html) |
+| Implantat | Brustimplantate (Typ, Hersteller, Seriennummer) | [Device](StructureDefinition-senologie-implantat.html) |
 | Medikation | Begleitmedikation | *geplant: MedicationStatement* |
 | Studienteilnahme | Klinische Studien | *geplant: ResearchSubject* |
 

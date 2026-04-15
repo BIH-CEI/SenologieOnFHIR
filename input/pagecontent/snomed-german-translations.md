@@ -46,7 +46,7 @@ Diese Seite dokumentiert den Status der deutschen SNOMED CT Übersetzungen für 
 
 #### Codes ohne deutsche Übersetzung (BfArM-Einreichung)
 
-Die folgende Tabelle listet alle SNOMED CT Codes, die zur Übersetzung beim BfArM eingereicht werden sollen. Die Datei [`snomed-bfarm-submission.csv`](leitlinien-annotation/snomed-bfarm-submission.csv) enthält diese Liste im maschinenlesbaren Format.
+Die folgende Tabelle listet alle SNOMED CT Codes, die zur Übersetzung beim BfArM eingereicht werden sollen. Die Datei `snomed-bfarm-submission.csv` im Verzeichnis `leitlinien-annotation/` enthält diese Liste im maschinenlesbaren Format.
 
 | SNOMED CT | Englisch | Domäne | Priorität |
 |-----------|----------|--------|-----------|

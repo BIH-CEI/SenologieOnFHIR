@@ -18,8 +18,8 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 
 * code MS
 * code.coding ^short = "Art der Bildgebung"
-* code.coding ^slicing.discriminator.type = #value
-* code.coding ^slicing.discriminator.path = "system"
+* code.coding ^slicing.discriminator.type = #pattern
+* code.coding ^slicing.discriminator.path = "$this"
 * code.coding ^slicing.rules = #open
 * code.coding contains
     mammography 0..1 and

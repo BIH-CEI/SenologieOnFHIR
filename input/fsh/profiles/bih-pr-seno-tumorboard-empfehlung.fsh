@@ -42,10 +42,10 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 // Therapie-Empfehlungen als Activities
 * activity MS
 * activity ^short = "Empfohlene Maßnahmen"
-* activity ^slicing.discriminator.type = #value
-* activity ^slicing.discriminator.path = "detail.kind"
+* activity ^slicing.discriminator.type = #pattern
+* activity ^slicing.discriminator.path = "detail.code"
 * activity ^slicing.rules = #open
-* activity ^slicing.description = "Slicing nach Art der empfohlenen Maßnahme"
+* activity ^slicing.description = "Slicing nach Art der empfohlenen Maßnahme (über detail.code Pattern)"
 
 * activity contains
     operativeTherapy 0..1 and
@@ -62,75 +62,77 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
     followUp 0..1
 
 // Operative Therapie
-* activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
 * activity[operativeTherapy].detail.code ^short = "Empfohlene operative Therapie"
 * activity[operativeTherapy].detail.code ^comment = "Aus dotbase: 'Operative Therapie' (choice)"
-* activity[operativeTherapy].reference only Reference(ServiceRequest)
+* activity[operativeTherapy].detail.kind = #ServiceRequest
 
 // Chemotherapie
-* activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
 * activity[chemotherapy].detail.code ^short = "Empfohlene Chemotherapie"
 * activity[chemotherapy].detail.code ^comment = "Aus dotbase: 'Chemotherapie' (choice)"
-* activity[chemotherapy].reference only Reference(MedicationRequest)
+* activity[chemotherapy].detail.kind = #MedicationRequest
 
 // Radiotherapie/Strahlentherapie
-* activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
 * activity[radiotherapy].detail.code ^short = "Empfohlene Strahlentherapie"
 * activity[radiotherapy].detail.code ^comment = "Aus dotbase: 'Strahlentherapie' (choice)"
-* activity[radiotherapy].reference only Reference(ServiceRequest)
+* activity[radiotherapy].detail.kind = #ServiceRequest
 
 // Endokrine Therapie
-* activity[endocrineTherapy].detail.kind = #MedicationRequest
+* activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
 * activity[endocrineTherapy].detail.code ^short = "Empfohlene endokrine Therapie"
 * activity[endocrineTherapy].detail.code ^comment = "Aus dotbase: 'Endokrine Therapie' (choice)"
-* activity[endocrineTherapy].reference only Reference(MedicationRequest)
+* activity[endocrineTherapy].detail.kind = #MedicationRequest
 
 // Zielgerichtete Therapie
-* activity[targetedTherapy].detail.kind = #MedicationRequest
+* activity[targetedTherapy].detail.code = $SCT#764166006 "Targeted therapy (procedure)"
 * activity[targetedTherapy].detail.code ^short = "Empfohlene zielgerichtete Therapie"
 * activity[targetedTherapy].detail.code ^comment = "Aus dotbase: 'Zielgerichtete Therapie' (choice)"
-* activity[targetedTherapy].reference only Reference(MedicationRequest)
+* activity[targetedTherapy].detail.kind = #MedicationRequest
 
 // Immuntherapie
-* activity[immunotherapy].detail.kind = #MedicationRequest
+* activity[immunotherapy].detail.code = $SCT#76334006 "Immunotherapy (procedure)"
 * activity[immunotherapy].detail.code ^short = "Empfohlene Immuntherapie"
 * activity[immunotherapy].detail.code ^comment = "Aus dotbase: 'Immuntherapie' (choice)"
-* activity[immunotherapy].reference only Reference(MedicationRequest)
+* activity[immunotherapy].detail.kind = #MedicationRequest
 
 // Antiresorptive Therapie
-* activity[antiresorptiveTherapy].detail.kind = #MedicationRequest
+* activity[antiresorptiveTherapy].detail.code = $SCT#870370003 "Antiresorptive therapy (procedure)"
 * activity[antiresorptiveTherapy].detail.code ^short = "Empfohlene antiresorptive Therapie"
 * activity[antiresorptiveTherapy].detail.code ^comment = "Aus dotbase: 'Antiresorptive Therapie' (choice, z.B. Bisphosphonate)"
-* activity[antiresorptiveTherapy].reference only Reference(MedicationRequest)
+* activity[antiresorptiveTherapy].detail.kind = #MedicationRequest
 
 // Weitere Diagnostik
-* activity[furtherDiagnostics].detail.kind = #ServiceRequest
+* activity[furtherDiagnostics].detail.code = $SCT#165197003 "Diagnostic assessment (procedure)"
 * activity[furtherDiagnostics].detail.code ^short = "Empfohlene weitere Diagnostik"
 * activity[furtherDiagnostics].detail.code ^comment = "Aus dotbase: 'Weitere Diagnostik' (choice)"
-* activity[furtherDiagnostics].reference only Reference(ServiceRequest)
+* activity[furtherDiagnostics].detail.kind = #ServiceRequest
 
 // Weitere Intervention
-* activity[furtherIntervention].detail.kind = #ServiceRequest
+* activity[furtherIntervention].detail.code = $SCT#71388002 "Procedure (procedure)"
 * activity[furtherIntervention].detail.code ^short = "Empfohlene weitere Intervention"
 * activity[furtherIntervention].detail.code ^comment = "Aus dotbase: 'Weitere Intervention' (choice)"
-* activity[furtherIntervention].reference only Reference(ServiceRequest)
+* activity[furtherIntervention].detail.kind = #ServiceRequest
 
 // Genetische Untersuchung
-* activity[genetics].detail.kind = #ServiceRequest
+* activity[genetics].detail.code = $SCT#405825005 "Molecular genetics procedure (procedure)"
 * activity[genetics].detail.code ^short = "Empfohlene genetische Untersuchung"
 * activity[genetics].detail.code ^comment = "Aus dotbase: 'Genetische Untersuchung' (choice, z.B. BRCA)"
-* activity[genetics].reference only Reference(ServiceRequest)
+* activity[genetics].detail.kind = #ServiceRequest
 
 // Klinische Studie
-* activity[clinicalTrial].detail.kind = #ServiceRequest
+* activity[clinicalTrial].detail.code = $SCT#110465008 "Clinical trial (procedure)"
 * activity[clinicalTrial].detail.code ^short = "Empfohlene klinische Studie"
 * activity[clinicalTrial].detail.code ^comment = "Aus dotbase: 'Studie' (choice)"
 * activity[clinicalTrial].detail.description ^comment = "Optional 'Sonstige Studie' (Freitext)"
+* activity[clinicalTrial].detail.kind = #ServiceRequest
 
 // Follow-up / Nachsorge
-* activity[followUp].detail.kind = #Appointment
+* activity[followUp].detail.code = $SCT#390906007 "Follow-up encounter (procedure)"
 * activity[followUp].detail.code ^short = "Follow-up / Nachsorge Plan"
 * activity[followUp].detail.code ^comment = "Aus dotbase: 'Vorsorge/Nachsorge', 'Wiedervorstellung'"
+* activity[followUp].detail.kind = #Appointment
 * activity[followUp].detail.scheduledTiming ^short = "Zeitplan für Nachsorge/Wiedervorstellung"
 
 // Allgemeine Notizen
