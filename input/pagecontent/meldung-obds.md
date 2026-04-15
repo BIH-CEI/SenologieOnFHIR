@@ -84,6 +84,47 @@ Die Senologie-Profile verwenden SNOMED CT als primäres Kodiersystem. Der oBDS e
 
 Für die Medikamenten-Übersetzung stehen bereits ConceptMaps in diesem IG bereit (siehe [Terminologie: Medikation](terminologie-medikation.html)). Die übrigen Übersetzungen nutzen ConceptMaps aus dem [MII Onkologie-Modul](https://simplifier.net/medizininformatikinitiative-modulonkologie).
 
+### Datenverfügbarkeit und offene Lücken
+
+{:.stu-note}
+Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen abgeleitet werden. Für eine korrekte Krebsregistermeldung müssen zusätzliche Datenquellen eingebunden werden.
+
+| oBDS-Datenpunkt | Quelle | Status |
+|---|---|---|
+| ICD-10-GM, Diagnosedatum, Seitenlokalisation | Senologie_Diagnose_Maligne | Vorhanden |
+| ICD-O-3 Morphologie + Version | Senologie_Pathologie_Befund | Vorhanden |
+| Diagnosesicherung (oBDS 1–9) | Senologie_Diagnose_Maligne (verificationStatus) | Vorhanden |
+| Grading (G1–G4) | Senologie_Pathologie_Befund | Vorhanden |
+| TNM-Klassifikation (c/p, UICC) | MII Onko TNM-Profile (via Referenzen) | Vorhanden |
+| OPS-Codes, OP-Datum, Intention | Senologie_Operation | Vorhanden |
+| Residualstatus (R0/R1/R2) | Senologie_Operation (outcome) | Vorhanden |
+| LK untersucht/befallen | Senologie_Pathologie_Befund | Vorhanden |
+| Systemtherapie: Substanz, Beginn/Ende, Intention | Senologie_Systemtherapie_Procedure + _Medikation | Vorhanden |
+| Strahlentherapie: Dosis, Zielgebiet, Applikationsart | Senologie_Strahlentherapie | Vorhanden |
+| Tumorkonferenz: Datum, Typ, Empfehlungen | Senologie_Tumorboard_Empfehlung | Vorhanden |
+| Modul Mamma: ER/PR/HER2 | Senologie_Pathologie_Befund | Vorhanden |
+| Topographie ICD-O (C50.x) | Senologie_Diagnose_Maligne (bodySite) | **Teilweise** — SNOMED-Kodierung vorhanden, ICD-O-Topographie-Code ggf. ergänzen |
+| Frühere Tumorerkrankungen | — | **Fehlt** — Vorerkrankungen nicht im Senologie-Scope (→ IPS/KIS) |
+| Allgemeiner Leistungszustand (ECOG) | — | **Fehlt** — kein eigenes Senologie-Profil, kommt aus KIS |
+| Absender/Melder-Daten (IKNR, Arzt, Anschrift, Bankdaten) | KIS / Verwaltung | **Externe Quelle** — administrative Daten |
+| Meldebegründung, Eigene Leistung | KIS / Verwaltung | **Externe Quelle** |
+| Sterbedatum, Todesursache | KIS / Standesamt | **Externe Quelle** |
+| Nebenwirkungen Systemtherapie (CTCAE-Grad) | — | **Teilweise** — Senologie_Operative_Komplikation existiert (Clavien-Dindo), CTCAE-Profil für Systemtherapie/RT fehlt |
+| Nebenwirkungen Strahlentherapie (CTCAE) | — | **Teilweise** — siehe oben |
+| Sozialdienstkontakt (Modul_Allgemein) | — | **Fehlt** — nicht im Senologie-Scope |
+
+#### Handlungsoptionen
+
+1. **CTCAE-Nebenwirkungsprofil ergänzen** — Analog zur operativen Komplikation (Clavien-Dindo) ein Observation-Profil für CTCAE-basierte Nebenwirkungen bei Systemtherapie und Strahlentherapie erstellen. Hohe Priorität, da meldungsrelevant.
+
+2. **ICD-O-Topographie ergänzen** — Sicherstellen, dass das Diagnose-Profil neben SNOMED CT auch ICD-O-3 Topographie-Codes in bodySite führen kann (Slice oder Extension).
+
+3. **Administrative Daten über ETL** — Absender, Melder, Bankdaten, Meldebegründung kommen aus dem KIS bzw. der Krankenhausverwaltung und werden in der ETL-Strecke ergänzt.
+
+4. **ECOG aus KIS** — Leistungszustand wird im KIS oder Anästhesiesystem dokumentiert und über ISiK-Schnittstelle eingebunden.
+
+**Empfehlung**: Prioritär ein CTCAE-Nebenwirkungsprofil erstellen (fehlt für oBDS und ist klinisch relevant). Administrative Daten über standortspezifische ETL ergänzen, in Abstimmung mit der GB IT.
+
 ### Testdaten-Referenz
 
 Als Referenz für die oBDS-Struktur dient der Testdatensatz der [Plattform §65c](https://plattform65c.atlassian.net/wiki/spaces/UMK/pages/189530203) (Testpatient Mamma).
