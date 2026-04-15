@@ -55,6 +55,17 @@ Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen 
 
 - [Datenmodell](datenmodell.html) — Logisches Modell und FHIR-Mapping
 - [Profile](profilbeschreibungen.html) — Alle FHIR-Profile im Detail
+- [Testpatientinnen](testpatientinnen.html) — Zwei durchgängige Beispielfälle (kurativ + palliativ)
 - [Anwendungsfälle](anwendungsfaelle-uebersicht.html) — Erfassung, Austausch, Auswertung, Meldedatensätze
-- [Terminologie](terminologie-medikation.html) — Medikamenten-Terminologie
+- [Terminologie](terminologie-uebersicht.html) — ValueSets, CodeSystems, ConceptMaps
+- [Offene Fragen](offene-fragen.html) — Ballot-Fragen zur Kommentierung
 - [Artifacts](artifacts.html) — Alle FHIR-Artefakte
+
+### Geplante Weiterentwicklungen
+
+Die folgenden Themen sind für zukünftige Versionen vorgesehen:
+
+- **Implantateregister-Meldung (IRegG)** — StructureMaps für die automatische Ableitung von Implantateregisterdaten aus Device- und Procedure-Ressourcen, analog zum [oBDS-Transformationsansatz](meldung-obds.html)
+- **CQL-basierte Qualitätsindikatoren** — Formale Definition der DKG-Kennzahlen und deskriptiver Statistiken als [CQL](http://cql.hl7.org/) Measures für automatisierte Auswertung
+- **Synthetische Testkohorte** — Regelbasiert generierte Testdaten (100 Patientinnen mit Variation von Subtypen, Stadien und Therapien) als Docker-Container für SQL on FHIR und CQL-Auswertungen
+- **PRO-Integration** — Referenzierung von PRO-CTCAE und EORTC QLQ-BR42 aus dem MII PRO-Modul für therapiebegleitende Patientinnenbefragungen
