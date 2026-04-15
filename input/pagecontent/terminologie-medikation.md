@@ -1,6 +1,6 @@
 ### Terminologie: Systemtherapie-Medikation
 
-Diese Seite dokumentiert die Terminologie-Entscheidungen und Mappings für die Codierung von Systemtherapie-Medikamenten im KDS Modul Senologie.
+Diese Seite dokumentiert die Terminologie-Entscheidungen und Mappings für die Codierung von Systemtherapie-Medikamenten im Kerndatensatz Senologie.
 
 #### Coding-Systeme im Vergleich
 

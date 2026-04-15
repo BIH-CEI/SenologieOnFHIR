@@ -1,6 +1,6 @@
 ### SNOMED CT Deutsche Übersetzungen
 
-Diese Seite dokumentiert den Status der deutschen SNOMED CT Übersetzungen für alle im KDS Modul Senologie verwendeten Codes.
+Diese Seite dokumentiert den Status der deutschen SNOMED CT Übersetzungen für alle im Kerndatensatz Senologie verwendeten Codes.
 
 #### Zusammenfassung
 
