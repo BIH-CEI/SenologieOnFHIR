@@ -103,7 +103,7 @@ Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen ab
 | Strahlentherapie: Dosis, Zielgebiet, Applikationsart | Senologie_Strahlentherapie | Vorhanden |
 | Tumorkonferenz: Datum, Typ, Empfehlungen | Senologie_Tumorboard_Empfehlung | Vorhanden |
 | Modul Mamma: ER/PR/HER2 | Senologie_Pathologie_Befund | Vorhanden |
-| Topographie ICD-O (C50.x) | Senologie_Diagnose_Maligne (bodySite) | **Trivial** — bei Mamma immer C50.x, ableitbar aus ICD-10-GM Code |
+| Topographie ICD-O (C50.x) | Senologie_Tumorlokalisation (BodyStructure.locationQualifier[quadrant]) | **Vorhanden** — Quadrant → C50.0–C50.9 via [ConceptMap](ConceptMap-cm-sct-to-icdo3-mamma-topographie.html), Seite separat aus locationQualifier[seitenlokalisation] |
 | Frühere Tumorerkrankungen | — | **Fehlt** — Vorerkrankungen nicht im Senologie-Scope (→ IPS/KIS) |
 | Allgemeiner Leistungszustand (ECOG) | MII Onko (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) | **Vorhanden** — MII Onko Profil, kein eigenes Senologie-Profil nötig |
 | Absender/Melder-Daten (IKNR, Arzt, Anschrift, Bankdaten) | KIS / Verwaltung | **Externe Quelle** — administrative Daten |
@@ -117,7 +117,7 @@ Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen ab
 
 1. **CTCAE-Nebenwirkungsprofil ergänzen** — Analog zur operativen Komplikation (Clavien-Dindo) ein Observation-Profil für CTCAE-basierte Nebenwirkungen bei Systemtherapie und Strahlentherapie erstellen. Hohe Priorität, da meldungsrelevant.
 
-2. **ICD-O-Topographie** — Bei Mamma trivial (immer C50.x), kann deterministisch aus dem ICD-10-GM Code abgeleitet werden. Kein eigener Datenpunkt nötig.
+2. **ICD-O-Topographie** — Wird aus der BodyStructure (Tumorlokalisation) abgeleitet: SNOMED-Quadrant → ICD-O-3 C50.x via ConceptMap. Seitenlokalisation separat. Die [ConceptMap SNOMED → ICD-O-3](ConceptMap-cm-sct-to-icdo3-mamma-topographie.html) deckt alle 7 Quadranten ab, mit Fallback auf C50.9.
 
 3. **ECOG-Leistungszustand** — Über das bestehende MII Onko Profil (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) abbildbar. Muss im Brustzentrum bei Diagnose und Verlauf dokumentiert und als Observation im Bundle mitgeliefert werden.
 
