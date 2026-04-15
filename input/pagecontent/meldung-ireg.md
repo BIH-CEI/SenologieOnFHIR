@@ -138,6 +138,42 @@ Die IRegG-Meldung verwendet eigene Enumerationen (enum_0044, enum_0050, enum_006
 | Art des Eingriffs | Senologie CodeSystem | enum_0100 | CodeSystem-Binding |
 | Implantat-Eigenschaften | Device Extensions | enum_0124/0126/0128 | CodeSystem-Binding |
 
+### Datenverfügbarkeit und offene Lücken
+
+{:.stu-note}
+Nicht alle IRegG-Pflichtfelder können aus den Senologie-Profilen abgeleitet werden. Für eine vollständige IRegG-Meldung müssen zusätzliche Datenquellen eingebunden werden.
+
+Die folgende Tabelle zeigt, welche IRegG-Daten aus welcher Quelle kommen:
+
+| IRegG-Datenpunkt | Quelle | Status |
+|---|---|---|
+| OP-Datum, OPS-Codes, Seitenlokalisation | Senologie_Operation | Vorhanden |
+| Implantat: Typ, Hersteller, LOT, Seriennummer | Senologie_Implantat | Vorhanden (Basis) |
+| ICD-10-GM Diagnose | Senologie_Diagnose_Maligne / _Benigne | Vorhanden |
+| Implantat: UDI-DI, Form, Oberfläche, Füllung, Volumen | Senologie_Implantat | **Erweiterung nötig** — Profil aktuell zu dünn |
+| Implantatlage (submuskulär/subfaszial etc.) | Senologie_Operation | **Erweiterung nötig** — kein Datenpunkt im Profil |
+| Zugang (axillär/periareolär/submammär etc.) | Senologie_Operation | **Erweiterung nötig** |
+| Prozedurtyp (Primär/Austausch/Revision/Explantation) | Senologie_Operation | **Teilweise** — Ableitung aus OP-Art möglich, aber nicht IRegG-kodiert |
+| Grund der Implantation (Karzinom/Rekonstruktion/Kosmetisch) | Senologie_Diagnose | **Teilweise** — über reasonReference ableitbar |
+| ASA-Klassifikation | — | **Fehlt** — kommt aus Anästhesie/Narkoseprotokoll |
+| Transfernummer (Pseudonym) | Vertrauensstelle | **Externe Quelle** — nicht klinisch, wird vom Vertrauensdienst vergeben |
+| Körpergröße, Gewicht, Alter | KIS / Allgemeine Anamnese | **Externe Quelle** — nicht im Senologie-Scope (→ IPS/KIS) |
+| Geschlecht bei Geburt | KIS / Patient | **Externe Quelle** — Patient.extension |
+| Entlassungsdatum, -grund | KIS / Encounter | **Externe Quelle** — ISiK-Encounter |
+| IRegG-Befundcodes (Infektion, Kapselfibrose, BIA-ALCL etc.) | Senologie_Operative_Komplikation | **Teilweise** — Mapping auf enum_0121 nötig |
+
+#### Handlungsoptionen
+
+Für die fehlenden Daten gibt es drei Ansätze:
+
+1. **Senologie-Profile erweitern** — Implantat-Profil um UDI-DI, Form, Oberfläche, Füllung, Volumen ergänzen; OP-Profil um Lage und Zugang. Vorteil: alles in einem Formular erfassbar. Nachteil: Senologie-Profil wird IRegG-lastig.
+
+2. **Eigenes IRegG-Erfassungsformular** — Separater SDC-Questionnaire speziell für die IRegG-Meldung, der die fehlenden Felder nacherfasst. Wird nach der OP ausgefüllt und ergänzt die klinische Dokumentation. Vorteil: klare Trennung klinisch vs. regulatorisch. Nachteil: Doppelerfassung möglich.
+
+3. **Hausinterne ETL-Strecke** — Die fehlenden Daten (ASA, Vitals, Entlassung, Transfernummer) werden aus KIS, Anästhesiesystem und Vertrauensstelle zusammengeführt und mit den Senologie-Daten zu einer vollständigen IRegG-Meldung kombiniert. Vorteil: nutzt bestehende Datenquellen. Nachteil: standortspezifische Integration nötig.
+
+**Empfehlung**: Kombination aus Option 1 (Profilerweiterung für klinisch relevante Implantatdaten) und Option 3 (ETL für administrative Daten). Die konkreten Anforderungen sollten mit der GB IT des Standorts abgestimmt werden.
+
 ### IRegG-Spezifikation
 
 Die Transformation basiert auf der IRegG-Spezifikation V4.1.1 (XML-Schema):
