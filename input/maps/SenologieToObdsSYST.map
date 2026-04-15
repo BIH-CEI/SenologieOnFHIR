@@ -1,0 +1,141 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsSYST"
+/// name = "SenologieToObdsSYST"
+/// title = "Senologie FHIR to oBDS Systemische Therapie (SYST)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+
+// ============================================================================
+// Hauptgruppe: Bundle → oBDS SYST
+// Ein Bundle enthaelt eine Systemtherapie-Procedure (uebergeordnet)
+// und zugehoerige MedicationStatements (einzelne Substanzgaben).
+// ============================================================================
+
+group SenologieToObdsSYST(source src : Bundle, target tgt : OBDSMeldung) {
+
+  // Systemtherapie-Procedure extrahieren
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
+    entry.resource as proc -> tgt.syst as syst then MapSYST(proc, syst, src) "CallMapSYST";
+  } "EntrySYST";
+}
+
+// ============================================================================
+// MapSYST: Procedure → oBDS SYST Basisdaten
+// Mapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum
+// ============================================================================
+
+group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // SYST_ID: Procedure.id
+  src.id as id -> tgt.systID = id "SetSystID";
+
+  // Meldeanlass: abgeleitet aus Procedure.status
+  // completed + performedPeriod.end vorhanden -> behandlungsende
+  // completed + nur performedPeriod.start -> behandlungsbeginn
+  src where performedPeriod.end.exists() -> tgt.meldeanlass = 'behandlungsende' "MeldeanlassEnde";
+  src where performedPeriod.end.exists().not() -> tgt.meldeanlass = 'behandlungsbeginn' "MeldeanlassBeginn";
+
+  // Intention: aus MII Onko Extension mii-ex-onko-systemische-therapie-intention
+  // valueCodeableConcept mit MII Onko Intentions-CodeSystem -> translate zu oBDS (K, P, S, X)
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention' then {
+    ext.value as val then {
+      val.coding as c -> tgt.intention = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
+    } "ExtractIntentionCoding";
+  } "MapIntention";
+
+  // Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)
+  // category.coding mit System mii-cs-onko-therapie-stellungzurop -> translate zu oBDS (O, A, N, I, S)
+  src.category as cat then {
+    cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'
+      -> tgt.stellungOP = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
+  } "MapStellungOP";
+
+  // Therapieart: aus Procedure.category (MII Onko Therapietyp-CodeSystem)
+  // Mappt CH, HO, IM, ZS etc.
+  src.category as cat then {
+    cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'
+      -> tgt.therapieart = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapieart', 'code') "TranslateTherapieart";
+  } "MapTherapieart";
+
+  // Protokoll: aus Procedure.usedCode.text (Protokollbezeichnung, z.B. "EC-T")
+  src.usedCode first as uc then {
+    uc.text as t -> tgt.protokoll = t "SetProtokoll";
+  } "MapProtokoll";
+
+  // Beginn: aus Procedure.performedPeriod.start
+  src.performed as perf then {
+    perf.start as s -> tgt.beginn = s "SetBeginn";
+  } "MapBeginn";
+
+  // Ende: aus Procedure.performedPeriod.end
+  src.performed as perf then {
+    perf.end as e -> tgt.ende = e "SetEnde";
+  } "MapEnde";
+
+  // Ende-Grund: aus Procedure.outcome.coding (MII Onko Ende-Grund CodeSystem)
+  // Falls keine strukturierte Codierung vorhanden, Freitext als Fallback
+  src.outcome as oc then {
+    oc.coding as c -> tgt.endeGrund = (c.code) "SetEndeGrundCode";
+  } "MapEndeGrund";
+
+  // Substanzen: MedicationStatements aus dem Bundle extrahieren, die per partOf
+  // auf diese Procedure verweisen
+  bundle.entry as medEntry where resource.is(MedicationStatement) then {
+    medEntry.resource as medStmt -> tgt.substanzen as subst then MapSubstanz(medStmt, subst) "CallMapSubstanz";
+  } "EntrySubstanzen";
+
+  // Nebenwirkungen: Observations mit Adverse-Event-Profil aus dem Bundle
+  // CTCAE-Grad >= 3 als einzelne Nebenwirkungen, sonst gradMaximal2OderUnbekannt
+  bundle.entry as obsEntry where resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl') then {
+    obsEntry.resource as obs -> tgt.nebenwirkungen as nw then MapNebenwirkungSYST(obs, nw) "CallMapNebenwirkung";
+  } "EntryNebenwirkungen";
+}
+
+// ============================================================================
+// MapSubstanz: MedicationStatement → oBDS Substanz
+// Extrahiert Substanzbezeichnung und ATC-Code aus der Medikation
+// ============================================================================
+
+group MapSubstanz(source src : MedicationStatement, target tgt : BackboneElement) {
+
+  // Bezeichnung: aus medicationCodeableConcept.text oder coding.display
+  src.medication as med then {
+    med.text as t -> tgt.bezeichnung = t "SetSubstanzBezeichnung";
+  } "MapSubstanzBezeichnung";
+
+  // ATC-Code: aus medicationCodeableConcept.coding mit ATC-System
+  src.medication as med then {
+    med.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/atc' then {
+      c.code as code -> tgt.atcCode = code "SetAtcCode";
+      c.version as v -> tgt.atcVersion = v "SetAtcVersion";
+    } "ExtractAtcCoding";
+  } "MapAtcCode";
+}
+
+// ============================================================================
+// MapNebenwirkungSYST: Observation → oBDS Nebenwirkung
+// Nur Nebenwirkungen mit CTCAE-Grad >= 3 werden als einzelne Eintraege gemeldet.
+// Grad <= 2 wird als gradMaximal2OderUnbekannt zusammengefasst.
+// ============================================================================
+
+group MapNebenwirkungSYST(source src : Observation, target tgt : BackboneElement) {
+
+  // Grad der Nebenwirkung (CTCAE)
+  src.value as val then {
+    val.coding as c then {
+      c.code as code -> tgt.nebenwirkung as nw then {
+        // Bezeichnung der Nebenwirkung (aus Observation.code)
+        src.code as obsCode then {
+          obsCode.text as t -> nw.artBezeichnung = t "SetNwBezeichnung";
+        } "ExtractNwBezeichnung";
+        // CTCAE-Grad
+        c.code as g -> nw.grad = g "SetNwGrad";
+        // CTCAE-Version
+        c.system as sys -> nw.version = sys "SetNwVersion";
+      } "CreateNebenwirkung";
+    } "ExtractGradCoding";
+  } "MapNebenwirkungGrad";
+}

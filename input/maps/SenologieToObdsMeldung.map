@@ -1,0 +1,132 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsMeldung"
+/// name = "SenologieToObdsMeldung"
+/// title = "Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// Alle Teil-Maps importieren
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsDiagnose"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsOP"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsSYST"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsST"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorkonferenz"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsVerlauf"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTod"
+
+// ============================================================================
+// Master Orchestrator: Bundle -> oBDS Meldung
+// Empfaengt ein FHIR Bundle mit allen Ressourcen eines Patienten und
+// dispatcht an die jeweiligen Teil-Maps basierend auf Ressourcentyp und Profil.
+//
+// Jede Ressource erzeugt eine separate oBDS-Meldung:
+//   - Condition (Erstdiagnose)         -> Diagnosemeldung
+//   - Condition (Rezidiv)              -> Verlaufsmeldung
+//   - Procedure (Operation)            -> OP-Meldung
+//   - Procedure (Systemtherapie)       -> SYST-Meldung
+//   - Procedure (Strahlentherapie)     -> ST-Meldung
+//   - CarePlan (Tumorboard)            -> Tumorkonferenzmeldung
+//   - Patient (verstorben)             -> Todesmeldung
+// ============================================================================
+
+group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
+
+  // --- Meldungs-Metadaten ---
+  src -> tgt then SetMeldungMetadata(src, tgt) "CallSetMeldungMetadata";
+
+  // --- Diagnose: Condition mit Senologie-Diagnose-Profil, NICHT Rezidiv ---
+  // clinicalStatus != recurrence und Profil senologie-diagnose
+  src.entry as entry where resource.is(Condition) and resource.meta.profile.exists($this.contains('senologie-diagnose')) and resource.clinicalStatus.coding.exists(code = 'recurrence').not() then {
+    entry.resource as condition then {
+      // Tumorzuordnung
+      condition -> tgt.tumorzuordnung as tz then MapTumorzuordnung(condition, tz) "DiagnoseTZ";
+      // Diagnose: delegiert an SenologieToObdsDiagnose.MapDiagnose
+      condition -> tgt.diagnose as dx then MapDiagnose(condition, dx, src) "DiagnoseDX";
+    } "DiagnoseConditionContext";
+  } "EntryDiagnose";
+
+  // --- Verlauf: Condition mit clinicalStatus = recurrence (Rezidiv) ---
+  src.entry as entry where resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence') then {
+    entry.resource as condition then {
+      // Tumorzuordnung
+      condition -> tgt.tumorzuordnung as tz then MapTumorzuordnung(condition, tz) "VerlaufTZ";
+      // Verlauf: delegiert an SenologieToObdsVerlauf.MapVerlauf
+      condition -> tgt.verlauf as verl then MapVerlauf(condition, verl, src) "VerlaufMap";
+    } "VerlaufConditionContext";
+  } "EntryVerlauf";
+
+  // --- OP: Procedure mit Senologie-Operation-Profil ---
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+    entry.resource as procedure then {
+      // OP: delegiert an SenologieToObdsOP.MapOP
+      procedure -> tgt.op as op then MapOP(procedure, op, src) "OPMap";
+    } "OPProcedureContext";
+  } "EntryOP";
+
+  // --- Systemische Therapie: Procedure mit Systemtherapie-Profil ---
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
+    entry.resource as procedure then {
+      // SYST: delegiert an SenologieToObdsSYST.MapSYST
+      procedure -> tgt.syst as syst then MapSYST(procedure, syst, src) "SYSTMap";
+    } "SYSTProcedureContext";
+  } "EntrySYST";
+
+  // --- Strahlentherapie: Procedure mit Strahlentherapie-Profil ---
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
+    entry.resource as procedure then {
+      // ST: delegiert an SenologieToObdsST.MapST
+      procedure -> tgt.st as st then MapST(procedure, st, src) "STMap";
+    } "STProcedureContext";
+  } "EntryST";
+
+  // --- Tumorkonferenz: CarePlan mit Tumorboard-Empfehlung-Profil ---
+  src.entry as entry where resource.is(CarePlan) and resource.meta.profile.exists($this.contains('senologie-tumorboard-empfehlung')) then {
+    entry.resource as careplan then {
+      // Tumorkonferenz: delegiert an SenologieToObdsTumorkonferenz.MapTumorkonferenz
+      careplan -> tgt.tumorkonferenz as tk then MapTumorkonferenz(careplan, tk) "TumorkonferenzMap";
+    } "TumorkonferenzCarePlanContext";
+  } "EntryTumorkonferenz";
+
+  // --- Tod: Patient mit deceasedDateTime ---
+  src.entry as entry where resource.is(Patient) and resource.deceased.exists() then {
+    entry.resource as patient then {
+      // Tod: delegiert an SenologieToObdsTod.MapTod
+      patient -> tgt.tod as tod then MapTod(patient, tod, src) "TodMap";
+    } "TodPatientContext";
+  } "EntryTod";
+}
+
+// ============================================================================
+// SetMeldungMetadata: Meldungs-Metadaten erzeugen
+// meldungID, melderID, meldebegruendung, eigeneLeistung
+// ============================================================================
+
+group SetMeldungMetadata(source src : Bundle, target tgt : OBDSMeldung) {
+
+  // Meldung_ID: aus Bundle.identifier oder generierte UUID
+  src.identifier as id then {
+    id.value as v -> tgt.meldungID = v "SetMeldungIDFromIdentifier";
+  } "MapMeldungID";
+
+  // Fallback: generierte UUID als Meldung_ID
+  src where identifier.exists().not() -> tgt.meldungID = uuid() "SetMeldungIDGenerated";
+
+  // Melder_ID: aus Bundle.meta.source oder fest konfigurierter Wert
+  src.meta as meta then {
+    meta.source as s -> tgt.melderID = s "SetMelderIDFromSource";
+  } "MapMelderID";
+
+  // Meldebegruendung: I (eigene Leistung) als Standard
+  // Wird ggf. durch die Teil-Maps ueberschrieben basierend auf Meldungstyp
+  src -> tgt.meldebegruendung = 'I' "SetMeldebegruendung";
+
+  // Eigene Leistung: J als Standard (Behandlungseinrichtung meldet eigene Daten)
+  src -> tgt.eigeneLeistung = 'J' "SetEigeneLeistung";
+}

@@ -1,0 +1,115 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorkonferenz"
+/// name = "SenologieToObdsTumorkonferenz"
+/// title = "Senologie FHIR to oBDS Tumorkonferenz"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+
+// ============================================================================
+// Hauptgruppe: CarePlan → oBDS Tumorkonferenz
+// Ein CarePlan (senologie-tumorboard-empfehlung) bildet eine Tumorkonferenz
+// mit Therapieempfehlungen ab. Die activity-Eintraege enthalten die
+// empfohlenen Therapiearten (OP, CH, ST, HO, IM, ZS, etc.)
+// ============================================================================
+
+group SenologieToObdsTumorkonferenz(source src : CarePlan, target tgt : OBDSMeldung) {
+
+  src -> tgt.tumorkonferenz as tk then MapTumorkonferenz(src, tk) "CallMapTumorkonferenz";
+}
+
+// ============================================================================
+// MapTumorkonferenz: CarePlan → oBDS Tumorkonferenz Basisdaten
+// Mapped ID, Meldeanlass, Datum und Typ der Konferenz
+// ============================================================================
+
+group MapTumorkonferenz(source src : CarePlan, target tgt : BackboneElement) {
+
+  // Tumorkonferenz_ID: CarePlan.id
+  src.id as id -> tgt.tumorkonferenzID = id "SetTumorkonferenzID";
+
+  // Meldeanlass: abgeleitet aus CarePlan.status und Kontext
+  // active = laufende Planung -> diagnose oder behandlungsbeginn
+  // completed = abgeschlossen -> behandlungsende
+  // Bei Tumorkonferenzen typischerweise: diagnose, behandlungsbeginn,
+  // behandlungsende oder statusaenderung
+  src.status as s where $this = 'active' -> tgt.meldeanlass = 'behandlungsbeginn' "MeldeanlassBeginn";
+  src.status as s where $this = 'completed' -> tgt.meldeanlass = 'behandlungsende' "MeldeanlassEnde";
+
+  // Datum: aus CarePlan.period.start (Datum des Tumorboards)
+  src.period as p then {
+    p.start as s -> tgt.datum = s "SetDatum";
+  } "MapDatum";
+
+  // Typ der Tumorkonferenz: praetherapeutisch, postoperativ, posttherapeutisch
+  // Abgeleitet aus CarePlan.category oder einer Extension
+  // category.coding mit Tumorkonferenz-Typ
+  src.category as cat then {
+    cat.coding as c then {
+      c.code as code -> tgt.typ = code "SetTyp";
+    } "ExtractTypCoding";
+  } "MapTyp";
+
+  // Fallback: Typ aus CarePlan.title ableiten
+  src.title as t where $this.lower().contains('praeth') or $this.lower().contains('präth') -> tgt.typ = 'praeth' "TypPraeth";
+  src.title as t where $this.lower().contains('postop') -> tgt.typ = 'postop' "TypPostop";
+  src.title as t where $this.lower().contains('postth') -> tgt.typ = 'postth' "TypPostth";
+
+  // Therapieempfehlung: aus CarePlan.activity Eintraegen
+  // Jede activity repraesentiert eine empfohlene Therapieart
+  src where activity.exists() -> tgt.therapieempfehlung as te then MapTherapieempfehlung(src, te) "CallMapTherapieempfehlung";
+}
+
+// ============================================================================
+// MapTherapieempfehlung: CarePlan.activity → oBDS Therapieempfehlung
+// Iteriert ueber alle activity-Eintraege und extrahiert Therapietypen.
+// Die activity-Slices im Senologie-Profil bilden die verschiedenen
+// Therapiearten ab (operativeTherapy, chemotherapy, radiotherapy, etc.)
+// ============================================================================
+
+group MapTherapieempfehlung(source src : CarePlan, target tgt : BackboneElement) {
+
+  // Operative Therapie -> OP
+  src.activity as act where detail.kind = 'ServiceRequest' and detail.code.exists() then {
+    act.detail as det where kind = 'ServiceRequest' then {
+      det.code as code where coding.exists() then {
+        code.coding as c -> tgt.typTherapieempfehlung = (c.code) "SetTypOpServiceRequest";
+      } "ExtractOpCode";
+    } "ExtractServiceRequestDetail";
+  } "MapServiceRequestActivities";
+
+  // Medikamentoese Therapien: Chemotherapie, Hormontherapie, Immuntherapie, etc.
+  src.activity as act where detail.kind = 'MedicationRequest' and detail.code.exists() then {
+    act.detail as det where kind = 'MedicationRequest' then {
+      det.code as code where coding.exists() then {
+        code.coding as c -> tgt.typTherapieempfehlung = (c.code) "SetTypMedicationRequest";
+      } "ExtractMedCode";
+    } "ExtractMedicationRequestDetail";
+  } "MapMedicationRequestActivities";
+
+  // Fallback: Therapietypen direkt aus activity.detail.code.coding.code extrahieren
+  // wenn die Codierung direkt oBDS-Therapietypen enthaelt (CH, ST, HO, IM, ZS, etc.)
+  src.activity as act where detail.exists() then {
+    act.detail as det then {
+      det.code as code then {
+        code.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'
+          -> tgt.typTherapieempfehlung = (c.code) "SetTypFromOnkoCS";
+      } "ExtractOnkoTypCoding";
+    } "ExtractOnkoDetail";
+  } "MapOnkoTypActivities";
+
+  // Abweichung vom Patientenwunsch: aus CarePlan.note oder Extension
+  // In der Senologie-Dokumentation als Notiz oder spezifische Extension erfasst
+  src.note as n where text.lower().contains('patientenwunsch') and text.lower().contains('abweichung') then {
+    n -> tgt.abweichungPatientenwunsch = 'J' "SetAbweichungJa";
+  } "MapAbweichungPatientenwunsch";
+
+  // Abweichung: aus Extension falls vorhanden
+  src.extension as ext where url.contains('abweichung-patientenwunsch') then {
+    ext.value as val then {
+      val -> tgt.abweichungPatientenwunsch = cast(val, 'string') "SetAbweichungFromExt";
+    } "ExtractAbweichungValue";
+  } "MapAbweichungExtension";
+}

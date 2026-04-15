@@ -1,0 +1,93 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTod"
+/// name = "SenologieToObdsTod"
+/// title = "Senologie Patient + Conditions to oBDS Todesmeldung"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+
+// ============================================================================
+// Hauptgruppe: Bundle -> oBDS Todesmeldung
+// Das Bundle enthaelt einen Patient (mit deceasedDateTime) und ggf.
+// Conditions fuer Todesursachen (category = cause-of-death).
+// Die Tumorzuordnung wird aus der Tumor-Condition abgeleitet.
+// ============================================================================
+
+group SenologieToObdsTod(source src : Bundle, target tgt : OBDSMeldung) {
+
+  // Tumorzuordnung: aus der Tumor-Condition (nicht cause-of-death)
+  src.entry as entry where resource.is(Condition) and resource.category.coding.exists(code = 'encounter-diagnosis') then {
+    entry.resource as condition then {
+      condition -> tgt.tumorzuordnung as tz then MapTumorzuordnung(condition, tz) "CallMapTumorzuordnung";
+    } "ConditionContext";
+  } "EntryConditionTZ";
+
+  // Tod: aus Patient + Todesursachen-Conditions
+  src.entry as patEntry where resource.is(Patient) then {
+    patEntry.resource as patient -> tgt.tod as tod then MapTod(patient, tod, src) "CallMapTod";
+  } "EntryPatient";
+}
+
+// ============================================================================
+// Tod: Patient -> OBDSMeldung.tod
+// Sterbedatum, Tod tumorbedingt, Todesursachen
+// ============================================================================
+
+group MapTod(source src : Patient, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // Abschluss_ID: aus Patient.identifier oder generiert
+  src.id as id -> tgt.abschlussID = id "SetAbschlussID";
+
+  // Sterbedatum: aus Patient.deceasedDateTime
+  src.deceased as d where $this.is(dateTime) -> tgt.sterbedatum = d "SetSterbedatum";
+
+  // Tod_tumorbedingt: wird ueber die Todesursachen-Conditions ermittelt
+  // Wenn eine cause-of-death Condition einen ICD-Code C00-C97 (Krebs) hat -> J
+  // Standardmaessig U (unbekannt), ueberschrieben durch Todesursachen-Analyse
+  src -> tgt.todTumorbedingt = 'U' "SetTodTumorbedingtDefault";
+
+  // Tod tumorbedingt: Ja, wenn eine Todesursache einen C-Code (Malignom) enthaelt
+  bundle.entry as codEntry where resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death') then {
+    codEntry.resource as codCondition then {
+      codCondition.code as code then {
+        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and code.startsWith('C') then {
+          c -> tgt.todTumorbedingt = 'J' "SetTodTumorbedingtJa";
+        } "CheckIsCancer";
+      } "CheckCodCode";
+    } "AnalyseCodCondition";
+  } "EntryCheckTumorbedingt";
+
+  // Tod tumorbedingt: aus Extension (falls explizit angegeben)
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-tod-tumorbedingt' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.todTumorbedingt = cd "SetTodTumorbedingtExplicit";
+      } "ExtractTodTumorbedingtCode";
+    } "MapTodTumorbedingtValue";
+  } "MapTodTumorbedingtExtension";
+
+  // Todesursachen: aus cause-of-death Conditions im Bundle
+  bundle.entry as codEntry where resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death') then {
+    codEntry.resource as codCondition -> tgt.todesursachen as tu then MapTodesursache(codCondition, tu) "CallMapTodesursache";
+  } "EntryTodesursachen";
+}
+
+// ============================================================================
+// Todesursache: Condition (cause-of-death) -> OBDSMeldung.tod.todesursachen
+// ICD-10-GM Code und Version der Todesursache
+// ============================================================================
+
+group MapTodesursache(source src : Condition, target tgt : BackboneElement) {
+
+  // ICD-10-Code der Todesursache
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then {
+      c.code as cd -> tgt.code = cd "SetTodesursacheCode";
+      c.version as v -> tgt.version = v "SetTodesursacheVersion";
+    } "ExtractTodesursacheICD";
+  } "MapTodesursacheCode";
+}

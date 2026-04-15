@@ -1,0 +1,46 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+/// name = "SenologieToObdsTumorzuordnung"
+/// title = "Senologie Diagnose to oBDS Tumorzuordnung"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Tumorzuordnung: Condition (Diagnose) -> OBDSMeldung.tumorzuordnung
+// Wird von allen Meldungstypen importiert, da die Tumorzuordnung in jeder
+// oBDS-Meldung enthalten sein muss.
+// ============================================================================
+
+group MapTumorzuordnung(source src : Condition, target tgt : BackboneElement) {
+
+  // Tumor_ID: aus Condition.identifier (Tumor-Kennung)
+  src.identifier as id where system = 'http://fhir.bih-charite.de/kds-senologie/sid/tumor-id' then {
+    id.value as v -> tgt.tumorID = v "SetTumorID";
+  } "MapTumorID";
+
+  // Primaertumor_ICD: ICD-10-GM Code und Version aus Condition.code
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' -> tgt.primaertumorICD as icd then {
+      c.code as cd -> icd.code = cd "SetICDCode";
+      c.version as v -> icd.version = v "SetICDVersion";
+    } "MapICD10Coding";
+  } "MapPrimaertumorICD";
+
+  // Diagnosedatum: aus Condition.onsetDateTime
+  src.onset as onset where $this.is(dateTime) -> tgt.diagnosedatum = onset "SetDiagnosedatum";
+
+  // Seitenlokalisation: aus Condition.bodySite mit Uebersetzung SNOMED -> oBDS
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct'
+      -> tgt.seitenlokalisation = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-seitenlokalisation', 'code') "TranslateSeitenlokalisation";
+  } "MapSeitenlokalisation";
+
+  // Morphologie_ICD_O: aus Condition.code ICD-O Morphologie (falls vorhanden)
+  src.code as code then {
+    code.coding as c where system = 'urn:oid:2.16.840.1.113883.6.43.1' -> tgt.morphologieICDO as morph then {
+      c.code as cd -> morph.code = cd "SetMorphCode";
+      c.version as v -> morph.version = v "SetMorphVersion";
+    } "MapMorphCoding";
+  } "MapMorphologieICDO";
+}

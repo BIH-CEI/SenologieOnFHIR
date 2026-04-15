@@ -1,0 +1,164 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsST"
+/// name = "SenologieToObdsST"
+/// title = "Senologie FHIR to oBDS Strahlentherapie (ST)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+
+// ============================================================================
+// Hauptgruppe: Bundle → oBDS ST (Strahlentherapie)
+// Ein Bundle enthaelt Strahlentherapie-Procedures (einzelne Bestrahlungsserien)
+// und ggf. Observations fuer Nebenwirkungen (CTCAE).
+// ============================================================================
+
+group SenologieToObdsST(source src : Bundle, target tgt : OBDSMeldung) {
+
+  // Strahlentherapie-Procedure extrahieren
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
+    entry.resource as proc -> tgt.st as st then MapST(proc, st, src) "CallMapST";
+  } "EntryST";
+}
+
+// ============================================================================
+// MapST: Procedure → oBDS ST Basisdaten
+// Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege
+// ============================================================================
+
+group MapST(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // ST_ID: Procedure.id
+  src.id as id -> tgt.stID = id "SetStID";
+
+  // Meldeanlass: abgeleitet aus vorhandenem Enddatum
+  src where performedPeriod.end.exists() -> tgt.meldeanlass = 'behandlungsende' "MeldeanlassEnde";
+  src where performedPeriod.end.exists().not() -> tgt.meldeanlass = 'behandlungsbeginn' "MeldeanlassBeginn";
+
+  // Intention: aus MII Onko Strahlentherapie-Intention Extension
+  // valueCodeableConcept -> translate zu oBDS (K, P, O, S, X)
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention' then {
+    ext.value as val then {
+      val.coding as c -> tgt.intention = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
+    } "ExtractIntentionCoding";
+  } "MapIntention";
+
+  // Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)
+  src.category as cat then {
+    cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'
+      -> tgt.stellungOP = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
+  } "MapStellungOP";
+
+  // Bestrahlung: jede Procedure bildet eine einzelne Bestrahlungsserie ab
+  // Im Senologie-Profil ist jede Procedure eine Bestrahlung
+  src -> tgt.bestrahlungen as best then MapBestrahlung(src, best) "CallMapBestrahlung";
+
+  // Ende-Grund: aus Procedure.outcome.coding
+  src.outcome as oc then {
+    oc.coding as c -> tgt.endeGrund = (c.code) "SetEndeGrundCode";
+  } "MapEndeGrund";
+
+  // Nebenwirkungen: Observations mit CTCAE-Codierung aus dem Bundle
+  src -> tgt.nebenwirkungen as nw then {
+    // Nebenwirkungen mit CTCAE-Grad >= 3
+    bundle.entry as obsEntry where resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl') then {
+      obsEntry.resource as obs then MapNebenwirkungST(obs, nw) "CallMapNebenwirkung";
+    } "EntryNebenwirkungen";
+  } "CreateNebenwirkungen";
+}
+
+// ============================================================================
+// MapBestrahlung: Procedure → oBDS Bestrahlung
+// Extrahiert Bestrahlungsdetails: Zeitraum, Applikationsart, Zielgebiet,
+// Dosis und Boost aus den MII Onko Extensions
+// ============================================================================
+
+group MapBestrahlung(source src : Procedure, target tgt : BackboneElement) {
+
+  // Beginn: aus performedPeriod.start
+  src.performed as perf then {
+    perf.start as s -> tgt.beginn = s "SetBestrahlungBeginn";
+  } "MapBestrahlungBeginn";
+
+  // Ende: aus performedPeriod.end
+  src.performed as perf then {
+    perf.end as e -> tgt.ende = e "SetBestrahlungEnde";
+  } "MapBestrahlungEnde";
+
+  // Applikationsart: aus Procedure.code oder MII Extension
+  // Perkutan vs. Kontakt (Brachytherapie)
+  // OPS 8-522 = Perkutane Hochvoltstrahlentherapie
+  // OPS 8-524 = Brachytherapie
+  src.code as code then {
+    code.coding as c where code.startsWith('8-522') -> tgt.applikationsart = 'P' "ApplikationsartPerkutan";
+    code.coding as c where code.startsWith('8-524') -> tgt.applikationsart = 'K' "ApplikationsartKontakt";
+  } "MapApplikationsart";
+
+  // Zielgebiet: aus Procedure.bodySite.coding
+  src.bodySite as bs then {
+    bs.coding as c then {
+      c.display as d -> tgt.zielgebiet = d "SetZielgebiet";
+    } "ExtractZielgebietCoding";
+  } "MapZielgebiet";
+
+  // Seite des Zielgebiets: aus bodySite-Extension Seitenlokalisation
+  // oder abgeleitet aus bodySite-SNOMED-Code (z.B. "Left breast")
+  src.bodySite as bs then {
+    bs.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-seitenlokalisation' then {
+      ext.value as val then {
+        val.coding as c -> tgt.seiteZielgebiet = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-seitenlokalisation', 'code') "TranslateSeiteZielgebiet";
+      } "ExtractSeiteCoding";
+    } "MapSeiteExtension";
+  } "MapSeiteZielgebiet";
+
+  // Gesamtdosis: aus MII Onko Gesamtdosis-Extension
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-gesamtdosis' then {
+    ext.value as val then {
+      val.value as v -> tgt.gesamtdosis = v "SetGesamtdosis";
+      val.unit as u -> tgt.gesamtdosisEinheit = u "SetGesamtdosisEinheit";
+    } "ExtractGesamtdosisValue";
+  } "MapGesamtdosis";
+
+  // Einzeldosis: nicht direkt als MII Extension vorhanden
+  // Kann aus Procedure.note oder spezieller Extension abgeleitet werden
+  // Fallback: berechnet aus Gesamtdosis / Anzahl Sitzungen (sessionCount)
+
+  // Boost: aus MII Onko Boost-Extension
+  // J=ja, N=nein, SIB=simultan integrierter Boost
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-boost' then {
+    ext.value as val then {
+      val.coding as c -> tgt.boost = (c.code) "SetBoost";
+    } "ExtractBoostCoding";
+  } "MapBoost";
+}
+
+// ============================================================================
+// MapNebenwirkungST: Observation → oBDS Nebenwirkung
+// Strahlentherapie-Nebenwirkungen mit CTCAE-Grad und Version
+// z.B. Strahlendermatitis Grad 3 (CTCAE 4.03)
+// ============================================================================
+
+group MapNebenwirkungST(source src : Observation, target tgt : BackboneElement) {
+
+  // Einzelne Nebenwirkung
+  src.value as val then {
+    val.coding as c -> tgt.nebenwirkung as nw then {
+      // Bezeichnung (Art) der Nebenwirkung
+      src.code as obsCode then {
+        obsCode.text as t -> nw.artBezeichnung = t "SetNwBezeichnung";
+        obsCode.coding as coding then {
+          coding.display as d where %obsCode.text.exists().not() -> nw.artBezeichnung = d "SetNwBezeichnungDisplay";
+        } "FallbackNwBezeichnung";
+      } "ExtractNwBezeichnung";
+
+      // CTCAE-Grad (3, 4, 5)
+      c.code as g -> nw.grad = g "SetNwGrad";
+
+      // CTCAE-Version (z.B. "4.03")
+      src.method as method then {
+        method.text as t -> nw.version = t "SetNwVersion";
+      } "ExtractNwVersion";
+    } "CreateNebenwirkung";
+  } "MapNebenwirkungGrad";
+}
