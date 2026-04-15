@@ -29,7 +29,7 @@ Technisch kann die Vorbelegung über `sdc-questionnaire-initialExpression` (FHIR
 |---|---|---|---|
 | Vorerkrankungen (Herz-Kreislauf, Atemwege, Gefäße, Neurologie, Verdauung, Haut, Rheumatologie, Nieren/Urogenital, Psyche, Infektionen, Krebs) | Past Illness History | Condition | IPS enthält aktive und abgeschlossene Diagnosen. Granularität kann abweichen. |
 | Allergien | Allergies and Intolerances | AllergyIntolerance | **IPS-Pflichtsektion** — immer vorhanden. |
-| Regelmäßige Medikation | Medications | MedicationStatement | **IPS-Pflichtsektion** — immer vorhanden. Bundesmedikationsplan ggf. als Quelle. |
+| Regelmäßige Medikation (Bestandsmedikation) | Medications | MedicationStatement | **IPS-Pflichtsektion**. In der ePA über die **ePA-Medikationsliste (eML)**, den **Bundesmedikationsplan (BMP)** und aggregierte **E-Rezept-Verordnungen** verfügbar. Die Bestandsmedikation (Metoprolol, L-Thyroxin etc.) muss nicht im Brustzentrum erfasst werden, sondern kann aus der ePA/KIS übernommen werden. |
 | Voroperationen | Procedure History | Procedure | Kodierung über SNOMED CT oder OPS. |
 | Schwangerschaft (aktuell) | Pregnancy | Observation | IPS-Sektion mit Status und erwartetem Entbindungsdatum. |
 | Implantate (Metall, MRT-Fähigkeit) | Medical Devices | DeviceUseStatement | IPS-Sektion für aktive Implantate. |
