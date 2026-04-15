@@ -99,6 +99,7 @@
 [Fall2-Tumorboard-Progression]: CarePlan-Fall2-Tumorboard-Progression.html
 [QuestionnaireSenologieDiagnose]: Questionnaire-senologie-diagnose-maligne.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
+[IRegBrustimplantatMeldung]: StructureDefinition-ireg-brustimplantat-meldung.html
 [EX_Senologie_Studienkontakt]: StructureDefinition-ex-senologie-studienkontakt.html
 [OBDSMeldung]: StructureDefinition-obds-meldung.html
 [EX_Senologie_OperatingTableSetup]: StructureDefinition-ex-senologie-operating-table-setup.html

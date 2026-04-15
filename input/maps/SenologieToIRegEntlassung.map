@@ -1,0 +1,65 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegEntlassung"
+/// name = "SenologieToIRegEntlassung"
+/// title = "Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplantat"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
+
+// ============================================================================
+// Entlassung: Encounter + Condition -> ENT_* + DBI_*
+//
+// Entlassungsdaten und Brustimplantat-spezifische Entlassungsdiagnosen.
+// ENT_Datum kommt aus Encounter.period.end.
+// ENT_GrundSchluessel kommt aus Encounter.hospitalization.dischargeDisposition.
+// DBI_* Diagnosen kommen aus Condition-Ressourcen im Bundle (ICD-10-GM).
+// ============================================================================
+
+group MapEntlassung(source src : Encounter, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // --- ENT_* Entlassungsdaten ---
+
+  // ENT_Datum: aus Encounter.period.end (Entlassungsdatum)
+  src.period as period then {
+    period.end as e -> tgt.datum = e "SetEntlassungsDatum";
+  } "MapEntlassungsDatum";
+
+  // ENT_GrundSchluessel: aus Encounter.hospitalization.dischargeDisposition
+  // 2-stelliger Entlassungs-/Verlegungsgrund nach §301 SGB V
+  src.hospitalization as hosp then {
+    hosp.dischargeDisposition as dd then {
+      dd.coding as c where system = 'http://fhir.de/CodeSystem/dkgev/Entlassungsgrund' then {
+        c.code as cd -> tgt.grundSchluessel = cd "SetEntlassungsgrund";
+      } "MapEntlassungsgrundCoding";
+      // Fallback: beliebiges Coding
+      dd.coding as c where system != 'http://fhir.de/CodeSystem/dkgev/Entlassungsgrund' then {
+        c.code as cd -> tgt.grundSchluessel = cd "SetEntlassungsgrundFallback";
+      } "MapEntlassungsgrundFallbackCoding";
+    } "MapDischargeDisposition";
+  } "MapHospitalization";
+
+  // --- DBI_* Brustimplantat-spezifische Entlassungsdiagnosen ---
+  // Alle Condition-Ressourcen im Bundle mit ICD-10-GM-Kodierung
+  bundle.entry as entry where resource.is(Condition) then {
+    entry.resource as condition then {
+      condition.code as code then {
+        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' -> tgt.diagnoseBrustimplantat as dbi then {
+          // DBI_IcdSchluessel: ICD-10-GM Kode mit optionaler Seitenlokalisation
+          c.code as cd -> dbi.icdSchluessel = cd "SetDbiIcdCode";
+
+          // Seitenlokalisation an ICD-Code anhaengen falls vorhanden
+          // Format: Z99.9:R (rechts), Z99.9:L (links), Z99.9:B (beidseits)
+          condition.bodySite as bs then {
+            bs.coding as bsc where system = 'http://snomed.info/sct' then {
+              bsc.code as bscd where $this = '24028007' -> dbi.icdSchluessel = append(cd, ':R') "AppendSeiteRechts";
+              bsc.code as bscd where $this = '7771000' -> dbi.icdSchluessel = append(cd, ':L') "AppendSeiteLinks";
+              bsc.code as bscd where $this = '51440002' -> dbi.icdSchluessel = append(cd, ':B') "AppendSeiteBeidseits";
+            } "MapDbiSeiteSCT";
+          } "MapDbiSeite";
+        } "MapDbiIcd";
+      } "MapDbiCode";
+    } "DbiConditionContext";
+  } "EntryDbiCondition";
+}

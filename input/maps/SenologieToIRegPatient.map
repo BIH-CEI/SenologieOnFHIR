@@ -1,0 +1,95 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegPatient"
+/// name = "SenologieToIRegPatient"
+/// title = "Senologie Patient + Observations to IRegG Patientenaufnahme"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
+
+// ============================================================================
+// Patientenaufnahme: Patient + Observations -> PAT_* + PAB_*
+//
+// Demografische und klinische Patientendaten bei Aufnahme.
+// PAT_Alter wird aus Patient.birthDate berechnet (Differenz zu heute).
+// PAT_Groesse und PAT_Gewicht kommen aus Observations (LOINC-kodiert).
+// PAB_* Brustimplantat-spezifische Daten kommen aus Extensions am Patient.
+// ============================================================================
+
+group MapPatientenaufnahme(source src : Patient, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // --- PAT_* Basisdaten ---
+
+  // PAT_GeschlechtSchluessel (enum_0070): aus Patient.gender
+  // male = 1, female = 2, other = 3, unknown = 9
+  src.gender as g where $this = 'male' -> tgt.geschlechtSchluessel = '1' "SetGeschlechtMale";
+  src.gender as g where $this = 'female' -> tgt.geschlechtSchluessel = '2' "SetGeschlechtFemale";
+  src.gender as g where $this = 'other' -> tgt.geschlechtSchluessel = '3' "SetGeschlechtOther";
+  src.gender as g where $this = 'unknown' -> tgt.geschlechtSchluessel = '9' "SetGeschlechtUnknown";
+
+  // PAT_Alter: berechnet aus Patient.birthDate
+  // FML truncate() berechnet Differenz in Jahren
+  src.birthDate as bd -> tgt.alter = truncate(evaluate(src, today().toString().substring(0, 4).toInteger() - birthDate.toString().substring(0, 4).toInteger())) "SetAlter";
+
+  // PAT_Groesse: aus Observation mit LOINC 8302-2 (Body height)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '8302-2') then {
+    entry.resource as obs then {
+      obs.value as val then {
+        val.value as v -> tgt.groesse = truncate(v) "SetGroesse";
+      } "MapGroesseValue";
+    } "GroesseObsContext";
+  } "EntryGroesse";
+
+  // PAT_Gewicht: aus Observation mit LOINC 29463-7 (Body weight)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '29463-7') then {
+    entry.resource as obs then {
+      obs.value as val then {
+        val.value as v -> tgt.gewicht = truncate(v) "SetGewicht";
+      } "MapGewichtValue";
+    } "GewichtObsContext";
+  } "EntryGewicht";
+
+  // --- PAB_* Brustimplantat-spezifische Patientendaten ---
+  src -> tgt.brustimplantat as pab then MapPatientBrustimplantat(src, pab) "CallMapPAB";
+}
+
+// ============================================================================
+// Brustimplantat-spezifische Patientendaten: Patient -> PAB_*
+// Autoimmunerkrankung, Verlauf, biologisches Geschlecht bei Geburt
+// ============================================================================
+
+group MapPatientBrustimplantat(source src : Patient, target tgt : BackboneElement) {
+
+  // PAB_AutoimmunerkrankungSchluessel (enum_0122): aus Extension
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-autoimmunerkrankung' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.autoimmunerkrankungSchluessel = cd "SetAutoimmunCode";
+      } "MapAutoimmunCoding";
+    } "MapAutoimmunValue";
+  } "MapAutoimmunerkrankung";
+
+  // Fallback: wenn keine Extension vorhanden, setze Standardwert "unbekannt"
+  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-autoimmunerkrankung').exists().not()
+    -> tgt.autoimmunerkrankungSchluessel = '9' "SetAutoimmunDefault";
+
+  // PAB_VerlaufAutoimmunerkrankungSchluessel (enum_0123): aus Extension
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-verlauf-autoimmunerkrankung' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.verlaufAutoimmunerkrankungSchluessel = cd "SetVerlaufAutoimmunCode";
+      } "MapVerlaufCoding";
+    } "MapVerlaufValue";
+  } "MapVerlaufAutoimmunerkrankung";
+
+  // PAB_GeschlechtGeburtSchluessel (enum_0170): aus birthsex Extension
+  // Biologisches Geschlecht bei Geburt
+  src.extension as ext where url = 'http://hl7.org/fhir/StructureDefinition/patient-birthsex' then {
+    ext.value as val then {
+      val where $this = 'M' -> tgt.geschlechtGeburtSchluessel = '1' "SetGeburtGeschlechtMale";
+      val where $this = 'F' -> tgt.geschlechtGeburtSchluessel = '2' "SetGeburtGeschlechtFemale";
+      val where $this = 'UNK' -> tgt.geschlechtGeburtSchluessel = '9' "SetGeburtGeschlechtUnknown";
+    } "MapBirthsexValue";
+  } "MapGeschlechtGeburt";
+}

@@ -1,0 +1,475 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegOperation"
+/// name = "SenologieToIRegOperation"
+/// title = "Senologie Procedure + Device to IRegG Operation + Artikelidentifikation"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Device" alias Device as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
+
+// ============================================================================
+// Operation: Procedure -> OPE_* + OBI_*
+//
+// Bildet eine Senologie_Operation (Procedure) auf die IRegG-Operationsstruktur
+// ab. Umfasst Basisdaten (Datum, Seitenlokalisation, ASA, Implantattyp) sowie
+// brustimplantat-spezifische Angaben (Art des Eingriffs, Grund, Lage, Zugang).
+//
+// Die Artikelidentifikation (Device -> ARI_* + ARB_* + ABI_*) wird ueber
+// Procedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.
+// ============================================================================
+
+group MapOperation(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // --- OPE_* Basisdaten ---
+
+  // OPE_LaufendeNummer: aus Procedure.identifier oder Sequenz
+  src.identifier as id first then {
+    id.value as v -> tgt.laufendeNummer = v "SetOpLaufendeNummer";
+  } "MapOpLaufendeNummer";
+
+  // Fallback: wenn kein Identifier, laufende Nummer 1
+  src where identifier.exists().not() -> tgt.laufendeNummer = 1 "SetOpLaufendeNummerDefault";
+
+  // OPE_Datum: aus Procedure.performedDateTime
+  src.performed as perf where $this.is(dateTime) -> tgt.datum = perf "SetOpDatum";
+
+  // OPE_SeitenLokalisationSchluessel (enum_0050): aus Procedure.bodySite
+  // rechts = 1, links = 2, beidseits = 3
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '24028007' -> tgt.seitenLokalisationSchluessel = '1' "SetSeiteRechts";
+      c.code as cd where $this = '7771000' -> tgt.seitenLokalisationSchluessel = '2' "SetSeiteLinks";
+      c.code as cd where $this = '51440002' -> tgt.seitenLokalisationSchluessel = '3' "SetSeiteBeidseits";
+    } "MapSeiteSCT";
+  } "MapSeitenLokalisation";
+
+  // OPE_AsaSchluessel (enum_0044): aus Extension oder Observation
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-asa-klassifikation' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.asaSchluessel = cd "SetAsaCode";
+      } "MapAsaCoding";
+    } "MapAsaValue";
+  } "MapAsaKlassifikation";
+
+  // OPE_ImplantattypSchluessel (enum_0080): Brustimplantat = 3
+  src -> tgt.implantattypSchluessel = '3' "SetImplantattypBrust";
+
+  // --- OBI_* Brustimplantat-spezifische Operationsdaten ---
+  src -> tgt.operationBrustimplantat as obi then MapOperationBrustimplantat(src, obi) "CallMapOBI";
+
+  // --- Artikelidentifikation: Device-Ressourcen ---
+  // Aufloesen ueber Procedure.focalDevice.manipulated (Device-Referenz)
+  src.focalDevice as fd then {
+    fd.manipulated as ref then {
+      // Suche die referenzierte Device-Ressource im Bundle
+      bundle.entry as devEntry where resource.is(Device) and fullUrl = (%ref.reference) then {
+        devEntry.resource as device -> tgt.artikelidentifikation as art then MapArtikelidentifikation(device, art) "CallMapArtikel";
+      } "ResolveDeviceRef";
+    } "MapDeviceRef";
+  } "MapFocalDevice";
+
+  // Fallback: alle Device-Ressourcen im Bundle, falls kein focalDevice vorhanden
+  src where focalDevice.exists().not() then {
+    bundle.entry as devEntry where resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat')) then {
+      devEntry.resource as device -> tgt.artikelidentifikation as art then MapArtikelidentifikation(device, art) "CallMapArtikelFallback";
+    } "EntryDeviceFallback";
+  } "FallbackDevice";
+
+  // --- Zubehoer (ADM/Netz): Device mit Zubehoer-Profil ---
+  bundle.entry as entry where resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer')) then {
+    entry.resource as device -> tgt.zubehoer as zub then MapZubehoer(device, zub) "CallMapZubehoer";
+  } "EntryZubehoer";
+}
+
+// ============================================================================
+// Brustimplantat-spezifische Operationsdaten: Procedure -> OBI_*
+// Art des Eingriffs, Grund, Lage, Zugang, Vorbehandlung, Massnahmen
+// ============================================================================
+
+group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneElement) {
+
+  // OBI_ArtEingriffSchluessel (enum_0100): aus Procedure.category oder Extension
+  // Primaereingriff = 1, Austausch Expander->Implantat = 2,
+  // Revision mit Austausch = 3, Revision ohne Austausch = 4, Explantation = 5
+  src.category as cat then {
+    cat.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-art-eingriff' then {
+      c.code as cd -> tgt.artEingriffSchluessel = cd "SetArtEingriffDirect";
+    } "MapArtEingriffCoding";
+  } "MapArtEingriff";
+
+  // OBI_GrundPrimaerEingriffSchluessel (enum_0102): bei Primaereingriff
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-grund-primaereingriff' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.grundPrimaerEingriffSchluessel = cd "SetGrundPrimaer";
+      } "MapGrundPrimaerCoding";
+    } "MapGrundPrimaerValue";
+  } "MapGrundPrimaerEingriff";
+
+  // OBI_GrundAustauschSchluessel (enum_0104): bei Austausch/Revision
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-grund-austausch' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.grundAustauschSchluessel = cd "SetGrundAustausch";
+      } "MapGrundAustauschCoding";
+    } "MapGrundAustauschValue";
+  } "MapGrundAustausch";
+
+  // OBI_GrundRevisionExplantationSchluessel (enum_0106): bei Explantation
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-grund-revision-explantation' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.grundRevisionExplantationSchluessel = cd "SetGrundExplantation";
+      } "MapGrundExplCoding";
+    } "MapGrundExplValue";
+  } "MapGrundRevisionExplantation";
+
+  // OBI_LageSchluessel (enum_0112): Lage des neuen Implantats
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-lage-implantat' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.lageSchluessel = cd "SetLage";
+      } "MapLageCoding";
+    } "MapLageValue";
+  } "MapLage";
+
+  // OBI_ZugangSchluessel (enum_0118): Operationszugang
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-zugang' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.zugangSchluessel = cd "SetZugang";
+      } "MapZugangCoding";
+    } "MapZugangValue";
+  } "MapZugang";
+
+  // OBI_EntfernungAdmNetzSchluessel (enum_0114)
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-entfernung-adm-netz' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.entfernungAdmNetzSchluessel = cd "SetEntfernungAdm";
+      } "MapEntfernungAdmCoding";
+    } "MapEntfernungAdmValue";
+  } "MapEntfernungAdmNetz";
+
+  // OBI_VerfahrenswechselSchluessel (enum_0111)
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-verfahrenswechsel' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.verfahrenswechselSchluessel = cd "SetVerfahrenswechsel";
+      } "MapVerfahrenCoding";
+    } "MapVerfahrenValue";
+  } "MapVerfahrenswechsel";
+
+  // --- Vorbehandlung (VBI_*) ---
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-vorbehandlung-bi' then {
+    ext -> tgt.vorbehandlung as vorb then MapVorbehandlung(ext, vorb) "CallMapVorbehandlung";
+  } "MapVorbehandlungen";
+
+  // --- Massnahmen (MAB_*) ---
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-massnahme-bi' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.massnahme as mass, mass.massnahmeSchluessel = cd "SetMassnahme";
+      } "MapMassnahmeCoding";
+    } "MapMassnahmeValue";
+  } "MapMassnahmen";
+
+  // --- Operationsdetails (ODB_*) ---
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-operationsdetail-bi' then {
+    ext -> tgt.operationsdetail as opd then MapOperationsdetail(ext, opd) "CallMapOpDetail";
+  } "MapOperationsdetails";
+
+  // --- Befunde bei Revision/Explantation (BEB_*) ---
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-befund-bi' then {
+    ext -> tgt.befund as bef then MapBefund(ext, bef) "CallMapBefund";
+  } "MapBefunde";
+
+  // --- OPS-Prozedurenkodesschluessel (PBI_*) ---
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' -> tgt.prozedurenSchluessel as pbi then {
+      c.code as cd -> pbi.opsKode = cd "SetPbiOps";
+    } "MapPbiCoding";
+  } "MapProzedurenSchluessel";
+}
+
+// ============================================================================
+// Vorbehandlung: Extension -> VBI_*
+// ============================================================================
+
+group MapVorbehandlung(source src : BackboneElement, target tgt : BackboneElement) {
+
+  src.extension as inner where url = 'behandlungLokal' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.behandlungLokalSchluessel = cd "SetVorbehandlungLokal";
+      } "MapVorbehLokalCoding";
+    } "MapVorbehLokalValue";
+  } "MapBehandlungLokal";
+
+  src.extension as inner where url = 'behandlungSystemisch' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.behandlungSystemischSchluessel = cd "SetVorbehandlungSystemisch";
+      } "MapVorbehSystCoding";
+    } "MapVorbehSystValue";
+  } "MapBehandlungSystemisch";
+}
+
+// ============================================================================
+// Operationsdetail: Extension -> ODB_*
+// ============================================================================
+
+group MapOperationsdetail(source src : BackboneElement, target tgt : BackboneElement) {
+
+  src.extension as inner where url = 'primaereingriff' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.operationsdetailPrimaerEingriffSchluessel = cd "SetOpDetailPrimaer";
+      } "MapOpDetailPrimaerCoding";
+    } "MapOpDetailPrimaerValue";
+  } "MapOpDetailPrimaerEingriff";
+
+  src.extension as inner where url = 'austausch' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.operationsdetailAustauschSchluessel = cd "SetOpDetailAustausch";
+      } "MapOpDetailAustauschCoding";
+    } "MapOpDetailAustauschValue";
+  } "MapOpDetailAustausch";
+
+  src.extension as inner where url = 'revision' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.operationsdetailRevisionSchluessel = cd "SetOpDetailRevision";
+      } "MapOpDetailRevisionCoding";
+    } "MapOpDetailRevisionValue";
+  } "MapOpDetailRevision";
+}
+
+// ============================================================================
+// Befund: Extension -> BEB_*
+// ============================================================================
+
+group MapBefund(source src : BackboneElement, target tgt : BackboneElement) {
+
+  src.extension as inner where url = 'befund' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.befundSchluessel = cd "SetBefund";
+      } "MapBefundCoding";
+    } "MapBefundValue";
+  } "MapBefundRevision";
+
+  src.extension as inner where url = 'befundAustausch' then {
+    inner.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.befundAustauschSchluessel = cd "SetBefundAustausch";
+      } "MapBefundAustauschCoding";
+    } "MapBefundAustauschValue";
+  } "MapBefundAustausch";
+}
+
+// ============================================================================
+// Artikelidentifikation: Device -> ARI_* + ARB_* + ABI_*
+// UDI, Hersteller, Seriennummer, LOT, Form, Oberflaeche, Fuellung, Volumen
+// ============================================================================
+
+group MapArtikelidentifikation(source src : Device, target tgt : BackboneElement) {
+
+  // --- ARI_* Identifikation ---
+
+  // ARI_LaufendeNummer: aus Device.identifier oder Sequenz
+  src.identifier as id first then {
+    id.value as v -> tgt.laufendeNummer = v "SetAriLaufendeNummer";
+  } "MapAriLaufendeNummer";
+  src where identifier.exists().not() -> tgt.laufendeNummer = 1 "SetAriLaufendeNummerDefault";
+
+  // ARI_Artikelkennzeichen: UDI oder REF-Nummer
+  src.udiCarrier as udi first then {
+    udi.deviceIdentifier as di -> tgt.artikelkennzeichen = di "SetArtikelkennzeichenUDI";
+    // Wenn UDI vorhanden, Typ = UDI
+    udi -> tgt.kennzeichenTypSchluessel = '1' "SetKennzeichenTypUDI";
+  } "MapUdiCarrier";
+
+  // Fallback: lotNumber als REF-Nummer (Katalognummer)
+  src where udiCarrier.exists().not() then {
+    src.lotNumber as lot -> tgt.artikelkennzeichen = lot "SetArtikelkennzeichenREF";
+    src -> tgt.kennzeichenTypSchluessel = '2' "SetKennzeichenTypREF";
+  } "MapArtikelkennzeichenFallback";
+
+  // ARI_ArtikelArtSchluessel (enum_0067): Implantat/Explantat
+  // Bestimmung aus Device.status oder Procedure-Kontext
+  src.status as st where $this = 'active' -> tgt.artikelArtSchluessel = '1' "SetArtikelArtImplantat";
+  src.status as st where $this = 'inactive' -> tgt.artikelArtSchluessel = '2' "SetArtikelArtExplantat";
+
+  // --- ARB_* Artikelbeschreibung ---
+  src -> tgt.artikelbeschreibung as arb then MapArtikelbeschreibung(src, arb) "CallMapArb";
+}
+
+// ============================================================================
+// Artikelbeschreibung: Device -> ARB_*
+// LOT-Nummer, Seriennummer, Verfalldatum, Bezeichnung
+// ============================================================================
+
+group MapArtikelbeschreibung(source src : Device, target tgt : BackboneElement) {
+
+  // ARB_LotNummer
+  src.lotNumber as lot -> tgt.lotNummer = lot "SetLotNummer";
+  src where lotNumber.exists().not() -> tgt.lotNummerUnbekannt = 1 "SetLotNummerUnbekannt";
+
+  // ARB_SerienNummer
+  src.serialNumber as sn -> tgt.serienNummer = sn "SetSerienNummer";
+  src where serialNumber.exists().not() -> tgt.serienNummerUnbekannt = 1 "SetSerienNummerUnbekannt";
+
+  // ARB_Artikelbezeichnung: aus Device.deviceName oder Device.type.text
+  src.deviceName as dn first then {
+    dn.name as n -> tgt.artikelbezeichnung = n "SetArtikelbezeichnung";
+  } "MapDeviceName";
+
+  // ARB_Barcode: aus UDI carrierHRF
+  src.udiCarrier as udi first then {
+    udi.carrierHRF as hrf -> tgt.barcode = hrf "SetBarcode";
+  } "MapBarcode";
+
+  // --- ABI_* Brustimplantat-spezifische Artikeldaten ---
+  src -> tgt.artikelBrustimplantat as abi then MapArtikelBrustimplantat(src, abi) "CallMapAbi";
+}
+
+// ============================================================================
+// ArtikelBrustimplantat: Device -> ABI_*
+// Hersteller, Artikeltyp, Form, Oberflaeche, Fuellung, Volumen
+// ============================================================================
+
+group MapArtikelBrustimplantat(source src : Device, target tgt : BackboneElement) {
+
+  // ABI_HerstellerSchluessel: aus Device.manufacturer (Klartext -> Katalogkode)
+  src.manufacturer as mfr -> tgt.herstellerSonstiger = mfr "SetHerstellerSonstiger";
+  src where manufacturer.exists().not() -> tgt.herstellerUnbekannt = 1 "SetHerstellerUnbekannt";
+
+  // ABI_ArtikelTypSchluessel (enum_0190): aus Device.type
+  src.type as t then {
+    t.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-artikel-typ' then {
+      c.code as cd -> tgt.artikelTypSchluessel = cd "SetArtikelTypDirect";
+    } "MapArtikelTypCoding";
+  } "MapArtikelTyp";
+
+  // Fallback: Brustimplantat Silikon als Standard
+  src where type.coding.where(system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-artikel-typ').exists().not()
+    -> tgt.artikelTypSchluessel = '1' "SetArtikelTypDefault";
+
+  // ABI_FormSchluessel (enum_0126): aus Extension
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-form' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.formSchluessel = cd "SetForm";
+      } "MapFormCoding";
+    } "MapFormValue";
+  } "MapForm";
+  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-form').exists().not()
+    -> tgt.formUnbekannt = 1 "SetFormUnbekannt";
+
+  // ABI_OberflaecheSchluessel (enum_0128): aus Extension
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-oberflaeche' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.oberflaecheSchluessel = cd "SetOberflaeche";
+      } "MapOberflaecheCoding";
+    } "MapOberflaecheValue";
+  } "MapOberflaeche";
+  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-oberflaeche').exists().not()
+    -> tgt.oberflaecheUnbekannt = 1 "SetOberflaecheUnbekannt";
+
+  // ABI_FuellungSchluessel (enum_0124): aus Extension
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-fuellung' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.fuellungSchluessel = cd "SetFuellung";
+      } "MapFuellungCoding";
+    } "MapFuellungValue";
+  } "MapFuellung";
+  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-fuellung').exists().not()
+    -> tgt.fuellungUnbekannt = 1 "SetFuellungUnbekannt";
+
+  // ABI_Volumen: aus Extension (in ml)
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-volumen' then {
+    ext.value as val -> tgt.volumen = val "SetVolumen";
+  } "MapVolumen";
+  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-volumen').exists().not()
+    -> tgt.volumenUnbekannt = 1 "SetVolumenUnbekannt";
+
+  // ABI_IntraoperativesVolumen: aus Extension
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-intraop-volumen' then {
+    ext.value as val -> tgt.intraoperativesVolumen = val "SetIntraopVolumen";
+  } "MapIntraopVolumen";
+}
+
+// ============================================================================
+// Zubehoer: Device -> ZUB_* + ZBI_*
+// ADM/Netz-Zubehoer zum Brustimplantat-Eingriff
+// ============================================================================
+
+group MapZubehoer(source src : Device, target tgt : BackboneElement) {
+
+  // ZUB_LaufendeNummer
+  src.identifier as id first then {
+    id.value as v -> tgt.laufendeNummer = v "SetZubLaufendeNummer";
+  } "MapZubLaufendeNummer";
+  src where identifier.exists().not() -> tgt.laufendeNummer = 1 "SetZubLaufendeNummerDefault";
+
+  // ZUB_ZubehoerArtSchluessel (enum_0069): Implantat/Explantat
+  src.status as st where $this = 'active' -> tgt.zubehoerArtSchluessel = '1' "SetZubArtImplantat";
+  src.status as st where $this = 'inactive' -> tgt.zubehoerArtSchluessel = '2' "SetZubArtExplantat";
+
+  // ZUB_ArtikelNummer
+  src.udiCarrier as udi first then {
+    udi.deviceIdentifier as di -> tgt.artikelNummer = di "SetZubArtikelNummer";
+  } "MapZubArtikelNummer";
+  src where udiCarrier.exists().not() -> tgt.artikelNummerUnbekannt = 1 "SetZubArtikelNummerUnbekannt";
+
+  // ZUB_LotNummer
+  src.lotNumber as lot -> tgt.lotNummer = lot "SetZubLotNummer";
+  src where lotNumber.exists().not() -> tgt.lotNummerUnbekannt = 1 "SetZubLotNummerUnbekannt";
+
+  // ZUB_SerienNummer
+  src.serialNumber as sn -> tgt.serienNummer = sn "SetZubSerienNummer";
+  src where serialNumber.exists().not() -> tgt.serienNummerUnbekannt = 1 "SetZubSerienNummerUnbekannt";
+
+  // ZUB_Artikelbezeichnung
+  src.deviceName as dn first then {
+    dn.name as n -> tgt.artikelbezeichnung = n "SetZubArtikelbezeichnung";
+  } "MapZubDeviceName";
+
+  // --- ZBI_* Brustimplantat-spezifisches Zubehoer ---
+  src -> tgt.zubehoerBrustimplantat as zbi then MapZubehoerBrustimplantat(src, zbi) "CallMapZbi";
+}
+
+// ============================================================================
+// ZubehoerBrustimplantat: Device -> ZBI_*
+// ============================================================================
+
+group MapZubehoerBrustimplantat(source src : Device, target tgt : BackboneElement) {
+
+  // ZBI_HerstellerSchluessel (enum_0131)
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-zubehoer-hersteller' then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.herstellerSchluessel = cd "SetZbiHersteller";
+      } "MapZbiHerstellerCoding";
+    } "MapZbiHerstellerValue";
+  } "MapZbiHersteller";
+
+  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-zubehoer-hersteller').exists().not()
+    -> tgt.herstellerUnbekannt = 1 "SetZbiHerstellerUnbekannt";
+
+  // ZBI_HerstellerSonstiger
+  src.manufacturer as mfr -> tgt.herstellerSonstiger = mfr "SetZbiHerstellerSonstiger";
+
+  // ZBI_ZubehoerTypSchluessel (enum_0191)
+  src.type as t then {
+    t.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-zubehoer-typ' then {
+      c.code as cd -> tgt.zubehoerTypSchluessel = cd "SetZbiZubehoerTyp";
+    } "MapZbiTypCoding";
+  } "MapZbiZubehoerTyp";
+}

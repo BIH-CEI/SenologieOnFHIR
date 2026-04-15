@@ -1,0 +1,129 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegMeldung"
+/// name = "SenologieToIRegMeldung"
+/// title = "Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Device" alias Device as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
+
+// Teil-Maps importieren
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegPatient"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegOperation"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegEntlassung"
+
+// ============================================================================
+// Master Orchestrator: Bundle -> IRegG Brustimplantat-Meldung
+//
+// Empfaengt ein FHIR Bundle mit Senologie-Ressourcen (Patient, Procedure,
+// Device, Encounter, Condition, Observations) und erzeugt eine vollstaendige
+// IRegG-Meldung fuer Brustimplantate.
+//
+// Im Gegensatz zur oBDS-Transformation (mehrere Meldungen pro Bundle)
+// erzeugt die IRegG-Meldung eine einzelne GEMeldung pro Behandlungsfall.
+// ============================================================================
+
+group SenologieToIRegMeldung(source src : Bundle, target tgt : IRegMeldung) {
+
+  // --- Meldungskopf (MEL_*) ---
+  src -> tgt.meldung as mel then MapMeldungskopf(src, mel) "CallMapMeldungskopf";
+
+  // --- Fall (FAL_*) ---
+  src.entry as entry where resource.is(Encounter) then {
+    entry.resource as encounter -> tgt.fall as fall then MapFall(encounter, fall, src) "CallMapFall";
+  } "EntryEncounter";
+}
+
+// ============================================================================
+// Meldungskopf: Bundle -> meldung (MEL_*)
+// Einrichtungskennung, Softwareinfo aus Organization und Bundle-Metadaten
+// ============================================================================
+
+group MapMeldungskopf(source src : Bundle, target tgt : BackboneElement) {
+
+  // MEL_IrdIdGesundheitseinrichtung: aus Organization im Bundle
+  src.entry as entry where resource.is(Organization) then {
+    entry.resource as org then {
+      org.identifier as id where system = 'http://fhir.de/sid/ird/ge-kennung' then {
+        id.value as v -> tgt.idEinrichtung = v "SetIdEinrichtung";
+      } "FilterIrdId";
+      // MEL_Bsnr: Betriebsstaettennummer
+      org.identifier as id where system = 'https://fhir.de/sid/arge-ik/iknr' then {
+        id.value as v -> tgt.bsnr = v "SetBsnr";
+      } "FilterBsnr";
+    } "OrgContext";
+  } "EntryOrganization";
+
+  // MEL_IrdSpezVersion: feste Version der IRegD-Spezifikation
+  src -> tgt.irdSpezVersion = '4.1.1' "SetSpezVersion";
+
+  // MEL_SwName, MEL_SwHersteller, MEL_SwVersion: aus Bundle.meta.tag oder fest
+  src -> tgt.swName = 'Senologie-KDS FHIR IG' "SetSwName";
+  src -> tgt.swHersteller = 'BIH at Charite' "SetSwHersteller";
+  src -> tgt.swVersion = '0.1.0' "SetSwVersion";
+}
+
+// ============================================================================
+// Fall: Encounter -> fall (FAL_*)
+// Aufnahmedatum, Art des Aufenthalts, Transfernummer
+// ============================================================================
+
+group MapFall(source src : Encounter, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // FAL_Aufnahmedatum: aus Encounter.period.start
+  src.period as period then {
+    period.start as s -> tgt.aufnahmedatum = s "SetAufnahmedatum";
+  } "MapAufnahmedatum";
+
+  // FAL_ArtAufenthaltSchluessel: aus Encounter.class
+  // vollstationaer = 1, teilstationaer = 2, ambulant = 3
+  src.class as cls then {
+    cls.code as cd where $this = 'IMP' -> tgt.artAufenthaltSchluessel = '1' "SetAufenthaltStationaer";
+    cls.code as cd where $this = 'SS' -> tgt.artAufenthaltSchluessel = '2' "SetAufenthaltTeilstationaer";
+    cls.code as cd where $this = 'AMB' -> tgt.artAufenthaltSchluessel = '3' "SetAufenthaltAmbulant";
+  } "MapArtAufenthalt";
+
+  // FAL_Transfernummer: aus Encounter.identifier mit Pseudonymisierungssystem
+  src.identifier as id where system = 'http://fhir.de/sid/ird/transfernummer' then {
+    id.value as v -> tgt.transfernummer = v "SetTransfernummer";
+  } "MapTransfernummer";
+
+  // FAL_DatumZeitSatzErstellung: aktuelle Zeit
+  src -> tgt.datumZeitSatzErstellung = evaluate(src, now()) "SetSatzErstellung";
+
+  // FAL_Versionsnummer
+  src.meta as meta then {
+    meta.versionId as v -> tgt.versionsnummer = v "SetVersionsnummer";
+  } "MapVersionsnummer";
+
+  // --- Ausloeser: OPS-Kodes die den Meldeanlass bilden ---
+  // Aus Procedure-Ressourcen im Bundle mit OPS-Kodierung
+  bundle.entry as entry where resource.is(Procedure) then {
+    entry.resource as procedure then {
+      procedure.code as code then {
+        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' -> tgt.ausloeser as ausl then {
+          c.code as cd -> ausl.prozedurenSchluessel = cd "SetAusloeserOPS";
+        } "MapAusloeserCoding";
+      } "MapAusloeserCode";
+    } "AusloeserProcContext";
+  } "EntryAusloeser";
+
+  // --- Patientenaufnahme: Patient + Observations ---
+  bundle.entry as entry where resource.is(Patient) then {
+    entry.resource as patient -> tgt.patientenaufnahme as pat then MapPatientenaufnahme(patient, pat, bundle) "CallMapPatientenaufnahme";
+  } "EntryPatient";
+
+  // --- Operationen: Procedure (Senologie_Operation) mit Device ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+    entry.resource as procedure -> tgt.operation as op then MapOperation(procedure, op, bundle) "CallMapOperation";
+  } "EntryOperation";
+
+  // --- Entlassung: Encounter + Conditions ---
+  src -> tgt.entlassung as entl then MapEntlassung(src, entl, bundle) "CallMapEntlassung";
+}
