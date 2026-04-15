@@ -136,6 +136,15 @@ Einzelne Medikamentengabe mit SNOMED-CT-kodiertem Wirkstoff, Zyklus- und Tages-T
 
 Therapieplanung mit Substanz, Intention (neoadjuvant, adjuvant, palliativ), Protokoll/Schema und Therapielinie.
 
+### Therapie-Nebenwirkungen (CTCAE)
+
+Für die Dokumentation von Nebenwirkungen der Systemtherapie und Strahlentherapie wird das MII Onko Profil **MII_PR_Onko_Nebenwirkung_Adverse_Event** (AdverseEvent) genutzt — kein eigenes Senologie-Profil. Es enthält:
+- `event.coding` — Art der Nebenwirkung (CTCAE-kodiert mit Version)
+- `seriousness` — CTCAE-Grad (1–5)
+- `suspectEntity.instance` — Referenz auf die verursachende Therapie
+
+Für **operative Komplikationen** wird dagegen das senologiespezifische Profil [Senologie_Operative_Komplikation](StructureDefinition-senologie-operative-komplikation.html) mit Clavien-Dindo-Klassifikation verwendet.
+
 ---
 
 ## Strahlentherapie

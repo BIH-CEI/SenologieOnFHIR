@@ -109,13 +109,13 @@ Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen ab
 | Absender/Melder-Daten (IKNR, Arzt, Anschrift, Bankdaten) | KIS / Verwaltung | **Externe Quelle** — administrative Daten |
 | Meldebegründung, Eigene Leistung | KIS / Verwaltung | **Externe Quelle** |
 | Sterbedatum, Todesursache | KIS / Standesamt | **Externe Quelle** |
-| Nebenwirkungen Systemtherapie (CTCAE-Grad) | — | **Teilweise** — Senologie_Operative_Komplikation existiert (Clavien-Dindo), CTCAE-Profil für Systemtherapie/RT fehlt |
-| Nebenwirkungen Strahlentherapie (CTCAE) | — | **Teilweise** — siehe oben |
+| Nebenwirkungen Systemtherapie (CTCAE-Grad) | MII Onko (`mii-pr-onko-nebenwirkung-adverse-event`) | **Vorhanden** — AdverseEvent mit CTCAE-Art, Grad und Verursacher-Referenz |
+| Nebenwirkungen Strahlentherapie (CTCAE) | MII Onko (`mii-pr-onko-nebenwirkung-adverse-event`) | **Vorhanden** — gleiches Profil, suspectEntity verweist auf RT-Procedure |
 | Sozialdienstkontakt (Modul_Allgemein) | — | **Fehlt** — nicht im Senologie-Scope |
 
 #### Handlungsoptionen
 
-1. **CTCAE-Nebenwirkungsprofil ergänzen** — Analog zur operativen Komplikation (Clavien-Dindo) ein Observation-Profil für CTCAE-basierte Nebenwirkungen bei Systemtherapie und Strahlentherapie erstellen. Hohe Priorität, da meldungsrelevant.
+1. **CTCAE-Nebenwirkungen** — Über das bestehende MII Onko Profil `mii-pr-onko-nebenwirkung-adverse-event` (AdverseEvent) abbildbar. CTCAE-Art, Grad und CTCAE-Version sind als MS-Elemente definiert. Die `suspectEntity`-Referenz verknüpft die Nebenwirkung mit der verursachenden Therapie. Kein eigenes Senologie-Profil nötig.
 
 2. **ICD-O-Topographie** — Wird aus der BodyStructure (Tumorlokalisation) abgeleitet: SNOMED-Quadrant → ICD-O-3 C50.x via ConceptMap. Seitenlokalisation separat. Die [ConceptMap SNOMED → ICD-O-3](ConceptMap-cm-sct-to-icdo3-mamma-topographie.html) deckt alle 7 Quadranten ab, mit Fallback auf C50.9.
 

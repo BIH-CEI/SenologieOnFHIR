@@ -238,3 +238,22 @@ Das Modul enthält ConceptMaps für SNOMED CT → ATC und SNOMED CT → ASK. Die
 - Wird ASK als Zielterminologie für die Medikamentendokumentation benötigt, oder reicht ATC?
 - Wie erfolgt die konkrete Anbindung an Arzneimitteldatenbanken (AMTS, KIS-Hausliste)?
 - Sollen die ConceptMaps normativ oder informativ sein?
+
+---
+
+## OF-11: PRO-CTCAE und CTCAE — Abgrenzung und Mapping
+
+{:.stu-note}
+Wie verhält sich die patientenberichtete Nebenwirkungserfassung (PRO-CTCAE) zur ärztlichen CTCAE-Dokumentation?
+
+Das Brustzentrum erhebt Nebenwirkungen auf zwei Wegen:
+
+- **CTCAE (ärztlich)**: Grad 0–5 pro Nebenwirkung, dokumentiert in der Systemtherapie-Dokumentation. Meldepflichtig an das Krebsregister (oBDS: bei Grad ≥3 einzeln, sonst nur Maximalgrad).
+- **PRO-CTCAE (Patient-reported)**: Schwere/Häufigkeit/Beeinträchtigung (jeweils 0–4) pro Symptom, erhoben per Fragebogen (z.B. bei fortgeschrittener Erkrankung in dotbase).
+
+Es gibt **kein offizielles Mapping** PRO-CTCAE → CTCAE Grad. Die NCI definiert PRO-CTCAE als Ergänzung, nicht als Ersatz der ärztlichen Dokumentation. Die Frage, ob und wie PRO-CTCAE-Daten in die CTCAE-basierte Meldung einfließen können, ist eine offene Forschungsfrage.
+
+**Für diesen IG:**
+- Die ärztliche CTCAE-Dokumentation wird als Senologie-Profil (Observation) abgebildet → oBDS-meldbar
+- PRO-CTCAE wird über das MII PRO-Modul abgebildet → nicht direkt meldbar
+- Ein Mapping PRO-CTCAE → CTCAE liegt außerhalb des Scope dieses IGs
