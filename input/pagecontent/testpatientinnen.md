@@ -1,9 +1,25 @@
 # Testpatientinnen
 
-Diese Seite beschreibt zwei synthetische Testpatientinnen, die den gesamten Versorgungspfad in der Senologie exemplarisch abbilden. Die Fälle sind klinisch realistisch und dienen dazu, die FHIR-Profile dieses Implementierungsleitfadens im Kontext typischer Behandlungsverläufe zu veranschaulichen und zu validieren.
+Diese Seite beschreibt 12 synthetische Testfälle, die den gesamten Versorgungspfad in der Senologie exemplarisch abbilden. Die Fälle decken alle Brustkrebs-Subtypen, Stadien 0–IV, benigne Befunde und eine B3-Läsion ab. Sie dienen dazu, die FHIR-Profile dieses Implementierungsleitfadens zu veranschaulichen, zu validieren und als Grundlage für CQL-Qualitätsindikatoren zu nutzen.
 
-- **Fall 1 (Erika Neumann)** repräsentiert ein frühes, hormonrezeptorpositives Mammakarzinom mit kurativem Therapieansatz.
-- **Fall 2 (Lena Hoffmann)** repräsentiert ein lokal fortgeschrittenes, triple-negatives Mammakarzinom mit primärer Metastasierung und palliativem Verlauf.
+**Gesamtumfang**: 208 FHIR-Instanzen über 12 Fälle, geladen auf HAPI FHIR (localhost:8095).
+
+### Übersicht
+
+| Fall | Name | Alter | Diagnose | Subtyp | Stadium | OP | Besonderheit |
+|---|---|---|---|---|---|---|---|
+| 1 | Erika Neumann | 60 | Invasiv NST | HR+/HER2- | IA | BET | Oncotype DX, Letrozol |
+| 2 | Lena Hoffmann | 44 | Invasiv NST | TNBC | IV | Mastektomie | Neoadj+Immun, Progression, MTB |
+| 3 | Sabine Weber | 72 | Invasiv NST | HR+/HER2- | IIA | Mastektomie | N1, ältere Patientin |
+| 4 | Julia Fischer | 38 | Invasiv NST | HER2+ | IIB | BET | Neoadj TCHP, pCR |
+| 5 | Monika Braun | 55 | Invasiv NST | HR+/HER2+ | IIIA | BET | Doppelt positiv, neoadjuvant |
+| 6 | Petra Schneider | 67 | **DCIS** | ER+ | 0 | BET | Kein invasiv, Screening |
+| 7 | Kathrin Müller | 48 | Invasiv NST | TNBC | IIA | BET | Neoadj, pCR |
+| 8 | **Klaus Hartmann** | 69 | Invasiv NST | HR+/HER2- | IIA | Mastektomie | **Männlich**, Tamoxifen |
+| 9 | Andrea Wolf | 51 | Invasiv lobulär | HR+/HER2- | IIIC | BET | N3(12/18), **Komplikation Lymphödem** |
+| 10 | Christina Becker | 43 | Invasiv NST | TNBC | IA | Mastektomie bilat. | **BRCA1**, prophylaktisch + **2 Implantate** |
+| 11 | Hannah Klein | 34 | **Fibroadenom** | — | — | Keine | **Benigne**, BI-RADS 3 |
+| 12 | Renate Vogel | 45 | **ADH (B3)** | — | — | Nachresektion | **B3-Läsion**, Vakuumbiopsie |
 
 ---
 
@@ -174,34 +190,68 @@ Kontroll-CT: neue Leberläsionen, Verdacht auf hepatische Metastasen. Biopsie be
 
 ---
 
+## Fall 3–12: Kurzprofile
+
+### Fall 3: Sabine Weber — HR+/HER2-, N1, ältere Patientin
+72 Jahre, postmenopausal. Invasives Karzinom NST rechts, G2, ER+ IRS 10, PR+ IRS 6, HER2- Score 0, Ki-67 12%. pT2 pN1a(2/12) cM0, UICC IIA. Mastektomie rechts + Axilladissektion → R0. Adjuvant RT Thoraxwand 50 Gy. Endokrin: Anastrozol. Keine Chemotherapie (postmenopausal, niedriges Risikoprofil trotz N1).
+
+### Fall 4: Julia Fischer — HER2+, neoadjuvant, pCR
+38 Jahre, prämenopausal. Invasives Karzinom NST links, G3, ER- PR- HER2+ (FISH amplifiziert), Ki-67 45%. cT2 cN1 cM0, UICC IIB. Neoadjuvant TCHP (Docetaxel + Carboplatin + Trastuzumab + Pertuzumab). BET links + SLNB → ypT0 ypN0 = **pCR**, R0. Adjuvant Trastuzumab + Pertuzumab 1 Jahr, RT.
+
+### Fall 5: Monika Braun — HR+/HER2+, doppelt positiv
+55 Jahre, perimenopausal. Invasives Karzinom NST rechts, G2, ER+ IRS 8, PR+ IRS 4, HER2+ (Score 3+), Ki-67 30%. cT3 cN1 cM0, UICC IIIA. Neoadjuvant EC → Docetaxel + Trastuzumab. BET rechts + SLNB → ypT1a ypN0, R0. Adjuvant Trastuzumab 1 Jahr + RT + Letrozol.
+
+### Fall 6: Petra Schneider — DCIS (Stadium 0)
+67 Jahre, postmenopausal. **Duktales Carcinoma in situ (DCIS)**, G2, ER+. Screening-Mammographie → BI-RADS 4 (Mikrokalzifikationen). Vakuumbiopsie → DCIS bestätigt. BET links → R0. Adjuvant RT 50 Gy (kein Boost). Keine Systemtherapie, kein Staging. Kein axillärer Eingriff (QI-4 konform).
+
+### Fall 7: Kathrin Müller — TNBC, kurativ, pCR
+48 Jahre, prämenopausal. Invasives Karzinom NST rechts, G3, ER- PR- HER2-, Ki-67 65%. cT2 cN0 cM0, UICC IIA. Neoadjuvant Carboplatin + Paclitaxel wöchentlich, dann EC. BET rechts + SLNB → ypT0 ypN0 = **pCR**, R0. Adjuvant RT 50 Gy + Boost 16 Gy. Keine endokrine Therapie (triple-negativ).
+
+### Fall 8: Klaus Hartmann — Männliches Mammakarzinom
+69 Jahre, **männlich**. Invasives Karzinom NST rechts, G2, ER+ IRS 12, PR+ IRS 6, HER2- Score 1+, Ki-67 18%. pT2 pN0(sn)(0/3) cM0, UICC IIA. Mastektomie rechts + SLNB → R0. Adjuvant RT Thoraxwand. Endokrin: **Tamoxifen** 20 mg/d (Standard bei Männern, kein Aromataseinhibitor). Keine gynäkologische Anamnese.
+
+### Fall 9: Andrea Wolf — N3, Komplikation Lymphödem
+51 Jahre, prämenopausal. Invasives lobuläres Karzinom links, G2, ER+ IRS 12, PR+ IRS 10, HER2-, Ki-67 20%. pT2 pN3a(12/18) cM0, UICC IIIC. Adjuvant EC × 4 → Paclitaxel × 12. BET links + Axilladissektion Level I–III → R0. **Komplikation: Lymphödem Arm links, Clavien-Dindo Grad II**. RT 50 Gy + Boost + Lymphabfluss. Endokrin: Tamoxifen.
+
+### Fall 10: Christina Becker — BRCA1, bilateral, Implantate
+43 Jahre, prämenopausal. Invasives Karzinom NST rechts, G3, ER- PR- HER2-, Ki-67 55%. **BRCA1-Mutation**. cT1c cN0 cM0, UICC IA. Familienanamnese: Mutter Mammakarzinom 41 J., Schwester Ovarialkarzinom 39 J. **Bilaterale Mastektomie** (therapeutisch rechts + prophylaktisch links) + SLNB rechts + **Sofortrekonstruktion beidseits mit Silikonimplantaten**. Adjuvant Carboplatin + Paclitaxel. RT Thoraxwand rechts.
+
+### Fall 11: Hannah Klein — Fibroadenom (benigne)
+34 Jahre, prämenopausal. Tastbefund links oben außen, 15 mm, glatt begrenzt. Mammographie BI-RADS 3. Sonographie: echoarmer Knoten. Stanzbiopsie: **Fibroadenom**, keine Atypie. Diagnose: **Senologie_Diagnose_Benigne** (ICD-10 D24, SNOMED 254845004). Keine OP, keine Therapie — Verlaufskontrolle in 6 Monaten.
+
+### Fall 12: Renate Vogel — B3-Läsion (ADH)
+45 Jahre, prämenopausal. Screening-Mammographie → BI-RADS 4a (Mikrokalzifikationen). Vakuumbiopsie: **Atypische duktale Hyperplasie (ADH)**, B3-Kategorie. Tumorkonferenz: Nachresektion empfohlen. Offene Biopsie/Nachresektion links → kein Upgrade, R0. Keine weitere Therapie, engmaschige Nachsorge.
+
+---
+
 ## Profilabdeckung
 
-Die folgende Tabelle zeigt, welche Profile durch die beiden Testfälle abgedeckt werden.
+| Profil | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Diagnose Maligne | x | x | x | x | x | x | x | x | x | x | | |
+| Diagnose Benigne | | | | | | | | | | | x | |
+| Bildgebung Befund | x | x | x | x | x | x | x | x | x | x | x | x |
+| Bildgebung Observation | x | x | x | x | x | x | x | x | x | x | x | x |
+| Bildgebung Sonstige | x | x | | | | | | | | | | |
+| Pathologie Befund | x | x | x | x | x | x | x | x | x | x | x | x |
+| Pathologie Präparat | x | x | x | x | x | x | x | x | x | x | x | x |
+| Klinische Untersuchung | x | x | | | | | | | | | x | |
+| Gynäkologische Anamnese | x | x | | | | | | | | | | |
+| Familienanamnese | x | | | | | | | | | x | | |
+| Genexpressionstest | x | | | | | | | | | | | |
+| Genexpressions-Score | x | | | | | | | | | | | |
+| Tumorboard | x | x | | x | x | | x | | x | | | x |
+| OP-Planung | x | | | | | | | | | | | |
+| Operation | x | x | x | x | x | x | x | x | x | x | | x |
+| Operative Komplikation | | x | | | | | | | x | | | |
+| Implantat | | | | | | | | | | x | | |
+| Strahlentherapie | x | x | x | x | x | x | x | x | x | x | | |
+| Systemtherapie Procedure | | x | | x | x | | x | | x | x | | |
+| Systemtherapie Medikation | | x | | x | x | | x | | x | x | | |
+| Begleitmedikation | x | x | x | | x | | | x | x | | | |
+| Studienteilnahme | | x | | | | | | | | | | |
 
-| Profil | Fall 1 (Neumann) | Fall 2 (Hoffmann) |
-|---|:---:|:---:|
-| [Diagnose Maligne](StructureDefinition-senologie-diagnose-maligne.html) | &#10003; | &#10003; |
-| [Bildgebungsbefund](StructureDefinition-senologie-bildgebung-befund.html) | &#10003; | &#10003; |
-| [Bildgebungs-Observation](StructureDefinition-senologie-bildgebung-observation.html) | &#10003; | &#10003; |
-| [Bildgebung Sonstige](StructureDefinition-senologie-bildgebung-sonstige.html) | &#10003; | &#10003; |
-| [Pathologiebefund](StructureDefinition-senologie-pathologie-befund.html) | &#10003; | &#10003; |
-| [Pathologisches Präparat](StructureDefinition-senologie-pathologie-praeparat.html) | &#10003; | &#10003; |
-| [Tumorlokalisation](StructureDefinition-senologie-tumorlokalisation.html) | &#10003; | &#10003; |
-| [Klinische Untersuchung](StructureDefinition-senologie-klinische-untersuchung.html) | &#10003; | &#10003; |
-| [Gynäkologische Anamnese](StructureDefinition-senologie-gynaekologische-anamnese.html) | &#10003; | &#10003; |
-| [Familienanamnese](StructureDefinition-senologie-familienanamnese.html) | &#10003; | |
-| [Genexpressionstest](StructureDefinition-senologie-genexpressionstest.html) | &#10003; | |
-| [Genexpressions-Score](StructureDefinition-senologie-genexpressions-score.html) | &#10003; | |
-| [Tumorboard Empfehlung](StructureDefinition-senologie-tumorboard-empfehlung.html) | &#10003; | &#10003; |
-| [OP-Planung](StructureDefinition-senologie-op-planung.html) | &#10003; | &#10003; |
-| [Operation](StructureDefinition-senologie-operation.html) | &#10003; | &#10003; |
-| [Operative Komplikation](StructureDefinition-senologie-operative-komplikation.html) | | &#10003; |
-| [Strahlentherapie](StructureDefinition-senologie-strahlentherapie.html) | &#10003; | &#10003; |
-| [Systemtherapie Procedure](StructureDefinition-senologie-systemtherapie-procedure.html) | | &#10003; |
-| [Systemtherapie Medikation](StructureDefinition-senologie-systemtherapie-medikation.html) | &#10003; | &#10003; |
-| [Geplante Systemtherapie](StructureDefinition-senologie-geplante-systemtherapie.html) | &#10003; | &#10003; |
-| [Begleitmedikation](StructureDefinition-senologie-begleitmedikation.html) | &#10003; | &#10003; |
-| [Studienteilnahme](StructureDefinition-senologie-studienteilnahme.html) | | &#10003; |
+Legende: 1=Neumann, 2=Hoffmann, 3=Weber, 4=Fischer, 5=Braun, 6=Schneider, 7=Müller, 8=Hartmann, 9=Wolf, 10=Becker, 11=Klein, 12=Vogel
 
 ---
 
