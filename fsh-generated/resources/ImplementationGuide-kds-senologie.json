@@ -4,7 +4,7 @@
   "url": "http://fhir.bih-charite.de/kds-senologie/ImplementationGuide/kds-senologie",
   "version": "0.1.0",
   "name": "SenologieKDS",
-  "title": "MII KDS Modul Senologie",
+  "title": "Kerndatensatz Senologie",
   "status": "draft",
   "publisher": "Berlin Institute of Health at Charité (BIH)",
   "contact": [
@@ -18,7 +18,7 @@
       ]
     }
   ],
-  "description": "Medizininformatik Initiative - Kerndatensatz Modul Senologie (Brustkrebsversorgung)",
+  "description": "Kerndatensatz für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus",
   "packageId": "kds-senologie",
   "fhirVersion": [
     "4.0.1"
@@ -513,6 +513,14 @@
       },
       {
         "reference": {
+          "reference": "StructureDefinition/obds-meldung"
+        },
+        "name": "oBDS Meldung",
+        "description": "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz v3.0.5). Bildet die XML-Struktur einer einzelnen Meldung ab, wie sie von Meldestellen an die Krebsregister übermittelt wird.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
           "reference": "StructureDefinition/ex-senologie-operating-table-setup"
         },
         "name": "OP-Lagerung/Tischanordnung",
@@ -549,6 +557,70 @@
         },
         "name": "Screeningstatus",
         "description": "Screeningstatus der Studienteilnahme — kein natives FHIR-Äquivalent in ResearchSubject",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-fm-lokalisation"
+        },
+        "name": "SNOMED CT to oBDS Fernmetastasen-Lokalisation",
+        "description": "Mapping von SNOMED CT Koerperstruktur-Codes zu oBDS Fernmetastasen-Lokalisation (PUL, OSS, HEP, BRA, etc.)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-grading"
+        },
+        "name": "SNOMED CT to oBDS Grading",
+        "description": "Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X, L, M, H, B)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-intention"
+        },
+        "name": "SNOMED CT to oBDS Intention",
+        "description": "Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, R, S, X)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-residualstatus"
+        },
+        "name": "SNOMED CT to oBDS Residualstatus",
+        "description": "Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus (R0, R1, R2, RX)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-seitenlokalisation"
+        },
+        "name": "SNOMED CT to oBDS Seitenlokalisation",
+        "description": "Mapping von SNOMED CT Lateralitaetscodes zu oBDS Seitenlokalisation (R, L, B, M, T, U)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-therapiestellung"
+        },
+        "name": "SNOMED CT to oBDS Therapie-Stellung zur OP",
+        "description": "Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-therapieart"
+        },
+        "name": "SNOMED CT to oBDS Therapieart",
+        "description": "Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, HO, IM, ZS, SO, ST)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
+        },
+        "name": "SNOMED CT to oBDS Verlauf Gesamtbeurteilung",
+        "description": "Mapping von SNOMED CT Tumorstatusbewertungen zu oBDS Gesamtbeurteilung Tumorstatus (V, T, K, P, U, X)",
         "exampleBoolean": false
       },
       {
@@ -723,7 +795,14 @@
             {
               "nameUrl": "anwendungsfaelle-meldedatensaetze.html",
               "title": "Meldedatensätze",
-              "generation": "markdown"
+              "generation": "markdown",
+              "page": [
+                {
+                  "nameUrl": "meldung-obds.html",
+                  "title": "oBDS-Transformation",
+                  "generation": "markdown"
+                }
+              ]
             }
           ]
         },
