@@ -257,3 +257,20 @@ Es gibt **kein offizielles Mapping** PRO-CTCAE → CTCAE Grad. Die NCI definiert
 - Die ärztliche CTCAE-Dokumentation wird als Senologie-Profil (Observation) abgebildet → oBDS-meldbar
 - PRO-CTCAE wird über das MII PRO-Modul abgebildet → nicht direkt meldbar
 - Ein Mapping PRO-CTCAE → CTCAE liegt außerhalb des Scope dieses IGs
+
+---
+
+## OF-12: Tumorverlauf — eine Condition oder mehrere?
+
+{:.stu-note}
+Wie wird der longitudinale Verlauf eines Tumors (Erstdiagnose → Therapie → Rezidiv/Progression) in FHIR abgebildet?
+
+Bei einem Tumorrezidiv oder einer Progression stellt sich die Frage, ob der aktualisierte Tumorstatus als **Update der bestehenden Condition** oder als **neue Condition** abgebildet wird:
+
+- **Option A (eine Condition, Status-Update)**: `Condition.clinicalStatus` wird von `active` auf `recurrence` aktualisiert. Verlaufsdaten (neues Staging, Fernmetastasen) als separate Observations. Vorteil: ein Tumor = eine Ressource. Nachteil: erfordert Versionierung (PUT statt POST), passt schlecht zum Formular-First-Ansatz.
+- **Option B (neue Condition)**: Rezidiv/Progression als neue Condition mit `clinicalStatus = recurrence` und Referenz auf die Erstdiagnose über `extension[occurredFollowing]`. Vorteil: jede Formulareingabe erzeugt neue Ressourcen. Nachteil: ein Tumor = mehrere Conditions, Zuordnung über Extension.
+- **Option C (EpisodeOfCare als Klammer)**: Eine EpisodeOfCare repräsentiert die gesamte Tumorbehandlung. Conditions, Procedures und Observations referenzieren die Episode. Vorteil: sauberstes Modell, entspricht dem oBDS-Konzept der Tumor_ID. Nachteil: noch nicht implementiert (→ OF-1).
+
+Im oBDS wird die Zuordnung über die **Tumor_ID** gelöst — alle Meldungen zum selben Tumor tragen dieselbe ID. In FHIR fehlt ein direktes Äquivalent. `Condition.identifier` mit einer stabilen Tumor-ID könnte diese Rolle übernehmen.
+
+**Aktueller Stand**: Die Testdaten verwenden Option B (separate Condition für Progression). Option C (EpisodeOfCare) ist die angestrebte Lösung, befindet sich aber noch in Arbeit (siehe OF-1).
