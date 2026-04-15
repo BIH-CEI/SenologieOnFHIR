@@ -348,6 +348,72 @@ Usage: #example
 * patient = Reference(Patient/Fall10-Patient-Christina-Becker)
 
 
+// --- Rekonstruktion rechts (Implantat) ---
+Instance: Fall10-Rekonstruktion-Rechts
+InstanceOf: Senologie_Operation
+Title: "Fall 10: Sofortrekonstruktion rechts mit Implantat"
+Description: "Implantatrekonstruktion rechts als Subprozedur der therapeutischen Mastektomie"
+Usage: #example
+
+* status = #completed
+
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+
+* category = $SCT#33496007 "Reconstruction of breast"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-886.17
+* code.coding[=].display = "Andere plastische Rekonstruktion der Mamma: Einsetzen eines Brustimplantates: nach Mastektomie"
+* code.text = "Sofortrekonstruktion rechts mit Silikonimplantat"
+
+* bodySite = $SCT#73056007 "Right breast structure"
+* performedDateTime = "2025-06-18"
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+
+// Subprozedur der Mastektomie
+* partOf = Reference(Procedure/Fall10-Operation-Mastektomie-Rechts)
+
+// Eingesetztes Implantat
+* focalDevice[+].action = $SCT#129336009 "Insertion"
+* focalDevice[=].manipulated = Reference(Device/Fall10-Implantat-Rechts)
+
+* outcome.text = "Implantatrekonstruktion rechts komplikationslos"
+
+
+// --- Rekonstruktion links (Implantat) ---
+Instance: Fall10-Rekonstruktion-Links
+InstanceOf: Senologie_Operation
+Title: "Fall 10: Sofortrekonstruktion links mit Implantat"
+Description: "Implantatrekonstruktion links als Subprozedur der prophylaktischen Mastektomie"
+Usage: #example
+
+* status = #completed
+
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#S "sonstiges"
+
+* category = $SCT#33496007 "Reconstruction of breast"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-886.17
+* code.coding[=].display = "Andere plastische Rekonstruktion der Mamma: Einsetzen eines Brustimplantates: nach Mastektomie"
+* code.text = "Sofortrekonstruktion links mit Silikonimplantat"
+
+* bodySite = $SCT#80248007 "Left breast structure"
+* performedDateTime = "2025-06-18"
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+
+// Subprozedur der Mastektomie
+* partOf = Reference(Procedure/Fall10-Operation-Mastektomie-Links)
+
+// Eingesetztes Implantat
+* focalDevice[+].action = $SCT#129336009 "Insertion"
+* focalDevice[=].manipulated = Reference(Device/Fall10-Implantat-Links)
+
+* outcome.text = "Implantatrekonstruktion links komplikationslos"
+
+
 // --- Adjuvante Systemtherapie ---
 Instance: Fall10-Systemtherapie-Adjuvant
 InstanceOf: Senologie_Systemtherapie_Procedure

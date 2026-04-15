@@ -67,6 +67,8 @@
 [Fall10-Patho-Conclusion]: Observation-Fall10-Patho-Conclusion.html
 [Fall10-Patient-Christina-Becker]: Patient-Fall10-Patient-Christina-Becker.html
 [Fall10-Operation-Mastektomie-Links]: Procedure-Fall10-Operation-Mastektomie-Links.html
+[Fall10-Rekonstruktion-Links]: Procedure-Fall10-Rekonstruktion-Links.html
+[Fall10-Rekonstruktion-Rechts]: Procedure-Fall10-Rekonstruktion-Rechts.html
 [Fall10-Pathologie-Praeparat]: Specimen-Fall10-Pathologie-Praeparat.html
 [Fall10-Operation-Mastektomie-Rechts]: Procedure-Fall10-Operation-Mastektomie-Rechts.html
 [Fall10-Diagnose-Mammakarzinom]: Condition-Fall10-Diagnose-Mammakarzinom.html
