@@ -8,21 +8,33 @@ Die Senologie-Profile erben entweder von MII-Kerndatensatzprofilen (wo onkologis
 
 #### Information (Anamnese, Risiko, Bildgebung, Pathologie)
 
-{% include img.html img="profil-vererbung-information.png" caption="Vererbung — Informationserhebung" width="100%" %}
+<div>
+<img src="profil-vererbung-information.png" alt="Vererbung — Informationserhebung" style="width:100%"/>
+<p><em>Vererbung — Informationserhebung</em></p>
+</div>
 
 #### Diagnose & Workflow (Entscheidung)
 
-{% include img.html img="profil-vererbung-diagnose.png" caption="Vererbung — Diagnose und Workflow" width="100%" %}
+<div>
+<img src="profil-vererbung-diagnose.png" alt="Vererbung — Diagnose und Workflow" style="width:100%"/>
+<p><em>Vererbung — Diagnose und Workflow</em></p>
+</div>
 
 #### Therapie (Handlung)
 
-{% include img.html img="profil-vererbung-therapie.png" caption="Vererbung — Therapeutische Maßnahmen" width="100%" %}
+<div>
+<img src="profil-vererbung-therapie.png" alt="Vererbung — Therapeutische Maßnahmen" style="width:100%"/>
+<p><em>Vererbung — Therapeutische Maßnahmen</em></p>
+</div>
 
 ### Referenzmodell
 
 Die Profile sind über FHIR-Referenzen miteinander verknüpft. Der Patient bildet den zentralen Ankerpunkt, die Diagnose ist die klinische Klammer für Therapie und Planung:
 
-{% include img.html img="profil-referenzen.png" caption="Referenzbeziehungen zwischen Senologie-Profilen" width="100%" %}
+<div>
+<img src="profil-referenzen.png" alt="Referenzbeziehungen zwischen Senologie-Profilen" style="width:100%"/>
+<p><em>Referenzbeziehungen zwischen Senologie-Profilen</em></p>
+</div>
 
 ### Logisches Modell
 
