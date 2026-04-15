@@ -1,0 +1,50 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsLeistungszustand"
+/// name = "SenologieToObdsLeistungszustand"
+/// title = "Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Gemeinsame Leistungszustand-Map: Extrahiert den ECOG Performance Status
+// aus einer Observation und mappt auf das oBDS-Element allgemeinerLeistungszustand.
+//
+// Wird von Diagnose und Verlauf importiert.
+//
+// MII Onko Profil: mii-pr-onko-allgemeiner-leistungszustand-ecog
+//   LOINC 89247-1 = "ECOG Performance Status"
+//
+// ECOG-Score: 0-4 (direkte Uebernahme), U = unbekannt
+// Die MII Onko Observation codiert den ECOG-Score als valueCodeableConcept
+// mit dem Karnofsky/ECOG-CodeSystem.
+// ============================================================================
+
+// ============================================================================
+// MapLeistungszustandFromBundle: Bundle -> allgemeinerLeistungszustand
+// Sucht die ECOG-Observation im Bundle und extrahiert den Score
+// ============================================================================
+
+group MapLeistungszustandFromBundle(source src : Bundle, target tgt : BackboneElement) {
+
+  // ECOG Performance Status (LOINC 89247-1)
+  src.entry as ecogEntry where resource.is(Observation) and resource.code.coding.exists(code = '89247-1') then {
+    ecogEntry.resource as ecogObs then MapLeistungszustand(ecogObs, tgt) "CallMapLeistungszustand";
+  } "EntryECOG";
+}
+
+// ============================================================================
+// MapLeistungszustand: Observation -> allgemeinerLeistungszustand (code)
+// Extrahiert den ECOG-Score (0-4) aus der Observation
+// ============================================================================
+
+group MapLeistungszustand(source src : Observation, target tgt : BackboneElement) {
+
+  // ECOG-Score: aus valueCodeableConcept.coding.code
+  src.value as v then {
+    v.coding as c then {
+      c.code as cd -> tgt.allgemeinerLeistungszustand = cd "SetECOG";
+    } "ExtractECOGCode";
+  } "MapECOGValue";
+}

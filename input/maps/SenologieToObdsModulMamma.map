@@ -1,0 +1,89 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsModulMamma"
+/// name = "SenologieToObdsModulMamma"
+/// title = "Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Gemeinsame Modul-Mamma-Map: Extrahiert mammaspezifische Observations aus
+// dem Bundle und mappt auf das oBDS Modul_Mamma BackboneElement.
+//
+// Wird von Diagnose, OP und Verlauf importiert.
+//
+// MII Onko Mamma-Profile:
+//   - mii-pr-onko-mamma-rezeptorstatus-estrogen (LOINC 85337-4)
+//   - mii-pr-onko-mamma-rezeptorstatus-progesteron (LOINC 85339-0)
+//   - mii-pr-onko-mamma-her2neu-status (LOINC 85319-2)
+//   - mii-pr-onko-mamma-menopause-status (LOINC 63612-8)
+//
+// SNOMED-CT Werte:
+//   10828004 = Positive (qualifier value) -> P
+//   260385009 = Negative (qualifier value) -> N
+//   261665006 = Unknown (qualifier value) -> U
+//
+// Menopausenstatus:
+//   309606002 = Before menopause (finding) -> 1 (praemenopausal)
+//   309607006 = During menopause (finding) -> 2 (perimenopausal, nicht oBDS-konform, gemappt auf U)
+//   309608001 = After menopause (finding) -> 3 (postmenopausal)
+// ============================================================================
+
+// ============================================================================
+// MapModulMamma: Bundle -> oBDS Modul_Mamma
+// Extrahiert Hormonrezeptoren, HER2 und Menopausenstatus aus Observations
+// ============================================================================
+
+group MapModulMamma(source src : Bundle, target tgt : BackboneElement) {
+
+  // Oestrogenrezeptor (LOINC 85337-4 = Estrogen receptor Ag [Presence])
+  src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
+    erEntry.resource as erObs then {
+      erObs.value as val then {
+        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusOestrogen = 'P' "SetERPositiv";
+        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusOestrogen = 'N' "SetERNegativ";
+        val.coding as c where code = '261665006' -> tgt.hormonrezeptorStatusOestrogen = 'U' "SetERUnbekannt";
+      } "MapERValue";
+    } "MapERObs";
+  } "EntryER";
+
+  // Progesteronrezeptor (LOINC 85339-0 = Progesterone receptor Ag [Presence])
+  src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
+    prEntry.resource as prObs then {
+      prObs.value as val then {
+        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusProgesteron = 'P' "SetPRPositiv";
+        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusProgesteron = 'N' "SetPRNegativ";
+        val.coding as c where code = '261665006' -> tgt.hormonrezeptorStatusProgesteron = 'U' "SetPRUnbekannt";
+      } "MapPRValue";
+    } "MapPRObs";
+  } "EntryPR";
+
+  // HER2-Status (LOINC 85319-2 = HER2 [Presence] in Breast cancer specimen)
+  src.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
+    herEntry.resource as herObs then {
+      herObs.value as val then {
+        val.coding as c where code = '10828004' -> tgt.her2neuStatus = 'P' "SetHER2Positiv";
+        val.coding as c where code = '260385009' -> tgt.her2neuStatus = 'N' "SetHER2Negativ";
+        val.coding as c where code = '261665006' -> tgt.her2neuStatus = 'U' "SetHER2Unbekannt";
+      } "MapHER2Value";
+    } "MapHER2Obs";
+  } "EntryHER2";
+
+  // Menopausenstatus (LOINC 63612-8 = Menopause status)
+  // Nur in Diagnose und Verlauf relevant (nicht OP)
+  src.entry as menoEntry where resource.is(Observation) and resource.code.coding.exists(code = '63612-8') then {
+    menoEntry.resource as menoObs then {
+      menoObs.value as val then {
+        // Praemenopausal: SNOMED 309606002 -> oBDS 1
+        val.coding as c where code = '309606002' -> tgt.praetherapeutischerMenopausenstatus = '1' "SetMenoPrae";
+        // Postmenopausal: SNOMED 309608001 -> oBDS 3
+        val.coding as c where code = '309608001' -> tgt.praetherapeutischerMenopausenstatus = '3' "SetMenoPost";
+        // Perimenopausal: SNOMED 309607006 -> oBDS U (kein oBDS-Code fuer perimenopausal)
+        val.coding as c where code = '309607006' -> tgt.praetherapeutischerMenopausenstatus = 'U' "SetMenoPeri";
+        // Unbekannt: SNOMED 261665006 -> oBDS U
+        val.coding as c where code = '261665006' -> tgt.praetherapeutischerMenopausenstatus = 'U' "SetMenoUnbekannt";
+      } "MapMenoValue";
+    } "MapMenoObs";
+  } "EntryMenopause";
+}

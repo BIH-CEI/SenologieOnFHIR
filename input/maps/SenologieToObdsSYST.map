@@ -7,6 +7,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsNebenwirkung"
 
 // ============================================================================
 // Hauptgruppe: Bundle → oBDS SYST
@@ -87,11 +88,8 @@ group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundl
     medEntry.resource as medStmt -> tgt.substanzen as subst then MapSubstanz(medStmt, subst) "CallMapSubstanz";
   } "EntrySubstanzen";
 
-  // Nebenwirkungen: Observations mit Adverse-Event-Profil aus dem Bundle
-  // CTCAE-Grad >= 3 als einzelne Nebenwirkungen, sonst gradMaximal2OderUnbekannt
-  bundle.entry as obsEntry where resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl') then {
-    obsEntry.resource as obs -> tgt.nebenwirkungen as nw then MapNebenwirkungSYST(obs, nw) "CallMapNebenwirkung";
-  } "EntryNebenwirkungen";
+  // Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (SYST-Variante)
+  src -> tgt.nebenwirkungen as nw then MapNebenwirkungenSYST(bundle, nw) "CallMapNebenwirkungen";
 }
 
 // ============================================================================
@@ -113,29 +111,4 @@ group MapSubstanz(source src : MedicationStatement, target tgt : BackboneElement
       c.version as v -> tgt.atcVersion = v "SetAtcVersion";
     } "ExtractAtcCoding";
   } "MapAtcCode";
-}
-
-// ============================================================================
-// MapNebenwirkungSYST: Observation → oBDS Nebenwirkung
-// Nur Nebenwirkungen mit CTCAE-Grad >= 3 werden als einzelne Eintraege gemeldet.
-// Grad <= 2 wird als gradMaximal2OderUnbekannt zusammengefasst.
-// ============================================================================
-
-group MapNebenwirkungSYST(source src : Observation, target tgt : BackboneElement) {
-
-  // Grad der Nebenwirkung (CTCAE)
-  src.value as val then {
-    val.coding as c then {
-      c.code as code -> tgt.nebenwirkung as nw then {
-        // Bezeichnung der Nebenwirkung (aus Observation.code)
-        src.code as obsCode then {
-          obsCode.text as t -> nw.artBezeichnung = t "SetNwBezeichnung";
-        } "ExtractNwBezeichnung";
-        // CTCAE-Grad
-        c.code as g -> nw.grad = g "SetNwGrad";
-        // CTCAE-Version
-        c.system as sys -> nw.version = sys "SetNwVersion";
-      } "CreateNebenwirkung";
-    } "ExtractGradCoding";
-  } "MapNebenwirkungGrad";
 }

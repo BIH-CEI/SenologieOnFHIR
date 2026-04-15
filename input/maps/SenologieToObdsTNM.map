@@ -1,0 +1,190 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTNM"
+/// name = "SenologieToObdsTNM"
+/// title = "Senologie TNM Observations to oBDS TNM BackboneElement"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Gemeinsame TNM-Map: Extrahiert TNM-Staging aus einer TNM-Klassifikation-
+// Observation (MII Onko) und mappt auf das oBDS TNM-BackboneElement.
+//
+// Wird von Diagnose (cTNM), OP (pTNM) und Verlauf (c/pTNM) importiert.
+// Die TNM-Klassifikation-Observation enthaelt T/N/M/L/V/Pn als components
+// mit LOINC-kodierten Codes.
+//
+// MII Onko TNM LOINC-Codes:
+//   Klinisch: 21908-9 (Gesamt), 21905-5 (cT), 21906-3 (cN), 21907-1 (cM)
+//   Pathologisch: 21902-2 (Gesamt), 21899-0 (pT), 21900-6 (pN), 21901-4 (pM)
+//   Symbole: 59479-6 (y), 21983-2 (r), 101659-7 (a), 42030-7 (m)
+//   Zusatz: 33739-4 (L), 33740-2 (V), 92837-4 (Pn)
+// ============================================================================
+
+// ============================================================================
+// MapTNM: Observation (TNM-Klassifikation) -> oBDS TNM BackboneElement
+// Generische Gruppe, die sowohl klinisches als auch pathologisches TNM
+// verarbeitet. Der c/p/u-Praefix wird aus dem jeweiligen LOINC-Code
+// der T/N/M-Komponenten abgeleitet.
+// ============================================================================
+
+group MapTNM(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // Datum der TNM-Klassifikation
+  src.effective as eff where $this.is(dateTime) -> tgt.datum = eff "SetTNMDatum";
+
+  // TNM-Auflage (Version): aus Observation.method
+  src.method as method then {
+    method.coding as c then {
+      c.code as cd -> tgt.version = cd "SetTNMVersion";
+    } "ExtractTNMVersionCode";
+  } "MapTNMVersion";
+
+  // y-Symbol (nach multimodaler Therapie) — LOINC 59479-6
+  src.component as comp where code.coding.exists(code = '59479-6') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.ySymbol = cd "SetYSymbol";
+      } "ExtractYCode";
+    } "MapYValue";
+  } "MapYSymbol";
+
+  // r-Symbol (Rezidivklassifikation) — LOINC 21983-2
+  src.component as comp where code.coding.exists(code = '21983-2') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.rSymbol = cd "SetRSymbol";
+      } "ExtractRCode";
+    } "MapRValue";
+  } "MapRSymbol";
+
+  // a-Symbol (Autopsie) — LOINC 101659-7
+  src.component as comp where code.coding.exists(code = '101659-7') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.aSymbol = cd "SetASymbol";
+      } "ExtractACode";
+    } "MapAValue";
+  } "MapASymbol";
+
+  // --- T-Kategorie ---
+
+  // T klinisch (LOINC 21905-5) -> Praefix c
+  src.component as comp where code.coding.exists(code = '21905-5') then {
+    comp -> tgt.cpuPraefixT = 'c' "SetCPrefixT";
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.t = cd "SetTClinical";
+      } "ExtractTClinCode";
+    } "MapTClinValue";
+  } "MapTClinical";
+
+  // T pathologisch (LOINC 21899-0) -> Praefix p
+  src.component as comp where code.coding.exists(code = '21899-0') then {
+    comp -> tgt.cpuPraefixT = 'p' "SetPPrefixT";
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.t = cd "SetTPathological";
+      } "ExtractTPathCode";
+    } "MapTPathValue";
+  } "MapTPathological";
+
+  // m_Symbol: multiple Primaertumoren — LOINC 42030-7
+  src.component as comp where code.coding.exists(code = '42030-7') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.mSymbol = cd "SetMSymbol";
+      } "ExtractMSymbolCode";
+    } "MapMSymbolValue";
+  } "MapMSymbol";
+
+  // --- N-Kategorie ---
+
+  // N klinisch (LOINC 21906-3) -> Praefix c
+  src.component as comp where code.coding.exists(code = '21906-3') then {
+    comp -> tgt.cpuPraefixN = 'c' "SetCPrefixN";
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.n = cd "SetNClinical";
+      } "ExtractNClinCode";
+    } "MapNClinValue";
+  } "MapNClinical";
+
+  // N pathologisch (LOINC 21900-6) -> Praefix p
+  src.component as comp where code.coding.exists(code = '21900-6') then {
+    comp -> tgt.cpuPraefixN = 'p' "SetPPrefixN";
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.n = cd "SetNPathological";
+      } "ExtractNPathCode";
+    } "MapNPathValue";
+  } "MapNPathological";
+
+  // --- M-Kategorie ---
+
+  // M klinisch (LOINC 21907-1) -> Praefix c
+  src.component as comp where code.coding.exists(code = '21907-1') then {
+    comp -> tgt.cpuPraefixM = 'c' "SetCPrefixM";
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.m = cd "SetMClinical";
+      } "ExtractMClinCode";
+    } "MapMClinValue";
+  } "MapMClinical";
+
+  // M pathologisch (LOINC 21901-4) -> Praefix p
+  src.component as comp where code.coding.exists(code = '21901-4') then {
+    comp -> tgt.cpuPraefixM = 'p' "SetPPrefixM";
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.m = cd "SetMPathological";
+      } "ExtractMPathCode";
+    } "MapMPathValue";
+  } "MapMPathological";
+
+  // --- Zusatzklassifikationen ---
+
+  // L: Lymphgefaessinvasion — LOINC 33739-4
+  src.component as comp where code.coding.exists(code = '33739-4') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.l = cd "SetL";
+      } "ExtractLCode";
+    } "MapLValue";
+  } "MapL";
+
+  // V: Veneninvasion — LOINC 33740-2
+  src.component as comp where code.coding.exists(code = '33740-2') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.v = cd "SetV";
+      } "ExtractVCode";
+    } "MapVValue";
+  } "MapV";
+
+  // Pn: Perineurale Invasion — LOINC 92837-4
+  src.component as comp where code.coding.exists(code = '92837-4') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.pn = cd "SetPn";
+      } "ExtractPnCode";
+    } "MapPnValue";
+  } "MapPn";
+
+  // S: Serumtumormarker (z.B. bei Hodentumoren, selten bei Mamma)
+  src.component as comp where code.coding.exists(code = '21924-6') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd -> tgt.s = cd "SetS";
+      } "ExtractSCode";
+    } "MapSValue";
+  } "MapS";
+
+  // UICC-Stadium: aus Observation.value (Gesamtstadium)
+  src.value as val then {
+    val.coding as c then {
+      c.code as cd -> tgt.uiccStadium = cd "SetUICC";
+    } "ExtractUICC";
+  } "MapUICC";
+}

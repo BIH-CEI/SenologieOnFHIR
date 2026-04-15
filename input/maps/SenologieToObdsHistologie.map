@@ -1,0 +1,142 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsHistologie"
+/// name = "SenologieToObdsHistologie"
+/// title = "Senologie Histologie Observations to oBDS Histologie BackboneElement"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Gemeinsame Histologie-Map: Extrahiert Histologiebefunde aus MII Onko
+// Observations und mappt auf das oBDS Histologie-BackboneElement.
+//
+// Wird von Diagnose, OP und Verlauf importiert.
+//
+// MII Onko Histologie-Profile:
+//   - mii-pr-onko-histologie-icdo3 (LOINC 59847-4): Morphologie + Freitext
+//   - mii-pr-onko-grading (LOINC 59542-1): Histopathologisches Grading
+//   - mii-pr-onko-anzahl-untersuchte-lymphknoten (LOINC 21894-1)
+//   - mii-pr-onko-anzahl-befallene-lymphknoten (LOINC 21893-3)
+//   - mii-pr-onko-anzahl-untersuchte-sentinel-lymphknoten (LOINC 92832-5)
+//   - mii-pr-onko-anzahl-befallene-sentinel-lymphknoten (LOINC 92831-7)
+//
+// Die Histologie-Observation (59847-4) ist die Haupt-Ressource.
+// Grading und Lymphknoten koennen als components in der Haupt-Observation
+// oder als separate Observations vorliegen.
+// ============================================================================
+
+// ============================================================================
+// MapHistologie: Observation (Histologie ICD-O-3) -> oBDS Histologie
+// Verarbeitet die Haupt-Histologie-Observation und extrahiert Morphologie,
+// Grading und Lymphknoten-Daten aus deren components.
+// ============================================================================
+
+group MapHistologie(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // Histologie_ID: aus Observation.identifier
+  src.identifier as id first then {
+    id.value as v -> tgt.histologieID = v "SetHistologieID";
+  } "MapHistologieID";
+
+  // Tumor_Histologiedatum: aus Observation.effectiveDateTime
+  src.effective as eff where $this.is(dateTime) -> tgt.tumorHistologiedatum = eff "SetHistologiedatum";
+
+  // Histologie_EinsendeNr: aus Observation.identifier (Pathologie-Einsende-Nr)
+  src.identifier as id where system = 'http://pathologie.charite.de/fhir/sid/einsende-nr' then {
+    id.value as v -> tgt.histologieEinsendeNr = v "SetEinsendeNr";
+  } "MapEinsendeNr";
+
+  // Histologiedatum aus Specimen.collection.collectedDateTime (falls vorhanden)
+  // Das Specimen wird ueber Observation.specimen referenziert
+  bundle.entry as specEntry where resource.is(Specimen) then {
+    specEntry.resource as specimen then {
+      // Einsende-Nummer aus Specimen.accessionIdentifier
+      specimen.accessionIdentifier as accId then {
+        accId.value as v -> tgt.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen";
+      } "MapAccessionId";
+      // Histologiedatum aus Specimen.collection.collectedDateTime
+      specimen.collection as coll then {
+        coll.collected as collDt where $this.is(dateTime) -> tgt.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen";
+      } "MapSpecimenCollection";
+    } "SpecimenContext";
+  } "EntrySpecimen";
+
+  // Morphologie_ICD_O: aus Observation.value (ICD-O Morphologie)
+  src.value as val then {
+    val.coding as c where system = 'urn:oid:2.16.840.1.113883.6.43.1' -> tgt.morphologieICDO as morph then {
+      c.code as cd -> morph.code = cd "SetMorphCode";
+      c.version as v -> morph.version = v "SetMorphVersion";
+    } "MapMorphCoding";
+  } "MapMorphologie";
+
+  // Morphologie_Freitext: aus Observation.value.text
+  src.value as val then {
+    val.text as t -> tgt.morphologieFreitext = t "SetMorphFreitext";
+  } "MapMorphFreitext";
+
+  // Grading: aus component (LOINC 59542-1) mit Uebersetzung SNOMED -> oBDS
+  src.component as comp where code.coding.exists(code = '59542-1') then {
+    comp.value as val then {
+      val.coding as c -> tgt.grading = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGrading";
+    } "MapGradingValue";
+  } "MapGrading";
+
+  // Grading: aus separater Observation im Bundle (Fallback)
+  bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
+    gradEntry.resource as gradObs then {
+      gradObs.value as val then {
+        val.coding as c -> tgt.grading = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
+      } "MapGradingSepValue";
+    } "MapGradingSepObs";
+  } "EntryGrading";
+
+  // LK_untersucht: Anzahl untersuchter Lymphknoten (LOINC 21894-1)
+  src.component as comp where code.coding.exists(code = '21894-1') then {
+    comp.value as val -> tgt.lkUntersucht = val "SetLKUntersucht";
+  } "MapLKUntersucht";
+
+  // LK_untersucht: aus separater Observation im Bundle (Fallback)
+  bundle.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+    lkEntry.resource as lkObs then {
+      lkObs.value as val -> tgt.lkUntersucht = val "SetLKUntersuchtSeparate";
+    } "MapLKUntersuchtSep";
+  } "EntryLKUntersucht";
+
+  // LK_befallen: Anzahl befallener Lymphknoten (LOINC 21893-3)
+  src.component as comp where code.coding.exists(code = '21893-3') then {
+    comp.value as val -> tgt.lkBefallen = val "SetLKBefallen";
+  } "MapLKBefallen";
+
+  // LK_befallen: aus separater Observation im Bundle (Fallback)
+  bundle.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+    lkbEntry.resource as lkbObs then {
+      lkbObs.value as val -> tgt.lkBefallen = val "SetLKBefallenSeparate";
+    } "MapLKBefallenSep";
+  } "EntryLKBefallen";
+
+  // Sentinel_LK_untersucht (LOINC 92832-5)
+  src.component as comp where code.coding.exists(code = '92832-5') then {
+    comp.value as val -> tgt.sentinelLKUntersucht = val "SetSentinelLKUntersucht";
+  } "MapSentinelLKUntersucht";
+
+  // Sentinel_LK_untersucht: aus separater Observation im Bundle (Fallback)
+  bundle.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+    slkEntry.resource as slkObs then {
+      slkObs.value as val -> tgt.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate";
+    } "MapSentinelLKUntersuchtSep";
+  } "EntrySentinelLKUntersucht";
+
+  // Sentinel_LK_befallen (LOINC 92831-7)
+  src.component as comp where code.coding.exists(code = '92831-7') then {
+    comp.value as val -> tgt.sentinelLKBefallen = val "SetSentinelLKBefallen";
+  } "MapSentinelLKBefallen";
+
+  // Sentinel_LK_befallen: aus separater Observation im Bundle (Fallback)
+  bundle.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
+    slkbEntry.resource as slkbObs then {
+      slkbObs.value as val -> tgt.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate";
+    } "MapSentinelLKBefallenSep";
+  } "EntrySentinelLKBefallen";
+}

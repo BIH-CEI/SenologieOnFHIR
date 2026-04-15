@@ -1,0 +1,93 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsResidualstatus"
+/// name = "SenologieToObdsResidualstatus"
+/// title = "Senologie Residualstatus Observation to oBDS Residualstatus BackboneElement"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/CodeableConcept" alias CodeableConcept as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Gemeinsame Residualstatus-Map: Extrahiert den Residualtumorstatus
+// (R-Klassifikation) und mappt auf das oBDS Residualstatus-BackboneElement.
+//
+// Wird von OP importiert.
+//
+// MII Onko Profil: mii-pr-onko-residualstatus
+// Die Observation hat zwei relevante components:
+//   - Lokale Beurteilung des Residualstatus
+//   - Gesamtbeurteilung des Residualstatus
+//
+// Alternativ kann der Residualstatus direkt aus Procedure.outcome kommen
+// (aelteres Mapping-Pattern, bleibt als Fallback erhalten).
+//
+// oBDS Residualstatus-Codes: R0, R1, R1(is), R1(cy+), R2, RX, U
+// ============================================================================
+
+// ============================================================================
+// MapResidualstatusFromObservation: Observation -> oBDS Residualstatus
+// Extrahiert lokale und Gesamtbeurteilung aus Observation.components
+// ============================================================================
+
+group MapResidualstatusFromObservation(source src : Observation, target tgt : BackboneElement) {
+
+  // Lokale Beurteilung: component mit LOINC-Code fuer lokalen Residualstatus
+  // MII Onko verwendet Observation.component fuer lokale vs. Gesamt-R-Klassifikation
+  src.component as comp where code.coding.exists(code = '84892-9') then {
+    comp.value as val then {
+      // Direkte oBDS-Codes aus MII Onko CodeSystem
+      val.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus' then {
+        c.code as cd -> tgt.lokaleBeurteilung = cd "SetLokaleBeurteilungDirect";
+      } "ExtractLokaleBeurteilungDirect";
+      // SNOMED -> oBDS Uebersetzung
+      val.coding as c where system = 'http://snomed.info/sct'
+        -> tgt.lokaleBeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilung";
+    } "MapLokaleBeurteilungValue";
+  } "MapLokaleBeurteilung";
+
+  // Gesamtbeurteilung: component mit LOINC-Code fuer Gesamt-Residualstatus
+  src.component as comp where code.coding.exists(code = '21976-6') then {
+    comp.value as val then {
+      // Direkte oBDS-Codes
+      val.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus' then {
+        c.code as cd -> tgt.gesamtbeurteilung = cd "SetGesamtbeurteilungDirect";
+      } "ExtractGesamtbeurteilungDirect";
+      // SNOMED -> oBDS Uebersetzung
+      val.coding as c where system = 'http://snomed.info/sct'
+        -> tgt.gesamtbeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilung";
+    } "MapGesamtbeurteilungValue";
+  } "MapGesamtbeurteilung";
+
+  // Fallback: wenn nur ein einzelner value (kein component), verwende fuer beide
+  src.value as val where %src.component.exists().not() then {
+    val.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus' then {
+      c.code as cd -> tgt.lokaleBeurteilung = cd "SetLokaleBeurteilungFallback";
+      c.code as cd -> tgt.gesamtbeurteilung = cd "SetGesamtbeurteilungFallback";
+    } "FallbackDirectCodes";
+    val.coding as c where system = 'http://snomed.info/sct' then {
+      c -> tgt.lokaleBeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilungFallback";
+      c -> tgt.gesamtbeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilungFallback";
+    } "FallbackSnomedCodes";
+  } "MapResidualstatusFallback";
+}
+
+// ============================================================================
+// MapResidualstatusFromOutcome: Procedure.outcome -> oBDS Residualstatus
+// Aelteres Pattern: Residualstatus direkt aus Procedure.outcome (CodeableConcept)
+// Bleibt als Kompatibilitaets-Gruppe erhalten
+// ============================================================================
+
+group MapResidualstatusFromOutcome(source src : CodeableConcept, target tgt : BackboneElement) {
+
+  // Direkte oBDS-Codes aus Procedure.outcome
+  src.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus' then {
+    c.code as cd -> tgt.lokaleBeurteilung = cd "SetLokaleBeurteilung";
+    c.code as cd -> tgt.gesamtbeurteilung = cd "SetGesamtbeurteilung";
+  } "MapResidualDirect";
+
+  // SNOMED -> oBDS Uebersetzung
+  src.coding as c where system = 'http://snomed.info/sct' then {
+    c -> tgt.lokaleBeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilung";
+    c -> tgt.gesamtbeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilung";
+  } "MapResidualSNOMED";
+}

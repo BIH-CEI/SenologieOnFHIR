@@ -1,0 +1,94 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsNebenwirkung"
+/// name = "SenologieToObdsNebenwirkung"
+/// title = "Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+
+// ============================================================================
+// Gemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)
+// aus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.
+//
+// Wird von SYST und ST importiert.
+//
+// MII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event
+// Die Nebenwirkung wird als Observation modelliert mit:
+//   - code: CTCAE-Term (NCI Thesaurus Code + Text)
+//   - value: CTCAE-Grad als CodeableConcept
+//   - method: CTCAE-Version
+//
+// oBDS-Struktur:
+//   nebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen
+//     Grad <=2 oder unbekannt sind, wird hier "2" oder "U" gesetzt.
+//   nebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad >=3
+//     mit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.
+// ============================================================================
+
+// ============================================================================
+// MapNebenwirkungenSYST: Bundle -> oBDS Nebenwirkungen (fuer Systemtherapie)
+// Bei SYST: Observations mit CTCAE-Codierung extrahieren,
+// Grad >=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt
+// ============================================================================
+
+group MapNebenwirkungenSYST(source src : Bundle, target tgt : BackboneElement) {
+
+  // Default: Wenn keine Nebenwirkungen vorhanden -> U (unbekannt)
+  src where entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()
+    -> tgt.gradMaximal2OderUnbekannt = 'U' "SetGradUnbekannt";
+
+  // Nebenwirkungen mit CTCAE-Codierung: jede Observation einzeln verarbeiten
+  src.entry as obsEntry where resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl') then {
+    obsEntry.resource as obs then MapNebenwirkungEinzeln(obs, tgt) "CallMapNebenwirkungEinzeln";
+  } "EntryNebenwirkungen";
+}
+
+// ============================================================================
+// MapNebenwirkungenST: Bundle -> oBDS Nebenwirkungen (fuer Strahlentherapie)
+// Gleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen
+// ============================================================================
+
+group MapNebenwirkungenST(source src : Bundle, target tgt : BackboneElement) {
+
+  // Default: Wenn keine Nebenwirkungen vorhanden -> U (unbekannt)
+  src where entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()
+    -> tgt.gradMaximal2OderUnbekannt = 'U' "SetGradUnbekannt";
+
+  // Nebenwirkungen mit CTCAE-Codierung
+  src.entry as obsEntry where resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl') then {
+    obsEntry.resource as obs then MapNebenwirkungEinzeln(obs, tgt) "CallMapNebenwirkungEinzeln";
+  } "EntryNebenwirkungen";
+}
+
+// ============================================================================
+// MapNebenwirkungEinzeln: Observation -> oBDS Nebenwirkung (einzeln)
+// Erzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version
+// ============================================================================
+
+group MapNebenwirkungEinzeln(source src : Observation, target tgt : BackboneElement) {
+
+  // Einzelne Nebenwirkung
+  src.value as val then {
+    val.coding as c -> tgt.nebenwirkung as nw then {
+      // Art/Bezeichnung der Nebenwirkung (aus Observation.code)
+      src.code as obsCode then {
+        obsCode.text as t -> nw.artBezeichnung = t "SetNwBezeichnung";
+        obsCode.coding as coding then {
+          coding.display as d where %obsCode.text.exists().not() -> nw.artBezeichnung = d "SetNwBezeichnungDisplay";
+        } "FallbackNwBezeichnung";
+      } "ExtractNwBezeichnung";
+
+      // CTCAE-Grad (1-5)
+      c.code as g -> nw.grad = g "SetNwGrad";
+
+      // CTCAE-Version (z.B. "4.03", "5.0")
+      src.method as method then {
+        method.text as t -> nw.version = t "SetNwVersion";
+        method.coding as mc then {
+          mc.code as v where %method.text.exists().not() -> nw.version = v "SetNwVersionFromCoding";
+        } "FallbackNwVersion";
+      } "ExtractNwVersion";
+    } "CreateNebenwirkung";
+  } "MapNebenwirkungGrad";
+}

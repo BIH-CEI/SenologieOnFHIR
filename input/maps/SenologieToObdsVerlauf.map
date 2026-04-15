@@ -9,6 +9,11 @@ uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as 
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTNM"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsHistologie"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsModulMamma"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsFernmetastasen"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsLeistungszustand"
 
 // ============================================================================
 // Hauptgruppe: Bundle -> oBDS Verlaufsmeldung
@@ -96,316 +101,31 @@ group MapVerlauf(source src : Condition, target tgt : BackboneElement, source bu
     } "MapFMStatusValue";
   } "MapTumorstatusFernmetastasen";
 
-  // Fernmetastasen: aus Observations im Bundle (Metastasen-Befunde)
-  // LOINC 21907-1 oder spezifische Metastasen-Observations
-  bundle.entry as fmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
-    fmEntry.resource as fmObs -> tgt.fernmetastasen as fm then MapFernmetastase(fmObs, fm) "CallMapFernmetastase";
-  } "EntryFernmetastasen";
-
-  // Alternative: Fernmetastasen aus Condition.evidence (Referenzen auf FM-Observations)
-  bundle.entry as fmEntry where resource.is(Observation) and resource.code.coding.exists(code = '97956-3') then {
-    fmEntry.resource as fmObs -> tgt.fernmetastasen as fm then MapFernmetastase(fmObs, fm) "CallMapFernmetastaseAlt";
-  } "EntryFernmetastasenAlt";
+  // Fernmetastasen: Delegiert an die gemeinsame Fernmetastasen-Map
+  src -> tgt then MapFernmetastasenFromBundle(bundle, tgt) "CallMapFernmetastasen";
 
   // Histologie: aus Observation im Bundle (Re-Biopsie im Verlauf)
   // LOINC 59847-4 = "Histology and Behavior ICD-O-3 Cancer"
+  // Delegiert an die gemeinsame Histologie-Map
   bundle.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
-    histEntry.resource as histObs -> tgt.histologie as histo then MapHistologieVerlauf(histObs, histo) "CallMapHistologieVerlauf";
+    histEntry.resource as histObs -> tgt.histologie as histo then MapHistologie(histObs, histo, bundle) "CallMapHistologie";
   } "EntryHistologie";
 
   // TNM: aus TNM-Observation im Bundle (Rezidiv-Staging)
   // Kann klinisch (21908-9) oder pathologisch (21902-2) sein
+  // Delegiert an die gemeinsame TNM-Map
   bundle.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
-    tnmEntry.resource as tnmObs -> tgt.tnm as tnm then MapTNMVerlauf(tnmObs, tnm, bundle) "CallMapTNMVerlaufC";
+    tnmEntry.resource as tnmObs -> tgt.tnm as tnm then MapTNM(tnmObs, tnm, bundle) "CallMapTNMClinical";
   } "EntryTNMClinical";
 
   bundle.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
-    tnmEntry.resource as tnmObs -> tgt.tnm as tnm then MapTNMVerlauf(tnmObs, tnm, bundle) "CallMapTNMVerlaufP";
+    tnmEntry.resource as tnmObs -> tgt.tnm as tnm then MapTNM(tnmObs, tnm, bundle) "CallMapTNMPathological";
   } "EntryTNMPathological";
 
-  // Allgemeiner Leistungszustand (ECOG): aus Observation im Bundle
-  // LOINC 89247-1 = "ECOG Performance Status"
-  bundle.entry as ecogEntry where resource.is(Observation) and resource.code.coding.exists(code = '89247-1') then {
-    ecogEntry.resource as ecogObs then {
-      ecogObs.value as v then {
-        v.coding as c then {
-          c.code as cd -> tgt.allgemeinerLeistungszustand = cd "SetECOG";
-        } "ExtractECOGCode";
-      } "MapECOGValue";
-    } "MapECOGObs";
-  } "EntryECOG";
+  // Allgemeiner Leistungszustand (ECOG): Delegiert an die gemeinsame Leistungszustand-Map
+  src -> tgt then MapLeistungszustandFromBundle(bundle, tgt) "CallMapLeistungszustand";
 
   // Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle (Rezidiv-Testung)
-  src -> tgt.modulMamma as mamma then MapModulMammaVerlauf(bundle, mamma) "CallMapModulMammaVerlauf";
-}
-
-// ============================================================================
-// Fernmetastase: Observation -> OBDSMeldung.verlauf.fernmetastasen
-// Diagnosedatum und Lokalisation der Fernmetastase
-// ============================================================================
-
-group MapFernmetastase(source src : Observation, target tgt : BackboneElement) {
-
-  // Diagnosedatum: aus Observation.effectiveDateTime
-  src.effective as eff where $this.is(dateTime) -> tgt.diagnosedatum = eff "SetFMDiagnosedatum";
-
-  // Lokalisation: aus Observation.bodySite oder value, Uebersetzung SNOMED -> oBDS
-  src.bodySite as bs then {
-    bs.coding as c where system = 'http://snomed.info/sct'
-      -> tgt.lokalisation = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-fm-lokalisation', 'code') "TranslateFMLokalisation";
-  } "MapFMLokalisation";
-
-  // Fallback: Lokalisation aus Observation.value (falls bodySite nicht vorhanden)
-  src.value as val then {
-    val.coding as c where system = 'http://snomed.info/sct'
-      -> tgt.lokalisation = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-fm-lokalisation', 'code') "TranslateFMLokalisationValue";
-  } "MapFMLokalisationValue";
-}
-
-// ============================================================================
-// Histologie (Verlauf): Observation -> OBDSMeldung.verlauf.histologie
-// Histologiebefund bei Re-Biopsie im Verlauf (gleiche Struktur wie Diagnose)
-// ============================================================================
-
-group MapHistologieVerlauf(source src : Observation, target tgt : BackboneElement) {
-
-  // Histologie_ID
-  src.identifier as id first then {
-    id.value as v -> tgt.histologieID = v "SetHistologieID";
-  } "MapHistologieID";
-
-  // Tumor_Histologiedatum
-  src.effective as eff where $this.is(dateTime) -> tgt.tumorHistologiedatum = eff "SetHistologiedatum";
-
-  // Histologie_EinsendeNr
-  src.identifier as id where system = 'http://pathologie.charite.de/fhir/sid/einsende-nr' then {
-    id.value as v -> tgt.histologieEinsendeNr = v "SetEinsendeNr";
-  } "MapEinsendeNr";
-
-  // Morphologie_ICD_O
-  src.value as val then {
-    val.coding as c where system = 'urn:oid:2.16.840.1.113883.6.43.1' -> tgt.morphologieICDO as morph then {
-      c.code as cd -> morph.code = cd "SetMorphCode";
-      c.version as v -> morph.version = v "SetMorphVersion";
-    } "MapMorphCoding";
-  } "MapMorphologie";
-
-  // Morphologie_Freitext
-  src.value as val then {
-    val.text as t -> tgt.morphologieFreitext = t "SetMorphFreitext";
-  } "MapMorphFreitext";
-
-  // Grading: Uebersetzung SNOMED -> oBDS
-  src.component as comp where code.coding.exists(code = '59542-1') then {
-    comp.value as val then {
-      val.coding as c -> tgt.grading = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGrading";
-    } "MapGradingValue";
-  } "MapGrading";
-
-  // LK_untersucht
-  src.component as comp where code.coding.exists(code = '21894-1') then {
-    comp.value as val -> tgt.lkUntersucht = val "SetLKUntersucht";
-  } "MapLKUntersucht";
-
-  // LK_befallen
-  src.component as comp where code.coding.exists(code = '21893-3') then {
-    comp.value as val -> tgt.lkBefallen = val "SetLKBefallen";
-  } "MapLKBefallen";
-
-  // Sentinel_LK_untersucht
-  src.component as comp where code.coding.exists(code = '92832-5') then {
-    comp.value as val -> tgt.sentinelLKUntersucht = val "SetSentinelLKUntersucht";
-  } "MapSentinelLKUntersucht";
-
-  // Sentinel_LK_befallen
-  src.component as comp where code.coding.exists(code = '92831-7') then {
-    comp.value as val -> tgt.sentinelLKBefallen = val "SetSentinelLKBefallen";
-  } "MapSentinelLKBefallen";
-}
-
-// ============================================================================
-// TNM (Verlauf): Observation -> OBDSMeldung.verlauf.tnm
-// TNM-Staging im Verlauf, mit r_Symbol fuer Rezidivklassifikation
-// Im Verlauf kann sowohl klinisches (c) als auch pathologisches (p) TNM vorkommen
-// ============================================================================
-
-group MapTNMVerlauf(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
-
-  // Datum der TNM-Klassifikation
-  src.effective as eff where $this.is(dateTime) -> tgt.datum = eff "SetTNMDatum";
-
-  // TNM-Auflage (Version)
-  src.method as method then {
-    method.coding as c then {
-      c.code as cd -> tgt.version = cd "SetTNMVersion";
-    } "ExtractTNMVersionCode";
-  } "MapTNMVersion";
-
-  // y-Symbol (nach multimodaler Therapie)
-  src.component as comp where code.coding.exists(code = '59479-6') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.ySymbol = cd "SetYSymbol";
-      } "ExtractYCode";
-    } "MapYValue";
-  } "MapYSymbol";
-
-  // r-Symbol (Rezidivklassifikation) — im Verlauf besonders relevant
-  src.component as comp where code.coding.exists(code = '21983-2') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.rSymbol = cd "SetRSymbol";
-      } "ExtractRCode";
-    } "MapRValue";
-  } "MapRSymbol";
-
-  // a-Symbol (Autopsie)
-  src.component as comp where code.coding.exists(code = '101659-7') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.aSymbol = cd "SetASymbol";
-      } "ExtractACode";
-    } "MapAValue";
-  } "MapASymbol";
-
-  // T-Kategorie (klinisch, LOINC 21905-5)
-  src.component as comp where code.coding.exists(code = '21905-5') then {
-    comp -> tgt.cpuPraefixT = 'c' "SetCPrefixT";
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.t = cd "SetTClinical";
-      } "ExtractTCode";
-    } "MapTValue";
-  } "MapTClinical";
-
-  // T-Kategorie (pathologisch, LOINC 21899-0)
-  src.component as comp where code.coding.exists(code = '21899-0') then {
-    comp -> tgt.cpuPraefixT = 'p' "SetPPrefixT";
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.t = cd "SetTPathological";
-      } "ExtractTPathCode";
-    } "MapTPathValue";
-  } "MapTPathological";
-
-  // m_Symbol: multiple Primaertumoren
-  src.component as comp where code.coding.exists(code = '42030-7') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.mSymbol = cd "SetMSymbol";
-      } "ExtractMSymbolCode";
-    } "MapMSymbolValue";
-  } "MapMSymbol";
-
-  // N-Kategorie (klinisch, LOINC 21906-3)
-  src.component as comp where code.coding.exists(code = '21906-3') then {
-    comp -> tgt.cpuPraefixN = 'c' "SetCPrefixN";
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.n = cd "SetNClinical";
-      } "ExtractNCode";
-    } "MapNValue";
-  } "MapNClinical";
-
-  // N-Kategorie (pathologisch, LOINC 21900-6)
-  src.component as comp where code.coding.exists(code = '21900-6') then {
-    comp -> tgt.cpuPraefixN = 'p' "SetPPrefixN";
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.n = cd "SetNPathological";
-      } "ExtractNPathCode";
-    } "MapNPathValue";
-  } "MapNPathological";
-
-  // M-Kategorie (klinisch, LOINC 21907-1)
-  src.component as comp where code.coding.exists(code = '21907-1') then {
-    comp -> tgt.cpuPraefixM = 'c' "SetCPrefixM";
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.m = cd "SetMClinical";
-      } "ExtractMCode";
-    } "MapMValue";
-  } "MapMClinical";
-
-  // M-Kategorie (pathologisch, LOINC 21901-4)
-  src.component as comp where code.coding.exists(code = '21901-4') then {
-    comp -> tgt.cpuPraefixM = 'p' "SetPPrefixM";
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.m = cd "SetMPathological";
-      } "ExtractMPathCode";
-    } "MapMPathValue";
-  } "MapMPathological";
-
-  // L: Lymphgefaessinvasion
-  src.component as comp where code.coding.exists(code = '33739-4') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.l = cd "SetL";
-      } "ExtractLCode";
-    } "MapLValue";
-  } "MapL";
-
-  // V: Veneninvasion
-  src.component as comp where code.coding.exists(code = '33740-2') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.v = cd "SetV";
-      } "ExtractVCode";
-    } "MapVValue";
-  } "MapV";
-
-  // Pn: Perineurale Invasion
-  src.component as comp where code.coding.exists(code = '92837-4') then {
-    comp.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.pn = cd "SetPn";
-      } "ExtractPnCode";
-    } "MapPnValue";
-  } "MapPn";
-
-  // UICC-Stadium
-  src.value as val then {
-    val.coding as c then {
-      c.code as cd -> tgt.uiccStadium = cd "SetUICC";
-    } "ExtractUICC";
-  } "MapUICC";
-}
-
-// ============================================================================
-// Modul_Mamma (Verlauf): Hormonrezeptoren + HER2 bei Rezidiv-Testung
-// Im Verlauf kein Menopausenstatus (nur bei Diagnose und OP)
-// ============================================================================
-
-group MapModulMammaVerlauf(source src : Bundle, target tgt : BackboneElement) {
-
-  // Oestrogenrezeptor (LOINC 85337-4)
-  src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
-    erEntry.resource as erObs then {
-      erObs.value as val then {
-        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusOestrogen = 'P' "SetERPositiv";
-        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusOestrogen = 'N' "SetERNegativ";
-      } "MapERValue";
-    } "MapERObs";
-  } "EntryER";
-
-  // Progesteronrezeptor (LOINC 85339-0)
-  src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
-    prEntry.resource as prObs then {
-      prObs.value as val then {
-        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusProgesteron = 'P' "SetPRPositiv";
-        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusProgesteron = 'N' "SetPRNegativ";
-      } "MapPRValue";
-    } "MapPRObs";
-  } "EntryPR";
-
-  // HER2-Status (LOINC 85319-2)
-  src.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
-    herEntry.resource as herObs then {
-      herObs.value as val then {
-        val.coding as c where code = '10828004' -> tgt.her2neuStatus = 'P' "SetHER2Positiv";
-        val.coding as c where code = '260385009' -> tgt.her2neuStatus = 'N' "SetHER2Negativ";
-      } "MapHER2Value";
-    } "MapHER2Obs";
-  } "EntryHER2";
+  // Delegiert an die gemeinsame ModulMamma-Map
+  src -> tgt.modulMamma as mamma then MapModulMamma(bundle, mamma) "CallMapModulMamma";
 }

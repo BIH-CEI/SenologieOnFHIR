@@ -7,6 +7,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsNebenwirkung"
 
 // ============================================================================
 // Hauptgruppe: Bundle → oBDS ST (Strahlentherapie)
@@ -59,13 +60,8 @@ group MapST(source src : Procedure, target tgt : BackboneElement, source bundle 
     oc.coding as c -> tgt.endeGrund = (c.code) "SetEndeGrundCode";
   } "MapEndeGrund";
 
-  // Nebenwirkungen: Observations mit CTCAE-Codierung aus dem Bundle
-  src -> tgt.nebenwirkungen as nw then {
-    // Nebenwirkungen mit CTCAE-Grad >= 3
-    bundle.entry as obsEntry where resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl') then {
-      obsEntry.resource as obs then MapNebenwirkungST(obs, nw) "CallMapNebenwirkung";
-    } "EntryNebenwirkungen";
-  } "CreateNebenwirkungen";
+  // Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (ST-Variante)
+  src -> tgt.nebenwirkungen as nw then MapNebenwirkungenST(bundle, nw) "CallMapNebenwirkungen";
 }
 
 // ============================================================================
@@ -131,34 +127,4 @@ group MapBestrahlung(source src : Procedure, target tgt : BackboneElement) {
       val.coding as c -> tgt.boost = (c.code) "SetBoost";
     } "ExtractBoostCoding";
   } "MapBoost";
-}
-
-// ============================================================================
-// MapNebenwirkungST: Observation → oBDS Nebenwirkung
-// Strahlentherapie-Nebenwirkungen mit CTCAE-Grad und Version
-// z.B. Strahlendermatitis Grad 3 (CTCAE 4.03)
-// ============================================================================
-
-group MapNebenwirkungST(source src : Observation, target tgt : BackboneElement) {
-
-  // Einzelne Nebenwirkung
-  src.value as val then {
-    val.coding as c -> tgt.nebenwirkung as nw then {
-      // Bezeichnung (Art) der Nebenwirkung
-      src.code as obsCode then {
-        obsCode.text as t -> nw.artBezeichnung = t "SetNwBezeichnung";
-        obsCode.coding as coding then {
-          coding.display as d where %obsCode.text.exists().not() -> nw.artBezeichnung = d "SetNwBezeichnungDisplay";
-        } "FallbackNwBezeichnung";
-      } "ExtractNwBezeichnung";
-
-      // CTCAE-Grad (3, 4, 5)
-      c.code as g -> nw.grad = g "SetNwGrad";
-
-      // CTCAE-Version (z.B. "4.03")
-      src.method as method then {
-        method.text as t -> nw.version = t "SetNwVersion";
-      } "ExtractNwVersion";
-    } "CreateNebenwirkung";
-  } "MapNebenwirkungGrad";
 }
