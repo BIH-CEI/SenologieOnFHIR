@@ -98,6 +98,7 @@
 [Fall1-Begleitmedikation-Metoprolol]: MedicationStatement-Fall1-Begleitmedikation-Metoprolol.html
 [Fall1-Operation-BET]: Procedure-Fall1-Operation-BET.html
 [Fall1-BiRADS-Links]: Observation-Fall1-BiRADS-Links.html
+[Fall1-ECOG-6Monate]: Observation-Fall1-ECOG-6Monate.html
 [Fall1-Familienanamnese]: FamilyMemberHistory-Fall1-Familienanamnese.html
 [Fall1-Gynaekologische-Anamnese]: Observation-Fall1-Gynaekologische-Anamnese.html
 [Fall1-Klinische-Untersuchung]: Observation-Fall1-Klinische-Untersuchung.html
@@ -120,6 +121,7 @@
 [Fall2-BiRADS-Rechts]: Observation-Fall2-BiRADS-Rechts.html
 [Fall2-Medikation-Carboplatin]: MedicationStatement-Fall2-Medikation-Carboplatin.html
 [Fall2-Bildgebung-CT]: DiagnosticReport-Fall2-Bildgebung-CT.html
+[Fall2-ECOG-Progression]: Observation-Fall2-ECOG-Progression.html
 [Fall2-Tumorboard-Initial]: CarePlan-Fall2-Tumorboard-Initial.html
 [Fall2-ResearchStudy-KEYNOTE522]: ResearchStudy-Fall2-ResearchStudy-KEYNOTE522.html
 [Fall2-Bildgebung-Mammographie]: DiagnosticReport-Fall2-Bildgebung-Mammographie.html
@@ -223,6 +225,7 @@
 [Fall9-Systemtherapie-Adjuvant]: Procedure-Fall9-Systemtherapie-Adjuvant.html
 [Fall9-Operation-BET]: Procedure-Fall9-Operation-BET.html
 [Fall9-BiRADS-Links]: Observation-Fall9-BiRADS-Links.html
+[Fall9-ECOG-12Monate]: Observation-Fall9-ECOG-12Monate.html
 [Fall9-Begleitmedikation-Tamoxifen]: MedicationStatement-Fall9-Begleitmedikation-Tamoxifen.html
 [Fall9-Medikation-Epirubicin]: MedicationStatement-Fall9-Medikation-Epirubicin.html
 [Fall9-Diagnose-Mammakarzinom]: Condition-Fall9-Diagnose-Mammakarzinom.html

@@ -2,6 +2,8 @@
 // Verlaufs-Observations für oBDS-Verlaufsmeldungen
 // Für drei Fälle: Fall 1 (Nachsorge rezidivfrei), Fall 2 (Progression), Fall 9 (Nachsorge)
 // Nutzt MII_PR_Onko_Verlauf als Grundlage (kein eigenes Senologie-Profil nötig).
+// Zusätzlich ECOG-Observations (oBDS-Pflichtfeld "Allgemeiner_Leistungszustand"
+// in jeder Verlaufsmeldung, nutzt MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG).
 // ============================================================
 
 Alias: $MII_ONKO_VERLAUF = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-verlauf
@@ -9,6 +11,8 @@ Alias: $MII_CS_VERLAUF_GESAMT = https://www.medizininformatik-initiative.de/fhir
 Alias: $MII_CS_VERLAUF_PT = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor
 Alias: $MII_CS_VERLAUF_LK = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten
 Alias: $MII_CS_VERLAUF_FM = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen
+Alias: $MII_ONKO_ECOG = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-allgemeiner-leistungszustand-ecog
+Alias: $MII_CS_ECOG = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog
 
 // ============================================================
 // Fall 1: Erika Neumann — Verlauf 6 Monate postoperativ (rezidivfrei)
@@ -54,6 +58,24 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Fernmetastasen"
+
+// ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
+Instance: Fall1-ECOG-6Monate
+InstanceOf: Observation
+Title: "Fall 1: ECOG-Leistungszustand 6 Monate postoperativ"
+Description: "ECOG 0 — vollständig aktiv, keine Einschränkung"
+Usage: #example
+
+* meta.profile = $MII_ONKO_ECOG
+* status = #final
+* code.coding[+].system = "http://loinc.org"
+* code.coding[=].code = #89247-1
+* code.coding[=].display = "ECOG Performance Status"
+* subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
+* effectiveDateTime = "2025-08-15"
+* valueCodeableConcept.coding[+].system = $MII_CS_ECOG
+* valueCodeableConcept.coding[=].code = #0
+* valueCodeableConcept.coding[=].display = "Normale, uneingeschränkte Aktivität wie vor der Erkrankung"
 
 
 // ============================================================
@@ -101,6 +123,24 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[=].code = #N
 * component[=].valueCodeableConcept.coding[=].display = "neu aufgetretene Fernmetastasen"
 
+// ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
+Instance: Fall2-ECOG-Progression
+InstanceOf: Observation
+Title: "Fall 2: ECOG-Leistungszustand bei Progression"
+Description: "ECOG 2 — deutliche Einschränkung bei Progression mit Lebermetastasen"
+Usage: #example
+
+* meta.profile = $MII_ONKO_ECOG
+* status = #final
+* code.coding[+].system = "http://loinc.org"
+* code.coding[=].code = #89247-1
+* code.coding[=].display = "ECOG Performance Status"
+* subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
+* effectiveDateTime = "2026-03-15"
+* valueCodeableConcept.coding[+].system = $MII_CS_ECOG
+* valueCodeableConcept.coding[=].code = #2
+* valueCodeableConcept.coding[=].display = "Gehfähig, nicht arbeitsfähig, > 50% der Wachzeit aktiv"
+
 
 // ============================================================
 // Fall 9: Andrea Wolf — Verlauf 12 Monate postoperativ (rezidivfrei, unter endokriner Therapie)
@@ -146,3 +186,21 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Fernmetastasen"
+
+// ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
+Instance: Fall9-ECOG-12Monate
+InstanceOf: Observation
+Title: "Fall 9: ECOG-Leistungszustand 12 Monate postoperativ"
+Description: "ECOG 1 — leicht eingeschränkt (Residual-Lymphödem nach Axilladissektion)"
+Usage: #example
+
+* meta.profile = $MII_ONKO_ECOG
+* status = #final
+* code.coding[+].system = "http://loinc.org"
+* code.coding[=].code = #89247-1
+* code.coding[=].display = "ECOG Performance Status"
+* subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
+* effectiveDateTime = "2026-03-20"
+* valueCodeableConcept.coding[+].system = $MII_CS_ECOG
+* valueCodeableConcept.coding[=].code = #1
+* valueCodeableConcept.coding[=].display = "Eingeschränkt bei körperlicher Anstrengung, gehfähig, leichte Arbeit möglich"

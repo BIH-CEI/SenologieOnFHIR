@@ -274,3 +274,75 @@ Bei einem Tumorrezidiv oder einer Progression stellt sich die Frage, ob der aktu
 Im oBDS wird die Zuordnung über die **Tumor_ID** gelöst — alle Meldungen zum selben Tumor tragen dieselbe ID. In FHIR fehlt ein direktes Äquivalent. `Condition.identifier` mit einer stabilen Tumor-ID könnte diese Rolle übernehmen.
 
 **Aktueller Stand**: Die Testdaten verwenden Option B (separate Condition für Progression). Option C (EpisodeOfCare) ist die angestrebte Lösung, befindet sich aber noch in Arbeit (siehe OF-1).
+
+---
+
+## OF-13: Frühere Tumorerkrankungen — Scope und Profilwahl
+
+{:.stu-note}
+Sollen frühere Tumorerkrankungen im Senologie-Scope explizit abgebildet werden, und wenn ja, über welches Profil?
+
+Der oBDS enthält im `Diagnose`-Typ das Element `Menge_Fruehere_Tumorerkrankung` mit Freitext, ICD-Code und Diagnosedatum (Jahr). Das MII-Onkologie-Modul stellt dafür das Profil `mii-pr-onko-fruehere-tumorerkrankung` (Condition) bereit.
+
+**Situation im Brustzentrum:** Anamnestisch erfasste Vorerkrankungen stammen üblicherweise aus der allgemeinen Patientenhistorie (KIS, IPS-Export) und nicht aus der senologiespezifischen Dokumentation. Sie werden im Brustzentrum selten strukturiert aufgenommen, sondern als Anamnesetext geführt.
+
+**Offene Teilfragen:**
+
+- Soll der Senologie-IG das MII Onko Profil als empfohlene Quelle nennen und ein Beispiel integrieren, oder gehört dieses Datum außerhalb des Senologie-Scope (Verweis auf IPS/KIS)?
+- Wenn integriert: Erfassung über eigenes Formularfeld in der Erstanamnese, oder nur als ETL-Übernahme aus dem KIS?
+- Muss der Jahrgang `Diagnosedatum` strukturiert erfasst werden, oder reicht ein Freitext („2015: Basaliom rechter Oberarm")?
+
+**Empfehlung (Diskussionsbedarf):** Option A – `mii-pr-onko-fruehere-tumorerkrankung` referenzieren, kein eigenes Profil, Erfassung optional. In der StructureMap `SenologieToObdsDiagnose` könnte eine zusätzliche Regel `Condition → Menge_Fruehere_Tumorerkrankung` ergänzt werden, sobald Testdaten vorliegen.
+
+---
+
+## OF-14: Modul_Allgemein — Sozialdienstkontakt, Studienteilnahme, DMP
+
+{:.stu-note}
+Soll das Senologie-Modul den oBDS-Block `Modul_Allgemein` (Sozialdienstkontakt, Studienteilnahme, DMP-Einschluss) abdecken?
+
+Der oBDS enthält in vielen Meldungstypen ein optionales Element `Modul_Allgemein` mit Feldern wie Sozialdienstkontakt (Ja/Nein), Datum erste Kontaktaufnahme Sozialdienst, Einschluss in strukturierte Behandlungsprogramme (DMP) und Studienteilnahme. Diese Felder sind Qualitätsindikator-relevant für Brustzentren (z.B. "Kontaktangebot Sozialdienst bei N+").
+
+**Verfügbare Profile:**
+
+- `mii-pr-onko-mamma-sozialdienst` (Observation) — MII Onko Profil für die Sozialdienstkontaktaufnahme
+- `Senologie_Studienteilnahme` — bereits im IG vorhanden (nutzt MII Onko als Basis)
+
+**Offene Teilfragen:**
+
+- Soll der Sozialdienstkontakt als Pflichtdokumentation bei N+ / Stadium III+ in die Testdaten aufgenommen werden (z.B. Fall 9 mit N3a)?
+- Wird der Sozialdienst-Indikator über eine Observation oder eine ServiceRequest (Überweisung an Sozialdienst) abgebildet?
+- Werden weitere Modul_Allgemein-Felder (DMP, Aufklärung, Ehrenamtliche Begleitung) im Senologie-Scope benötigt, oder bleiben sie außerhalb?
+
+**Empfehlung:** Sozialdienst-Observation zu Fall 9 (N3) als Testdatum ergänzen sobald die Frage geklärt ist. StructureMap `SenologieToObdsModulAllgemein` wird bei Bedarf separat entwickelt.
+
+---
+
+## OF-15: Neoadjuvante Therapie — strukturierte ycTNM und ypTNM
+
+{:.stu-note}
+Wie wird im neoadjuvanten Setting (Fall 4, 5, 7) die Verlaufs-TNM-Klassifikation strukturiert erfasst?
+
+Bei neoadjuvanter Systemtherapie ist die TNM-Klassifikation für den oBDS mit `y`-Symbol meldepflichtig:
+
+- **ycTNM**: klinisches Staging NACH der neoadjuvanten Therapie und VOR der Operation (z.B. zur Beurteilung des Ansprechens via Bildgebung)
+- **ypTNM**: pathologisches Staging NACH der Operation (z.B. ypT0 ypN0 bei pCR)
+
+**Aktueller Stand der Testdaten:**
+
+- Fall 4, 5, 7 dokumentieren das initiale cTNM nur narrativ in `Condition.stage.summary.text` ("UICC IIB (cT2 cN1 cM0)")
+- Die ypTNM nach Operation wird nur als Freitext in `Procedure.outcome.text` erfasst ("ypT0 ypN0(sn)(0/3) — pCR")
+- Es existieren KEINE strukturierten TNM-Observations (MII Onko `mii-pr-onko-tnm-klassifikation`) — weder für cTNM vor Therapie noch für ycTNM/ypTNM nach Therapie
+
+**Konsequenz für oBDS-Meldung:**
+
+- Die StructureMap `SenologieToObdsDiagnose` erwartet eine TNM-Observation mit LOINC 21908-9 (clinical) für cTNM, und `SenologieToObdsOP` erwartet 21902-2 (pathology) für pTNM
+- Ohne diese Observations können im oBDS-Export die Felder `<cTNM>`, `<pTNM>`, `<y_Symbol>`, `<m_Symbol>`, `<L>`, `<V>`, `<Pn>`, `<UICC_Stadium>` nicht gefüllt werden
+
+**Offene Teilfragen:**
+
+- Sollen die Testdaten Fall 4, 5, 7 um strukturierte cTNM- und ypTNM-Observations ergänzt werden?
+- Welches Profil wird referenziert: MII Onko `mii-pr-onko-tnm-klassifikation` (mit Unter-Observations pro T/N/M-Kategorie) oder ein kombiniertes Staging-Profil?
+- Wie wird die Reihenfolge (cTNM → ycTNM → ypTNM) zeitlich abgebildet, wenn eine Condition mehrere Stagings durchläuft?
+
+**Empfehlung:** cTNM-Observation zu Fall 4, 5, 7 als Beispiel ergänzen; ypTNM als Nachsorge-Observation nach OP. Die Verwendung des `y_Symbol`-Profils (`mii-pr-onko-tnm-y-symbol`) als Komponente in der TNM-Observation prüfen.

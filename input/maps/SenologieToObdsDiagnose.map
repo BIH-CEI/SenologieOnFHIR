@@ -6,6 +6,7 @@
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/RiskAssessment" alias RiskAssessment as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
@@ -90,4 +91,40 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
 
   // Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle
   src -> tgt.modulMamma as mamma then MapModulMamma(bundle, mamma) "CallMapModulMamma";
+
+  // Weitere Klassifikationen: Genexpressionstests (Oncotype DX, MammaPrint, ...)
+  // aus RiskAssessment-Ressourcen (Senologie_Genexpressionstest) im Bundle
+  bundle.entry as raEntry where resource.is(RiskAssessment) then {
+    raEntry.resource as ra -> tgt.weitereKlassifikationen as wk then MapWeitereKlassifikation(ra, bundle, wk) "CallMapWeitereKlassifikation";
+  } "EntryWeitereKlassifikation";
+}
+
+// ============================================================================
+// Weitere Klassifikation: RiskAssessment (Genexpressionstest) -> Menge_Weitere_Klassifikation
+// Mappt Genexpressionstests wie Oncotype DX, MammaPrint auf das oBDS-Element
+// "Weitere_Klassifikation" (Datum, Name, Stadium/Ergebnis).
+// ============================================================================
+
+group MapWeitereKlassifikation(source src : RiskAssessment, source bundle : Bundle, target tgt : BackboneElement) {
+  // Datum: aus RiskAssessment.occurrenceDateTime
+  src.occurrence as occ where $this.is(dateTime) -> tgt.datum = occ "SetWKDatum";
+
+  // Name: aus RiskAssessment.method.coding.display oder method.text
+  src.method as m then {
+    m.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-genexpressionstest' then {
+      c.display as d -> tgt.name = d "SetWKNameDisplay";
+    } "MapWKMethodCoding";
+    m.text as t -> tgt.name = t "SetWKNameText";
+  } "MapWKMethod";
+
+  // Stadium: aus RiskAssessment.prediction[0].qualitativeRisk.text + basis-Observation
+  // Format: "<Score> (<RiskCategory>)"
+  src.prediction as pred first then {
+    pred.qualitativeRisk as qr then {
+      qr.text as t -> tgt.stadium = t "SetWKStadiumQualitativeText";
+      qr.coding as c first then {
+        c.display as d -> tgt.stadium = d "SetWKStadiumQualitativeDisplay";
+      } "MapWKQRCoding";
+    } "MapWKQR";
+  } "MapWKPrediction";
 }

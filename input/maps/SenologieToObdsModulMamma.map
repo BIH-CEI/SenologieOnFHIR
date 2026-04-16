@@ -5,6 +5,8 @@
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/ServiceRequest" alias ServiceRequest as source
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 // ============================================================================
@@ -86,4 +88,40 @@ group MapModulMamma(source src : Bundle, target tgt : BackboneElement) {
       } "MapMenoValue";
     } "MapMenoObs";
   } "EntryMenopause";
+
+  // Praeoperative Drahtmarkierung (aus Senologie_OP_Planung ServiceRequest.extension[preOpMarkierung])
+  // ValueCodeableConcept mit code M/S/T/N/U oder Freitext; wird nur fuer OP-Meldung verwendet.
+  src.entry as srEntry where resource.is(ServiceRequest) then {
+    srEntry.resource as sr then {
+      sr.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-pre-op-markierung' then {
+        ext.value as val then {
+          val.coding as c where code = 'M' -> tgt.praeopDrahtmarkierung = 'M' "SetDrahtMammografie";
+          val.coding as c where code = 'S' -> tgt.praeopDrahtmarkierung = 'S' "SetDrahtSonografie";
+          val.coding as c where code = 'T' -> tgt.praeopDrahtmarkierung = 'T' "SetDrahtMRT";
+          val.coding as c where code = 'N' -> tgt.praeopDrahtmarkierung = 'N' "SetDrahtNein";
+        } "MapDrahtValue";
+      } "MapDrahtExt";
+    } "MapDrahtSR";
+  } "EntryDrahtmarkierung";
+
+  // Intraoperative Praeparatkontrolle (QI-3) — aus Specimen im Bundle
+  // Specimen.processing.procedure.coding mit oBDS-Kode (M/S/N/U)
+  src.entry as specEntry where resource.is(Specimen) then {
+    specEntry.resource as spec then {
+      spec.processing as proc then {
+        proc.procedure as p then {
+          p.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-obds-intraop-praeparatkontrolle' -> tgt.intraopPraeparatkontrolle = (c.code) "SetIntraopKontrolle";
+        } "MapIntraopProc";
+      } "MapIntraopProcessing";
+    } "MapIntraopSpec";
+  } "EntryIntraopKontrolle";
+
+  // Tumorgroesse invasiv (LOINC 33728-7 = Size of tumor in Specimen; component/valueQuantity in mm)
+  src.entry as sizeEntry where resource.is(Observation) and resource.code.coding.exists(code = '33728-7') then {
+    sizeEntry.resource as sizeObs then {
+      sizeObs.value as val then {
+        val.value as v -> tgt.tumorgroesseInvasiv = v "SetTumorgroesseInvasiv";
+      } "MapSizeInvasiv";
+    } "MapSizeObs";
+  } "EntryTumorSize";
 }

@@ -18,26 +18,26 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 
 * code MS
 * code.coding ^short = "Art der Bildgebung"
-* code.coding ^slicing.discriminator.type = #pattern
-* code.coding ^slicing.discriminator.path = "$this"
+* code.coding ^slicing.discriminator.type = #value
+* code.coding ^slicing.discriminator.path = "code"
 * code.coding ^slicing.rules = #open
 * code.coding contains
     mammography 0..1 and
     ultrasound 0..1 and
     mri 0..1 and
     tomosynthesis 0..1
-* code.coding[mammography].system = "http://loinc.org" (exactly)
-* code.coding[mammography].code = #18781-5 (exactly)
-* code.coding[mammography].display = "Mammography of bilateral breasts" (exactly)
-* code.coding[ultrasound].system = "http://loinc.org" (exactly)
-* code.coding[ultrasound].code = #18740-1 (exactly)
-* code.coding[ultrasound].display = "Ultrasound of bilateral breasts" (exactly)
-* code.coding[mri].system = "http://loinc.org" (exactly)
-* code.coding[mri].code = #36581-3 (exactly)
-* code.coding[mri].display = "MRI of breast" (exactly)
-* code.coding[tomosynthesis].system = "http://radlex.org" (exactly)
-* code.coding[tomosynthesis].code = #RID40755 (exactly)
-* code.coding[tomosynthesis].display = "Digital breast tomosynthesis" (exactly)
+* code.coding[mammography] ^patternCoding.system = "http://loinc.org"
+* code.coding[mammography] ^patternCoding.code = #18781-5
+* code.coding[mammography].display = "Mammography of bilateral breasts"
+* code.coding[ultrasound] ^patternCoding.system = "http://loinc.org"
+* code.coding[ultrasound] ^patternCoding.code = #18740-1
+* code.coding[ultrasound].display = "Ultrasound of bilateral breasts"
+* code.coding[mri] ^patternCoding.system = "http://loinc.org"
+* code.coding[mri] ^patternCoding.code = #36581-3
+* code.coding[mri].display = "MRI of breast"
+* code.coding[tomosynthesis] ^patternCoding.system = "http://radlex.org"
+* code.coding[tomosynthesis] ^patternCoding.code = #RID40755
+* code.coding[tomosynthesis].display = "Digital breast tomosynthesis"
 * code ^comment = "Aus dotbase: 'Modalität' (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes"
 
 * subject MS

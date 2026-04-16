@@ -101,6 +101,14 @@ Description: "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz 
     * hormonrezeptorStatusOestrogen 0..1 code "HormonrezeptorStatus_Oestrogen" "Oestrogenrezeptorstatus: P=positiv, N=negativ, U=unbekannt"
     * hormonrezeptorStatusProgesteron 0..1 code "HormonrezeptorStatus_Progesteron" "Progesteronrezeptorstatus: P=positiv, N=negativ, U=unbekannt"
     * her2neuStatus 0..1 code "Her2neuStatus" "HER2-Rezeptorstatus: P=positiv, N=negativ, U=unbekannt"
+    * praeopDrahtmarkierung 0..1 code "PraeopDrahtmarkierung" "Praeoperative Drahtmarkierung: M=Mammografie, S=Sonografie, T=MRT, N=keine, U=unbekannt"
+    * intraopPraeparatkontrolle 0..1 code "IntraopPraeparatkontrolle" "Intraoperative Praeparatkontrolle (QI-3): M=Mammografie, S=Sonografie, N=nein, U=unbekannt"
+    * tumorgroesseInvasiv 0..1 integer "TumorgroesseInvasiv" "Groesse des invasiven Tumorherdes in mm (maximaler Durchmesser)"
+    * tumorgroesseDCIS 0..1 integer "TumorgroesseDCIS" "Groesse der DCIS-Komponente in mm (maximaler Durchmesser)"
+  * weitereKlassifikationen 0..* BackboneElement "Menge_Weitere_Klassifikation" "Weitere onkologische Klassifikationen (z.B. Genexpressionstests Oncotype DX, MammaPrint)"
+    * datum 0..1 date "Datum" "Datum der Klassifikation"
+    * name 1..1 string "Name" "Name der Klassifikation (z.B. 'Oncotype DX', 'MammaPrint')"
+    * stadium 1..1 string "Stadium" "Ergebnis/Stadium der Klassifikation (z.B. 'RS 18 / low risk')"
 
 // --- OP ---
 * op 0..1 BackboneElement "OP" "Operationsmeldung"
@@ -160,6 +168,10 @@ Description: "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz 
     * hormonrezeptorStatusOestrogen 0..1 code "HormonrezeptorStatus_Oestrogen" "Oestrogenrezeptorstatus: P=positiv, N=negativ, U=unbekannt"
     * hormonrezeptorStatusProgesteron 0..1 code "HormonrezeptorStatus_Progesteron" "Progesteronrezeptorstatus: P=positiv, N=negativ, U=unbekannt"
     * her2neuStatus 0..1 code "Her2neuStatus" "HER2-Rezeptorstatus: P=positiv, N=negativ, U=unbekannt"
+    * praeopDrahtmarkierung 0..1 code "PraeopDrahtmarkierung" "Praeoperative Drahtmarkierung: M=Mammografie, S=Sonografie, T=MRT, N=keine, U=unbekannt"
+    * intraopPraeparatkontrolle 0..1 code "IntraopPraeparatkontrolle" "Intraoperative Praeparatkontrolle (QI-3): M=Mammografie, S=Sonografie, N=nein, U=unbekannt"
+    * tumorgroesseInvasiv 0..1 integer "TumorgroesseInvasiv" "Groesse des invasiven Tumorherdes in mm (maximaler Durchmesser)"
+    * tumorgroesseDCIS 0..1 integer "TumorgroesseDCIS" "Groesse der DCIS-Komponente in mm (maximaler Durchmesser)"
 
 // --- Systemische Therapie ---
 * syst 0..1 BackboneElement "SYST" "Systemische Therapiemeldung"
@@ -179,7 +191,8 @@ Description: "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz 
   * nebenwirkungen 1..1 BackboneElement "Nebenwirkungen" "Nebenwirkungen der Therapie"
     * gradMaximal2OderUnbekannt 0..1 code "Grad_maximal2_oder_unbekannt" "Maximaler Schweregrad <=2 oder unbekannt"
     * nebenwirkung 0..* BackboneElement "Nebenwirkung" "Einzelne Nebenwirkung Grad >=3"
-      * artBezeichnung 0..1 string "Art Bezeichnung" "Bezeichnung der Nebenwirkung"
+      * artBezeichnung 0..1 string "Art Bezeichnung" "Bezeichnung der Nebenwirkung (Freitext)"
+      * artMedDRACode 0..1 code "Art MedDRA Code" "MedDRA-Code der Nebenwirkung (8-stellig)"
       * grad 1..1 code "Grad" "CTCAE-Grad der Nebenwirkung (3, 4, 5)"
       * version 0..1 string "Version" "CTCAE-Version"
 
@@ -204,7 +217,8 @@ Description: "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz 
   * nebenwirkungen 1..1 BackboneElement "Nebenwirkungen" "Nebenwirkungen der Strahlentherapie"
     * gradMaximal2OderUnbekannt 0..1 code "Grad_maximal2_oder_unbekannt" "Maximaler Schweregrad <=2 oder unbekannt"
     * nebenwirkung 0..* BackboneElement "Nebenwirkung" "Einzelne Nebenwirkung Grad >=3"
-      * artBezeichnung 0..1 string "Art Bezeichnung" "Bezeichnung der Nebenwirkung"
+      * artBezeichnung 0..1 string "Art Bezeichnung" "Bezeichnung der Nebenwirkung (Freitext)"
+      * artMedDRACode 0..1 code "Art MedDRA Code" "MedDRA-Code der Nebenwirkung (8-stellig)"
       * grad 1..1 code "Grad" "CTCAE-Grad der Nebenwirkung (3, 4, 5)"
       * version 0..1 string "Version" "CTCAE-Version"
 

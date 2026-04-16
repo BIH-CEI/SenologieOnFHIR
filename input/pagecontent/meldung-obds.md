@@ -103,15 +103,22 @@ Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen ab
 | Strahlentherapie: Dosis, Zielgebiet, Applikationsart | Senologie_Strahlentherapie | Vorhanden |
 | Tumorkonferenz: Datum, Typ, Empfehlungen | Senologie_Tumorboard_Empfehlung | Vorhanden |
 | Modul Mamma: ER/PR/HER2 | Senologie_Pathologie_Befund | Vorhanden |
+| Modul Mamma: Menopausenstatus | MII Onko (`mii-pr-onko-mamma-menopause-status`) | Vorhanden — SNOMED 309606002/309608001/309607006 → oBDS 1/3/U |
+| Modul Mamma: Präoperative Drahtmarkierung (M/S/T/N/U) | Senologie_OP_Planung (`extension[preOpMarkierung]`) | Vorhanden — ServiceRequest-Extension, Coding M/S/T/N/U |
+| Modul Mamma: Intraoperative Präparatkontrolle (QI-3) | Specimen.processing.procedure | Vorhanden — Indikator für QI-3 "Präparatkontrolle nach Drahtmarkierung" |
+| Modul Mamma: TumorgrößeInvasiv / TumorgrößeDCIS | Senologie_Pathologie_Befund (LOINC 33728-7) | Vorhanden — strukturierte Tumorgröße in mm |
 | Topographie ICD-O (C50.x) | Senologie_Tumorlokalisation (BodyStructure.locationQualifier[quadrant]) | **Vorhanden** — Quadrant → C50.0–C50.9 via [ConceptMap](ConceptMap-cm-sct-to-icdo3-mamma-topographie.html), Seite separat aus locationQualifier[seitenlokalisation] |
-| Frühere Tumorerkrankungen | — | **Fehlt** — Vorerkrankungen nicht im Senologie-Scope (→ IPS/KIS) |
-| Allgemeiner Leistungszustand (ECOG) | MII Onko (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) | **Vorhanden** — MII Onko Profil, kein eigenes Senologie-Profil nötig |
+| Genexpressionstests (Oncotype DX, MammaPrint) → Menge_Weitere_Klassifikation | Senologie_Genexpressionstest (RiskAssessment) | Vorhanden — wird als `<Weitere_Klassifikation>` mit Name + Stadium/Score abgebildet |
+| Frühere Tumorerkrankungen | MII Onko (`mii-pr-onko-fruehere-tumorerkrankung`) | **Teilweise abbildbar** — MII-Profil vorhanden, aber aktuell nicht als Senologie-Testdatum; Datenlage im Brustzentrum meist anamnestisch → siehe OF-13 |
+| Allgemeiner Leistungszustand (ECOG) | MII Onko (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) | **Vorhanden** — MII Onko Profil, kein eigenes Senologie-Profil nötig. Testdaten: Fall 1, 2, 9 (Verlauf) |
 | Absender/Melder-Daten (IKNR, Arzt, Anschrift, Bankdaten) | KIS / Verwaltung | **Externe Quelle** — administrative Daten |
 | Meldebegründung, Eigene Leistung | KIS / Verwaltung | **Externe Quelle** |
 | Sterbedatum, Todesursache | KIS / Standesamt | **Externe Quelle** |
 | Nebenwirkungen Systemtherapie (CTCAE-Grad) | MII Onko (`mii-pr-onko-nebenwirkung-adverse-event`) | **Vorhanden** — AdverseEvent mit CTCAE-Art, Grad und Verursacher-Referenz |
 | Nebenwirkungen Strahlentherapie (CTCAE) | MII Onko (`mii-pr-onko-nebenwirkung-adverse-event`) | **Vorhanden** — gleiches Profil, suspectEntity verweist auf RT-Procedure |
-| Sozialdienstkontakt (Modul_Allgemein) | — | **Fehlt** — nicht im Senologie-Scope |
+| Nebenwirkung Art: MedDRA-Code (alternativ zu Bezeichnung) | MII Onko AdverseEvent | **Vorhanden im LM** — in StructureMap noch nicht ausgeschrieben |
+| Sozialdienstkontakt (Modul_Allgemein) | MII Onko (`mii-pr-onko-mamma-sozialdienst`) | **Teilweise abbildbar** — MII-Profil existiert, aber nicht im Senologie-Scope dokumentiert → siehe OF-14 |
+| Strukturierte ycTNM / ypTNM bei neoadjuvanter Therapie (Fall 4, 5, 7) | MII Onko TNM-Profile | **Lücke in Testdaten** — aktuell nur narrativ in Procedure.outcome.text; benötigt TNM-Observations mit y-Symbol |
 
 #### Handlungsoptionen
 
@@ -119,11 +126,15 @@ Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen ab
 
 2. **ICD-O-Topographie** — Wird aus der BodyStructure (Tumorlokalisation) abgeleitet: SNOMED-Quadrant → ICD-O-3 C50.x via ConceptMap. Seitenlokalisation separat. Die [ConceptMap SNOMED → ICD-O-3](ConceptMap-cm-sct-to-icdo3-mamma-topographie.html) deckt alle 7 Quadranten ab, mit Fallback auf C50.9.
 
-3. **ECOG-Leistungszustand** — Über das bestehende MII Onko Profil (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) abbildbar. Muss im Brustzentrum bei Diagnose und Verlauf dokumentiert und als Observation im Bundle mitgeliefert werden.
+3. **ECOG-Leistungszustand** — Über das bestehende MII Onko Profil (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) abbildbar. Muss im Brustzentrum bei Diagnose und Verlauf dokumentiert und als Observation im Bundle mitgeliefert werden. Testdaten für Verlaufs-ECOG liegen für Fall 1, 2 und 9 vor.
 
-4. **Administrative Daten über ETL** — Absender, Melder, Bankdaten, Meldebegründung kommen aus dem KIS bzw. der Krankenhausverwaltung und werden in der ETL-Strecke ergänzt, in Abstimmung mit der GB IT.
+4. **Mamma-spezifische Modulfelder (QI-3, Drahtmarkierung, Tumorgröße)** — Die Felder `PraeopDrahtmarkierung`, `IntraopPraeparatkontrolle` (QI-3), `TumorgroesseInvasiv` und `TumorgroesseDCIS` sind im Logical Model ergänzt. Die Drahtmarkierung wird aus der OP-Planung (ServiceRequest-Extension `preOpMarkierung`) übernommen; die QI-3-Präparatkontrolle aus `Specimen.processing.procedure`; Tumorgröße aus der Pathologie (LOINC 33728-7).
 
-**Empfehlung**: Prioritär ein CTCAE-Nebenwirkungsprofil erstellen (fehlt für oBDS und ist klinisch relevant). Administrative und Verwaltungsdaten über standortspezifische ETL ergänzen.
+5. **Genexpressionstests** — Oncotype DX, MammaPrint, Prosigna etc. werden als `<Weitere_Klassifikation>` (oBDS `Menge_Weitere_Klassifikation`) exportiert. Mapping aus `Senologie_Genexpressionstest` (RiskAssessment): `method.coding.display` → Name, `occurrenceDateTime` → Datum, `prediction.qualitativeRisk` → Stadium.
+
+6. **Administrative Daten über ETL** — Absender, Melder, Bankdaten, Meldebegründung kommen aus dem KIS bzw. der Krankenhausverwaltung und werden in der ETL-Strecke ergänzt, in Abstimmung mit der GB IT.
+
+**Empfehlung**: Die verbleibenden Lücken (Testdaten-ycTNM/ypTNM, Frühere Tumorerkrankungen, Sozialdienstkontakt) sind konzeptionell gelöst, benötigen aber Testdaten-Ergänzung bzw. Entscheidung im Zuge der Ballotierung (siehe OF-13, OF-14).
 
 ### Testdaten-Referenz
 
