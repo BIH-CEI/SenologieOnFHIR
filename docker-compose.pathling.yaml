@@ -2,12 +2,27 @@ services:
   pathling:
     image: aehrc/pathling:latest
     ports:
-      - "8090:8080"
+      - "8091:8080"
     environment:
       pathling.storage.warehouseUrl: file:///tmp/warehouse
       pathling.query.cacheSize: "100"
       pathling.terminology.enabled: "false"
-      JAVA_TOOL_OPTIONS: "-Xmx4g"
+      pathling.import.allowableSources: "file:///tmp/ndjson"
+      JAVA_TOOL_OPTIONS: >-
+        -Xmx4g
+        --add-opens=java.base/java.lang=ALL-UNNAMED
+        --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+        --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+        --add-opens=java.base/java.io=ALL-UNNAMED
+        --add-opens=java.base/java.net=ALL-UNNAMED
+        --add-opens=java.base/java.nio=ALL-UNNAMED
+        --add-opens=java.base/java.util=ALL-UNNAMED
+        --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+        --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+        --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+        --add-opens=java.base/sun.nio.cs=ALL-UNNAMED
+        --add-opens=java.base/sun.security.action=ALL-UNNAMED
+        --add-opens=java.base/sun.util.calendar=ALL-UNNAMED
     volumes:
       - pathling-warehouse:/tmp/warehouse
     healthcheck:
