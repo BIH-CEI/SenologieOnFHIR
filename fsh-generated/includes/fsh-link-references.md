@@ -246,7 +246,6 @@
 [QuestKlinischeUntersuchung]: Questionnaire-QuestKlinischeUntersuchung.html
 [QuestOPPlanung]: Questionnaire-QuestOPPlanung.html
 [QuestPostOPDokumentation]: Questionnaire-QuestPostOPDokumentation.html
-[QuestionnaireSenologieDiagnose]: Questionnaire-senologie-diagnose-maligne.html
 [QuestDiagnoseMaligne]: Questionnaire-QuestDiagnoseMaligne.html
 [QuestTumorboard]: Questionnaire-QuestTumorboard.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
