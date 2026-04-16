@@ -1,0 +1,112 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "SystemtherapieKohorte",
+  "url": "http://fhir.bih-charite.de/kds-senologie/ViewDefinition/SystemtherapieKohorte",
+  "name": "SystemtherapieKohorte",
+  "title": "Systemtherapie-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Systemische Therapien (Procedure-Ebene). Spalten: patientId, procedureId, art (CH/HO/IM/ZT), intention, beginn, ende, protokoll, substanzen.",
+  "resource": "Procedure",
+  "where": [
+    {
+      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-systemtherapie-procedure' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie' or category.coding.where(code='18629005' or code='385786002' or code='169413002' or code='76334006' or code='764166006').exists()"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "procedureId",
+          "type": "id"
+        },
+        {
+          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "iif(category.coding.where(code='385786002').exists() or code.coding.where(code='385786002').exists(), 'CH', iif(category.coding.where(code='169413002').exists() or code.coding.where(code='169413002').exists(), 'HO', iif(category.coding.where(code='76334006').exists() or code.coding.where(code='76334006').exists(), 'IM', iif(category.coding.where(code='764166006').exists() or code.coding.where(code='764166006').exists(), 'ZT', 'ST'))))",
+          "name": "art",
+          "type": "string",
+          "description": "Art der Systemtherapie: CH=Chemo, HO=Hormon, IM=Immun, ZT=Zielgerichtet, ST=Sonstige"
+        },
+        {
+          "path": "code.coding.first().display",
+          "name": "typDisplay",
+          "type": "string"
+        },
+        {
+          "path": "extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention').value.coding.first().code",
+          "name": "intention",
+          "type": "code"
+        },
+        {
+          "path": "extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention').value.coding.first().display",
+          "name": "intentionDisplay",
+          "type": "string"
+        },
+        {
+          "path": "performed.ofType(Period).start",
+          "name": "beginn",
+          "type": "dateTime"
+        },
+        {
+          "path": "performed.ofType(Period).end",
+          "name": "ende",
+          "type": "dateTime"
+        },
+        {
+          "path": "performed.ofType(dateTime)",
+          "name": "performedDateTime",
+          "type": "dateTime"
+        },
+        {
+          "path": "usedCode.coding.first().display",
+          "name": "protokoll",
+          "type": "string"
+        },
+        {
+          "path": "usedCode.coding.first().code",
+          "name": "protokollCode",
+          "type": "code"
+        },
+        {
+          "path": "outcome.text",
+          "name": "outcomeText",
+          "type": "string"
+        },
+        {
+          "path": "outcome.coding.first().code",
+          "name": "outcomeCode",
+          "type": "code"
+        },
+        {
+          "path": "reasonReference.first().reference.replaceMatches('^Condition/', '')",
+          "name": "reasonConditionId",
+          "type": "string"
+        },
+        {
+          "path": "note.first().text",
+          "name": "note",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    },
+    {
+      "forEach": "partOf",
+      "column": [
+        {
+          "path": "reference",
+          "name": "partOfRef",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

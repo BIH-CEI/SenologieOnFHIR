@@ -1,0 +1,91 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "DiagnoseKohorte",
+  "url": "http://fhir.bih-charite.de/kds-senologie/ViewDefinition/DiagnoseKohorte",
+  "name": "DiagnoseKohorte",
+  "title": "Diagnosekohorte (Mamma)",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Alle Mamma-Diagnosen mit Staging. Spalten: patientId, conditionId, icd10, snomed, seitenlokalisation, diagnosedatum, clinicalStatus, uiccStage, grading.",
+  "resource": "Condition",
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "conditionId",
+          "type": "id"
+        },
+        {
+          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code",
+          "name": "icd10",
+          "type": "code"
+        },
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().code",
+          "name": "snomed",
+          "type": "code"
+        },
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().display",
+          "name": "snomedDisplay",
+          "type": "string"
+        },
+        {
+          "path": "bodySite.first().coding.first().display",
+          "name": "seitenlokalisation",
+          "type": "string"
+        },
+        {
+          "path": "bodySite.first().coding.first().code",
+          "name": "seitenlokalisationCode",
+          "type": "code"
+        },
+        {
+          "path": "extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum').value.ofType(dateTime)",
+          "name": "diagnosedatum",
+          "type": "dateTime"
+        },
+        {
+          "path": "onset.ofType(dateTime)",
+          "name": "onsetDateTime",
+          "type": "dateTime"
+        },
+        {
+          "path": "recordedDate",
+          "name": "recordedDate",
+          "type": "dateTime"
+        },
+        {
+          "path": "clinicalStatus.coding.first().code",
+          "name": "clinicalStatus",
+          "type": "code"
+        },
+        {
+          "path": "verificationStatus.coding.first().code",
+          "name": "verificationStatus",
+          "type": "code"
+        },
+        {
+          "path": "stage.first().summary.text",
+          "name": "uiccStage",
+          "type": "string"
+        },
+        {
+          "path": "stage.first().assessment.first().reference",
+          "name": "stagingAssessment",
+          "type": "string"
+        },
+        {
+          "path": "evidence.first().detail.first().reference",
+          "name": "evidenceDetail",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

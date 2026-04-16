@@ -1,0 +1,108 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "OperationenKohorte",
+  "url": "http://fhir.bih-charite.de/kds-senologie/ViewDefinition/OperationenKohorte",
+  "name": "OperationenKohorte",
+  "title": "Operationen-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Alle Senologie-Operationen mit Outcome. Spalten: patientId, procedureId, ops, art (BET/Mastektomie/SNB/ALND), datum, seite, outcome (R0/R1/R2), hauptoperateur.",
+  "resource": "Procedure",
+  "where": [
+    {
+      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-operation' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-operation' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-operation' or code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and (code.startsWith('5-870') or code.startsWith('5-871') or code.startsWith('5-872') or code.startsWith('5-401') or code.startsWith('5-402'))).exists()"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "procedureId",
+          "type": "id"
+        },
+        {
+          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops').first().code",
+          "name": "ops",
+          "type": "code"
+        },
+        {
+          "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops').first().display",
+          "name": "opsDisplay",
+          "type": "string"
+        },
+        {
+          "path": "iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and code.startsWith('5-870')).exists(), 'BET', iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and (code.startsWith('5-871') or code.startsWith('5-872'))).exists(), 'Mastektomie', iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and code.startsWith('5-401')).exists(), 'SNB', iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and code.startsWith('5-402')).exists(), 'ALND', 'Sonstige'))))",
+          "name": "art",
+          "type": "string",
+          "description": "OP-Art kategorisiert: BET | Mastektomie | SNB | ALND | Sonstige"
+        },
+        {
+          "path": "category.coding.first().display",
+          "name": "kategorie",
+          "type": "string"
+        },
+        {
+          "path": "performed.ofType(dateTime)",
+          "name": "datum",
+          "type": "dateTime"
+        },
+        {
+          "path": "performed.ofType(Period).start",
+          "name": "beginn",
+          "type": "dateTime"
+        },
+        {
+          "path": "bodySite.first().coding.first().display",
+          "name": "seite",
+          "type": "string"
+        },
+        {
+          "path": "bodySite.first().coding.first().code",
+          "name": "seiteCode",
+          "type": "code"
+        },
+        {
+          "path": "outcome.text",
+          "name": "outcomeText",
+          "type": "string"
+        },
+        {
+          "path": "iif(outcome.text.contains('R0') or outcome.coding.where(code='R0').exists(), 'R0', iif(outcome.text.contains('R1') or outcome.coding.where(code='R1').exists(), 'R1', iif(outcome.text.contains('R2') or outcome.coding.where(code='R2').exists(), 'R2', {})))",
+          "name": "outcome",
+          "type": "string",
+          "description": "Resektionsstatus R0/R1/R2 (heuristisch aus outcome.text oder outcome.coding)"
+        },
+        {
+          "path": "performer.where(function.coding.code='304292004' or function.text.contains('Hauptoperateur')).first().actor.display",
+          "name": "hauptoperateur",
+          "type": "string"
+        },
+        {
+          "path": "performer.first().actor.display",
+          "name": "performer",
+          "type": "string"
+        },
+        {
+          "path": "extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention').value.coding.first().code",
+          "name": "intention",
+          "type": "code"
+        },
+        {
+          "path": "reasonReference.first().reference.replaceMatches('^Condition/', '')",
+          "name": "reasonConditionId",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

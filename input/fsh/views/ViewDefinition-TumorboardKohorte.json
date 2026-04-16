@@ -1,0 +1,107 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "TumorboardKohorte",
+  "url": "http://fhir.bih-charite.de/kds-senologie/ViewDefinition/TumorboardKohorte",
+  "name": "TumorboardKohorte",
+  "title": "Tumorboard-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Tumorboard-Empfehlungen (CarePlan). Spalten: patientId, careplanId, datum, typ, empfehlungen (mehrzeilig über forEach activity).",
+  "resource": "CarePlan",
+  "where": [
+    {
+      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung' or category.coding.where(code='394656005').exists() or title.contains('Tumorboard') or title.contains('Tumorkonferenz')"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "careplanId",
+          "type": "id"
+        },
+        {
+          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "period.start",
+          "name": "datum",
+          "type": "dateTime"
+        },
+        {
+          "path": "period.end",
+          "name": "datumEnde",
+          "type": "dateTime"
+        },
+        {
+          "path": "title",
+          "name": "typ",
+          "type": "string"
+        },
+        {
+          "path": "description",
+          "name": "beschreibung",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        },
+        {
+          "path": "intent",
+          "name": "intent",
+          "type": "code"
+        },
+        {
+          "path": "addresses.first().reference.replaceMatches('^Condition/', '')",
+          "name": "conditionId",
+          "type": "string"
+        },
+        {
+          "path": "activity.detail.code.text.join('; ') | activity.detail.code.coding.display.join('; ')",
+          "name": "empfehlungen",
+          "type": "string",
+          "description": "Alle empfohlenen Maßnahmen als zusammengefügter String"
+        },
+        {
+          "path": "activity.detail.status.join(', ')",
+          "name": "empfehlungsStatus",
+          "type": "string"
+        },
+        {
+          "path": "note.first().text",
+          "name": "note",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "forEach": "activity",
+      "column": [
+        {
+          "path": "detail.kind",
+          "name": "activityKind",
+          "type": "code"
+        },
+        {
+          "path": "detail.code.coding.first().code",
+          "name": "activityCode",
+          "type": "code"
+        },
+        {
+          "path": "detail.code.text | detail.code.coding.first().display",
+          "name": "activityLabel",
+          "type": "string"
+        },
+        {
+          "path": "detail.status",
+          "name": "activityStatus",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "PatientKohorte",
+  "url": "http://fhir.bih-charite.de/kds-senologie/ViewDefinition/PatientKohorte",
+  "name": "PatientKohorte",
+  "title": "Patientenkohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Flache Tabelle aller Patientinnen mit Basis-Demographika. Spalten: id, name, gender, birthDate, age, city.",
+  "resource": "Patient",
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "id",
+          "type": "id"
+        },
+        {
+          "path": "name.where(use='official' or use.empty()).first().family + ', ' + name.where(use='official' or use.empty()).first().given.first()",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "path": "gender",
+          "name": "gender",
+          "type": "code"
+        },
+        {
+          "path": "birthDate",
+          "name": "birthDate",
+          "type": "date"
+        },
+        {
+          "path": "(today() - birthDate).toString()",
+          "name": "age",
+          "type": "string",
+          "description": "Alter in Jahren (heuristisch berechnet aus birthDate)"
+        },
+        {
+          "path": "address.where(use='home' or use.empty()).first().city",
+          "name": "city",
+          "type": "string"
+        },
+        {
+          "path": "address.where(use='home' or use.empty()).first().postalCode",
+          "name": "postalCode",
+          "type": "string"
+        },
+        {
+          "path": "deceased.ofType(dateTime).exists() or deceased.ofType(boolean) = true",
+          "name": "deceased",
+          "type": "boolean"
+        }
+      ]
+    }
+  ]
+}
