@@ -1,0 +1,184 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigBrust"
+/// name = "SenologieToIqtigBrust"
+/// title = "Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/ServiceRequest" alias ServiceRequest as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
+
+// ============================================================================
+// Teildatensatz Brust (BRUST): Condition + Observations -> BRUST:*
+//
+// Pro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die
+// Zuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).
+//
+// Quellen:
+//   - Condition (Senologie_Diagnose_Maligne / _Benigne) -> Indikation, ICD,
+//     Seitenlokalisation, Diagnosedatum
+//   - Observation (BI-RADS, bildgebende Methode, Praeopbefund) -> Befund
+//   - ServiceRequest (Senologie_OP_Planung) -> Drahtmarkierung, Neoadjuvanz
+//   - Observation (cTNM, Tumorgroesse klinisch) -> Staging-Felder
+// ============================================================================
+
+group MapBrust(source src : Condition, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // BRUST:LNRBRUST - Standardwert 1 (kann durch Slicing ueberschrieben werden)
+  src -> tgt.laufendeNummer = 1 "SetLnrBrust";
+
+  // BRUST:SEITE - Seitenlokalisation aus Condition.bodySite (SNOMED CT)
+  // 24028007=right, 7771000=left, 51440002=bilateral
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '24028007' -> tgt.seitenlokalisation = 'R' "SetSeiteR";
+      c.code as cd where $this = '7771000' -> tgt.seitenlokalisation = 'L' "SetSeiteL";
+      c.code as cd where $this = '51440002' -> tgt.seitenlokalisation = 'B' "SetSeiteB";
+    } "MapSeiteSCT";
+  } "MapSeitenlokalisation";
+
+  // BRUST:INDIKATION - Indikation aus ICD-10-GM-Code
+  // C50.* = maligne (1), D05.* = DCIS (2), D24 = benigne (3), Z40.* = Risikoreduktion (4)
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then {
+      c.code as cd where $this.startsWith('C50') -> tgt.indikation = '1' "SetIndikMaligne";
+      c.code as cd where $this.startsWith('D05') -> tgt.indikation = '2' "SetIndikDCIS";
+      c.code as cd where $this.startsWith('D24') -> tgt.indikation = '3' "SetIndikBenigne";
+      c.code as cd where $this.startsWith('Z40') -> tgt.indikation = '4' "SetIndikRisiko";
+      c.code as cd where $this.startsWith('Z42') -> tgt.indikation = '5' "SetIndikRekon";
+    } "MapIndikationICD";
+  } "MapIndikation";
+
+  // BRUST:DIAGICD - ICD-10-GM-Kodierung der Diagnose
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' -> tgt.diagnoseICD as icd then {
+      c.code as cd -> icd.code = cd "SetICDCode";
+      c.version as v -> icd.version = v "SetICDVersion";
+    } "MapICDCoding";
+  } "MapDiagnoseICD";
+
+  // BRUST:DIAGDATUM - Diagnosedatum aus Condition.onsetDateTime
+  src.onset as onset where $this.is(dateTime) -> tgt.diagnosedatum = onset "SetDiagnosedatum";
+
+  // BRUST:CT / BRUST:CN / BRUST:CM - klinische TNM aus Observation (LOINC 21908-9 Stage group)
+  // Hier ueber TNM-Komponenten: T=21905-5, N=21906-3, M=21907-1
+  bundle.entry as tEntry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
+    tEntry.resource as tObs then {
+      tObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.cT = cd "SetCT";
+        } "MapCTCoding";
+      } "MapCTValue";
+    } "MapCTObs";
+  } "EntryCT";
+
+  bundle.entry as nEntry where resource.is(Observation) and resource.code.coding.exists(code = '21906-3') then {
+    nEntry.resource as nObs then {
+      nObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.cN = cd "SetCN";
+        } "MapCNCoding";
+      } "MapCNValue";
+    } "MapCNObs";
+  } "EntryCN";
+
+  bundle.entry as mEntry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
+    mEntry.resource as mObs then {
+      mObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.cM = cd "SetCM";
+        } "MapCMCoding";
+      } "MapCMValue";
+    } "MapCMObs";
+  } "EntryCM";
+
+  // BRUST:UICCKLIN - klinisches UICC-Stadium (LOINC 21902-2 Stage group.clinical)
+  bundle.entry as uiccEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+    uiccEntry.resource as uiccObs then {
+      uiccObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.uiccStadiumKlinisch = cd "SetUICCKlin";
+        } "MapUICCKlinCoding";
+      } "MapUICCKlinValue";
+    } "MapUICCKlinObs";
+  } "EntryUICCKlin";
+
+  // BRUST:TGROESSEKLIN - praetherapeutische Tumorgroesse aus Bildgebung
+  // LOINC 44648-0 (Breast tumor size, imaging) oder Senologie_Bildgebung_Observation
+  bundle.entry as tgEntry where resource.is(Observation) and resource.code.coding.exists(code = '44648-0') then {
+    tgEntry.resource as tgObs then {
+      tgObs.value as val then {
+        val.value as v -> tgt.tumorgroesseKlinisch = truncate(v) "SetTGroesseKlin";
+      } "MapTGroesseKlinValue";
+    } "MapTGroesseKlinObs";
+  } "EntryTGroesseKlin";
+
+  // BRUST:BILDGMETHODE - Eingesetzte bildgebende Methode aus Senologie_Bildgebung_Befund
+  // LOINC 24604-1 (Breast imaging report) oder Senologie-spezifisch
+  bundle.entry as bildEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung')) then {
+    bildEntry.resource as bildObs then {
+      bildObs.method as m then {
+        m.coding as c where system = 'http://snomed.info/sct' then {
+          // 71651007=Mammografie, 16310003=Sonografie, 113091000=MRT, 710324008=Tomosynthese
+          c.code as cd where $this = '71651007' -> tgt.bildgebendeMethode = '1' "SetMethMammo";
+          c.code as cd where $this = '16310003' -> tgt.bildgebendeMethode = '2' "SetMethSono";
+          c.code as cd where $this = '113091000' -> tgt.bildgebendeMethode = '3' "SetMethMRT";
+          c.code as cd where $this = '710324008' -> tgt.bildgebendeMethode = '4' "SetMethTomo";
+        } "MapBildMethodCoding";
+      } "MapBildMethod";
+    } "MapBildObs";
+  } "EntryBildgebung";
+
+  // BRUST:BIRADS - BI-RADS-Klassifikation aus Observation
+  // LOINC 72133-2 (Breast imaging BI-RADS)
+  bundle.entry as biradsEntry where resource.is(Observation) and resource.code.coding.exists(code = '72133-2') then {
+    biradsEntry.resource as biradsObs then {
+      biradsObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.birads = cd "SetBIRADS";
+        } "MapBIRADSCoding";
+      } "MapBIRADSValue";
+    } "MapBIRADSObs";
+  } "EntryBIRADS";
+
+  // BRUST:BEFUND - Praeoperativer Befund (B-Klassifikation) aus Pathologie-Befund
+  bundle.entry as befEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund')) then {
+    befEntry.resource as befObs then {
+      befObs.value as val then {
+        val.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-befundcode-b' first then {
+          c.code as cd -> tgt.befundcode = cd "SetBefundB";
+        } "MapBefundBCoding";
+      } "MapBefundValue";
+    } "MapBefundObs";
+  } "EntryBefund";
+
+  // BRUST:HISTPRAEOP - Praeoperative histologische Sicherung aus Procedure (Biopsie-OPS)
+  // Abgeleitet aus Verification-Status / Procedure-Kontext; Default = 0 (nein)
+  src -> tgt.histologischeSicherungPraeop = '0' "SetHistPraeopDefault";
+
+  // BRUST:DRAHT - Praeoperative Drahtmarkierung aus ServiceRequest-Extension
+  bundle.entry as srEntry where resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung')) then {
+    srEntry.resource as sr then {
+      sr.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/preOpMarkierung' then {
+        ext.value as val then {
+          val.coding as c first then {
+            // M=Mammo -> 1, S=Sono -> 2, T=MRT -> 3, N=keine -> 0
+            c.code as cd where $this = 'M' -> tgt.drahtmarkierung = '1' "SetDrahtMammo";
+            c.code as cd where $this = 'S' -> tgt.drahtmarkierung = '2' "SetDrahtSono";
+            c.code as cd where $this = 'T' -> tgt.drahtmarkierung = '3' "SetDrahtMRT";
+            c.code as cd where $this = 'N' -> tgt.drahtmarkierung = '0' "SetDrahtKeine";
+          } "MapDrahtCoding";
+        } "MapDrahtValue";
+      } "MapDrahtExt";
+    } "SRContext";
+  } "EntryDraht";
+
+  // BRUST:NEOADJ - Neoadjuvante Therapie erhalten (Default = 0, konkrete Ableitung aus
+  // bestehender Systemtherapie-Procedure mit stellungOP=N noetig)
+  src -> tgt.neoadjuvanteTherapie = '0' "SetNeoadjDefault";
+
+  // BRUST:TKPRAEOP - Praetherapeutische Tumorkonferenz-Empfehlung
+  // Aus Senologie_Tumorboard_Empfehlung (CarePlan) mit Typ "praetherapeutisch"
+  src -> tgt.tumorkonferenzPraeop = '9' "SetTKPraeopDefault";
+}

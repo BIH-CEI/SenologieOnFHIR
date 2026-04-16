@@ -1,0 +1,50 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrust"
+/// name = "SenologieToOncoBoxBrust"
+/// title = "Senologie FHIR Bundle to OncoBox Brust N1.1.1 (Orchestrator)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as source
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
+uses "http://hl7.org/fhir/StructureDefinition/ResearchSubject" alias ResearchSubject as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// Teil-Maps importieren
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustZentrum"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustPrimaerfall"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustOperation"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustTherapie"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustKennzahlen"
+
+// ============================================================================
+// Master Orchestrator: Bundle -> OncoBox Brust N1.1.1 Meldung
+//
+// Erzeugt aus einem FHIR-Bundle mit Senologie-Ressourcen eine OncoBox-Brust-
+// Meldung. Pro Patientin/Fall wird ein Primaerfall-Block erzeugt. Die Kennzahlen
+// (KB-1 bis KB-20) werden ueber eine separate Sub-Map aggregiert befuellt.
+//
+// Scope: OncoBox Brust N1.1.1 (DKG/OnkoZert-Zertifizierung Brustzentren)
+// ============================================================================
+
+group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
+
+  // --- Zentrum / Meldungs-Metadaten ---
+  src -> tgt.zentrum as zentrum then MapZentrum(src, zentrum) "CallMapZentrum";
+
+  // --- Primaerfall: pro Brust-Diagnose ein Primaerfall-Block ---
+  // Ein Bundle sollte typischerweise einen Primaerfall enthalten (eine Patientin,
+  // eine Erstdiagnose). Bei Bundles mit mehreren Faellen (z.B. Rezidiven) wird
+  // pro Condition (C50.* / D05.* / Z40.* / Z42.*) ein Block erzeugt.
+  src.entry as entry where resource.is(Condition) and resource.code.coding.exists(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and (code.startsWith('C50') or code.startsWith('D05') or code.startsWith('D24') or code.startsWith('Z40') or code.startsWith('Z42'))) then {
+    entry.resource as condition -> tgt.primaerfall as pf then MapPrimaerfall(condition, pf, src) "CallMapPrimaerfall";
+  } "EntryPrimaerfall";
+
+  // --- Kennzahlen KB-1 bis KB-20 aggregieren ---
+  src -> tgt then MapKennzahlen(src, tgt) "CallMapKennzahlen";
+}

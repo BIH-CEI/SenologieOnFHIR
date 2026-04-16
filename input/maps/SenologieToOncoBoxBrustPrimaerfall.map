@@ -1,0 +1,403 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustPrimaerfall"
+/// name = "SenologieToOncoBoxBrustPrimaerfall"
+/// title = "Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
+uses "http://hl7.org/fhir/StructureDefinition/ResearchSubject" alias ResearchSubject as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// Operation / Therapie per Sub-Map
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustOperation"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustTherapie"
+
+// ============================================================================
+// Primaerfall: Condition (Brust-Diagnose) + Patient + Encounter -> Primaerfall
+//
+// Pro Primaerfall (Condition mit ICD-10 aus dem Mamma-Spektrum) werden
+// Patientendaten, Fall-Daten, Diagnose-Block und Therapie-Subblocks befuellt.
+// ============================================================================
+
+group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // --- Fall-ID aus Condition.id ---
+  src.id as cid -> tgt.fallId = cid "SetFallId";
+
+  // --- Primaerfallart aus ICD-10 ableiten ---
+  // C50.* = invasiv (1), D05.* = DCIS (2), Z40.* = Risikoreduktion (7),
+  // Z42.* = Rekonstruktion (8), D24 = benigne (9)
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then {
+      c.code as cd where $this.startsWith('C50') -> tgt.primaerfallart = '1' "SetPfArtInvasiv";
+      c.code as cd where $this.startsWith('D05') -> tgt.primaerfallart = '2' "SetPfArtDCIS";
+      c.code as cd where $this.startsWith('Z40') -> tgt.primaerfallart = '7' "SetPfArtRisiko";
+      c.code as cd where $this.startsWith('Z42') -> tgt.primaerfallart = '8' "SetPfArtRekon";
+      c.code as cd where $this.startsWith('D24') -> tgt.primaerfallart = '9' "SetPfArtBenigne";
+    } "MapPrimaerfallartICD";
+  } "MapPrimaerfallart";
+
+  // --- Patientendaten ---
+  bundle.entry as entry where resource.is(Patient) then {
+    entry.resource as patient -> tgt.patient as pat then MapPatient(patient, pat, bundle) "CallMapPatient";
+    entry.resource as patient then {
+      patient.id as pid -> tgt.patientPseudonym = pid "SetPatientPseudonym";
+    } "PseudCtx";
+  } "EntryPatient";
+
+  // --- Fall aus Encounter ---
+  bundle.entry as entry where resource.is(Encounter) then {
+    entry.resource as encounter -> tgt.fall as fall then MapFall(encounter, fall) "CallMapFall";
+  } "EntryEncounter";
+
+  // --- Diagnose-Block ---
+  src -> tgt.diagnose as diag then MapDiagnose(src, diag, bundle) "CallMapDiagnose";
+
+  // --- Operationen ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation')) then {
+    entry.resource as procedure -> tgt.operation as op then MapOperation(procedure, op, bundle) "CallMapOperation";
+  } "EntryOperation";
+
+  // --- Systemtherapie ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
+    entry.resource as procedure -> tgt.systemtherapie as syst then MapSystemtherapie(procedure, syst, bundle) "CallMapSystemtherapie";
+  } "EntrySystemtherapie";
+
+  // --- Strahlentherapie ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
+    entry.resource as procedure -> tgt.strahlentherapie as rt then MapStrahlentherapie(procedure, rt, bundle) "CallMapStrahlentherapie";
+  } "EntryRT";
+
+  // --- Tumorkonferenz aus CarePlan ---
+  bundle.entry as entry where resource.is(CarePlan) and resource.meta.profile.exists($this.contains('senologie-tumorboard')) then {
+    entry.resource as cp -> tgt.tumorkonferenz as tk then MapTumorkonferenz(cp, tk) "CallMapTK";
+  } "EntryTK";
+
+  // --- Studienteilnahme aus ResearchSubject ---
+  bundle.entry as entry where resource.is(ResearchSubject) then {
+    entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud) "CallMapStud";
+  } "EntryResearchSubject";
+}
+
+// ============================================================================
+// Patient -> Patient-Block (Geburtsdatum, Geschlecht, PLZ, Menopausenstatus)
+// ============================================================================
+
+group MapPatient(source src : Patient, target tgt : BackboneElement, source bundle : Bundle) {
+
+  src.birthDate as bd -> tgt.geburtsdatum = bd "SetPatGebdat";
+
+  src.gender as g where $this = 'female' -> tgt.geschlecht = 'W' "SetPatGeschlW";
+  src.gender as g where $this = 'male' -> tgt.geschlecht = 'M' "SetPatGeschlM";
+  src.gender as g where $this = 'other' -> tgt.geschlecht = 'D' "SetPatGeschlD";
+  src.gender as g where $this = 'unknown' -> tgt.geschlecht = 'U' "SetPatGeschlU";
+
+  src.address as addr first then {
+    addr.postalCode as plz -> tgt.postleitzahl = plz "SetPatPLZ";
+  } "MapPatPLZ";
+
+  // Menopausenstatus aus Observation (LOINC 86805-9 Menopausal status)
+  // 289903006=praemenopausal, 289904000=perimenopausal, 76977008=postmenopausal
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '86805-9') then {
+    entry.resource as obs then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd where $this = '289903006' -> tgt.menopausenstatus = '1' "SetMenoPrae";
+          c.code as cd where $this = '289904000' -> tgt.menopausenstatus = '2' "SetMenoPeri";
+          c.code as cd where $this = '76977008' -> tgt.menopausenstatus = '3' "SetMenoPost";
+        } "MapMenoCoding";
+      } "MapMenoVal";
+    } "MapMenoObs";
+  } "EntryMeno";
+}
+
+// ============================================================================
+// Fall -> Fall-Block (Typ, Aufnahme/Entlassung)
+// ============================================================================
+
+group MapFall(source src : Encounter, target tgt : BackboneElement) {
+
+  src.class as cls then {
+    cls.code as cd where $this = 'IMP' -> tgt.fallTyp = '1' "SetFallTypStat";
+    cls.code as cd where $this = 'AMB' -> tgt.fallTyp = '2' "SetFallTypAmb";
+    cls.code as cd where $this = 'SS' -> tgt.fallTyp = '3' "SetFallTypTeilstat";
+  } "MapFallTyp";
+
+  src.period as period then {
+    period.start as s -> tgt.aufnahmedatum = s "SetFallAufn";
+    period.end as e -> tgt.entlassungsdatum = e "SetFallEntl";
+  } "MapFallPeriod";
+}
+
+// ============================================================================
+// Diagnose -> Diagnose-Block
+// ============================================================================
+
+group MapDiagnose(source src : Condition, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // Diagnose_Datum aus Condition.onsetDateTime
+  src.onset as on where $this.is(dateTime) -> tgt.diagnosedatum = on "SetDiagDatum";
+
+  // ICD-10-GM
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' -> tgt.diagnoseICD as icd then {
+      c.code as cd -> icd.code = cd "SetDiagICDCode";
+      c.version as v -> icd.version = v "SetDiagICDVersion";
+    } "MapDiagICDCoding";
+  } "MapDiagICD";
+
+  // Dignitaet aus ICD-10-GM-Prefix
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then {
+      c.code as cd where $this.startsWith('C50') -> tgt.dignitaet = '1' "SetDignMaligne";
+      c.code as cd where $this.startsWith('D05') -> tgt.dignitaet = '2' "SetDignInSitu";
+      c.code as cd where $this.startsWith('D24') -> tgt.dignitaet = '4' "SetDignBenigne";
+    } "MapDignICD";
+  } "MapDignitaet";
+
+  // Seitenlokalisation
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '24028007' -> tgt.seitenlokalisation = 'R' "SetDiagSeiteR";
+      c.code as cd where $this = '7771000' -> tgt.seitenlokalisation = 'L' "SetDiagSeiteL";
+      c.code as cd where $this = '51440002' -> tgt.seitenlokalisation = 'B' "SetDiagSeiteB";
+    } "MapDiagSeiteSCT";
+  } "MapDiagSeite";
+
+  // Bildgebung (Senologie_Bildgebung_Observation / _Befund)
+  bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung')) then {
+    entry.resource as obs -> tgt.bildgebung as bg then MapBildgebung(obs, bg) "CallMapBg";
+  } "EntryBg";
+
+  // cTNM-Komponenten (LOINC 21905-5 / 21906-3 / 21907-1)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
+    entry.resource as obs -> tgt.cTNM as ctnm then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> ctnm.cT = cd "SetCT";
+        } "MapCTCoding";
+      } "MapCTVal";
+    } "MapCT";
+  } "EntryCT";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21906-3') then {
+    entry.resource as obs -> tgt.cTNM as ctnm then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> ctnm.cN = cd "SetCN";
+        } "MapCNCoding";
+      } "MapCNVal";
+    } "MapCN";
+  } "EntryCN";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
+    entry.resource as obs -> tgt.cTNM as ctnm then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> ctnm.cM = cd "SetCM";
+        } "MapCMCoding";
+      } "MapCMVal";
+    } "MapCM";
+  } "EntryCM";
+
+  // Tumorgroesse klinisch (LOINC 44648-0)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '44648-0') then {
+    entry.resource as obs -> tgt.cTNM as ctnm then {
+      obs.value as val then {
+        val.value as v -> ctnm.tumorgroesseKlinisch = truncate(v) "SetTGKlin";
+      } "MapTGKlinVal";
+    } "MapTGKlin";
+  } "EntryTGKlin";
+
+  // pTNM-Komponenten (LOINC 21899-0 / 21900-6 / 21901-4)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21899-0') then {
+    entry.resource as obs -> tgt.pTNM as ptnm then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> ptnm.pT = cd "SetPT";
+        } "MapPTCoding";
+      } "MapPTVal";
+    } "MapPT";
+  } "EntryPT";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21900-6') then {
+    entry.resource as obs -> tgt.pTNM as ptnm then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> ptnm.pN = cd "SetPN";
+        } "MapPNCoding";
+      } "MapPNVal";
+    } "MapPN";
+  } "EntryPN";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21901-4') then {
+    entry.resource as obs -> tgt.pTNM as ptnm then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> ptnm.pM = cd "SetPM";
+        } "MapPMCoding";
+      } "MapPMVal";
+    } "MapPM";
+  } "EntryPM";
+
+  // Tumorgroesse invasiv (LOINC 33728-7)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '33728-7') then {
+    entry.resource as obs -> tgt.pTNM as ptnm then {
+      obs.value as val then {
+        val.value as v -> ptnm.tumorgroesseInvasiv = truncate(v) "SetTGInv";
+      } "MapTGInvVal";
+    } "MapTGInv";
+  } "EntryTGInv";
+
+  // Histologie ICD-O-3 (Observation LOINC 59847-4)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+    entry.resource as obs then {
+      obs.value as val then {
+        val.coding as c where system = 'urn:oid:2.16.840.1.113883.6.43.1' -> tgt.diagnoseICDO as icdo then {
+          c.code as cd -> icdo.code = cd "SetHistCode";
+          c.version as v -> icdo.version = v "SetHistVersion";
+        } "MapHistICDO";
+      } "MapHistValue";
+    } "MapHistObs";
+  } "EntryHistologie";
+
+  // Grading (LOINC 33732-9)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '33732-9') then {
+    entry.resource as obs then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.grading = cd "SetGrading";
+        } "MapGrading";
+      } "MapGradingVal";
+    } "MapGradingObs";
+  } "EntryGrading";
+
+  // Lymphknoten (LOINC 21894-1 / 21893-3 / 92832-5 / 92833-3)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+    entry.resource as obs -> tgt.lymphknoten as lk then {
+      obs.value as val then {
+        val.value as v -> lk.untersucht = truncate(v) "SetLKUnt";
+      } "MapLKUntVal";
+    } "MapLKUnt";
+  } "EntryLKUnt";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+    entry.resource as obs -> tgt.lymphknoten as lk then {
+      obs.value as val then {
+        val.value as v -> lk.befallen = truncate(v) "SetLKBef";
+      } "MapLKBefVal";
+    } "MapLKBef";
+  } "EntryLKBef";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+    entry.resource as obs -> tgt.lymphknoten as lk then {
+      obs.value as val then {
+        val.value as v -> lk.sentinelUntersucht = truncate(v) "SetSLKUnt";
+      } "MapSLKUntVal";
+    } "MapSLKUnt";
+  } "EntrySLKUnt";
+
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '92833-3') then {
+    entry.resource as obs -> tgt.lymphknoten as lk then {
+      obs.value as val then {
+        val.value as v -> lk.sentinelBefallen = truncate(v) "SetSLKBef";
+      } "MapSLKBefVal";
+    } "MapSLKBef";
+  } "EntrySLKBef";
+
+  // Rezeptorstatus ER (LOINC 85337-4)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
+    entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      obs.value as val then {
+        val.coding as c where code = '10828004' -> rez.erStatus = 'P' "SetERPositiv";
+        val.coding as c where code = '260385009' -> rez.erStatus = 'N' "SetERNegativ";
+        val.coding as c where code = '261665006' -> rez.erStatus = 'U' "SetERUnbekannt";
+      } "MapER";
+    } "MapERObs";
+  } "EntryER";
+
+  // Rezeptorstatus PR (LOINC 85339-0)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
+    entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      obs.value as val then {
+        val.coding as c where code = '10828004' -> rez.prStatus = 'P' "SetPRPositiv";
+        val.coding as c where code = '260385009' -> rez.prStatus = 'N' "SetPRNegativ";
+        val.coding as c where code = '261665006' -> rez.prStatus = 'U' "SetPRUnbekannt";
+      } "MapPR";
+    } "MapPRObs";
+  } "EntryPR";
+
+  // Rezeptorstatus HER2 (LOINC 85319-2)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
+    entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      obs.value as val then {
+        val.coding as c where code = '10828004' -> rez.her2Status = 'P' "SetHER2Positiv";
+        val.coding as c where code = '260385009' -> rez.her2Status = 'N' "SetHER2Negativ";
+        val.coding as c where code = '261665006' -> rez.her2Status = 'U' "SetHER2Unbekannt";
+      } "MapHER2";
+    } "MapHER2Obs";
+  } "EntryHER2";
+}
+
+// ============================================================================
+// Bildgebung -> Bildgebung-Block
+// ============================================================================
+
+group MapBildgebung(source src : Observation, target tgt : BackboneElement) {
+
+  src.effective as eff where $this.is(dateTime) -> tgt.datum = eff "SetBgDatum";
+
+  // Methode aus Observation.method (SNOMED)
+  src.method as m then {
+    m.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '71651007' -> tgt.methode = '1' "SetBgMammo";
+      c.code as cd where $this = '16310003' -> tgt.methode = '2' "SetBgSono";
+      c.code as cd where $this = '113091000' -> tgt.methode = '3' "SetBgMRT";
+      c.code as cd where $this = '241489003' -> tgt.methode = '4' "SetBgTomo";
+    } "MapBgMethodeCoding";
+  } "MapBgMethode";
+
+  // BI-RADS (falls value CodeableConcept)
+  src.value as val then {
+    val.coding as c first then {
+      c.code as cd -> tgt.birads = cd "SetBgBirads";
+    } "MapBgBiradsCoding";
+  } "MapBgBirads";
+}
+
+// ============================================================================
+// Tumorkonferenz -> Tumorkonferenz-Block
+// ============================================================================
+
+group MapTumorkonferenz(source src : CarePlan, target tgt : BackboneElement) {
+
+  src -> tgt.lnr = 1 "SetTKLnr";
+
+  // Datum aus CarePlan.period.start
+  src.period as period then {
+    period.start as s -> tgt.datum = s "SetTKDatum";
+  } "MapTKPeriod";
+
+  // Typ aus CarePlan.category
+  src.category as cat then {
+    cat.coding as c then {
+      c.code as cd where $this = 'praetherapeutisch' -> tgt.typ = '1' "SetTKTypPrae";
+      c.code as cd where $this = 'postoperativ' -> tgt.typ = '2' "SetTKTypPost";
+      c.code as cd where $this = 'rezidiv' -> tgt.typ = '3' "SetTKTypRez";
+    } "MapTKTypCoding";
+  } "MapTKTyp";
+}
+
+// ============================================================================
+// Studienteilnahme -> Studien-Block
+// ============================================================================
+
+group MapStudienteilnahme(source src : ResearchSubject, target tgt : BackboneElement) {
+
+  src -> tgt.teilgenommen = '1' "SetStudJa";
+}

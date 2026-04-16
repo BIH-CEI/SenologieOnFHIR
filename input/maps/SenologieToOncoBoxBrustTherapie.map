@@ -1,0 +1,87 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustTherapie"
+/// name = "SenologieToOncoBoxBrustTherapie"
+/// title = "Senologie Procedure (Syst / RT) to OncoBox Brust Therapie"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// ============================================================================
+// Systemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -> Syst-Block
+//
+// Relevante Felder fuer OncoBox / Kennzahlen:
+//   - KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)
+//   - KB-7: Trastuzumab bei HER2-positiven Patientinnen
+//   - KB-8: First-Line-Therapie bei Metastasierung
+// ============================================================================
+
+group MapSystemtherapie(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  src -> tgt.lnr = 1 "SetSystLnr";
+
+  // Syst_Art (Chemo=1, Immun=2, zielgerichtet=3)
+  src.code as code then {
+    code.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '367336001' -> tgt.therapieart = '1' "SetSystChemo";
+      c.code as cd where $this = '76334006' -> tgt.therapieart = '2' "SetSystImmun";
+      c.code as cd where $this = '169413002' -> tgt.therapieart = '3' "SetSystZiel";
+    } "MapSystArtCoding";
+  } "MapSystArt";
+
+  // Syst_Stellung (neoadjuvant/adjuvant/palliativ) aus Extension (CodeableConcept)
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-therapiestellung' then {
+    ext.value as val then {
+      val.coding as c where code = 'neoadjuvant' -> tgt.stellungZurOP = 'N' "SetStellNeo";
+      val.coding as c where code = 'adjuvant' -> tgt.stellungZurOP = 'A' "SetStellAdj";
+      val.coding as c where code = 'palliativ' -> tgt.stellungZurOP = 'P' "SetStellPal";
+    } "MapStellVal";
+  } "MapStellExt";
+
+  // Syst_Beginn / Syst_Ende aus performedPeriod
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.beginn = s "SetSystBeginn";
+    perf.end as e -> tgt.ende = e "SetSystEnde";
+  } "MapSystPeriod";
+
+  // Syst_Trastuzumab - Flag wenn Substanz Trastuzumab enthaelt (ATC L01FD01)
+  // Einfachste Ableitung: Procedure.code.coding mit Trastuzumab-Code (z.B. SNOMED 387208009)
+  src.code as code then {
+    code.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '387208009' -> tgt.enthaeltTrastuzumab = '1' "SetTrastuJa";
+    } "MapTrastuCoding";
+  } "MapTrastu";
+}
+
+// ============================================================================
+// Strahlentherapie: Procedure (Senologie_Strahlentherapie) -> RT-Block
+// ============================================================================
+
+group MapStrahlentherapie(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  src -> tgt.lnr = 1 "SetRTLnr";
+
+  // RT_Beginn / RT_Ende aus performedPeriod
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.beginn = s "SetRTBeginn";
+    perf.end as e -> tgt.ende = e "SetRTEnde";
+  } "MapRTPeriod";
+
+  // RT_Stellung aus Extension therapiestellung (CodeableConcept)
+  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-therapiestellung' then {
+    ext.value as val then {
+      val.coding as c where code = 'neoadjuvant' -> tgt.stellungZurOP = 'N' "SetRTNeo";
+      val.coding as c where code = 'adjuvant' -> tgt.stellungZurOP = 'A' "SetRTAdj";
+      val.coding as c where code = 'palliativ' -> tgt.stellungZurOP = 'P' "SetRTPal";
+    } "MapRTStellVal";
+  } "MapRTStellExt";
+
+  // RT_Zielgebiet aus Procedure.bodySite (SNOMED)
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '76752008' -> tgt.zielgebiet = '1' "SetRTBrust";
+      c.code as cd where $this = '59441001' -> tgt.zielgebiet = '2' "SetRTLAW";
+    } "MapRTZielCoding";
+  } "MapRTZiel";
+}

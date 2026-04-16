@@ -11,9 +11,9 @@ Zertifizierte Brustzentren unterliegen mehreren Meldepflichten:
 | Meldung | Empfänger | Rechtsgrundlage | Häufigkeit |
 |---|---|---|---|
 | Krebsregistermeldung (oBDS) | Klinisches Krebsregister | Landeskrebsregistergesetze | Bei Diagnose, Therapie, Verlauf, Tod |
-| Implantateregistermeldung | DIMDI (Implantateregister) | Implantateregistergesetz (IRegG) | Bei Implantation, Explantation, Revision |
-| DKG-Kennzahlenbogen | Deutsche Krebsgesellschaft | Zertifizierungsordnung | Jährlich |
-| Qualitätssicherung (QS) | IQTIG / G-BA | SGB V §136 | Fallbezogen |
+| Implantateregistermeldung (IRegG) | BfArM / Implantateregister | Implantateregistergesetz (IRegG) | Bei Implantation, Explantation, Revision |
+| OncoBox Brust (N1.1.1) | OnkoZert (DKG) | DKG-Zertifizierungsordnung | Jährlich |
+| Qualitätssicherung (QS 18.1 Mammachirurgie) | IQTIG / G-BA | SGB V §136 | Fallbezogen |
 
 ### Krebsregistermeldung (oBDS)
 
@@ -58,9 +58,9 @@ Das Implantateregistergesetz (IRegG) verpflichtet zur Meldung bei Einsatz, Wechs
 | Eingriffsart | Senologie_Operation (Procedure) | `Procedure.code` |
 | Komplikationen | Senologie_Operative_Komplikation (Observation) | Clavien-Dindo, Typ |
 
-### DKG-Kennzahlenbogen
+### DKG-Kennzahlenbogen / OncoBox Brust (OnkoZert)
 
-Die jährliche Erhebung der DKG-Qualitätsindikatoren für die Brustzentrum-Zertifizierung kann aus den FHIR-Daten abgeleitet werden. Siehe [Auswertung: Qualitätsindikatoren](anwendungsfaelle-auswertung.html).
+Die jährliche Erhebung der DKG-Qualitätsindikatoren für die Brustzentrum-Zertifizierung erfolgt über das **OncoBox-Brust-XML-Format (Spezifikation N1.1.1)**, das an [OnkoZert](https://xml-oncobox.de/de/Zentren/BrustZentren) übermittelt wird. Die OncoBox-Meldung umfasst Primärfalldaten sowie 20 aggregierte Qualitätsindikatoren (KB-1 bis KB-20). Siehe [OncoBox-Brust-Transformation](meldung-oncobox.html) sowie [Auswertung: Qualitätsindikatoren](anwendungsfaelle-auswertung.html).
 
 ### Architektur: Meldungsgenerierung
 

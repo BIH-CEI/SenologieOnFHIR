@@ -1,0 +1,207 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustKennzahlen"
+/// name = "SenologieToOncoBoxBrustKennzahlen"
+/// title = "Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// ============================================================================
+// Kennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)
+//
+// Die OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die
+// Aggregation erfolgt typischerweise ueber alle Primaerfaelle des
+// Berichtszeitraums. In dieser Transformation werden pro Bundle alle
+// 20 Kennzahlen als "Shell"-Eintraege angelegt (Zaehler=0, Nenner=0),
+// die dann von einer nachgelagerten Auswerteschicht (CQL) mit den
+// tatsaechlichen Aggregatwerten befuellt werden.
+//
+// Die tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein
+// Aggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern
+// eine CQL-basierte Auswertung erfordert.
+//
+// Kurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):
+//   KB-1  Postop. Fallbesprechung
+//   KB-2  Praetherapeutische Fallbesprechung
+//   KB-3  Fallbesprechung Rezidiv/Metastasen
+//   KB-4  Adjuvante Chemotherapie (invasiv)
+//   KB-5  Adjuvante Chemotherapie (DCIS)
+//   KB-6  Endokrine Therapie
+//   KB-7  Trastuzumab bei HER2+
+//   KB-8  First-Line-Therapie bei Metastasierung
+//   KB-9  Psychoonkologische Mitbetreuung
+//   KB-10 Sozialdienst-Mitbetreuung
+//   KB-11 Studienteilnahme
+//   KB-12 Praeoperative histologische Sicherung
+//   KB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)
+//   KB-14 Anzahl Eingriffe bis R0
+//   KB-15 BET-Rate bei pT1
+//   KB-16 Mastektomien
+//   KB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)
+//   KB-18 Drahtmarkierung bei nicht-tastbaren Befunden
+//   KB-19 Revisionsoperationen
+//   KB-20 Checkliste (organisatorisch)
+// ============================================================================
+
+group MapKennzahlen(source src : Bundle, target tgt : OncoBoxBrust) {
+
+  // KB-1 Postop. Fallbesprechung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-1' "SetKB1Id";
+    src -> kz.bezeichnung = 'Postop. Fallbesprechung' "SetKB1Name";
+    src -> kz.zaehler = 0 "SetKB1Z";
+    src -> kz.nenner = 0 "SetKB1N";
+  } "InitKB1";
+
+  // KB-2 Praetherapeutische Fallbesprechung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-2' "SetKB2Id";
+    src -> kz.bezeichnung = 'Praetherapeutische Fallbesprechung' "SetKB2Name";
+    src -> kz.zaehler = 0 "SetKB2Z";
+    src -> kz.nenner = 0 "SetKB2N";
+  } "InitKB2";
+
+  // KB-3 Fallbesprechung Rezidiv/Metastasen
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-3' "SetKB3Id";
+    src -> kz.bezeichnung = 'Fallbesprechung Rezidiv/Metastasen' "SetKB3Name";
+    src -> kz.zaehler = 0 "SetKB3Z";
+    src -> kz.nenner = 0 "SetKB3N";
+  } "InitKB3";
+
+  // KB-4 Adjuvante Chemotherapie (invasiv)
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-4' "SetKB4Id";
+    src -> kz.bezeichnung = 'Adjuvante Chemotherapie (invasiv)' "SetKB4Name";
+    src -> kz.zaehler = 0 "SetKB4Z";
+    src -> kz.nenner = 0 "SetKB4N";
+  } "InitKB4";
+
+  // KB-5 Adjuvante Chemotherapie (DCIS)
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-5' "SetKB5Id";
+    src -> kz.bezeichnung = 'Adjuvante Chemotherapie (DCIS)' "SetKB5Name";
+    src -> kz.zaehler = 0 "SetKB5Z";
+    src -> kz.nenner = 0 "SetKB5N";
+  } "InitKB5";
+
+  // KB-6 Endokrine Therapie
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-6' "SetKB6Id";
+    src -> kz.bezeichnung = 'Endokrine Therapie' "SetKB6Name";
+    src -> kz.zaehler = 0 "SetKB6Z";
+    src -> kz.nenner = 0 "SetKB6N";
+  } "InitKB6";
+
+  // KB-7 Trastuzumab bei HER2+
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-7' "SetKB7Id";
+    src -> kz.bezeichnung = 'Trastuzumab bei HER2+' "SetKB7Name";
+    src -> kz.zaehler = 0 "SetKB7Z";
+    src -> kz.nenner = 0 "SetKB7N";
+  } "InitKB7";
+
+  // KB-8 First-Line-Therapie bei Metastasierung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-8' "SetKB8Id";
+    src -> kz.bezeichnung = 'First-Line-Therapie bei Metastasierung' "SetKB8Name";
+    src -> kz.zaehler = 0 "SetKB8Z";
+    src -> kz.nenner = 0 "SetKB8N";
+  } "InitKB8";
+
+  // KB-9 Psychoonkologische Mitbetreuung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-9' "SetKB9Id";
+    src -> kz.bezeichnung = 'Psychoonkologische Mitbetreuung' "SetKB9Name";
+    src -> kz.zaehler = 0 "SetKB9Z";
+    src -> kz.nenner = 0 "SetKB9N";
+  } "InitKB9";
+
+  // KB-10 Sozialdienst-Mitbetreuung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-10' "SetKB10Id";
+    src -> kz.bezeichnung = 'Sozialdienst-Mitbetreuung' "SetKB10Name";
+    src -> kz.zaehler = 0 "SetKB10Z";
+    src -> kz.nenner = 0 "SetKB10N";
+  } "InitKB10";
+
+  // KB-11 Studienteilnahme
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-11' "SetKB11Id";
+    src -> kz.bezeichnung = 'Studienteilnahme' "SetKB11Name";
+    src -> kz.zaehler = 0 "SetKB11Z";
+    src -> kz.nenner = 0 "SetKB11N";
+  } "InitKB11";
+
+  // KB-12 Praeoperative histologische Sicherung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-12' "SetKB12Id";
+    src -> kz.bezeichnung = 'Praeoperative histologische Sicherung' "SetKB12Name";
+    src -> kz.zaehler = 0 "SetKB12Z";
+    src -> kz.nenner = 0 "SetKB12N";
+  } "InitKB12";
+
+  // KB-13 Primaerfaelle / Rezidive / Metastasen
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-13' "SetKB13Id";
+    src -> kz.bezeichnung = 'Primaerfaelle / Rezidive / Metastasen' "SetKB13Name";
+    src -> kz.zaehler = 0 "SetKB13Z";
+    src -> kz.nenner = 0 "SetKB13N";
+  } "InitKB13";
+
+  // KB-14 Anzahl Eingriffe bis R0
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-14' "SetKB14Id";
+    src -> kz.bezeichnung = 'Anzahl Eingriffe bis R0' "SetKB14Name";
+    src -> kz.zaehler = 0 "SetKB14Z";
+    src -> kz.nenner = 0 "SetKB14N";
+  } "InitKB14";
+
+  // KB-15 BET-Rate bei pT1
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-15' "SetKB15Id";
+    src -> kz.bezeichnung = 'BET-Rate bei pT1' "SetKB15Name";
+    src -> kz.zaehler = 0 "SetKB15Z";
+    src -> kz.nenner = 0 "SetKB15N";
+  } "InitKB15";
+
+  // KB-16 Mastektomien
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-16' "SetKB16Id";
+    src -> kz.bezeichnung = 'Mastektomien' "SetKB16Name";
+    src -> kz.zaehler = 0 "SetKB16Z";
+    src -> kz.nenner = 0 "SetKB16N";
+  } "InitKB16";
+
+  // KB-17 Lymphknoten-Entfernung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-17' "SetKB17Id";
+    src -> kz.bezeichnung = 'Lymphknoten-Entfernung (LK-Entf.)' "SetKB17Name";
+    src -> kz.zaehler = 0 "SetKB17Z";
+    src -> kz.nenner = 0 "SetKB17N";
+  } "InitKB17";
+
+  // KB-18 Drahtmarkierung
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-18' "SetKB18Id";
+    src -> kz.bezeichnung = 'Drahtmarkierung' "SetKB18Name";
+    src -> kz.zaehler = 0 "SetKB18Z";
+    src -> kz.nenner = 0 "SetKB18N";
+  } "InitKB18";
+
+  // KB-19 Revisionsoperationen
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-19' "SetKB19Id";
+    src -> kz.bezeichnung = 'Revisionsoperationen' "SetKB19Name";
+    src -> kz.zaehler = 0 "SetKB19Z";
+    src -> kz.nenner = 0 "SetKB19N";
+  } "InitKB19";
+
+  // KB-20 Checkliste
+  src -> tgt.kennzahl as kz then {
+    src -> kz.id = 'KB-20' "SetKB20Id";
+    src -> kz.bezeichnung = 'Checkliste' "SetKB20Name";
+    src -> kz.zaehler = 0 "SetKB20Z";
+    src -> kz.nenner = 0 "SetKB20N";
+  } "InitKB20";
+}

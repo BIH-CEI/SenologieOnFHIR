@@ -1,0 +1,50 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigMammachirurgie181"
+/// name = "SenologieToIqtigMammachirurgie181"
+/// title = "Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator)"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
+
+// Teil-Maps importieren
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigBasis"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigBrust"
+imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigOperation"
+
+// ============================================================================
+// Master Orchestrator: Bundle -> IQTIG QS 18.1 Mammachirurgie
+//
+// Empfaengt ein FHIR Bundle mit Senologie-Ressourcen (Patient, Encounter,
+// Condition, Procedure, Specimen, Observations) und erzeugt eine vollstaendige
+// IQTIG-QS-Meldung mit den drei Teildatensaetzen:
+//   - Teildatensatz Basis (B): Patient + Encounter
+//   - Teildatensatz Brust (BRUST): Condition + Pathologie (ein Eintrag je Seite)
+//   - Teildatensatz Operation (O): Procedure + Specimen (ein Eintrag je OP)
+//
+// Analog zur IRegG-Meldung wird eine einzelne QS-Meldung pro Behandlungsfall
+// erzeugt. Die Zuordnung der Teildatensaetze Brust und Operation erfolgt ueber
+// die laufenden Nummern (LNRBRUST, LNROP).
+// ============================================================================
+
+group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG181) {
+
+  // --- Teildatensatz Basis (B) ---
+  src -> tgt.teildatensatzBasis as basis then MapBasis(src, basis) "CallMapBasis";
+
+  // --- Teildatensatz Brust (BRUST): pro Condition mit Brust-Diagnose ---
+  src.entry as entry where resource.is(Condition) and (resource.meta.profile.exists($this.contains('senologie-diagnose')) or resource.code.coding.exists(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and code.startsWith('C50'))) then {
+    entry.resource as condition -> tgt.teildatensatzBrust as brust then MapBrust(condition, brust, src) "CallMapBrust";
+  } "EntryBrust";
+
+  // --- Teildatensatz Operation (O): pro Procedure (Senologie_BrustOP / Senologie_Operation) ---
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation')) then {
+    entry.resource as procedure -> tgt.teildatensatzOperation as op then MapOperation(procedure, op, src) "CallMapOperation";
+  } "EntryOperation";
+}

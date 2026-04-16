@@ -1,0 +1,136 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigBasis"
+/// name = "SenologieToIqtigBasis"
+/// title = "Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
+
+// ============================================================================
+// Teildatensatz Basis (B): Patient + Encounter + Organization -> B:*
+//
+// Enthaelt die administrativen und demografischen Pflichtfelder fuer die
+// IQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,
+// Geschlecht, Aufnahme/Entlassung).
+//
+// Die Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle
+// uebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.
+// ============================================================================
+
+group MapBasis(source src : Bundle, target tgt : BackboneElement) {
+
+  // --- Einrichtung (aus Organization) ---
+  src.entry as entry where resource.is(Organization) then {
+    entry.resource as org then {
+      // B:IKNRKH - Institutionskennzeichen (IKNR)
+      org.identifier as id where system = 'https://fhir.de/sid/arge-ik/iknr' then {
+        id.value as v -> tgt.institutionskennzeichen = v "SetIKNRKH";
+      } "FilterIKNR";
+      // B:ENTLSTANDORT - Standort-ID
+      org.identifier as id where system = 'http://fhir.de/sid/standortnummer' then {
+        id.value as v -> tgt.entlassenderStandort = v "SetStandort";
+      } "FilterStandort";
+      // B:BSNR - Betriebsstaettennummer (ambulant)
+      org.identifier as id where system = 'http://fhir.de/sid/kbv/bsnr' then {
+        id.value as v -> tgt.betriebsstaettennummer = v "SetBSNR";
+      } "FilterBSNR";
+    } "OrgContext";
+  } "EntryOrganization";
+
+  // --- Datensatzversion (fest fuer diesen Mapper) ---
+  src -> tgt.datensatzVersion = '18.1_2024_V05' "SetDatensatzVersion";
+
+  // --- Patient ---
+  src.entry as entry where resource.is(Patient) then {
+    entry.resource as patient then MapBasisPatient(patient, tgt) "CallMapBasisPatient";
+  } "EntryPatient";
+
+  // --- Encounter (Aufnahme/Entlassung) ---
+  src.entry as entry where resource.is(Encounter) then {
+    entry.resource as encounter then MapBasisEncounter(encounter, tgt) "CallMapBasisEncounter";
+  } "EntryEncounter";
+}
+
+// ============================================================================
+// Patient -> B:VERSICHERTENIDNEU, B:GEBDATUM, B:GESCHLECHT, B:PLZ
+// ============================================================================
+
+group MapBasisPatient(source src : Patient, target tgt : BackboneElement) {
+
+  // B:VERSICHERTENIDNEU - Pseudonymisierte Versicherten-ID
+  src.identifier as id where system = 'http://fhir.de/sid/gkv/kvid-10' then {
+    id.value as v -> tgt.pseudonymId = v "SetPseudonymId";
+  } "MapPseudonymId";
+
+  // Fallback: aus pseudonymisierter ID mit einrichtungsspezifischem System
+  src.identifier as id where system.contains('pseudonym') or system.contains('pid') then {
+    id.value as v -> tgt.pseudonymId = v "SetPseudonymIdFallback";
+  } "MapPseudonymIdFallback";
+
+  // B:GEBDATUM - Geburtsdatum
+  src.birthDate as bd -> tgt.geburtsdatum = bd "SetGeburtsdatum";
+
+  // B:GESCHLECHT - Geschlecht
+  // male=1, female=2, other=8, unknown=9
+  src.gender as g where $this = 'male' -> tgt.geschlecht = '1' "SetGeschlechtM";
+  src.gender as g where $this = 'female' -> tgt.geschlecht = '2' "SetGeschlechtF";
+  src.gender as g where $this = 'other' -> tgt.geschlecht = '8' "SetGeschlechtX";
+  src.gender as g where $this = 'unknown' -> tgt.geschlecht = '9' "SetGeschlechtU";
+
+  // B:PLZ - Postleitzahl
+  src.address as addr first then {
+    addr.postalCode as plz -> tgt.postleitzahl = plz "SetPLZ";
+  } "MapPLZ";
+}
+
+// ============================================================================
+// Encounter -> B:AUFNDATUM, B:ENTLDATUM, B:AUFNGRUND, B:AUFNANLASS, B:ENTLGRUND
+// ============================================================================
+
+group MapBasisEncounter(source src : Encounter, target tgt : BackboneElement) {
+
+  // B:VORGANGSNR - Fall-ID aus Encounter.identifier
+  src.identifier as id first then {
+    id.value as v -> tgt.fallId = v "SetFallId";
+  } "MapFallId";
+
+  // B:AUFNDATUM
+  src.period as period then {
+    period.start as s -> tgt.aufnahmedatum = s "SetAufnahmedatum";
+  } "MapAufnahmedatum";
+
+  // B:ENTLDATUM
+  src.period as period then {
+    period.end as e -> tgt.entlassungsdatum = e "SetEntlassungsdatum";
+  } "MapEntlassungsdatum";
+
+  // B:AUFNANLASS - Aufnahmeanlass aus Encounter.extension (ISiK/KDS)
+  src.extension as ext where url = 'https://gematik.de/fhir/isik/StructureDefinition/ISiKAufnahmeanlass' then {
+    ext.value as val then {
+      val.coding as c first then {
+        c.code as cd -> tgt.aufnahmeanlass = cd "SetAufnahmeanlass";
+      } "MapAufnahmeanlassCoding";
+    } "MapAufnahmeanlassValue";
+  } "MapAufnahmeanlass";
+
+  // B:AUFNGRUND - Aufnahmegrund Paragraph 301 SGB V
+  src.extension as ext where url = 'http://fhir.de/StructureDefinition/Aufnahmegrund' then {
+    ext.value as val then {
+      val.coding as c first then {
+        c.code as cd -> tgt.aufnahmegrund = cd "SetAufnahmegrund";
+      } "MapAufnahmegrundCoding";
+    } "MapAufnahmegrundValue";
+  } "MapAufnahmegrund";
+
+  // B:ENTLGRUND - Entlassungsgrund aus hospitalization.dischargeDisposition
+  src.hospitalization as hosp then {
+    hosp.dischargeDisposition as dd then {
+      dd.coding as c first then {
+        c.code as cd -> tgt.entlassungsgrund = cd "SetEntlassungsgrund";
+      } "MapEntlassungsgrundCoding";
+    } "MapDischargeDisposition";
+  } "MapEntlassungsgrund";
+}

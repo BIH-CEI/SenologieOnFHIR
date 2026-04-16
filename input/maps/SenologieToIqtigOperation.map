@@ -1,0 +1,340 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigOperation"
+/// name = "SenologieToIqtigOperation"
+/// title = "Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
+
+// ============================================================================
+// Teildatensatz Operation (O): Procedure + Specimen + Observations -> O:*
+//
+// Pro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:
+//   - Procedure (Senologie_BrustOP / Senologie_Operation) -> OP-Datum, OPS,
+//     Seitenlokalisation, Operationsart
+//   - Specimen (Senologie_Pathologie_Praeparat) -> Schnellschnitt,
+//     Praeparatkontrolle, Praeparat-spezifische Daten
+//   - Observation (Pathologie-Befund) -> Histologie, Grading, pTNM, R-Status
+//   - Observation (Rezeptorstatus: ER/PR/HER2) -> QI-relevante Felder
+// ============================================================================
+
+group MapOperation(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // O:LNROP - Laufende Nummer der Operation (Default 1; ueber Slicing iterierbar)
+  src -> tgt.laufendeNummer = 1 "SetLnrOp";
+
+  // O:LNRBRUST - Zuordnung zum Brust-Teildatensatz (Default 1)
+  src -> tgt.bezugLnrBrust = 1 "SetLnrBrustRef";
+
+  // O:OPDATUM - aus Procedure.performedDateTime
+  src.performed as perf where $this.is(dateTime) -> tgt.operationsdatum = perf "SetOpDatum";
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.operationsdatum = s "SetOpDatumPeriod";
+  } "MapOpDatumPeriod";
+
+  // O:SEITE - Seitenlokalisation aus Procedure.bodySite (SNOMED CT)
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '24028007' -> tgt.seitenlokalisation = 'R' "SetOpSeiteR";
+      c.code as cd where $this = '7771000' -> tgt.seitenlokalisation = 'L' "SetOpSeiteL";
+      c.code as cd where $this = '51440002' -> tgt.seitenlokalisation = 'B' "SetOpSeiteB";
+    } "MapOpSeiteSCT";
+  } "MapOpSeitenlokalisation";
+
+  // O:OPSCHLUESSEL - OPS-Kodes aus Procedure.code
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' -> tgt.prozeduren as opsItem then {
+      c.code as cd -> opsItem.code = cd "SetOpsCode";
+      c.version as v -> opsItem.version = v "SetOpsVersion";
+    } "MapOpsCoding";
+  } "MapProzeduren";
+
+  // O:OPART - Operationsart aus Procedure.category oder Senologie-Operation-Art VS
+  // BET (5-870) -> 1, Mastektomie einfach (5-871) -> 2, Mastektomie SSM (5-872) -> 3,
+  // Mastektomie NSM (5-883) -> 4, Revision -> 5, Wiederaufbau (5-885) -> 6
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      c.code as cd where $this.startsWith('5-870') -> tgt.operationsart = '1' "SetOpArtBET";
+      c.code as cd where $this.startsWith('5-871') -> tgt.operationsart = '2' "SetOpArtMastEinfach";
+      c.code as cd where $this.startsWith('5-872') -> tgt.operationsart = '3' "SetOpArtMastSSM";
+      c.code as cd where $this.startsWith('5-883') -> tgt.operationsart = '4' "SetOpArtMastNSM";
+      c.code as cd where $this.startsWith('5-885') -> tgt.operationsart = '6' "SetOpArtRekon";
+    } "MapOpArtOPS";
+  } "MapOpArtFromOPS";
+
+  // Direkter Map aus Senologie-Operation-Art CodeSystem (falls vorhanden)
+  src.category as cat then {
+    cat.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-brustop-art' then {
+      c.code as cd -> tgt.operationsart = cd "SetOpArtDirect";
+    } "MapOpArtCoding";
+  } "MapOpArtCategory";
+
+  // O:DIGNITAET - Intraoperative Dignitaet aus Pathologie-Schnellschnitt (Observation)
+  bundle.entry as digEntry where resource.is(Observation) and resource.code.coding.exists(code = '22748-9') then {
+    digEntry.resource as digObs then {
+      digObs.value as val then {
+        val.coding as c first then {
+          // 1222584008=maligne -> 1, 36103009=benigne -> 2
+          c.code as cd where $this = '1222584008' -> tgt.dignitaetIntraop = '1' "SetDigMaligne";
+          c.code as cd where $this = '36103009' -> tgt.dignitaetIntraop = '2' "SetDigBenigne";
+        } "MapDigCoding";
+      } "MapDigValue";
+    } "MapDigObs";
+  } "EntryDignitaet";
+
+  // O:SCHNELLSCHNITT - Intraoperativer Schnellschnitt durchgefuehrt
+  // aus Specimen.processing.procedure (Schnellschnitt-Kodierung)
+  bundle.entry as specEntry where resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat')) then {
+    specEntry.resource as specimen then {
+      specimen.processing as proc where procedure.coding.exists(code = '123038009') -> tgt.intraopSchnellschnitt = '1' "SetSchnellschnittJa";
+    } "SpecContextSS";
+  } "EntrySchnellschnitt";
+
+  // O:PRAEPKONTROLLE - QI-3 Intraoperative Praeparatkontrolle aus Specimen.processing
+  // Mammografisch=1, Sonografisch=2
+  bundle.entry as specEntry where resource.is(Specimen) then {
+    specEntry.resource as specimen then {
+      specimen.processing as proc then {
+        proc.procedure as p then {
+          p.coding as c where system = 'http://snomed.info/sct' then {
+            c.code as cd where $this = '71651007' -> tgt.intraopPraeparatkontrolle = '1' "SetPraepkMammo";
+            c.code as cd where $this = '16310003' -> tgt.intraopPraeparatkontrolle = '2' "SetPraepkSono";
+          } "MapPraepkCoding";
+        } "MapPraepkProcedure";
+      } "MapPraepkProcessing";
+    } "SpecContextPK";
+  } "EntryPraeparatkontrolle";
+
+  // --- Histologie / Pathologie aus Pathologie-Befund Observations ---
+
+  // O:HISTMORPH - ICD-O-3 Morphologie aus Observation (LOINC 59847-4)
+  bundle.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+    histEntry.resource as histObs then {
+      histObs.value as val then {
+        val.coding as c where system = 'urn:oid:2.16.840.1.113883.6.43.1' -> tgt.histologieICDO as histo then {
+          c.code as cd -> histo.code = cd "SetHistCode";
+          c.version as v -> histo.version = v "SetHistVersion";
+        } "MapHistICDO";
+      } "MapHistValue";
+    } "MapHistObs";
+  } "EntryHistologie";
+
+  // O:GRADING - Histopathologisches Grading aus Observation (LOINC 33732-9)
+  bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '33732-9') then {
+    gradEntry.resource as gradObs then {
+      gradObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.grading = cd "SetGrading";
+        } "MapGradingCoding";
+      } "MapGradingValue";
+    } "MapGradingObs";
+  } "EntryGrading";
+
+  // O:TGROESSEINV - Tumorgroesse invasiv (LOINC 33728-7)
+  bundle.entry as tgInvEntry where resource.is(Observation) and resource.code.coding.exists(code = '33728-7') then {
+    tgInvEntry.resource as tgInvObs then {
+      tgInvObs.value as val then {
+        val.value as v -> tgt.tumorgroesseInvasiv = truncate(v) "SetTGroesseInv";
+      } "MapTGroesseInvValue";
+    } "MapTGroesseInvObs";
+  } "EntryTGroesseInv";
+
+  // O:TGROESSEDCIS - Tumorgroesse DCIS
+  bundle.entry as tgDcisEntry where resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('pathologie')) then {
+    tgDcisEntry.resource as tgDcisObs then {
+      tgDcisObs.value as val then {
+        val.value as v -> tgt.tumorgroesseDCIS = truncate(v) "SetTGroesseDCIS";
+      } "MapTGroesseDCISValue";
+    } "MapTGroesseDCISObs";
+  } "EntryTGroesseDCIS";
+
+  // O:MULTIFOK - Multifokalitaet aus Observation (SNOMED 399566009 fuer multifokal)
+  bundle.entry as mfEntry where resource.is(Observation) and resource.code.coding.exists(code = '44638-1') then {
+    mfEntry.resource as mfObs then {
+      mfObs.value as val then {
+        val.coding as c first then {
+          c.code as cd where $this = '56061002' -> tgt.multifokalitaet = '0' "SetMFNein";
+          c.code as cd where $this = '399566009' -> tgt.multifokalitaet = '1' "SetMFJa";
+          c.code as cd where $this = '367651003' -> tgt.multifokalitaet = '2' "SetMFMZ";
+        } "MapMFCoding";
+      } "MapMFValue";
+    } "MapMFObs";
+  } "EntryMultifokal";
+
+  // --- pTNM aus TNM-Observation (LOINC 21902-2 mit c/p-Praefix) ---
+
+  // O:PT - pT aus Observation (LOINC 21899-0 Primary tumor.pathology)
+  bundle.entry as ptEntry where resource.is(Observation) and resource.code.coding.exists(code = '21899-0') then {
+    ptEntry.resource as ptObs then {
+      ptObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.pT = cd "SetPT";
+        } "MapPTCoding";
+      } "MapPTValue";
+    } "MapPTObs";
+  } "EntryPT";
+
+  // O:PN - pN aus Observation (LOINC 21900-6 Regional lymph nodes.pathology)
+  bundle.entry as pnEntry where resource.is(Observation) and resource.code.coding.exists(code = '21900-6') then {
+    pnEntry.resource as pnObs then {
+      pnObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.pN = cd "SetPN";
+        } "MapPNCoding";
+      } "MapPNValue";
+    } "MapPNObs";
+  } "EntryPN";
+
+  // O:PM - pM aus Observation (LOINC 21901-4 Distant metastases.pathology)
+  bundle.entry as pmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21901-4') then {
+    pmEntry.resource as pmObs then {
+      pmObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.pM = cd "SetPM";
+        } "MapPMCoding";
+      } "MapPMValue";
+    } "MapPMObs";
+  } "EntryPM";
+
+  // O:UICCPATHO - pathologisches UICC-Stadium (LOINC 21902-2)
+  bundle.entry as uiccEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+    uiccEntry.resource as uiccObs then {
+      uiccObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> tgt.uiccStadiumPatho = cd "SetUICCPatho";
+        } "MapUICCPathoCoding";
+      } "MapUICCPathoValue";
+    } "MapUICCPathoObs";
+  } "EntryUICCPatho";
+
+  // --- Residualstatus R0/R1/R2 aus Procedure.outcome ---
+
+  // O:RSTATUSLOK / O:RSTATUSGES - aus Procedure.outcome (SNOMED CT)
+  // 122538001=R0, 122539009=R1, 122540006=R2, 122541005=RX
+  src.outcome as out then {
+    out.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '122538001' -> tgt.residualstatusLokal = 'R0' "SetRStatusLokR0";
+      c.code as cd where $this = '122538001' -> tgt.residualstatusGesamt = 'R0' "SetRStatusGesR0";
+      c.code as cd where $this = '122539009' -> tgt.residualstatusLokal = 'R1' "SetRStatusLokR1";
+      c.code as cd where $this = '122539009' -> tgt.residualstatusGesamt = 'R1' "SetRStatusGesR1";
+      c.code as cd where $this = '122540006' -> tgt.residualstatusLokal = 'R2' "SetRStatusLokR2";
+      c.code as cd where $this = '122540006' -> tgt.residualstatusGesamt = 'R2' "SetRStatusGesR2";
+      c.code as cd where $this = '122541005' -> tgt.residualstatusLokal = 'RX' "SetRStatusLokRX";
+      c.code as cd where $this = '122541005' -> tgt.residualstatusGesamt = 'RX' "SetRStatusGesRX";
+    } "MapOutcomeCoding";
+  } "MapResidualstatus";
+
+  // --- Lymphknoten aus Pathologie-Observations ---
+
+  // O:SENTINEL - Sentinel-Biopsie durchgefuehrt (OPS 5-401.1*)
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      c.code as cd where $this.startsWith('5-401.1') -> tgt.sentinelDurchgefuehrt = '1' "SetSentinelJa";
+    } "MapSentinelOPS";
+  } "MapSentinel";
+
+  // O:AXDISSEKTION - Axilladissektion (OPS 5-402)
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      c.code as cd where $this.startsWith('5-402') -> tgt.axillaDissektion = '1' "SetAxDissJa";
+    } "MapAxDissOPS";
+  } "MapAxillaDissektion";
+
+  // O:LKUNTERSUCHT - Anzahl untersuchter LK (LOINC 21894-1)
+  bundle.entry as lkuEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+    lkuEntry.resource as lkuObs then {
+      lkuObs.value as val then {
+        val.value as v -> tgt.lkUntersucht = truncate(v) "SetLKUntersucht";
+      } "MapLKUntersuchtValue";
+    } "MapLKUntersuchtObs";
+  } "EntryLKUntersucht";
+
+  // O:LKBEFALLEN - Anzahl befallener LK (LOINC 21893-3)
+  bundle.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+    lkbEntry.resource as lkbObs then {
+      lkbObs.value as val then {
+        val.value as v -> tgt.lkBefallen = truncate(v) "SetLKBefallen";
+      } "MapLKBefallenValue";
+    } "MapLKBefallenObs";
+  } "EntryLKBefallen";
+
+  // O:SLKUNTERSUCHT / O:SLKBEFALLEN - Sentinel-LK (LOINC 92832-5 / 92833-3)
+  bundle.entry as slkuEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+    slkuEntry.resource as slkuObs then {
+      slkuObs.value as val then {
+        val.value as v -> tgt.sentinelLkUntersucht = truncate(v) "SetSLKUntersucht";
+      } "MapSLKUntersuchtValue";
+    } "MapSLKUntersuchtObs";
+  } "EntrySLKUntersucht";
+
+  bundle.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92833-3') then {
+    slkbEntry.resource as slkbObs then {
+      slkbObs.value as val then {
+        val.value as v -> tgt.sentinelLkBefallen = truncate(v) "SetSLKBefallen";
+      } "MapSLKBefallenValue";
+    } "MapSLKBefallenObs";
+  } "EntrySLKBefallen";
+
+  // --- Rezeptorstatus (identisches Muster wie in SenologieToObdsModulMamma) ---
+
+  // O:ERSTATUS - Oestrogenrezeptor (LOINC 85337-4)
+  bundle.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
+    erEntry.resource as erObs then {
+      erObs.value as val then {
+        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusER = 'P' "SetERPositiv";
+        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusER = 'N' "SetERNegativ";
+        val.coding as c where code = '261665006' -> tgt.hormonrezeptorStatusER = 'U' "SetERUnbekannt";
+      } "MapERValue";
+    } "MapERObs";
+  } "EntryER";
+
+  // O:PRSTATUS - Progesteronrezeptor (LOINC 85339-0)
+  bundle.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
+    prEntry.resource as prObs then {
+      prObs.value as val then {
+        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusPR = 'P' "SetPRPositiv";
+        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusPR = 'N' "SetPRNegativ";
+        val.coding as c where code = '261665006' -> tgt.hormonrezeptorStatusPR = 'U' "SetPRUnbekannt";
+      } "MapPRValue";
+    } "MapPRObs";
+  } "EntryPR";
+
+  // O:HER2STATUS - HER2-Status (LOINC 85319-2)
+  bundle.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
+    herEntry.resource as herObs then {
+      herObs.value as val then {
+        val.coding as c where code = '10828004' -> tgt.her2Status = 'P' "SetHER2Positiv";
+        val.coding as c where code = '260385009' -> tgt.her2Status = 'N' "SetHER2Negativ";
+        val.coding as c where code = '261665006' -> tgt.her2Status = 'U' "SetHER2Unbekannt";
+      } "MapHER2Value";
+    } "MapHER2Obs";
+  } "EntryHER2";
+
+  // --- Komplikationen ---
+
+  // O:KOMPL - Aus Senologie_Operative_Komplikation (Observation oder Condition)
+  bundle.entry as kompEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
+    kompEntry.resource as kompObs -> tgt.komplikationen as kompItem then {
+      kompObs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> kompItem.kuerzel = cd "SetKomplKuerzel";
+        } "MapKomplKuerzelCoding";
+      } "MapKomplValue";
+    } "MapKomplObs";
+  } "EntryKomplikationen";
+
+  // Auch aus Condition-basierten Komplikationen
+  bundle.entry as kcEntry where resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item') then {
+    kcEntry.resource as kcCond -> tgt.komplikationen as kompItem then {
+      kcCond.code as code then {
+        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' first then {
+          c.code as cd -> kompItem.icdCode = cd "SetKomplICD";
+        } "MapKomplICDCoding";
+      } "MapKomplCondCode";
+    } "MapKomplCondItem";
+  } "EntryKomplikationenCond";
+}

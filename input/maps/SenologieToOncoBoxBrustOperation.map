@@ -1,0 +1,133 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustOperation"
+/// name = "SenologieToOncoBoxBrustOperation"
+/// title = "Senologie Procedure + Specimen to OncoBox Brust Operation"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/ServiceRequest" alias ServiceRequest as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// ============================================================================
+// Operation: Procedure (+ Specimen / Observation) -> Operation-Block
+//
+// Pro Brust-Procedure wird ein Operation-Block erzeugt mit OP-Datum,
+// Seitenlokalisation, OPS-Kodes, Operationsart, Drahtmarkierung, Sentinel,
+// Residualstatus und Komplikationen.
+// ============================================================================
+
+group MapOperation(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // LNR Default 1
+  src -> tgt.lnr = 1 "SetOpLnr";
+
+  // Op_Datum
+  src.performed as perf where $this.is(dateTime) -> tgt.datum = perf "SetOpDatum";
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.datum = s "SetOpDatumPeriod";
+  } "MapOpDatumPeriod";
+
+  // Op_Seite
+  src.bodySite as bs then {
+    bs.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '24028007' -> tgt.seitenlokalisation = 'R' "SetOpSeiteR";
+      c.code as cd where $this = '7771000' -> tgt.seitenlokalisation = 'L' "SetOpSeiteL";
+      c.code as cd where $this = '51440002' -> tgt.seitenlokalisation = 'B' "SetOpSeiteB";
+    } "MapOpSeiteSCT";
+  } "MapOpSeite";
+
+  // OPS-Kodes
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' -> tgt.opsCodes as ops then {
+      c.code as cd -> ops.code = cd "SetOpsCode";
+      c.version as v -> ops.version = v "SetOpsVer";
+    } "MapOpsCoding";
+  } "MapOpsCodes";
+
+  // Op_Art aus OPS-Prefix
+  // 5-870* = BET, 5-871* = Mast einfach, 5-872* = SSM, 5-883* = NSM,
+  // 5-885* = Rekon, 5-401.1* = SLNB, 5-402* = Axilla
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      c.code as cd where $this.startsWith('5-870') -> tgt.operationsart = '1' "SetOpArtBET";
+      c.code as cd where $this.startsWith('5-871') -> tgt.operationsart = '2' "SetOpArtMastEinf";
+      c.code as cd where $this.startsWith('5-872') -> tgt.operationsart = '3' "SetOpArtSSM";
+      c.code as cd where $this.startsWith('5-883') -> tgt.operationsart = '4' "SetOpArtNSM";
+      c.code as cd where $this.startsWith('5-885') -> tgt.operationsart = '6' "SetOpArtRekon";
+      c.code as cd where $this.startsWith('5-402') -> tgt.operationsart = '7' "SetOpArtAxilla";
+      c.code as cd where $this.startsWith('5-401.1') -> tgt.operationsart = '8' "SetOpArtSLNB";
+    } "MapOpArtOPS";
+  } "MapOpArt";
+
+  // Op_Sentinel durchgefuehrt (OPS 5-401.1*)
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      c.code as cd where $this.startsWith('5-401.1') -> tgt.sentinel = '1' "SetSentinelJa";
+    } "MapSentinelOPS";
+  } "MapSentinel";
+
+  // Op_Axdissektion (OPS 5-402*)
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      c.code as cd where $this.startsWith('5-402') -> tgt.axillaDissektion = '1' "SetAxDissJa";
+    } "MapAxDissOPS";
+  } "MapAxDiss";
+
+  // Op_Drahtmarkierung (aus Senologie_OP_Planung Extension preOpMarkierung)
+  // Werte: M=Mammografie (2), S=Sonografie (1), T=MRT (3), N=keine (0)
+  // Quelle: oft am ServiceRequest (Senologie_OP_Planung), ggf. auch am Procedure.
+  bundle.entry as srEntry where resource.is(ServiceRequest) then {
+    srEntry.resource as sr then {
+      sr.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-pre-op-markierung' then {
+        ext.value as val then {
+          val.coding as c where code = 'N' -> tgt.drahtmarkierung = '0' "SetDrahtKeine";
+          val.coding as c where code = 'S' -> tgt.drahtmarkierung = '1' "SetDrahtSono";
+          val.coding as c where code = 'M' -> tgt.drahtmarkierung = '2' "SetDrahtMammo";
+          val.coding as c where code = 'T' -> tgt.drahtmarkierung = '3' "SetDrahtMRT";
+        } "MapDrahtVal";
+      } "MapDrahtExt";
+    } "MapDrahtSR";
+  } "EntryDrahtSR";
+
+  // Op_Schnellschnitt / Op_Praeparatkontrolle aus Specimen.processing
+  bundle.entry as entry where resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat')) then {
+    entry.resource as specimen then {
+      specimen.processing as proc where procedure.coding.exists(code = '123038009') -> tgt.intraopSchnellschnitt = '1' "SetSSJa";
+      specimen.processing as proc then {
+        proc.procedure as p then {
+          p.coding as c where system = 'http://snomed.info/sct' then {
+            c.code as cd where $this = '71651007' -> tgt.intraopPraeparatkontrolle = '1' "SetPKMammo";
+            c.code as cd where $this = '16310003' -> tgt.intraopPraeparatkontrolle = '2' "SetPKSono";
+          } "MapPKCoding";
+        } "MapPKProcedure";
+      } "MapPKProcessing";
+    } "SpecCtx";
+  } "EntrySpecimen";
+
+  // Residualstatus aus Procedure.outcome (SNOMED)
+  src.outcome as out then {
+    out.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '122538001' -> tgt.residualstatusLokal = 'R0' "SetRLokR0";
+      c.code as cd where $this = '122538001' -> tgt.residualstatusGesamt = 'R0' "SetRGesR0";
+      c.code as cd where $this = '122539009' -> tgt.residualstatusLokal = 'R1' "SetRLokR1";
+      c.code as cd where $this = '122539009' -> tgt.residualstatusGesamt = 'R1' "SetRGesR1";
+      c.code as cd where $this = '122540006' -> tgt.residualstatusLokal = 'R2' "SetRLokR2";
+      c.code as cd where $this = '122540006' -> tgt.residualstatusGesamt = 'R2' "SetRGesR2";
+      c.code as cd where $this = '122541005' -> tgt.residualstatusLokal = 'RX' "SetRLokRX";
+      c.code as cd where $this = '122541005' -> tgt.residualstatusGesamt = 'RX' "SetRGesRX";
+    } "MapROutcomeCoding";
+  } "MapROutcome";
+
+  // Komplikationen (Senologie_Operative_Komplikation)
+  bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
+    entry.resource as obs -> tgt.komplikationen as komp then {
+      obs.value as val then {
+        val.coding as c first then {
+          c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
+        } "MapKompKuerzel";
+      } "MapKompVal";
+    } "MapKompObs";
+  } "EntryKomp";
+}

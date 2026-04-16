@@ -1,0 +1,58 @@
+/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustZentrum"
+/// name = "SenologieToOncoBoxBrustZentrum"
+/// title = "Senologie Organization to OncoBox Brust Zentrum"
+/// status = "draft"
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as source
+uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// ============================================================================
+// Zentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -> Zentrum
+//
+// Die Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als
+// Konfigurationswert oder ueber Organization.identifier gepflegt. Der
+// Berichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-
+// spezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis
+// typischerweise ueber Parameter gesetzt.
+// ============================================================================
+
+group MapZentrum(source src : Bundle, target tgt : BackboneElement) {
+
+  // OncoBox-Spezifikationsversion (fest)
+  src -> tgt.oncoBoxVersion = 'N1.1.1' "SetOncoBoxVersion";
+
+  // Meldungsdatum (fest auf Bundle-Timestamp)
+  src.timestamp as ts -> tgt.meldungsdatum = ts "SetMeldungsdatum";
+
+  // --- Zentrum aus Organization ---
+  src.entry as entry where resource.is(Organization) then {
+    entry.resource as org then {
+
+      // Zentrum_Name aus Organization.name
+      org.name as name -> tgt.zentrumName = name "SetZentrumName";
+
+      // IKNR - Institutionskennzeichen
+      org.identifier as id where system = 'https://fhir.de/sid/arge-ik/iknr' then {
+        id.value as v -> tgt.iknr = v "SetIKNR";
+      } "FilterIKNR";
+
+      // Standort-ID
+      org.identifier as id where system = 'http://fhir.de/sid/standortnummer' then {
+        id.value as v -> tgt.standortId = v "SetStandortId";
+      } "FilterStandort";
+
+      // Zentrum_ID aus OnkoZert-Kennung (Organization.identifier)
+      // Falls keine spezifische OnkoZert-Kennung, IKNR als Fallback
+      org.identifier as id where system = 'https://www.onkozert.de/sid/zentrum-id' then {
+        id.value as v -> tgt.zentrumId = v "SetZentrumId";
+      } "FilterZentrumIdOZ";
+
+      // Fallback: IKNR als Zentrum-ID
+      org.identifier as id where system = 'https://fhir.de/sid/arge-ik/iknr' then {
+        id.value as v -> tgt.zentrumId = v "SetZentrumIdIKNRFallback";
+      } "FilterZentrumIdIKNR";
+
+    } "OrgContext";
+  } "EntryOrganization";
+}
