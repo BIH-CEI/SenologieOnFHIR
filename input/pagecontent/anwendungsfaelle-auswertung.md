@@ -82,6 +82,40 @@ Ergänzend zu CQL stellt das IG sechs [SQL-on-FHIR v2](https://sql-on-fhir.org/)
 
 Die kanonischen URLs folgen dem Schema `http://fhir.bih-charite.de/kds-senologie/ViewDefinition/{Name}`. Ausführung z.B. über [Pathling](https://pathling.csiro.au/), [sof-js](https://github.com/FHIR/sql-on-fhir-v2/tree/master/sof-js) oder direkt gegen eine HAPI-Instanz.
 
+### Ausführung mit Pathling
+
+[Pathling](https://pathling.csiro.au/) ist die von CSIRO als Open Source (Apache-2.0) entwickelte SQL-on-FHIR-Engine. Sie wird im IG als **empfohlene** Laufzeit für die sechs ViewDefinitions unterstützt; eine kommerzielle Lizenz ist nicht erforderlich. Das Repository stellt dafür zwei Integrationsvarianten bereit:
+
+**Variante A — Docker-Server (empfohlen für Teams / Shared Setup).**
+Ein eigenständiges Compose-File `docker-compose.pathling.yaml` startet einen Pathling-FHIR-Server auf Port `8090`. Der Datenimport erfolgt über ein kleines Python-Skript, das die 177 Beispiel-Ressourcen aus `fsh-generated/resources/` per FHIR-REST in die Pathling-Instanz lädt:
+
+```bash
+docker compose -f docker-compose.pathling.yaml up -d
+python3 scripts/load-to-pathling.py
+```
+
+Anschließend stehen die ViewDefinitions über die FHIR-Operation `POST /ViewDefinition/$run` zur Verfügung und können sowohl aus dem Jupyter-Notebook heraus als auch von BI-Tools oder CI-Pipelines abgefragt werden.
+
+**Variante B — Python-Bibliothek (lokale Ausführung, ohne Docker).**
+Für einzelne Analysen und reproduzierbare Notebooks genügt die Pathling-Python-Bibliothek, die ein eingebettetes Spark betreibt und die Bundles direkt aus dem Dateisystem liest:
+
+```bash
+pip install pathling pandas
+```
+
+```python
+from pathling import PathlingContext
+
+pc   = PathlingContext.create()
+data = pc.read.bundles("../fsh-generated/resources/",
+                       resource_types=["Patient", "Condition", "Procedure",
+                                       "Observation", "DiagnosticReport", "CarePlan"])
+for name, vd in VIEWS.items():
+    df[name] = pc.view.execute(vd, data).toPandas()
+```
+
+Beide Varianten führen die **sechs** ViewDefinitions identisch aus; die im Notebook (`notebooks/senologie-analyse.ipynb`) gezeigten Auswertungen sind dadurch unverändert reproduzierbar, unabhängig von der gewählten Engine.
+
 ### Interaktive Analyse
 
 Ein lauffähiges Jupyter-Notebook [`notebooks/senologie-analyse.ipynb`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/notebooks/senologie-analyse.ipynb) demonstriert die End-to-End-Auswertung der oben genannten ViewDefinitions gegen eine lokale HAPI-Instanz (Port 8095, 12 synthetische Patientinnen, 177 Ressourcen). Es zeigt 7 Beispielanalysen:
@@ -105,7 +139,13 @@ bundle = requests.get(f'{FHIR_BASE}/Condition?_count=200',
 df = pd.json_normalize([e['resource'] for e in bundle.get('entry', [])])
 ```
 
-Das Notebook ist so aufgebaut, dass es **keine externen Laufzeiten** (Pathling, Spark, kommerzielle Tools) benötigt — ein eingebauter, minimaler FHIRPath-Evaluator wendet die ViewDefinitions direkt auf die JSON-Ressourcen an und liefert `pandas.DataFrame`-Ausgaben. Für produktive Datenmengen wird der Einsatz einer vollwertigen SQL-on-FHIR-Runtime empfohlen.
+Das Notebook bietet drei austauschbare Ausführungsmodi, die oben über die Variable `EXECUTION_MODE` gewählt werden — die nachfolgenden Analysezellen sind modusunabhängig:
+
+1. **`"docker"` — Pathling FHIR Server** *(empfohlen)*: die sechs ViewDefinitions werden per `POST /ViewDefinition/$run` gegen den mit `docker-compose.pathling.yaml` gestarteten Pathling-Container ausgeführt.
+2. **`"python"` — Pathling Python-Bibliothek**: lokale Ausführung über `PathlingContext` mit eingebettetem Spark; es ist kein Docker nötig (`pip install pathling`).
+3. **`"custom"` — eingebauter FHIRPath-Mini-Runner**: Fallback ohne Pathling/Spark, nutzt den HAPI-Testserver oder direkt die JSON-Ressourcen aus `fsh-generated/resources/`.
+
+Für produktive Datenmengen wird der Einsatz von Pathling (Modus 1 oder 2) empfohlen; der Custom-Runner ist bewusst als leichtgewichtige Alternative für Demo- und CI-Szenarien erhalten. Die Schritt-für-Schritt-Anleitung für alle drei Modi findet sich unter [`notebooks/README.md`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/notebooks/README.md).
 
 ### Datenschutz und Governance
 
