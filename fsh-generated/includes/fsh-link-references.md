@@ -112,6 +112,7 @@
 [Fall1-Bildgebung-Skelettszintigraphie]: DiagnosticReport-Fall1-Bildgebung-Skelettszintigraphie.html
 [Fall1-Pathologie-Praeparat]: Specimen-Fall1-Pathologie-Praeparat.html
 [Fall1-Tumorboard]: CarePlan-Fall1-Tumorboard.html
+[Fall1-Verlauf-6Monate]: Observation-Fall1-Verlauf-6Monate.html
 [Fall2-Strahlentherapie]: Procedure-Fall2-Strahlentherapie.html
 [Fall2-Systemtherapie-Adjuvant]: Procedure-Fall2-Systemtherapie-Adjuvant.html
 [Fall2-Begleitmedikation-Ondansetron]: MedicationStatement-Fall2-Begleitmedikation-Ondansetron.html
@@ -138,6 +139,7 @@
 [Fall2-Studienteilnahme]: ResearchSubject-Fall2-Studienteilnahme.html
 [Fall2-Diagnose-Mammakarzinom]: Condition-Fall2-Diagnose-Mammakarzinom.html
 [Fall2-Tumorboard-Progression]: CarePlan-Fall2-Tumorboard-Progression.html
+[Fall2-Verlauf-Progression]: Observation-Fall2-Verlauf-Progression.html
 [Fall3-Strahlentherapie]: Procedure-Fall3-Strahlentherapie.html
 [Fall3-BiRADS-Rechts]: Observation-Fall3-BiRADS-Rechts.html
 [Fall3-Begleitmedikation-Anastrozol]: MedicationStatement-Fall3-Begleitmedikation-Anastrozol.html
@@ -232,6 +234,7 @@
 [Fall9-Komplikation-Lymphoedem]: Observation-Fall9-Komplikation-Lymphoedem.html
 [Fall9-Pathologie-Praeparat]: Specimen-Fall9-Pathologie-Praeparat.html
 [Fall9-Tumorboard]: CarePlan-Fall9-Tumorboard.html
+[Fall9-Verlauf-12Monate]: Observation-Fall9-Verlauf-12Monate.html
 [QuestionnaireSenologieDiagnose]: Questionnaire-senologie-diagnose-maligne.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
 [IRegBrustimplantatMeldung]: StructureDefinition-ireg-brustimplantat-meldung.html

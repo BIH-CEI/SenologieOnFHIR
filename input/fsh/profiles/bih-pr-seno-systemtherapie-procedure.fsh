@@ -11,6 +11,8 @@ Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt I
 * status = #completed (exactly)
 * status ^short = "Durchgeführt"
 
+// Note: category inherited from MII_PR_Onko_Systemische_Therapie parent
+
 * code MS
 * code.coding ^short = "Systemtherapie-Typ"
 * code.text = "Systemtherapie"
