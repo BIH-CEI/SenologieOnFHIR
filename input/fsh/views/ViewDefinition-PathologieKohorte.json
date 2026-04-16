@@ -5,11 +5,11 @@
   "name": "PathologieKohorte",
   "title": "Pathologie-Kohorte",
   "status": "draft",
-  "description": "SQL-on-FHIR ViewDefinition: Pathologie-Befunde mit IHC-Status. Spalten: patientId, reportId, datum, morphology (ICD-O-3), grading, er, pr, her2, ki67. ER/PR/HER2/Ki-67 werden aus der conclusion-Freitext und referenzierten Observations extrahiert.",
+  "description": "SQL-on-FHIR ViewDefinition: Pathologie-Befunde (DiagnosticReport). Spalten: reportId, patientId, datum, issued, morphology (ICD-O-3), conclusion (Freitext), specimenRef, institut, status. Hinweis: Aidbox FHIRPath unterstützt today(), replaceMatches(), startsWith(), contains() (String), matches() und iif() noch nicht - Grading (G1-G4), ER/PR/HER2-Status und Ki-67 werden nachgelagert im Notebook aus der conclusion-Spalte (regex) oder aus verknüpften Observations extrahiert. subject-Referenz wird über getReferenceKey(Patient) aufgelöst (Aidbox speichert Referenzen als {id, resourceType}, nicht als 'Type/id'-String).",
   "resource": "DiagnosticReport",
   "where": [
     {
-      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-pathologie-befund' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-report' or category.coding.where(code='SP' or code='PAT').exists() or code.coding.where(code='60568-3').exists()"
+      "path": "meta.profile.where($this='http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-pathologie-befund' or $this='https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-report').exists()"
     }
   ],
   "select": [
@@ -21,7 +21,7 @@
           "type": "id"
         },
         {
-          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "path": "subject.getReferenceKey(Patient)",
           "name": "patientId",
           "type": "string"
         },
@@ -36,7 +36,7 @@
           "type": "instant"
         },
         {
-          "path": "conclusionCode.coding.where(system='http://terminology.hl7.org/CodeSystem/icd-o-3' or system.contains('icd-o')).first().code",
+          "path": "conclusionCode.coding.where(system='http://terminology.hl7.org/CodeSystem/icd-o-3').first().code",
           "name": "morphology",
           "type": "code"
         },
@@ -46,37 +46,7 @@
           "type": "string"
         },
         {
-          "path": "iif(conclusion.contains('G1'), 'G1', iif(conclusion.contains('G2'), 'G2', iif(conclusion.contains('G3'), 'G3', iif(conclusion.contains('G4'), 'G4', {}))))",
-          "name": "grading",
-          "type": "string",
-          "description": "Grading (G1-G4) heuristisch aus conclusion-Freitext"
-        },
-        {
-          "path": "iif(conclusion.matches('.*ER\\+.*') or conclusion.matches('.*ER positiv.*'), 'positive', iif(conclusion.matches('.*ER-.*') or conclusion.matches('.*ER negativ.*'), 'negative', {}))",
-          "name": "er",
-          "type": "string",
-          "description": "Östrogenrezeptor-Status (positive/negative) aus Freitext"
-        },
-        {
-          "path": "iif(conclusion.matches('.*PR\\+.*') or conclusion.matches('.*PR positiv.*'), 'positive', iif(conclusion.matches('.*PR-.*') or conclusion.matches('.*PR negativ.*'), 'negative', {}))",
-          "name": "pr",
-          "type": "string",
-          "description": "Progesteronrezeptor-Status (positive/negative) aus Freitext"
-        },
-        {
-          "path": "iif(conclusion.matches('.*HER2\\+.*') or conclusion.contains('HER2 Score 3') or conclusion.matches('.*HER2 positiv.*'), 'positive', iif(conclusion.matches('.*HER2-.*') or conclusion.contains('HER2 Score 0') or conclusion.contains('HER2 Score 1') or conclusion.matches('.*HER2 negativ.*'), 'negative', {}))",
-          "name": "her2",
-          "type": "string",
-          "description": "HER2-Status (positive/negative) aus Freitext"
-        },
-        {
-          "path": "conclusion.matches('.*Ki-?67 ?[:=]? ?(\\\\d+).*').toString()",
-          "name": "ki67Present",
-          "type": "string",
-          "description": "Ki-67-Angabe vorhanden (Wert-Extraktion erfolgt im Notebook)"
-        },
-        {
-          "path": "specimen.first().reference",
+          "path": "specimen.first().getReferenceKey(Specimen)",
           "name": "specimenRef",
           "type": "string"
         },

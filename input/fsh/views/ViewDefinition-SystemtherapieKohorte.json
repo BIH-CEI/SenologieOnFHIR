@@ -5,11 +5,11 @@
   "name": "SystemtherapieKohorte",
   "title": "Systemtherapie-Kohorte",
   "status": "draft",
-  "description": "SQL-on-FHIR ViewDefinition: Systemische Therapien (Procedure-Ebene). Spalten: patientId, procedureId, art (CH/HO/IM/ZT), intention, beginn, ende, protokoll, substanzen.",
+  "description": "SQL-on-FHIR ViewDefinition: Systemische Therapien (Procedure). Spalten: procedureId, patientId (volle Referenz 'Patient/xyz'), categoryCode, categoryDisplay, typCode, typDisplay, intention, intentionDisplay, beginn, ende, performedDateTime, protokoll, protokollCode, outcomeText, outcomeCode, reasonConditionId, note, status. Hinweis: Aidbox FHIRPath unterstützt today(), replaceMatches(), startsWith(), contains() (String), matches() und iif() noch nicht - die Kategorisierung der Art (CH=Chemo=SNOMED 385786002, HO=Hormon=169413002, IM=Immun=76334006, ZT=Zielgerichtet=764166006) erfolgt nachgelagert im Notebook anhand categoryCode/typCode.",
   "resource": "Procedure",
   "where": [
     {
-      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-systemtherapie-procedure' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie' or category.coding.where(code='18629005' or code='385786002' or code='169413002' or code='76334006' or code='764166006').exists()"
+      "path": "meta.profile.where($this='http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-systemtherapie-procedure' or $this='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie').exists()"
     }
   ],
   "select": [
@@ -21,15 +21,24 @@
           "type": "id"
         },
         {
-          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "path": "subject.getReferenceKey(Patient)",
           "name": "patientId",
           "type": "string"
         },
         {
-          "path": "iif(category.coding.where(code='385786002').exists() or code.coding.where(code='385786002').exists(), 'CH', iif(category.coding.where(code='169413002').exists() or code.coding.where(code='169413002').exists(), 'HO', iif(category.coding.where(code='76334006').exists() or code.coding.where(code='76334006').exists(), 'IM', iif(category.coding.where(code='764166006').exists() or code.coding.where(code='764166006').exists(), 'ZT', 'ST'))))",
-          "name": "art",
-          "type": "string",
-          "description": "Art der Systemtherapie: CH=Chemo, HO=Hormon, IM=Immun, ZT=Zielgerichtet, ST=Sonstige"
+          "path": "category.coding.first().code",
+          "name": "categoryCode",
+          "type": "code"
+        },
+        {
+          "path": "category.coding.first().display",
+          "name": "categoryDisplay",
+          "type": "string"
+        },
+        {
+          "path": "code.coding.first().code",
+          "name": "typCode",
+          "type": "code"
         },
         {
           "path": "code.coding.first().display",
@@ -82,7 +91,7 @@
           "type": "code"
         },
         {
-          "path": "reasonReference.first().reference.replaceMatches('^Condition/', '')",
+          "path": "reasonReference.first().getReferenceKey(Condition)",
           "name": "reasonConditionId",
           "type": "string"
         },
@@ -95,14 +104,9 @@
           "path": "status",
           "name": "status",
           "type": "code"
-        }
-      ]
-    },
-    {
-      "forEach": "partOf",
-      "column": [
+        },
         {
-          "path": "reference",
+          "path": "partOf.first().getReferenceKey(Procedure)",
           "name": "partOfRef",
           "type": "string"
         }

@@ -5,11 +5,11 @@
   "name": "OperationenKohorte",
   "title": "Operationen-Kohorte",
   "status": "draft",
-  "description": "SQL-on-FHIR ViewDefinition: Alle Senologie-Operationen mit Outcome. Spalten: patientId, procedureId, ops, art (BET/Mastektomie/SNB/ALND), datum, seite, outcome (R0/R1/R2), hauptoperateur.",
+  "description": "SQL-on-FHIR ViewDefinition: Alle Operationen (Procedure) mit OPS-Code, Datum, Seite, Outcome und Performer. Spalten: procedureId, patientId, ops, opsDisplay, kategorie, datum, beginn, seite, seiteCode, outcomeText, outcomeCode, performer, hauptoperateur, intention, reasonConditionId, status. Hinweis: Aidbox FHIRPath unterstützt today(), replaceMatches(), startsWith(), contains() (String), matches() und iif() noch nicht - die nachgelagerte Kategorisierung (BET='5-870'/Mastektomie='5-871|5-872'/SNB='5-401'/ALND='5-402'; Resektionsstatus R0/R1/R2 aus outcomeText) erfolgt im Notebook. subject/reason-Referenzen werden über getReferenceKey(...) aufgelöst (Aidbox speichert Referenzen als {id, resourceType}, nicht als 'Type/id'-String).",
   "resource": "Procedure",
   "where": [
     {
-      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-operation' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-operation' or meta.profile contains 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-operation' or code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and (code.startsWith('5-870') or code.startsWith('5-871') or code.startsWith('5-872') or code.startsWith('5-401') or code.startsWith('5-402'))).exists()"
+      "path": "meta.profile.where($this='http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-operation' or $this='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-operation' or $this='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-operation').exists()"
     }
   ],
   "select": [
@@ -21,7 +21,7 @@
           "type": "id"
         },
         {
-          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "path": "subject.getReferenceKey(Patient)",
           "name": "patientId",
           "type": "string"
         },
@@ -34,12 +34,6 @@
           "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops').first().display",
           "name": "opsDisplay",
           "type": "string"
-        },
-        {
-          "path": "iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and code.startsWith('5-870')).exists(), 'BET', iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and (code.startsWith('5-871') or code.startsWith('5-872'))).exists(), 'Mastektomie', iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and code.startsWith('5-401')).exists(), 'SNB', iif(code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops' and code.startsWith('5-402')).exists(), 'ALND', 'Sonstige'))))",
-          "name": "art",
-          "type": "string",
-          "description": "OP-Art kategorisiert: BET | Mastektomie | SNB | ALND | Sonstige"
         },
         {
           "path": "category.coding.first().display",
@@ -72,19 +66,18 @@
           "type": "string"
         },
         {
-          "path": "iif(outcome.text.contains('R0') or outcome.coding.where(code='R0').exists(), 'R0', iif(outcome.text.contains('R1') or outcome.coding.where(code='R1').exists(), 'R1', iif(outcome.text.contains('R2') or outcome.coding.where(code='R2').exists(), 'R2', {})))",
-          "name": "outcome",
-          "type": "string",
-          "description": "Resektionsstatus R0/R1/R2 (heuristisch aus outcome.text oder outcome.coding)"
-        },
-        {
-          "path": "performer.where(function.coding.code='304292004' or function.text.contains('Hauptoperateur')).first().actor.display",
-          "name": "hauptoperateur",
-          "type": "string"
+          "path": "outcome.coding.first().code",
+          "name": "outcomeCode",
+          "type": "code"
         },
         {
           "path": "performer.first().actor.display",
           "name": "performer",
+          "type": "string"
+        },
+        {
+          "path": "performer.where(function.coding.code='304292004').first().actor.display",
+          "name": "hauptoperateur",
           "type": "string"
         },
         {
@@ -93,7 +86,7 @@
           "type": "code"
         },
         {
-          "path": "reasonReference.first().reference.replaceMatches('^Condition/', '')",
+          "path": "reasonReference.first().getReferenceKey(Condition)",
           "name": "reasonConditionId",
           "type": "string"
         },

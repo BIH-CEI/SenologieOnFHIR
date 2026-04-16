@@ -5,7 +5,7 @@
   "name": "PatientKohorte",
   "title": "Patientenkohorte",
   "status": "draft",
-  "description": "SQL-on-FHIR ViewDefinition: Flache Tabelle aller Patientinnen mit Basis-Demographika. Spalten: id, name, gender, birthDate, age, city.",
+  "description": "SQL-on-FHIR ViewDefinition: Flache Tabelle aller Patientinnen mit Basis-Demographika. Spalten: id, familyName, givenName, gender, birthDate, city, postalCode, deceased. Hinweis: age wird nachgelagert aus birthDate berechnet (Aidbox FHIRPath unterstützt today() noch nicht). Name ist in familyName und givenName aufgeteilt; Zusammenfügen erfolgt nachgelagert (String-Konkatenation mit + ist in Aidbox bei leeren Operanden problematisch).",
   "resource": "Patient",
   "select": [
     {
@@ -16,8 +16,13 @@
           "type": "id"
         },
         {
-          "path": "name.where(use='official' or use.empty()).first().family + ', ' + name.where(use='official' or use.empty()).first().given.first()",
-          "name": "name",
+          "path": "name.where(use='official' or use.empty()).first().family",
+          "name": "familyName",
+          "type": "string"
+        },
+        {
+          "path": "name.where(use='official' or use.empty()).first().given.first()",
+          "name": "givenName",
           "type": "string"
         },
         {
@@ -29,12 +34,6 @@
           "path": "birthDate",
           "name": "birthDate",
           "type": "date"
-        },
-        {
-          "path": "(today() - birthDate).toString()",
-          "name": "age",
-          "type": "string",
-          "description": "Alter in Jahren (heuristisch berechnet aus birthDate)"
         },
         {
           "path": "address.where(use='home' or use.empty()).first().city",

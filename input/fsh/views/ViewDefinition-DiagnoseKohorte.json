@@ -5,7 +5,7 @@
   "name": "DiagnoseKohorte",
   "title": "Diagnosekohorte (Mamma)",
   "status": "draft",
-  "description": "SQL-on-FHIR ViewDefinition: Alle Mamma-Diagnosen mit Staging. Spalten: patientId, conditionId, icd10, snomed, seitenlokalisation, diagnosedatum, clinicalStatus, uiccStage, grading.",
+  "description": "SQL-on-FHIR ViewDefinition: Alle Diagnosen/Conditions mit Staging. Spalten: conditionId, patientId, icd10, snomed, snomedDisplay, seitenlokalisation, seitenlokalisationCode, diagnosedatum, onsetDateTime, recordedDate, clinicalStatus, verificationStatus, uiccStage, stagingAssessment, evidenceDetail. Hinweis: Aidbox FHIRPath unterstützt today(), replaceMatches(), startsWith(), contains() (String), matches() und iif() noch nicht; subject.reference ist in Aidbox nicht direkt adressierbar, stattdessen wird getReferenceKey(Patient) verwendet.",
   "resource": "Condition",
   "select": [
     {
@@ -16,7 +16,7 @@
           "type": "id"
         },
         {
-          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "path": "subject.getReferenceKey(Patient)",
           "name": "patientId",
           "type": "string"
         },

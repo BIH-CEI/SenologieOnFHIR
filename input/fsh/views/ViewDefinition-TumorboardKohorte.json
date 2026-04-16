@@ -5,11 +5,11 @@
   "name": "TumorboardKohorte",
   "title": "Tumorboard-Kohorte",
   "status": "draft",
-  "description": "SQL-on-FHIR ViewDefinition: Tumorboard-Empfehlungen (CarePlan). Spalten: patientId, careplanId, datum, typ, empfehlungen (mehrzeilig über forEach activity).",
+  "description": "SQL-on-FHIR ViewDefinition: Tumorboard-Empfehlungen (CarePlan). Kopfzeile je CarePlan plus eine Zeile je activity. Spalten (Kopf): careplanId, patientId (volle Referenz 'Patient/xyz'), datum, datumEnde, typ, beschreibung, status, intent, conditionId (volle Referenz 'Condition/xyz'), empfehlungenText, empfehlungenDisplay, empfehlungsStatus, note. Spalten (activity-Zeile): activityKind, activityCode, activityText, activityDisplay, activityStatus. Hinweis: Aidbox FHIRPath unterstützt today(), replaceMatches(), startsWith(), contains() (String), matches(), iif() und den Union-Operator '|' noch nicht - Title-Filter ('Tumorboard'/'Tumorkonferenz') und Präfix-Entfernung ('Patient/', 'Condition/') erfolgen nachgelagert.",
   "resource": "CarePlan",
   "where": [
     {
-      "path": "meta.profile contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung' or category.coding.where(code='394656005').exists() or title.contains('Tumorboard') or title.contains('Tumorkonferenz')"
+      "path": "meta.profile.where($this='http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung').exists()"
     }
   ],
   "select": [
@@ -21,7 +21,7 @@
           "type": "id"
         },
         {
-          "path": "subject.reference.replaceMatches('^Patient/', '')",
+          "path": "subject.getReferenceKey(Patient)",
           "name": "patientId",
           "type": "string"
         },
@@ -56,15 +56,21 @@
           "type": "code"
         },
         {
-          "path": "addresses.first().reference.replaceMatches('^Condition/', '')",
+          "path": "addresses.first().getReferenceKey(Condition)",
           "name": "conditionId",
           "type": "string"
         },
         {
-          "path": "activity.detail.code.text.join('; ') | activity.detail.code.coding.display.join('; ')",
-          "name": "empfehlungen",
+          "path": "activity.detail.code.text.join('; ')",
+          "name": "empfehlungenText",
           "type": "string",
-          "description": "Alle empfohlenen Maßnahmen als zusammengefügter String"
+          "description": "Alle freitextlichen empfohlenen Maßnahmen als zusammengefügter String"
+        },
+        {
+          "path": "activity.detail.code.coding.display.join('; ')",
+          "name": "empfehlungenDisplay",
+          "type": "string",
+          "description": "Alle empfohlenen Maßnahmen (Coding.display) als zusammengefügter String"
         },
         {
           "path": "activity.detail.status.join(', ')",
@@ -92,8 +98,13 @@
           "type": "code"
         },
         {
-          "path": "detail.code.text | detail.code.coding.first().display",
-          "name": "activityLabel",
+          "path": "detail.code.text",
+          "name": "activityText",
+          "type": "string"
+        },
+        {
+          "path": "detail.code.coding.first().display",
+          "name": "activityDisplay",
           "type": "string"
         },
         {
