@@ -53,6 +53,11 @@
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
+[QR-Diagnose-Fall1]: QuestionnaireResponse-QR-Diagnose-Fall1.html
+[QR-KlinUntersuchung-Fall1]: QuestionnaireResponse-QR-KlinUntersuchung-Fall1.html
+[QR-OPPlanung-Fall1]: QuestionnaireResponse-QR-OPPlanung-Fall1.html
+[QR-PostOP-Fall1]: QuestionnaireResponse-QR-PostOP-Fall1.html
+[QR-Tumorboard-Fall1]: QuestionnaireResponse-QR-Tumorboard-Fall1.html
 [Fall10-Strahlentherapie]: Procedure-Fall10-Strahlentherapie.html
 [Fall10-Systemtherapie-Adjuvant]: Procedure-Fall10-Systemtherapie-Adjuvant.html
 [Fall10-BiRADS-Rechts]: Observation-Fall10-BiRADS-Rechts.html
@@ -238,7 +243,12 @@
 [Fall9-Pathologie-Praeparat]: Specimen-Fall9-Pathologie-Praeparat.html
 [Fall9-Tumorboard]: CarePlan-Fall9-Tumorboard.html
 [Fall9-Verlauf-12Monate]: Observation-Fall9-Verlauf-12Monate.html
+[QuestKlinischeUntersuchung]: Questionnaire-QuestKlinischeUntersuchung.html
+[QuestOPPlanung]: Questionnaire-QuestOPPlanung.html
+[QuestPostOPDokumentation]: Questionnaire-QuestPostOPDokumentation.html
 [QuestionnaireSenologieDiagnose]: Questionnaire-senologie-diagnose-maligne.html
+[QuestDiagnoseMaligne]: Questionnaire-QuestDiagnoseMaligne.html
+[QuestTumorboard]: Questionnaire-QuestTumorboard.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
 [IQTIGMammachirurgie181]: StructureDefinition-iqtig-mammachirurgie-181.html
 [IRegBrustimplantatMeldung]: StructureDefinition-ireg-brustimplantat-meldung.html

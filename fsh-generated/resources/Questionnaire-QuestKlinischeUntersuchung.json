@@ -1,0 +1,134 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "QuestKlinischeUntersuchung",
+  "url": "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-klinische-untersuchung",
+  "title": "Fragebogen: Klinische Untersuchung Mamma",
+  "description": "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Definition-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel.",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "valueExpression": {
+        "language": "application/x-fhir-query",
+        "expression": "Observation"
+      },
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+    },
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
+  "item": [
+    {
+      "linkId": "untersuchung-datum",
+      "text": "Untersuchungsdatum",
+      "type": "date",
+      "required": true,
+      "definition": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.effectiveDateTime"
+    },
+    {
+      "answerOption": [
+        {
+          "valueCoding": {
+            "code": "80248007",
+            "system": "http://snomed.info/sct",
+            "display": "Left breast structure"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "73056007",
+            "system": "http://snomed.info/sct",
+            "display": "Right breast structure"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "63762007",
+            "system": "http://snomed.info/sct",
+            "display": "Breast structure"
+          }
+        }
+      ],
+      "linkId": "seitenlokalisation",
+      "text": "Untersuchte Seite",
+      "type": "choice",
+      "required": true,
+      "definition": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.bodySite.coding"
+    },
+    {
+      "code": [
+        {
+          "code": "118242002",
+          "system": "http://snomed.info/sct",
+          "display": "Finding by palpation"
+        }
+      ],
+      "linkId": "palpationsbefund",
+      "text": "Palpationsbefund",
+      "type": "text",
+      "required": false,
+      "definition": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:palpationsbefund.valueString"
+    },
+    {
+      "code": [
+        {
+          "code": "115951000119105",
+          "system": "http://snomed.info/sct",
+          "display": "Breast symptom of change in skin"
+        }
+      ],
+      "linkId": "hautveraenderungen",
+      "text": "Hautveränderungen",
+      "type": "text",
+      "required": false,
+      "definition": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:hautveraenderungen.valueString"
+    },
+    {
+      "code": [
+        {
+          "code": "248819006",
+          "system": "http://snomed.info/sct",
+          "display": "Nipple finding"
+        }
+      ],
+      "linkId": "mamillenbefund",
+      "text": "Mamillenbefund (Retraktion, Sekretion, Ekzem)",
+      "type": "text",
+      "required": false,
+      "definition": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:mamillenbefund.valueString"
+    },
+    {
+      "code": [
+        {
+          "code": "248858001",
+          "system": "http://snomed.info/sct",
+          "display": "Axillary lymph node abnormality"
+        }
+      ],
+      "linkId": "lymphknotenstatus",
+      "text": "Klinischer Lymphknotenstatus (axillär)",
+      "type": "text",
+      "required": false,
+      "definition": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:lymphknotenstatus.valueString"
+    }
+  ],
+  "name": "QuestKlinischeUntersuchung",
+  "status": "draft",
+  "experimental": true,
+  "version": "0.1.0"
+}
