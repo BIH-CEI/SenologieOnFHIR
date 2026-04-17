@@ -10,18 +10,51 @@ Die Testdaten sind als FSH-Beispiele im IG enthalten und können direkt in einen
 
 ### Verfügbare FHIR-Server
 
-Für die Erprobung des Kerndatensatzes stehen drei Docker-basierte Testumgebungen bereit, die unterschiedliche Schwerpunkte setzen:
+Für die Erprobung des Kerndatensatzes stehen drei Docker-basierte Testumgebungen bereit. Alle Docker-Compose-Dateien, Import-Skripte und Testdaten sind im [GitHub-Repository](https://github.com/BIH-CEI/SenologieOnFHIR) frei verfügbar.
 
-| Server | Port | Image | Schwerpunkt |
+| Server | Port | Lizenz | Schwerpunkt |
 |---|---|---|---|
-| **Aidbox** | 8888 | `healthsamurai/aidboxone:edge` | SQL on FHIR ViewDefinitions (`$run`, `$materialize`), Questionnaire-Extraction, FHIR Schema Validierung |
-| **HAPI FHIR** | 8095 | `hapiproject/hapi:latest` | CQL-Auswertung (`$cql`, `$evaluate-measure`), Standard FHIR REST, breite Community-Unterstützung |
-| **Pathling** | 8091 | `aehrc/pathling:latest` | FHIRPath-basierte Analysen (`$extract`, `$aggregate`), Apache-Spark-Engine, NDJSON-Bulk-Import |
+| **HAPI FHIR** | 8095 | **Open Source** (Apache-2.0), keine Registrierung | CQL-Auswertung (`$cql`, `$evaluate-measure`), Standard FHIR REST |
+| **Pathling** | 8091 | **Open Source** (Apache-2.0), keine Registrierung | FHIRPath-basierte Analysen (`$extract`, `$aggregate`), Apache-Spark-Engine |
+| **Aidbox** | 8888 | **Kostenlose Lizenz** erforderlich ([aidbox.app](https://aidbox.app/)) | SQL on FHIR ViewDefinitions (`$run`, `$materialize`), FHIR Schema Validierung |
 
-#### Aidbox (empfohlen für SQL on FHIR)
+{:.stu-note}
+**HAPI FHIR** und **Pathling** können ohne Registrierung oder Lizenz direkt aus dem Repository gestartet werden. Für **Aidbox** ist eine individuelle (kostenlose) Lizenz erforderlich, die unter [aidbox.app](https://aidbox.app/) beantragt werden kann. Die Lizenzdatei (`.env`) ist nicht im Repository enthalten.
+
+#### HAPI FHIR (Open Source, empfohlen für CQL)
 
 ```bash
-# Voraussetzung: .env mit AIDBOX_LICENSE (gratis unter https://aidbox.app/)
+git clone https://github.com/BIH-CEI/SenologieOnFHIR.git
+cd SenologieOnFHIR
+docker compose up -d hapi-fhir-server fhir-postgres
+# Daten laden (Python 3 erforderlich):
+python3 -c "
+import json, glob, urllib.request
+for f in sorted(glob.glob('fsh-generated/resources/*.json')):
+    r = json.load(open(f))
+    rt, rid = r.get('resourceType'), r.get('id')
+    if rt and rid and 'Fall' in rid:
+        urllib.request.urlopen(urllib.request.Request(
+            f'http://localhost:8095/fhir/{rt}/{rid}',
+            data=json.dumps(r).encode(), method='PUT',
+            headers={'Content-Type': 'application/fhir+json'}))
+"
+```
+
+#### Pathling (Open Source, empfohlen für Analysen)
+
+```bash
+docker compose -f docker-compose.pathling.yaml up -d
+python3 scripts/load-to-pathling.py
+```
+
+#### Aidbox (SQL on FHIR ViewDefinitions, kostenlose Lizenz nötig)
+
+```bash
+# 1. Lizenz beantragen unter https://aidbox.app/
+# 2. .env anlegen:
+echo "AIDBOX_LICENSE=<ihr-jwt-token>" > .env
+# 3. Starten:
 docker compose up -d
 ```
 
