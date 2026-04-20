@@ -302,6 +302,7 @@ Description: "Neoadjuvante Therapie: EC x4 gefolgt von Docetaxel + Trastuzumab x
 Usage: #example
 
 * status = #completed
+* category = $SCT#18629005 "Administration of drug or medicament"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -369,6 +370,7 @@ Description: "Adjuvante Ganzbrustbestrahlung rechts nach BET"
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
@@ -411,6 +413,9 @@ Usage: #example
 * dateAsserted = "2025-10-10"
 
 * dosage.text = "1x täglich"
+* dosage.timing.repeat.frequency = 1
+* dosage.timing.repeat.period = 1
+* dosage.timing.repeat.periodUnit = #d
 * dosage.doseAndRate.doseQuantity.value = 2.5
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"

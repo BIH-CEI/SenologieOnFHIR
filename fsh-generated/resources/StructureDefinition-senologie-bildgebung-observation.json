@@ -21,8 +21,9 @@
         "constraint": [
           {
             "key": "biRads-value",
-            "severity": "error",
+            "severity": "warning",
             "human": "BI-RADS value muss aus BI-RADS ValueSet sein (0-6)",
+            "expression": "value.ofType(CodeableConcept).exists() implies value.ofType(CodeableConcept).coding.exists()",
             "source": "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-bildgebung-observation"
           }
         ]
@@ -74,11 +75,6 @@
         }
       },
       {
-        "id": "Observation.code.coding:biRadsLoinc.display",
-        "path": "Observation.code.coding.display",
-        "fixedString": "Breast Imaging-Reporting and Data System (BI-RADS) assessment category"
-      },
-      {
         "id": "Observation.code.coding:biRadsSnomed",
         "path": "Observation.code.coding",
         "sliceName": "biRadsSnomed",
@@ -101,11 +97,6 @@
           "code": "18794-8",
           "system": "http://loinc.org"
         }
-      },
-      {
-        "id": "Observation.code.coding:acrDensityLoinc.display",
-        "path": "Observation.code.coding.display",
-        "fixedString": "Breast density category (4th edition BI-RADS)"
       },
       {
         "id": "Observation.code.coding:acrDensityRadlex",
@@ -132,11 +123,6 @@
         }
       },
       {
-        "id": "Observation.code.coding:herdbefundSnomed.display",
-        "path": "Observation.code.coding.display",
-        "fixedString": "Lesion of breast"
-      },
-      {
         "id": "Observation.code.coding:herdbefundRadlex",
         "path": "Observation.code.coding",
         "sliceName": "herdbefundRadlex",
@@ -161,11 +147,6 @@
         }
       },
       {
-        "id": "Observation.code.coding:mikrokalkSnomed.display",
-        "path": "Observation.code.coding.display",
-        "fixedString": "Microcalcification"
-      },
-      {
         "id": "Observation.code.coding:mikrokalkRadlex",
         "path": "Observation.code.coding",
         "sliceName": "mikrokalkRadlex",
@@ -188,11 +169,6 @@
           "code": "248858001",
           "system": "http://snomed.info/sct"
         }
-      },
-      {
-        "id": "Observation.code.coding:lymphknotenSnomed.display",
-        "path": "Observation.code.coding.display",
-        "fixedString": "Axillary lymph node abnormality"
       },
       {
         "id": "Observation.code.coding:lymphknotenRadlex",
@@ -260,7 +236,13 @@
         "comment": "z.B. BI-RADS 3-5, ACR A-D, Herdbefund-Code, etc.",
         "type": [
           {
+            "code": "Quantity"
+          },
+          {
             "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
           }
         ],
         "mustSupport": true

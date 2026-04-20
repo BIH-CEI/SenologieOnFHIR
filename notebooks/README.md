@@ -31,7 +31,7 @@ Im Notebook:
 
 ```python
 EXECUTION_MODE = "docker"
-PATHLING_URL   = "http://localhost:8090/fhir"
+PATHLING_URL   = "http://localhost:8091/fhir"
 ```
 
 ### Option 2: Pathling als Python-Library
@@ -99,7 +99,7 @@ Die Zelle `mode-selector` (direkt nach dem Setup) enthält:
 ```python
 EXECUTION_MODE = "docker"   # "docker" | "python" | "custom"
 
-PATHLING_URL   = "http://localhost:8090/fhir"
+PATHLING_URL   = "http://localhost:8091/fhir"
 HAPI_URL       = "http://localhost:8095/fhir"
 RESOURCES_DIR  = Path("../fsh-generated/resources")
 ```

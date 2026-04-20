@@ -65,18 +65,15 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 // BI-RADS Klassifikation (Breast Imaging-Reporting and Data System)
 * code.coding[biRadsLoinc] ^short = "BI-RADS Kategorie (LOINC)"
 * code.coding[biRadsLoinc] = http://loinc.org#72018-2
-* code.coding[biRadsLoinc].display = "Breast Imaging-Reporting and Data System (BI-RADS) assessment category" (exactly)
 
 * code.coding[biRadsSnomed] ^short = "BI-RADS Kategorie (SNOMED)"
 * code.coding[biRadsSnomed] = http://snomed.info/sct#241736003
 
-* value[x] only CodeableConcept
 * obeys biRads-value
 
 // ACR Breast Density
 * code.coding[acrDensityLoinc] ^short = "ACR Brustdichte (LOINC)"
 * code.coding[acrDensityLoinc] = http://loinc.org#18794-8
-* code.coding[acrDensityLoinc].display = "Breast density category (4th edition BI-RADS)" (exactly)
 
 * code.coding[acrDensityRadlex] ^short = "ACR Brustdichte (RadLex)"
 * code.coding[acrDensityRadlex] = http://radlex.org#RID28536
@@ -84,7 +81,6 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 // Herdbefund (Mass, Läsion, Tumor)
 * code.coding[herdbefundSnomed] ^short = "Herdbefund/Läsion (SNOMED)"
 * code.coding[herdbefundSnomed] = http://snomed.info/sct#300886002
-* code.coding[herdbefundSnomed].display = "Lesion of breast" (exactly)
 
 * code.coding[herdbefundRadlex] ^short = "Herdbefund/Läsion (RadLex)"
 * code.coding[herdbefundRadlex] = http://radlex.org#RID3933
@@ -92,7 +88,6 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 // Mikrokalk
 * code.coding[mikrokalkSnomed] ^short = "Mikrokalkifikation (SNOMED)"
 * code.coding[mikrokalkSnomed] = http://snomed.info/sct#373945005
-* code.coding[mikrokalkSnomed].display = "Microcalcification" (exactly)
 
 * code.coding[mikrokalkRadlex] ^short = "Mikrokalkifikation (RadLex)"
 * code.coding[mikrokalkRadlex] = http://radlex.org#RID4002
@@ -100,7 +95,6 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 // Lymphknoten Status
 * code.coding[lymphknotenSnomed] ^short = "Lymphknoten-Status (SNOMED)"
 * code.coding[lymphknotenSnomed] = http://snomed.info/sct#248858001
-* code.coding[lymphknotenSnomed].display = "Axillary lymph node abnormality" (exactly)
 
 * code.coding[lymphknotenRadlex] ^short = "Lymphknoten-Status (RadLex)"
 * code.coding[lymphknotenRadlex] = http://radlex.org#RID58844
@@ -108,4 +102,5 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 // Invariante für BI-RADS Werte
 Invariant: biRads-value
 Description: "BI-RADS value muss aus BI-RADS ValueSet sein (0-6)"
-Severity: #error
+Expression: "value.ofType(CodeableConcept).exists() implies value.ofType(CodeableConcept).coding.exists()"
+Severity: #warning

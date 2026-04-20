@@ -21,6 +21,9 @@ Usage: #example
 
 // Dosierung
 * dosage.text = "1x täglich morgens"
+* dosage.timing.repeat.frequency = 1
+* dosage.timing.repeat.period = 1
+* dosage.timing.repeat.periodUnit = #d
 * dosage.doseAndRate.doseQuantity.value = 47.5
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"

@@ -422,6 +422,7 @@ Description: "Adjuvante Chemotherapie mit Carboplatin + Paclitaxel bei TNBC + BR
 Usage: #example
 
 * status = #completed
+* category = $SCT#18629005 "Administration of drug or medicament"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -493,6 +494,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 1
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-07-21"
 * dosage.doseAndRate.doseQuantity.value = 175
 * dosage.doseAndRate.doseQuantity.unit = "mg/m2"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -509,6 +511,7 @@ Description: "Adjuvante Thoraxwandbestrahlung rechts nach therapeutischer Mastek
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"

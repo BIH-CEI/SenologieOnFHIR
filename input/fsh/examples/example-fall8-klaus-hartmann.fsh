@@ -258,6 +258,7 @@ Description: "Adjuvante Thoraxwandbestrahlung rechts nach Mastektomie"
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
@@ -301,6 +302,9 @@ Usage: #example
 * dateAsserted = "2025-07-15"
 
 * dosage.text = "1x täglich 20 mg, Dauer 5 Jahre (Standard bei männlichem Mammakarzinom)"
+* dosage.timing.repeat.frequency = 1
+* dosage.timing.repeat.period = 1
+* dosage.timing.repeat.periodUnit = #d
 * dosage.doseAndRate.doseQuantity.value = 20
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"

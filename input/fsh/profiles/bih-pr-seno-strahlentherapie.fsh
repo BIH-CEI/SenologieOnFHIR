@@ -11,11 +11,11 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * status = #completed (exactly)
 * status ^short = "Durchgeführt"
 
-// Note: category inherited from MII_PR_Onko_Strahlentherapie parent (SCT 1287742003 "Radiotherapy")
+// category inherited from MII parent: SCT#1287742003 "Radiotherapy (procedure)"
 
 * code MS
 * code.coding ^short = "Strahlentherapie-Typ"
-* code.text = "Bestrahlung"
+* code.text ^short = "Bestrahlung"
 
 * subject MS
 

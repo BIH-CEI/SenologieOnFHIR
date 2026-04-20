@@ -5,6 +5,7 @@ Description: "Adjuvante Ganzbrustbestrahlung links mit 50 Gy in 25 Fraktionen na
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 // Code (MII parent requires code.coding with OPS or SCT)
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"

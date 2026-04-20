@@ -14,7 +14,7 @@ Usage:
 
 Environment:
     PATHLING_URL   Base URL of the Pathling FHIR endpoint
-                   (default: http://localhost:8090/fhir).
+                   (default: http://localhost:8091/fhir).
     RESOURCES_DIR  Directory with FSH-generated resources
                    (default: fsh-generated/resources relative to repo root).
 """
@@ -110,7 +110,7 @@ def put_resource(base_url: str, resource: dict) -> tuple[int, str]:
 
 
 def main() -> int:
-    base_url = os.environ.get("PATHLING_URL", "http://localhost:8090/fhir")
+    base_url = os.environ.get("PATHLING_URL", "http://localhost:8091/fhir")
     resources_dir = Path(
         os.environ.get("RESOURCES_DIR", repo_root() / "fsh-generated" / "resources")
     )

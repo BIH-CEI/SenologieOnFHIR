@@ -26,6 +26,7 @@ Usage: #example
 * extension[dayInCycle].valueInteger = 1
 
 // Dosierung
+* dosage.timing.event = "2024-01-15"
 * dosage.doseAndRate.doseQuantity.value = 90
 * dosage.doseAndRate.doseQuantity.unit = "mg/m2"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"

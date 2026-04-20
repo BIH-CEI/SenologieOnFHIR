@@ -234,6 +234,7 @@ Description: "Adjuvante Chemotherapie EC q3w x4 → Paclitaxel wöchentlich x12"
 Usage: #example
 
 * status = #completed
+* category = $SCT#18629005 "Administration of drug or medicament"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -305,6 +306,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 5
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-07-07"
 * dosage.doseAndRate.doseQuantity.value = 80
 * dosage.doseAndRate.doseQuantity.unit = "mg/m2"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -397,6 +399,7 @@ Description: "Adjuvante Bestrahlung Restbrust links 50 Gy + Boost 10 Gy + Lympha
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
@@ -439,6 +442,9 @@ Usage: #example
 * dateAsserted = "2025-12-20"
 
 * dosage.text = "1x täglich 20 mg, initial prämenopausal, nach 2 Jahren Umstellung auf Aromataseinhibitor + GnRH-Agonist geplant"
+* dosage.timing.repeat.frequency = 1
+* dosage.timing.repeat.period = 1
+* dosage.timing.repeat.periodUnit = #d
 * dosage.doseAndRate.doseQuantity.value = 20
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"

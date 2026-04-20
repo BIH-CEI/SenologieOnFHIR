@@ -15,7 +15,7 @@ Description: "DiagnosticReport für nicht-mammaspezifische Bildgebung im Rahmen 
 // Kategorie Radiologie
 * category MS
 * category ^short = "Diagnostik / Bildgebung"
-* category.coding = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
+* category = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
 
 // Modalität — offen kodiert, keine Einschränkung auf Mamma-Bildgebung
 * code MS

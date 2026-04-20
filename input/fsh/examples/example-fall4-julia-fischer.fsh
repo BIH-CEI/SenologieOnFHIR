@@ -241,6 +241,7 @@ Description: "Neoadjuvante Therapie mit Docetaxel, Carboplatin, Trastuzumab, Per
 Usage: #example
 
 * status = #completed
+* category = $SCT#18629005 "Administration of drug or medicament"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -284,6 +285,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 1
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-03-10"
 * dosage.doseAndRate.doseQuantity.value = 75
 * dosage.doseAndRate.doseQuantity.unit = "mg/m2"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -343,6 +345,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 1
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-03-10"
 * dosage.doseAndRate.doseQuantity.value = 8
 * dosage.doseAndRate.doseQuantity.unit = "mg/kg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -374,6 +377,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 1
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-03-10"
 * dosage.doseAndRate.doseQuantity.value = 840
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -429,6 +433,7 @@ Description: "Adjuvante Ganzbrustbestrahlung links nach BET"
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"

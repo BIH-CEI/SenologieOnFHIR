@@ -14,7 +14,7 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 
 * category MS
 * category ^short = "Diagnostik / Bildgebung"
-* category.coding = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
+* category = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
 
 * code MS
 * code.coding ^short = "Art der Bildgebung"
@@ -28,16 +28,16 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
     tomosynthesis 0..1
 * code.coding[mammography] ^patternCoding.system = "http://loinc.org"
 * code.coding[mammography] ^patternCoding.code = #18781-5
-* code.coding[mammography].display = "Mammography of bilateral breasts"
+* code.coding[mammography] ^short = "Mammography of bilateral breasts"
 * code.coding[ultrasound] ^patternCoding.system = "http://loinc.org"
 * code.coding[ultrasound] ^patternCoding.code = #18740-1
-* code.coding[ultrasound].display = "Ultrasound of bilateral breasts"
+* code.coding[ultrasound] ^short = "Ultrasound of bilateral breasts"
 * code.coding[mri] ^patternCoding.system = "http://loinc.org"
 * code.coding[mri] ^patternCoding.code = #36581-3
-* code.coding[mri].display = "MRI of breast"
+* code.coding[mri] ^short = "MRI of breast"
 * code.coding[tomosynthesis] ^patternCoding.system = "http://radlex.org"
 * code.coding[tomosynthesis] ^patternCoding.code = #RID40755
-* code.coding[tomosynthesis].display = "Digital breast tomosynthesis"
+* code.coding[tomosynthesis] ^short = "Digital breast tomosynthesis"
 * code ^comment = "Aus dotbase: 'Modalität' (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes"
 
 * subject MS

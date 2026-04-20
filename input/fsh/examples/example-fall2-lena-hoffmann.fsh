@@ -389,6 +389,7 @@ Description: "Neoadjuvante Therapie mit Carboplatin/Paclitaxel + Pembrolizumab"
 Usage: #example
 
 * status = #completed
+* category = $SCT#18629005 "Administration of drug or medicament"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -460,6 +461,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 1
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-03-01"
 * dosage.doseAndRate.doseQuantity.value = 80
 * dosage.doseAndRate.doseQuantity.unit = "mg/m2"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -491,6 +493,7 @@ Usage: #example
 * extension[therapyCycle].valueInteger = 1
 * extension[dayInCycle].valueInteger = 1
 
+* dosage.timing.event = "2025-03-01"
 * dosage.doseAndRate.doseQuantity.value = 200
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -586,6 +589,7 @@ Description: "Adjuvante Pembrolizumab Maintenance nach Operation"
 Usage: #example
 
 * status = #completed
+* category = $SCT#18629005 "Administration of drug or medicament"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -614,6 +618,7 @@ Description: "Adjuvante Bestrahlung der Thoraxwand und supraklavikulärer Lympha
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
@@ -690,6 +695,9 @@ Usage: #example
 * dateAsserted = "2025-02-20"
 
 * dosage.text = "4 mg i.v. alle 4 Wochen"
+* dosage.timing.repeat.frequency = 1
+* dosage.timing.repeat.period = 4
+* dosage.timing.repeat.periodUnit = #wk
 * dosage.doseAndRate.doseQuantity.value = 4
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
@@ -715,6 +723,9 @@ Usage: #example
 * dateAsserted = "2025-02-20"
 
 * dosage.text = "8 mg i.v. vor Chemotherapie, ggf. 8 mg p.o. Folgetag"
+* dosage.timing.repeat.frequency = 1
+* dosage.timing.repeat.period = 3
+* dosage.timing.repeat.periodUnit = #wk
 * dosage.doseAndRate.doseQuantity.value = 8
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"

@@ -215,6 +215,7 @@ Description: "Adjuvante Ganzbrustbestrahlung links nach BET bei DCIS"
 Usage: #example
 
 * status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
