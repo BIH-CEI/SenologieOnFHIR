@@ -412,7 +412,7 @@ Usage: #example
 * focus = Reference(Procedure/Fall9-Operation-BET)
 
 * component[komplikationsart].code = $SCT#116224001 "Complication of procedure"
-* component[komplikationsart].valueCodeableConcept = $SCT#65636009 "Lymphedema of upper limb"
+* component[komplikationsart].valueCodeableConcept = $SCT#449620005 "Lymphedema of upper limb"
 * component[komplikationsart].valueCodeableConcept.text = "Lymphödem Arm links"
 
 * note.text = "Lymphödem Arm links nach Axilladissektion Level I-III (12/18 LK befallen). Konservative Therapie mit Kompressionswickelung und Lymphdrainage."
