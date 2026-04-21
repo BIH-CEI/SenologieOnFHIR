@@ -45,7 +45,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * followUp contains drainage 0..* and verband 0..* and antibiotika 0..* and mobilisation 0..* and laborkontrolle 0..*
 * followUp[drainage] = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].coding MS
-* followUp[verband] = $SCT#262171009 "Dressing of wound"
+* followUp[verband] = $SCT#182531007 "Dressing of wound"
 * followUp[verband].coding MS
 * followUp[antibiotika] = $SCT#281789004 "Antibiotic therapy (procedure)"
 * followUp[antibiotika].coding MS

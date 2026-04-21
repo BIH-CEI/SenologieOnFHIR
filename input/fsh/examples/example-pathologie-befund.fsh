@@ -69,7 +69,7 @@ Usage: #example
 * status = #available
 
 // Art des Präparats: Stanzbiopsie
-* type.coding[sct] = $SCT#122573003 "Core needle biopsy specimen"
+* type.coding[sct] = $SCT#122737001 "Specimen from breast obtained by core needle biopsy"
 * type.text = "Stanzbiopsie"
 
 // Patient

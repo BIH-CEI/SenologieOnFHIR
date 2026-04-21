@@ -163,7 +163,7 @@ Usage: #example
 
 * status = #available
 
-* type.coding[sct] = $SCT#122573003 "Core needle biopsy specimen"
+* type.coding[sct] = $SCT#122737001 "Specimen from breast obtained by core needle biopsy"
 * type.text = "Vakuumbiopsie (stereotaktisch gesteuert)"
 
 * subject = Reference(Patient/Fall12-Patient-Renate-Vogel)
@@ -242,7 +242,7 @@ Usage: #example
 // Follow-up
 * followUp[drainage].coding = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].text = "Keine Drainage"
-* followUp[verband].coding = $SCT#262171009 "Dressing of wound"
+* followUp[verband].coding = $SCT#182531007 "Dressing of wound"
 * followUp[verband].text = "Steristrips"
 
 // Outcome
