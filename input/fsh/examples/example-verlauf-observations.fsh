@@ -42,19 +42,19 @@ Usage: #example
 * valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
 
 // Lokaler Tumorstatus
-* component[+].code.coding = $SCT#277062004 "Anatomic site"
+* component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
 // Lymphknoten-Status
-* component[+].code.coding = $SCT#277060007 "Lymph node group"
+* component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
 // Fernmetastasen-Status
-* component[+].code.coding = $SCT#277061006 "Metastatic site"
+* component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
@@ -68,7 +68,7 @@ Usage: #example
 
 * meta.profile = $MII_ONKO_ECOG
 * status = #final
-* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
@@ -106,19 +106,19 @@ Usage: #example
 * valueCodeableConcept.coding[=].display = "Progression"
 
 // Lokaler Tumorstatus: K (bereits reseziert, kein Lokalrezidiv)
-* component[+].code.coding = $SCT#277062004 "Anatomic site"
+* component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
 // Lymphknoten-Status: K
-* component[+].code.coding = $SCT#277060007 "Lymph node group"
+* component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
 // Fernmetastasen: N = Neu aufgetretene Fernmetastasen
-* component[+].code.coding = $SCT#277061006 "Metastatic site"
+* component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #N
 * component[=].valueCodeableConcept.coding[=].display = "Fernmetastasen No Change"
@@ -132,7 +132,7 @@ Usage: #example
 
 * meta.profile = $MII_ONKO_ECOG
 * status = #final
-* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
@@ -170,19 +170,19 @@ Usage: #example
 * valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
 
 // Lokaler Tumorstatus: K
-* component[+].code.coding = $SCT#277062004 "Anatomic site"
+* component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
 // Lymphknoten-Status: K
-* component[+].code.coding = $SCT#277060007 "Lymph node group"
+* component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
 // Fernmetastasen: K
-* component[+].code.coding = $SCT#277061006 "Metastatic site"
+* component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
@@ -196,7 +196,7 @@ Usage: #example
 
 * meta.profile = $MII_ONKO_ECOG
 * status = #final
-* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)

@@ -77,5 +77,5 @@ Usage: #example
 * bodySite = $SCT#73056007 "Right breast structure"
 
 // BI-RADS 1
-* valueCodeableConcept.coding = $SCT#397139008 "Mammography assessment (Category 1) - Negative"
+* valueCodeableConcept.coding = $SCT#397140005 "Mammography assessment (Category 1) - Negative"
 * valueCodeableConcept.text = "BI-RADS 1 — unauffällig"
