@@ -18,6 +18,14 @@ imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegPa
 imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegOperation"
 imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegEntlassung"
 
+// Known limitation: Sub-groups (MapMeldungskopf, MapFall) use
+// `target tgt : BackboneElement` because FML has no syntax to declare the
+// specific Logical Model sub-path when a parent group passes a BackboneElement
+// slice. The IG Publisher resolves target paths against BackboneElement,
+// producing ~20 SM_TARGET_PATH / SM_SOURCE_PATH errors. The element names are
+// correct and match the IRegG Brustimplantat Logical Model. These errors are
+// cosmetic.
+
 // ============================================================================
 // Master Orchestrator: Bundle -> IRegG Brustimplantat-Meldung
 //

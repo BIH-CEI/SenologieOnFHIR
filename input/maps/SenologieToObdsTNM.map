@@ -7,6 +7,12 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
+// Known limitation: MapTNM uses `target tgt : BackboneElement` because FML
+// has no syntax to declare the Logical Model sub-path for BackboneElement
+// slices passed from parent groups (diagnose.cTNM, diagnose.pTNM, op.tnm,
+// verlauf.tnm). The IG Publisher produces SM_TARGET_PATH errors (~24). The
+// element names are correct per the oBDS Logical Model.
+
 // ============================================================================
 // Gemeinsame TNM-Map: Extrahiert TNM-Staging aus einer TNM-Klassifikation-
 // Observation (MII Onko) und mappt auf das oBDS TNM-BackboneElement.

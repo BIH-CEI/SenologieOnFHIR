@@ -7,6 +7,11 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
+// Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
+// has no syntax to declare the Logical Model sub-path for BackboneElement
+// slices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names
+// are correct per the oBDS Logical Model.
+
 // ============================================================================
 // Gemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)
 // aus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.

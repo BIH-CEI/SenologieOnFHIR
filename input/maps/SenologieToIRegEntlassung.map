@@ -8,6 +8,13 @@ uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as sour
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
 uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
 
+// Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
+// has no syntax to declare the specific Logical Model sub-path when a parent
+// group passes a BackboneElement slice (e.g., `tgt.entlassung as entl then ...`).
+// The IG Publisher resolves target paths against BackboneElement, producing
+// SM_TARGET_PATH / SM_SOURCE_PATH errors. The element names are correct and
+// match the IRegG Brustimplantat Logical Model. These errors are cosmetic.
+
 // ============================================================================
 // Entlassung: Encounter + Condition -> ENT_* + DBI_*
 //
