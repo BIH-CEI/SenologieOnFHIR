@@ -221,12 +221,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
 * code.coding[=].display = "Mastektomie"
-// OPS-Code SLNB
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
-* code.text = "Mastektomie rechts, Sentinel-LK-Biopsie"
+* code.text = "Mastektomie rechts"
 
 // Lateralität
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -248,7 +243,37 @@ Usage: #example
 
 // Outcome
 * outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
-* outcome.text = "R0-Resektion, Sentinel negativ pN0(sn)(0/3)"
+* outcome.text = "R0-Resektion"
+
+
+// --- SLNB (Sub-Prozedur) ---
+Instance: Fall8-Operation-SLNB
+InstanceOf: Senologie_Operation
+Title: "Fall 8: Sentinel-Lymphknoten-Biopsie rechts"
+Description: "SLNB als Subprozedur der Mastektomie"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-401.11
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.text = "Sentinel-Lymphknoten-Biopsie"
+
+* bodySite = $SCT#73056007 "Right breast structure"
+* performedDateTime = "2025-07-01"
+* subject = Reference(Patient/Fall8-Patient-Klaus-Hartmann)
+* reasonReference = Reference(Condition/Fall8-Diagnose-Mammakarzinom)
+
+// Sub-procedure of main OP
+* partOf = Reference(Procedure/Fall8-Operation-Mastektomie)
+
+// Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.text = "Sentinel-LK negativ pN0(sn)(0/3)"
 
 
 // --- Strahlentherapie ---

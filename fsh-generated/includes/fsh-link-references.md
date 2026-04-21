@@ -16,6 +16,7 @@
 [Example-Systemtherapie-ECT]: Procedure-Example-Systemtherapie-ECT.html
 [Example-Patho-Conclusion]: Observation-Example-Patho-Conclusion.html
 [example-patient]: Patient-example-patient.html
+[Example-Operation-SLNB]: Procedure-Example-Operation-SLNB.html
 [Example-Pathologie-Praeparat]: Specimen-Example-Pathologie-Praeparat.html
 [Example-Studienteilnahme]: ResearchSubject-Example-Studienteilnahme.html
 [Senologie_Implantat]: StructureDefinition-senologie-implantat.html
@@ -115,12 +116,14 @@
 [Fall1-Pathologie-Befund]: DiagnosticReport-Fall1-Pathologie-Befund.html
 [Fall1-Patho-Conclusion]: Observation-Fall1-Patho-Conclusion.html
 [Fall1-Patient-Erika-Neumann]: Patient-Fall1-Patient-Erika-Neumann.html
+[Fall1-Operation-SLNB]: Procedure-Fall1-Operation-SLNB.html
 [Fall1-Bildgebung-Skelettszintigraphie]: DiagnosticReport-Fall1-Bildgebung-Skelettszintigraphie.html
 [Fall1-Pathologie-Praeparat]: Specimen-Fall1-Pathologie-Praeparat.html
 [Fall1-Tumorboard]: CarePlan-Fall1-Tumorboard.html
 [Fall1-Verlauf-6Monate]: Observation-Fall1-Verlauf-6Monate.html
 [Fall2-Strahlentherapie]: Procedure-Fall2-Strahlentherapie.html
 [Fall2-Systemtherapie-Adjuvant]: Procedure-Fall2-Systemtherapie-Adjuvant.html
+[Fall2-Operation-Axilladissektion]: Procedure-Fall2-Operation-Axilladissektion.html
 [Fall2-Begleitmedikation-Ondansetron]: MedicationStatement-Fall2-Begleitmedikation-Ondansetron.html
 [Fall2-Begleitmedikation-Zoledronat]: MedicationStatement-Fall2-Begleitmedikation-Zoledronat.html
 [Fall2-BiRADS-Rechts]: Observation-Fall2-BiRADS-Rechts.html
@@ -148,6 +151,7 @@
 [Fall2-Tumorboard-Progression]: CarePlan-Fall2-Tumorboard-Progression.html
 [Fall2-Verlauf-Progression]: Observation-Fall2-Verlauf-Progression.html
 [Fall3-Strahlentherapie]: Procedure-Fall3-Strahlentherapie.html
+[Fall3-Operation-Axilladissektion]: Procedure-Fall3-Operation-Axilladissektion.html
 [Fall3-BiRADS-Rechts]: Observation-Fall3-BiRADS-Rechts.html
 [Fall3-Begleitmedikation-Anastrozol]: MedicationStatement-Fall3-Begleitmedikation-Anastrozol.html
 [Fall3-Diagnose-Mammakarzinom]: Condition-Fall3-Diagnose-Mammakarzinom.html
@@ -172,6 +176,7 @@
 [Fall4-Patho-Conclusion]: Observation-Fall4-Patho-Conclusion.html
 [Fall4-Patient-Julia-Fischer]: Patient-Fall4-Patient-Julia-Fischer.html
 [Fall4-Medikation-Pertuzumab]: MedicationStatement-Fall4-Medikation-Pertuzumab.html
+[Fall4-Operation-SLNB]: Procedure-Fall4-Operation-SLNB.html
 [Fall4-Bildgebung-Sonographie]: DiagnosticReport-Fall4-Bildgebung-Sonographie.html
 [Fall4-Pathologie-Praeparat]: Specimen-Fall4-Pathologie-Praeparat.html
 [Fall4-Medikation-Trastuzumab]: MedicationStatement-Fall4-Medikation-Trastuzumab.html
@@ -187,6 +192,7 @@
 [Fall5-Pathologie-Befund]: DiagnosticReport-Fall5-Pathologie-Befund.html
 [Fall5-Patho-Conclusion]: Observation-Fall5-Patho-Conclusion.html
 [Fall5-Patient-Monika-Braun]: Patient-Fall5-Patient-Monika-Braun.html
+[Fall5-Operation-SLNB]: Procedure-Fall5-Operation-SLNB.html
 [Fall5-Bildgebung-Sonographie]: DiagnosticReport-Fall5-Bildgebung-Sonographie.html
 [Fall5-Pathologie-Praeparat]: Specimen-Fall5-Pathologie-Praeparat.html
 [Fall5-Tumorboard-Neoadjuvant]: CarePlan-Fall5-Tumorboard-Neoadjuvant.html
@@ -211,6 +217,7 @@
 [Fall7-Pathologie-Befund]: DiagnosticReport-Fall7-Pathologie-Befund.html
 [Fall7-Patho-Conclusion]: Observation-Fall7-Patho-Conclusion.html
 [Fall7-Patient-Kathrin-Mueller]: Patient-Fall7-Patient-Kathrin-Mueller.html
+[Fall7-Operation-SLNB]: Procedure-Fall7-Operation-SLNB.html
 [Fall7-Bildgebung-Sonographie]: DiagnosticReport-Fall7-Bildgebung-Sonographie.html
 [Fall7-Pathologie-Praeparat]: Specimen-Fall7-Pathologie-Praeparat.html
 [Fall7-Diagnose-Mammakarzinom]: Condition-Fall7-Diagnose-Mammakarzinom.html
@@ -224,10 +231,12 @@
 [Fall8-Pathologie-Befund]: DiagnosticReport-Fall8-Pathologie-Befund.html
 [Fall8-Patho-Conclusion]: Observation-Fall8-Patho-Conclusion.html
 [Fall8-Patient-Klaus-Hartmann]: Patient-Fall8-Patient-Klaus-Hartmann.html
+[Fall8-Operation-SLNB]: Procedure-Fall8-Operation-SLNB.html
 [Fall8-Bildgebung-Sonographie]: DiagnosticReport-Fall8-Bildgebung-Sonographie.html
 [Fall8-Pathologie-Praeparat]: Specimen-Fall8-Pathologie-Praeparat.html
 [Fall9-Strahlentherapie]: Procedure-Fall9-Strahlentherapie.html
 [Fall9-Systemtherapie-Adjuvant]: Procedure-Fall9-Systemtherapie-Adjuvant.html
+[Fall9-Operation-Axilladissektion]: Procedure-Fall9-Operation-Axilladissektion.html
 [Fall9-Operation-BET]: Procedure-Fall9-Operation-BET.html
 [Fall9-BiRADS-Links]: Observation-Fall9-BiRADS-Links.html
 [Fall9-ECOG-12Monate]: Observation-Fall9-ECOG-12Monate.html

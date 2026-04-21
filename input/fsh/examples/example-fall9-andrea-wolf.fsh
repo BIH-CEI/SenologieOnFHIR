@@ -336,12 +336,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.a1
 * code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Lumpektomie mit axillärer Lymphknotenexzision"
-// OPS-Code Axilladissektion
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-402.12
-* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-III"
-* code.text = "BET links, Axilladissektion Level I-III"
+* code.text = "BET links"
 
 // Lateralität
 * bodySite = $SCT#80248007 "Left breast structure"
@@ -363,7 +358,37 @@ Usage: #example
 
 // Outcome
 * outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
-* outcome.text = "R0-Resektion, pN3a (12/18 LK befallen)"
+* outcome.text = "R0-Resektion"
+
+
+// --- Axilladissektion (Sub-Prozedur) ---
+Instance: Fall9-Operation-Axilladissektion
+InstanceOf: Senologie_Operation
+Title: "Fall 9: Axilladissektion links Level I-III"
+Description: "Axilladissektion als Subprozedur der BET"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-402.12
+* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-III"
+* code.text = "Axilladissektion Level I-III"
+
+* bodySite = $SCT#80248007 "Left breast structure"
+* performedDateTime = "2025-10-01"
+* subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
+* reasonReference = Reference(Condition/Fall9-Diagnose-Mammakarzinom)
+
+// Sub-procedure of main OP
+* partOf = Reference(Procedure/Fall9-Operation-BET)
+
+// Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.text = "pN3a (12/18 LK befallen)"
 
 
 // --- Operative Komplikation: Lymphödem ---

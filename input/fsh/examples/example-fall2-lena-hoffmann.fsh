@@ -523,12 +523,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
 * code.coding[=].display = "Mastektomie"
-// OPS-Code Axilladissektion
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-402.12
-* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-III"
-* code.text = "Mastektomie rechts, Axilladissektion Level I-III"
+* code.text = "Mastektomie rechts"
 
 // Lateralität
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -550,10 +545,40 @@ Usage: #example
 
 // Outcome
 * outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
-* outcome.text = "ypT1a ypN0 (0/14) R0, gutes Ansprechen auf neoadjuvante Therapie"
+* outcome.text = "ypT1a R0, gutes Ansprechen auf neoadjuvante Therapie"
 
 // Komplikation
 * complication.text = "Serom postoperativ"
+
+
+// --- Axilladissektion (Sub-Prozedur) ---
+Instance: Fall2-Operation-Axilladissektion
+InstanceOf: Senologie_Operation
+Title: "Fall 2: Axilladissektion rechts Level I-III"
+Description: "Axilladissektion als Subprozedur der Mastektomie"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-402.12
+* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-III"
+* code.text = "Axilladissektion Level I-III"
+
+* bodySite = $SCT#73056007 "Right breast structure"
+* performedDateTime = "2025-08-05"
+* subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
+* reasonReference = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
+
+// Sub-procedure of main OP
+* partOf = Reference(Procedure/Fall2-Operation-Mastektomie)
+
+// Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.text = "ypN0 (0/14 LK negativ)"
 
 
 // --- Operative Komplikation: Serom ---

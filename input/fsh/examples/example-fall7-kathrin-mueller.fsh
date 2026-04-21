@@ -374,11 +374,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.a1
 * code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Lumpektomie mit axillärer Lymphknotenexzision"
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
-* code.text = "BET rechts, Sentinel-LK-Biopsie"
+* code.text = "BET rechts"
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
@@ -394,7 +390,37 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 * outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
-* outcome.text = "ypT0 ypN0(sn)(0/2) — pathologische Komplettremission (pCR), R0"
+* outcome.text = "ypT0 R0 — pathologische Komplettremission (pCR)"
+
+
+// --- SLNB (Sub-Prozedur) ---
+Instance: Fall7-Operation-SLNB
+InstanceOf: Senologie_Operation
+Title: "Fall 7: Sentinel-Lymphknoten-Biopsie rechts"
+Description: "SLNB als Subprozedur der BET"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-401.11
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.text = "Sentinel-Lymphknoten-Biopsie"
+
+* bodySite = $SCT#73056007 "Right breast structure"
+* performedDateTime = "2025-09-02"
+* subject = Reference(Patient/Fall7-Patient-Kathrin-Mueller)
+* reasonReference = Reference(Condition/Fall7-Diagnose-Mammakarzinom)
+
+// Sub-procedure of main OP
+* partOf = Reference(Procedure/Fall7-Operation-BET)
+
+// Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.text = "Sentinel-LK negativ ypN0(sn)(0/2)"
 
 
 // --- Strahlentherapie ---

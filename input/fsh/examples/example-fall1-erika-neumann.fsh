@@ -430,12 +430,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.a1
 * code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Lumpektomie mit axillärer Lymphknotenexzision"
-// OPS-Code SLNB
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
-* code.text = "BET links, Sentinel-LK-Biopsie"
+* code.text = "BET links"
 
 // Lateralität
 * bodySite = $SCT#80248007 "Left breast structure"
@@ -457,7 +452,37 @@ Usage: #example
 
 // Outcome
 * outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
-* outcome.text = "R0-Resektion, Sentinel negativ (0/2)"
+* outcome.text = "R0-Resektion"
+
+
+// --- SLNB (Sub-Prozedur) ---
+Instance: Fall1-Operation-SLNB
+InstanceOf: Senologie_Operation
+Title: "Fall 1: Sentinel-Lymphknoten-Biopsie links"
+Description: "SLNB als Subprozedur der BET"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-401.11
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.text = "Sentinel-Lymphknoten-Biopsie"
+
+* bodySite = $SCT#80248007 "Left breast structure"
+* performedDateTime = "2025-02-05"
+* subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
+* reasonReference = Reference(Condition/Fall1-Diagnose-Mammakarzinom)
+
+// Sub-procedure of main OP
+* partOf = Reference(Procedure/Fall1-Operation-BET)
+
+// Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.text = "Sentinel-LK negativ pN0(sn)(0/2)"
 
 
 // --- Strahlentherapie ---

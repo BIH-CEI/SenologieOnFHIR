@@ -261,11 +261,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
 * code.coding[=].display = "Mastektomie"
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-402.11
-* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-II"
-* code.text = "Mastektomie rechts, Axilladissektion Level I-II"
+* code.text = "Mastektomie rechts"
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
@@ -281,7 +277,37 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband Thoraxwand"
 
 * outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
-* outcome.text = "R0-Resektion, pT2 pN1a (2/12 LK positiv)"
+* outcome.text = "R0-Resektion, pT2"
+
+
+// --- Axilladissektion (Sub-Prozedur) ---
+Instance: Fall3-Operation-Axilladissektion
+InstanceOf: Senologie_Operation
+Title: "Fall 3: Axilladissektion rechts Level I-II"
+Description: "Axilladissektion als Subprozedur der Mastektomie"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-402.11
+* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-II"
+* code.text = "Axilladissektion Level I-II"
+
+* bodySite = $SCT#73056007 "Right breast structure"
+* performedDateTime = "2025-04-08"
+* subject = Reference(Patient/Fall3-Patient-Sabine-Weber)
+* reasonReference = Reference(Condition/Fall3-Diagnose-Mammakarzinom)
+
+// Sub-procedure of main OP
+* partOf = Reference(Procedure/Fall3-Operation-Mastektomie)
+
+// Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.text = "pN1a (2/12 LK positiv)"
 
 
 // --- Strahlentherapie ---
