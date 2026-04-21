@@ -263,7 +263,8 @@ Beide Testpatientinnen werden an definierten Zeitpunkten im Versorgungspfad mitt
 |---|---|:---:|:---:|
 | **EQ-5D-5L** | Baseline, post-OP, 6 Monate, 12 Monate | &#10003; | &#10003; |
 | **EORTC QLQ-C30** | Baseline, Nachsorge | &#10003; | &#10003; |
-| **EORTC QLQ-BR42** | Post-OP | &#10003; | &#10003; |
+| **EORTC QLQ-BR45** | Post-OP, Nachsorge | &#10003; | &#10003; |
+| **PROMIS-29 + Cognitive Function 4a** | Erstvorstellung | &#10003; | &#10003; |
 | **PRO-CTCAE** | Während Systemtherapie | | &#10003; |
 
 **Hinweis:** Diese Instrumente werden im [MII PRO-Modul](https://www.medizininformatik-initiative.de/Kerndatensatz/Modul_Patient_Reported_Outcomes/IGMIIKDSModulPatientReportedOutcomesPRO.html) profiliert und sind nicht Bestandteil dieses Implementierungsleitfadens. Die Senologie-IG referenziert das PRO-Modul für die strukturierte Erfassung patientenberichteter Endpunkte.

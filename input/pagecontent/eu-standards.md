@@ -88,7 +88,7 @@ Die Erfassung patientenberichteter Endpunkte gewinnt in der onkologischen Versor
 | **EORTC QLQ-C30** | EORTC | Lizenz nötig | MII PRO-Modul |
 | **EORTC QLQ-BR42** | EORTC | Lizenz nötig | MII PRO-Modul (geplant) |
 | **PRO-CTCAE** | NCI | Frei (public domain) | MII PRO-Modul (geplant) |
-| **PROMIS** | NIH | Frei | MII PRO-Modul |
+| **PROMIS-29 + Cognitive Function 4a** | NIH | Frei | MII PRO-Modul — 8 Domänen (Physical Function, Anxiety, Depression, Fatigue, Pain Interference, Sleep Disturbance, Social Ability, Cognitive Function) mit je 4 Items + T-Score. Cognitive Function wegen Chemobrain klinisch relevant. |
 | **BREAST-Q** | Memorial Sloan Kettering | Lizenzpflichtig | Nicht abbildbar (lizenzrechtlich) |
 
 PROMs werden im Senologie-Kerndatensatz **nicht eigenständig profiliert**, sondern über das [MII PRO-Modul](https://www.medizininformatik-initiative.de/Kerndatensatz/Modul_Patient_Reported_Outcomes) referenziert. Die Abgrenzung zwischen ärztlich dokumentierten Nebenwirkungen (CTCAE, im Senologie-Scope) und patientenberichteten Nebenwirkungen (PRO-CTCAE, im PRO-Modul) ist in [OF-11](offene-fragen.html) dokumentiert.
