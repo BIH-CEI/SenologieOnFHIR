@@ -53,7 +53,7 @@ def extract_condition(qr):
     condition = {
         "resourceType": "Condition",
         "meta": {
-            "profile": ["http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose"]
+            "profile": ["https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose"]
         },
         "clinicalStatus": {
             "coding": [{
@@ -103,7 +103,7 @@ def mark_processed(qr_id):
         auth=AUTH,
         json={
             "meta": {
-                "tag": [{"system": "http://fhir.bih-charite.de/kds-senologie", "code": "extracted"}]
+                "tag": [{"system": "https://www.senologie.org/fhir", "code": "extracted"}]
             }
         },
         headers={"Content-Type": "application/fhir+json"}
@@ -133,7 +133,7 @@ def extract_all_unprocessed():
         f"{AIDBOX_URL}/fhir/QuestionnaireResponse",
         auth=AUTH,
         params={
-            "questionnaire": "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-diagnose",
+            "questionnaire": "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose",
             "_tag:not": "extracted",
             "_count": 100
         }

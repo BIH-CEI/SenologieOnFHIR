@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsVerlauf"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf"
 /// name = "SenologieToObdsVerlauf"
 /// title = "Senologie Verlauf Bundle to oBDS Verlaufsmeldung"
 /// status = "draft"
@@ -6,14 +6,14 @@
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTNM"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsHistologie"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsModulMamma"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsFernmetastasen"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsLeistungszustand"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand"
 
 // Known limitation: Sub-groups (MapVerlauf) use `target tgt : BackboneElement`.
 // See SenologieToObdsTNM.map for details.
@@ -69,7 +69,7 @@ group MapVerlauf(source src : Condition, target tgt : BackboneElement, source bu
   src.stage as stg first then {
     stg.summary as sum then {
       sum.coding as c where system = 'http://snomed.info/sct'
-        -> tgt.gesamtbeurteilungTumorstatus = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung', 'code') "TranslateGesamtbeurteilung";
+        -> tgt.gesamtbeurteilungTumorstatus = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung', 'code') "TranslateGesamtbeurteilung";
     } "ExtractGesamtbeurteilungCoding";
   } "MapGesamtbeurteilung";
 

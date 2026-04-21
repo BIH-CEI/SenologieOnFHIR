@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsDiagnose"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose"
 /// name = "SenologieToObdsDiagnose"
 /// title = "Senologie Diagnose Bundle to oBDS Diagnosemeldung"
 /// status = "draft"
@@ -7,13 +7,13 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/RiskAssessment" alias RiskAssessment as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTNM"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsHistologie"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsModulMamma"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsLeistungszustand"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand"
 
 // Known limitation: Sub-groups (MapDiagnose, MapWeitereKlassifikation) use
 // `target tgt : BackboneElement`. See SenologieToObdsTNM.map for details.
@@ -114,7 +114,7 @@ group MapWeitereKlassifikation(source src : RiskAssessment, source bundle : Bund
 
   // Name: aus RiskAssessment.method.coding.display oder method.text
   src.method as m then {
-    m.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-genexpressionstest' then {
+    m.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest' then {
       c.display as d -> tgt.name = d "SetWKNameDisplay";
     } "MapWKMethodCoding";
     m.text as t -> tgt.name = t "SetWKNameText";

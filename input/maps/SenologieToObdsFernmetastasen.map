@@ -1,11 +1,11 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsFernmetastasen"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen"
 /// name = "SenologieToObdsFernmetastasen"
 /// title = "Senologie Fernmetastasen Observations to oBDS Fernmetastasen BackboneElement"
 /// status = "draft"
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -58,12 +58,12 @@ group MapFernmetastase(source src : Observation, target tgt : BackboneElement) {
   // Lokalisation: aus Observation.bodySite, Uebersetzung SNOMED -> oBDS
   src.bodySite as bs then {
     bs.coding as c where system = 'http://snomed.info/sct'
-      -> tgt.lokalisation = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-fm-lokalisation', 'code') "TranslateFMLokalisation";
+      -> tgt.lokalisation = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation', 'code') "TranslateFMLokalisation";
   } "MapFMLokalisation";
 
   // Fallback: Lokalisation aus Observation.value (falls bodySite nicht vorhanden)
   src.value as val then {
     val.coding as c where system = 'http://snomed.info/sct'
-      -> tgt.lokalisation = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-fm-lokalisation', 'code') "TranslateFMLokalisationValue";
+      -> tgt.lokalisation = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation', 'code') "TranslateFMLokalisationValue";
   } "MapFMLokalisationValue";
 }

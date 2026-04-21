@@ -4,7 +4,7 @@ Id: cs-senologie-diagnosesicherung
 Title: "CodeSystem Diagnosesicherung"
 Description: "Diagnosesicherung gemäß oBDS (Onkologischer Basisdatensatz)"
 
-* ^url = "http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnosesicherung"
+* ^url = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
 * ^status = #draft
 * ^caseSensitive = true
 
@@ -39,7 +39,7 @@ Id: vs-senologie-diagnosesicherung
 Title: "ValueSet Diagnosesicherung"
 Description: "Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen"
 
-* ^url = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnosesicherung"
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnosesicherung"
 * ^status = #draft
 
 * include codes from system CSSenologieDiagnosesicherung

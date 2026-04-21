@@ -23,13 +23,13 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 // SNOMED slice - bind to Senologie ValueSet (24 Hauptdiagnosen)
 * code.coding[sct] MS
 * code.coding[sct] ^short = "SNOMED CT Diagnose"
-* code.coding[sct] from http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-sct (required)
+* code.coding[sct] from https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sct (required)
 
 // Senologie-specific slice for non-SNOMED codes
 * code.coding contains senologie 0..1 MS
 * code.coding[senologie] ^short = "Senologie-spezifischer Code"
-* code.coding[senologie].system = "http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose"
-* code.coding[senologie] from http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-lokal (required)
+* code.coding[senologie].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose"
+* code.coding[senologie] from https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-lokal (required)
 
 // Grad der Mammaerkrankung
 * stage MS

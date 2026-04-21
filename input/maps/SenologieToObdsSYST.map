@@ -1,13 +1,13 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsSYST"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST"
 /// name = "SenologieToObdsSYST"
 /// title = "Senologie FHIR to oBDS Systemische Therapie (SYST)"
 /// status = "draft"
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsNebenwirkung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"
 
 // Known limitation: Sub-groups (MapSYST, MapSubstanz) use
 // `target tgt : BackboneElement` because FML has no syntax to declare the
@@ -49,7 +49,7 @@ group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundl
   // valueCodeableConcept mit MII Onko Intentions-CodeSystem -> translate zu oBDS (K, P, S, X)
   src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention' then {
     ext.value as val then {
-      val.coding as c -> tgt.intention = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
+      val.coding as c -> tgt.intention = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
     } "ExtractIntentionCoding";
   } "MapIntention";
 
@@ -57,14 +57,14 @@ group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundl
   // category.coding mit System mii-cs-onko-therapie-stellungzurop -> translate zu oBDS (O, A, N, I, S)
   src.category as cat then {
     cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'
-      -> tgt.stellungOP = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
+      -> tgt.stellungOP = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
   } "MapStellungOP";
 
   // Therapieart: aus Procedure.category (MII Onko Therapietyp-CodeSystem)
   // Mappt CH, HO, IM, ZS etc.
   src.category as cat then {
     cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'
-      -> tgt.therapieart = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapieart', 'code') "TranslateTherapieart";
+      -> tgt.therapieart = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapieart', 'code') "TranslateTherapieart";
   } "MapTherapieart";
 
   // Protokoll: aus Procedure.usedCode.text (Protokollbezeichnung, z.B. "EC-T")

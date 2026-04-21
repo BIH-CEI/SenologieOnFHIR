@@ -1,13 +1,13 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsST"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsST"
 /// name = "SenologieToObdsST"
 /// title = "Senologie FHIR to oBDS Strahlentherapie (ST)"
 /// status = "draft"
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsNebenwirkung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"
 
 // Known limitation: Sub-groups (MapST, MapBestrahlung) use
 // `target tgt : BackboneElement` because FML has no syntax to declare the
@@ -47,14 +47,14 @@ group MapST(source src : Procedure, target tgt : BackboneElement, source bundle 
   // valueCodeableConcept -> translate zu oBDS (K, P, O, S, X)
   src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention' then {
     ext.value as val then {
-      val.coding as c -> tgt.intention = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
+      val.coding as c -> tgt.intention = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
     } "ExtractIntentionCoding";
   } "MapIntention";
 
   // Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)
   src.category as cat then {
     cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'
-      -> tgt.stellungOP = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
+      -> tgt.stellungOP = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
   } "MapStellungOP";
 
   // Bestrahlung: jede Procedure bildet eine einzelne Bestrahlungsserie ab
@@ -109,7 +109,7 @@ group MapBestrahlung(source src : Procedure, target tgt : BackboneElement) {
   src.bodySite as bs then {
     bs.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-seitenlokalisation' then {
       ext.value as val then {
-        val.coding as c -> tgt.seiteZielgebiet = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-seitenlokalisation', 'code') "TranslateSeiteZielgebiet";
+        val.coding as c -> tgt.seiteZielgebiet = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation', 'code') "TranslateSeiteZielgebiet";
       } "ExtractSeiteCoding";
     } "MapSeiteExtension";
   } "MapSeiteZielgebiet";

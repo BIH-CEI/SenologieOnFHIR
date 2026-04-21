@@ -100,7 +100,7 @@ Der Kliniker erfasst diese Daten über einen strukturierten Fragebogen (Ausschni
   * linkId = "tnm-t-kategorie"
   * text = "T-Kategorie"
   * type = #choice
-  * answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-tnm-t-kategorie"
+  * answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-tnm-t-kategorie"
 ```
 
 ---

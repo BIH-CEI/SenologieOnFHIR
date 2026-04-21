@@ -29,7 +29,7 @@ Mapping-Uebersicht:
 - Zubehoer (ZUB_* + ZBI_*) -> Device
 - Entlassung (ENT_* + DBI_*) -> Encounter.hospitalization + Condition"""
 
-* ^url = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung"
+* ^url = "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung"
 * ^version = "0.1.0"
 * ^status = #draft
 

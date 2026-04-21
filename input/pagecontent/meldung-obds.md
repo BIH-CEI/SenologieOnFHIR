@@ -177,7 +177,7 @@ Content-Type: application/fhir+json
     },
     {
       "name": "source",
-      "valueUri": "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsDiagnose"
+      "valueUri": "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose"
     }
   ]
 }

@@ -1,4 +1,4 @@
-Alias: $CS_GENEXPR = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-genexpressionstest
+Alias: $CS_GENEXPR = https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest
 
 ValueSet: VS_Senologie_Genexpressionstest
 Id: vs-senologie-genexpressionstest

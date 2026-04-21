@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustOperation"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation"
 /// name = "SenologieToOncoBoxBrustOperation"
 /// title = "Senologie Procedure + Specimen to OncoBox Brust Operation"
 /// status = "draft"
@@ -8,7 +8,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as sour
 uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/ServiceRequest" alias ServiceRequest as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -85,7 +85,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   // Quelle: oft am ServiceRequest (Senologie_OP_Planung), ggf. auch am Procedure.
   bundle.entry as srEntry where resource.is(ServiceRequest) then {
     srEntry.resource as sr then {
-      sr.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-pre-op-markierung' then {
+      sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung' then {
         ext.value as val then {
           val.coding as c where code = 'N' -> tgt.drahtmarkierung = '0' "SetDrahtKeine";
           val.coding as c where code = 'S' -> tgt.drahtmarkierung = '1' "SetDrahtSono";

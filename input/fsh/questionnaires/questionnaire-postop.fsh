@@ -17,7 +17,7 @@ Title: "Fragebogen: Postoperative Dokumentation"
 Description: "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, Observation)."
 Usage: #definition
 
-* url = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-postop"
+* url = "https://www.senologie.org/fhir/Questionnaire/senologie-postop"
 * name = "QuestPostOPDokumentation"
 * title = "Fragebogen: Postoperative Dokumentation"
 * status = #draft
@@ -48,7 +48,7 @@ Usage: #definition
 * item[=].item[=].text = "Art der Operation"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-operation-art"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
 
 // Seite
 * item[=].item[+].linkId = "op-seite"

@@ -31,7 +31,7 @@ Dieses Modell dient als Zielstruktur der FHIR StructureMaps fuer die Ableitung
 einer IQTIG-konformen QS-Meldung aus einem Senologie-FHIR-Bundle. Die
 Serialisierung (CSV / XML) ist nicht Bestandteil dieses Modells."""
 
-* ^url = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181"
+* ^url = "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181"
 * ^version = "0.1.0"
 * ^status = #draft
 

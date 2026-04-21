@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigOperation"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation"
 /// name = "SenologieToIqtigOperation"
 /// title = "Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation"
 /// status = "draft"
@@ -8,7 +8,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as sour
 uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
+uses "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -73,7 +73,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
 
   // Direkter Map aus Senologie-Operation-Art CodeSystem (falls vorhanden)
   src.category as cat then {
-    cat.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-brustop-art' then {
+    cat.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art' then {
       c.code as cd -> tgt.operationsart = cd "SetOpArtDirect";
     } "MapOpArtCoding";
   } "MapOpArtCategory";

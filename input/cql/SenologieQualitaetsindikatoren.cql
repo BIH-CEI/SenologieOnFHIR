@@ -66,7 +66,7 @@ define "Alle Brustoperationen":
 define "Strahlentherapien":
   [Procedure] P
     where exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('8-52'))
-    or P.meta.profile.value contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-strahlentherapie'
+    or P.meta.profile.value contains 'https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie'
 
 // ============================================================================
 // QI-2: Prätherapeutische histologische Sicherung
@@ -285,10 +285,10 @@ define "Anzahl Strahlentherapien":
   Count("Strahlentherapien")
 
 define "Anzahl Systemtherapien":
-  Count([Procedure] P where P.meta.profile.value contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-systemtherapie-procedure')
+  Count([Procedure] P where P.meta.profile.value contains 'https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure')
 
 define "Anzahl Tumorkonferenzen":
   Count([CarePlan])
 
 define "Anzahl Komplikationen":
-  Count([Observation] O where O.meta.profile.value contains 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-operative-komplikation')
+  Count([Observation] O where O.meta.profile.value contains 'https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation')

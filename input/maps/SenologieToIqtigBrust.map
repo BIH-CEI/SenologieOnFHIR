@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigBrust"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust"
 /// name = "SenologieToIqtigBrust"
 /// title = "Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust"
 /// status = "draft"
@@ -7,7 +7,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/ServiceRequest" alias ServiceRequest as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
+uses "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -151,7 +151,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as befEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund')) then {
     befEntry.resource as befObs then {
       befObs.value as val then {
-        val.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-befundcode-b' first then {
+        val.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b' first then {
           c.code as cd -> tgt.befundcode = cd "SetBefundB";
         } "MapBefundBCoding";
       } "MapBefundValue";
@@ -165,7 +165,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   // BRUST:DRAHT - Praeoperative Drahtmarkierung aus ServiceRequest-Extension
   bundle.entry as srEntry where resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung')) then {
     srEntry.resource as sr then {
-      sr.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/preOpMarkierung' then {
+      sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung' then {
         ext.value as val then {
           val.coding as c first then {
             // M=Mammo -> 1, S=Sono -> 2, T=MRT -> 3, N=keine -> 0

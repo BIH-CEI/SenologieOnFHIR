@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsModulMamma"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"
 /// name = "SenologieToObdsModulMamma"
 /// title = "Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement"
 /// status = "draft"
@@ -7,7 +7,7 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/ServiceRequest" alias ServiceRequest as source
 uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -99,7 +99,7 @@ group MapModulMamma(source src : Bundle, target tgt : BackboneElement) {
   // ValueCodeableConcept mit code M/S/T/N/U oder Freitext; wird nur fuer OP-Meldung verwendet.
   src.entry as srEntry where resource.is(ServiceRequest) then {
     srEntry.resource as sr then {
-      sr.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-pre-op-markierung' then {
+      sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung' then {
         ext.value as val then {
           val.coding as c where code = 'M' -> tgt.praeopDrahtmarkierung = 'M' "SetDrahtMammografie";
           val.coding as c where code = 'S' -> tgt.praeopDrahtmarkierung = 'S' "SetDrahtSonografie";
@@ -116,7 +116,7 @@ group MapModulMamma(source src : Bundle, target tgt : BackboneElement) {
     specEntry.resource as spec then {
       spec.processing as proc then {
         proc.procedure as p then {
-          p.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-obds-intraop-praeparatkontrolle' -> tgt.intraopPraeparatkontrolle = (c.code) "SetIntraopKontrolle";
+          p.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-obds-intraop-praeparatkontrolle' -> tgt.intraopPraeparatkontrolle = (c.code) "SetIntraopKontrolle";
         } "MapIntraopProc";
       } "MapIntraopProcessing";
     } "MapIntraopSpec";

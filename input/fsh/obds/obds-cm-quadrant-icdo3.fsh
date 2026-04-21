@@ -10,7 +10,7 @@ Usage: #definition
 Title: "CM SNOMED CT Brustquadrant zu ICD-O-3 Topographie"
 Description: "Übersetzung der SNOMED-CT-kodierten Brustquadranten in ICD-O-3 Topographie-Codes (C50.0–C50.9) für die oBDS-Krebsregistermeldung. Quelle: BodyStructure.locationQualifier[quadrant]."
 
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-icdo3-mamma-topographie"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-icdo3-mamma-topographie"
 * version = "0.1.0"
 * name = "CM_SCT_To_ICDO3_Mamma_Topographie"
 * status = #draft

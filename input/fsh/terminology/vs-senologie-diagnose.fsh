@@ -1,4 +1,4 @@
-Alias: $CS_LOKAL = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose-lokal
+Alias: $CS_LOKAL = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal
 
 ValueSet: VS_Senologie_Diagnose
 Id: vs-senologie-diagnose
@@ -104,7 +104,7 @@ Description: "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senolo
 * ^version = "0.1.0"
 * ^experimental = true
 
-* include codes from system http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-diagnose-lokal
+* include codes from system https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal
 
 
 * $SCT#24028007 "Right"
@@ -112,7 +112,7 @@ Description: "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senolo
 * $SCT#51440002 "Bilateral"
 
 
-Alias: $CS_META = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-metastasierung
+Alias: $CS_META = https://www.senologie.org/fhir/CodeSystem/cs-senologie-metastasierung
 
 ValueSet: VS_Senologie_Metastasierung
 Id: vs-senologie-metastasierung

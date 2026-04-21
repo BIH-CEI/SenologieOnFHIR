@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsHistologie"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"
 /// name = "SenologieToObdsHistologie"
 /// title = "Senologie Histologie Observations to oBDS Histologie BackboneElement"
 /// status = "draft"
@@ -6,7 +6,7 @@
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement`. See
 // SenologieToObdsTNM.map for details on SM_TARGET_PATH errors.
@@ -82,7 +82,7 @@ group MapHistologie(source src : Observation, target tgt : BackboneElement, sour
   // Grading: aus component (LOINC 59542-1) mit Uebersetzung SNOMED -> oBDS
   src.component as comp where code.coding.exists(code = '59542-1') then {
     comp.value as val then {
-      val.coding as c -> tgt.grading = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGrading";
+      val.coding as c -> tgt.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGrading";
     } "MapGradingValue";
   } "MapGrading";
 
@@ -90,7 +90,7 @@ group MapHistologie(source src : Observation, target tgt : BackboneElement, sour
   bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
     gradEntry.resource as gradObs then {
       gradObs.value as val then {
-        val.coding as c -> tgt.grading = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
+        val.coding as c -> tgt.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
       } "MapGradingSepValue";
     } "MapGradingSepObs";
   } "EntryGrading";

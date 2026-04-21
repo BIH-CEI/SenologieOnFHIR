@@ -8,7 +8,7 @@ Logical: OBDSMeldung
 Id: obds-meldung
 Title: "oBDS Meldung"
 Description: "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz v3.0.5). Bildet die XML-Struktur einer einzelnen Meldung ab, wie sie von Meldestellen an die Krebsregister übermittelt wird."
-* ^url = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung"
+* ^url = "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"
 * ^version = "0.1.0"
 * ^status = #draft
 

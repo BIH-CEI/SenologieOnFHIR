@@ -23,7 +23,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Seitenlokalisation"
 Description: "Mapping von SNOMED CT Lateralitaetscodes zu oBDS Seitenlokalisation (R, L, B, M, T, U)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-seitenlokalisation"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -76,7 +76,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Intention"
 Description: "Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, R, S, X)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -129,7 +129,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Grading"
 Description: "Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X, L, M, H, B)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-grading"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -176,7 +176,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Residualstatus"
 Description: "Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus (R0, R1, R2, RX)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -205,7 +205,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Therapie-Stellung zur OP"
 Description: "Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapiestellung"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -252,7 +252,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Therapieart"
 Description: "Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, HO, IM, ZS, SO, ST)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-therapieart"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapieart"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -301,7 +301,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Fernmetastasen-Lokalisation"
 Description: "Mapping von SNOMED CT Koerperstruktur-Codes zu oBDS Fernmetastasen-Lokalisation (PUL, OSS, HEP, BRA, etc.)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-fm-lokalisation"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references
@@ -390,7 +390,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "SNOMED CT to oBDS Verlauf Gesamtbeurteilung"
 Description: "Mapping von SNOMED CT Tumorstatusbewertungen zu oBDS Gesamtbeurteilung Tumorstatus (V, T, K, P, U, X)"
-* url = "http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
+* url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
 * version = "0.1.0"
 * status = #draft
 // sourceUri and targetUri omitted — use group.source/.target for CodeSystem references

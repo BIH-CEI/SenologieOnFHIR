@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToOncoBoxBrustTherapie"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie"
 /// name = "SenologieToOncoBoxBrustTherapie"
 /// title = "Senologie Procedure (Syst / RT) to OncoBox Brust Therapie"
 /// status = "draft"
@@ -6,7 +6,7 @@
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
 
 // Known limitation: Sub-groups (MapSystemtherapie, MapStrahlentherapie) use
 // `target tgt : BackboneElement` because FML has no syntax to declare the
@@ -37,7 +37,7 @@ group MapSystemtherapie(source src : Procedure, target tgt : BackboneElement, so
   } "MapSystArt";
 
   // Syst_Stellung (neoadjuvant/adjuvant/palliativ) aus Extension (CodeableConcept)
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-therapiestellung' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapiestellung' then {
     ext.value as val then {
       val.coding as c where code = 'neoadjuvant' -> tgt.stellungZurOP = 'N' "SetStellNeo";
       val.coding as c where code = 'adjuvant' -> tgt.stellungZurOP = 'A' "SetStellAdj";
@@ -75,7 +75,7 @@ group MapStrahlentherapie(source src : Procedure, target tgt : BackboneElement, 
   } "MapRTPeriod";
 
   // RT_Stellung aus Extension therapiestellung (CodeableConcept)
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ex-senologie-therapiestellung' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapiestellung' then {
     ext.value as val then {
       val.coding as c where code = 'neoadjuvant' -> tgt.stellungZurOP = 'N' "SetRTNeo";
       val.coding as c where code = 'adjuvant' -> tgt.stellungZurOP = 'A' "SetRTAdj";

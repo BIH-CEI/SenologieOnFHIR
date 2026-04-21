@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsOP"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP"
 /// name = "SenologieToObdsOP"
 /// title = "Senologie Operation Bundle to oBDS OP-Meldung"
 /// status = "draft"
@@ -8,14 +8,14 @@ uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as sour
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTNM"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsHistologie"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsModulMamma"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsResidualstatus"
-imports "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsNebenwirkung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"
 
 // Known limitation: Sub-groups (MapOP, MapKomplikationen, MapOperateur) use
 // `target tgt : BackboneElement`. See SenologieToObdsTNM.map for details.
@@ -60,7 +60,7 @@ group MapOP(source src : Procedure, target tgt : BackboneElement, source bundle 
         c.code as cd -> tgt.intention = cd "SetIntentionDirect";
       } "ExtractIntentionCode";
       val.coding as c where system = 'http://snomed.info/sct'
-        -> tgt.intention = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
+        -> tgt.intention = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
     } "MapIntentionValue";
   } "MapIntention";
 

@@ -222,7 +222,7 @@ Content-Type: application/fhir+json
     },
     {
       "name": "source",
-      "valueUri": "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIqtigMammachirurgie181"
+      "valueUri": "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181"
     }
   ]
 }

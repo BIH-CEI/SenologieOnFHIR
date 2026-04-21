@@ -1,11 +1,11 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsResidualstatus"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus"
 /// name = "SenologieToObdsResidualstatus"
 /// title = "Senologie Residualstatus Observation to oBDS Residualstatus BackboneElement"
 /// status = "draft"
 
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
 uses "http://hl7.org/fhir/StructureDefinition/CodeableConcept" alias CodeableConcept as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -46,7 +46,7 @@ group MapResidualstatusFromObservation(source src : Observation, target tgt : Ba
       } "ExtractLokaleBeurteilungDirect";
       // SNOMED -> oBDS Uebersetzung
       val.coding as c where system = 'http://snomed.info/sct'
-        -> tgt.lokaleBeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilung";
+        -> tgt.lokaleBeurteilung = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilung";
     } "MapLokaleBeurteilungValue";
   } "MapLokaleBeurteilung";
 
@@ -59,7 +59,7 @@ group MapResidualstatusFromObservation(source src : Observation, target tgt : Ba
       } "ExtractGesamtbeurteilungDirect";
       // SNOMED -> oBDS Uebersetzung
       val.coding as c where system = 'http://snomed.info/sct'
-        -> tgt.gesamtbeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilung";
+        -> tgt.gesamtbeurteilung = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilung";
     } "MapGesamtbeurteilungValue";
   } "MapGesamtbeurteilung";
 
@@ -70,8 +70,8 @@ group MapResidualstatusFromObservation(source src : Observation, target tgt : Ba
       c.code as cd -> tgt.gesamtbeurteilung = cd "SetGesamtbeurteilungFallback";
     } "FallbackDirectCodes";
     val.coding as c where system = 'http://snomed.info/sct' then {
-      c -> tgt.lokaleBeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilungFallback";
-      c -> tgt.gesamtbeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilungFallback";
+      c -> tgt.lokaleBeurteilung = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilungFallback";
+      c -> tgt.gesamtbeurteilung = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilungFallback";
     } "FallbackSnomedCodes";
   } "MapResidualstatusFallback";
 }
@@ -92,7 +92,7 @@ group MapResidualstatusFromOutcome(source src : CodeableConcept, target tgt : Ba
 
   // SNOMED -> oBDS Uebersetzung
   src.coding as c where system = 'http://snomed.info/sct' then {
-    c -> tgt.lokaleBeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilung";
-    c -> tgt.gesamtbeurteilung = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilung";
+    c -> tgt.lokaleBeurteilung = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateLokaleBeurteilung";
+    c -> tgt.gesamtbeurteilung = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus', 'code') "TranslateGesamtbeurteilung";
   } "MapResidualSNOMED";
 }

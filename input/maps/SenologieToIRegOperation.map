@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegOperation"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIRegOperation"
 /// name = "SenologieToIRegOperation"
 /// title = "Senologie Procedure + Device to IRegG Operation + Artikelidentifikation"
 /// status = "draft"
@@ -6,7 +6,7 @@
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
 uses "http://hl7.org/fhir/StructureDefinition/Device" alias Device as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -50,7 +50,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   } "MapSeitenLokalisation";
 
   // OPE_AsaSchluessel (enum_0044): aus Extension oder Observation
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-asa-klassifikation' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-asa-klassifikation' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.asaSchluessel = cd "SetAsaCode";
@@ -99,13 +99,13 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   // Primaereingriff = 1, Austausch Expander->Implantat = 2,
   // Revision mit Austausch = 3, Revision ohne Austausch = 4, Explantation = 5
   src.category as cat then {
-    cat.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-art-eingriff' then {
+    cat.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/ireg-art-eingriff' then {
       c.code as cd -> tgt.artEingriffSchluessel = cd "SetArtEingriffDirect";
     } "MapArtEingriffCoding";
   } "MapArtEingriff";
 
   // OBI_GrundPrimaerEingriffSchluessel (enum_0102): bei Primaereingriff
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-grund-primaereingriff' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-grund-primaereingriff' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.grundPrimaerEingriffSchluessel = cd "SetGrundPrimaer";
@@ -114,7 +114,7 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapGrundPrimaerEingriff";
 
   // OBI_GrundAustauschSchluessel (enum_0104): bei Austausch/Revision
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-grund-austausch' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-grund-austausch' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.grundAustauschSchluessel = cd "SetGrundAustausch";
@@ -123,7 +123,7 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapGrundAustausch";
 
   // OBI_GrundRevisionExplantationSchluessel (enum_0106): bei Explantation
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-grund-revision-explantation' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-grund-revision-explantation' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.grundRevisionExplantationSchluessel = cd "SetGrundExplantation";
@@ -132,7 +132,7 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapGrundRevisionExplantation";
 
   // OBI_LageSchluessel (enum_0112): Lage des neuen Implantats
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-lage-implantat' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-lage-implantat' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.lageSchluessel = cd "SetLage";
@@ -141,7 +141,7 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapLage";
 
   // OBI_ZugangSchluessel (enum_0118): Operationszugang
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-zugang' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-zugang' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.zugangSchluessel = cd "SetZugang";
@@ -150,7 +150,7 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapZugang";
 
   // OBI_EntfernungAdmNetzSchluessel (enum_0114)
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-entfernung-adm-netz' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-entfernung-adm-netz' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.entfernungAdmNetzSchluessel = cd "SetEntfernungAdm";
@@ -159,7 +159,7 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapEntfernungAdmNetz";
 
   // OBI_VerfahrenswechselSchluessel (enum_0111)
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-verfahrenswechsel' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-verfahrenswechsel' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.verfahrenswechselSchluessel = cd "SetVerfahrenswechsel";
@@ -168,12 +168,12 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapVerfahrenswechsel";
 
   // --- Vorbehandlung (VBI_*) ---
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-vorbehandlung-bi' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-vorbehandlung-bi' then {
     ext -> tgt.vorbehandlung as vorb then MapVorbehandlung(ext, vorb) "CallMapVorbehandlung";
   } "MapVorbehandlungen";
 
   // --- Massnahmen (MAB_*) ---
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-massnahme-bi' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-massnahme-bi' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.massnahme as mass, mass.massnahmeSchluessel = cd "SetMassnahme";
@@ -182,12 +182,12 @@ group MapOperationBrustimplantat(source src : Procedure, target tgt : BackboneEl
   } "MapMassnahmen";
 
   // --- Operationsdetails (ODB_*) ---
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-operationsdetail-bi' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-operationsdetail-bi' then {
     ext -> tgt.operationsdetail as opd then MapOperationsdetail(ext, opd) "CallMapOpDetail";
   } "MapOperationsdetails";
 
   // --- Befunde bei Revision/Explantation (BEB_*) ---
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-befund-bi' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-befund-bi' then {
     ext -> tgt.befund as bef then MapBefund(ext, bef) "CallMapBefund";
   } "MapBefunde";
 
@@ -355,57 +355,57 @@ group MapArtikelBrustimplantat(source src : Device, target tgt : BackboneElement
 
   // ABI_ArtikelTypSchluessel (enum_0190): aus Device.type
   src.type as t then {
-    t.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-artikel-typ' then {
+    t.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/ireg-artikel-typ' then {
       c.code as cd -> tgt.artikelTypSchluessel = cd "SetArtikelTypDirect";
     } "MapArtikelTypCoding";
   } "MapArtikelTyp";
 
   // Fallback: Brustimplantat Silikon als Standard
-  src where type.coding.where(system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-artikel-typ').exists().not()
+  src where type.coding.where(system = 'https://www.senologie.org/fhir/CodeSystem/ireg-artikel-typ').exists().not()
     -> tgt.artikelTypSchluessel = '1' "SetArtikelTypDefault";
 
   // ABI_FormSchluessel (enum_0126): aus Extension
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-form' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-form' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.formSchluessel = cd "SetForm";
       } "MapFormCoding";
     } "MapFormValue";
   } "MapForm";
-  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-form').exists().not()
+  src where extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-form').exists().not()
     -> tgt.formUnbekannt = 1 "SetFormUnbekannt";
 
   // ABI_OberflaecheSchluessel (enum_0128): aus Extension
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-oberflaeche' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-oberflaeche' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.oberflaecheSchluessel = cd "SetOberflaeche";
       } "MapOberflaecheCoding";
     } "MapOberflaecheValue";
   } "MapOberflaeche";
-  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-oberflaeche').exists().not()
+  src where extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-oberflaeche').exists().not()
     -> tgt.oberflaecheUnbekannt = 1 "SetOberflaecheUnbekannt";
 
   // ABI_FuellungSchluessel (enum_0124): aus Extension
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-fuellung' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-fuellung' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.fuellungSchluessel = cd "SetFuellung";
       } "MapFuellungCoding";
     } "MapFuellungValue";
   } "MapFuellung";
-  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-fuellung').exists().not()
+  src where extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-fuellung').exists().not()
     -> tgt.fuellungUnbekannt = 1 "SetFuellungUnbekannt";
 
   // ABI_Volumen: aus Extension (in ml)
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-volumen' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-volumen' then {
     ext.value as val -> tgt.volumen = val "SetVolumen";
   } "MapVolumen";
-  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-volumen').exists().not()
+  src where extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-volumen').exists().not()
     -> tgt.volumenUnbekannt = 1 "SetVolumenUnbekannt";
 
   // ABI_IntraoperativesVolumen: aus Extension
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-implantat-intraop-volumen' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-implantat-intraop-volumen' then {
     ext.value as val -> tgt.intraoperativesVolumen = val "SetIntraopVolumen";
   } "MapIntraopVolumen";
 }
@@ -457,7 +457,7 @@ group MapZubehoer(source src : Device, target tgt : BackboneElement) {
 group MapZubehoerBrustimplantat(source src : Device, target tgt : BackboneElement) {
 
   // ZBI_HerstellerSchluessel (enum_0131)
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-zubehoer-hersteller' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-zubehoer-hersteller' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.herstellerSchluessel = cd "SetZbiHersteller";
@@ -465,7 +465,7 @@ group MapZubehoerBrustimplantat(source src : Device, target tgt : BackboneElemen
     } "MapZbiHerstellerValue";
   } "MapZbiHersteller";
 
-  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-zubehoer-hersteller').exists().not()
+  src where extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-zubehoer-hersteller').exists().not()
     -> tgt.herstellerUnbekannt = 1 "SetZbiHerstellerUnbekannt";
 
   // ZBI_HerstellerSonstiger
@@ -473,7 +473,7 @@ group MapZubehoerBrustimplantat(source src : Device, target tgt : BackboneElemen
 
   // ZBI_ZubehoerTypSchluessel (enum_0191)
   src.type as t then {
-    t.coding as c where system = 'http://fhir.bih-charite.de/kds-senologie/CodeSystem/ireg-zubehoer-typ' then {
+    t.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/ireg-zubehoer-typ' then {
       c.code as cd -> tgt.zubehoerTypSchluessel = cd "SetZbiZubehoerTyp";
     } "MapZbiTypCoding";
   } "MapZbiZubehoerTyp";

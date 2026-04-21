@@ -294,7 +294,7 @@ Usage: #example
 
 * category[laboratory] = http://terminology.hl7.org/CodeSystem/observation-category#laboratory
 
-* code.coding[genexpressionstest] = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-genexpressionstest#oncotype-dx "Oncotype DX"
+* code.coding[genexpressionstest] = https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest#oncotype-dx "Oncotype DX"
 
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2025-01-25"
@@ -319,7 +319,7 @@ Usage: #example
 
 * condition = Reference(Condition/Fall1-Diagnose-Mammakarzinom)
 
-* method = http://fhir.bih-charite.de/kds-senologie/CodeSystem/cs-senologie-genexpressionstest#oncotype-dx "Oncotype DX"
+* method = https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest#oncotype-dx "Oncotype DX"
 
 * basis = Reference(Observation/Fall1-Genexpressions-Score)
 

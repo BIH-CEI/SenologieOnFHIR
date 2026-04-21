@@ -15,7 +15,7 @@ Title: "Fall 1 — QR Diagnose Maligne"
 Description: "Antworten auf QuestDiagnoseMaligne für Fall 1 Erika Neumann. Extraktion erzeugt Condition/Fall1-Diagnose-Mammakarzinom (C50.4 links, UICC IA)."
 Usage: #example
 
-* questionnaire = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-diagnose-maligne"
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose-maligne"
 * status = #completed
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * authored = "2025-01-15"
@@ -67,7 +67,7 @@ Title: "Fall 1 — QR OP Planung"
 Description: "Antworten auf QuestOPPlanung für Fall 1 Erika Neumann. Extraktion erzeugt ServiceRequest/Fall1-OP-Planung (BET links + SLNB, 90 min, Drahtmarkierung)."
 Usage: #example
 
-* questionnaire = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-op-planung"
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-op-planung"
 * status = #completed
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * authored = "2025-01-28"
@@ -104,7 +104,7 @@ Title: "Fall 1 — QR Postoperative Dokumentation"
 Description: "Antworten auf QuestPostOPDokumentation für Fall 1 Erika Neumann. Extraktion erzeugt Procedure/Fall1-Operation-BET (BET + SLNB links, R0, 2025-02-05)."
 Usage: #example
 
-* questionnaire = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-postop"
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-postop"
 * status = #completed
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * authored = "2025-02-05"
@@ -152,7 +152,7 @@ Title: "Fall 1 — QR Tumorboard Empfehlung"
 Description: "Antworten auf QuestTumorboard für Fall 1 Erika Neumann. Extraktion erzeugt CarePlan/Fall1-Tumorboard (BET + SLNB, adjuvante RT, endokrine Therapie, keine Chemotherapie)."
 Usage: #example
 
-* questionnaire = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-tumorboard"
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard"
 * status = #completed
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * authored = "2025-01-28"
@@ -189,7 +189,7 @@ Title: "Fall 1 — QR Klinische Untersuchung"
 Description: "Antworten auf QuestKlinischeUntersuchung für Fall 1 Erika Neumann. Extraktion erzeugt Observation/Fall1-Klinische-Untersuchung (links OAQ, tastbarer Knoten)."
 Usage: #example
 
-* questionnaire = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-klinische-untersuchung"
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung"
 * status = #completed
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * authored = "2025-01-15"

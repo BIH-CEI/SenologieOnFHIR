@@ -1,10 +1,10 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToObdsTumorzuordnung"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"
 /// name = "SenologieToObdsTumorzuordnung"
 /// title = "Senologie Diagnose to oBDS Tumorzuordnung"
 /// status = "draft"
 
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung" alias OBDSMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
 
 // Known limitation: MapTumorzuordnung uses `target tgt : BackboneElement`
 // because FML has no syntax to declare the Logical Model sub-path for
@@ -20,7 +20,7 @@ uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/obds-meldung"
 group MapTumorzuordnung(source src : Condition, target tgt : BackboneElement) {
 
   // Tumor_ID: aus Condition.identifier (Tumor-Kennung)
-  src.identifier as id where system = 'http://fhir.bih-charite.de/kds-senologie/sid/tumor-id' then {
+  src.identifier as id where system = 'https://www.senologie.org/fhir/sid/tumor-id' then {
     id.value as v -> tgt.tumorID = v "SetTumorID";
   } "MapTumorID";
 
@@ -38,7 +38,7 @@ group MapTumorzuordnung(source src : Condition, target tgt : BackboneElement) {
   // Seitenlokalisation: aus Condition.bodySite mit Uebersetzung SNOMED -> oBDS
   src.bodySite as bs then {
     bs.coding as c where system = 'http://snomed.info/sct'
-      -> tgt.seitenlokalisation = translate(c, 'http://fhir.bih-charite.de/kds-senologie/ConceptMap/cm-sct-to-obds-seitenlokalisation', 'code') "TranslateSeitenlokalisation";
+      -> tgt.seitenlokalisation = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation', 'code') "TranslateSeitenlokalisation";
   } "MapSeitenlokalisation";
 
   // Morphologie_ICD_O: aus Condition.code ICD-O Morphologie (falls vorhanden)

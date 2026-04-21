@@ -9,7 +9,7 @@ Usage: #definition
 * date = "2026-03-14"
 * publisher = "Berlin Institute of Health at Charité (BIH)"
 
-* sourceUri = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-systemtherapie-medikation"
+* sourceUri = "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation"
 // targetUri omitted — no corresponding ATC ValueSet available; group.target references the CodeSystem
 
 * group[+]

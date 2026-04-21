@@ -10,7 +10,7 @@ Title: "Fragebogen: Klinische Untersuchung Mamma"
 Description: "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Definition-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel."
 Usage: #definition
 
-* url = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-klinische-untersuchung"
+* url = "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung"
 * name = "QuestKlinischeUntersuchung"
 * title = "Fragebogen: Klinische Untersuchung Mamma"
 * status = #draft

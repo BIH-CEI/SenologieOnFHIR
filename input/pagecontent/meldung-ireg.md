@@ -203,7 +203,7 @@ Content-Type: application/fhir+json
     },
     {
       "name": "source",
-      "valueUri": "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegMeldung"
+      "valueUri": "https://www.senologie.org/fhir/StructureMap/SenologieToIRegMeldung"
     }
   ]
 }

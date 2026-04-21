@@ -10,7 +10,7 @@ Title: "Fragebogen: OP Planung"
 Description: "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Definition-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel."
 Usage: #definition
 
-* url = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-op-planung"
+* url = "https://www.senologie.org/fhir/Questionnaire/senologie-op-planung"
 * name = "QuestOPPlanung"
 * title = "Fragebogen: OP Planung"
 * status = #draft

@@ -1,4 +1,4 @@
-/// url = "http://fhir.bih-charite.de/kds-senologie/StructureMap/SenologieToIRegPatient"
+/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIRegPatient"
 /// name = "SenologieToIRegPatient"
 /// title = "Senologie Patient + Observations to IRegG Patientenaufnahme"
 /// status = "draft"
@@ -6,7 +6,7 @@
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
-uses "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
+uses "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -67,7 +67,7 @@ group MapPatientenaufnahme(source src : Patient, target tgt : BackboneElement, s
 group MapPatientBrustimplantat(source src : Patient, target tgt : BackboneElement) {
 
   // PAB_AutoimmunerkrankungSchluessel (enum_0122): aus Extension
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-autoimmunerkrankung' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-autoimmunerkrankung' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.autoimmunerkrankungSchluessel = cd "SetAutoimmunCode";
@@ -76,11 +76,11 @@ group MapPatientBrustimplantat(source src : Patient, target tgt : BackboneElemen
   } "MapAutoimmunerkrankung";
 
   // Fallback: wenn keine Extension vorhanden, setze Standardwert "unbekannt"
-  src where extension.where(url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-autoimmunerkrankung').exists().not()
+  src where extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-autoimmunerkrankung').exists().not()
     -> tgt.autoimmunerkrankungSchluessel = '9' "SetAutoimmunDefault";
 
   // PAB_VerlaufAutoimmunerkrankungSchluessel (enum_0123): aus Extension
-  src.extension as ext where url = 'http://fhir.bih-charite.de/kds-senologie/StructureDefinition/ireg-verlauf-autoimmunerkrankung' then {
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-verlauf-autoimmunerkrankung' then {
     ext.value as val then {
       val.coding as c then {
         c.code as cd -> tgt.verlaufAutoimmunerkrankungSchluessel = cd "SetVerlaufAutoimmunCode";

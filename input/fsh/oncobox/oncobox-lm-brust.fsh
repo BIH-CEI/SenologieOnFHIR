@@ -47,7 +47,7 @@ Dieses Modell dient als Zielstruktur der FHIR StructureMaps fuer die Ableitung
 einer OncoBox-Brust-konformen Meldung aus einem Senologie-FHIR-Bundle.
 Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
 
-* ^url = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/oncobox-brust-meldung"
+* ^url = "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"
 * ^version = "0.1.0"
 * ^status = #draft
 

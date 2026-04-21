@@ -10,7 +10,7 @@ Title: "Fragebogen: Senologie Diagnose Maligne"
 Description: "Fragebogen zur strukturierten Erfassung einer Mamma-Diagnose. Nutzt SDC Definition-based Extraction mit dem Senologie_Diagnose_Maligne-Profil als Ziel."
 Usage: #definition
 
-* url = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-diagnose-maligne"
+* url = "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose-maligne"
 * name = "QuestDiagnoseMaligne"
 * title = "Fragebogen: Senologie Diagnose Maligne"
 * status = #draft
@@ -38,7 +38,7 @@ Usage: #definition
 * item[=].text = "Diagnose (SNOMED CT)"
 * item[=].type = #choice
 * item[=].required = true
-* item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-sct"
+* item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sct"
 * item[=].code[+] = $SCT#439401001 "Diagnosis"
 
 // ICD-10-GM Diagnose

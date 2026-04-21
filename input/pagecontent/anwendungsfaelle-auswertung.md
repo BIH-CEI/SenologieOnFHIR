@@ -80,7 +80,7 @@ Ergänzend zu CQL stellt das IG sechs [SQL-on-FHIR v2](https://sql-on-fhir.org/)
 | [`SystemtherapieKohorte`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/input/fsh/views/ViewDefinition-SystemtherapieKohorte.json) | Procedure | Systemtherapien (CH/HO/IM/ZT), Intention, Beginn/Ende, Protokoll |
 | [`TumorboardKohorte`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/input/fsh/views/ViewDefinition-TumorboardKohorte.json) | CarePlan | Tumorboard-Empfehlungen mit Aktivitäten (Therapieempfehlungen) |
 
-Die kanonischen URLs folgen dem Schema `http://fhir.bih-charite.de/kds-senologie/ViewDefinition/{Name}`. Ausführung z.B. über [Pathling](https://pathling.csiro.au/), [sof-js](https://github.com/FHIR/sql-on-fhir-v2/tree/master/sof-js) oder direkt gegen eine HAPI-Instanz.
+Die kanonischen URLs folgen dem Schema `https://www.senologie.org/fhir/ViewDefinition/{Name}`. Ausführung z.B. über [Pathling](https://pathling.csiro.au/), [sof-js](https://github.com/FHIR/sql-on-fhir-v2/tree/master/sof-js) oder direkt gegen eine HAPI-Instanz.
 
 ### Ausführung mit Pathling
 

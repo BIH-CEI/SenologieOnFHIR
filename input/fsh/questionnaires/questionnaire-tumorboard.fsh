@@ -12,7 +12,7 @@ Title: "Fragebogen: Tumorboard Empfehlung"
 Description: "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Definition-based Extraction mit dem Senologie_Tumorboard_Empfehlung-Profil (CarePlan) als Ziel."
 Usage: #definition
 
-* url = "http://fhir.bih-charite.de/kds-senologie/Questionnaire/senologie-tumorboard"
+* url = "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard"
 * name = "QuestTumorboard"
 * title = "Fragebogen: Tumorboard Empfehlung"
 * status = #draft

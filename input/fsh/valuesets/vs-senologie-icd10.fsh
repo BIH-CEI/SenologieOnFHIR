@@ -5,7 +5,7 @@ Id: vs-senologie-icd10
 Title: "ValueSet Senologie ICD-10-GM"
 Description: "ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotbase Codebook"
 
-* ^url = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-icd10"
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-icd10"
 * ^status = #draft
 
 // === C50 - Bösartige Neubildung der Brustdrüse (Cancer Registry) ===
