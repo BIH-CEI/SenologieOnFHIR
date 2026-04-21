@@ -5,7 +5,7 @@ Description: "Neoadjuvante Chemotherapie mit Epirubicin/Cyclophosphamid gefolgt 
 Usage: #example
 
 * status = #completed
-* category = $SCT#18629005 "Administration of drug or medicament"
+* category = $SCT#18629005 "Administration of medication"
 
 // Intention (required by MII Onko parent)
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"

@@ -12,7 +12,7 @@ Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt I
 * status ^short = "Durchgeführt"
 
 // category required by proc-mii-1 when OPS coded (parent may set it but SUSHI cannot resolve)
-* category = $SCT#18629005 "Administration of drug or medicament"
+* category = $SCT#18629005 "Administration of medication"
 
 * code MS
 * code.coding ^short = "Systemtherapie-Typ"

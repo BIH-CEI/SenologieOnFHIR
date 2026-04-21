@@ -255,7 +255,7 @@ Usage: #example
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
-* category = $SCT#172043006 "Modified radical mastectomy"
+* category = $SCT#172043006 "Simple mastectomy"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
@@ -275,7 +275,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall3-Diagnose-Mammakarzinom)
 
-* followUp[drainage].coding = $SCT#122462000 "Drainage device"
+* followUp[drainage].coding = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].text = "Redon-Drainage 12 Ch x2"
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband Thoraxwand"

@@ -50,7 +50,7 @@ Usage: #example
 * bodySite = $SCT#80248007 "Left breast structure"
 
 // BI-RADS 5
-* valueCodeableConcept.coding = $SCT#397143000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Suspekter Herdbefund OAQ, 15 mm, unscharf begrenzt, Mikrokalk"

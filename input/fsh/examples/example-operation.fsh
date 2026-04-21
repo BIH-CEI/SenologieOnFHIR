@@ -10,7 +10,7 @@ Usage: #example
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
 // Art der Operation: BET
-* category = $SCT#392022002 "Breast-conserving surgery"
+* category = $SCT#392022002 "Excision of mass"
 
 // OPS-Code (inherited from MII Onko)
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
@@ -32,7 +32,7 @@ Usage: #example
 * reasonReference = Reference(Condition/Example-Diagnose-Mammakarzinom)
 
 // Follow-up
-* followUp[drainage].coding = $SCT#122462000 "Drainage device"
+* followUp[drainage].coding = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].text = "Redon-Drainage 10 Ch"
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband"

@@ -43,7 +43,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * followUp ^slicing.discriminator.path = "$this"
 * followUp ^slicing.rules = #open
 * followUp contains drainage 0..* and verband 0..* and antibiotika 0..* and mobilisation 0..* and laborkontrolle 0..*
-* followUp[drainage] = $SCT#122462000 "Drainage device"
+* followUp[drainage] = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].coding MS
 * followUp[verband] = $SCT#262171009 "Dressing of wound"
 * followUp[verband].coding MS

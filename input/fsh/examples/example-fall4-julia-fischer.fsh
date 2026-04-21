@@ -96,7 +96,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397143000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Herdbefund links, 32 mm, irregulär, suspekte axilläre LK links"
@@ -241,7 +241,7 @@ Description: "Neoadjuvante Therapie mit Docetaxel, Carboplatin, Trastuzumab, Per
 Usage: #example
 
 * status = #completed
-* category = $SCT#18629005 "Administration of drug or medicament"
+* category = $SCT#18629005 "Administration of medication"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -398,7 +398,7 @@ Usage: #example
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
-* category = $SCT#392022002 "Breast-conserving surgery"
+* category = $SCT#392022002 "Excision of mass"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
@@ -418,7 +418,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall4-Diagnose-Mammakarzinom)
 
-* followUp[drainage].coding = $SCT#122462000 "Drainage device"
+* followUp[drainage].coding = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].text = "Redon-Drainage 10 Ch"
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband"

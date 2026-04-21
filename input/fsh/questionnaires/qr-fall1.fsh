@@ -113,7 +113,7 @@ Usage: #example
 * item[+].linkId = "operation"
 
 * item[=].item[+].linkId = "op-kategorie"
-* item[=].item[=].answer.valueCoding = $SCT#392022002 "Breast-conserving surgery"
+* item[=].item[=].answer.valueCoding = $SCT#392022002 "Excision of mass"
 
 * item[=].item[+].linkId = "op-seite"
 * item[=].item[=].answer.valueCoding = $SCT#80248007 "Left breast structure"

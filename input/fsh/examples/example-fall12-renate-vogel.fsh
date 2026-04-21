@@ -97,7 +97,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397141003 "BI-RADS assessment category 4"
+* valueCodeableConcept.coding = $SCT#397144001 "BI-RADS assessment category 4"
 * valueCodeableConcept.text = "BI-RADS 4a — geringe Malignitätswahrscheinlichkeit"
 
 * note.text = "Gruppierte Mikrokalzifikationen links OIQ, ca. 12 mm Ausdehnung, abklärungsbedürftig"
@@ -218,7 +218,7 @@ Usage: #example
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#D "diagnostisch"
 
 // Art der Operation
-* category = $SCT#392022002 "Breast-conserving surgery"
+* category = $SCT#392022002 "Excision of mass"
 
 // OPS-Code
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
@@ -240,7 +240,7 @@ Usage: #example
 * reasonReference = Reference(Condition/Fall12-Diagnose-ADH)
 
 // Follow-up
-* followUp[drainage].coding = $SCT#122462000 "Drainage device"
+* followUp[drainage].coding = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].text = "Keine Drainage"
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Steristrips"

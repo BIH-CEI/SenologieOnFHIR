@@ -103,7 +103,7 @@ Usage: #example
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
-* valueCodeableConcept.coding = $SCT#397143000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Große Raumforderung zentral rechts, 55 mm, unscharf begrenzt, Hautinfiltration, vergrößerte axilläre LK rechts"
@@ -389,7 +389,7 @@ Description: "Neoadjuvante Therapie mit Carboplatin/Paclitaxel + Pembrolizumab"
 Usage: #example
 
 * status = #completed
-* category = $SCT#18629005 "Administration of drug or medicament"
+* category = $SCT#18629005 "Administration of medication"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
@@ -516,7 +516,7 @@ Usage: #example
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
 // Art der Operation
-* category = $SCT#172043006 "Modified radical mastectomy"
+* category = $SCT#172043006 "Simple mastectomy"
 
 // OPS-Code Mastektomie
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
@@ -543,7 +543,7 @@ Usage: #example
 * reasonReference = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
 
 // Follow-up
-* followUp[drainage].coding = $SCT#122462000 "Drainage device"
+* followUp[drainage].coding = $SCT#122462000 "Drainage procedure"
 * followUp[drainage].text = "Redon-Drainage 12 Ch x2"
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband Thoraxwand"
@@ -591,7 +591,7 @@ Description: "Adjuvante Pembrolizumab Maintenance nach Operation"
 Usage: #example
 
 * status = #completed
-* category = $SCT#18629005 "Administration of drug or medicament"
+* category = $SCT#18629005 "Administration of medication"
 
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 
