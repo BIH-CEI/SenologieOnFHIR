@@ -78,6 +78,23 @@ Wo internationale Terminologien Lücken aufweisen, werden [Vorschläge für das 
 | **EU Laboratory Report** | Laborwerte aus EU Lab beziehbar | Noch nicht integriert (MII Labor-Modul als Zwischenschritt) |
 | **EHDS Sekundärnutzung** | Daten für Forschung über EHDS nutzbar | Vorbereitet (SQL on FHIR, CQL) |
 
+### Patient-Reported Outcomes (PROMs)
+
+Die Erfassung patientenberichteter Endpunkte gewinnt in der onkologischen Versorgung und in der EU-weiten Qualitätsmessung zunehmend an Bedeutung. Relevante Instrumente für die Senologie:
+
+| Instrument | Herausgeber | Lizenz | Abbildung |
+|---|---|---|---|
+| **EQ-5D-5L** | EuroQol Group | Lizenz nötig | MII PRO-Modul |
+| **EORTC QLQ-C30** | EORTC | Lizenz nötig | MII PRO-Modul |
+| **EORTC QLQ-BR42** | EORTC | Lizenz nötig | MII PRO-Modul (geplant) |
+| **PRO-CTCAE** | NCI | Frei (public domain) | MII PRO-Modul (geplant) |
+| **PROMIS** | NIH | Frei | MII PRO-Modul |
+| **BREAST-Q** | Memorial Sloan Kettering | Lizenzpflichtig | Nicht abbildbar (lizenzrechtlich) |
+
+PROMs werden im Senologie-Kerndatensatz **nicht eigenständig profiliert**, sondern über das [MII PRO-Modul](https://www.medizininformatik-initiative.de/Kerndatensatz/Modul_Patient_Reported_Outcomes) referenziert. Die Abgrenzung zwischen ärztlich dokumentierten Nebenwirkungen (CTCAE, im Senologie-Scope) und patientenberichteten Nebenwirkungen (PRO-CTCAE, im PRO-Modul) ist in [OF-11](offene-fragen.html) dokumentiert.
+
+Auf EU-Ebene arbeiten [PaRIS (OECD)](https://www.oecd.org/health/paris/) und das [EU-PROM-Network](https://www.ciph.cam.ac.uk/research/eu-prom/) an der Standardisierung von PROMs für die Sekundärnutzung im EHDS. Eine zukünftige Integration standardisierter PROM-Daten über den EHDS ist denkbar.
+
 ### Weiterentwicklung
 
 Mit dem Fortschreiten der EU-Implementing-Acts (erwartet Anfang 2027) und der Veröffentlichung weiterer EU FHIR IGs wird die Kompatibilität des Kerndatensatzes regelmäßig geprüft. Insbesondere:
