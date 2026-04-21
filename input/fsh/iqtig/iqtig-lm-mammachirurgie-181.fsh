@@ -106,7 +106,7 @@ Serialisierung (CSV / XML) ist nicht Bestandteil dieses Modells."""
 
   // --- OPS-Prozeduren ---
   * prozeduren 1..* BackboneElement "O:OPSCHLUESSEL" "OPS-Prozedurenkodes des Eingriffs"
-    * code 1..1 code "Code" "OPS-Kode (Format: [135689]-[0-9]{2}[a-zA-Z0-9](.[a-zA-Z0-9]{1,2})*)"
+    * code 1..1 code "Code" "OPS-Kode, z.B. 5-870.a1"
     * version 1..1 string "Version" "OPS-Version (z.B. 2024)"
 
   // --- Operationscharakteristik ---

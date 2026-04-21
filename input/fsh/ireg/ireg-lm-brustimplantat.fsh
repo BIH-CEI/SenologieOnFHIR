@@ -57,7 +57,7 @@ Mapping-Uebersicht:
 
 // --- Ausloeser -> Procedure.code ---
   * ausloeser 0..* BackboneElement "Ausloeser" "Ausloesende OPS-Prozedur"
-    * prozedurenSchluessel 1..1 string "ALR_ProzedurenSchluessel" "OPS-Kode (Format: [135689]-[0-9]{2}[a-zA-Z0-9](.[a-zA-Z0-9]{1,2})*(:[RLB])?)"
+    * prozedurenSchluessel 1..1 string "ALR_ProzedurenSchluessel" "OPS-Kode, z.B. 5-870.a1"
 
 // =============================================================================
 // Patientenaufnahme (PatientenaufnahmeBasis) -> Patient + Observations
