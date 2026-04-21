@@ -93,7 +93,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397143000 "Mammography assessment (Category 3) - Probably benign finding, short interval follow-up"
+* valueCodeableConcept.coding = $SCT#397143007 "Mammography assessment (Category 3) - Probably benign finding, short interval follow-up"
 * valueCodeableConcept.text = "BI-RADS 3 — wahrscheinlich gutartig"
 
 * note.text = "Ovaler, glatt begrenzter Herdbefund links oben außen, 15 mm, wahrscheinlich gutartig. Verlaufskontrolle empfohlen."
