@@ -68,7 +68,7 @@ Usage: #example
 
 * meta.profile = $MII_ONKO_ECOG
 * status = #final
-* code.coding[+].system = "http://loinc.org"
+* code.coding[+].system = "http://snomed.info/sct"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
@@ -132,7 +132,7 @@ Usage: #example
 
 * meta.profile = $MII_ONKO_ECOG
 * status = #final
-* code.coding[+].system = "http://loinc.org"
+* code.coding[+].system = "http://snomed.info/sct"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
@@ -196,7 +196,7 @@ Usage: #example
 
 * meta.profile = $MII_ONKO_ECOG
 * status = #final
-* code.coding[+].system = "http://loinc.org"
+* code.coding[+].system = "http://snomed.info/sct"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
