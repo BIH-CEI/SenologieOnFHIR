@@ -253,7 +253,7 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
 // Definition von Zaehler, Nenner und Zielwert.
 // =============================================================================
 * kennzahl 0..* BackboneElement "Kennzahl" "DKG-Qualitaetsindikator (KB-1 bis KB-20)"
-  * id 1..1 code "KB_ID" "Kennzahl-ID: KB-1 ... KB-20"
+  * kennzahlId 1..1 code "KB_ID" "Kennzahl-ID: KB-1 ... KB-20"
   * bezeichnung 0..1 string "KB_Bezeichnung" "Kurzbezeichnung der Kennzahl"
   * zaehler 1..1 integer "KB_Zaehler" "Zaehler (Anzahl Faelle, die das Qualitaetskriterium erfuellen)"
   * nenner 1..1 integer "KB_Nenner" "Nenner (Gesamtanzahl einschlussfaehiger Faelle)"
