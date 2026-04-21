@@ -86,7 +86,7 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * activity[endocrineTherapy].detail.kind = #MedicationRequest
 
 // Zielgerichtete Therapie
-* activity[targetedTherapy].detail.code = $SCT#764166006 "Targeted therapy (procedure)"
+* activity[targetedTherapy].detail.code = $SCT#416608005 "Drug therapy"
 * activity[targetedTherapy].detail.code ^short = "Empfohlene zielgerichtete Therapie"
 * activity[targetedTherapy].detail.code ^comment = "Aus dotbase: 'Zielgerichtete Therapie' (choice)"
 * activity[targetedTherapy].detail.kind = #MedicationRequest

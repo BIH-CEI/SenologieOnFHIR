@@ -102,7 +102,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Suspekter Herdbefund OAQ links, 18 mm, unscharf begrenzt"
@@ -223,7 +223,7 @@ Usage: #example
 * component[mamillenbefund].code = $SCT#248819006 "Nipple finding"
 * component[mamillenbefund].valueString = "Mamille unauffällig, keine Sekretion"
 
-* component[lymphknotenstatus].code = $SCT#248858001 "Axillary lymph node abnormality"
+* component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
 * component[lymphknotenstatus].valueString = "Axilläre Lymphknoten beidseits klinisch unauffällig"
 
 
@@ -429,7 +429,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.a1
-* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Lumpektomie mit axillärer Lymphknotenexzision"
+* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma und Destruktion von Mammagewebe: Partielle Resektion: Defektdeckung durch Mobilisation und Adaptation von bis zu 25 % des Brustgewebes (bis zu 1 Quadranten)"
 * code.text = "BET links"
 
 // Lateralität
@@ -451,7 +451,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0-Resektion"
 
 
@@ -469,7 +469,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
 * code.text = "Sentinel-Lymphknoten-Biopsie"
 
 * bodySite = $SCT#80248007 "Left breast structure"
@@ -481,7 +481,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall1-Operation-BET)
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "Sentinel-LK negativ pN0(sn)(0/2)"
 
 
@@ -498,7 +498,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 
@@ -554,7 +554,7 @@ Usage: #example
 
 * status = #active
 
-* medicationCodeableConcept.coding = $SCT#768532006 "Levothyroxine sodium"
+* medicationCodeableConcept.coding = $SCT#768532006 "Levothyroxine-containing product"
 * medicationCodeableConcept.text = "L-Thyroxin 75 µg"
 
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)

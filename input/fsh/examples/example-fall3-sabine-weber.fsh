@@ -96,7 +96,7 @@ Usage: #example
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
-* valueCodeableConcept.coding = $SCT#397142005 "BI-RADS assessment category 4"
+* valueCodeableConcept.coding = $SCT#397144001 "Mammography assessment (Category 4) - Suspicious abnormality, biopsy should be considered"
 * valueCodeableConcept.text = "BI-RADS 4 — suspekt"
 
 * note.text = "Herdbefund rechts, 28 mm, unscharf begrenzt, Verdacht auf Malignität"
@@ -260,7 +260,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie"
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
 * code.text = "Mastektomie rechts"
 
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -276,7 +276,7 @@ Usage: #example
 * followUp[verband].coding = $SCT#182531007 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband Thoraxwand"
 
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0-Resektion, pT2"
 
 
@@ -306,7 +306,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall3-Operation-Mastektomie)
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "pN1a (2/12 LK positiv)"
 
 
@@ -323,7 +323,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall3-Patient-Sabine-Weber)
 

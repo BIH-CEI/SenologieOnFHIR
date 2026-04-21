@@ -93,7 +93,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397140002 "BI-RADS assessment category 3"
+* valueCodeableConcept.coding = $SCT#397143000 "Mammography assessment (Category 3) - Probably benign finding, short interval follow-up"
 * valueCodeableConcept.text = "BI-RADS 3 — wahrscheinlich gutartig"
 
 * note.text = "Ovaler, glatt begrenzter Herdbefund links oben außen, 15 mm, wahrscheinlich gutartig. Verlaufskontrolle empfohlen."
@@ -216,5 +216,5 @@ Usage: #example
 * component[mamillenbefund].code = $SCT#248819006 "Nipple finding"
 * component[mamillenbefund].valueString = "Mamille unauffällig, keine Sekretion"
 
-* component[lymphknotenstatus].code = $SCT#248858001 "Axillary lymph node abnormality"
+* component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
 * component[lymphknotenstatus].valueString = "Axilläre Lymphknoten beidseits unauffällig"

@@ -28,9 +28,9 @@ Usage: #example
 
 * status = #final
 
-* code.coding[+].system = "http://loinc.org"
-* code.coding[=].code = #97509-4
-* code.coding[=].display = "Cancer disease status"
+* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[=].code = #396432002
+* code.coding[=].display = "Status of regression of tumor (observable entity)"
 
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * focus = Reference(Condition/Fall1-Diagnose-Mammakarzinom)
@@ -39,25 +39,25 @@ Usage: #example
 // Gesamtbeurteilung: K = kein Anhalt für Resttumor
 * valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_GESAMT
 * valueCodeableConcept.coding[=].code = #K
-* valueCodeableConcept.coding[=].display = "kein Anhalt für Tumor"
+* valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
 
 // Lokaler Tumorstatus
-* component[+].code.coding = http://loinc.org#LP248431-2 "Primary tumor response"
+* component[+].code.coding = $SCT#277062004 "Anatomic site"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Tumor"
+* component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
 // Lymphknoten-Status
-* component[+].code.coding = http://loinc.org#LP417347-6 "Regional lymph node response"
+* component[+].code.coding = $SCT#277060007 "Lymph node group"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Lymphknotenbefall"
+* component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
 // Fernmetastasen-Status
-* component[+].code.coding = http://loinc.org#LP128969-2 "Distant metastasis response"
+* component[+].code.coding = $SCT#277061006 "Metastatic site"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Fernmetastasen"
+* component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
 
 // ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
 Instance: Fall1-ECOG-6Monate
@@ -75,7 +75,7 @@ Usage: #example
 * effectiveDateTime = "2025-08-15"
 * valueCodeableConcept.coding[+].system = $MII_CS_ECOG
 * valueCodeableConcept.coding[=].code = #0
-* valueCodeableConcept.coding[=].display = "Normale, uneingeschränkte Aktivität wie vor der Erkrankung"
+* valueCodeableConcept.coding[=].display = "Normale, uneingeschränkte Aktivität wie vor der Erkrankung (90 - 100 % nach Karnofsky)"
 
 
 // ============================================================
@@ -92,9 +92,9 @@ Usage: #example
 
 * status = #final
 
-* code.coding[+].system = "http://loinc.org"
-* code.coding[=].code = #97509-4
-* code.coding[=].display = "Cancer disease status"
+* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[=].code = #396432002
+* code.coding[=].display = "Status of regression of tumor (observable entity)"
 
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
 * focus = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
@@ -106,22 +106,22 @@ Usage: #example
 * valueCodeableConcept.coding[=].display = "Progression"
 
 // Lokaler Tumorstatus: K (bereits reseziert, kein Lokalrezidiv)
-* component[+].code.coding = http://loinc.org#LP248431-2 "Primary tumor response"
+* component[+].code.coding = $SCT#277062004 "Anatomic site"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Lokalrezidiv"
+* component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
 // Lymphknoten-Status: K
-* component[+].code.coding = http://loinc.org#LP417347-6 "Regional lymph node response"
+* component[+].code.coding = $SCT#277060007 "Lymph node group"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für LK-Rezidiv"
+* component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
 // Fernmetastasen: N = Neu aufgetretene Fernmetastasen
-* component[+].code.coding = http://loinc.org#LP128969-2 "Distant metastasis response"
+* component[+].code.coding = $SCT#277061006 "Metastatic site"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #N
-* component[=].valueCodeableConcept.coding[=].display = "neu aufgetretene Fernmetastasen"
+* component[=].valueCodeableConcept.coding[=].display = "Fernmetastasen No Change"
 
 // ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
 Instance: Fall2-ECOG-Progression
@@ -139,7 +139,7 @@ Usage: #example
 * effectiveDateTime = "2026-03-15"
 * valueCodeableConcept.coding[+].system = $MII_CS_ECOG
 * valueCodeableConcept.coding[=].code = #2
-* valueCodeableConcept.coding[=].display = "Gehfähig, nicht arbeitsfähig, > 50% der Wachzeit aktiv"
+* valueCodeableConcept.coding[=].display = "Gehfähig, Selbstversorgung möglich, aber nicht arbeitsfähig; kann mehr als 50 % der Wachzeit aufstehen (50 - 60 % nach Karnofsky)"
 
 
 // ============================================================
@@ -156,9 +156,9 @@ Usage: #example
 
 * status = #final
 
-* code.coding[+].system = "http://loinc.org"
-* code.coding[=].code = #97509-4
-* code.coding[=].display = "Cancer disease status"
+* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[=].code = #396432002
+* code.coding[=].display = "Status of regression of tumor (observable entity)"
 
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
 * focus = Reference(Condition/Fall9-Diagnose-Mammakarzinom)
@@ -167,25 +167,25 @@ Usage: #example
 // Gesamtbeurteilung: K = kein Anhalt für Tumor
 * valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_GESAMT
 * valueCodeableConcept.coding[=].code = #K
-* valueCodeableConcept.coding[=].display = "kein Anhalt für Tumor"
+* valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
 
 // Lokaler Tumorstatus: K
-* component[+].code.coding = http://loinc.org#LP248431-2 "Primary tumor response"
+* component[+].code.coding = $SCT#277062004 "Anatomic site"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Tumor"
+* component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
 // Lymphknoten-Status: K
-* component[+].code.coding = http://loinc.org#LP417347-6 "Regional lymph node response"
+* component[+].code.coding = $SCT#277060007 "Lymph node group"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Lymphknotenbefall"
+* component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
 // Fernmetastasen: K
-* component[+].code.coding = http://loinc.org#LP128969-2 "Distant metastasis response"
+* component[+].code.coding = $SCT#277061006 "Metastatic site"
 * component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
 * component[=].valueCodeableConcept.coding[=].code = #K
-* component[=].valueCodeableConcept.coding[=].display = "kein Anhalt für Fernmetastasen"
+* component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
 
 // ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
 Instance: Fall9-ECOG-12Monate
@@ -203,4 +203,4 @@ Usage: #example
 * effectiveDateTime = "2026-03-20"
 * valueCodeableConcept.coding[+].system = $MII_CS_ECOG
 * valueCodeableConcept.coding[=].code = #1
-* valueCodeableConcept.coding[=].display = "Eingeschränkt bei körperlicher Anstrengung, gehfähig, leichte Arbeit möglich"
+* valueCodeableConcept.coding[=].display = "Einschränkung bei körperlicher Anstrengung, aber gehfähig; leichte körperliche Arbeit bzw. Arbeit im Sitzen (z. B. leichte Hausarbeit oder Büroarbeit) möglich (70 - 80 % nach Karnofsky)"

@@ -39,7 +39,7 @@ Usage: #example
 * code.coding[icd10-gm].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
 * code.coding[icd10-gm].version = "2025"
 * code.coding[icd10-gm].code = #D05.1
-* code.coding[icd10-gm].display = "Carcinoma in situ der Brustdrüse: Intraduktales Carcinoma in situ"
+* code.coding[icd10-gm].display = "Carcinoma in situ der Milchgänge"
 * code.text = "Duktales Carcinoma in situ (DCIS) links, G2, ER+"
 
 * bodySite.coding = $SCT#80248007 "Left breast structure"
@@ -95,7 +95,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397142005 "BI-RADS assessment category 4"
+* valueCodeableConcept.coding = $SCT#397144001 "Mammography assessment (Category 4) - Suspicious abnormality, biopsy should be considered"
 * valueCodeableConcept.text = "BI-RADS 4 — suspekt, Mikrokalzifikationen"
 
 * note.text = "Gruppierte polymorphe Mikrokalzifikationen links, Ausdehnung ca. 15 mm, suspekt"
@@ -204,7 +204,7 @@ Usage: #example
 * followUp[verband].coding = $SCT#182531007 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband"
 
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0, knapper Resektionsrand (2 mm). Tis(DCIS), kein invasiver Anteil."
 
 
@@ -221,7 +221,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall6-Patient-Petra-Schneider)
 

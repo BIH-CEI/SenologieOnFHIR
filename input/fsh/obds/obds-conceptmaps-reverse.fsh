@@ -262,7 +262,7 @@ Description: "Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, H
 * group[=].element[+].code = #367336001
 * group[=].element[=].display = "Chemotherapy (procedure)"
 * group[=].element[=].target[+].code = #CH
-* group[=].element[=].target[=].display = "Chemotherapie"
+* group[=].element[=].target[=].display = "Zytostatische Chemotherapie, Immuntherapie und antiretrovirale Therapie"
 * group[=].element[=].target[=].equivalence = #equivalent
 
 * group[=].element[+].code = #169413002

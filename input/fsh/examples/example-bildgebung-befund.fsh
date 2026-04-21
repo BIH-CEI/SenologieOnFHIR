@@ -50,7 +50,7 @@ Usage: #example
 * bodySite = $SCT#80248007 "Left breast structure"
 
 // BI-RADS 5
-* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Suspekter Herdbefund OAQ, 15 mm, unscharf begrenzt, Mikrokalk"
@@ -77,5 +77,5 @@ Usage: #example
 * bodySite = $SCT#73056007 "Right breast structure"
 
 // BI-RADS 1
-* valueCodeableConcept.coding = $SCT#397138000 "BI-RADS assessment category 1"
+* valueCodeableConcept.coding = $SCT#397139008 "Mammography assessment (Category 1) - Negative"
 * valueCodeableConcept.text = "BI-RADS 1 — unauffällig"

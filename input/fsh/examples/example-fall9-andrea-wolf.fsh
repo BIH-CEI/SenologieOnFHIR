@@ -106,7 +106,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Architekturgestörter Herdbefund links OAQ, 30 mm, lobulär imponierend, suspekte axilläre LK links"
@@ -241,7 +241,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-54
-* code.coding[=].display = "Chemotherapie"
+* code.coding[=].display = "Zytostatische Chemotherapie, Immuntherapie und antiretrovirale Therapie"
 
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
 
@@ -265,7 +265,7 @@ Usage: #example
 
 * status = #completed
 
-* medicationCodeableConcept.coding[sct] = $SCT#387215009 "Epirubicin"
+* medicationCodeableConcept.coding[sct] = $SCT#417916005 "Epirubicin"
 * medicationCodeableConcept.text = "Epirubicin"
 
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
@@ -335,7 +335,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.a1
-* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Lumpektomie mit axillärer Lymphknotenexzision"
+* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma und Destruktion von Mammagewebe: Partielle Resektion: Defektdeckung durch Mobilisation und Adaptation von bis zu 25 % des Brustgewebes (bis zu 1 Quadranten)"
 * code.text = "BET links"
 
 // Lateralität
@@ -357,7 +357,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0-Resektion"
 
 
@@ -387,7 +387,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall9-Operation-BET)
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "pN3a (12/18 LK befallen)"
 
 
@@ -412,7 +412,7 @@ Usage: #example
 * focus = Reference(Procedure/Fall9-Operation-BET)
 
 * component[komplikationsart].code = $SCT#116224001 "Complication of procedure"
-* component[komplikationsart].valueCodeableConcept = $SCT#95321009 "Lymphedema of upper limb"
+* component[komplikationsart].valueCodeableConcept = $SCT#65636009 "Lymphedema of upper limb"
 * component[komplikationsart].valueCodeableConcept.text = "Lymphödem Arm links"
 
 * note.text = "Lymphödem Arm links nach Axilladissektion Level I-III (12/18 LK befallen). Konservative Therapie mit Kompressionswickelung und Lymphdrainage."
@@ -431,7 +431,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
 

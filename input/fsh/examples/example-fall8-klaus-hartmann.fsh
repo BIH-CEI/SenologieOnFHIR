@@ -103,7 +103,7 @@ Usage: #example
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
-* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Retromamillärer Herdbefund rechts, 28 mm, unscharf begrenzt, bei männlichem Patienten"
@@ -220,7 +220,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie"
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
 * code.text = "Mastektomie rechts"
 
 // Lateralität
@@ -242,7 +242,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0-Resektion"
 
 
@@ -260,7 +260,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
 * code.text = "Sentinel-Lymphknoten-Biopsie"
 
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -272,7 +272,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall8-Operation-Mastektomie)
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "Sentinel-LK negativ pN0(sn)(0/3)"
 
 
@@ -289,7 +289,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall8-Patient-Klaus-Hartmann)
 

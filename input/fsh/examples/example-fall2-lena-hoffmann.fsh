@@ -103,7 +103,7 @@ Usage: #example
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
-* valueCodeableConcept.coding = $SCT#397145000 "BI-RADS assessment category 5"
+* valueCodeableConcept.coding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
 * valueCodeableConcept.text = "BI-RADS 5 — hochverdächtig auf Malignität"
 
 * note.text = "Große Raumforderung zentral rechts, 55 mm, unscharf begrenzt, Hautinfiltration, vergrößerte axilläre LK rechts"
@@ -396,7 +396,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-54
-* code.coding[=].display = "Chemotherapie"
+* code.coding[=].display = "Zytostatische Chemotherapie, Immuntherapie und antiretrovirale Therapie"
 
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
 
@@ -420,7 +420,7 @@ Usage: #example
 
 * status = #completed
 
-* medicationCodeableConcept.coding[sct] = $SCT#386905006 "Carboplatin"
+* medicationCodeableConcept.coding[sct] = $SCT#386905002 "Carboplatin"
 * medicationCodeableConcept.text = "Carboplatin"
 
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
@@ -522,7 +522,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie"
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
 * code.text = "Mastektomie rechts"
 
 // Lateralität
@@ -544,7 +544,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband Thoraxwand"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "ypT1a R0, gutes Ansprechen auf neoadjuvante Therapie"
 
 // Komplikation
@@ -577,7 +577,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall2-Operation-Mastektomie)
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "ypN0 (0/14 LK negativ)"
 
 
@@ -602,7 +602,7 @@ Usage: #example
 * focus = Reference(Procedure/Fall2-Operation-Mastektomie)
 
 * component[komplikationsart].code = $SCT#116224001 "Complication of procedure"
-* component[komplikationsart].valueCodeableConcept = $SCT#87614002 "Seroma"
+* component[komplikationsart].valueCodeableConcept = $SCT#285345009 "Seroma"
 * component[komplikationsart].valueCodeableConcept.text = "Serom"
 
 * note.text = "Serom axillär rechts, konservative Behandlung mit Punktion, kein operativer Eingriff erforderlich"
@@ -651,7 +651,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
 

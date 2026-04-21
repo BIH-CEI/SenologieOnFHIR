@@ -105,7 +105,7 @@ Usage: #example
 
 * bodySite = $SCT#73056007 "Right breast structure"
 
-* valueCodeableConcept.coding = $SCT#397144001 "BI-RADS assessment category 4"
+* valueCodeableConcept.coding = $SCT#397144001 "Mammography assessment (Category 4) - Suspicious abnormality, biopsy should be considered"
 * valueCodeableConcept.text = "BI-RADS 4c — hohe Malignitätswahrscheinlichkeit"
 
 * note.text = "Unscharf begrenzter Herdbefund rechts OAQ, 18 mm, suspekt"
@@ -241,12 +241,12 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie"
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
 // OPS-Code SLNB
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
 * code.text = "Therapeutische Mastektomie rechts + SLNB"
 
 // Lateralität
@@ -268,7 +268,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0-Resektion, Sentinel negativ pN0(sn)(0/2), Sofortrekonstruktion mit Implantat"
 
 
@@ -291,7 +291,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie"
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
 * code.text = "Prophylaktische Mastektomie links (risikoreduktiv bei BRCA1)"
 
 // Lateralität
@@ -375,7 +375,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall10-Operation-Mastektomie-Rechts)
 
 // Eingesetztes Implantat
-* focalDevice[+].action = $SCT#129336009 "Insertion"
+* focalDevice[+].action = $SCT#129336009 "Implantation - action"
 * focalDevice[=].manipulated = Reference(Device/Fall10-Implantat-Rechts)
 
 // Outcome — kein Residualstatus bei Rekonstruktion
@@ -408,7 +408,7 @@ Usage: #example
 * partOf = Reference(Procedure/Fall10-Operation-Mastektomie-Links)
 
 // Eingesetztes Implantat
-* focalDevice[+].action = $SCT#129336009 "Insertion"
+* focalDevice[+].action = $SCT#129336009 "Implantation - action"
 * focalDevice[=].manipulated = Reference(Device/Fall10-Implantat-Links)
 
 // Outcome — kein Residualstatus bei Rekonstruktion
@@ -429,7 +429,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-54
-* code.coding[=].display = "Chemotherapie"
+* code.coding[=].display = "Zytostatische Chemotherapie, Immuntherapie und antiretrovirale Therapie"
 
 * subject = Reference(Patient/Fall10-Patient-Christina-Becker)
 
@@ -453,7 +453,7 @@ Usage: #example
 
 * status = #completed
 
-* medicationCodeableConcept.coding[sct] = $SCT#386905006 "Carboplatin"
+* medicationCodeableConcept.coding[sct] = $SCT#386905002 "Carboplatin"
 * medicationCodeableConcept.text = "Carboplatin"
 
 * subject = Reference(Patient/Fall10-Patient-Christina-Becker)
@@ -517,7 +517,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger, intensitätsmodulierte Radiotherapie: Mit bildgestützter Bestrahlungsplanung"
+* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 
 * subject = Reference(Patient/Fall10-Patient-Christina-Becker)
 

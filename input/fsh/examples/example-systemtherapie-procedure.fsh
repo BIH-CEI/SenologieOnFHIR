@@ -14,7 +14,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2024"
 * code.coding[=].code = #8-54
-* code.coding[=].display = "Chemotherapie"
+* code.coding[=].display = "Zytostatische Chemotherapie, Immuntherapie und antiretrovirale Therapie"
 // code.text already set by profile to "Systemtherapie"
 
 // Patient

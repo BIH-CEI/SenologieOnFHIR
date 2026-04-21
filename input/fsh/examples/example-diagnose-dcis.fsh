@@ -13,7 +13,7 @@ Usage: #example
 * code.coding[icd10-gm].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
 * code.coding[icd10-gm].version = "2024"
 * code.coding[icd10-gm].code = #D05.1
-* code.coding[icd10-gm].display = "Carcinoma in situ der Brustdrüse: Intraduktales Karzinom in situ"
+* code.coding[icd10-gm].display = "Carcinoma in situ der Milchgänge"
 * code.text = "DCIS rechts"
 
 // Seite

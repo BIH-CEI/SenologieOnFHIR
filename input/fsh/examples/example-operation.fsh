@@ -38,7 +38,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0-Resektion"
 
 
@@ -56,7 +56,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2024"
 * code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Sentinel-Lymphonodektomie"
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
 * code.text = "Sentinel-Lymphknoten-Biopsie"
 
 * bodySite = $SCT#80248007 "Left breast structure"
@@ -68,5 +68,5 @@ Usage: #example
 * partOf = Reference(Procedure/Example-Operation-BET)
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "Sentinel-LK negativ"

@@ -50,7 +50,7 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
 * component[mamillenbefund] ^comment = "Aus dotbase: Mamillensekretion, Retraktion etc."
 * component[mamillenbefund].value[x] only CodeableConcept or string
 
-* component[lymphknotenstatus].code = $SCT#248858001 "Axillary lymph node abnormality"
+* component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
 * component[lymphknotenstatus] ^short = "Klinischer Lymphknotenstatus"
 * component[lymphknotenstatus] ^comment = "Aus dotbase: Tastbare axilläre Lymphknoten"
 * component[lymphknotenstatus].value[x] only CodeableConcept or string

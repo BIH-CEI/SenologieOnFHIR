@@ -97,7 +97,7 @@ Usage: #example
 
 * bodySite = $SCT#80248007 "Left breast structure"
 
-* valueCodeableConcept.coding = $SCT#397144001 "BI-RADS assessment category 4"
+* valueCodeableConcept.coding = $SCT#397144001 "Mammography assessment (Category 4) - Suspicious abnormality, biopsy should be considered"
 * valueCodeableConcept.text = "BI-RADS 4a — geringe Malignitätswahrscheinlichkeit"
 
 * note.text = "Gruppierte Mikrokalzifikationen links OIQ, ca. 12 mm Ausdehnung, abklärungsbedürftig"
@@ -224,7 +224,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.a0
-* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Lumpektomie"
+* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma und Destruktion von Mammagewebe: Partielle Resektion: Direkte Adaptation der benachbarten Wundflächen oder Verzicht auf Adaptation"
 * code.text = "Offene Biopsie / Nachresektion links OIQ"
 
 // Lateralität
@@ -246,7 +246,7 @@ Usage: #example
 * followUp[verband].text = "Steristrips"
 
 // Outcome
-* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
 * outcome.text = "R0, kein Upgrade — nur ADH, kein DCIS, kein invasives Karzinom"
 
 

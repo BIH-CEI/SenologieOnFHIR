@@ -94,7 +94,7 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 
 // Lymphknoten Status
 * code.coding[lymphknotenSnomed] ^short = "Lymphknoten-Status (SNOMED)"
-* code.coding[lymphknotenSnomed] = http://snomed.info/sct#248858001
+* code.coding[lymphknotenSnomed] = http://snomed.info/sct#301782006
 
 * code.coding[lymphknotenRadlex] ^short = "Lymphknoten-Status (RadLex)"
 * code.coding[lymphknotenRadlex] = http://radlex.org#RID58844
