@@ -59,7 +59,10 @@ Jede Ebene erbt von der darüberliegenden und spezialisiert sie für den jeweili
 | **ICD-10-GM** | DE National | Diagnosekodierung (DRG, Krebsregister) |
 | **ICD-O-3** | International (WHO) | Morphologie (Histologie), Topographie |
 | **OPS** | DE National | Prozedurenkodierung (KIS) |
-| **ATC** | International (WHO) | Arzneimittelklassifikation — EU-weit das primäre Kodiersystem für Medikamente (EMA, EHDS ePrescription). Der Kerndatensatz kodiert Medikamente primär in SNOMED CT und stellt [ConceptMaps](terminologie-medikation.html) (SNOMED CT → ATC) für die Meldung und den europäischen Austausch bereit. |
+| **ATC-WHO** | International (WHO) | Arzneimittelklassifikation — EU-weit das primäre Kodiersystem für Medikamente (EMA, EHDS ePrescription). Der Kerndatensatz kodiert Medikamente primär in SNOMED CT und stellt [ConceptMaps](terminologie-medikation.html) (SNOMED CT → ATC) für den europäischen Austausch bereit. |
+| **ATC-DE** | DE National (BfArM) | Deutsche ATC-Erweiterung — relevant für die Krebsregistermeldung (oBDS). Unterscheidet sich in einzelnen Codes von ATC-WHO. |
+| **UNII** | International (FDA) | Unique Ingredient Identifier — für Studienmedikationen und regulatorische Zwecke. Relevant bei klinischen Studien (z.B. IND-Arzneimittel). |
+| **INN** | International (WHO) | International Nonproprietary Name — wirkstoffbasierte Benennung, herstellerunabhängig. Standard für Studienprotokolle und wissenschaftliche Kommunikation. |
 | **RadLex** | International (RSNA) | Radiologische Befundkategorien (ACR-Dichte) |
 
 Wo internationale Terminologien Lücken aufweisen, werden [Vorschläge für das BfArM](terminologie-uebersicht.html) als nationales SNOMED-CT-Release-Center dokumentiert.
