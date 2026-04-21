@@ -35,7 +35,6 @@ Usage: #definition
 * item[=].text = "Untersuchungsdatum"
 * item[=].type = #date
 * item[=].required = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.effectiveDateTime"
 
 // Seite
 * item[+].linkId = "seitenlokalisation"
@@ -45,7 +44,6 @@ Usage: #definition
 * item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#63762007 "Breast structure"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.bodySite.coding"
 
 // Palpationsbefund
 * item[+].linkId = "palpationsbefund"
@@ -53,7 +51,6 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].code[+] = $SCT#118242002 "Finding by palpation"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:palpationsbefund.valueString"
 
 // Hautveränderungen
 * item[+].linkId = "hautveraenderungen"
@@ -61,7 +58,6 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].code[+] = $SCT#115951000119105 "Breast symptom of change in skin"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:hautveraenderungen.valueString"
 
 // Mamillenbefund
 * item[+].linkId = "mamillenbefund"
@@ -69,7 +65,6 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].code[+] = $SCT#248819006 "Nipple finding"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:mamillenbefund.valueString"
 
 // Lymphknotenstatus
 * item[+].linkId = "lymphknotenstatus"
@@ -77,4 +72,3 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].code[+] = $SCT#248858001 "Axillary lymph node abnormality"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-klinische-untersuchung#Observation.component:lymphknotenstatus.valueString"

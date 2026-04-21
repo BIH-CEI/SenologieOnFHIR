@@ -39,7 +39,6 @@ Usage: #definition
 * item[=].type = #choice
 * item[=].required = true
 * item[=].answerValueSet = "http://fhir.bih-charite.de/kds-senologie/ValueSet/vs-senologie-diagnose-sct"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:sct"
 * item[=].code[+] = $SCT#439401001 "Diagnosis"
 
 // ICD-10-GM Diagnose
@@ -47,20 +46,17 @@ Usage: #definition
 * item[=].text = "ICD-10-GM Code"
 * item[=].type = #string
 * item[=].required = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:icd10-gm.code"
 
 * item[+].linkId = "diagnose-icd10-display"
 * item[=].text = "ICD-10-GM Klartext"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:icd10-gm.display"
 
 // Freitext-Beschreibung der Diagnose
 * item[+].linkId = "diagnose-text"
 * item[=].text = "Klartextbeschreibung der Diagnose"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.code.text"
 
 // Seitenlokalisation
 * item[+].linkId = "seitenlokalisation"
@@ -70,7 +66,6 @@ Usage: #definition
 * item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#63762007 "Breast structure"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.bodySite.coding"
 * item[=].code[+] = $SCT#272741003 "Laterality"
 
 // Feststellungsdatum
@@ -78,14 +73,12 @@ Usage: #definition
 * item[=].text = "Feststellungsdatum der Diagnose"
 * item[=].type = #date
 * item[=].required = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.extension:Feststellungsdatum.value[x]"
 
 // Recorded Date
 * item[+].linkId = "recorded-date"
 * item[=].text = "Datum der Dokumentation"
 * item[=].type = #date
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.recordedDate"
 
 // Diagnosesicherung
 * item[+].linkId = "diagnosesicherung"
@@ -93,21 +86,18 @@ Usage: #definition
 * item[=].type = #choice
 * item[=].required = true
 * item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-primaertumor-diagnosesicherung"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.verificationStatus.coding"
 
 // Stadium (Freitext, passt zu stage.summary.text im Profil)
 * item[+].linkId = "stadium-summary"
 * item[=].text = "UICC-Stadium (Freitext, z.B. \"UICC IA (cT1c cN0 cM0)\")"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.stage.summary.text"
 
 // Metastasierung (Slice stage:metastasis)
 * item[+].linkId = "metastasen-summary"
 * item[=].text = "Metastasierung (Freitext, z.B. \"cM0\")"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.stage:metastasis.summary.text"
 
 // Clinical Status
 * item[+].linkId = "clinical-status"
@@ -118,11 +108,9 @@ Usage: #definition
 * item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#recurrence "Recurrence"
 * item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#remission "Remission"
 * item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#resolved "Resolved"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.clinicalStatus.coding"
 
 // Onset
 * item[+].linkId = "onset"
 * item[=].text = "Beginn der Erkrankung"
 * item[=].type = #date
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-diagnose-maligne#Condition.onsetDateTime"

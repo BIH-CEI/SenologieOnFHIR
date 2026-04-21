@@ -36,7 +36,6 @@ Usage: #definition
 * item[=].text = "Art der geplanten Operation"
 * item[=].type = #string
 * item[=].required = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.code.text"
 
 // Seite
 * item[+].linkId = "seitenlokalisation"
@@ -46,28 +45,24 @@ Usage: #definition
 * item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#63762007 "Breast structure"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.bodySite.coding"
 
 // Intention / Grund der OP
 * item[+].linkId = "intention"
 * item[=].text = "Intention / Grund der OP"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.reasonCode.text"
 
 // OP-Dauer (Minuten)
 * item[+].linkId = "op-dauer-min"
 * item[=].text = "Geplante OP-Dauer (Minuten)"
 * item[=].type = #integer
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.extension:operationsDuration.value[x].value"
 
 // CA-Behandlung / Tumorkonferenz-Zustimmung
 * item[+].linkId = "tumor-conference-consent"
 * item[=].text = "CA-Behandlung / Tumorkonferenz-Zustimmung erteilt"
 * item[=].type = #boolean
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.extension:tumorConferenceConsent.value[x].text"
 
 // Präoperative Markierung
 * item[+].linkId = "pre-op-markierung"
@@ -78,7 +73,6 @@ Usage: #definition
 * item[=].answerOption[+].valueString = "Clip-Markierung"
 * item[=].answerOption[+].valueString = "Magnetsonde"
 * item[=].answerOption[+].valueString = "Keine"
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.value[x].text"
 
 // Planungsdetails / Notes
 * item[+].linkId = "notes"
@@ -86,18 +80,15 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].repeats = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.note.text"
 
 // Präoperative Blutabnahme
 * item[+].linkId = "pre-op-blutabnahme"
 * item[=].text = "Präoperative Blutabnahme geplant"
 * item[=].type = #boolean
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpBlutabnahme.value[x].text"
 
 // Präoperative Antibiotikatherapie
 * item[+].linkId = "pre-op-antibiotika"
 * item[=].text = "Präoperative Antibiotikatherapie"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpAntibiotikatherapie.value[x]"

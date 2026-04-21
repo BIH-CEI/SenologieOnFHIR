@@ -38,21 +38,18 @@ Usage: #definition
 * item[=].text = "Datum des Tumorboards"
 * item[=].type = #date
 * item[=].required = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.period.start"
 
 // Titel
 * item[+].linkId = "tumorboard-titel"
 * item[=].text = "Titel der Empfehlung"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.title"
 
 // Zusammenfassung / Beschreibung
 * item[+].linkId = "tumorboard-beschreibung"
 * item[=].text = "Zusammenfassung der Empfehlung"
 * item[=].type = #text
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.description"
 
 // ---------- Therapieempfehlungen ----------
 
@@ -61,70 +58,60 @@ Usage: #definition
 * item[=].text = "Operative Therapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:operativeTherapy.detail.code.text"
 
 // Strahlentherapie
 * item[+].linkId = "empfehlung-strahlentherapie"
 * item[=].text = "Strahlentherapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:radiotherapy.detail.code.text"
 
 // Endokrine Therapie
 * item[+].linkId = "empfehlung-endokrin"
 * item[=].text = "Endokrine Therapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:endocrineTherapy.detail.code.text"
 
 // Chemotherapie
 * item[+].linkId = "empfehlung-chemotherapie"
 * item[=].text = "Chemotherapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:chemotherapy.detail.code.text"
 
 // Zielgerichtete Therapie
 * item[+].linkId = "empfehlung-zielgerichtet"
 * item[=].text = "Zielgerichtete Therapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:targetedTherapy.detail.code.text"
 
 // Immuntherapie
 * item[+].linkId = "empfehlung-immuntherapie"
 * item[=].text = "Immuntherapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:immunotherapy.detail.code.text"
 
 // Weitere Diagnostik
 * item[+].linkId = "empfehlung-diagnostik"
 * item[=].text = "Weitere Diagnostik empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:furtherDiagnostics.detail.code.text"
 
 // Klinische Studie
 * item[+].linkId = "empfehlung-studie"
 * item[=].text = "Klinische Studie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:clinicalTrial.detail.code.text"
 
 // Genetische Untersuchung
 * item[+].linkId = "empfehlung-genetik"
 * item[=].text = "Genetische Untersuchung empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:genetics.detail.code.text"
 
 // Nachsorge
 * item[+].linkId = "empfehlung-nachsorge"
 * item[=].text = "Nachsorge-Empfehlung"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.activity:followUp.detail.code.text"
 
 // Sonstiges
 * item[+].linkId = "empfehlung-sonstiges"
@@ -132,4 +119,3 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].repeats = true
-* item[=].definition = "http://fhir.bih-charite.de/kds-senologie/StructureDefinition/senologie-tumorboard-empfehlung#CarePlan.note.text"
