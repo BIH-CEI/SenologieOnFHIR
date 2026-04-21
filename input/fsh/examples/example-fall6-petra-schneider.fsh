@@ -204,6 +204,7 @@ Usage: #example
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband"
 
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "R0, knapper Resektionsrand (2 mm). Tis(DCIS), kein invasiver Anteil."
 
 

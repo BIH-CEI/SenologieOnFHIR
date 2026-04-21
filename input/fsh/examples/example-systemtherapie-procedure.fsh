@@ -25,6 +25,7 @@ Usage: #example
 * performedPeriod.end = "2024-05-20"
 
 // Outcome: regulär abgeschlossen
+* outcome.coding = $MII_CS_Onko_Therapie_Ende_Grund#E "reguläres Ende"
 * outcome.text = "Therapie planmäßig abgeschlossen, klinisch partielle Remission"
 
 // Bezogene Diagnose

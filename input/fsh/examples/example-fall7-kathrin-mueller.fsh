@@ -257,6 +257,7 @@ Usage: #example
 * performedPeriod.start = "2025-03-24"
 * performedPeriod.end = "2025-08-10"
 
+* outcome.coding = $MII_CS_Onko_Therapie_Ende_Grund#E "reguläres Ende"
 * outcome.text = "Therapie planmäßig abgeschlossen, klinisch komplette Remission"
 
 * reasonReference = Reference(Condition/Fall7-Diagnose-Mammakarzinom)
@@ -392,6 +393,7 @@ Usage: #example
 * followUp[verband].coding = $SCT#262171009 "Dressing of wound"
 * followUp[verband].text = "Kompressionsverband"
 
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "ypT0 ypN0(sn)(0/2) — pathologische Komplettremission (pCR), R0"
 
 

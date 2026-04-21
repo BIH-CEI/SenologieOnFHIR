@@ -268,6 +268,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "R0-Resektion, Sentinel negativ pN0(sn)(0/2), Sofortrekonstruktion mit Implantat"
 
 
@@ -306,8 +307,7 @@ Usage: #example
 * followUp[drainage].coding = $SCT#122462000 "Drainage device"
 * followUp[drainage].text = "Redon-Drainage 10 Ch"
 
-// Outcome
-* outcome.text = "Prophylaktische Mastektomie links komplikationslos, Sofortrekonstruktion mit Implantat"
+// Outcome — kein Residualstatus bei prophylaktischer OP (kein Tumor)
 
 
 // --- Implantat rechts ---
@@ -378,7 +378,7 @@ Usage: #example
 * focalDevice[+].action = $SCT#129336009 "Insertion"
 * focalDevice[=].manipulated = Reference(Device/Fall10-Implantat-Rechts)
 
-* outcome.text = "Implantatrekonstruktion rechts komplikationslos"
+// Outcome — kein Residualstatus bei Rekonstruktion
 
 
 // --- Rekonstruktion links (Implantat) ---
@@ -411,7 +411,7 @@ Usage: #example
 * focalDevice[+].action = $SCT#129336009 "Insertion"
 * focalDevice[=].manipulated = Reference(Device/Fall10-Implantat-Links)
 
-* outcome.text = "Implantatrekonstruktion links komplikationslos"
+// Outcome — kein Residualstatus bei Rekonstruktion
 
 
 // --- Adjuvante Systemtherapie ---
@@ -436,6 +436,7 @@ Usage: #example
 * performedPeriod.start = "2025-07-21"
 * performedPeriod.end = "2025-11-10"
 
+* outcome.coding = $MII_CS_Onko_Therapie_Ende_Grund#E "reguläres Ende"
 * outcome.text = "Chemotherapie planmäßig abgeschlossen"
 
 * reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)

@@ -246,6 +246,7 @@ Usage: #example
 * followUp[verband].text = "Steristrips"
 
 // Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "R0, kein Upgrade — nur ADH, kein DCIS, kein invasives Karzinom"
 
 

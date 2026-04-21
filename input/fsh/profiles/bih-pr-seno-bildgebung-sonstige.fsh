@@ -22,15 +22,15 @@ Description: "DiagnosticReport für nicht-mammaspezifische Bildgebung im Rahmen 
 * code ^short = "Art der Bildgebung (Modalität)"
 * code ^comment = "Kodierung der Bildgebungsmodalität über LOINC oder SNOMED CT. Im Gegensatz zum Mamma-Bildgebungsprofil sind hier keine festen Slices definiert — die konkreten Modalitäten werden durch das Formular gesteuert."
 * code.coding MS
-* code.coding ^slicing.discriminator.type = #value
-* code.coding ^slicing.discriminator.path = "system"
+* code.coding ^slicing.discriminator.type = #pattern
+* code.coding ^slicing.discriminator.path = "$this"
 * code.coding ^slicing.rules = #open
 * code.coding contains
     loinc 0..1 MS and
     snomed 0..1 MS
-* code.coding[loinc].system = "http://loinc.org" (exactly)
+* code.coding[loinc] ^patternCoding.system = "http://loinc.org"
 * code.coding[loinc] ^short = "LOINC-Code der Bildgebungsmodalität"
-* code.coding[snomed].system = "http://snomed.info/sct" (exactly)
+* code.coding[snomed] ^patternCoding.system = "http://snomed.info/sct"
 * code.coding[snomed] ^short = "SNOMED-CT-Code der Bildgebungsmodalität"
 
 // Patientenbezug

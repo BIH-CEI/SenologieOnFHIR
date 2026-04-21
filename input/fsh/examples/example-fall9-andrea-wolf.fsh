@@ -248,6 +248,7 @@ Usage: #example
 * performedPeriod.start = "2025-04-28"
 * performedPeriod.end = "2025-09-15"
 
+* outcome.coding = $MII_CS_Onko_Therapie_Ende_Grund#E "reguläres Ende"
 * outcome.text = "Chemotherapie planmäßig abgeschlossen"
 
 * reasonReference = Reference(Condition/Fall9-Diagnose-Mammakarzinom)
@@ -361,6 +362,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "R0-Resektion, pN3a (12/18 LK befallen)"
 
 

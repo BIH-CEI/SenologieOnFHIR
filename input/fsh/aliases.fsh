@@ -9,6 +9,10 @@ Alias: $MII_PR_Onko_Strahlentherapie_Bestrahlung = https://www.medizininformatik
 Alias: $MII_PR_Onko_Systemische_Therapie = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie
 Alias: $MII_PR_Onko_Systemische_Therapie_Medikation = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie-medikation
 
+// --- MII Onkologie CodeSystems / ValueSets ---
+Alias: $MII_CS_Onko_Residualstatus = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus
+Alias: $MII_CS_Onko_Therapie_Ende_Grund = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-ende-grund
+
 // --- MII Onkologie Extensions ---
 Alias: $MII_EX_Onko_Strahlentherapie_Intention = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention
 Alias: $MII_EX_Onko_Strahlentherapie_Bestrahlung_Boost = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-boost

@@ -38,4 +38,5 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband"
 
 // Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "R0-Resektion, Sentinel negativ"

@@ -403,6 +403,7 @@ Usage: #example
 * performedPeriod.start = "2025-03-01"
 * performedPeriod.end = "2025-07-15"
 
+* outcome.coding = $MII_CS_Onko_Therapie_Ende_Grund#E "reguläres Ende"
 * outcome.text = "Therapie planmäßig abgeschlossen, klinisch gute Remission"
 
 * reasonReference = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
@@ -548,6 +549,7 @@ Usage: #example
 * followUp[verband].text = "Kompressionsverband Thoraxwand"
 
 // Outcome
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "R0"
 * outcome.text = "ypT1a ypN0 (0/14) R0, gutes Ansprechen auf neoadjuvante Therapie"
 
 // Komplikation
@@ -603,6 +605,7 @@ Usage: #example
 * performedPeriod.start = "2025-10-01"
 * performedPeriod.end = "2026-07-01"
 
+* outcome.coding = $MII_CS_Onko_Therapie_Ende_Grund#P "Abbruch wegen Progress"
 * outcome.text = "Pembrolizumab Maintenance für 9 Zyklen, dann Abbruch wegen Progression"
 
 * reasonReference = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
