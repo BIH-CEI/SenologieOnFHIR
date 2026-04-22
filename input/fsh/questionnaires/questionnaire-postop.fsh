@@ -57,7 +57,7 @@ Usage: #definition
 * item[=].item[=].required = true
 * item[=].item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#63762007 "Breast structure"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
 
 // Performed Date
 * item[=].item[+].linkId = "op-datum"

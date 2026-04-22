@@ -65,7 +65,7 @@ Usage: #definition
 * item[=].required = true
 * item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
 * item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
-* item[=].answerOption[+].valueCoding = $SCT#63762007 "Breast structure"
+* item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
 * item[=].code[+] = $SCT#272741003 "Laterality"
 
 // Feststellungsdatum

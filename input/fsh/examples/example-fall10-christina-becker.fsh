@@ -242,12 +242,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
 * code.coding[=].display = "(Modifizierte radikale) Mastektomie"
-// OPS-Code SLNB
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #5-401.11
-* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
-* code.text = "Therapeutische Mastektomie rechts + SLNB"
+* code.text = "Therapeutische Mastektomie rechts"
 
 // Lateralität
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -308,6 +303,35 @@ Usage: #example
 * followUp[drainage].text = "Redon-Drainage 10 Ch"
 
 // Outcome — kein Residualstatus bei prophylaktischer OP (kein Tumor)
+
+
+// --- SLNB rechts (Subprozedur der Mastektomie) ---
+Instance: Fall10-Operation-SLNB
+InstanceOf: Senologie_Operation
+Title: "Fall 10: Sentinel-Lymphknoten-Biopsie rechts"
+Description: "SLNB als Subprozedur der therapeutischen Mastektomie rechts"
+Usage: #example
+
+* status = #completed
+* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+
+* category = $SCT#234262008 "Excision of axillary lymph node"
+
+* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-401.11
+* code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
+* code.text = "Sentinel-Lymphknoten-Biopsie rechts"
+
+* bodySite = $SCT#73056007 "Right breast structure"
+* performedDateTime = "2025-06-18"
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
+
+* partOf = Reference(Procedure/Fall10-Operation-Mastektomie-Rechts)
+
+* outcome.coding = $MII_CS_Onko_Residualstatus#R0 "Kein Residualtumor"
+* outcome.text = "Sentinel-LK negativ pN0(sn)(0/2)"
 
 
 // --- Implantat rechts ---

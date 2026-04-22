@@ -15,7 +15,7 @@ Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Kl
 // Code: Clavien-Dindo classification
 * code MS
 * code.coding MS
-* code.coding = $SCT#789279006 "Clavien-Dindo complication grade (observable entity)"
+* code.coding = $SCT#789279006 "Clavien-Dindo classification grade"
 * code.coding ^short = "Clavien-Dindo-Klassifikation"
 
 // Wert: Clavien-Dindo Grade

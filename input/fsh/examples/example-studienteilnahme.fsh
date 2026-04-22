@@ -36,7 +36,7 @@ Usage: #example
 * consent.display = "Studieneinwilligung ADAPT-HER2 vom 2024-02-10"
 
 // Screeningstatus: geeignet
-* extension[Screeningstatus].valueCodeableConcept = $SCT#385645004 "Eligible (qualifier value)"
+* extension[Screeningstatus].valueCodeableConcept = $SCT#1304144001 "Eligible for clinical trial"
 
 // Kontaktperson
 * extension[Kontakt].valueString = "Dr. med. Anna Schmidt, Studienzentrale Senologie"

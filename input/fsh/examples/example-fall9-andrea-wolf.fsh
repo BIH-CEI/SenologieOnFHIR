@@ -400,7 +400,7 @@ Usage: #example
 
 * status = #final
 
-* code.coding = $SCT#789279006 "Clavien-Dindo complication grade (observable entity)"
+* code.coding = $SCT#789279006 "Clavien-Dindo classification grade"
 
 * valueCodeableConcept.text = "Clavien-Dindo Grad II"
 

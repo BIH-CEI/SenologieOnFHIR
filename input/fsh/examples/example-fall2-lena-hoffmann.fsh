@@ -376,7 +376,7 @@ Usage: #example
 
 * consent.display = "Studieneinwilligung KEYNOTE-522 vom 2025-02-25"
 
-* extension[Screeningstatus].valueCodeableConcept = $SCT#385645004 "Eligible (qualifier value)"
+* extension[Screeningstatus].valueCodeableConcept = $SCT#1304144001 "Eligible for clinical trial"
 * extension[Kontakt].valueString = "Dr. med. Markus Weber, Studienzentrale Onkologie"
 * extension[Aufklaerungsdatum].valueDate = "2025-02-25"
 
@@ -590,7 +590,7 @@ Usage: #example
 
 * status = #final
 
-* code.coding = $SCT#789279006 "Clavien-Dindo complication grade (observable entity)"
+* code.coding = $SCT#789279006 "Clavien-Dindo classification grade"
 
 * valueCodeableConcept.text = "Clavien-Dindo Grad I"
 
