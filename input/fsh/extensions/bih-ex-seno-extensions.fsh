@@ -1,5 +1,5 @@
 // ============================================================
-// Senologie Custom Extensions (9 remaining)
+// Senologie Custom Extensions (10 remaining)
 // ============================================================
 // After refactoring to MII parent profiles, only extensions
 // without adequate native FHIR or MII equivalents remain.
@@ -43,13 +43,19 @@ Title: "OP-Lagerung/Tischanordnung"
 Description: "OP-Lagerung und Tischanordnung — kein natives FHIR-Äquivalent"
 * value[x] only CodeableConcept
 
-// === Strahlentherapie (1 Extension) ===
+// === Strahlentherapie (2 Extensions) ===
 // Used by: Senologie_Strahlentherapie (Procedure)
 
 Extension: EX_Senologie_SessionCount
 Id: ex-senologie-session-count
 Title: "Anzahl Bestrahlungssitzungen"
 Description: "Anzahl der Bestrahlungssitzungen — MII Onko hat kein Fraktionszahl-Element"
+* value[x] only Quantity
+
+Extension: EX_Senologie_Einzeldosis
+Id: ex-senologie-einzeldosis
+Title: "Einzeldosis pro Fraktion"
+Description: "Einzeldosis pro Bestrahlungsfraktion in Gy — OncoBox 2.0 H10, oBDS Einzeldosis"
 * value[x] only Quantity
 
 // === Systemtherapie Medikation (2 Extensions) ===
