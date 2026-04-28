@@ -14,9 +14,9 @@ Usage: #example
 
 // OPS-Code (inherited from MII Onko)
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2024"
-* code.coding[=].code = #5-870.0
-* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma und Destruktion von Mammagewebe: Exzision"
+* code.coding[=].version = "2025"
+* code.coding[=].code = #5-870.a0
+* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma und Destruktion von Mammagewebe: Partielle Resektion: Ohne weitere Maßnahmen"
 * code.text = "BET links, Sentinel-LK-Biopsie"
 
 // Lateralität

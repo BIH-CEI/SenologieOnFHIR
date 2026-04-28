@@ -116,7 +116,7 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * activity[furtherIntervention].detail.kind = #ServiceRequest
 
 // Genetische Untersuchung
-* activity[genetics].detail.code = $SCT#405825005 "Molecular genetics procedure (procedure)"
+* activity[genetics].detail.code = $SCT#405825005 "Molecular genetic test"
 * activity[genetics].detail.code ^short = "Empfohlene genetische Untersuchung"
 * activity[genetics].detail.code ^comment = "Aus dotbase: 'Genetische Untersuchung' (choice, z.B. BRCA)"
 * activity[genetics].detail.kind = #ServiceRequest

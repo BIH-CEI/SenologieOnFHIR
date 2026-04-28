@@ -4,7 +4,7 @@
 // Ziel: Senologie_Klinische_Untersuchung (Observation)
 // ============================================================
 
-Instance: QuestKlinischeUntersuchung
+Instance: senologie-klinische-untersuchung
 InstanceOf: Questionnaire
 Title: "Fragebogen: Klinische Untersuchung Mamma"
 Description: "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Definition-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel."
@@ -71,4 +71,4 @@ Usage: #definition
 * item[=].text = "Klinischer Lymphknotenstatus (axillär)"
 * item[=].type = #text
 * item[=].required = false
-* item[=].code[+] = $SCT#248858001 "Axillary lymph node abnormality"
+* item[=].code[+] = $SCT#284429001 "Examination of axillary lymph nodes"

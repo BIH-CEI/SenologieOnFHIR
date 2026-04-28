@@ -4,7 +4,7 @@
 // Ziel: Senologie_OP_Planung (ServiceRequest) über Definition-based Extraction
 // ============================================================
 
-Instance: QuestOPPlanung
+Instance: senologie-op-planung
 InstanceOf: Questionnaire
 Title: "Fragebogen: OP Planung"
 Description: "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Definition-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel."

@@ -11,7 +11,7 @@
 // Extraktion: SDC Definition-based Extraction pro Gruppe.
 // ============================================================
 
-Instance: QuestPostOPDokumentation
+Instance: senologie-postop
 InstanceOf: Questionnaire
 Title: "Fragebogen: Postoperative Dokumentation"
 Description: "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, Observation)."
@@ -79,7 +79,7 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#P "palliativ"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#D "diagnostisch"
-* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#R "Revision"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#R "Revision/Komplikation"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#S "sonstiges"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#X "Fehlende Angabe"
 
@@ -143,11 +143,11 @@ Usage: #definition
 * item[=].item[=].text = "Clavien-Dindo-Grad"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1367519000 "Clavien-Dindo complication grade I"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1367521005 "Clavien-Dindo complication grade II"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1367523008 "Clavien-Dindo complication grade III"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1367525001 "Clavien-Dindo complication grade IV"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1367527009 "Clavien-Dindo complication grade V"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1367519000 "Clavien-Dindo classification grade I"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1367520006 "Clavien-Dindo classification grade II"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1367521005 "Clavien-Dindo classification grade III"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1367524002 "Clavien-Dindo classification grade IV"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1367527009 "Clavien-Dindo classification grade V"
 
 // Datum der Komplikation
 * item[=].item[+].linkId = "komplikation-datum"

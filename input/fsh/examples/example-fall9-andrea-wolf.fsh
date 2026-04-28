@@ -375,7 +375,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-402.12
-* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-III"
+* code.coding[=].display = "Regionale Lymphadenektomie (Ausräumung mehrerer Lymphknoten einer Region) als selbständiger Eingriff: Axillär: Level 1 und 2"
 * code.text = "Axilladissektion Level I-III"
 
 * bodySite = $SCT#80248007 "Left breast structure"

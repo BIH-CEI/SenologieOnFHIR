@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST"
-/// name = "SenologieToObdsSYST"
-/// title = "Senologie FHIR to oBDS Systemische Therapie (SYST)"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST" = "SenologieToObdsSYST"
+
+// title: Senologie FHIR to oBDS Systemische Therapie (SYST)
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBDSMeldung as target
@@ -68,7 +68,7 @@ group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundl
   } "MapTherapieart";
 
   // Protokoll: aus Procedure.usedCode.text (Protokollbezeichnung, z.B. "EC-T")
-  src.usedCode first as uc then {
+  src.usedCode as uc then {
     uc.text as t -> tgt.protokoll = t "SetProtokoll";
   } "MapProtokoll";
 

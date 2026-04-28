@@ -233,7 +233,7 @@ Usage: #example
 
 * status = #available
 
-* type.coding[sct] = $SCT#127465003 "Mastectomy specimen"
+* type.coding[sct] = $SCT#122600000 "Specimen from breast obtained by modified radical mastectomy"
 * type.text = "Mastektomie-Präparat"
 
 * subject = Reference(Patient/Fall3-Patient-Sabine-Weber)
@@ -241,7 +241,7 @@ Usage: #example
 * collection.bodySite = $SCT#73056007 "Right breast structure"
 * collection.bodySite.text = "Rechte Brust, Mastektomie mit Axilladissektion"
 * collection.collectedDateTime = "2025-04-08"
-* collection.method = $SCT#392021009 "Mastectomy"
+* collection.method = $SCT#5884001 "Mastectomy"
 
 
 // --- Operation ---
@@ -294,7 +294,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-402.11
-* code.coding[=].display = "Regionale Lymphadenektomie: Axillär: Level I-II"
+* code.coding[=].display = "Regionale Lymphadenektomie (Ausräumung mehrerer Lymphknoten einer Region) als selbständiger Eingriff: Axillär: Level 1"
 * code.text = "Axilladissektion Level I-II"
 
 * bodySite = $SCT#73056007 "Right breast structure"

@@ -1,15 +1,22 @@
 #!/bin/sh
-# Pre-commit hook: auto-render staged .puml files
+# Pre-commit hook: auto-process staged files
 # Install: ln -sf ../../scripts/pre-commit .git/hooks/pre-commit
 
+# --- PlantUML: render staged .puml files ---
 STAGED_PUML=$(git diff --cached --name-only --diff-filter=ACM | grep '\.puml$' || true)
-[ -z "$STAGED_PUML" ] && exit 0
+if [ -n "$STAGED_PUML" ]; then
+    sh scripts/render-plantuml.sh
+    for puml in $STAGED_PUML; do
+        base=$(basename "$puml" .puml)
+        [ -f "input/images/${base}.png" ] && git add "input/images/${base}.png"
+    done
+fi
 
-# Render all (fast enough for a few diagrams)
-sh scripts/render-plantuml.sh
-
-# Stage rendered images
-for puml in $STAGED_PUML; do
-    base=$(basename "$puml" .puml)
-    [ -f "input/images/${base}.png" ] && git add "input/images/${base}.png"
-done
+# --- FML: fix IG-Publisher-incompatible syntax in staged .map files ---
+STAGED_MAPS=$(git diff --cached --name-only --diff-filter=ACM | grep '\.map$' || true)
+if [ -n "$STAGED_MAPS" ]; then
+    python3 scripts/fix-fml-compat.py
+    for mapfile in $STAGED_MAPS; do
+        [ -f "$mapfile" ] && git add "$mapfile"
+    done
+fi

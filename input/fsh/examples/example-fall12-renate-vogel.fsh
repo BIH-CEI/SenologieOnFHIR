@@ -310,7 +310,7 @@ Usage: #example
 
 * status = #available
 
-* type.coding[sct] = $SCT#309502007 "Excision biopsy specimen"
+* type.coding[sct] = $SCT#397078009 "Specimen obtained by excisional biopsy"
 * type.text = "Exzisionspräparat"
 
 * subject = Reference(Patient/Fall12-Patient-Renate-Vogel)

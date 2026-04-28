@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust"
-/// name = "SenologieToIqtigBrust"
-/// title = "Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust" = "SenologieToIqtigBrust"
+
+// title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
@@ -71,7 +71,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as tEntry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
     tEntry.resource as tObs then {
       tObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.cT = cd "SetCT";
         } "MapCTCoding";
       } "MapCTValue";
@@ -81,7 +81,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as nEntry where resource.is(Observation) and resource.code.coding.exists(code = '21906-3') then {
     nEntry.resource as nObs then {
       nObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.cN = cd "SetCN";
         } "MapCNCoding";
       } "MapCNValue";
@@ -91,7 +91,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as mEntry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
     mEntry.resource as mObs then {
       mObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.cM = cd "SetCM";
         } "MapCMCoding";
       } "MapCMValue";
@@ -102,7 +102,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as uiccEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
     uiccEntry.resource as uiccObs then {
       uiccObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.uiccStadiumKlinisch = cd "SetUICCKlin";
         } "MapUICCKlinCoding";
       } "MapUICCKlinValue";
@@ -140,7 +140,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as biradsEntry where resource.is(Observation) and resource.code.coding.exists(code = '72133-2') then {
     biradsEntry.resource as biradsObs then {
       biradsObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.birads = cd "SetBIRADS";
         } "MapBIRADSCoding";
       } "MapBIRADSValue";
@@ -151,7 +151,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
   bundle.entry as befEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund')) then {
     befEntry.resource as befObs then {
       befObs.value as val then {
-        val.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b' first then {
+        val.coding as c where system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b' then {
           c.code as cd -> tgt.befundcode = cd "SetBefundB";
         } "MapBefundBCoding";
       } "MapBefundValue";
@@ -167,7 +167,7 @@ group MapBrust(source src : Condition, target tgt : BackboneElement, source bund
     srEntry.resource as sr then {
       sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung' then {
         ext.value as val then {
-          val.coding as c first then {
+          val.coding as c then {
             // M=Mammo -> 1, S=Sono -> 2, T=MRT -> 3, N=keine -> 0
             c.code as cd where $this = 'M' -> tgt.drahtmarkierung = '1' "SetDrahtMammo";
             c.code as cd where $this = 'S' -> tgt.drahtmarkierung = '2' "SetDrahtSono";

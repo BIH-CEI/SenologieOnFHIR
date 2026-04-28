@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation"
-/// name = "SenologieToIqtigOperation"
-/// title = "Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation" = "SenologieToIqtigOperation"
+
+// title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
@@ -82,7 +82,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as digEntry where resource.is(Observation) and resource.code.coding.exists(code = '22748-9') then {
     digEntry.resource as digObs then {
       digObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           // 1222584008=maligne -> 1, 36103009=benigne -> 2
           c.code as cd where $this = '1222584008' -> tgt.dignitaetIntraop = '1' "SetDigMaligne";
           c.code as cd where $this = '36103009' -> tgt.dignitaetIntraop = '2' "SetDigBenigne";
@@ -132,7 +132,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '33732-9') then {
     gradEntry.resource as gradObs then {
       gradObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.grading = cd "SetGrading";
         } "MapGradingCoding";
       } "MapGradingValue";
@@ -161,7 +161,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as mfEntry where resource.is(Observation) and resource.code.coding.exists(code = '44638-1') then {
     mfEntry.resource as mfObs then {
       mfObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd where $this = '56061002' -> tgt.multifokalitaet = '0' "SetMFNein";
           c.code as cd where $this = '399566009' -> tgt.multifokalitaet = '1' "SetMFJa";
           c.code as cd where $this = '367651003' -> tgt.multifokalitaet = '2' "SetMFMZ";
@@ -176,7 +176,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as ptEntry where resource.is(Observation) and resource.code.coding.exists(code = '21899-0') then {
     ptEntry.resource as ptObs then {
       ptObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.pT = cd "SetPT";
         } "MapPTCoding";
       } "MapPTValue";
@@ -187,7 +187,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as pnEntry where resource.is(Observation) and resource.code.coding.exists(code = '21900-6') then {
     pnEntry.resource as pnObs then {
       pnObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.pN = cd "SetPN";
         } "MapPNCoding";
       } "MapPNValue";
@@ -198,7 +198,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as pmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21901-4') then {
     pmEntry.resource as pmObs then {
       pmObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.pM = cd "SetPM";
         } "MapPMCoding";
       } "MapPMValue";
@@ -209,7 +209,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as uiccEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
     uiccEntry.resource as uiccObs then {
       uiccObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.uiccStadiumPatho = cd "SetUICCPatho";
         } "MapUICCPathoCoding";
       } "MapUICCPathoValue";
@@ -325,7 +325,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as kompEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
     kompEntry.resource as kompObs -> tgt.komplikationen as kompItem then {
       kompObs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> kompItem.kuerzel = cd "SetKomplKuerzel";
         } "MapKomplKuerzelCoding";
       } "MapKomplValue";
@@ -336,7 +336,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as kcEntry where resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item') then {
     kcEntry.resource as kcCond -> tgt.komplikationen as kompItem then {
       kcCond.code as code then {
-        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' first then {
+        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then {
           c.code as cd -> kompItem.icdCode = cd "SetKomplICD";
         } "MapKomplICDCoding";
       } "MapKomplCondCode";

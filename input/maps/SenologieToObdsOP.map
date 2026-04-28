@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP"
-/// name = "SenologieToObdsOP"
-/// title = "Senologie Operation Bundle to oBDS OP-Meldung"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP" = "SenologieToObdsOP"
+
+// title: Senologie Operation Bundle to oBDS OP-Meldung
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
@@ -49,7 +49,7 @@ group SenologieToObdsOP(source src : Bundle, target tgt : OBDSMeldung) {
 group MapOP(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
 
   // OP_ID: aus Procedure.identifier
-  src.identifier as id first then {
+  src.identifier as id then {
     id.value as v -> tgt.opID = v "SetOPID";
   } "MapOPID";
 

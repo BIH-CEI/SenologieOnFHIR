@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis"
-/// name = "SenologieToIqtigBasis"
-/// title = "Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis" = "SenologieToIqtigBasis"
+
+// title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
@@ -86,7 +86,7 @@ group MapBasisPatient(source src : Patient, target tgt : BackboneElement) {
   src.gender as g where $this = 'unknown' -> tgt.geschlecht = '9' "SetGeschlechtU";
 
   // B:PLZ - Postleitzahl
-  src.address as addr first then {
+  src.address as addr then {
     addr.postalCode as plz -> tgt.postleitzahl = plz "SetPLZ";
   } "MapPLZ";
 }
@@ -98,7 +98,7 @@ group MapBasisPatient(source src : Patient, target tgt : BackboneElement) {
 group MapBasisEncounter(source src : Encounter, target tgt : BackboneElement) {
 
   // B:VORGANGSNR - Fall-ID aus Encounter.identifier
-  src.identifier as id first then {
+  src.identifier as id then {
     id.value as v -> tgt.fallId = v "SetFallId";
   } "MapFallId";
 
@@ -115,7 +115,7 @@ group MapBasisEncounter(source src : Encounter, target tgt : BackboneElement) {
   // B:AUFNANLASS - Aufnahmeanlass aus Encounter.extension (ISiK/KDS)
   src.extension as ext where url = 'https://gematik.de/fhir/isik/StructureDefinition/ISiKAufnahmeanlass' then {
     ext.value as val then {
-      val.coding as c first then {
+      val.coding as c then {
         c.code as cd -> tgt.aufnahmeanlass = cd "SetAufnahmeanlass";
       } "MapAufnahmeanlassCoding";
     } "MapAufnahmeanlassValue";
@@ -124,7 +124,7 @@ group MapBasisEncounter(source src : Encounter, target tgt : BackboneElement) {
   // B:AUFNGRUND - Aufnahmegrund Paragraph 301 SGB V
   src.extension as ext where url = 'http://fhir.de/StructureDefinition/Aufnahmegrund' then {
     ext.value as val then {
-      val.coding as c first then {
+      val.coding as c then {
         c.code as cd -> tgt.aufnahmegrund = cd "SetAufnahmegrund";
       } "MapAufnahmegrundCoding";
     } "MapAufnahmegrundValue";
@@ -133,7 +133,7 @@ group MapBasisEncounter(source src : Encounter, target tgt : BackboneElement) {
   // B:ENTLGRUND - Entlassungsgrund aus hospitalization.dischargeDisposition
   src.hospitalization as hosp then {
     hosp.dischargeDisposition as dd then {
-      dd.coding as c first then {
+      dd.coding as c then {
         c.code as cd -> tgt.entlassungsgrund = cd "SetEntlassungsgrund";
       } "MapEntlassungsgrundCoding";
     } "MapDischargeDisposition";

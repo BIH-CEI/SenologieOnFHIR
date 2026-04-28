@@ -6,7 +6,7 @@
 // Ziel: Senologie_Tumorboard_Empfehlung (CarePlan)
 // ============================================================
 
-Instance: QuestTumorboard
+Instance: senologie-tumorboard
 InstanceOf: Questionnaire
 Title: "Fragebogen: Tumorboard Empfehlung"
 Description: "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Definition-based Extraction mit dem Senologie_Tumorboard_Empfehlung-Profil (CarePlan) als Ziel."

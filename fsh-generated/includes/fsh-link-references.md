@@ -73,6 +73,7 @@
 [Fall10-Patho-Conclusion]: Observation-Fall10-Patho-Conclusion.html
 [Fall10-Patient-Christina-Becker]: Patient-Fall10-Patient-Christina-Becker.html
 [Fall10-Operation-Mastektomie-Links]: Procedure-Fall10-Operation-Mastektomie-Links.html
+[Fall10-Operation-SLNB]: Procedure-Fall10-Operation-SLNB.html
 [Fall10-Rekonstruktion-Links]: Procedure-Fall10-Rekonstruktion-Links.html
 [Fall10-Rekonstruktion-Rechts]: Procedure-Fall10-Rekonstruktion-Rechts.html
 [Fall10-Pathologie-Praeparat]: Specimen-Fall10-Pathologie-Praeparat.html
@@ -252,11 +253,10 @@
 [Fall9-Pathologie-Praeparat]: Specimen-Fall9-Pathologie-Praeparat.html
 [Fall9-Tumorboard]: CarePlan-Fall9-Tumorboard.html
 [Fall9-Verlauf-12Monate]: Observation-Fall9-Verlauf-12Monate.html
-[QuestKlinischeUntersuchung]: Questionnaire-QuestKlinischeUntersuchung.html
-[QuestOPPlanung]: Questionnaire-QuestOPPlanung.html
-[QuestPostOPDokumentation]: Questionnaire-QuestPostOPDokumentation.html
-[QuestDiagnoseMaligne]: Questionnaire-QuestDiagnoseMaligne.html
-[QuestTumorboard]: Questionnaire-QuestTumorboard.html
+[senologie-klinische-untersuchung]: Questionnaire-senologie-klinische-untersuchung.html
+[senologie-op-planung]: Questionnaire-senologie-op-planung.html
+[senologie-postop]: Questionnaire-senologie-postop.html
+[senologie-tumorboard]: Questionnaire-senologie-tumorboard.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
 [IQTIGMammachirurgie181]: StructureDefinition-iqtig-mammachirurgie-181.html
 [IRegBrustimplantatMeldung]: StructureDefinition-ireg-brustimplantat-meldung.html

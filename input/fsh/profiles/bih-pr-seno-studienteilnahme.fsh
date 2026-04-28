@@ -91,6 +91,6 @@ Description: "Screeningstatus einer klinischen Studienteilnahme"
 * insert PR_CS_VS_Version
 * $SCT#385432009 "Not applicable (qualifier value)"
 * $SCT#709491003 "Assessed (qualifier value)"
-* $SCT#385645004 "Eligible (qualifier value)"
+* $SCT#1304144001 "Eligible for clinical trial"
 * $SCT#385646003 "Not eligible (qualifier value)"
 * $SCT#260385009 "Negative (qualifier value)"

@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToIRegOperation"
-/// name = "SenologieToIRegOperation"
-/// title = "Senologie Procedure + Device to IRegG Operation + Artikelidentifikation"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToIRegOperation" = "SenologieToIRegOperation"
+
+// title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
@@ -29,7 +29,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   // --- OPE_* Basisdaten ---
 
   // OPE_LaufendeNummer: aus Procedure.identifier oder Sequenz
-  src.identifier as id first then {
+  src.identifier as id then {
     id.value as v -> tgt.laufendeNummer = v "SetOpLaufendeNummer";
   } "MapOpLaufendeNummer";
 
@@ -286,13 +286,13 @@ group MapArtikelidentifikation(source src : Device, target tgt : BackboneElement
   // --- ARI_* Identifikation ---
 
   // ARI_LaufendeNummer: aus Device.identifier oder Sequenz
-  src.identifier as id first then {
+  src.identifier as id then {
     id.value as v -> tgt.laufendeNummer = v "SetAriLaufendeNummer";
   } "MapAriLaufendeNummer";
   src where identifier.exists().not() -> tgt.laufendeNummer = 1 "SetAriLaufendeNummerDefault";
 
   // ARI_Artikelkennzeichen: UDI oder REF-Nummer
-  src.udiCarrier as udi first then {
+  src.udiCarrier as udi then {
     udi.deviceIdentifier as di -> tgt.artikelkennzeichen = di "SetArtikelkennzeichenUDI";
     // Wenn UDI vorhanden, Typ = UDI
     udi -> tgt.kennzeichenTypSchluessel = '1' "SetKennzeichenTypUDI";
@@ -329,12 +329,12 @@ group MapArtikelbeschreibung(source src : Device, target tgt : BackboneElement) 
   src where serialNumber.exists().not() -> tgt.serienNummerUnbekannt = 1 "SetSerienNummerUnbekannt";
 
   // ARB_Artikelbezeichnung: aus Device.deviceName oder Device.type.text
-  src.deviceName as dn first then {
+  src.deviceName as dn then {
     dn.name as n -> tgt.artikelbezeichnung = n "SetArtikelbezeichnung";
   } "MapDeviceName";
 
   // ARB_Barcode: aus UDI carrierHRF
-  src.udiCarrier as udi first then {
+  src.udiCarrier as udi then {
     udi.carrierHRF as hrf -> tgt.barcode = hrf "SetBarcode";
   } "MapBarcode";
 
@@ -418,7 +418,7 @@ group MapArtikelBrustimplantat(source src : Device, target tgt : BackboneElement
 group MapZubehoer(source src : Device, target tgt : BackboneElement) {
 
   // ZUB_LaufendeNummer
-  src.identifier as id first then {
+  src.identifier as id then {
     id.value as v -> tgt.laufendeNummer = v "SetZubLaufendeNummer";
   } "MapZubLaufendeNummer";
   src where identifier.exists().not() -> tgt.laufendeNummer = 1 "SetZubLaufendeNummerDefault";
@@ -428,7 +428,7 @@ group MapZubehoer(source src : Device, target tgt : BackboneElement) {
   src.status as st where $this = 'inactive' -> tgt.zubehoerArtSchluessel = '2' "SetZubArtExplantat";
 
   // ZUB_ArtikelNummer
-  src.udiCarrier as udi first then {
+  src.udiCarrier as udi then {
     udi.deviceIdentifier as di -> tgt.artikelNummer = di "SetZubArtikelNummer";
   } "MapZubArtikelNummer";
   src where udiCarrier.exists().not() -> tgt.artikelNummerUnbekannt = 1 "SetZubArtikelNummerUnbekannt";
@@ -442,7 +442,7 @@ group MapZubehoer(source src : Device, target tgt : BackboneElement) {
   src where serialNumber.exists().not() -> tgt.serienNummerUnbekannt = 1 "SetZubSerienNummerUnbekannt";
 
   // ZUB_Artikelbezeichnung
-  src.deviceName as dn first then {
+  src.deviceName as dn then {
     dn.name as n -> tgt.artikelbezeichnung = n "SetZubArtikelbezeichnung";
   } "MapZubDeviceName";
 

@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose"
-/// name = "SenologieToObdsDiagnose"
-/// title = "Senologie Diagnose Bundle to oBDS Diagnosemeldung"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose" = "SenologieToObdsDiagnose"
+
+// title: Senologie Diagnose Bundle to oBDS Diagnosemeldung
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
@@ -122,10 +122,10 @@ group MapWeitereKlassifikation(source src : RiskAssessment, source bundle : Bund
 
   // Stadium: aus RiskAssessment.prediction[0].qualitativeRisk.text + basis-Observation
   // Format: "<Score> (<RiskCategory>)"
-  src.prediction as pred first then {
+  src.prediction as pred then {
     pred.qualitativeRisk as qr then {
       qr.text as t -> tgt.stadium = t "SetWKStadiumQualitativeText";
-      qr.coding as c first then {
+      qr.coding as c then {
         c.display as d -> tgt.stadium = d "SetWKStadiumQualitativeDisplay";
       } "MapWKQRCoding";
     } "MapWKQR";

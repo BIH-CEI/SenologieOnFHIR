@@ -188,7 +188,7 @@ Usage: #example
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-870.91
-* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma: Exzision ohne axilläre Lymphknotenexzision"
+* code.coding[=].display = "Partielle (brusterhaltende) Exzision der Mamma und Destruktion von Mammagewebe: Lokale Exzision: Defektdeckung durch Mobilisation und Adaptation von bis zu 25 % des Brustgewebes (bis zu 1 Quadranten)"
 * code.text = "BET links (DCIS-Exzision)"
 
 * bodySite = $SCT#80248007 "Left breast structure"

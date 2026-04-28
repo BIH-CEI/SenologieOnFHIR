@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation"
-/// name = "SenologieToOncoBoxBrustOperation"
-/// title = "Senologie Procedure + Specimen to OncoBox Brust Operation"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation" = "SenologieToOncoBoxBrustOperation"
+
+// title: Senologie Procedure + Specimen to OncoBox Brust Operation
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
@@ -129,7 +129,7 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
     entry.resource as obs -> tgt.komplikationen as komp then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
         } "MapKompKuerzel";
       } "MapKompVal";

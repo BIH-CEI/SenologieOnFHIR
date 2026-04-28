@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf"
-/// name = "SenologieToObdsVerlauf"
-/// title = "Senologie Verlauf Bundle to oBDS Verlaufsmeldung"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf" = "SenologieToObdsVerlauf"
+
+// title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
@@ -49,7 +49,7 @@ group SenologieToObdsVerlauf(source src : Bundle, target tgt : OBDSMeldung) {
 group MapVerlauf(source src : Condition, target tgt : BackboneElement, source bundle : Bundle) {
 
   // Verlauf_ID: aus Condition.identifier
-  src.identifier as id first then {
+  src.identifier as id then {
     id.value as v -> tgt.verlaufID = v "SetVerlaufID";
   } "MapVerlaufID";
 
@@ -66,7 +66,7 @@ group MapVerlauf(source src : Condition, target tgt : BackboneElement, source bu
 
   // Gesamtbeurteilung Tumorstatus: aus Condition.stage (Verlaufsbeurteilung)
   // Uebersetzung SNOMED -> oBDS via ConceptMap
-  src.stage as stg first then {
+  src.stage as stg then {
     stg.summary as sum then {
       sum.coding as c where system = 'http://snomed.info/sct'
         -> tgt.gesamtbeurteilungTumorstatus = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung', 'code') "TranslateGesamtbeurteilung";

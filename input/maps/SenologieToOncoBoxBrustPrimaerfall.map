@@ -1,7 +1,7 @@
-/// url = "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustPrimaerfall"
-/// name = "SenologieToOncoBoxBrustPrimaerfall"
-/// title = "Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall"
-/// status = "draft"
+map "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustPrimaerfall" = "SenologieToOncoBoxBrustPrimaerfall"
+
+// title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall
+// status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
@@ -102,7 +102,7 @@ group MapPatient(source src : Patient, target tgt : BackboneElement, source bund
   src.gender as g where $this = 'other' -> tgt.geschlecht = 'D' "SetPatGeschlD";
   src.gender as g where $this = 'unknown' -> tgt.geschlecht = 'U' "SetPatGeschlU";
 
-  src.address as addr first then {
+  src.address as addr then {
     addr.postalCode as plz -> tgt.postleitzahl = plz "SetPatPLZ";
   } "MapPatPLZ";
 
@@ -111,7 +111,7 @@ group MapPatient(source src : Patient, target tgt : BackboneElement, source bund
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '86805-9') then {
     entry.resource as obs then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd where $this = '289903006' -> tgt.menopausenstatus = '1' "SetMenoPrae";
           c.code as cd where $this = '289904000' -> tgt.menopausenstatus = '2' "SetMenoPeri";
           c.code as cd where $this = '76977008' -> tgt.menopausenstatus = '3' "SetMenoPost";
@@ -183,7 +183,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
     entry.resource as obs -> tgt.cTNM as ctnm then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> ctnm.cT = cd "SetCT";
         } "MapCTCoding";
       } "MapCTVal";
@@ -193,7 +193,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21906-3') then {
     entry.resource as obs -> tgt.cTNM as ctnm then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> ctnm.cN = cd "SetCN";
         } "MapCNCoding";
       } "MapCNVal";
@@ -203,7 +203,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
     entry.resource as obs -> tgt.cTNM as ctnm then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> ctnm.cM = cd "SetCM";
         } "MapCMCoding";
       } "MapCMVal";
@@ -223,7 +223,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21899-0') then {
     entry.resource as obs -> tgt.pTNM as ptnm then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> ptnm.pT = cd "SetPT";
         } "MapPTCoding";
       } "MapPTVal";
@@ -233,7 +233,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21900-6') then {
     entry.resource as obs -> tgt.pTNM as ptnm then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> ptnm.pN = cd "SetPN";
         } "MapPNCoding";
       } "MapPNVal";
@@ -243,7 +243,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21901-4') then {
     entry.resource as obs -> tgt.pTNM as ptnm then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> ptnm.pM = cd "SetPM";
         } "MapPMCoding";
       } "MapPMVal";
@@ -275,7 +275,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '33732-9') then {
     entry.resource as obs then {
       obs.value as val then {
-        val.coding as c first then {
+        val.coding as c then {
           c.code as cd -> tgt.grading = cd "SetGrading";
         } "MapGrading";
       } "MapGradingVal";
@@ -369,7 +369,7 @@ group MapBildgebung(source src : Observation, target tgt : BackboneElement) {
 
   // BI-RADS (falls value CodeableConcept)
   src.value as val then {
-    val.coding as c first then {
+    val.coding as c then {
       c.code as cd -> tgt.birads = cd "SetBgBirads";
     } "MapBgBiradsCoding";
   } "MapBgBirads";
