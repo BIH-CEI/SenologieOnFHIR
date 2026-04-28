@@ -237,6 +237,17 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
     * datum 1..1 date "Verlauf_Datum" "Datum des Ereignisses"
     * ereignis 1..1 code "Verlauf_Ereignis" "Ereignis: 1=Lokalrezidiv, 2=Regionaerrezidiv, 3=Fernmetastase, 4=kontralaterales Mamma-CA, 5=Zweitmalignom, 6=Progress"
 
+    // --- OncoBox 2.0: FM-spezifische Felder (J03-J05) ---
+    // Nur relevant wenn ereignis = 3 (Fernmetastase). Bildet die FM-spezifischen
+    // Therapiedaten ab, die in OncoBox 2.0 neu hinzukommen.
+    * fmOperation 0..1 BackboneElement "FM_Operation" "Operation bei Fernmetastasen (OncoBox 2.0 J03/J05)"
+      * opDatum 0..1 date "FM_Op_Datum" "J03: Datum der FM-Operation (z.B. Metastasenresektion)"
+      * residualstatus 0..1 code "FM_R_Status" "J05: Residualstatus nach FM-Operation: R0, R1, R2, RX"
+    * fmTherapie 0..* BackboneElement "FM_Therapie" "Therapie bei Fernmetastasen (OncoBox 2.0 J04)"
+      * therapieart 1..1 code "FM_Therapie_Art" "Art der FM-Therapie: 1=Chemotherapie, 2=Immuntherapie, 3=zielgerichtete Therapie, 4=Strahlentherapie, 5=endokrine Therapie, 9=sonstige"
+      * beginn 0..1 date "FM_Therapie_Beginn" "Beginn der FM-Therapie"
+      * ende 0..1 date "FM_Therapie_Ende" "Ende der FM-Therapie"
+
   * tod 0..1 BackboneElement "Tod" "Tod der Patientin im Berichtszeitraum"
     * sterbedatum 1..1 date "Tod_Datum" "Sterbedatum"
     * todesursache 0..1 code "Tod_Ursache" "Todesursache (ICD-10-GM-Kode)"
