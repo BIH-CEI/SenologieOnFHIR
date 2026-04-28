@@ -1,0 +1,193 @@
+map "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf" = "SenologieToOncoBoxBrustVerlauf"
+
+// title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J03-J05)
+// status: draft
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
+// has no syntax to declare the Logical Model sub-path for BackboneElement
+// slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH
+// errors. The element names are correct per the OncoBox Brust Logical Model.
+
+// ============================================================================
+// MapVerlaufFromBundle: Bundle -> OncoBox Primaerfall.verlauf (repeating)
+//
+// Extrahiert Verlaufsereignisse aus dem Bundle und mappt auf den OncoBox-
+// Verlauf-Block. Verlaufsereignisse werden aus folgenden FHIR-Ressourcen
+// abgeleitet:
+//
+// - Condition mit clinicalStatus=recurrence -> Rezidiv / Fernmetastase
+// - Observation LOINC 21907-1 (Distant metastases.clinical) -> Fernmetastase
+//
+// Fuer Fernmetastasen-Ereignisse (ereignis=3) werden zusaetzlich die
+// OncoBox 2.0 Felder J03-J05 befuellt:
+//   J03: FM_OP_Datum       -> aus Procedure (Operation) mit FM-reasonReference
+//   J04: FM_Therapien      -> Existenz-Check fuer OP/Syst/ST/Endo im Bundle
+//   J05: FM_Residualstatus -> aus Procedure.outcome (Operation)
+// ============================================================================
+
+group MapVerlaufFromBundle(source src : Bundle, target tgt : BackboneElement) {
+
+  // --- Fernmetastasen-Observations -> Verlauf mit ereignis=3 ---
+  // LOINC 21907-1 = "Distant metastases.clinical Cancer"
+  src.entry as fmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
+    fmEntry.resource as fmObs -> tgt.verlauf as verl then MapVerlaufFernmetastase(fmObs, verl, src) "CallMapVerlaufFM";
+  } "EntryVerlaufFM";
+
+  // --- Conditions mit recurrence -> Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---
+  src.entry as recEntry where resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence') then {
+    recEntry.resource as recCond -> tgt.verlauf as verl then MapVerlaufRezidiv(recCond, verl) "CallMapVerlaufRez";
+  } "EntryVerlaufRez";
+}
+
+// ============================================================================
+// MapVerlaufFernmetastase: Observation (FM) -> Verlauf + OncoBox 2.0 J03-J05
+//
+// Bildet eine Fernmetastasen-Observation auf den OncoBox-Verlauf-Block ab.
+// Zusaetzlich werden FM-spezifische Therapie-Procedures aus dem Bundle
+// extrahiert fuer die OncoBox 2.0 Felder.
+//
+// FM-spezifische Procedures werden identifiziert ueber:
+// - meta.profile enthält das jeweilige Senologie-Profil
+// - extension:Intention mit code 'P' (palliativ) als FM-Kontextindikator
+// ============================================================================
+
+group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // Verlauf_Datum: aus Observation.effectiveDateTime
+  src.effective as eff where $this.is(dateTime) -> tgt.datum = eff "SetVerlaufDatumFM";
+
+  // Verlauf_Ereignis: 3 = Fernmetastase
+  src -> tgt.ereignis = '3' "SetEreignisFM";
+
+  // === OncoBox 2.0: J03 — FM_OP_Datum ===
+  // Operationsdatum bei Fernmetastasen: aus Procedure (Operation) mit
+  // palliativer Intention im selben Bundle
+  bundle.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+    opEntry.resource as proc then {
+      proc.extension as ext where url.contains('Intention') then {
+        ext.value as val then {
+          val.coding as c where code = 'P' then {
+            proc.performed as perf where $this.is(dateTime) -> tgt.fmOpDatum = perf "SetFMOpDatum";
+          } "CheckIntentionPalliativ";
+        } "MapIntentionValue";
+      } "MapIntentionExt";
+    } "MapFMOpProc";
+  } "EntryFMOp";
+
+  // === OncoBox 2.0: J04 — FM_Therapien ===
+  src -> tgt.fmTherapien as fmTh then MapFMTherapien(bundle, fmTh) "CallMapFMTherapien";
+
+  // === OncoBox 2.0: J05 — FM_Residualstatus ===
+  // Aus Procedure.outcome der FM-Operation (palliativer Kontext)
+  bundle.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+    opEntry.resource as proc then {
+      proc.extension as ext where url.contains('Intention') then {
+        ext.value as val then {
+          val.coding as c where code = 'P' then {
+            proc.outcome as oc then {
+              oc.coding as rc where system.contains('residualstatus') -> tgt.fmResidualstatus = rc "SetFMResidualCode";
+            } "MapFMResidualCoding";
+          } "CheckIntentionPalliativR";
+        } "MapIntentionValueR";
+      } "MapIntentionExtR";
+    } "MapFMResidualProc";
+  } "EntryFMResidual";
+}
+
+// ============================================================================
+// MapFMTherapien: Bundle -> FM_Therapien (J04)
+//
+// Prueft fuer jede Therapieart ob eine Procedure mit palliativer Intention
+// im Bundle vorhanden ist und setzt entsprechend 0/1.
+// ============================================================================
+
+group MapFMTherapien(source src : Bundle, target tgt : BackboneElement) {
+
+  // Operation bei FM
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+    entry.resource as proc then {
+      proc.extension as ext where url.contains('Intention') then {
+        ext.value as val then {
+          val.coding as c where code = 'P' -> tgt.operation = '1' "SetFMThOP";
+        } "CheckIntentionPalliativOP";
+      } "MapIntentionExtOP";
+    } "MapFMThOPProc";
+  } "EntryFMThOP";
+
+  // Systemtherapie bei FM
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie')) then {
+    entry.resource as proc then {
+      proc.extension as ext where url.contains('Intention') then {
+        ext.value as val then {
+          val.coding as c where code = 'P' -> tgt.systemtherapie = '1' "SetFMThSyst";
+        } "CheckIntentionPalliativSyst";
+      } "MapIntentionExtSyst";
+    } "MapFMThSystProc";
+  } "EntryFMThSyst";
+
+  // Strahlentherapie bei FM
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
+    entry.resource as proc then {
+      proc.extension as ext where url.contains('Intention') then {
+        ext.value as val then {
+          val.coding as c where code = 'P' -> tgt.strahlentherapie = '1' "SetFMThST";
+        } "CheckIntentionPalliativST";
+      } "MapIntentionExtST";
+    } "MapFMThSTProc";
+  } "EntryFMThST";
+
+  // Endokrine Therapie bei FM (Senologie Systemtherapie mit endocrine type)
+  // Endokrine Therapie wird als Systemtherapie mit spezifischem Code erfasst
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie')) then {
+    entry.resource as proc then {
+      proc.code as code then {
+        code.coding as c where code = '169413002' then {
+          proc.extension as ext where url.contains('Intention') then {
+            ext.value as val then {
+              val.coding as ic where code = 'P' -> tgt.endokrineTherapie = '1' "SetFMThEndo";
+            } "CheckIntentionPalliativEndo";
+          } "MapIntentionExtEndo";
+        } "CheckEndocrineCode";
+      } "MapEndocrineCodeCtx";
+    } "MapFMThEndoProc";
+  } "EntryFMThEndo";
+}
+
+// ============================================================================
+// MapVerlaufRezidiv: Condition (Rezidiv) -> Verlauf (Nicht-FM-Ereignis)
+//
+// Mappt Rezidiv-Conditions auf den OncoBox-Verlauf-Block fuer Lokalrezidive,
+// Regionaerrezidive und andere Verlaufsereignisse.
+// FM-spezifische Felder J03-J05 werden hier NICHT befuellt.
+// ============================================================================
+
+group MapVerlaufRezidiv(source src : Condition, target tgt : BackboneElement) {
+
+  // Verlauf_Datum: aus Condition.recordedDate oder extension Feststellungsdatum
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum' then {
+    ext.value as val where $this.is(dateTime) -> tgt.datum = val "SetVerlaufDatumExt";
+  } "MapVerlaufDatumExt";
+
+  // Fallback: recordedDate
+  src.recordedDate as rd -> tgt.datum = rd "SetVerlaufDatumFallback";
+
+  // Verlauf_Ereignis: aus Condition.code oder stage
+  // Mapping: Lokalrezidiv=1, Regionaerrezidiv=2, kontralateral=4, Zweitmalignom=5, Progress=6
+  // (Fernmetastase=3 wird ueber MapVerlaufFernmetastase abgedeckt)
+  src.code as code then {
+    code.coding as c where system = 'http://snomed.info/sct' then {
+      // 255226008 = Local recurrence of tumor
+      c.code as cd where $this = '255226008' -> tgt.ereignis = '1' "SetEreignisLokal";
+      // 315266007 = Regional recurrence
+      c.code as cd where $this = '315266007' -> tgt.ereignis = '2' "SetEreignisRegional";
+      // 94222008 = Contralateral breast cancer (Secondary malignant neoplasm of contralateral breast)
+      c.code as cd where $this = '94222008' -> tgt.ereignis = '4' "SetEreignisKontralateral";
+    } "MapEreignisSCT";
+  } "MapEreignis";
+}
