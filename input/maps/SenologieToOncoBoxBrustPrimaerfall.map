@@ -11,10 +11,9 @@ uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as 
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
 uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
 uses "http://hl7.org/fhir/StructureDefinition/ResearchSubject" alias ResearchSubject as source
-uses "http://hl7.org/fhir/StructureDefinition/ResearchStudy" alias ResearchStudy as source
 uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
 
-// Operation / Therapie / Verlauf per Sub-Map
+// Operation / Therapie per Sub-Map
 imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation"
 imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie"
 imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf"
@@ -99,13 +98,11 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
 
   // --- Studienteilnahme aus ResearchSubject ---
   bundle.entry as entry where resource.is(ResearchSubject) then {
-    entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud, bundle) "CallMapStud";
+    entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud) "CallMapStud";
   } "EntryResearchSubject";
 
-  // --- Verlauf aus MII_PR_Onko_Verlauf Observation (inkl. OncoBox 2.0 FM-Felder J03-J05) ---
-  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '396432002') then {
-    entry.resource as obs -> tgt.verlauf as verl then MapVerlauf(obs, verl, bundle) "CallMapVerlauf";
-  } "EntryVerlauf";
+  // --- Verlauf (inkl. OncoBox 2.0 FM-Felder J03-J05) ---
+  src -> tgt then MapVerlaufFromBundle(bundle, tgt) "CallMapVerlauf";
 }
 
 // ============================================================================
@@ -454,52 +451,10 @@ group MapPsychoonkologie(source src : Procedure, target tgt : BackboneElement) {
 }
 
 // ============================================================================
-// Studienteilnahme -> Studien-Block (OncoBox 2.0 K02/K03)
-//
-// Felder:
-//   - teilgenommen: immer '1' (ResearchSubject existiert)
-//   - studienKurzname: aus study.display oder ResearchStudy.title
-//   - studiennameCode: aus Extension StudiennameCode (K02)
-//   - screening: aus Extension Studienscreening (K03)
-//   - art: aus ResearchStudy.category (1=interventionell, 2=nicht-interv., 3=Register, 9=sonstige)
+// Studienteilnahme -> Studien-Block
 // ============================================================================
 
-group MapStudienteilnahme(source src : ResearchSubject, target tgt : BackboneElement, source bundle : Bundle) {
+group MapStudienteilnahme(source src : ResearchSubject, target tgt : BackboneElement) {
 
-  // Stud_Teilgenommen = 1
   src -> tgt.teilgenommen = '1' "SetStudJa";
-
-  // Stud_Name aus study.display
-  src.study as study then {
-    study.display as d -> tgt.studienKurzname = d "SetStudName";
-  } "MapStudName";
-
-  // Stud_Name_Code aus Extension StudiennameCode (K02)
-  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code' then {
-    ext.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.studiennameCode = cd "SetStudNameCode";
-      } "MapStudNameCodeCoding";
-    } "MapStudNameCodeVal";
-  } "MapStudNameCodeExt";
-
-  // Stud_Screening aus Extension Studienscreening (K03)
-  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienscreening' then {
-    ext.value as val where $this = true -> tgt.screening = '1' "SetScreeningJa";
-    ext.value as val where $this = false -> tgt.screening = '0' "SetScreeningNein";
-  } "MapScreeningExt";
-
-  // Stud_Art aus ResearchStudy.category (resolve via bundle)
-  // ResearchStudy.category SNOMED: 386053000=interventionell, ...
-  bundle.entry as entry where resource.is(ResearchStudy) then {
-    entry.resource as rs then {
-      rs.category as cat then {
-        cat.coding as c where system = 'http://snomed.info/sct' then {
-          c.code as cd where $this = '386053000' -> tgt.art = '1' "SetArtInterventionell";
-          c.code as cd where $this = '733936006' -> tgt.art = '2' "SetArtNichtInterventionell";
-          c.code as cd where $this = '385672004' -> tgt.art = '3' "SetArtRegister";
-        } "MapArtCoding";
-      } "MapArtCat";
-    } "MapArtRS";
-  } "EntryResearchStudy";
 }

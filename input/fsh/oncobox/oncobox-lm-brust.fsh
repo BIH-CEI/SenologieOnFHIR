@@ -16,7 +16,8 @@
 //   - Sheet "Gesamtbetracht."    (53 Zeilen, Gesamtbetrachtung)
 //   - Sheets "KB-1" bis "KB-20"  (20 Qualitaetsindikatoren / DKG Kennzahlen)
 //
-// Scope: Nur OncoBox Brust N1.1.1 (nicht OncoBox 2.0, nicht Darm/Prostata/Lunge).
+// Scope: OncoBox Brust N1.1.1 mit OncoBox 2.0 FM-Erweiterung (J03-J05).
+// Nicht: OncoBox Darm/Prostata/Lunge.
 //
 // Hinweis: Die XML-Tag-Namen und Feldcodes in den "XML"-Captions dieser
 // Elemente folgen der OncoBox-Brust-Konvention (Caps-Case mit Unterstrichen)
@@ -259,6 +260,28 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
       * therapieart 1..1 code "FM_Therapie_Art" "Art der FM-Therapie: 1=Chemotherapie, 2=Immuntherapie, 3=zielgerichtete Therapie, 4=Strahlentherapie, 5=endokrine Therapie, 9=sonstige"
       * beginn 0..1 date "FM_Therapie_Beginn" "Beginn der FM-Therapie"
       * ende 0..1 date "FM_Therapie_Ende" "Ende der FM-Therapie"
+
+    // =========================================================================
+    // OncoBox 2.0: FM-spezifische Felder (J03-J05)
+    //
+    // Nur auszufuellen wenn ereignis=3 (Fernmetastase). Bilden die
+    // therapiebezogenen Zusatzangaben bei Fernmetastasen ab:
+    //   J03 = Operationsdatum bei FM
+    //   J04 = Durchgefuehrte Therapiearten bei FM
+    //   J05 = Residualstatus nach FM-Therapie
+    //
+    // FHIR-Quelle: Procedure-Ressourcen (Senologie_Operation,
+    // Senologie_Systemtherapie_Procedure, Senologie_Strahlentherapie) mit
+    // reasonReference auf die Fernmetastasen-Condition.
+    // =========================================================================
+    * fmOpDatum 0..1 date "FM_OP_Datum" "J03: Operationsdatum bei Fernmetastasen"
+    * fmTherapien 0..1 BackboneElement "FM_Therapien" "J04: Durchgefuehrte Therapien bei Fernmetastasen"
+      * operation 0..1 code "FM_Th_OP" "Operative Therapie bei FM durchgefuehrt: 0=nein, 1=ja"
+      * systemtherapie 0..1 code "FM_Th_Syst" "Systemtherapie bei FM durchgefuehrt: 0=nein, 1=ja"
+      * strahlentherapie 0..1 code "FM_Th_ST" "Strahlentherapie bei FM durchgefuehrt: 0=nein, 1=ja"
+      * endokrineTherapie 0..1 code "FM_Th_Endo" "Endokrine Therapie bei FM durchgefuehrt: 0=nein, 1=ja"
+      * sonstige 0..1 code "FM_Th_Sonst" "Sonstige Therapie bei FM durchgefuehrt: 0=nein, 1=ja"
+    * fmResidualstatus 0..1 code "FM_Residualstatus" "J05: Residualstatus nach FM-Therapie: R0, R1, R2, RX"
 
   * tod 0..1 BackboneElement "Tod" "Tod der Patientin im Berichtszeitraum"
     * sterbedatum 1..1 date "Tod_Datum" "Sterbedatum"

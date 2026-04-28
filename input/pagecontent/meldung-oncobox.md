@@ -8,7 +8,7 @@ Zertifizierte Brustzentren uebermitteln jaehrlich ihre Fall- und Qualitaetsindik
 - **Zielformat**: OncoBox Brust, Spezifikation **N1.1.1**
 - **Methode**: FHIR StructureMaps (FML) mit OncoBox Logical Model als Zielstruktur
 - **Ausfuehrung**: [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke
-- **Scope**: **Nur OncoBox Brust N1.1.1** -- nicht OncoBox 2.0, nicht OncoBox Darm/Prostata/Lunge
+- **Scope**: **OncoBox Brust N1.1.1** mit **OncoBox 2.0 FM-Erweiterung (J03-J05)** -- nicht OncoBox Darm/Prostata/Lunge
 
 ### Architektur
 
@@ -54,6 +54,7 @@ Die OncoBox-Brust-Meldung besteht aus:
 | **SenologieToOncoBoxBrustPrimaerfall** | Patient + Condition + Encounter + Diagnose-Block | Patient, Condition, Encounter, Observation, CarePlan, ResearchSubject | primaerfall |
 | **SenologieToOncoBoxBrustOperation** | OP + Specimen + Pathologie | Procedure, Specimen, Observation | primaerfall.operation |
 | **SenologieToOncoBoxBrustTherapie** | Systemtherapie + Strahlentherapie | Procedure (Senologie_Systemtherapie, _Strahlentherapie) | primaerfall.systemtherapie / .strahlentherapie |
+| **SenologieToOncoBoxBrustVerlauf** | Verlauf + OncoBox 2.0 FM-Felder (J03-J05) | Observation (FM), Condition (Rezidiv), Procedure (OP/Syst/ST) | primaerfall.verlauf |
 | **SenologieToOncoBoxBrustKennzahlen** | Shell-Eintraege KB-1 bis KB-20 | Bundle (Aggregation) | kennzahl |
 
 ### Mapping-Tabellen
@@ -132,6 +133,24 @@ Die OncoBox-Brust-Meldung besteht aus:
 | Studienteilnahme | ResearchSubject | teilgenommen 0/1 |
 | Stud_Name_Code (K02) | ResearchSubject.extension[StudiennameCode] | OncoBox 2.0: Studienname aus Auswahlliste |
 | Stud_Screening (K03) | ResearchSubject.extension[Studienscreening] | OncoBox 2.0: Screening zur Studienteilnahme 0/1 |
+
+#### Primaerfall -- Verlauf + OncoBox 2.0 FM-Felder (J03-J05)
+
+| OncoBox-Feld | FHIR-Quelle | Anmerkung |
+|---|---|---|
+| Verlauf_Datum | Observation.effectiveDateTime (FM) / Condition.recordedDate (Rezidiv) | Datum des Verlaufsereignisses |
+| Verlauf_Ereignis | Observation LOINC 21907-1 -> 3 (FM); Condition.code SNOMED -> 1/2/4 | 1=Lokal, 2=Regional, 3=FM, 4=Kontralateral |
+| **FM_OP_Datum (J03)** | Procedure.performedDateTime (Operation, Intention=P) | Nur bei ereignis=3: Operationsdatum bei FM |
+| **FM_Therapien (J04)** | Existenz-Check Procedure-Ressourcen (Intention=P) im Bundle | OP/Syst/ST/Endo: jeweils 0/1 |
+| FM_Th_OP | Procedure (senologie-operation, Intention=P) vorhanden | 0=nein, 1=ja |
+| FM_Th_Syst | Procedure (senologie-systemtherapie, Intention=P) vorhanden | 0=nein, 1=ja |
+| FM_Th_ST | Procedure (senologie-strahlentherapie, Intention=P) vorhanden | 0=nein, 1=ja |
+| FM_Th_Endo | Procedure (senologie-systemtherapie, endokrin, Intention=P) vorhanden | 0=nein, 1=ja |
+| FM_Th_Sonst | -- | Derzeit nicht automatisch ableitbar |
+| **FM_Residualstatus (J05)** | Procedure.outcome (Operation, Intention=P) | R0/R1/R2/RX |
+
+{:.stu-note}
+Die OncoBox 2.0 FM-Felder (J03-J05) erweitern den Verlauf-Block um therapiebezogene Details bei Fernmetastasen. FM-spezifische Procedures werden anhand der palliativen Therapie-Intention (`extension:Intention` = P) identifiziert. Die Felder sind nur relevant wenn `Verlauf_Ereignis = 3` (Fernmetastase).
 
 ### DKG-Kennzahlen (KB-1 bis KB-20)
 
@@ -233,6 +252,10 @@ Nicht alle OncoBox-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet w
 | Studienteilnahme | ResearchSubject / Senologie_Studienteilnahme | Vorhanden |
 | Studienname Auswahlliste (K02) | ResearchSubject.extension[StudiennameCode] | **Vorhanden** -- OncoBox 2.0 |
 | Screening Studienteilnahme (K03) | ResearchSubject.extension[Studienscreening] | **Vorhanden** -- OncoBox 2.0 |
+| Verlauf_Datum / Verlauf_Ereignis | Observation (FM) / Condition (Rezidiv) | Vorhanden |
+| FM_OP_Datum (J03) | Procedure (Operation, Intention=P) | Vorhanden |
+| FM_Therapien (J04) | Procedure-Existenz-Check (OP/Syst/ST/Endo, Intention=P) | Vorhanden |
+| FM_Residualstatus (J05) | Procedure.outcome (Operation, Intention=P) | Vorhanden |
 | Anzahl Eingriffe bis R0 (KB-14) | Aggregation Procedure (pro Fall) | **Aggregationsschritt** -- CQL erforderlich |
 | BET-Rate bei pT1 (KB-15) | Aggregation (Op_Art + pTNM) | **Aggregationsschritt** -- CQL erforderlich |
 | Tumorkonferenz-Typ (prae/post/rezidiv) | CarePlan.category | **Teilweise** -- CodeSystem fuer Typ zu ergaenzen |
@@ -261,7 +284,7 @@ Die Transformation basiert auf der **OncoBox Brust Spezifikation N1.1.1**:
 - **Primaerfallarten**: Sheet "Primaerfallarten" (103 Zeilen; OnkoZert-Klassifikation der Fallarten)
 - **Kennzahlen**: Sheets KB-1 bis KB-20 (Zaehler/Nenner/Sollwert je Indikator)
 - **Offizielle Quelle**: [OnkoZert XML OncoBox Brustzentren](https://xml-oncobox.de/de/Zentren/BrustZentren)
-- **Scope**: Nur OncoBox Brust N1.1.1 -- nicht OncoBox 2.0, nicht OncoBox Darm/Prostata/Lunge
+- **Scope**: OncoBox Brust N1.1.1 + OncoBox 2.0 FM-Erweiterung (J03-J05) -- nicht OncoBox Darm/Prostata/Lunge
 
 > **Hinweis**: Die OncoBox-Spezifikation wird durch OnkoZert/DKG regelmaessig aktualisiert. Die hier abgebildete Struktur entspricht der Spezifikation N1.1.1. Bei Aktualisierung der Spezifikation sind Logical Model und StructureMaps entsprechend zu versionieren. Die Quell-Excel-Datei liegt unter `input/data/oncobox-brust/OncoBoxBrust_N1.1.1_Spec.xlsx`.
 
