@@ -31,5 +31,8 @@ Usage: #example
 * extension[sessionCount].valueQuantity.value = 25
 * extension[sessionCount].valueQuantity.unit = "Sitzungen"
 
+// Einzeldosis pro Fraktion (50 Gy / 25 Fraktionen = 2 Gy)
+* extension[einzeldosis].valueQuantity = 2 'Gy' "Gy"
+
 // Bezogene Diagnose
 * reasonReference = Reference(Condition/Example-Diagnose-Mammakarzinom)

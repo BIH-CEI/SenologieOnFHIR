@@ -209,6 +209,7 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
     * ende 0..1 date "RT_Ende" "Therapieende"
     * zielgebiet 0..1 code "RT_Zielgebiet" "Zielgebiet: 1=Brust/Thorax, 2=LAW, 3=Boost, 4=Fernmetastase, 9=sonstige"
     * gesamtdosisGy 0..1 decimal "RT_Dosis_Gy" "Gesamtdosis in Gy"
+    * einzeldosisGy 0..1 decimal "RT_Einzeldosis_Gy" "Einzeldosis pro Fraktion in Gy"
     * stellungZurOP 0..1 code "RT_Stellung" "Stellung zur OP: N=neoadjuvant, A=adjuvant, P=palliativ"
 
   // --- Tumorkonferenz ---
