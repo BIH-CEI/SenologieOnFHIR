@@ -235,10 +235,19 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
     * screening 0..1 code "Stud_Screening" "Screening zur Studienteilnahme durchgefuehrt (K03, OncoBox 2.0): 0=nein, 1=ja"
     * art 0..1 code "Stud_Art" "Art der Studie: 1=interventionell, 2=nicht-interventionell, 3=Beobachtung/Register, 9=sonstige"
 
-  // --- Verlauf / Outcome ---
-  * verlauf 0..* BackboneElement "Verlauf" "Verlaufsereignis (Rezidiv, Metastasierung, Progress)"
-    * datum 1..1 date "Verlauf_Datum" "Datum des Ereignisses"
-    * ereignis 1..1 code "Verlauf_Ereignis" "Ereignis: 1=Lokalrezidiv, 2=Regionaerrezidiv, 3=Fernmetastase, 4=kontralaterales Mamma-CA, 5=Zweitmalignom, 6=Progress"
+  // --- Verlauf / Outcome (M01-M10) ---
+  * verlauf 0..* BackboneElement "Verlauf" "Verlaufsmeldung / Nachsorge (M01-M10 + Ereignisse)"
+    * meldedatum 1..1 date "Meldedatum" "Datum der Verlaufsmeldung (M01)"
+    * melder 0..1 string "Melder" "Meldende Einrichtung / Person (M02)"
+    * nachsorgeArt 0..1 code "Nachsorge_Art" "Art der Nachsorge: aktiv=persoenlich untersucht, passiv=aus Akten/Registern (M03)"
+    * vitalstatus 1..1 code "Vitalstatus" "Vitalstatus: lebend, verstorben, unbekannt (M04)"
+    * tumorstatusLokal 0..1 code "Tumorstatus_Lokal" "Lokaler Tumorstatus: K=kein Tumor, T=Tumorreste, P=Progress, N=No Change, R=Lokalrezidiv, F=fraglich, U=unbekannt, X=fehlend (M05)"
+    * tumorstatusLK 0..1 code "Tumorstatus_LK" "Lymphknoten-Tumorstatus: K, T, P, N, R, F, U, X (M06)"
+    * tumorstatusFM 0..1 code "Tumorstatus_FM" "Fernmetastasen-Tumorstatus: K, T, P, N, R, F, U, X (M07)"
+    * zweittumor 0..1 code "Zweittumor" "Zweittumor diagnostiziert: ja, nein, unbekannt (M08)"
+    * zweitttumorIcd 0..1 code "Zweittumor_ICD" "ICD-10-GM Diagnose des Zweittumors (M09)"
+    * zweitttumorDatum 0..1 date "Zweittumor_Datum" "Diagnosedatum des Zweittumors (M10)"
+    * ereignis 0..1 code "Verlauf_Ereignis" "Ereignis: 1=Lokalrezidiv, 2=Regionaerrezidiv, 3=Fernmetastase, 4=kontralaterales Mamma-CA, 5=Zweitmalignom, 6=Progress"
 
   * tod 0..1 BackboneElement "Tod" "Tod der Patientin im Berichtszeitraum"
     * sterbedatum 1..1 date "Tod_Datum" "Sterbedatum"
