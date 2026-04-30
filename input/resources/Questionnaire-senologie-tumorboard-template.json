@@ -1,0 +1,429 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-tumorboard",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard",
+  "version": "0.1.0",
+  "name": "QuestTumorboard",
+  "title": "Fragebogen: Tumorboard Empfehlung",
+  "status": "draft",
+  "experimental": true,
+  "subjectType": ["Patient"],
+  "contained": [
+    {
+      "resourceType": "CarePlan",
+      "id": "careplan-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+        ]
+      },
+      "status": "active",
+      "intent": "plan",
+      "title": "Tumorboard Empfehlung",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='tumorboard-titel').answer.valueString"
+          }
+        ]
+      },
+      "description": "Zusammenfassung",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='tumorboard-beschreibung').answer.valueString"
+          }
+        ]
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "'Patient/' + %patient.id"
+            }
+          ]
+        }
+      },
+      "period": {
+        "start": "2024-01-01",
+        "_start": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "item.where(linkId='tumorboard-datum').answer.valueDate"
+            }
+          ]
+        }
+      },
+      "activity": [
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "387713003",
+                  "display": "Surgical procedure (procedure)"
+                }
+              ]
+            },
+            "description": "Operative Therapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-op').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "108290001",
+                  "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+                }
+              ]
+            },
+            "description": "Strahlentherapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-strahlentherapie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "169413002",
+                  "display": "Hormone therapy (procedure)"
+                }
+              ]
+            },
+            "description": "Endokrine Therapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-endokrin').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "385786002",
+                  "display": "Chemotherapy care (regime/therapy)"
+                }
+              ]
+            },
+            "description": "Chemotherapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-chemotherapie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "416608005",
+                  "display": "Drug therapy"
+                }
+              ]
+            },
+            "description": "Zielgerichtete Therapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-zielgerichtet').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "76334006",
+                  "display": "Immunotherapy (procedure)"
+                }
+              ]
+            },
+            "description": "Immuntherapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-immuntherapie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "165197003",
+                  "display": "Diagnostic assessment (procedure)"
+                }
+              ]
+            },
+            "description": "Weitere Diagnostik",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-diagnostik').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "110465008",
+                  "display": "Clinical trial (procedure)"
+                }
+              ]
+            },
+            "description": "Klinische Studie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-studie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "405825005",
+                  "display": "Molecular genetic test"
+                }
+              ]
+            },
+            "description": "Genetische Untersuchung",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-genetik').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "Appointment",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "390906007",
+                  "display": "Follow-up encounter (procedure)"
+                }
+              ]
+            },
+            "description": "Nachsorge",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-nachsorge').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        }
+      ],
+      "note": [
+        {
+          "text": "Sonstige Anmerkungen",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='empfehlung-sonstiges').answer.valueString"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+            "code": "patient"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#careplan-template"
+      }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "tumorboard-datum",
+      "text": "Datum des Tumorboards",
+      "type": "date",
+      "required": true
+    },
+    {
+      "linkId": "tumorboard-titel",
+      "text": "Titel der Empfehlung",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "tumorboard-beschreibung",
+      "text": "Zusammenfassung der Empfehlung",
+      "type": "text",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-op",
+      "text": "Operative Therapie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-strahlentherapie",
+      "text": "Strahlentherapie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-endokrin",
+      "text": "Endokrine Therapie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-chemotherapie",
+      "text": "Chemotherapie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-zielgerichtet",
+      "text": "Zielgerichtete Therapie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-immuntherapie",
+      "text": "Immuntherapie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-diagnostik",
+      "text": "Weitere Diagnostik empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-studie",
+      "text": "Klinische Studie empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-genetik",
+      "text": "Genetische Untersuchung empfohlen",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-nachsorge",
+      "text": "Nachsorge-Empfehlung",
+      "type": "string",
+      "required": false
+    },
+    {
+      "linkId": "empfehlung-sonstiges",
+      "text": "Sonstige Anmerkungen",
+      "type": "text",
+      "required": false,
+      "repeats": true
+    }
+  ]
+}
