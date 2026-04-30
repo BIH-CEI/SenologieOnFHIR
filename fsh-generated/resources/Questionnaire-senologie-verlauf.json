@@ -1,0 +1,464 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-verlauf",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf",
+  "title": "Fragebogen: Verlauf / Nachsorge",
+  "description": "Fragebogen zur strukturierten Verlaufsdokumentation (Nachsorge). Erfasst Gesamtbeurteilung, Primaertumorstatus, Lymphknotenstatus, Fernmetastasen-Status und ECOG-Leistungszustand. Nutzt SDC Definition-based Extraction mit zwei Observationen als Ziel (MII_PR_Onko_Verlauf, MII_PR_Onko_ECOG).",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
+  "item": [
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Observation?_profile=https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-verlauf"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "linkId": "verlauf-datum",
+          "text": "Datum der Verlaufskontrolle",
+          "type": "date",
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.effectiveDateTime"
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "V",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "Vollremission (complete remission, CR)"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "T",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "Teilremission (partial remission, PR)"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "K",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "keine Aenderung (no change, NC) = stable disease"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "P",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "Progression"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "D",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "Divergentes Geschehen"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "R",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "Rezidiv"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "U",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "unbekannt"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "X",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
+                "display": "fehlende Angabe"
+              }
+            }
+          ],
+          "linkId": "verlauf-gesamt",
+          "text": "Gesamtbeurteilung des Tumorstatus",
+          "type": "choice",
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept"
+        },
+        {
+          "item": [
+            {
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "445200009",
+                    "system": "http://snomed.info/sct",
+                    "display": "Status of residual neoplasm (observable entity)"
+                  }
+                }
+              ],
+              "linkId": "verlauf-pt-code",
+              "text": "Primaertumorstatus Code",
+              "type": "choice",
+              "required": true,
+              "readOnly": true,
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.code"
+            },
+            {
+              "answerOption": [
+                {
+                  "valueCoding": {
+                    "code": "K",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "kein Tumor nachweisbar"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "T",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "Tumorreste (Residualtumor)"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "P",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "Progression"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "N",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "Kein Anhalt fuer Tumor (no change)"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "R",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "Lokalrezidiv"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "F",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "fraglich"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "U",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "unbekannt"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "X",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor",
+                    "display": "fehlende Angabe"
+                  }
+                }
+              ],
+              "linkId": "verlauf-pt-value",
+              "text": "Lokaler Tumorstatus",
+              "type": "choice",
+              "required": true,
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueCodeableConcept"
+            }
+          ],
+          "linkId": "verlauf-pt",
+          "text": "Primaertumorstatus",
+          "type": "group",
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component"
+        },
+        {
+          "item": [
+            {
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "399656008",
+                    "system": "http://snomed.info/sct",
+                    "display": "Presence of metastatic neoplasm in regional lymph node (observable entity)"
+                  }
+                }
+              ],
+              "linkId": "verlauf-lk-code",
+              "text": "Lymphknotenstatus Code",
+              "type": "choice",
+              "required": true,
+              "readOnly": true,
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.code"
+            },
+            {
+              "answerOption": [
+                {
+                  "valueCoding": {
+                    "code": "K",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "kein Lymphknotenbefall nachweisbar"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "T",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "Tumorreste (Residualtumor)"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "P",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "Progression"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "N",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "Kein Anhalt fuer Lymphknotenbefall (no change)"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "R",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "Regionaerrezidiv"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "F",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "fraglich"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "U",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "unbekannt"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "X",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten",
+                    "display": "fehlende Angabe"
+                  }
+                }
+              ],
+              "linkId": "verlauf-lk-value",
+              "text": "Regionaerer Lymphknotenstatus",
+              "type": "choice",
+              "required": true,
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueCodeableConcept"
+            }
+          ],
+          "linkId": "verlauf-lk",
+          "text": "Lymphknotenstatus",
+          "type": "group",
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component"
+        },
+        {
+          "item": [
+            {
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "399608002",
+                    "system": "http://snomed.info/sct",
+                    "display": "Status of distant metastasis (observable entity)"
+                  }
+                }
+              ],
+              "linkId": "verlauf-fm-code",
+              "text": "Fernmetastasen-Status Code",
+              "type": "choice",
+              "required": true,
+              "readOnly": true,
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.code"
+            },
+            {
+              "answerOption": [
+                {
+                  "valueCoding": {
+                    "code": "K",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "keine Fernmetastasen nachweisbar"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "T",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "Tumorreste (Residualtumor)"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "P",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "Fernmetastasen Progress"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "N",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "Fernmetastasen No Change"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "R",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "neue Fernmetastasen (Rezidiv)"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "F",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "fraglich"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "U",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "unbekannt"
+                  }
+                },
+                {
+                  "valueCoding": {
+                    "code": "X",
+                    "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
+                    "display": "fehlende Angabe"
+                  }
+                }
+              ],
+              "linkId": "verlauf-fm-value",
+              "text": "Status Fernmetastasen",
+              "type": "choice",
+              "required": true,
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueCodeableConcept"
+            }
+          ],
+          "linkId": "verlauf-fm",
+          "text": "Fernmetastasen-Status",
+          "type": "group",
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component"
+        }
+      ],
+      "linkId": "verlauf",
+      "text": "Verlaufsbeurteilung",
+      "type": "group",
+      "required": true
+    },
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Observation?_profile=https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-allgemeiner-leistungszustand-ecog"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "0",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog",
+                "display": "Normale, uneingeschraenkte Aktivitaet wie vor der Erkrankung"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "1",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog",
+                "display": "Einschraenkung bei koerperlicher Anstrengung, aber gehfaehig"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "2",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog",
+                "display": "Gehfaehig, Selbstversorgung moeglich, aber nicht arbeitsfaehig"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "3",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog",
+                "display": "Nur begrenzte Selbstversorgung moeglich, mehr als 50% der Wachzeit bettlaegerig"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "4",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog",
+                "display": "Voellig pflegebeduertig, keinerlei Selbstversorgung moeglich"
+              }
+            }
+          ],
+          "linkId": "ecog-score",
+          "text": "ECOG Performance Status",
+          "type": "choice",
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept"
+        },
+        {
+          "linkId": "ecog-datum",
+          "text": "Datum ECOG-Erhebung",
+          "type": "date",
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.effectiveDateTime"
+        }
+      ],
+      "linkId": "ecog",
+      "text": "Allgemeiner Leistungszustand (ECOG)",
+      "type": "group",
+      "required": false
+    }
+  ],
+  "name": "QuestVerlauf",
+  "status": "draft",
+  "experimental": true,
+  "version": "0.1.0"
+}

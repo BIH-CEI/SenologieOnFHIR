@@ -211,3 +211,58 @@ Usage: #example
 
 * item[+].linkId = "lymphknotenstatus"
 * item[=].answer.valueString = "Axilläre Lymphknoten beidseits klinisch unauffällig"
+
+
+// ------------------------------------------------------------
+// QR 6: Verlauf 6 Monate postoperativ (rezidivfrei)
+// → Observation/Fall1-Verlauf-6Monate + Observation/Fall1-ECOG-6Monate
+// ------------------------------------------------------------
+Instance: QR-Verlauf-Fall1
+InstanceOf: QuestionnaireResponse
+Title: "Fall 1 — QR Verlauf 6 Monate"
+Description: "Antworten auf QuestVerlauf fuer Fall 1 Erika Neumann. Extraktion erzeugt Observation/Fall1-Verlauf-6Monate (kein Rezidiv, ECOG 0)."
+Usage: #example
+
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf"
+* status = #completed
+* subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
+* authored = "2025-08-15"
+
+// --- Verlauf group ---
+* item[+].linkId = "verlauf"
+
+* item[=].item[+].linkId = "verlauf-datum"
+* item[=].item[=].answer.valueDate = "2025-08-15"
+
+* item[=].item[+].linkId = "verlauf-gesamt"
+* item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung#K "keine Aenderung (no change, NC) = stable disease"
+
+// PT-Status
+* item[=].item[+].linkId = "verlauf-pt"
+* item[=].item[=].item[+].linkId = "verlauf-pt-code"
+* item[=].item[=].item[=].answer.valueCoding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
+* item[=].item[=].item[+].linkId = "verlauf-pt-value"
+* item[=].item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor#K "kein Tumor nachweisbar"
+
+// LK-Status
+* item[=].item[+].linkId = "verlauf-lk"
+* item[=].item[=].item[+].linkId = "verlauf-lk-code"
+* item[=].item[=].item[=].answer.valueCoding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
+* item[=].item[=].item[+].linkId = "verlauf-lk-value"
+* item[=].item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten#K "kein Lymphknotenbefall nachweisbar"
+
+// FM-Status
+* item[=].item[+].linkId = "verlauf-fm"
+* item[=].item[=].item[+].linkId = "verlauf-fm-code"
+* item[=].item[=].item[=].answer.valueCoding = $SCT#399608002 "Status of distant metastasis (observable entity)"
+* item[=].item[=].item[+].linkId = "verlauf-fm-value"
+* item[=].item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen#K "keine Fernmetastasen nachweisbar"
+
+// --- ECOG group ---
+* item[+].linkId = "ecog"
+
+* item[=].item[+].linkId = "ecog-score"
+* item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog#0 "Normale, uneingeschraenkte Aktivitaet wie vor der Erkrankung"
+
+* item[=].item[+].linkId = "ecog-datum"
+* item[=].item[=].answer.valueDate = "2025-08-15"
