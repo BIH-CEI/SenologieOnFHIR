@@ -1,0 +1,268 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-strahlentherapie-quest",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-strahlentherapie",
+  "title": "Fragebogen: Strahlentherapie",
+  "description": "Fragebogen zur Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit dem Senologie_Strahlentherapie-Profil (Procedure) als Ziel.",
+  "subjectType": [
+    "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Procedure",
+      "id": "strahlentherapie-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "completed",
+      "category": {
+        "coding": [
+          {
+            "code": "1287742003",
+            "system": "http://snomed.info/sct",
+            "display": "Radiotherapy (procedure)"
+          }
+        ]
+      }
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#strahlentherapie-template"
+      }
+    },
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
+  "item": [
+    {
+      "linkId": "rt-beginn",
+      "text": "Beginn der Bestrahlung",
+      "type": "date",
+      "required": true,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.performedPeriod.start"
+    },
+    {
+      "linkId": "rt-ende",
+      "text": "Ende der Bestrahlung",
+      "type": "date",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.performedPeriod.end"
+    },
+    {
+      "answerOption": [
+        {
+          "valueCoding": {
+            "code": "80248007",
+            "system": "http://snomed.info/sct",
+            "display": "Left breast structure"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "73056007",
+            "system": "http://snomed.info/sct",
+            "display": "Right breast structure"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "63762007",
+            "system": "http://snomed.info/sct",
+            "display": "Both breasts"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "91724009",
+            "system": "http://snomed.info/sct",
+            "display": "Lymph node structure of thorax"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "68171009",
+            "system": "http://snomed.info/sct",
+            "display": "Axillary lymph node structure"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "88911004",
+            "system": "http://snomed.info/sct",
+            "display": "Supraclavicular lymph node structure"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "127951006",
+            "system": "http://snomed.info/sct",
+            "display": "Chest wall structure"
+          }
+        }
+      ],
+      "linkId": "rt-region",
+      "text": "Bestrahlungsregion",
+      "type": "choice",
+      "required": true,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.bodySite"
+    },
+    {
+      "linkId": "rt-ops",
+      "text": "OPS-Code der Bestrahlung",
+      "type": "string",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.code.coding.code"
+    },
+    {
+      "answerOption": [
+        {
+          "valueCoding": {
+            "code": "K",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
+            "display": "kurativ"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "P",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
+            "display": "palliativ"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "S",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
+            "display": "sonstiges"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "X",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
+            "display": "Fehlende Angabe"
+          }
+        }
+      ],
+      "linkId": "rt-intention",
+      "text": "Behandlungsintention",
+      "type": "choice",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:Intention.valueCodeableConcept"
+    },
+    {
+      "linkId": "rt-gesamtdosis",
+      "text": "Gesamtdosis (Gy)",
+      "type": "decimal",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:Gesamtdosis.valueQuantity.value"
+    },
+    {
+      "linkId": "rt-einzeldosis",
+      "text": "Einzeldosis pro Fraktion (Gy)",
+      "type": "decimal",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:einzeldosis.valueQuantity.value"
+    },
+    {
+      "linkId": "rt-sitzungen",
+      "text": "Anzahl Bestrahlungssitzungen (Fraktionen)",
+      "type": "integer",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:sessionCount.valueQuantity.value"
+    },
+    {
+      "answerOption": [
+        {
+          "valueCoding": {
+            "code": "399300004",
+            "system": "http://snomed.info/sct",
+            "display": "Radiation boost"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "261665006",
+            "system": "http://snomed.info/sct",
+            "display": "Unknown"
+          }
+        }
+      ],
+      "linkId": "rt-boost",
+      "text": "Boost-Bestrahlung",
+      "type": "choice",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:Boost.valueCodeableConcept"
+    },
+    {
+      "answerOption": [
+        {
+          "valueCoding": {
+            "code": "24028007",
+            "system": "http://snomed.info/sct",
+            "display": "Right"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "7771000",
+            "system": "http://snomed.info/sct",
+            "display": "Left"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "51440002",
+            "system": "http://snomed.info/sct",
+            "display": "Right and left"
+          }
+        }
+      ],
+      "linkId": "rt-seite",
+      "text": "Seitenlokalisation",
+      "type": "choice",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.bodySite.extension:Seitenlokalisation.valueCodeableConcept"
+    },
+    {
+      "linkId": "rt-diagnose",
+      "text": "Bezogene Diagnose",
+      "type": "reference",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.reasonReference"
+    },
+    {
+      "linkId": "rt-note",
+      "text": "Anmerkungen / Besonderheiten",
+      "type": "text",
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.note.text"
+    }
+  ],
+  "name": "QuestStrahlentherapie",
+  "status": "draft",
+  "experimental": true,
+  "version": "0.1.0"
+}

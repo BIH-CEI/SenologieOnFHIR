@@ -53,6 +53,7 @@
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
+[CS_Senologie_Studienname]: CodeSystem-cs-senologie-studienname.html
 [EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
 [QR-Diagnose-Fall1]: QuestionnaireResponse-QR-Diagnose-Fall1.html
@@ -257,6 +258,7 @@
 [senologie-klinische-untersuchung]: Questionnaire-senologie-klinische-untersuchung.html
 [senologie-op-planung]: Questionnaire-senologie-op-planung.html
 [senologie-postop]: Questionnaire-senologie-postop.html
+[senologie-strahlentherapie-quest]: Questionnaire-senologie-strahlentherapie-quest.html
 [senologie-tumorboard]: Questionnaire-senologie-tumorboard.html
 [EX_Senologie_OperationsDuration]: StructureDefinition-ex-senologie-operations-duration.html
 [IQTIGMammachirurgie181]: StructureDefinition-iqtig-mammachirurgie-181.html
@@ -268,6 +270,7 @@
 [EX_Senologie_PreOpAntibiotikatherapie]: StructureDefinition-ex-senologie-pre-op-antibiotikatherapie.html
 [EX_Senologie_PreOpBlutabnahme]: StructureDefinition-ex-senologie-pre-op-blutabnahme.html
 [EX_Senologie_PreOpMarkierung]: StructureDefinition-ex-senologie-pre-op-markierung.html
+[EX_Senologie_Studienscreening]: StructureDefinition-ex-senologie-studienscreening.html
 [EX_Senologie_Screeningstatus]: StructureDefinition-ex-senologie-screeningstatus.html
 [cm-sct-to-obds-fm-lokalisation]: ConceptMap-cm-sct-to-obds-fm-lokalisation.html
 [cm-sct-to-obds-grading]: ConceptMap-cm-sct-to-obds-grading.html
@@ -278,6 +281,7 @@
 [cm-sct-to-obds-therapieart]: ConceptMap-cm-sct-to-obds-therapieart.html
 [cm-sct-to-obds-verlauf-gesamtbeurteilung]: ConceptMap-cm-sct-to-obds-verlauf-gesamtbeurteilung.html
 [EX_Senologie_ExaminationLocation]: StructureDefinition-ex-senologie-examination-location.html
+[EX_Senologie_StudiennameCode]: StructureDefinition-ex-senologie-studienname-code.html
 [EX_Senologie_DayInCycle]: StructureDefinition-ex-senologie-day-in-cycle.html
 [EX_Senologie_TherapyCycle]: StructureDefinition-ex-senologie-therapy-cycle.html
 [EX_Senologie_TherapyLine]: StructureDefinition-ex-senologie-therapy-line.html
@@ -292,4 +296,5 @@
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html
 [VS_Senologie_Screeningstatus]: ValueSet-vs-senologie-screeningstatus.html
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
+[VS_Senologie_Studienname]: ValueSet-vs-senologie-studienname.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
