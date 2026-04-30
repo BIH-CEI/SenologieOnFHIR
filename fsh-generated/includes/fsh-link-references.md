@@ -53,6 +53,7 @@
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
+[CS_Senologie_Studienname]: CodeSystem-cs-senologie-studienname.html
 [EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
 [QR-Diagnose-Fall1]: QuestionnaireResponse-QR-Diagnose-Fall1.html
@@ -101,6 +102,15 @@
 [Fall12-Bildgebung-Mammographie]: DiagnosticReport-Fall12-Bildgebung-Mammographie.html
 [Fall12-Tumorboard]: CarePlan-Fall12-Tumorboard.html
 [Fall12-Pathologie-Praeparat-Vakuumbiopsie]: Specimen-Fall12-Pathologie-Praeparat-Vakuumbiopsie.html
+[Fall13-Systemtherapie-AdjChemoTrast]: Procedure-Fall13-Systemtherapie-AdjChemoTrast.html
+[Fall13-Strahlentherapie-Links]: Procedure-Fall13-Strahlentherapie-Links.html
+[Fall13-Strahlentherapie-Rechts]: Procedure-Fall13-Strahlentherapie-Rechts.html
+[Fall13-OP-Links-BET]: Procedure-Fall13-OP-Links-BET.html
+[Fall13-Diagnose-Links]: Condition-Fall13-Diagnose-Links.html
+[Fall13-Diagnose-Rechts]: Condition-Fall13-Diagnose-Rechts.html
+[Fall13-OP-Rechts-Mastektomie]: Procedure-Fall13-OP-Rechts-Mastektomie.html
+[Fall13-Patient-Sabine-Lehmann]: Patient-Fall13-Patient-Sabine-Lehmann.html
+[Fall13-Encounter]: Encounter-Fall13-Encounter.html
 [Fall1-Strahlentherapie]: Procedure-Fall1-Strahlentherapie.html
 [Fall1-Begleitmedikation-LThyroxin]: MedicationStatement-Fall1-Begleitmedikation-LThyroxin.html
 [Fall1-Begleitmedikation-Metoprolol]: MedicationStatement-Fall1-Begleitmedikation-Metoprolol.html
@@ -268,6 +278,7 @@
 [EX_Senologie_PreOpAntibiotikatherapie]: StructureDefinition-ex-senologie-pre-op-antibiotikatherapie.html
 [EX_Senologie_PreOpBlutabnahme]: StructureDefinition-ex-senologie-pre-op-blutabnahme.html
 [EX_Senologie_PreOpMarkierung]: StructureDefinition-ex-senologie-pre-op-markierung.html
+[EX_Senologie_Studienscreening]: StructureDefinition-ex-senologie-studienscreening.html
 [EX_Senologie_Screeningstatus]: StructureDefinition-ex-senologie-screeningstatus.html
 [cm-sct-to-obds-fm-lokalisation]: ConceptMap-cm-sct-to-obds-fm-lokalisation.html
 [cm-sct-to-obds-grading]: ConceptMap-cm-sct-to-obds-grading.html
@@ -278,6 +289,7 @@
 [cm-sct-to-obds-therapieart]: ConceptMap-cm-sct-to-obds-therapieart.html
 [cm-sct-to-obds-verlauf-gesamtbeurteilung]: ConceptMap-cm-sct-to-obds-verlauf-gesamtbeurteilung.html
 [EX_Senologie_ExaminationLocation]: StructureDefinition-ex-senologie-examination-location.html
+[EX_Senologie_StudiennameCode]: StructureDefinition-ex-senologie-studienname-code.html
 [EX_Senologie_DayInCycle]: StructureDefinition-ex-senologie-day-in-cycle.html
 [EX_Senologie_TherapyCycle]: StructureDefinition-ex-senologie-therapy-cycle.html
 [EX_Senologie_TherapyLine]: StructureDefinition-ex-senologie-therapy-line.html
@@ -292,4 +304,5 @@
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html
 [VS_Senologie_Screeningstatus]: ValueSet-vs-senologie-screeningstatus.html
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
+[VS_Senologie_Studienname]: ValueSet-vs-senologie-studienname.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html

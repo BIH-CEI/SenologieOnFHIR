@@ -6,7 +6,7 @@
   "name": "Senologie_Studienteilnahme",
   "title": "BIH Senologie Studienteilnahme",
   "status": "draft",
-  "description": "ResearchSubject für klinische Studienteilnahme in der Senologie aus dotbase Questionnaire 'Studien'. Bildet Studienname, Screeningstatus, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab.",
+  "description": "ResearchSubject für klinische Studienteilnahme in der Senologie aus dotbase Questionnaire 'Studien'. Bildet Studienname, Screeningstatus, Studienscreening, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab.",
   "fhirVersion": "4.0.1",
   "kind": "resource",
   "abstract": false,
@@ -42,6 +42,40 @@
             "code": "Extension",
             "profile": [
               "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-screeningstatus"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ResearchSubject.extension:Studienscreening",
+        "path": "ResearchSubject.extension",
+        "sliceName": "Studienscreening",
+        "short": "Screening zur Studienteilnahme (K03)",
+        "comment": "OncoBox 2.0 K03: Wurde ein Screening zur Studienteilnahme durchgeführt? Mapping auf Stud_Screening (0=nein, 1=ja)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienscreening"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ResearchSubject.extension:StudiennameCode",
+        "path": "ResearchSubject.extension",
+        "sliceName": "StudiennameCode",
+        "short": "Studienname aus Auswahlliste (K02)",
+        "comment": "OncoBox 2.0 K02: Kodierter Studienname aus Auswahlliste. Ergänzt study.display um einen strukturierten Code.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code"
             ]
           }
         ]
@@ -97,7 +131,7 @@
         "id": "ResearchSubject.study",
         "path": "ResearchSubject.study",
         "short": "Referenz auf die klinische Studie",
-        "comment": "Enthält den Studiennamen als display oder Referenz auf eine ResearchStudy-Ressource",
+        "comment": "Enthält den Studiennamen als display oder Referenz auf eine ResearchStudy-Ressource. Für OncoBox 2.0 K02: Studienname aus Auswahlliste via study.display oder ResearchStudy.title",
         "mustSupport": true
       },
       {
