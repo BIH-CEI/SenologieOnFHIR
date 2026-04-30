@@ -1,0 +1,161 @@
+map "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf" = "SenologieToOncoBoxBrustVerlauf"
+
+// title: Senologie Verlauf-Observation + FM-Procedures to OncoBox Brust Verlauf
+// status: draft
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
+uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
+
+// Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
+// has no syntax to declare the Logical Model sub-path for BackboneElement
+// slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH
+// errors. The element names are correct per the OncoBox Brust Logical Model.
+
+// ============================================================================
+// Verlauf: Observation (MII_PR_Onko_Verlauf) -> Verlauf-Block
+//
+// Pro Verlauf-Observation wird ein Verlauf-Block erzeugt mit Datum und
+// Ereignistyp. Die FM-Komponente (SNOMED 399608002) bestimmt, ob
+// ereignis = 3 (Fernmetastase) gesetzt wird.
+//
+// OncoBox 2.0 FM-spezifische Felder (J03-J05):
+//   - J03: FM_Op_Datum aus Procedure.performed (FM-bezogene Operation)
+//   - J04: FM_Therapie aus Procedure (palliative Intention, FM-bezogen)
+//   - J05: FM_R_Status aus Procedure.outcome (FM-Operation)
+// ============================================================================
+
+group MapVerlauf(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
+
+  // Verlauf_Datum
+  src.effective as eff where $this.is(dateTime) -> tgt.datum = eff "SetVerlaufDatum";
+
+  // Verlauf_Ereignis aus FM-Komponente
+  // Fernmetastasen-Komponente: SNOMED 399608002 "Status of distant metastasis"
+  // Werte: K=kein, T=Tumorreste, P=Progress, N=Neu, R=Rezidiv
+  // Wenn N oder P -> ereignis = 3 (Fernmetastase)
+  src.component as comp where code.coding.exists(code = '399608002') then {
+    comp.value as val then {
+      val.coding as c where code = 'N' -> tgt.ereignis = '3' "SetEreignisFMNeu";
+      val.coding as c where code = 'P' -> tgt.ereignis = '3' "SetEreignisFMProgress";
+      val.coding as c where code = 'R' -> tgt.ereignis = '3' "SetEreignisFMRezidiv";
+    } "MapEreignisFMVal";
+  } "MapEreignisFM";
+
+  // Primaertumor-Komponente: SNOMED 445200009 "Status of residual neoplasm"
+  // Wenn R (Rezidiv) und kein FM -> ereignis = 1 (Lokalrezidiv)
+  src.component as comp where code.coding.exists(code = '445200009') then {
+    comp.value as val then {
+      val.coding as c where code = 'R' -> tgt.ereignis = '1' "SetEreignisLokalrezidiv";
+      val.coding as c where code = 'P' -> tgt.ereignis = '6' "SetEreignisProgress";
+    } "MapEreignisPTVal";
+  } "MapEreignisPT";
+
+  // LK-Komponente: SNOMED 399656008 "Presence of metastatic neoplasm in regional LN"
+  src.component as comp where code.coding.exists(code = '399656008') then {
+    comp.value as val then {
+      val.coding as c where code = 'R' -> tgt.ereignis = '2' "SetEreignisRegionaerrezidiv";
+    } "MapEreignisLKVal";
+  } "MapEreignisLK";
+
+  // --- OncoBox 2.0: FM-spezifische Felder (J03-J05) ---
+  // J03/J05: FM-Operation aus Procedure mit palliativ-Intention und FM-Bezug
+  // Erkennbar an: Intention=palliativ UND (reasonCode enthalt FM-Diagnose ODER
+  // bodySite ist FM-Lokalisation wie Leber, Lunge, Knochen etc.)
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation')) and resource.extension.exists(url.contains('therapiestellung') and value.coding.exists(code = 'palliativ')) then {
+    entry.resource as proc -> tgt.fmOperation as fmOp then MapFMOperation(proc, fmOp) "CallMapFMOp";
+  } "EntryFMOp";
+
+  // J04: FM-Therapie aus Procedure mit palliativ-Intention (Systemtherapie)
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) and resource.extension.exists(url.contains('therapiestellung') and value.coding.exists(code = 'palliativ')) then {
+    entry.resource as proc -> tgt.fmTherapie as fmTh then MapFMTherapieSyst(proc, fmTh) "CallMapFMThSyst";
+  } "EntryFMThSyst";
+
+  // J04: FM-Therapie aus Procedure mit palliativ-Intention (Strahlentherapie)
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) and resource.extension.exists(url.contains('therapiestellung') and value.coding.exists(code = 'palliativ')) then {
+    entry.resource as proc -> tgt.fmTherapie as fmTh then MapFMTherapieRT(proc, fmTh) "CallMapFMThRT";
+  } "EntryFMThRT";
+
+  // J04: FM-Therapie aus endokriner Therapie mit palliativ-Intention
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-endokrine-therapie')) and resource.extension.exists(url.contains('therapiestellung') and value.coding.exists(code = 'palliativ')) then {
+    entry.resource as proc -> tgt.fmTherapie as fmTh then MapFMTherapieEndo(proc, fmTh) "CallMapFMThEndo";
+  } "EntryFMThEndo";
+}
+
+// ============================================================================
+// FM-Operation (J03/J05): Procedure -> fmOperation-Block
+// ============================================================================
+
+group MapFMOperation(source src : Procedure, target tgt : BackboneElement) {
+
+  // J03: FM_Op_Datum
+  src.performed as perf where $this.is(dateTime) -> tgt.opDatum = perf "SetFMOpDatum";
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.opDatum = s "SetFMOpDatumPeriod";
+  } "MapFMOpDatumPeriod";
+
+  // J05: FM_R_Status aus Procedure.outcome (SNOMED)
+  src.outcome as out then {
+    out.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '122538001' -> tgt.residualstatus = 'R0' "SetFMRR0";
+      c.code as cd where $this = '122539009' -> tgt.residualstatus = 'R1' "SetFMRR1";
+      c.code as cd where $this = '122540006' -> tgt.residualstatus = 'R2' "SetFMRR2";
+      c.code as cd where $this = '122541005' -> tgt.residualstatus = 'RX' "SetFMRRX";
+    } "MapFMROutcomeCoding";
+  } "MapFMROutcome";
+}
+
+// ============================================================================
+// FM-Therapie Systemtherapie (J04): Procedure -> fmTherapie-Block
+// ============================================================================
+
+group MapFMTherapieSyst(source src : Procedure, target tgt : BackboneElement) {
+
+  // FM_Therapie_Art aus SNOMED-Code
+  src.code as code then {
+    code.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '367336001' -> tgt.therapieart = '1' "SetFMThChemo";
+      c.code as cd where $this = '76334006' -> tgt.therapieart = '2' "SetFMThImmun";
+      c.code as cd where $this = '169413002' -> tgt.therapieart = '3' "SetFMThZiel";
+    } "MapFMThArtCoding";
+  } "MapFMThArt";
+
+  // FM_Therapie_Beginn / Ende
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.beginn = s "SetFMThBeginn";
+    perf.end as e -> tgt.ende = e "SetFMThEnde";
+  } "MapFMThPeriod";
+}
+
+// ============================================================================
+// FM-Therapie Strahlentherapie (J04): Procedure -> fmTherapie-Block
+// ============================================================================
+
+group MapFMTherapieRT(source src : Procedure, target tgt : BackboneElement) {
+
+  // FM_Therapie_Art = 4 (Strahlentherapie)
+  src -> tgt.therapieart = '4' "SetFMThArtRT";
+
+  // FM_Therapie_Beginn / Ende
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.beginn = s "SetFMThRTBeginn";
+    perf.end as e -> tgt.ende = e "SetFMThRTEnde";
+  } "MapFMThRTPeriod";
+}
+
+// ============================================================================
+// FM-Therapie Endokrine Therapie (J04): Procedure -> fmTherapie-Block
+// ============================================================================
+
+group MapFMTherapieEndo(source src : Procedure, target tgt : BackboneElement) {
+
+  // FM_Therapie_Art = 5 (endokrine Therapie)
+  src -> tgt.therapieart = '5' "SetFMThArtEndo";
+
+  // FM_Therapie_Beginn / Ende
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.beginn = s "SetFMThEndoBeginn";
+    perf.end as e -> tgt.ende = e "SetFMThEndoEnde";
+  } "MapFMThEndoPeriod";
+}
