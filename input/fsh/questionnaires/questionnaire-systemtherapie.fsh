@@ -21,12 +21,18 @@ Usage: #definition
 * subjectType = #Patient
 * insert Version
 
-// ---------- SDC Template-based Extraction ----------
+// ---------- Contained Procedure (Extraction Template) ----------
+* contained = procedure-template
+
+// ---------- SDC Extensions ----------
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
 * extension[=].extension[+].url = "name"
 * extension[=].extension[=].valueCoding = http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext#patient
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
+
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* extension[=].valueReference = Reference(procedure-template)
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Procedure-Pfad):
@@ -114,3 +120,66 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].definition = "http://hl7.org/fhir/StructureDefinition/Procedure#Procedure.note.text"
+
+
+// ============================================================
+// Contained Procedure: Template für Template-based Extraction
+// ============================================================
+
+Instance: procedure-template
+InstanceOf: Procedure
+Usage: #inline
+
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+* status = #completed
+* category = $SCT#18629005 "Administration of medication"
+
+* code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding.code.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.code"
+* code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding.system.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.system"
+* code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding.display.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.display"
+
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "'Patient/' + %patient.id"
+
+* performedPeriod.start = "2024-01-01"
+* performedPeriod.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedPeriod.start.extension.valueString = "item.where(linkId='syst-beginn').answer.valueDate"
+* performedPeriod.end = "2024-12-31"
+* performedPeriod.end.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedPeriod.end.extension.valueString = "item.where(linkId='syst-ende').answer.valueDate"
+
+* outcome.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* outcome.coding.code.extension.valueString = "item.where(linkId='syst-status').answer.valueCoding.code"
+* outcome.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* outcome.coding.system.extension.valueString = "item.where(linkId='syst-status').answer.valueCoding.system"
+* outcome.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* outcome.coding.display.extension.valueString = "item.where(linkId='syst-status').answer.valueCoding.display"
+
+* usedCode.text = "Therapieprotokoll"
+* usedCode.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* usedCode.text.extension.valueString = "item.where(linkId='syst-protokoll').answer.valueString"
+
+* note.text = "Anmerkungen"
+* note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* note.text.extension.valueString = "item.where(linkId='syst-anmerkungen').answer.valueString"
+
+// --- Intention (MII Onko Extension) ---
+* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-intention"
+* extension[=].valueCodeableConcept.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.code.extension.valueString = "item.where(linkId='syst-intention').answer.valueCoding.code"
+* extension[=].valueCodeableConcept.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.system.extension.valueString = "item.where(linkId='syst-intention').answer.valueCoding.system"
+* extension[=].valueCodeableConcept.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.display.extension.valueString = "item.where(linkId='syst-intention').answer.valueCoding.display"
+
+// --- Stellung zur OP (MII Onko Extension) ---
+* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-therapie-stellungzurop"
+* extension[=].valueCodeableConcept.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.code.extension.valueString = "item.where(linkId='syst-stellung').answer.valueCoding.code"
+* extension[=].valueCodeableConcept.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.system.extension.valueString = "item.where(linkId='syst-stellung').answer.valueCoding.system"
+* extension[=].valueCodeableConcept.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.display.extension.valueString = "item.where(linkId='syst-stellung').answer.valueCoding.display"

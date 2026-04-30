@@ -21,12 +21,18 @@ Usage: #definition
 * subjectType = #Patient
 * insert Version
 
-// ---------- SDC Template-based Extraction ----------
+// ---------- Contained Observation (Extraction Template) ----------
+* contained = observation-template
+
+// ---------- SDC Extensions ----------
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
 * extension[=].extension[+].url = "name"
 * extension[=].extension[=].valueCoding = http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext#patient
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
+
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* extension[=].valueReference = Reference(observation-template)
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Observation-Pfad):
@@ -85,3 +91,54 @@ Usage: #definition
 * item[=].required = false
 * item[=].code[+] = $SCT#284429001 "Examination of axillary lymph nodes"
 * item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
+
+
+// ============================================================
+// Contained Observation: Template für Template-based Extraction
+// ============================================================
+
+Instance: observation-template
+InstanceOf: Observation
+Usage: #inline
+
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
+* status = #final
+* code = $LOINC#32422-8 "Physical findings of Breast"
+
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "'Patient/' + %patient.id"
+
+* effectiveDateTime = "2024-01-01"
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "item.where(linkId='untersuchung-datum').answer.valueDate"
+
+* bodySite.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding.code.extension.valueString = "item.where(linkId='seitenlokalisation').answer.valueCoding.code"
+* bodySite.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding.system.extension.valueString = "item.where(linkId='seitenlokalisation').answer.valueCoding.system"
+* bodySite.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding.display.extension.valueString = "item.where(linkId='seitenlokalisation').answer.valueCoding.display"
+
+// --- Palpationsbefund ---
+* component[+].code = $SCT#118242002 "Finding by palpation"
+* component[=].valueString = "Palpationsbefund"
+* component[=].valueString.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueString.extension.valueString = "item.where(linkId='palpationsbefund').answer.valueString"
+
+// --- Hautveränderungen ---
+* component[+].code = $SCT#115951000119105 "Breast symptom of change in skin"
+* component[=].valueString = "Hautveränderungen"
+* component[=].valueString.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueString.extension.valueString = "item.where(linkId='hautveraenderungen').answer.valueString"
+
+// --- Mamillenbefund ---
+* component[+].code = $SCT#248819006 "Nipple finding"
+* component[=].valueString = "Mamillenbefund"
+* component[=].valueString.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueString.extension.valueString = "item.where(linkId='mamillenbefund').answer.valueString"
+
+// --- Lymphknotenstatus ---
+* component[+].code = $SCT#301782006 "Finding of lymph node of axillary region"
+* component[=].valueString = "Lymphknotenstatus"
+* component[=].valueString.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueString.extension.valueString = "item.where(linkId='lymphknotenstatus').answer.valueString"
