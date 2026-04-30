@@ -11,7 +11,6 @@ uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as 
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
 uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
 uses "http://hl7.org/fhir/StructureDefinition/ResearchSubject" alias ResearchSubject as source
-uses "http://hl7.org/fhir/StructureDefinition/ResearchStudy" alias ResearchStudy as source
 uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
 
 // Operation / Therapie / Verlauf per Sub-Map
@@ -87,7 +86,7 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
 
   // --- Studienteilnahme aus ResearchSubject ---
   bundle.entry as entry where resource.is(ResearchSubject) then {
-    entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud, bundle) "CallMapStud";
+    entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud) "CallMapStud";
   } "EntryResearchSubject";
 
   // --- Verlauf aus MII_PR_Onko_Verlauf Observation (inkl. OncoBox 2.0 FM-Felder J03-J05) ---
@@ -325,35 +324,68 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
   // Rezeptorstatus ER (LOINC 85337-4)
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
     entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      // ER Status (P/N/U)
       obs.value as val then {
         val.coding as c where code = '10828004' -> rez.erStatus = 'P' "SetERPositiv";
         val.coding as c where code = '260385009' -> rez.erStatus = 'N' "SetERNegativ";
         val.coding as c where code = '261665006' -> rez.erStatus = 'U' "SetERUnbekannt";
       } "MapER";
+
+      // ER Prozent aus component:AnteilPositiveZellen (SCT 1234804006)
+      obs.component as comp where code.coding.exists(code = '1234804006') then {
+        comp.value as val then {
+          val.value as v -> rez.erProzent = v "SetERProzent";
+        } "MapERProzentVal";
+      } "MapERProzent";
     } "MapERObs";
   } "EntryER";
 
   // Rezeptorstatus PR (LOINC 85339-0)
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
     entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      // PR Status (P/N/U)
       obs.value as val then {
         val.coding as c where code = '10828004' -> rez.prStatus = 'P' "SetPRPositiv";
         val.coding as c where code = '260385009' -> rez.prStatus = 'N' "SetPRNegativ";
         val.coding as c where code = '261665006' -> rez.prStatus = 'U' "SetPRUnbekannt";
       } "MapPR";
+
+      // PR Prozent aus component:AnteilPositiveZellen (SCT 1234803000)
+      obs.component as comp where code.coding.exists(code = '1234803000') then {
+        comp.value as val then {
+          val.value as v -> rez.prProzent = v "SetPRProzent";
+        } "MapPRProzentVal";
+      } "MapPRProzent";
     } "MapPRObs";
   } "EntryPR";
 
   // Rezeptorstatus HER2 (LOINC 85319-2)
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
     entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      // HER2 Status (P/N/U)
       obs.value as val then {
         val.coding as c where code = '10828004' -> rez.her2Status = 'P' "SetHER2Positiv";
         val.coding as c where code = '260385009' -> rez.her2Status = 'N' "SetHER2Negativ";
         val.coding as c where code = '261665006' -> rez.her2Status = 'U' "SetHER2Unbekannt";
       } "MapHER2";
+
+      // HER2 IHC Score aus component:IHCScore (LOINC 85319-2)
+      obs.component as comp where code.coding.exists(code = '85319-2') then {
+        comp.value as val then {
+          val.coding as c -> rez.her2Score = (c.code) "SetHER2Score";
+        } "MapHER2ScoreVal";
+      } "MapHER2Score";
     } "MapHER2Obs";
   } "EntryHER2";
+
+  // Ki-67 Proliferationsindex (LOINC 29593-1)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '29593-1') then {
+    entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      obs.value as val then {
+        val.value as v -> rez.ki67 = v "SetKi67";
+      } "MapKi67Val";
+    } "MapKi67Obs";
+  } "EntryKi67";
 }
 
 // ============================================================================
@@ -406,52 +438,10 @@ group MapTumorkonferenz(source src : CarePlan, target tgt : BackboneElement) {
 }
 
 // ============================================================================
-// Studienteilnahme -> Studien-Block (OncoBox 2.0 K02/K03)
-//
-// Felder:
-//   - teilgenommen: immer '1' (ResearchSubject existiert)
-//   - studienKurzname: aus study.display oder ResearchStudy.title
-//   - studiennameCode: aus Extension StudiennameCode (K02)
-//   - screening: aus Extension Studienscreening (K03)
-//   - art: aus ResearchStudy.category (1=interventionell, 2=nicht-interv., 3=Register, 9=sonstige)
+// Studienteilnahme -> Studien-Block
 // ============================================================================
 
-group MapStudienteilnahme(source src : ResearchSubject, target tgt : BackboneElement, source bundle : Bundle) {
+group MapStudienteilnahme(source src : ResearchSubject, target tgt : BackboneElement) {
 
-  // Stud_Teilgenommen = 1
   src -> tgt.teilgenommen = '1' "SetStudJa";
-
-  // Stud_Name aus study.display
-  src.study as study then {
-    study.display as d -> tgt.studienKurzname = d "SetStudName";
-  } "MapStudName";
-
-  // Stud_Name_Code aus Extension StudiennameCode (K02)
-  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code' then {
-    ext.value as val then {
-      val.coding as c then {
-        c.code as cd -> tgt.studiennameCode = cd "SetStudNameCode";
-      } "MapStudNameCodeCoding";
-    } "MapStudNameCodeVal";
-  } "MapStudNameCodeExt";
-
-  // Stud_Screening aus Extension Studienscreening (K03)
-  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienscreening' then {
-    ext.value as val where $this = true -> tgt.screening = '1' "SetScreeningJa";
-    ext.value as val where $this = false -> tgt.screening = '0' "SetScreeningNein";
-  } "MapScreeningExt";
-
-  // Stud_Art aus ResearchStudy.category (resolve via bundle)
-  // ResearchStudy.category SNOMED: 386053000=interventionell, ...
-  bundle.entry as entry where resource.is(ResearchStudy) then {
-    entry.resource as rs then {
-      rs.category as cat then {
-        cat.coding as c where system = 'http://snomed.info/sct' then {
-          c.code as cd where $this = '386053000' -> tgt.art = '1' "SetArtInterventionell";
-          c.code as cd where $this = '733936006' -> tgt.art = '2' "SetArtNichtInterventionell";
-          c.code as cd where $this = '385672004' -> tgt.art = '3' "SetArtRegister";
-        } "MapArtCoding";
-      } "MapArtCat";
-    } "MapArtRS";
-  } "EntryResearchStudy";
 }
