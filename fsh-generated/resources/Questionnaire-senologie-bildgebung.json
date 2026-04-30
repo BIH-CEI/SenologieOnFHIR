@@ -31,7 +31,7 @@
         {
           "valueExpression": {
             "language": "application/x-fhir-query",
-            "expression": "DiagnosticReport"
+            "expression": "DiagnosticReport?_profile=https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
           },
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
         }
@@ -41,7 +41,8 @@
           "linkId": "untersuchung-datum",
           "text": "Untersuchungsdatum",
           "type": "date",
-          "required": true
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.effective[x]"
         },
         {
           "answerOption": [
@@ -73,9 +74,17 @@
           "linkId": "bildgebungsart",
           "text": "Bildgebungsart",
           "type": "choice",
-          "required": true
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.code"
         },
         {
+          "code": [
+            {
+              "code": "272741003",
+              "system": "http://snomed.info/sct",
+              "display": "Laterality"
+            }
+          ],
           "answerOption": [
             {
               "valueCoding": {
@@ -108,7 +117,8 @@
           "linkId": "befundender-arzt",
           "text": "Befundender Arzt",
           "type": "string",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.conclusion"
         }
       ],
       "linkId": "untersuchung",
@@ -121,7 +131,7 @@
         {
           "valueExpression": {
             "language": "application/x-fhir-query",
-            "expression": "Observation"
+            "expression": "Observation?_profile=https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
           },
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
         }
@@ -189,9 +199,17 @@
           "linkId": "birads-kategorie",
           "text": "BI-RADS Kategorie",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "18794-8",
+              "system": "http://loinc.org",
+              "display": "Mammography breast density"
+            }
+          ],
           "answerOption": [
             {
               "valueString": "A – fast vollständig fetthaltig"
@@ -209,19 +227,36 @@
           "linkId": "acr-brustdichte",
           "text": "ACR Brustdichte",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "300886002",
+              "system": "http://snomed.info/sct",
+              "display": "Mass of breast"
+            }
+          ],
           "linkId": "herdbefund-beschreibung",
           "text": "Herdbefund Beschreibung",
           "type": "text",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.note.text"
         },
         {
+          "code": [
+            {
+              "code": "373945005",
+              "system": "http://snomed.info/sct",
+              "display": "Microcalcification"
+            }
+          ],
           "linkId": "mikrokalk",
           "text": "Mikrokalkifikationen vorhanden",
           "type": "boolean",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
           "enableWhen": [
@@ -237,10 +272,18 @@
           "required": false
         },
         {
+          "code": [
+            {
+              "code": "301782006",
+              "system": "http://snomed.info/sct",
+              "display": "Lymph node finding"
+            }
+          ],
           "linkId": "lymphknoten-auffaellig",
           "text": "Lymphknoten auffällig",
           "type": "boolean",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         }
       ],
       "linkId": "befund",
