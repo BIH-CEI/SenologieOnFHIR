@@ -1,0 +1,306 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-verlauf",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf",
+  "title": "Fragebogen: Verlaufsdokumentation / Nachsorge",
+  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel.",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
+  "item": [
+    {
+      "item": [
+        {
+          "linkId": "kontrolltermin-datum",
+          "text": "Datum Vorstellung",
+          "type": "date",
+          "required": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "6-Monats-Kontrolle"
+            },
+            {
+              "valueString": "12-Monats-Kontrolle"
+            },
+            {
+              "valueString": "Ausserplanmaessig"
+            },
+            {
+              "valueString": "Abschlusskontrolle"
+            }
+          ],
+          "linkId": "kontrolltermin-art",
+          "text": "Art der Kontrolle",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "linkId": "kontrolltermin-monate-seit-ed",
+          "text": "Monate seit Erstdiagnose",
+          "type": "integer",
+          "required": false
+        }
+      ],
+      "linkId": "kontrolltermin",
+      "text": "Kontrolltermin",
+      "type": "group",
+      "required": true
+    },
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Observation"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueString": "Gut"
+            },
+            {
+              "valueString": "Eingeschraenkt"
+            },
+            {
+              "valueString": "Schlecht"
+            }
+          ],
+          "linkId": "klinisch-allgemeinzustand",
+          "text": "Allgemeinzustand",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "Unauffaellig"
+            },
+            {
+              "valueString": "Auffaellig"
+            }
+          ],
+          "linkId": "klinisch-lokalbefund",
+          "text": "Lokalbefund Brust",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "klinisch-lokalbefund",
+              "operator": "=",
+              "answerString": "Auffaellig"
+            }
+          ],
+          "linkId": "klinisch-lokalbefund-beschreibung",
+          "text": "Lokalbefund Beschreibung",
+          "type": "text",
+          "required": false
+        },
+        {
+          "code": [
+            {
+              "code": "449620005",
+              "system": "http://snomed.info/sct",
+              "display": "Lymphedema"
+            }
+          ],
+          "answerOption": [
+            {
+              "valueString": "Kein"
+            },
+            {
+              "valueString": "Grad I"
+            },
+            {
+              "valueString": "Grad II"
+            },
+            {
+              "valueString": "Grad III"
+            }
+          ],
+          "linkId": "klinisch-lymphoedem",
+          "text": "Lymphoedem",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "linkId": "klinisch-armumfangsdifferenz",
+          "text": "Armumfangsdifferenz (cm)",
+          "type": "decimal",
+          "required": false
+        },
+        {
+          "linkId": "klinisch-schmerzen",
+          "text": "Schmerzen",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "linkId": "klinischer-status",
+      "text": "Klinischer Status",
+      "type": "group",
+      "required": false
+    },
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Observation"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "103338009",
+                "system": "http://snomed.info/sct",
+                "display": "Complete remission"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "268910001",
+                "system": "http://snomed.info/sct",
+                "display": "Partial remission"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "58158008",
+                "system": "http://snomed.info/sct",
+                "display": "Stable disease"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "271299001",
+                "system": "http://snomed.info/sct",
+                "display": "Tumor progression"
+              }
+            },
+            {
+              "valueString": "Kein Anhalt fuer Tumor"
+            }
+          ],
+          "linkId": "tumorstatus-gesamtbeurteilung",
+          "text": "Gesamtbeurteilung Verlauf",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "linkId": "tumorstatus-lokalrezidiv",
+          "text": "Lokalrezidiv",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "tumorstatus-lokalrezidiv",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "linkId": "tumorstatus-rezidiv-datum",
+          "text": "Datum Rezidiv",
+          "type": "date",
+          "required": false
+        },
+        {
+          "linkId": "tumorstatus-fernmetastasen",
+          "text": "Fernmetastasen",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "tumorstatus-fernmetastasen",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "answerOption": [
+            {
+              "valueString": "Lunge"
+            },
+            {
+              "valueString": "Leber"
+            },
+            {
+              "valueString": "Knochen"
+            },
+            {
+              "valueString": "Hirn"
+            },
+            {
+              "valueString": "Sonstige"
+            }
+          ],
+          "linkId": "tumorstatus-metastasen-lokalisation",
+          "text": "Metastasenlokalisation",
+          "type": "choice",
+          "required": false,
+          "repeats": true
+        }
+      ],
+      "linkId": "tumorstatus",
+      "text": "Tumorstatus",
+      "type": "group",
+      "required": false
+    },
+    {
+      "item": [
+        {
+          "linkId": "vorgehen-naechster-termin",
+          "text": "Naechster Kontrolltermin",
+          "type": "date",
+          "required": false
+        },
+        {
+          "linkId": "vorgehen-empfehlung",
+          "text": "Empfehlung",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "weiteres-vorgehen",
+      "text": "Weiteres Vorgehen",
+      "type": "group",
+      "required": false
+    }
+  ],
+  "name": "QuestVerlauf",
+  "status": "draft",
+  "version": "0.8.0",
+  "experimental": true
+}

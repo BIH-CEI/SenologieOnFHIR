@@ -13,9 +13,10 @@ uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
 uses "http://hl7.org/fhir/StructureDefinition/ResearchSubject" alias ResearchSubject as source
 uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
 
-// Operation / Therapie per Sub-Map
+// Operation / Therapie / Verlauf per Sub-Map
 imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation"
 imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie"
+imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf"
 
 // Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
 // has no syntax to declare the Logical Model sub-path for BackboneElement
@@ -87,6 +88,11 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
   bundle.entry as entry where resource.is(ResearchSubject) then {
     entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud) "CallMapStud";
   } "EntryResearchSubject";
+
+  // --- Verlauf aus MII_PR_Onko_Verlauf Observation (inkl. OncoBox 2.0 FM-Felder J03-J05) ---
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '396432002') then {
+    entry.resource as obs -> tgt.verlauf as verl then MapVerlauf(obs, verl, bundle) "CallMapVerlauf";
+  } "EntryVerlauf";
 }
 
 // ============================================================================
