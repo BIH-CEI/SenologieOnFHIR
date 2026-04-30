@@ -114,6 +114,8 @@ Die OncoBox-Brust-Meldung besteht aus:
 | Op_Schnellschnitt | Specimen.processing (SNOMED 123038009) | 0/1 |
 | Op_Praeparatkontrolle | Specimen.processing.procedure (SNOMED) | Mammo=1, Sono=2 |
 | Op_R_Lokal / Op_R_Gesamt | Procedure.outcome (SNOMED) | R0-RX |
+| Op_Revision | Procedure.reasonCode (SNOMED 282032007 / Text) | OncoBox 2.0: Revisionsoperation 0/1 |
+| Op_Anzahl_bis_R0 | Procedure-Aggregation (CQL) | OncoBox 2.0: Default 1 bei R0, CQL-Aggregation fuer Kette (KB-14) |
 | Op_Komplikation | Senologie_Operative_Komplikation | Kuerzel + ICD |
 
 #### Primaerfall -- Therapie
