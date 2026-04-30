@@ -40,6 +40,10 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * extension[einzeldosis] ^short = "Einzeldosis pro Fraktion in Gy"
 * extension[einzeldosis] ^comment = "OncoBox 2.0 H10: Einzeldosis pro Tag in Gy"
 
+* extension contains EX_Senologie_SimultaneRadiochemotherapie named simultaneRadiochemotherapie 0..1
+* extension[simultaneRadiochemotherapie] ^short = "Simultane Radiochemotherapie (H03)"
+* extension[simultaneRadiochemotherapie] ^comment = "OncoBox 2.0 H03: Simultane Radiochemotherapie ja/nein"
+
 * note ^short = "Detaillierte Beschreibung"
 * reasonReference MS
 * reasonReference ^short = "Bezogene Diagnose"
