@@ -130,16 +130,14 @@ Usage: #example
 * item[=].item[+].linkId = "op-outcome"
 * item[=].item[=].answer.valueString = "R0-Resektion, Sentinel negativ (0/2)"
 
-// --- FollowUp group ---
-* item[+].linkId = "followup"
-
+// Postoperative Anordnungen (jetzt im Operation-Gruppe)
 * item[=].item[+].linkId = "followup-drainage"
 * item[=].item[=].answer.valueString = "Redon-Drainage 10 Ch"
 
 * item[=].item[+].linkId = "followup-verband"
 * item[=].item[=].answer.valueString = "Kompressionsverband"
 
-// Keine Komplikation für Fall 1 — Komplikations-Gruppe bleibt leer
+// Keine Komplikation fuer Fall 1 — Komplikations-Gruppe bleibt leer
 
 
 // ------------------------------------------------------------
