@@ -257,6 +257,7 @@
 [Fall9-Verlauf-12Monate]: Observation-Fall9-Verlauf-12Monate.html
 [senologie-klinische-untersuchung]: Questionnaire-senologie-klinische-untersuchung.html
 [senologie-op-planung]: Questionnaire-senologie-op-planung.html
+[senologie-pathologie]: Questionnaire-senologie-pathologie.html
 [senologie-postop]: Questionnaire-senologie-postop.html
 [senologie-strahlentherapie-quest]: Questionnaire-senologie-strahlentherapie-quest.html
 [senologie-tumorboard]: Questionnaire-senologie-tumorboard.html
