@@ -1,5 +1,6 @@
 Alias: $SCT = http://snomed.info/sct
 Alias: $LOINC = http://loinc.org
+Alias: $ICD11 = http://id.who.int/icd/release/11/mms
 
 // --- MII Onkologie Profiles ---
 Alias: $MII_PR_Onko_Operation = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-operation
