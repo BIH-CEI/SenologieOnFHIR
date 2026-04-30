@@ -83,6 +83,11 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
     entry.resource as cp -> tgt.tumorkonferenz as tk then MapTumorkonferenz(cp, tk) "CallMapTK";
   } "EntryTK";
 
+  // --- Psychoonkologie aus Procedure (senologie-psychoonkologie) ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-psychoonkologie')) then {
+    entry.resource as proc -> tgt.psychoonkologie as psych then MapPsychoonkologie(proc, psych) "CallMapPsych";
+  } "EntryPsychoonko";
+
   // --- Studienteilnahme aus ResearchSubject ---
   bundle.entry as entry where resource.is(ResearchSubject) then {
     entry.resource as rs -> tgt.studienteilnahme as stud then MapStudienteilnahme(rs, stud) "CallMapStud";
@@ -396,6 +401,23 @@ group MapTumorkonferenz(source src : CarePlan, target tgt : BackboneElement) {
       c.code as cd where $this = 'rezidiv' -> tgt.typ = '3' "SetTKTypRez";
     } "MapTKTypCoding";
   } "MapTKTyp";
+}
+
+// ============================================================================
+// Psychoonkologie -> Psychoonkologie-Block (KB-9)
+//
+// Procedure.status = completed -> erfolgt = '1', Procedure.performedDateTime -> datum
+// Procedure.status = not-done  -> erfolgt = '0'
+// ============================================================================
+
+group MapPsychoonkologie(source src : Procedure, target tgt : BackboneElement) {
+
+  // Psych_Erfolgt: completed=ja, not-done=nein
+  src.status as s where $this = 'completed' -> tgt.erfolgt = '1' "SetPsychJa";
+  src.status as s where $this = 'not-done' -> tgt.erfolgt = '0' "SetPsychNein";
+
+  // Psych_Datum aus performedDateTime
+  src.performed as perf where $this.is(dateTime) -> tgt.datum = perf "SetPsychDatum";
 }
 
 // ============================================================================
