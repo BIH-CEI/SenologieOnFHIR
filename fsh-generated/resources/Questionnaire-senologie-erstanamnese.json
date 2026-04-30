@@ -3,9 +3,75 @@
   "id": "senologie-erstanamnese",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese",
   "title": "Fragebogen: Erstanamnese",
-  "description": "Fragebogen zur Erstanamnese (Allgemeine Anamnese, Gynäkologische Anamnese, Familienanamnese). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Observation, FamilyMemberHistory).",
+  "description": "Fragebogen zur Erstanamnese (Diagnose, gynaekologische Anamnese, Familienanamnese). Nutzt SDC Template-based Extraction mit drei contained Templates: Condition (Senologie_Diagnose_Maligne), Observation (Senologie_Gynaekologische_Anamnese), FamilyMemberHistory (Senologie_Familienanamnese).",
   "subjectType": [
     "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Condition",
+      "id": "erstanamnese-diagnose-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "clinicalStatus": {
+        "coding": [
+          {
+            "code": "active",
+            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "Observation",
+      "id": "erstanamnese-gyn-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "code": "89221-6",
+            "system": "http://loinc.org",
+            "display": "Gynecology History and physical note"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "FamilyMemberHistory",
+      "id": "erstanamnese-famhx-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+        ]
+      },
+      "patient": {
+        "reference": "placeholder"
+      },
+      "status": "completed",
+      "relationship": {
+        "coding": [
+          {
+            "code": "FAMMEMB",
+            "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+            "display": "family member"
+          }
+        ]
+      }
+    }
   ],
   "extension": [
     {
@@ -27,301 +93,403 @@
   ],
   "item": [
     {
-      "item": [
+      "extension": [
         {
-          "linkId": "datum-vorstellung",
-          "text": "Datum der Vorstellung",
-          "type": "date",
-          "required": true
-        },
-        {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "185387006",
-                "system": "http://snomed.info/sct",
-                "display": "New patient consultation"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "726007",
-                "system": "http://snomed.info/sct",
-                "display": "Pathology consultation, comprehensive, records and specimen with report"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "390906007",
-                "system": "http://snomed.info/sct",
-                "display": "Follow-up encounter"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "183620003",
-                "system": "http://snomed.info/sct",
-                "display": "Aftercare follow-up visit"
-              }
-            }
-          ],
-          "linkId": "vorstellungsgrund",
-          "text": "Vorstellungsgrund",
-          "type": "choice",
-          "required": true
-        },
-        {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "171176006",
-                "system": "http://snomed.info/sct",
-                "display": "Breast cancer screening"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "2471000175109",
-                "system": "http://snomed.info/sct",
-                "display": "Interval cancer detected"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "129434009",
-                "system": "http://snomed.info/sct",
-                "display": "Self-examination of breast"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "261087003",
-                "system": "http://snomed.info/sct",
-                "display": "Incidental"
-              }
-            }
-          ],
-          "linkId": "screeningstatus",
-          "text": "Screeningstatus",
-          "type": "choice",
-          "required": false
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+          "valueReference": {
+            "reference": "#erstanamnese-diagnose-template"
+          }
         }
       ],
-      "linkId": "allgemeine-anamnese",
-      "text": "Allgemeine Anamnese",
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "254837009",
+                "system": "http://snomed.info/sct",
+                "display": "Malignant neoplasm of breast"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "109886000",
+                "system": "http://snomed.info/sct",
+                "display": "Overlapping malignant neoplasm of breast"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "93796005",
+                "system": "http://snomed.info/sct",
+                "display": "Ductal carcinoma in situ of breast"
+              }
+            }
+          ],
+          "linkId": "diagnose-sct",
+          "text": "Diagnose (SNOMED CT)",
+          "type": "choice",
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:sct"
+        },
+        {
+          "linkId": "diagnose-icd10",
+          "text": "ICD-10-GM Code",
+          "type": "string",
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:icd10-gm.code"
+        },
+        {
+          "linkId": "diagnose-icd10-display",
+          "text": "ICD-10-GM Bezeichnung",
+          "type": "string",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:icd10-gm.display"
+        },
+        {
+          "linkId": "diagnose-text",
+          "text": "Diagnosetext (Freitext)",
+          "type": "string",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.text"
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "80248007",
+                "system": "http://snomed.info/sct",
+                "display": "Left breast structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "73056007",
+                "system": "http://snomed.info/sct",
+                "display": "Right breast structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "63762007",
+                "system": "http://snomed.info/sct",
+                "display": "Both breasts"
+              }
+            }
+          ],
+          "linkId": "seitenlokalisation",
+          "text": "Seitenlokalisation",
+          "type": "choice",
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.bodySite"
+        },
+        {
+          "linkId": "feststellungsdatum",
+          "text": "Feststellungsdatum (Erstdiagnose)",
+          "type": "date",
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.extension:Feststellungsdatum.valueDateTime"
+        },
+        {
+          "linkId": "recorded-date",
+          "text": "Dokumentationsdatum",
+          "type": "date",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.recordedDate"
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "7",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "histologische Untersuchung eines Primaertumors"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "6",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "Histologie einer Metastase"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "5",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "Zytologie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "4",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "spezifische Tumormarker"
+              }
+            }
+          ],
+          "linkId": "diagnosesicherung",
+          "text": "Diagnosesicherung",
+          "type": "choice",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.verificationStatus.coding"
+        },
+        {
+          "linkId": "stadium-summary",
+          "text": "Klinisches Stadium (Zusammenfassung)",
+          "type": "string",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.stage.summary.text"
+        },
+        {
+          "linkId": "metastasen-summary",
+          "text": "Metastasierungsstatus",
+          "type": "string",
+          "required": false
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "active",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                "display": "Active"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "recurrence",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                "display": "Recurrence"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "remission",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                "display": "Remission"
+              }
+            }
+          ],
+          "linkId": "clinical-status",
+          "text": "Klinischer Status",
+          "type": "choice",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.clinicalStatus"
+        },
+        {
+          "linkId": "onset",
+          "text": "Symptombeginn",
+          "type": "date",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.onsetDateTime"
+        }
+      ],
+      "linkId": "diagnose",
+      "text": "Diagnose",
       "type": "group",
       "required": true
     },
     {
       "extension": [
         {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+          "valueReference": {
+            "reference": "#erstanamnese-gyn-template"
+          }
         }
       ],
       "item": [
         {
-          "code": [
+          "linkId": "gyn-datum",
+          "text": "Datum der Anamneseerhebung",
+          "type": "date",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.effectiveDateTime"
+        },
+        {
+          "item": [
             {
-              "code": "42798-9",
-              "system": "http://loinc.org",
-              "display": "Age at menarche"
+              "linkId": "gyn-menarche-alter",
+              "text": "Alter bei Menarche (Jahre)",
+              "type": "integer",
+              "required": false,
+              "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menarche.valueQuantity.value"
             }
           ],
-          "linkId": "menarchealter",
-          "text": "Menarchealter (Jahre)",
-          "type": "integer",
-          "required": false
+          "linkId": "gyn-menarche",
+          "text": "Menarche",
+          "type": "group",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menarche"
+        },
+        {
+          "item": [
+            {
+              "linkId": "gyn-menopause-alter",
+              "text": "Alter bei Menopause (Jahre)",
+              "type": "integer",
+              "required": false,
+              "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menopause.valueQuantity.value"
+            }
+          ],
+          "linkId": "gyn-menopause",
+          "text": "Menopause",
+          "type": "group",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menopause"
+        },
+        {
+          "item": [
+            {
+              "linkId": "gyn-gravida-anzahl",
+              "text": "Anzahl Schwangerschaften (Gravida)",
+              "type": "integer",
+              "required": false,
+              "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:schwangerschaften.valueQuantity.value"
+            }
+          ],
+          "linkId": "gyn-gravida",
+          "text": "Schwangerschaften",
+          "type": "group",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:schwangerschaften"
+        },
+        {
+          "linkId": "gyn-hrt",
+          "text": "Hormonersatztherapie (HRT)",
+          "type": "string",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:hormonersatztherapie.valueCodeableConcept.text"
+        }
+      ],
+      "linkId": "gyn-anamnese",
+      "text": "Gynaekologische Anamnese",
+      "type": "group",
+      "required": false
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+          "valueReference": {
+            "reference": "#erstanamnese-famhx-template"
+          }
+        }
+      ],
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MTH",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Mutter"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "FTH",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Vater"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SIS",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Schwester"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "DAUC",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Tochter"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MGRMTH",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Grossmutter muetterlicherseits"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "PGRMTH",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Grossmutter vaeterlicherseits"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MAUNT",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Tante muetterlicherseits"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "PAUNT",
+                "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+                "display": "Tante vaeterlicherseits"
+              }
+            }
+          ],
+          "linkId": "fam-verwandtschaft",
+          "text": "Verwandtschaftsgrad",
+          "type": "choice",
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.relationship"
         },
         {
           "answerOption": [
             {
               "valueCoding": {
-                "code": "309606002",
+                "code": "254837009",
                 "system": "http://snomed.info/sct",
-                "display": "Before menopause"
+                "display": "Mammakarzinom"
               }
             },
             {
               "valueCoding": {
-                "code": "307429007",
+                "code": "363443007",
                 "system": "http://snomed.info/sct",
-                "display": "Perimenopausal"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "76498008",
-                "system": "http://snomed.info/sct",
-                "display": "Postmenopausal state"
+                "display": "Ovarialkarzinom"
               }
             }
           ],
-          "linkId": "menopausenstatus",
-          "text": "Menopausenstatus",
+          "linkId": "fam-erkrankung",
+          "text": "Erkrankung",
           "type": "choice",
-          "required": false
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.condition.code"
         },
         {
-          "code": [
-            {
-              "code": "11996-6",
-              "system": "http://loinc.org",
-              "display": "Pregnancies"
-            }
-          ],
-          "linkId": "gravida",
-          "text": "Gravida (Anzahl Schwangerschaften)",
+          "linkId": "fam-alter",
+          "text": "Erkrankungsalter (Jahre)",
           "type": "integer",
-          "required": false
-        },
-        {
-          "code": [
-            {
-              "code": "11977-6",
-              "system": "http://loinc.org",
-              "display": "Parity"
-            }
-          ],
-          "linkId": "para",
-          "text": "Para (Anzahl Geburten)",
-          "type": "integer",
-          "required": false
-        },
-        {
-          "linkId": "hormonersatztherapie",
-          "text": "Hormonersatztherapie",
-          "type": "boolean",
-          "required": false
-        },
-        {
-          "linkId": "orale-kontrazeption",
-          "text": "Orale Kontrazeption",
-          "type": "boolean",
-          "required": false
-        },
-        {
-          "linkId": "stilldauer",
-          "text": "Stilldauer",
-          "type": "string",
-          "required": false
-        }
-      ],
-      "linkId": "gynaekologische-anamnese",
-      "text": "Gynäkologische Anamnese",
-      "type": "group",
-      "required": false
-    },
-    {
-      "item": [
-        {
-          "extension": [
-            {
-              "valueExpression": {
-                "language": "application/x-fhir-query",
-                "expression": "FamilyMemberHistory"
-              },
-              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-            }
-          ],
-          "item": [
-            {
-              "answerOption": [
-                {
-                  "valueCoding": {
-                    "code": "MTH",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Mother"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "SIS",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Sister"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "DAUC",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Daughter"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "GRMTH",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Grandmother"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "AUNT",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Aunt"
-                  }
-                }
-              ],
-              "linkId": "verwandtschaftsgrad",
-              "text": "Verwandtschaftsgrad",
-              "type": "choice",
-              "required": true
-            },
-            {
-              "answerOption": [
-                {
-                  "valueCoding": {
-                    "code": "254837009",
-                    "system": "http://snomed.info/sct",
-                    "display": "Malignant neoplasm of breast"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "363443007",
-                    "system": "http://snomed.info/sct",
-                    "display": "Malignant tumor of ovary"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "74964007",
-                    "system": "http://snomed.info/sct",
-                    "display": "Other"
-                  }
-                }
-              ],
-              "linkId": "erkrankung",
-              "text": "Erkrankung",
-              "type": "choice",
-              "required": true
-            },
-            {
-              "linkId": "erkrankungsalter",
-              "text": "Erkrankungsalter (Jahre)",
-              "type": "integer",
-              "required": false
-            }
-          ],
-          "linkId": "familienmitglied",
-          "text": "Familienmitglied",
-          "type": "group",
           "required": false,
-          "repeats": true
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.condition.onsetAge.value"
+        },
+        {
+          "linkId": "fam-note",
+          "text": "Anmerkungen",
+          "type": "text",
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.note.text"
         }
       ],
       "linkId": "familienanamnese",
       "text": "Familienanamnese",
       "type": "group",
-      "required": false
+      "required": false,
+      "repeats": true
     }
   ],
   "name": "QuestErstanamnese",
   "status": "draft",
-  "version": "0.1.0",
-  "experimental": true
+  "experimental": true,
+  "version": "0.1.0"
 }

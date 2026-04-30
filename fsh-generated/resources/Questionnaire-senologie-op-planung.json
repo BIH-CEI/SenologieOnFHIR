@@ -3,17 +3,32 @@
   "id": "senologie-op-planung",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-op-planung",
   "title": "Fragebogen: OP Planung",
-  "description": "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Definition-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel.",
+  "description": "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel.",
   "subjectType": [
     "Patient"
   ],
+  "contained": [
+    {
+      "resourceType": "ServiceRequest",
+      "id": "op-planung-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "draft",
+      "intent": "plan"
+    }
+  ],
   "extension": [
     {
-      "valueExpression": {
-        "language": "application/x-fhir-query",
-        "expression": "ServiceRequest"
-      },
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#op-planung-template"
+      }
     },
     {
       "extension": [
@@ -37,7 +52,8 @@
       "linkId": "op-art",
       "text": "Art der geplanten Operation",
       "type": "string",
-      "required": true
+      "required": true,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.code.text"
     },
     {
       "answerOption": [
@@ -66,36 +82,52 @@
       "linkId": "seitenlokalisation",
       "text": "Seite",
       "type": "choice",
-      "required": true
+      "required": true,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.bodySite"
     },
     {
       "linkId": "intention",
       "text": "Intention / Grund der OP",
       "type": "string",
-      "required": false
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.reasonCode.text"
     },
     {
       "linkId": "op-dauer-min",
       "text": "Geplante OP-Dauer (Minuten)",
       "type": "integer",
-      "required": false
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:operationsDuration.valueDuration.value"
     },
     {
       "linkId": "tumor-conference-consent",
       "text": "CA-Behandlung / Tumorkonferenz-Zustimmung erteilt",
       "type": "boolean",
-      "required": false
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:tumorConferenceConsent.valueCodeableConcept"
     },
     {
       "answerOption": [
         {
-          "valueString": "Drahtmarkierung"
+          "valueCoding": {
+            "code": "129125009",
+            "system": "http://snomed.info/sct",
+            "display": "Procedure with device"
+          }
         },
         {
-          "valueString": "Clip-Markierung"
+          "valueCoding": {
+            "code": "397956004",
+            "system": "http://snomed.info/sct",
+            "display": "Wire guided localization of breast lesion"
+          }
         },
         {
-          "valueString": "Magnetsonde"
+          "valueCoding": {
+            "code": "77343006",
+            "system": "http://snomed.info/sct",
+            "display": "Angiography"
+          }
         },
         {
           "valueString": "Keine"
@@ -104,26 +136,30 @@
       "linkId": "pre-op-markierung",
       "text": "Präoperative Markierung geplant",
       "type": "choice",
-      "required": false
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.valueCodeableConcept"
     },
     {
       "linkId": "notes",
       "text": "Planungsdetails / Freitext",
       "type": "text",
       "required": false,
-      "repeats": true
+      "repeats": true,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.note.text"
     },
     {
       "linkId": "pre-op-blutabnahme",
       "text": "Präoperative Blutabnahme geplant",
       "type": "boolean",
-      "required": false
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpBlutabnahme.valueCodeableConcept"
     },
     {
       "linkId": "pre-op-antibiotika",
       "text": "Präoperative Antibiotikatherapie",
       "type": "string",
-      "required": false
+      "required": false,
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpAntibiotikatherapie.valueString"
     }
   ],
   "name": "QuestOPPlanung",

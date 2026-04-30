@@ -1,0 +1,56 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "KlinischeUntersuchungKohorte",
+  "url": "https://www.senologie.org/fhir/ViewDefinition/KlinischeUntersuchungKohorte",
+  "name": "KlinischeUntersuchungKohorte",
+  "title": "Klinische Untersuchung-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Klinische Brustuntersuchungen (Observation) mit Befunden.",
+  "resource": "Observation",
+  "where": [
+    {
+      "path": "meta.profile.where($this='https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung').exists()"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "observationId",
+          "type": "id"
+        },
+        {
+          "path": "subject.getReferenceKey(Patient)",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "effective.ofType(dateTime)",
+          "name": "datum",
+          "type": "dateTime"
+        },
+        {
+          "path": "bodySite.coding.first().display",
+          "name": "seite",
+          "type": "string"
+        },
+        {
+          "path": "value.ofType(CodeableConcept).coding.first().display",
+          "name": "befund",
+          "type": "string"
+        },
+        {
+          "path": "note.first().text",
+          "name": "bemerkung",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

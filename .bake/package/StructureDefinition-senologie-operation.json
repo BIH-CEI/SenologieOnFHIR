@@ -1,0 +1,185 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-operation",
+  "extension": [
+    {
+      "url": "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/spdx-license",
+            "code": "CC-BY-4.0",
+            "display": "Creative Commons Attribution 4.0 International"
+          }
+        ]
+      }
+    }
+  ],
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation",
+  "version": "0.8.0",
+  "name": "Senologie_Operation",
+  "title": "BIH LM Senologie Brustwand-Operation",
+  "status": "draft",
+  "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Procedure",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-operation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Procedure.category",
+        "path": "Procedure.category",
+        "short": "Art der Operation",
+        "definition": "Art der Operation Brust, Axillär, Lateralität",
+        "binding": {
+          "strength": "required",
+          "valueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
+        }
+      },
+      {
+        "id": "Procedure.reasonReference",
+        "path": "Procedure.reasonReference",
+        "short": "Bezogene Diagnose"
+      },
+      {
+        "id": "Procedure.outcome",
+        "path": "Procedure.outcome",
+        "short": "Outcome der Operation, v.a. bei Revision"
+      },
+      {
+        "id": "Procedure.complication",
+        "path": "Procedure.complication",
+        "short": "Komplikation (oBDS / ICD-10)",
+        "comment": "Verwendet geerbte Slices compl_obds und compl_icd10 vom MII Onko Operation Parent"
+      },
+      {
+        "id": "Procedure.followUp",
+        "path": "Procedure.followUp",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "open"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:drainage",
+        "path": "Procedure.followUp",
+        "sliceName": "drainage",
+        "min": 0,
+        "max": "*",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "122462000",
+              "system": "http://snomed.info/sct",
+              "display": "Drainage procedure"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Procedure.followUp:drainage.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:verband",
+        "path": "Procedure.followUp",
+        "sliceName": "verband",
+        "min": 0,
+        "max": "*",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "182531007",
+              "system": "http://snomed.info/sct",
+              "display": "Dressing of wound"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Procedure.followUp:verband.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:antibiotika",
+        "path": "Procedure.followUp",
+        "sliceName": "antibiotika",
+        "min": 0,
+        "max": "*",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "281789004",
+              "system": "http://snomed.info/sct",
+              "display": "Antibiotic therapy (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Procedure.followUp:antibiotika.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:mobilisation",
+        "path": "Procedure.followUp",
+        "sliceName": "mobilisation",
+        "min": 0,
+        "max": "*",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "183040004",
+              "system": "http://snomed.info/sct",
+              "display": "Mobilization (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Procedure.followUp:mobilisation.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.followUp:laborkontrolle",
+        "path": "Procedure.followUp",
+        "sliceName": "laborkontrolle",
+        "min": 0,
+        "max": "*",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "15220000",
+              "system": "http://snomed.info/sct",
+              "display": "Laboratory test (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Procedure.followUp:laborkontrolle.coding",
+        "path": "Procedure.followUp.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.usedCode",
+        "path": "Procedure.usedCode",
+        "short": "Verwendete Codes",
+        "definition": "Verwendete Codes für die Operation — erbt IntraoperativesImaging und PraeoperativeMarkierung von MII Mamma"
+      }
+    ]
+  }
+}

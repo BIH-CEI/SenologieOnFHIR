@@ -1,0 +1,2551 @@
+{
+  "resourceType": "ImplementationGuide",
+  "id": "kds-senologie",
+  "url": "https://www.senologie.org/fhir/ImplementationGuide/kds-senologie",
+  "version": "0.8.0",
+  "name": "SenologieKDS",
+  "title": "Kerndatensatz Senologie",
+  "status": "draft",
+  "publisher": "Berlin Institute of Health at Charité (BIH)",
+  "contact": [
+    {
+      "name": "Berlin Institute of Health at Charité (BIH)",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://www.bihealth.org"
+        }
+      ]
+    }
+  ],
+  "description": "Kerndatensatz für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus",
+  "packageId": "kds-senologie",
+  "fhirVersion": [
+    "4.0.1"
+  ],
+  "dependsOn": [
+    {
+      "packageId": "de.medizininformatikinitiative.kerndatensatz.onkologie",
+      "version": "2026.0.0",
+      "uri": "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.onkologie/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.onkologie",
+      "id": "de_medizininformatikinitiative_kerndatensatz_onkologie"
+    },
+    {
+      "packageId": "de.medizininformatikinitiative.kerndatensatz.patho",
+      "version": "2026.0.0",
+      "uri": "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.patho/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.patho",
+      "id": "de_medizininformatikinitiative_kerndatensatz_patho"
+    },
+    {
+      "packageId": "de.medizininformatikinitiative.kerndatensatz.bildgebung",
+      "version": "2026.0.0",
+      "uri": "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.bildgebung",
+      "id": "de_medizininformatikinitiative_kerndatensatz_bildgebung"
+    },
+    {
+      "packageId": "de.gematik.isik",
+      "version": "5.0.0",
+      "uri": "http://fhir.org/packages/de.gematik.isik/ImplementationGuide/de.gematik.isik",
+      "id": "de_gematik_isik"
+    },
+    {
+      "packageId": "hl7.fhir.uv.sdc",
+      "version": "4.0.0",
+      "uri": "http://hl7.org/fhir/uv/sdc/ImplementationGuide/hl7.fhir.uv.sdc",
+      "id": "hl7_fhir_uv_sdc"
+    }
+  ],
+  "definition": {
+    "resource": [
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-session-count"
+        },
+        "name": "Anzahl Bestrahlungssitzungen",
+        "description": "Anzahl der Bestrahlungssitzungen — MII Onko hat kein Fraktionszahl-Element",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-aufklaerungsdatum"
+        },
+        "name": "Aufklärungsdatum",
+        "description": "Datum der Aufklärung der Patientin über die Studie",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Example-Bildgebung-Skelettszintigraphie"
+        },
+        "name": "Beispiel Skelettszintigraphie (Staging)",
+        "description": "Skelettszintigraphie im Rahmen des Stagings bei Mammakarzinom — kein Hinweis auf ossäre Metastasen.",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+      },
+      {
+        "reference": {
+          "reference": "ResearchStudy/Example-ResearchStudy-ADAPT-HER2"
+        },
+        "name": "Beispiel: ADAPT-HER2 Studie",
+        "description": "Fiktive klinische Studie ADAPT-HER2 für Mammakarzinom",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Example-Strahlentherapie"
+        },
+        "name": "Beispiel: Adjuvante Bestrahlung 50 Gy / 25 Fraktionen",
+        "description": "Adjuvante Ganzbrustbestrahlung links mit 50 Gy in 25 Fraktionen nach BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Example-Begleitmedikation-Metoprolol"
+        },
+        "name": "Beispiel: Begleitmedikation Metoprolol 47,5 mg",
+        "description": "Patientin nimmt Metoprolol 47,5 mg 1x täglich wegen arterieller Hypertonie.",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Example-Operation-BET"
+        },
+        "name": "Beispiel: BET links mit Sentinel-LK-Biopsie",
+        "description": "Brusterhaltende Therapie (BET) links mit intraoperativer Sentinel-Lymphknoten-Biopsie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Example-Bildgebung-BiRADS-Rechts"
+        },
+        "name": "Beispiel: BI-RADS 1 rechts",
+        "description": "BI-RADS 1 Befund der rechten Brust bei Mammographie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Example-Bildgebung-BiRADS-Links"
+        },
+        "name": "Beispiel: BI-RADS 5 links",
+        "description": "BI-RADS 5 Befund der linken Brust bei Mammographie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Example-Diagnose-DCIS"
+        },
+        "name": "Beispiel: DCIS rechts",
+        "description": "Duktales Carcinoma in situ der rechten Brust, mammographisch entdeckt",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Example-Medikation-Epirubicin"
+        },
+        "name": "Beispiel: Epirubicin 90 mg/m², Zyklus 1, Tag 1",
+        "description": "Einzelgabe Epirubicin im Rahmen des EC-T Schemas, Zyklus 1, Tag 1",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Example-Pathologie-Befund"
+        },
+        "name": "Beispiel: Invasiv-duktales Karzinom G2, ER+/PR+/HER2-",
+        "description": "Pathologischer Befund nach Stanzbiopsie: invasiv-duktales Karzinom, G2, Hormonrezeptor-positiv, HER2-negativ",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Example-Diagnose-Mammakarzinom"
+        },
+        "name": "Beispiel: Mammakarzinom links",
+        "description": "Primäres Mammakarzinom der linken Brust, Stadium II, histologisch gesichert",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Example-Diagnose-Rezidiv"
+        },
+        "name": "Beispiel: Mammakarzinom-Rezidiv",
+        "description": "Lokalrezidiv eines Mammakarzinoms nach brusterhaltender Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Example-Bildgebung-Mammographie"
+        },
+        "name": "Beispiel: Mammographie bilateral, BI-RADS 5 links",
+        "description": "Mammographie bilateral mit suspektem Herdbefund links (BI-RADS 5) und unauffälligem Befund rechts (BI-RADS 1)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Example-Systemtherapie-ECT"
+        },
+        "name": "Beispiel: Neoadjuvante Chemotherapie EC-T",
+        "description": "Neoadjuvante Chemotherapie mit Epirubicin/Cyclophosphamid gefolgt von Docetaxel (EC-T Schema)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Example-Patho-Conclusion"
+        },
+        "name": "Beispiel: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/example-patient"
+        },
+        "name": "Beispiel: Patientin",
+        "description": "Beispiel-Patientin für Senologie-Instanzen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Example-Operation-SLNB"
+        },
+        "name": "Beispiel: Sentinel-Lymphknoten-Biopsie links",
+        "description": "SLNB als Subprozedur der BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Example-Pathologie-Praeparat"
+        },
+        "name": "Beispiel: Stanzbiopsie-Präparat links OAQ",
+        "description": "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "ResearchSubject/Example-Studienteilnahme"
+        },
+        "name": "Beispiel: Studienteilnahme ADAPT-HER2",
+        "description": "Beispiel einer Patientin, die in der ADAPT-HER2-Studie im Interventionsarm teilnimmt",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-studienteilnahme"
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-implantat"
+        },
+        "name": "BIH LM Senologie Brustimplantat",
+        "description": "Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senologie",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-operation"
+        },
+        "name": "BIH LM Senologie Brustwand-Operation",
+        "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/LogicalModelSenologie"
+        },
+        "name": "BIH LM Senologie LogicalModel",
+        "description": "LogicalModel der BIH-Spezifikation des Moduls Senologie",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-operation-art"
+        },
+        "name": "BIH LM Senologie Operation",
+        "description": "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-diagnose-benigne"
+        },
+        "name": "BIH PR Seno Diagnose Benigne",
+        "description": "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankungen. ISiK-kompatibel für Krankenhaus-Interoperabilität ohne Krebsregister-Anforderungen.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-diagnose-maligne"
+        },
+        "name": "BIH PR Seno Diagnose Maligne",
+        "description": "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Basiert auf MII PR Onko Diagnose Primärtumor mit oBDS-konformer Diagnosesicherung und Staging.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-genexpressions-score"
+        },
+        "name": "BIH PR Seno Genexpressions-Score",
+        "description": "Observation für den numerischen Score-Wert eines Genexpressionstests (Oncotype DX Recurrence Score, MammaPrint Index, Prosigna ROR Score, EndoPredict EPclin Score)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-genexpressionstest"
+        },
+        "name": "BIH PR Seno Genexpressionstest",
+        "description": "RiskAssessment für genomische Risikoscores bei Mammakarzinom (Oncotype DX, MammaPrint, Prosigna, EndoPredict). Bildet die Risikoklassifikation ab und referenziert die Score-Observation.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-begleitmedikation"
+        },
+        "name": "BIH Senologie Begleitmedikation",
+        "description": "Begleitmedikation der Patientin – aktuelle Dauermedikation und sonstige Medikamente, die nicht Teil der onkologischen Systemtherapie sind (z. B. Antihypertensiva, Schilddrüsenhormone, Antikoagulantien).",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-bildgebung-befund"
+        },
+        "name": "BIH Senologie Bildgebung Befund",
+        "description": "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-bildgebung-observation"
+        },
+        "name": "BIH Senologie Bildgebung Observation",
+        "description": "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-bildgebung-sonstige"
+        },
+        "name": "BIH Senologie Bildgebung Sonstige",
+        "description": "DiagnosticReport für nicht-mammaspezifische Bildgebung im Rahmen des Stagings oder der Verlaufskontrolle (z.B. Skelettszintigraphie, CT, PET-CT, Röntgen Thorax, Lebersonographie).",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-familienanamnese"
+        },
+        "name": "BIH Senologie Familienanamnese",
+        "description": "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom aus dotbase Questionnaire 'Familienanamnese'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-geplante-systemtherapie"
+        },
+        "name": "BIH Senologie Geplante Systemtherapie",
+        "description": "MedicationRequest für geplante Systemtherapie aus dotbase Questionnaire 'Geplante Systemtherapie'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-gynaekologische-anamnese"
+        },
+        "name": "BIH Senologie Gynäkologische Anamnese",
+        "description": "Observation für gynäkologische Anamnese (Menarche, Menopause, Schwangerschaften, HRT) aus dotbase Questionnaire 'Gynäkologische Anamnese'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-klinische-untersuchung"
+        },
+        "name": "BIH Senologie Klinische Untersuchung",
+        "description": "Observation für klinische Brustuntersuchung (Mammabefund pro Seite) aus dotbase Questionnaire 'Klinische Untersuchung'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-op-planung"
+        },
+        "name": "BIH Senologie OP Planung",
+        "description": "ServiceRequest für OP Planung aus dotbase Questionnaire 'OP Planung ärztlich V1.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-operative-komplikation"
+        },
+        "name": "BIH Senologie Operative Komplikation",
+        "description": "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation aus dotbase Questionnaire 'Operative Komplikation(en) V2.0'. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent).",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-pathologie-befund"
+        },
+        "name": "BIH Senologie Pathologie Befund",
+        "description": "DiagnosticReport für pathologische Befunde aus dotbase Questionnaire 'Pathologie'. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-pathologie-praeparat"
+        },
+        "name": "BIH Senologie Pathologisches Präparat",
+        "description": "Specimen für pathologische Präparate aus dotbase (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-strahlentherapie"
+        },
+        "name": "BIH Senologie Strahlentherapie",
+        "description": "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahlentherapie ESP-PECS'. Erbt Gesamtdosis, Boost und Seitenlokalisation von MII Onko Bestrahlung.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-studienteilnahme"
+        },
+        "name": "BIH Senologie Studienteilnahme",
+        "description": "ResearchSubject für klinische Studienteilnahme in der Senologie aus dotbase Questionnaire 'Studien'. Bildet Studienname, Screeningstatus, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-systemtherapie-procedure"
+        },
+        "name": "BIH Senologie Systemtherapie (übergeordnet)",
+        "description": "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt Intention, outcome und usedCode von MII Onko Systemtherapie.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-systemtherapie-medikation"
+        },
+        "name": "BIH Senologie Systemtherapie Medikation (einzelne Gabe)",
+        "description": "MedicationStatement für einzelne Medikamentengaben aus dotbase. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-tumorboard-empfehlung"
+        },
+        "name": "BIH Senologie Tumorboard Empfehlung",
+        "description": "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard) aus dotbase Questionnaire 'Empfehlung der interdisziplinären Tumorkonferenz V2.0'",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/senologie-tumorlokalisation"
+        },
+        "name": "BIH Senologie Tumorlokalisation",
+        "description": "BodyStructure für die Tumorlokalisation in der Brust (Seite, Quadrant, Uhrzeitposition, Mamillenabstand)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-tumor-conference-consent"
+        },
+        "name": "CA-Behandlung/Tumorkonferenz-Zustimmung",
+        "description": "CA-Behandlung / Tumorkonferenz-Zustimmung (Ja/Nein) — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-icdo3-mamma-topographie"
+        },
+        "name": "CM SNOMED CT Brustquadrant zu ICD-O-3 Topographie",
+        "description": "Übersetzung der SNOMED-CT-kodierten Brustquadranten in ICD-O-3 Topographie-Codes (C50.0–C50.9) für die oBDS-Krebsregistermeldung. Quelle: BodyStructure.locationQualifier[quadrant].",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "CodeSystem/cs-senologie-diagnosesicherung"
+        },
+        "name": "CodeSystem Diagnosesicherung",
+        "description": "Diagnosesicherung gemäß oBDS (Onkologischer Basisdatensatz)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/CM-Senologie-Medikation-SCT-ASK"
+        },
+        "name": "ConceptMap: SNOMED CT → ASK (Senologie Systemtherapie)",
+        "description": "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf Arzneistoffkatalog (ASK, BfArM 2026). Validiert über fhir-terminology MCP Server.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/CM-Senologie-Medikation-SCT-ATC"
+        },
+        "name": "ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie)",
+        "description": "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf ATC (BfArM 2026). Validiert über fhir-terminology MCP Server gegen lokale Snowstorm- und ATC-Instanz.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "CodeSystem/cs-senologie-diagnose-lokal"
+        },
+        "name": "CS Senologie Diagnose Lokal",
+        "description": "Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "CodeSystem/cs-senologie-genexpressionstest"
+        },
+        "name": "CS Senologie Genexpressionstest",
+        "description": "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "CodeSystem/cs-senologie-metastasierung"
+        },
+        "name": "CS Senologie Metastasierung",
+        "description": "Metastasierungsstatus für Senologie",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureMap/extract-diagnose"
+        },
+        "exampleBoolean": false,
+        "name": "Extract Senologie Diagnose from QuestionnaireResponse"
+      },
+      {
+        "reference": {
+          "reference": "QuestionnaireResponse/QR-Diagnose-Fall1"
+        },
+        "name": "Fall 1 — QR Diagnose Maligne",
+        "description": "Antworten auf QuestDiagnoseMaligne für Fall 1 Erika Neumann. Extraktion erzeugt Condition/Fall1-Diagnose-Mammakarzinom (C50.4 links, UICC IA).",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "QuestionnaireResponse/QR-KlinUntersuchung-Fall1"
+        },
+        "name": "Fall 1 — QR Klinische Untersuchung",
+        "description": "Antworten auf QuestKlinischeUntersuchung für Fall 1 Erika Neumann. Extraktion erzeugt Observation/Fall1-Klinische-Untersuchung (links OAQ, tastbarer Knoten).",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "QuestionnaireResponse/QR-OPPlanung-Fall1"
+        },
+        "name": "Fall 1 — QR OP Planung",
+        "description": "Antworten auf QuestOPPlanung für Fall 1 Erika Neumann. Extraktion erzeugt ServiceRequest/Fall1-OP-Planung (BET links + SLNB, 90 min, Drahtmarkierung).",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "QuestionnaireResponse/QR-PostOP-Fall1"
+        },
+        "name": "Fall 1 — QR Postoperative Dokumentation",
+        "description": "Antworten auf QuestPostOPDokumentation für Fall 1 Erika Neumann. Extraktion erzeugt Procedure/Fall1-Operation-BET (BET + SLNB links, R0, 2025-02-05).",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "QuestionnaireResponse/QR-Tumorboard-Fall1"
+        },
+        "name": "Fall 1 — QR Tumorboard Empfehlung",
+        "description": "Antworten auf QuestTumorboard für Fall 1 Erika Neumann. Extraktion erzeugt CarePlan/Fall1-Tumorboard (BET + SLNB, adjuvante RT, endokrine Therapie, keine Chemotherapie).",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Strahlentherapie"
+        },
+        "name": "Fall 10: Adjuvante Bestrahlung Thoraxwand rechts 50 Gy",
+        "description": "Adjuvante Thoraxwandbestrahlung rechts nach therapeutischer Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Systemtherapie-Adjuvant"
+        },
+        "name": "Fall 10: Adjuvante Chemotherapie Carboplatin + Paclitaxel",
+        "description": "Adjuvante Chemotherapie mit Carboplatin + Paclitaxel bei TNBC + BRCA1",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall10-BiRADS-Rechts"
+        },
+        "name": "Fall 10: BI-RADS 4c rechts",
+        "description": "BI-RADS 4c Befund der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Device/Fall10-Implantat-Links"
+        },
+        "name": "Fall 10: Brustimplantat links (Sofortrekonstruktion)",
+        "description": "Brustimplantat links nach prophylaktischer Mastektomie, Sofortrekonstruktion",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-implantat"
+      },
+      {
+        "reference": {
+          "reference": "Device/Fall10-Implantat-Rechts"
+        },
+        "name": "Fall 10: Brustimplantat rechts (Sofortrekonstruktion)",
+        "description": "Brustimplantat rechts nach therapeutischer Mastektomie, Sofortrekonstruktion",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-implantat"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall10-Medikation-Carboplatin"
+        },
+        "name": "Fall 10: Carboplatin AUC5, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Carboplatin im Rahmen der adjuvanten Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "FamilyMemberHistory/Fall10-Familienanamnese-Mutter"
+        },
+        "name": "Fall 10: Familienanamnese — Mutter Mammakarzinom 41 J.",
+        "description": "Mutter mit Mammakarzinom im Alter von 41 Jahren",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+      },
+      {
+        "reference": {
+          "reference": "FamilyMemberHistory/Fall10-Familienanamnese-Schwester"
+        },
+        "name": "Fall 10: Familienanamnese — Schwester Ovarialkarzinom 39 J.",
+        "description": "Schwester mit Ovarialkarzinom im Alter von 39 Jahren",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall10-Bildgebung-Mammographie"
+        },
+        "name": "Fall 10: Mammographie bilateral",
+        "description": "Mammographie bilateral mit suspektem Herdbefund rechts BI-RADS 4c",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall10-Medikation-Paclitaxel"
+        },
+        "name": "Fall 10: Paclitaxel 175 mg/m2, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Paclitaxel im Rahmen der adjuvanten Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall10-Pathologie-Befund"
+        },
+        "name": "Fall 10: Pathologie — Invasives Karzinom NST, G3, TNBC, Ki-67 55%",
+        "description": "Pathologischer Befund: Invasives Karzinom NST, G3, ER- PR- HER2-, Ki-67 55%, BRCA1-positiv",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall10-Patho-Conclusion"
+        },
+        "name": "Fall 10: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall10-Patient-Christina-Becker"
+        },
+        "name": "Fall 10: Patientin Christina Becker",
+        "description": "Synthetische Testpatientin — BRCA1-Trägerin, TNBC rechts, bilaterale Mastektomie mit Implantatrekonstruktion",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Operation-Mastektomie-Links"
+        },
+        "name": "Fall 10: Prophylaktische Mastektomie links (risikoreduktiv)",
+        "description": "Prophylaktische kontralaterale Mastektomie links bei BRCA1-Mutation",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Operation-SLNB"
+        },
+        "name": "Fall 10: Sentinel-Lymphknoten-Biopsie rechts",
+        "description": "SLNB als Subprozedur der therapeutischen Mastektomie rechts",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Rekonstruktion-Links"
+        },
+        "name": "Fall 10: Sofortrekonstruktion links mit Implantat",
+        "description": "Implantatrekonstruktion links als Subprozedur der prophylaktischen Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Rekonstruktion-Rechts"
+        },
+        "name": "Fall 10: Sofortrekonstruktion rechts mit Implantat",
+        "description": "Implantatrekonstruktion rechts als Subprozedur der therapeutischen Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall10-Pathologie-Praeparat"
+        },
+        "name": "Fall 10: Stanzbiopsie-Präparat rechts OAQ",
+        "description": "Stanzbiopsie aus dem oberen äußeren Quadranten der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall10-Operation-Mastektomie-Rechts"
+        },
+        "name": "Fall 10: Therapeutische Mastektomie rechts + SLNB",
+        "description": "Therapeutische Mastektomie rechts mit SLNB, R0, pN0(sn)(0/2)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall10-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 10: TNBC rechts, cT1c cN0 cM0",
+        "description": "Triple-negatives invasives Mammakarzinom NST rechts, G3, UICC IA, BRCA1-Trägerin",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall11-BiRADS-Links"
+        },
+        "name": "Fall 11: BI-RADS 3 links",
+        "description": "BI-RADS 3 Befund der linken Brust — wahrscheinlich gutartig",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall11-Diagnose-Fibroadenom"
+        },
+        "name": "Fall 11: Fibroadenom links oben außen",
+        "description": "Fibroadenom der linken Brust — benigne Diagnose, histologisch bestätigt",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-benigne"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall11-Klinische-Untersuchung"
+        },
+        "name": "Fall 11: Klinische Brustuntersuchung",
+        "description": "Klinische Untersuchung mit tastbarem Knoten links oben außen, 15 mm, glatt begrenzt",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall11-Bildgebung-Mammographie"
+        },
+        "name": "Fall 11: Mammographie bilateral",
+        "description": "Mammographie bilateral mit BI-RADS 3 links",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall11-Pathologie-Befund"
+        },
+        "name": "Fall 11: Pathologie — Fibroadenom, keine Atypie",
+        "description": "Pathologischer Befund der Stanzbiopsie: Fibroadenom, keine Atypie, B2",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall11-Patho-Conclusion"
+        },
+        "name": "Fall 11: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen — benigne",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall11-Patient-Hannah-Klein"
+        },
+        "name": "Fall 11: Patientin Hannah Klein",
+        "description": "Synthetische Testpatientin — Fibroadenom der Brust (benigne), keine Therapie",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall11-Bildgebung-Sonographie"
+        },
+        "name": "Fall 11: Sonographie links",
+        "description": "Sonographie links mit glatt begrenztem, ovalem, echoarmem Knoten",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall11-Pathologie-Praeparat"
+        },
+        "name": "Fall 11: Stanzbiopsie-Präparat links oben außen",
+        "description": "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall12-Diagnose-ADH"
+        },
+        "name": "Fall 12: ADH (B3-Läsion), D48.6",
+        "description": "Atypische duktale Hyperplasie (ADH), B3-Läsion, ICD-10 D48.6 (meldepflichtig)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall12-BiRADS-Links"
+        },
+        "name": "Fall 12: BI-RADS 4a links",
+        "description": "BI-RADS 4a Befund der linken Brust — geringe Malignitätswahrscheinlichkeit",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall12-Pathologie-Praeparat-Nachresektion"
+        },
+        "name": "Fall 12: Exzisionspräparat Nachresektion links OIQ",
+        "description": "Exzisionspräparat aus dem oberen inneren Quadranten der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall12-Operation-Nachresektion"
+        },
+        "name": "Fall 12: Nachresektion / offene Biopsie links",
+        "description": "Offene Biopsie / Nachresektion links OIQ bei B3-Läsion (ADH), R0, kein Upgrade",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall12-Pathologie-Befund-Nachresektion"
+        },
+        "name": "Fall 12: Pathologie Nachresektion — ADH, kein Upgrade, R0",
+        "description": "Pathologischer Befund der Nachresektion: ADH bestätigt, kein DCIS, kein invasives Karzinom, R0",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall12-Pathologie-Befund-Vakuumbiopsie"
+        },
+        "name": "Fall 12: Pathologie Vakuumbiopsie — ADH, B3",
+        "description": "Pathologischer Befund der Vakuumbiopsie: Atypische duktale Hyperplasie, B3-Kategorie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall12-Patho-Conclusion-Nachresektion"
+        },
+        "name": "Fall 12: Pathologische Diagnose Nachresektion",
+        "description": "Diagnostische Schlussfolgerung: ADH bestätigt, kein Upgrade, R0",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall12-Patho-Conclusion-Vakuumbiopsie"
+        },
+        "name": "Fall 12: Pathologische Diagnose Vakuumbiopsie",
+        "description": "Diagnostische Schlussfolgerung: ADH, B3",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall12-Patient-Renate-Vogel"
+        },
+        "name": "Fall 12: Patientin Renate Vogel",
+        "description": "Synthetische Testpatientin — B3-Läsion (ADH), Nachresektion ohne Upgrade",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall12-Bildgebung-Mammographie"
+        },
+        "name": "Fall 12: Screening-Mammographie bilateral",
+        "description": "Screening-Mammographie mit Mikrokalzifikationen links BI-RADS 4a",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall12-Tumorboard"
+        },
+        "name": "Fall 12: Tumorboard-Empfehlung — Nachresektion empfohlen",
+        "description": "Empfehlung: offene Biopsie / Nachresektion zum Ausschluss eines Upgrades bei B3-Läsion",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall12-Pathologie-Praeparat-Vakuumbiopsie"
+        },
+        "name": "Fall 12: Vakuumbiopsie-Präparat links OIQ",
+        "description": "Vakuumbiopsie aus dem oberen inneren Quadranten der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall1-Strahlentherapie"
+        },
+        "name": "Fall 1: Adjuvante Bestrahlung 50 Gy + 10 Gy Boost",
+        "description": "Adjuvante Ganzbrustbestrahlung links 50 Gy in 25 Fraktionen + 10 Gy Boost",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall1-Begleitmedikation-LThyroxin"
+        },
+        "name": "Fall 1: Begleitmedikation L-Thyroxin 75 µg",
+        "description": "L-Thyroxin 75 µg 1x täglich wegen Hypothyreose",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall1-Begleitmedikation-Metoprolol"
+        },
+        "name": "Fall 1: Begleitmedikation Metoprolol 47,5 mg",
+        "description": "Metoprolol 47,5 mg 1x täglich wegen arterieller Hypertonie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall1-Operation-BET"
+        },
+        "name": "Fall 1: BET links + SLNB",
+        "description": "Brusterhaltende Therapie links mit Sentinel-LK-Biopsie, R0",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-BiRADS-Links"
+        },
+        "name": "Fall 1: BI-RADS 5 links",
+        "description": "BI-RADS 5 Befund der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-ECOG-6Monate"
+        },
+        "name": "Fall 1: ECOG-Leistungszustand 6 Monate postoperativ",
+        "description": "ECOG 0 — vollständig aktiv, keine Einschränkung",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "FamilyMemberHistory/Fall1-Familienanamnese"
+        },
+        "name": "Fall 1: Familienanamnese — Mutter Mammakarzinom",
+        "description": "Mutter mit Mammakarzinom im Alter von 52 Jahren",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-Gynaekologische-Anamnese"
+        },
+        "name": "Fall 1: Gynäkologische Anamnese",
+        "description": "Postmenopausale Patientin, Menarche mit 13, Menopause mit 54",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-Klinische-Untersuchung"
+        },
+        "name": "Fall 1: Klinische Brustuntersuchung",
+        "description": "Klinische Untersuchung mit tastbarem Knoten links OAQ",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall1-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 1: Mammakarzinom links OAQ, cT1c cN0 cM0",
+        "description": "Invasives Mammakarzinom NST der linken Brust, oberer äußerer Quadrant, UICC IA",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall1-Bildgebung-Mammographie"
+        },
+        "name": "Fall 1: Mammographie bilateral",
+        "description": "Mammographie bilateral mit suspektem Herdbefund links BI-RADS 5",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-Genexpressions-Score"
+        },
+        "name": "Fall 1: Oncotype DX Recurrence Score 18",
+        "description": "Oncotype DX Recurrence Score von 18 (niedrig)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressions-score"
+      },
+      {
+        "reference": {
+          "reference": "RiskAssessment/Fall1-Genexpressionstest"
+        },
+        "name": "Fall 1: Oncotype DX Risikobewertung",
+        "description": "Oncotype DX: niedriges Risiko, 10-Jahres-Fernrezidivrisiko 12%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressionstest"
+      },
+      {
+        "reference": {
+          "reference": "ServiceRequest/Fall1-OP-Planung"
+        },
+        "name": "Fall 1: OP-Planung BET + SLNB",
+        "description": "Geplante brusterhaltende Therapie links mit Sentinel-LK-Biopsie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall1-Pathologie-Befund"
+        },
+        "name": "Fall 1: Pathologie — Invasives Karzinom NST, G2, ER+/PR+/HER2-",
+        "description": "Pathologischer Befund der Stanzbiopsie: invasives Karzinom NST, G2, hormonrezeptor-positiv, HER2-negativ",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-Patho-Conclusion"
+        },
+        "name": "Fall 1: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall1-Patient-Erika-Neumann"
+        },
+        "name": "Fall 1: Patientin Erika Neumann",
+        "description": "Synthetische Testpatientin — frühes Mammakarzinom, kurative Behandlung",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall1-Operation-SLNB"
+        },
+        "name": "Fall 1: Sentinel-Lymphknoten-Biopsie links",
+        "description": "SLNB als Subprozedur der BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall1-Bildgebung-Skelettszintigraphie"
+        },
+        "name": "Fall 1: Skelettszintigraphie (Staging)",
+        "description": "Skelettszintigraphie im Rahmen des Stagings — kein Hinweis auf ossäre Metastasen",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall1-Pathologie-Praeparat"
+        },
+        "name": "Fall 1: Stanzbiopsie-Präparat links OAQ",
+        "description": "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall1-Tumorboard"
+        },
+        "name": "Fall 1: Tumorboard-Empfehlung",
+        "description": "Empfehlung: BET + SLNB, adjuvante RT, endokrine Therapie, keine Chemotherapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall1-Verlauf-6Monate"
+        },
+        "name": "Fall 1: Verlaufskontrolle 6 Monate postoperativ",
+        "description": "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall2-Strahlentherapie"
+        },
+        "name": "Fall 2: Adjuvante Bestrahlung Thoraxwand + supraklavikulär 50 Gy",
+        "description": "Adjuvante Bestrahlung der Thoraxwand und supraklavikulärer Lymphabflusswege",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall2-Systemtherapie-Adjuvant"
+        },
+        "name": "Fall 2: Adjuvante Pembrolizumab Maintenance",
+        "description": "Adjuvante Pembrolizumab Maintenance nach Operation",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall2-Operation-Axilladissektion"
+        },
+        "name": "Fall 2: Axilladissektion rechts Level I-III",
+        "description": "Axilladissektion als Subprozedur der Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall2-Begleitmedikation-Ondansetron"
+        },
+        "name": "Fall 2: Begleitmedikation Ondansetron 8 mg",
+        "description": "Ondansetron 8 mg als Antiemetikum supportiv bei Chemotherapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall2-Begleitmedikation-Zoledronat"
+        },
+        "name": "Fall 2: Begleitmedikation Zoledronat 4 mg",
+        "description": "Zoledronat 4 mg i.v. alle 4 Wochen wegen ossärer Metastase",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall2-BiRADS-Rechts"
+        },
+        "name": "Fall 2: BI-RADS 5 rechts",
+        "description": "BI-RADS 5 Befund der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall2-Medikation-Carboplatin"
+        },
+        "name": "Fall 2: Carboplatin AUC5, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Carboplatin im Rahmen der neoadjuvanten Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall2-Bildgebung-CT"
+        },
+        "name": "Fall 2: CT Thorax/Abdomen (Staging)",
+        "description": "CT Thorax und Abdomen im Rahmen des Stagings",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall2-ECOG-Progression"
+        },
+        "name": "Fall 2: ECOG-Leistungszustand bei Progression",
+        "description": "ECOG 2 — deutliche Einschränkung bei Progression mit Lebermetastasen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall2-Tumorboard-Initial"
+        },
+        "name": "Fall 2: Initiales Tumorboard",
+        "description": "Empfehlung: neoadjuvante Chemotherapie + Immuntherapie, dann Mastektomie + Axilladissektion, adjuvante RT, MTB-Überweisung",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "ResearchStudy/Fall2-ResearchStudy-KEYNOTE522"
+        },
+        "name": "Fall 2: KEYNOTE-522 Studie",
+        "description": "Fiktive klinische Studie KEYNOTE-522 für triple-negatives Mammakarzinom",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall2-Bildgebung-Mammographie"
+        },
+        "name": "Fall 2: Mammographie bilateral",
+        "description": "Mammographie bilateral mit großem Herdbefund rechts BI-RADS 5",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall2-Operation-Mastektomie"
+        },
+        "name": "Fall 2: Mastektomie rechts + Axilladissektion",
+        "description": "Modifiziert radikale Mastektomie rechts mit Axilladissektion Level I-III, ypT1a ypN0(0/14) R0",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall2-Bildgebung-MRT"
+        },
+        "name": "Fall 2: MRT Mamma",
+        "description": "MRT der Brust zur Ausdehnungsbeurteilung",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall2-Systemtherapie-Neoadjuvant"
+        },
+        "name": "Fall 2: Neoadjuvante Chemotherapie + Immuntherapie",
+        "description": "Neoadjuvante Therapie mit Carboplatin/Paclitaxel + Pembrolizumab",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall2-Medikation-Paclitaxel"
+        },
+        "name": "Fall 2: Paclitaxel 80 mg/m2, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Paclitaxel im Rahmen der neoadjuvanten Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall2-Pathologie-Befund"
+        },
+        "name": "Fall 2: Pathologie — Invasiv-duktales Karzinom G3, triple-negativ",
+        "description": "Pathologischer Befund der Stanzbiopsie: invasiv-duktales Karzinom G3, triple-negativ, Ki-67 70%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall2-Patho-Conclusion"
+        },
+        "name": "Fall 2: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall2-Patient-Lena-Hoffmann"
+        },
+        "name": "Fall 2: Patientin Lena Hoffmann",
+        "description": "Synthetische Testpatientin — lokal fortgeschrittenes triple-negatives Mammakarzinom, palliativ",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall2-Medikation-Pembrolizumab"
+        },
+        "name": "Fall 2: Pembrolizumab 200 mg, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Pembrolizumab im Rahmen der neoadjuvanten Immuntherapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall2-Komplikation-Serom"
+        },
+        "name": "Fall 2: Postoperative Komplikation — Serom, Clavien-Dindo I",
+        "description": "Postoperatives Serom nach Mastektomie, Clavien-Dindo Grad I",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall2-Diagnose-Progression"
+        },
+        "name": "Fall 2: Progression — hepatische Metastasen",
+        "description": "Hepatische Metastasierung nach 18 Monaten, klinischer Status Rezidiv",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall2-Bildgebung-Skelettszintigraphie"
+        },
+        "name": "Fall 2: Skelettszintigraphie — ossäre Metastase BWK 12",
+        "description": "Skelettszintigraphie mit Nachweis einer ossären Metastase BWK 12",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall2-Bildgebung-Sonographie"
+        },
+        "name": "Fall 2: Sonographie bilateral",
+        "description": "Sonographie bilateral mit Herdbefund rechts und suspekten axillären Lymphknoten",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall2-Pathologie-Praeparat"
+        },
+        "name": "Fall 2: Stanzbiopsie-Präparat rechts zentral",
+        "description": "Stanzbiopsie aus dem zentralen Drüsenkörper der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "ResearchSubject/Fall2-Studienteilnahme"
+        },
+        "name": "Fall 2: Studienteilnahme KEYNOTE-522",
+        "description": "Teilnahme an KEYNOTE-522, Interventionsarm (Pembrolizumab)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-studienteilnahme"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall2-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 2: Triple-negatives Mammakarzinom rechts, cT3 cN2a cM1(OSS)",
+        "description": "Triple-negatives invasiv-duktales Mammakarzinom rechts, zentraler Drüsenkörper, G3, UICC IV",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall2-Tumorboard-Progression"
+        },
+        "name": "Fall 2: Tumorboard bei Progression",
+        "description": "Empfehlung: Palliativkonzept bei hepatischer Metastasierung",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall2-Verlauf-Progression"
+        },
+        "name": "Fall 2: Verlaufskontrolle bei Progression",
+        "description": "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall3-Strahlentherapie"
+        },
+        "name": "Fall 3: Adjuvante Bestrahlung Thoraxwand 50 Gy",
+        "description": "Adjuvante Bestrahlung der Thoraxwand rechts nach Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall3-Operation-Axilladissektion"
+        },
+        "name": "Fall 3: Axilladissektion rechts Level I-II",
+        "description": "Axilladissektion als Subprozedur der Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall3-BiRADS-Rechts"
+        },
+        "name": "Fall 3: BI-RADS 4 rechts",
+        "description": "BI-RADS 4 Befund der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall3-Begleitmedikation-Anastrozol"
+        },
+        "name": "Fall 3: Endokrine Therapie Anastrozol 1 mg",
+        "description": "Anastrozol 1 mg/d als adjuvante endokrine Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall3-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 3: Mammakarzinom rechts, cT2 pN1a cM0",
+        "description": "Invasives Mammakarzinom NST der rechten Brust, UICC IIA, HR+/HER2-",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall3-Bildgebung-Mammographie"
+        },
+        "name": "Fall 3: Mammographie bilateral",
+        "description": "Mammographie bilateral mit suspektem Herdbefund rechts BI-RADS 4",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall3-Operation-Mastektomie"
+        },
+        "name": "Fall 3: Mastektomie rechts + Axilladissektion",
+        "description": "Mastektomie rechts mit Axilladissektion Level I-II, R0, pN1a(2/12)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall3-Pathologie-Praeparat-OP"
+        },
+        "name": "Fall 3: Mastektomie-Präparat rechts",
+        "description": "Mastektomie-Resektat rechte Brust mit Axilla-Lymphknoten",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall3-Pathologie-Befund-OP"
+        },
+        "name": "Fall 3: Pathologie OP-Präparat — pT2 pN1a(2/12)",
+        "description": "Pathologischer Befund des Mastektomie-Präparats mit Axilladissektion",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall3-Pathologie-Befund"
+        },
+        "name": "Fall 3: Pathologie — Invasives Karzinom NST, G2, ER+/PR+/HER2-",
+        "description": "Pathologischer Befund: invasives Karzinom NST, G2, ER+ IRS 10, PR+ IRS 6, HER2- Score 0, Ki-67 12%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall3-Patho-Conclusion-OP"
+        },
+        "name": "Fall 3: Pathologische Diagnose OP-Präparat",
+        "description": "Diagnostische Schlussfolgerung OP-Präparat",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall3-Patho-Conclusion"
+        },
+        "name": "Fall 3: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall3-Patient-Sabine-Weber"
+        },
+        "name": "Fall 3: Patientin Sabine Weber",
+        "description": "Synthetische Testpatientin — HR+/HER2- Mammakarzinom, Stadium IIA, N1",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall3-Pathologie-Praeparat-Stanze"
+        },
+        "name": "Fall 3: Stanzbiopsie-Präparat rechts",
+        "description": "Stanzbiopsie aus der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall4-Strahlentherapie"
+        },
+        "name": "Fall 4: Adjuvante Ganzbrustbestrahlung 50 Gy + Boost",
+        "description": "Adjuvante Ganzbrustbestrahlung links nach BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall4-Operation-BET"
+        },
+        "name": "Fall 4: BET links + SLNB nach neoadjuvanter Therapie",
+        "description": "Brusterhaltende Therapie links mit Sentinel-LK-Biopsie, ypT0 ypN0 (pCR), R0",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall4-BiRADS-Links"
+        },
+        "name": "Fall 4: BI-RADS 5 links",
+        "description": "BI-RADS 5 Befund der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall4-Medikation-Carboplatin"
+        },
+        "name": "Fall 4: Carboplatin AUC6, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Carboplatin im Rahmen der neoadjuvanten TCHP",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall4-Medikation-Docetaxel"
+        },
+        "name": "Fall 4: Docetaxel 75 mg/m2, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Docetaxel im Rahmen der neoadjuvanten TCHP",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall4-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 4: HER2+ Mammakarzinom links, cT2 cN1 cM0",
+        "description": "Invasives Mammakarzinom NST links, HER2+, UICC IIB",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall4-Bildgebung-Mammographie"
+        },
+        "name": "Fall 4: Mammographie bilateral",
+        "description": "Mammographie bilateral mit Herdbefund links BI-RADS 5",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall4-Systemtherapie-Neoadjuvant"
+        },
+        "name": "Fall 4: Neoadjuvante TCHP",
+        "description": "Neoadjuvante Therapie mit Docetaxel, Carboplatin, Trastuzumab, Pertuzumab",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall4-Pathologie-Befund"
+        },
+        "name": "Fall 4: Pathologie — Invasives Karzinom NST, G3, HER2+",
+        "description": "Pathologischer Befund: invasives Karzinom NST, G3, ER- PR- HER2+ (FISH amplifiziert), Ki-67 45%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall4-Patho-Conclusion"
+        },
+        "name": "Fall 4: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall4-Patient-Julia-Fischer"
+        },
+        "name": "Fall 4: Patientin Julia Fischer",
+        "description": "Synthetische Testpatientin — HER2+ Mammakarzinom, neoadjuvant TCHP, pCR",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall4-Medikation-Pertuzumab"
+        },
+        "name": "Fall 4: Pertuzumab, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Pertuzumab im Rahmen der neoadjuvanten TCHP",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall4-Operation-SLNB"
+        },
+        "name": "Fall 4: Sentinel-Lymphknoten-Biopsie links",
+        "description": "SLNB als Subprozedur der BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall4-Bildgebung-Sonographie"
+        },
+        "name": "Fall 4: Sonographie bilateral",
+        "description": "Sonographie bilateral mit Herdbefund links und suspekten axillären LK",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall4-Pathologie-Praeparat"
+        },
+        "name": "Fall 4: Stanzbiopsie-Präparat links",
+        "description": "Stanzbiopsie aus der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall4-Medikation-Trastuzumab"
+        },
+        "name": "Fall 4: Trastuzumab, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Trastuzumab im Rahmen der neoadjuvanten TCHP",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall4-Tumorboard"
+        },
+        "name": "Fall 4: Tumorboard — Neoadjuvante Therapie empfohlen",
+        "description": "Empfehlung: neoadjuvante TCHP, dann BET + SLNB, adjuvant Trastuzumab/Pertuzumab + RT",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall5-Strahlentherapie"
+        },
+        "name": "Fall 5: Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy",
+        "description": "Adjuvante Ganzbrustbestrahlung rechts nach BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall5-Operation-BET"
+        },
+        "name": "Fall 5: BET rechts + SLNB",
+        "description": "Brusterhaltende Therapie rechts mit SLNB, ypT1a ypN0(sn)(0/3), R0",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall5-BiRADS-Rechts"
+        },
+        "name": "Fall 5: BI-RADS 5 rechts",
+        "description": "BI-RADS 5 Befund der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall5-Begleitmedikation-Letrozol"
+        },
+        "name": "Fall 5: Endokrine Therapie Letrozol 2,5 mg",
+        "description": "Letrozol 2,5 mg/d als adjuvante endokrine Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall5-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 5: HR+/HER2+ Mammakarzinom rechts, cT3 cN1 cM0",
+        "description": "Invasives Mammakarzinom NST rechts, HR+/HER2+, UICC IIIA",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall5-Bildgebung-Mammographie"
+        },
+        "name": "Fall 5: Mammographie bilateral",
+        "description": "Mammographie bilateral mit großem Herdbefund rechts BI-RADS 5",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall5-Bildgebung-MRT"
+        },
+        "name": "Fall 5: MRT Mamma",
+        "description": "MRT der Brust zur Ausdehnungsbeurteilung bei cT3",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall5-Systemtherapie-Neoadjuvant"
+        },
+        "name": "Fall 5: Neoadjuvante EC → Docetaxel + Trastuzumab",
+        "description": "Neoadjuvante Therapie: EC x4 gefolgt von Docetaxel + Trastuzumab x4",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall5-Pathologie-Befund"
+        },
+        "name": "Fall 5: Pathologie — Invasives Karzinom NST, G2, HR+/HER2+",
+        "description": "Pathologischer Befund: invasives Karzinom NST, G2, ER+ IRS 8, PR+ IRS 4, HER2+ Score 3+, Ki-67 30%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall5-Patho-Conclusion"
+        },
+        "name": "Fall 5: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall5-Patient-Monika-Braun"
+        },
+        "name": "Fall 5: Patientin Monika Braun",
+        "description": "Synthetische Testpatientin — HR+/HER2+ Mammakarzinom, Stadium IIIA, neoadjuvant",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall5-Operation-SLNB"
+        },
+        "name": "Fall 5: Sentinel-Lymphknoten-Biopsie rechts",
+        "description": "SLNB als Subprozedur der BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall5-Bildgebung-Sonographie"
+        },
+        "name": "Fall 5: Sonographie bilateral",
+        "description": "Sonographie bilateral mit Herdbefund rechts und suspekten axillären LK",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall5-Pathologie-Praeparat"
+        },
+        "name": "Fall 5: Stanzbiopsie-Präparat rechts",
+        "description": "Stanzbiopsie aus der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall5-Tumorboard-Neoadjuvant"
+        },
+        "name": "Fall 5: Tumorboard — Neoadjuvante Therapie",
+        "description": "Empfehlung: EC → Docetaxel + Trastuzumab neoadjuvant, dann OP, adjuvant Trastuzumab + RT + Letrozol",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall5-Tumorboard-Postoperativ"
+        },
+        "name": "Fall 5: Tumorboard — Postoperativ",
+        "description": "Postoperative Tumorboard-Empfehlung: Bestätigung adjuvante Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall6-Strahlentherapie"
+        },
+        "name": "Fall 6: Adjuvante Bestrahlung 50 Gy (kein Boost)",
+        "description": "Adjuvante Ganzbrustbestrahlung links nach BET bei DCIS",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall6-Operation-BET"
+        },
+        "name": "Fall 6: BET links",
+        "description": "Brusterhaltende Therapie links bei DCIS, R0 knapp",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall6-BiRADS-Links"
+        },
+        "name": "Fall 6: BI-RADS 4 links",
+        "description": "BI-RADS 4 Befund links — Mikrokalzifikationen",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall6-Diagnose-DCIS"
+        },
+        "name": "Fall 6: DCIS links",
+        "description": "Duktales Carcinoma in situ (DCIS) links, G2, ER+",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall6-Pathologie-Befund"
+        },
+        "name": "Fall 6: Pathologie Vakuumbiopsie — DCIS G2, ER+",
+        "description": "Pathologischer Befund der Vakuumbiopsie: DCIS G2, ER+, kein invasiver Anteil",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall6-Patho-Conclusion"
+        },
+        "name": "Fall 6: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall6-Patient-Petra-Schneider"
+        },
+        "name": "Fall 6: Patientin Petra Schneider",
+        "description": "Synthetische Testpatientin — DCIS, Screening-Detektion, Stadium 0",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall6-Bildgebung-Mammographie"
+        },
+        "name": "Fall 6: Screening-Mammographie bilateral",
+        "description": "Screening-Mammographie mit Mikrokalzifikationen links BI-RADS 4",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall6-Pathologie-Praeparat"
+        },
+        "name": "Fall 6: Vakuumbiopsie-Präparat links",
+        "description": "Stereotaktische Vakuumbiopsie aus der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall7-Strahlentherapie"
+        },
+        "name": "Fall 7: Adjuvante Bestrahlung 50 Gy + Boost 16 Gy",
+        "description": "Adjuvante Ganzbrustbestrahlung rechts mit Boost auf Tumorbett",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall7-Operation-BET"
+        },
+        "name": "Fall 7: BET rechts + SLNB",
+        "description": "Brusterhaltende Therapie rechts mit SLNB, ypT0 ypN0(sn)(0/2) = pCR, R0",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall7-BiRADS-Rechts"
+        },
+        "name": "Fall 7: BI-RADS 5 rechts",
+        "description": "BI-RADS 5 Befund der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall7-Medikation-Carboplatin"
+        },
+        "name": "Fall 7: Carboplatin, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Carboplatin im Rahmen der neoadjuvanten Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall7-Medikation-Epirubicin"
+        },
+        "name": "Fall 7: Epirubicin 90 mg/m2, Zyklus 1 (EC), Tag 1",
+        "description": "Einzelgabe Epirubicin im Rahmen der neoadjuvanten EC-Phase",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall7-Bildgebung-Mammographie"
+        },
+        "name": "Fall 7: Mammographie bilateral",
+        "description": "Mammographie bilateral mit Herdbefund rechts BI-RADS 5",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall7-Systemtherapie-Neoadjuvant"
+        },
+        "name": "Fall 7: Neoadjuvante Carboplatin/Paclitaxel → EC",
+        "description": "Neoadjuvante Therapie: Carboplatin/Paclitaxel weekly x12, dann EC q3w x4",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall7-Medikation-Paclitaxel"
+        },
+        "name": "Fall 7: Paclitaxel 80 mg/m2, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Paclitaxel im Rahmen der neoadjuvanten Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall7-Pathologie-Befund"
+        },
+        "name": "Fall 7: Pathologie — Invasives Karzinom NST, G3, TNBC",
+        "description": "Pathologischer Befund: invasives Karzinom NST, G3, ER- PR- HER2-, Ki-67 65%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall7-Patho-Conclusion"
+        },
+        "name": "Fall 7: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall7-Patient-Kathrin-Mueller"
+        },
+        "name": "Fall 7: Patientin Kathrin Mueller",
+        "description": "Synthetische Testpatientin — TNBC, neoadjuvant, pCR",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall7-Operation-SLNB"
+        },
+        "name": "Fall 7: Sentinel-Lymphknoten-Biopsie rechts",
+        "description": "SLNB als Subprozedur der BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall7-Bildgebung-Sonographie"
+        },
+        "name": "Fall 7: Sonographie bilateral",
+        "description": "Sonographie bilateral mit Herdbefund rechts, keine suspekten LK",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall7-Pathologie-Praeparat"
+        },
+        "name": "Fall 7: Stanzbiopsie-Präparat rechts",
+        "description": "Stanzbiopsie aus der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall7-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 7: TNBC rechts, cT2 cN0 cM0",
+        "description": "Invasives Mammakarzinom NST rechts, triple-negativ, UICC IIA",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall7-Tumorboard"
+        },
+        "name": "Fall 7: Tumorboard — Neoadjuvante Therapie empfohlen",
+        "description": "Empfehlung: neoadjuvante Carboplatin/Paclitaxel → EC, dann BET + SLNB, adjuvante RT",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall8-Strahlentherapie"
+        },
+        "name": "Fall 8: Adjuvante Bestrahlung Thoraxwand rechts 50 Gy",
+        "description": "Adjuvante Thoraxwandbestrahlung rechts nach Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall8-BiRADS-Rechts"
+        },
+        "name": "Fall 8: BI-RADS 5 rechts",
+        "description": "BI-RADS 5 Befund der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall8-Begleitmedikation-Tamoxifen"
+        },
+        "name": "Fall 8: Endokrine Therapie Tamoxifen 20 mg",
+        "description": "Tamoxifen 20 mg/d — Standard bei männlichem Mammakarzinom (NICHT Aromataseinhibitor)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall8-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 8: Mammakarzinom rechts, cT2 pN0(sn) cM0",
+        "description": "Invasives Mammakarzinom NST rechts, zentraler Drüsenkörper, männlich, UICC IIA",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall8-Bildgebung-Mammographie"
+        },
+        "name": "Fall 8: Mammographie rechts",
+        "description": "Mammographie mit suspektem Herdbefund rechts BI-RADS 5",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall8-Operation-Mastektomie"
+        },
+        "name": "Fall 8: Mastektomie rechts + SLNB",
+        "description": "Mastektomie rechts (Standard bei männlichem Mammakarzinom) + Sentinel-LK-Biopsie, R0, pN0(sn)(0/3)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall8-Pathologie-Befund"
+        },
+        "name": "Fall 8: Pathologie — Invasives Karzinom NST, G2, HR+/HER2-",
+        "description": "Pathologischer Befund: Invasives Karzinom NST, G2, ER+ IRS 12, PR+ IRS 6, HER2- Score 1+, Ki-67 18%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall8-Patho-Conclusion"
+        },
+        "name": "Fall 8: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall8-Patient-Klaus-Hartmann"
+        },
+        "name": "Fall 8: Patient Klaus Hartmann",
+        "description": "Synthetischer Testpatient — männliches Mammakarzinom rechts, HR+/HER2-, UICC IIA",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall8-Operation-SLNB"
+        },
+        "name": "Fall 8: Sentinel-Lymphknoten-Biopsie rechts",
+        "description": "SLNB als Subprozedur der Mastektomie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall8-Bildgebung-Sonographie"
+        },
+        "name": "Fall 8: Sonographie rechts",
+        "description": "Sonographie mit hypoechogenem Herdbefund rechts retromamillär",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall8-Pathologie-Praeparat"
+        },
+        "name": "Fall 8: Stanzbiopsie-Präparat rechts retromamillär",
+        "description": "Stanzbiopsie aus dem retromamillären Bereich der rechten Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall9-Strahlentherapie"
+        },
+        "name": "Fall 9: Adjuvante Bestrahlung 50 Gy + Boost + Lymphabfluss",
+        "description": "Adjuvante Bestrahlung Restbrust links 50 Gy + Boost 10 Gy + Lymphabflusswege",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall9-Systemtherapie-Adjuvant"
+        },
+        "name": "Fall 9: Adjuvante Chemotherapie EC → Paclitaxel",
+        "description": "Adjuvante Chemotherapie EC q3w x4 → Paclitaxel wöchentlich x12",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall9-Operation-Axilladissektion"
+        },
+        "name": "Fall 9: Axilladissektion links Level I-III",
+        "description": "Axilladissektion als Subprozedur der BET",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Procedure/Fall9-Operation-BET"
+        },
+        "name": "Fall 9: BET links + Axilladissektion Level I-III",
+        "description": "Brusterhaltende Therapie links + Axilladissektion Level I-III, R0, pN3a(12/18)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall9-BiRADS-Links"
+        },
+        "name": "Fall 9: BI-RADS 5 links",
+        "description": "BI-RADS 5 Befund der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall9-ECOG-12Monate"
+        },
+        "name": "Fall 9: ECOG-Leistungszustand 12 Monate postoperativ",
+        "description": "ECOG 1 — leicht eingeschränkt (Residual-Lymphödem nach Axilladissektion)",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall9-Begleitmedikation-Tamoxifen"
+        },
+        "name": "Fall 9: Endokrine Therapie Tamoxifen 20 mg (initial, prämenopausal)",
+        "description": "Tamoxifen 20 mg/d, prämenopausal, nach 2 Jahren Umstellung auf AI + GnRH geplant",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall9-Medikation-Epirubicin"
+        },
+        "name": "Fall 9: Epirubicin, Zyklus 1, Tag 1",
+        "description": "Einzelgabe Epirubicin im Rahmen der adjuvanten EC-Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "Condition/Fall9-Diagnose-Mammakarzinom"
+        },
+        "name": "Fall 9: Lobuläres Mammakarzinom links, cT2 pN3a cM0",
+        "description": "Invasives lobuläres Mammakarzinom links, G2, UICC IIIC, pN3a(12/18)",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall9-Bildgebung-Mammographie"
+        },
+        "name": "Fall 9: Mammographie bilateral",
+        "description": "Mammographie bilateral mit Herdbefund links OAQ",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+      },
+      {
+        "reference": {
+          "reference": "MedicationStatement/Fall9-Medikation-Paclitaxel"
+        },
+        "name": "Fall 9: Paclitaxel 80 mg/m2 wöchentlich, Woche 1",
+        "description": "Einzelgabe Paclitaxel im Rahmen der adjuvanten wöchentlichen Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      {
+        "reference": {
+          "reference": "DiagnosticReport/Fall9-Pathologie-Befund"
+        },
+        "name": "Fall 9: Pathologie — Invasives lobuläres Karzinom, G2, HR+/HER2-",
+        "description": "Pathologischer Befund: Invasives lobuläres Karzinom, G2, ER+ IRS 12, PR+ IRS 10, HER2-, Ki-67 20%",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall9-Patho-Conclusion"
+        },
+        "name": "Fall 9: Pathologische Diagnose/Conclusion",
+        "description": "Diagnostische Schlussfolgerung des Pathologen",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Patient/Fall9-Patient-Andrea-Wolf"
+        },
+        "name": "Fall 9: Patientin Andrea Wolf",
+        "description": "Synthetische Testpatientin — lobuläres Mammakarzinom links, UICC IIIC, LK-positiv, Komplikation",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall9-Komplikation-Lymphoedem"
+        },
+        "name": "Fall 9: Postoperative Komplikation — Lymphödem Arm links, Clavien-Dindo II",
+        "description": "Lymphödem Arm links nach Axilladissektion, Clavien-Dindo Grad II",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"
+      },
+      {
+        "reference": {
+          "reference": "Specimen/Fall9-Pathologie-Praeparat"
+        },
+        "name": "Fall 9: Stanzbiopsie-Präparat links OAQ",
+        "description": "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+      },
+      {
+        "reference": {
+          "reference": "CarePlan/Fall9-Tumorboard"
+        },
+        "name": "Fall 9: Tumorboard-Empfehlung",
+        "description": "Empfehlung: adjuvante Chemotherapie EC→Paclitaxel, BET + Axilladissektion, RT, endokrine Therapie",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      {
+        "reference": {
+          "reference": "Observation/Fall9-Verlauf-12Monate"
+        },
+        "name": "Fall 9: Verlaufskontrolle 12 Monate postoperativ",
+        "description": "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-klinische-untersuchung"
+        },
+        "name": "Fragebogen: Klinische Untersuchung Mamma",
+        "description": "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Definition-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-op-planung"
+        },
+        "name": "Fragebogen: OP Planung",
+        "description": "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Definition-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-postop"
+        },
+        "name": "Fragebogen: Postoperative Dokumentation",
+        "description": "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, Observation).",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-tumorboard"
+        },
+        "name": "Fragebogen: Tumorboard Empfehlung",
+        "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Definition-based Extraction mit dem Senologie_Tumorboard_Empfehlung-Profil (CarePlan) als Ziel.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-operations-duration"
+        },
+        "name": "Geplante OP-Dauer",
+        "description": "Geplante OP-Dauer in Minuten — ServiceRequest hat kein duration-Element",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/iqtig-mammachirurgie-181"
+        },
+        "name": "IQTIG QS 18.1 Mammachirurgie (Logical Model)",
+        "description": "Logisches Modell des IQTIG-Datensatzes fuer das QS-Verfahren 18.1 Mammachirurgie\n(Spezifikation 2024 V05).\n\nDer Datensatz besteht aus drei Teildatensaetzen:\n- Teildatensatz Basis (B): Patienten- und Falldaten\n- Teildatensatz Brust (BRUST): Brustspezifische Diagnose- und Befunddaten\n- Teildatensatz Operation (O): Operation, Histologie, Pathologie, Resektionsstatus\n\nDieses Modell dient als Zielstruktur der FHIR StructureMaps fuer die Ableitung\neiner IQTIG-konformen QS-Meldung aus einem Senologie-FHIR-Bundle. Die\nSerialisierung (CSV / XML) ist nicht Bestandteil dieses Modells.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ireg-brustimplantat-meldung"
+        },
+        "name": "IRegG Brustimplantat Meldung (Logical Model)",
+        "description": "Logisches Modell der GEMeldung fuer Brustimplantate gemaess IRegD XML-Spezifikation V4.1.1.\n\nDieses Modell bildet die Hierarchie der XML-Nachricht ab, beschraenkt auf den\nBrustimplantat-Anteil (ohne Endoprothese und Aortenklappe). Es dient als\nStructureMap-Target fuer die Erzeugung von IRegG-XML-Meldungen aus FHIR-Ressourcen.\n\nMapping-Uebersicht:\n- Meldung (MEL_*) -> MessageHeader + Organization\n- Fall (FAL_*) -> Encounter\n- PatientenaufnahmeBrustimplantat (PAT_* + PAB_*) -> Patient + Observations\n- Operation (OPE_* + OBI_*) -> Procedure\n- Artikelidentifikation (ARI_* + ARB_* + ABI_*) -> Device\n- Zubehoer (ZUB_* + ZBI_*) -> Device\n- Entlassung (ENT_* + DBI_*) -> Encounter.hospitalization + Condition",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-studienkontakt"
+        },
+        "name": "Kontaktperson Studie",
+        "description": "Kontaktperson für die klinische Studie — kein natives FHIR-Äquivalent in ResearchSubject",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/obds-meldung"
+        },
+        "name": "oBDS Meldung",
+        "description": "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz v3.0.5). Bildet die XML-Struktur einer einzelnen Meldung ab, wie sie von Meldestellen an die Krebsregister übermittelt wird.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/oncobox-brust-meldung"
+        },
+        "name": "OncoBox Brust N1.1.1 Meldung (Logical Model)",
+        "description": "Logisches Modell einer OncoBox-Brust-Meldung gemaess OnkoZert-Spezifikation N1.1.1.\n\nDie OncoBox Brust ist das XML-basierte Exportformat fuer die jaehrliche Uebermittlung\nvon Fall- und Qualitaetsindikatordaten zertifizierter Brustzentren an OnkoZert\n(DKG-Zertifizierung). Der Datensatz besteht aus folgenden Hauptkomponenten:\n\n- **Zentrum**  -- Kennung und Berichtszeitraum\n- **Primaerfall** -- Patienten- und Falldaten (Primaerfallarten nach OnkoZert-Systematik)\n- **Diagnose** -- Diagnoseinformationen (ICD-10-GM, TNM, Bildgebung, Histologie)\n- **Therapie** -- Operationen, Systemtherapie, Strahlentherapie, Hormontherapie, Trastuzumab\n- **Tumorkonferenz** -- Praetherapeutische und postoperative Fallbesprechung\n- **Versorgungskette** -- Psychoonkologie, Sozialdienst, Studienteilnahme\n- **Nachsorge / Outcome** -- Rezidiv, Metastasierung, Tod\n- **Kennzahlen (KB-1 bis KB-20)** -- DKG-Qualitaetsindikatoren\n\nDieses Modell dient als Zielstruktur der FHIR StructureMaps fuer die Ableitung\neiner OncoBox-Brust-konformen Meldung aus einem Senologie-FHIR-Bundle.\nDie Serialisierung (XML) ist nicht Bestandteil dieses Modells.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-operating-table-setup"
+        },
+        "name": "OP-Lagerung/Tischanordnung",
+        "description": "OP-Lagerung und Tischanordnung — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-pre-op-antibiotikatherapie"
+        },
+        "name": "Präoperative Antibiotikatherapie",
+        "description": "Präoperative Antibiotikatherapie — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-pre-op-blutabnahme"
+        },
+        "name": "Präoperative Blutabnahme",
+        "description": "Präoperative Blutabnahme geplant — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-pre-op-markierung"
+        },
+        "name": "Präoperative Markierung",
+        "description": "Präoperative Markierung geplant — ServiceRequest hat kein usedCode",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-screeningstatus"
+        },
+        "name": "Screeningstatus",
+        "description": "Screeningstatus der Studienteilnahme — kein natives FHIR-Äquivalent in ResearchSubject",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-fm-lokalisation"
+        },
+        "name": "SNOMED CT to oBDS Fernmetastasen-Lokalisation",
+        "description": "Mapping von SNOMED CT Koerperstruktur-Codes zu oBDS Fernmetastasen-Lokalisation (PUL, OSS, HEP, BRA, etc.)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-grading"
+        },
+        "name": "SNOMED CT to oBDS Grading",
+        "description": "Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X, L, M, H, B)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-intention"
+        },
+        "name": "SNOMED CT to oBDS Intention",
+        "description": "Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, R, S, X)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-residualstatus"
+        },
+        "name": "SNOMED CT to oBDS Residualstatus",
+        "description": "Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus (R0, R1, R2, RX)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-seitenlokalisation"
+        },
+        "name": "SNOMED CT to oBDS Seitenlokalisation",
+        "description": "Mapping von SNOMED CT Lateralitaetscodes zu oBDS Seitenlokalisation (R, L, B, M, T, U)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-therapiestellung"
+        },
+        "name": "SNOMED CT to oBDS Therapie-Stellung zur OP",
+        "description": "Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-therapieart"
+        },
+        "name": "SNOMED CT to oBDS Therapieart",
+        "description": "Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, HO, IM, ZS, SO, ST)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
+        },
+        "name": "SNOMED CT to oBDS Verlauf Gesamtbeurteilung",
+        "description": "Mapping von SNOMED CT Tumorstatusbewertungen zu oBDS Gesamtbeurteilung Tumorstatus (V, T, K, P, U, X)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-examination-location"
+        },
+        "name": "Standort der Untersuchung",
+        "description": "Standort/Einrichtung der bildgebenden Untersuchung — DiagnosticReport hat kein location-Element",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-day-in-cycle"
+        },
+        "name": "Tag im Zyklus",
+        "description": "Tag innerhalb eines Therapie-Zyklus — MII Onko hat kein day-in-cycle",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-therapy-cycle"
+        },
+        "name": "Therapie-Zyklus",
+        "description": "Nummer des Therapie-Zyklus (1, 2, 3, etc.) — MII Onko hat kein cycle tracking",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "StructureDefinition/ex-senologie-therapy-line"
+        },
+        "name": "Therapielinie",
+        "description": "Therapielinie (1. Linie, 2. Linie, etc.) — kein natives FHIR-Äquivalent",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-diagnosesicherung"
+        },
+        "name": "ValueSet Diagnosesicherung",
+        "description": "Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-icd10"
+        },
+        "name": "ValueSet Senologie ICD-10-GM",
+        "description": "ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotbase Codebook",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-diagnose-b3"
+        },
+        "name": "VS Senologie B3 Läsionen",
+        "description": "B3 Läsionen der Mamma nach S3-Leitlinie",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-diagnose"
+        },
+        "name": "VS Senologie Diagnose",
+        "description": "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook - SNOMED CT und lokale Codes",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-diagnose-lokal"
+        },
+        "name": "VS Senologie Diagnose Lokal",
+        "description": "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senologie-Slice)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-diagnose-sct"
+        },
+        "name": "VS Senologie Diagnose SNOMED CT",
+        "description": "SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für sct-Slice)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-genexpressionstest"
+        },
+        "name": "VS Senologie Genexpressionstest",
+        "description": "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-metastasierung"
+        },
+        "name": "VS Senologie Metastasierung",
+        "description": "Metastasierungsstatus - lokale Codes basierend auf Dotbase",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-risikoklasse"
+        },
+        "name": "VS Senologie Risikoklasse",
+        "description": "Risikokategorien für Genexpressionstests (low, intermediate, high)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-screeningstatus"
+        },
+        "name": "VS Senologie Screeningstatus",
+        "description": "Screeningstatus einer klinischen Studienteilnahme",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-seite"
+        },
+        "name": "VS Senologie Seite",
+        "description": "Lateralität der Mamma-Erkrankung",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-systemtherapie-medikation"
+        },
+        "name": "VS Senologie Systemtherapie Medikation",
+        "description": "Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01)",
+        "exampleBoolean": false
+      }
+    ],
+    "page": {
+      "nameUrl": "toc.html",
+      "title": "Table of Contents",
+      "generation": "html",
+      "page": [
+        {
+          "nameUrl": "index.html",
+          "title": "Home",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "datenmodell.html",
+          "title": "Datenmodell",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "profilbeschreibungen.html",
+          "title": "Profile",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "testpatientinnen.html",
+          "title": "Testpatientinnen",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "walkthrough-tumorformel.html",
+          "title": "Walkthrough — TNM und IHC",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "leitlinien-abdeckung.html",
+          "title": "S3-Leitlinien-Abdeckung",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "anwendungsfaelle-uebersicht.html",
+          "title": "Anwendungsfälle",
+          "generation": "markdown",
+          "page": [
+            {
+              "nameUrl": "anwendungsfaelle-erfassung.html",
+              "title": "Erfassung",
+              "generation": "markdown"
+            },
+            {
+              "nameUrl": "anwendungsfaelle-austausch.html",
+              "title": "Austausch",
+              "generation": "markdown"
+            },
+            {
+              "nameUrl": "anwendungsfaelle-auswertung.html",
+              "title": "Auswertung",
+              "generation": "markdown"
+            },
+            {
+              "nameUrl": "anwendungsfaelle-meldedatensaetze.html",
+              "title": "Meldedatensätze",
+              "generation": "markdown",
+              "page": [
+                {
+                  "nameUrl": "meldung-obds.html",
+                  "title": "oBDS-Transformation",
+                  "generation": "markdown"
+                },
+                {
+                  "nameUrl": "meldung-ireg.html",
+                  "title": "IRegG-Transformation (Brustimplantate)",
+                  "generation": "markdown"
+                },
+                {
+                  "nameUrl": "meldung-iqtig.html",
+                  "title": "IQTIG-QS-Transformation (18.1 Mammachirurgie)",
+                  "generation": "markdown"
+                },
+                {
+                  "nameUrl": "meldung-oncobox.html",
+                  "title": "OncoBox-Brust-Transformation (OnkoZert / DKG)",
+                  "generation": "markdown"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nameUrl": "testumgebungen.html",
+          "title": "Testumgebungen",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "eu-standards.html",
+          "title": "EU-Standards und Einordnung",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "ips-prepopulation.html",
+          "title": "IPS-Prepopulation",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "offene-fragen.html",
+          "title": "Offene Fragen",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "GeneralRemarks.html",
+          "title": "Allgemeines",
+          "generation": "markdown"
+        },
+        {
+          "nameUrl": "terminologie-uebersicht.html",
+          "title": "Terminologie",
+          "generation": "markdown",
+          "page": [
+            {
+              "nameUrl": "terminologie-medikation.html",
+              "title": "Medikation",
+              "generation": "markdown"
+            },
+            {
+              "nameUrl": "snomed-german-translations.html",
+              "title": "SNOMED Übersetzungen",
+              "generation": "markdown"
+            }
+          ]
+        }
+      ]
+    },
+    "parameter": [
+      {
+        "code": "copyrightyear",
+        "value": "2025+"
+      },
+      {
+        "code": "releaselabel",
+        "value": "ci-build"
+      }
+    ]
+  }
+}

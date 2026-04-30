@@ -1,0 +1,46 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "FamilienanamnesesKohorte",
+  "url": "https://www.senologie.org/fhir/ViewDefinition/FamilienanamnesesKohorte",
+  "name": "FamilienanamnesesKohorte",
+  "title": "Familienanamnese-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Familienanamnese (FamilyMemberHistory) mit Verwandtschaftsgrad und Erkrankung.",
+  "resource": "FamilyMemberHistory",
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "familyHistoryId",
+          "type": "id"
+        },
+        {
+          "path": "patient.getReferenceKey(Patient)",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "relationship.coding.first().display",
+          "name": "verwandtschaftsgrad",
+          "type": "string"
+        },
+        {
+          "path": "condition.first().code.coding.where(system='http://snomed.info/sct').first().display",
+          "name": "erkrankung",
+          "type": "string"
+        },
+        {
+          "path": "condition.first().onset.ofType(Age).value",
+          "name": "erkrankungsalter",
+          "type": "decimal"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

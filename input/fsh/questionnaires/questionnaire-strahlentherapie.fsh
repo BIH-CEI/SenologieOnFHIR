@@ -1,22 +1,45 @@
 // ============================================================
 // Questionnaire: Strahlentherapie
-// Quelle: dotbase Codebook Section "Strahlentherapie"
-// Ziel: Procedure (Strahlentherapie) via Definition-based Extraction
+// Quelle: dotbase Codebook Section "Strahlentherapie ESP-PECS"
+// Ziel: Senologie_Strahlentherapie (Procedure)
+// Extraktion: SDC Template-based Extraction mit contained
+//   Procedure-Template (senologie-strahlentherapie Profil).
+//   Items verwenden definition-URLs auf das Senologie-Profil,
+//   templateExtract verweist auf das contained Procedure-Skelett.
 // ============================================================
 
+// --- Contained template resource ---
+Instance: strahlentherapie-template
+InstanceOf: Procedure
+Usage: #inline
+
+* id = "strahlentherapie-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+* status = #completed
+* category = $SCT#1287742003 "Radiotherapy (procedure)"
+* subject.reference = "placeholder"
+
+// --- Questionnaire ---
 Instance: senologie-strahlentherapie-quest
 InstanceOf: Questionnaire
 Title: "Fragebogen: Strahlentherapie"
-Description: "Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel."
+Description: "Fragebogen zur Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit dem Senologie_Strahlentherapie-Profil (Procedure) als Ziel."
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-strahlentherapie"
 * name = "QuestStrahlentherapie"
 * title = "Fragebogen: Strahlentherapie"
 * status = #draft
-* insert Version
 * experimental = true
 * subjectType = #Patient
+* insert Version
+
+// Contained template
+* contained[+] = strahlentherapie-template
+
+// SDC templateExtract -> contained Procedure template
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* extension[=].valueReference = Reference(strahlentherapie-template)
 
 // Launch Context
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -26,169 +49,104 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Patient
 
 // ============================================================
-// Group 1: Therapie-Rahmen (Procedure)
+// Items
 // ============================================================
-* item[+].linkId = "therapie-rahmen"
-* item[=].text = "Therapie-Rahmen"
-* item[=].type = #group
+
+// --- Bestrahlungszeitraum ---
+* item[+].linkId = "rt-beginn"
+* item[=].text = "Beginn der Bestrahlung"
+* item[=].type = #date
 * item[=].required = true
-* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-* item[=].extension[=].valueExpression.language = #application/x-fhir-query
-* item[=].extension[=].valueExpression.expression = "Procedure"
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.performedPeriod.start"
 
-// Intention
-* item[=].item[+].linkId = "rt-intention"
-* item[=].item[=].text = "Intention"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neoadjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliativ"
-
-// Startdatum
-* item[=].item[+].linkId = "rt-startdatum"
-* item[=].item[=].text = "Startdatum"
-* item[=].item[=].type = #date
-* item[=].item[=].required = true
-
-// Enddatum
-* item[=].item[+].linkId = "rt-enddatum"
-* item[=].item[=].text = "Enddatum"
-* item[=].item[=].type = #date
-* item[=].item[=].required = false
-
-// Bezogene Operation
-* item[=].item[+].linkId = "rt-bezogene-op"
-* item[=].item[=].text = "Bezogene Operation (Referenz auf vorherige OP)"
-* item[=].item[=].type = #string
-* item[=].item[=].required = false
-
-// ============================================================
-// Group 2: Bestrahlungsplan
-// ============================================================
-* item[+].linkId = "bestrahlungsplan"
-* item[=].text = "Bestrahlungsplan"
-* item[=].type = #group
+* item[+].linkId = "rt-ende"
+* item[=].text = "Ende der Bestrahlung"
+* item[=].type = #date
 * item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.performedPeriod.end"
 
-// Zielvolumen
-* item[=].item[+].linkId = "rt-zielvolumen"
-* item[=].item[=].text = "Zielvolumen"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = false
-* item[=].item[=].repeats = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76752008 "Breast structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#78904004 "Chest wall structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#68171009 "Axillary lymph node structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#16051009 "Infraclavicular lymph node structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76838003 "Supraclavicular lymph node structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#245282001 "Internal mammary lymph node group"
+// --- Bestrahlungsregion ---
+* item[+].linkId = "rt-region"
+* item[=].text = "Bestrahlungsregion"
+* item[=].type = #choice
+* item[=].required = true
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.bodySite"
+* item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
+* item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
+* item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
+* item[=].answerOption[+].valueCoding = $SCT#91724009 "Lymph node structure of thorax"
+* item[=].answerOption[+].valueCoding = $SCT#68171009 "Axillary lymph node structure"
+* item[=].answerOption[+].valueCoding = $SCT#88911004 "Supraclavicular lymph node structure"
+* item[=].answerOption[+].valueCoding = $SCT#127951006 "Chest wall structure"
 
-// Applikationsart
-* item[=].item[+].linkId = "rt-applikationsart"
-* item[=].item[=].text = "Applikationsart"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1163834000 "3D conformal radiation therapy"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1163833006 "Intensity modulated radiation therapy"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#152198000 "Brachytherapy"
-
-// Gesamtdosis
-* item[=].item[+].linkId = "rt-gesamtdosis"
-* item[=].item[=].text = "Gesamtdosis (Gy)"
-* item[=].item[=].type = #decimal
-* item[=].item[=].required = false
-* item[=].item[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
-* item[=].item[=].extension[=].valueCoding = http://unitsofmeasure.org#Gy "Gy"
-
-// Einzeldosis pro Fraktion
-* item[=].item[+].linkId = "rt-einzeldosis"
-* item[=].item[=].text = "Einzeldosis pro Fraktion (Gy)"
-* item[=].item[=].type = #decimal
-* item[=].item[=].required = false
-* item[=].item[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
-* item[=].item[=].extension[=].valueCoding = http://unitsofmeasure.org#Gy "Gy"
-
-// Anzahl Fraktionen
-* item[=].item[+].linkId = "rt-fraktionen"
-* item[=].item[=].text = "Anzahl Fraktionen"
-* item[=].item[=].type = #integer
-* item[=].item[=].required = false
-
-// ============================================================
-// Group 3: Boost
-// ============================================================
-* item[+].linkId = "boost"
-* item[=].text = "Boost"
-* item[=].type = #group
+// --- OPS-Code ---
+* item[+].linkId = "rt-ops"
+* item[=].text = "OPS-Code der Bestrahlung"
+* item[=].type = #string
 * item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.code.coding.code"
 
-// Boost durchgefuehrt
-* item[=].item[+].linkId = "rt-boost"
-* item[=].item[=].text = "Boost durchgeführt"
-* item[=].item[=].type = #boolean
-* item[=].item[=].required = false
-
-// Boost-Dosis
-* item[=].item[+].linkId = "rt-boost-dosis"
-* item[=].item[=].text = "Boost-Dosis (Gy)"
-* item[=].item[=].type = #decimal
-* item[=].item[=].required = false
-* item[=].item[=].enableWhen[+].question = "rt-boost"
-* item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerBoolean = true
-* item[=].item[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
-* item[=].item[=].extension[=].valueCoding = http://unitsofmeasure.org#Gy "Gy"
-
-// Boost-Fraktionen
-* item[=].item[+].linkId = "rt-boost-fraktionen"
-* item[=].item[=].text = "Boost-Fraktionen"
-* item[=].item[=].type = #integer
-* item[=].item[=].required = false
-* item[=].item[=].enableWhen[+].question = "rt-boost"
-* item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerBoolean = true
-
-// Boost-Technik
-* item[=].item[+].linkId = "rt-boost-technik"
-* item[=].item[=].text = "Boost-Technik"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = false
-* item[=].item[=].enableWhen[+].question = "rt-boost"
-* item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerBoolean = true
-* item[=].item[=].answerOption[+].valueString = "Elektronen"
-* item[=].item[=].answerOption[+].valueString = "Photonen"
-* item[=].item[=].answerOption[+].valueString = "Brachytherapie"
-
-// ============================================================
-// Group 4: Ergebnis
-// ============================================================
-* item[+].linkId = "ergebnis"
-* item[=].text = "Ergebnis"
-* item[=].type = #group
+// --- Behandlungsintention ---
+* item[+].linkId = "rt-intention"
+* item[=].text = "Behandlungsintention"
+* item[=].type = #choice
 * item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:Intention.valueCodeableConcept"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#P "palliativ"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#S "sonstiges"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#X "Fehlende Angabe"
 
-// Akute Nebenwirkungen
-* item[=].item[+].linkId = "rt-nebenwirkungen"
-* item[=].item[=].text = "Akute Nebenwirkungen (Radiodermatitis, Fatigue, etc.)"
-* item[=].item[=].type = #text
-* item[=].item[=].required = false
+// --- Gesamtdosis ---
+* item[+].linkId = "rt-gesamtdosis"
+* item[=].text = "Gesamtdosis (Gy)"
+* item[=].type = #decimal
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:Gesamtdosis.valueQuantity.value"
 
-// Therapiestatus
-* item[=].item[+].linkId = "rt-therapiestatus"
-* item[=].item[=].text = "Therapiestatus"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "Abgeschlossen"
-* item[=].item[=].answerOption[+].valueString = "Abgebrochen"
-* item[=].item[=].answerOption[+].valueString = "Laufend"
+// --- Einzeldosis ---
+* item[+].linkId = "rt-einzeldosis"
+* item[=].text = "Einzeldosis pro Fraktion (Gy)"
+* item[=].type = #decimal
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:einzeldosis.valueQuantity.value"
 
-// Abbruchgrund
-* item[=].item[+].linkId = "rt-abbruchgrund"
-* item[=].item[=].text = "Abbruchgrund"
-* item[=].item[=].type = #text
-* item[=].item[=].required = false
-* item[=].item[=].enableWhen[+].question = "rt-therapiestatus"
-* item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerString = "Abgebrochen"
+// --- Anzahl Sitzungen ---
+* item[+].linkId = "rt-sitzungen"
+* item[=].text = "Anzahl Bestrahlungssitzungen (Fraktionen)"
+* item[=].type = #integer
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:sessionCount.valueQuantity.value"
+
+// --- Boost ---
+* item[+].linkId = "rt-boost"
+* item[=].text = "Boost-Bestrahlung"
+* item[=].type = #choice
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.extension:Boost.valueCodeableConcept"
+* item[=].answerOption[+].valueCoding = $SCT#399300004 "Radiation boost"
+* item[=].answerOption[+].valueCoding = $SCT#261665006 "Unknown"
+
+// --- Seitenlokalisation ---
+* item[+].linkId = "rt-seite"
+* item[=].text = "Seitenlokalisation"
+* item[=].type = #choice
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.bodySite.extension:Seitenlokalisation.valueCodeableConcept"
+* item[=].answerOption[+].valueCoding = $SCT#24028007 "Right"
+* item[=].answerOption[+].valueCoding = $SCT#7771000 "Left"
+* item[=].answerOption[+].valueCoding = $SCT#51440002 "Right and left"
+
+// --- Bezogene Diagnose ---
+* item[+].linkId = "rt-diagnose"
+* item[=].text = "Bezogene Diagnose"
+* item[=].type = #reference
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.reasonReference"
+
+// --- Anmerkungen ---
+* item[+].linkId = "rt-note"
+* item[=].text = "Anmerkungen / Besonderheiten"
+* item[=].type = #text
+* item[=].required = false
+* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie#Procedure.note.text"

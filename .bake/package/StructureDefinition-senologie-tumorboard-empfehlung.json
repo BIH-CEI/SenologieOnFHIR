@@ -1,0 +1,479 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-tumorboard-empfehlung",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung",
+  "version": "0.8.0",
+  "name": "Senologie_Tumorboard_Empfehlung",
+  "title": "BIH Senologie Tumorboard Empfehlung",
+  "status": "draft",
+  "description": "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard) aus dotbase Questionnaire 'Empfehlung der interdisziplinären Tumorkonferenz V2.0'",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "CarePlan",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/CarePlan",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "CarePlan.status",
+        "path": "CarePlan.status",
+        "short": "Aktiver Care Plan",
+        "fixedCode": "active",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.intent",
+        "path": "CarePlan.intent",
+        "short": "Tumorboard-Empfehlung als Planungsplan",
+        "fixedCode": "plan",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.title",
+        "path": "CarePlan.title",
+        "short": "Tumorboard Empfehlung",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.description",
+        "path": "CarePlan.description",
+        "short": "Empfehlungen der interdisziplinären Tumorkonferenz",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.subject",
+        "path": "CarePlan.subject",
+        "short": "Patient für den das Tumorboard stattfindet",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.period",
+        "path": "CarePlan.period",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.period.start",
+        "path": "CarePlan.period.start",
+        "short": "Datum des Tumorboard",
+        "comment": "Aus dotbase: 'Datum'",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.contributor",
+        "path": "CarePlan.contributor",
+        "short": "Ärzte/Spezialisten des Tumorboards"
+      },
+      {
+        "id": "CarePlan.careTeam",
+        "path": "CarePlan.careTeam",
+        "short": "Beteiligte Fachgruppen",
+        "comment": "References zu CareTeam mit verschiedenen Fachdisziplinen (Chirurgie, Onkologie, Radiologie, Pathologie, etc.)"
+      },
+      {
+        "id": "CarePlan.addresses",
+        "path": "CarePlan.addresses",
+        "short": "Grund des Tumorboards (Diagnose)",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.activity",
+        "path": "CarePlan.activity",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "detail.code"
+            }
+          ],
+          "rules": "open",
+          "description": "Slicing nach Art der empfohlenen Maßnahme (über detail.code Pattern)"
+        },
+        "short": "Empfohlene Maßnahmen",
+        "mustSupport": true
+      },
+      {
+        "id": "CarePlan.activity:operativeTherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "operativeTherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:operativeTherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "ServiceRequest"
+      },
+      {
+        "id": "CarePlan.activity:operativeTherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene operative Therapie",
+        "comment": "Aus dotbase: 'Operative Therapie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "387713003",
+              "system": "http://snomed.info/sct",
+              "display": "Surgical procedure (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:chemotherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "chemotherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:chemotherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "MedicationRequest"
+      },
+      {
+        "id": "CarePlan.activity:chemotherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene Chemotherapie",
+        "comment": "Aus dotbase: 'Chemotherapie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "385786002",
+              "system": "http://snomed.info/sct",
+              "display": "Chemotherapy care (regime/therapy)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:radiotherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "radiotherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:radiotherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "ServiceRequest"
+      },
+      {
+        "id": "CarePlan.activity:radiotherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene Strahlentherapie",
+        "comment": "Aus dotbase: 'Strahlentherapie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "108290001",
+              "system": "http://snomed.info/sct",
+              "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:endocrineTherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "endocrineTherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:endocrineTherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "MedicationRequest"
+      },
+      {
+        "id": "CarePlan.activity:endocrineTherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene endokrine Therapie",
+        "comment": "Aus dotbase: 'Endokrine Therapie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "169413002",
+              "system": "http://snomed.info/sct",
+              "display": "Hormone therapy (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:targetedTherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "targetedTherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:targetedTherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "MedicationRequest"
+      },
+      {
+        "id": "CarePlan.activity:targetedTherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene zielgerichtete Therapie",
+        "comment": "Aus dotbase: 'Zielgerichtete Therapie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "416608005",
+              "system": "http://snomed.info/sct",
+              "display": "Drug therapy"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:immunotherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "immunotherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:immunotherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "MedicationRequest"
+      },
+      {
+        "id": "CarePlan.activity:immunotherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene Immuntherapie",
+        "comment": "Aus dotbase: 'Immuntherapie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "76334006",
+              "system": "http://snomed.info/sct",
+              "display": "Immunotherapy (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:antiresorptiveTherapy",
+        "path": "CarePlan.activity",
+        "sliceName": "antiresorptiveTherapy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:antiresorptiveTherapy.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "MedicationRequest"
+      },
+      {
+        "id": "CarePlan.activity:antiresorptiveTherapy.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene antiresorptive Therapie",
+        "comment": "Aus dotbase: 'Antiresorptive Therapie' (choice, z.B. Bisphosphonate)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "870370003",
+              "system": "http://snomed.info/sct",
+              "display": "Antiresorptive therapy (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:furtherDiagnostics",
+        "path": "CarePlan.activity",
+        "sliceName": "furtherDiagnostics",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:furtherDiagnostics.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "ServiceRequest"
+      },
+      {
+        "id": "CarePlan.activity:furtherDiagnostics.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene weitere Diagnostik",
+        "comment": "Aus dotbase: 'Weitere Diagnostik' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "165197003",
+              "system": "http://snomed.info/sct",
+              "display": "Diagnostic assessment (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:furtherIntervention",
+        "path": "CarePlan.activity",
+        "sliceName": "furtherIntervention",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:furtherIntervention.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "ServiceRequest"
+      },
+      {
+        "id": "CarePlan.activity:furtherIntervention.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene weitere Intervention",
+        "comment": "Aus dotbase: 'Weitere Intervention' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "71388002",
+              "system": "http://snomed.info/sct",
+              "display": "Procedure (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:genetics",
+        "path": "CarePlan.activity",
+        "sliceName": "genetics",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:genetics.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "ServiceRequest"
+      },
+      {
+        "id": "CarePlan.activity:genetics.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene genetische Untersuchung",
+        "comment": "Aus dotbase: 'Genetische Untersuchung' (choice, z.B. BRCA)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "405825005",
+              "system": "http://snomed.info/sct",
+              "display": "Molecular genetic test"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:clinicalTrial",
+        "path": "CarePlan.activity",
+        "sliceName": "clinicalTrial",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:clinicalTrial.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "ServiceRequest"
+      },
+      {
+        "id": "CarePlan.activity:clinicalTrial.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Empfohlene klinische Studie",
+        "comment": "Aus dotbase: 'Studie' (choice)",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "110465008",
+              "system": "http://snomed.info/sct",
+              "display": "Clinical trial (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:clinicalTrial.detail.description",
+        "path": "CarePlan.activity.detail.description",
+        "comment": "Optional 'Sonstige Studie' (Freitext)"
+      },
+      {
+        "id": "CarePlan.activity:followUp",
+        "path": "CarePlan.activity",
+        "sliceName": "followUp",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "CarePlan.activity:followUp.detail.kind",
+        "path": "CarePlan.activity.detail.kind",
+        "patternCode": "Appointment"
+      },
+      {
+        "id": "CarePlan.activity:followUp.detail.code",
+        "path": "CarePlan.activity.detail.code",
+        "short": "Follow-up / Nachsorge Plan",
+        "comment": "Aus dotbase: 'Vorsorge/Nachsorge', 'Wiedervorstellung'",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "390906007",
+              "system": "http://snomed.info/sct",
+              "display": "Follow-up encounter (procedure)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "CarePlan.activity:followUp.detail.scheduled[x]",
+        "path": "CarePlan.activity.detail.scheduled[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "CarePlan.activity:followUp.detail.scheduled[x]:scheduledTiming",
+        "path": "CarePlan.activity.detail.scheduled[x]",
+        "sliceName": "scheduledTiming",
+        "short": "Zeitplan für Nachsorge/Wiedervorstellung",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Timing"
+          }
+        ]
+      },
+      {
+        "id": "CarePlan.note",
+        "path": "CarePlan.note",
+        "short": "Allgemeine Anmerkungen des Tumorboards",
+        "comment": "Aus dotbase: 'Sonstiges' (choice)"
+      }
+    ]
+  }
+}

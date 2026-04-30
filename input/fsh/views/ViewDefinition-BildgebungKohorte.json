@@ -1,0 +1,56 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "BildgebungKohorte",
+  "url": "https://www.senologie.org/fhir/ViewDefinition/BildgebungKohorte",
+  "name": "BildgebungKohorte",
+  "title": "Bildgebung-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Bildgebungsbefunde (DiagnosticReport) mit Modalität, BI-RADS und Seite.",
+  "resource": "DiagnosticReport",
+  "where": [
+    {
+      "path": "meta.profile.where($this='https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund').exists()"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "reportId",
+          "type": "id"
+        },
+        {
+          "path": "subject.getReferenceKey(Patient)",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "effective.ofType(dateTime)",
+          "name": "datum",
+          "type": "dateTime"
+        },
+        {
+          "path": "code.coding.first().display",
+          "name": "modalitaet",
+          "type": "string"
+        },
+        {
+          "path": "code.coding.first().code",
+          "name": "modalitaetCode",
+          "type": "code"
+        },
+        {
+          "path": "conclusion",
+          "name": "conclusion",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

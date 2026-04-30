@@ -1,28 +1,69 @@
 // ============================================================
-// Questionnaire: Erstanamnese / Anamnese
+// Questionnaire: Erstanamnese (Initial History)
 // Quellen (dotbase Codebook Sections):
-//   - "Allgemeine Anamnese"
+//   - "Diagnose"
 //   - "Gynäkologische Anamnese"
 //   - "Familienanamnese"
 // Ziele:
-//   - Encounter / Observation (Allgemeine + Gynäkologische Anamnese)
-//   - FamilyMemberHistory (Familienanamnese)
-// Extraktion: SDC Definition-based Extraction pro Gruppe.
+//   - Senologie_Diagnose_Maligne (Condition)
+//   - Senologie_Gynaekologische_Anamnese (Observation)
+//   - Senologie_Familienanamnese (FamilyMemberHistory)
+// Extraktion: SDC Template-based Extraction mit contained
+//   Templates fuer jede Zielressource. Items verwenden
+//   definition-URLs auf die jeweiligen Senologie-Profile.
 // ============================================================
 
+// --- Contained template: Condition (Senologie_Diagnose_Maligne) ---
+Instance: erstanamnese-diagnose-template
+InstanceOf: Condition
+Usage: #inline
+
+* id = "erstanamnese-diagnose-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+* clinicalStatus = http://terminology.hl7.org/CodeSystem/condition-clinical#active
+* subject.reference = "placeholder"
+
+// --- Contained template: Observation (Senologie_Gynaekologische_Anamnese) ---
+Instance: erstanamnese-gyn-template
+InstanceOf: Observation
+Usage: #inline
+
+* id = "erstanamnese-gyn-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
+* status = #final
+* code = $LOINC#89221-6 "Gynecology History and physical note"
+* subject.reference = "placeholder"
+
+// --- Contained template: FamilyMemberHistory (Senologie_Familienanamnese) ---
+Instance: erstanamnese-famhx-template
+InstanceOf: FamilyMemberHistory
+Usage: #inline
+
+* id = "erstanamnese-famhx-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+* status = #completed
+* patient.reference = "placeholder"
+* relationship = http://terminology.hl7.org/CodeSystem/v3-RoleCode#FAMMEMB "family member"
+
+// --- Questionnaire ---
 Instance: senologie-erstanamnese
 InstanceOf: Questionnaire
 Title: "Fragebogen: Erstanamnese"
-Description: "Fragebogen zur Erstanamnese (Allgemeine Anamnese, Gynäkologische Anamnese, Familienanamnese). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Observation, FamilyMemberHistory)."
+Description: "Fragebogen zur Erstanamnese (Diagnose, gynaekologische Anamnese, Familienanamnese). Nutzt SDC Template-based Extraction mit drei contained Templates: Condition (Senologie_Diagnose_Maligne), Observation (Senologie_Gynaekologische_Anamnese), FamilyMemberHistory (Senologie_Familienanamnese)."
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese"
 * name = "QuestErstanamnese"
 * title = "Fragebogen: Erstanamnese"
 * status = #draft
-* insert Version
 * experimental = true
 * subjectType = #Patient
+* insert Version
+
+// Contained templates
+* contained[+] = erstanamnese-diagnose-template
+* contained[+] = erstanamnese-gyn-template
+* contained[+] = erstanamnese-famhx-template
 
 // Launch Context
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -32,138 +73,225 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Patient
 
 // ============================================================
-// Group 1: Allgemeine Anamnese
+// Group 1: Diagnose (Condition)
 // ============================================================
-* item[+].linkId = "allgemeine-anamnese"
-* item[=].text = "Allgemeine Anamnese"
+* item[+].linkId = "diagnose"
+* item[=].text = "Diagnose"
 * item[=].type = #group
 * item[=].required = true
 
-// Datum Vorstellung
-* item[=].item[+].linkId = "datum-vorstellung"
-* item[=].item[=].text = "Datum der Vorstellung"
+// SDC templateExtract -> contained Condition template
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].valueReference = Reference(erstanamnese-diagnose-template)
+
+// SNOMED-Diagnose
+* item[=].item[+].linkId = "diagnose-sct"
+* item[=].item[=].text = "Diagnose (SNOMED CT)"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:sct"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#254837009 "Malignant neoplasm of breast"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#109886000 "Overlapping malignant neoplasm of breast"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#93796005 "Ductal carcinoma in situ of breast"
+
+// ICD-10-GM Code
+* item[=].item[+].linkId = "diagnose-icd10"
+* item[=].item[=].text = "ICD-10-GM Code"
+* item[=].item[=].type = #string
+* item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:icd10-gm.code"
+
+// ICD-10 Display
+* item[=].item[+].linkId = "diagnose-icd10-display"
+* item[=].item[=].text = "ICD-10-GM Bezeichnung"
+* item[=].item[=].type = #string
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.coding:icd10-gm.display"
+
+// Freitext-Diagnose
+* item[=].item[+].linkId = "diagnose-text"
+* item[=].item[=].text = "Diagnosetext (Freitext)"
+* item[=].item[=].type = #string
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.code.text"
+
+// Seitenlokalisation
+* item[=].item[+].linkId = "seitenlokalisation"
+* item[=].item[=].text = "Seitenlokalisation"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.bodySite"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
+
+// Feststellungsdatum
+* item[=].item[+].linkId = "feststellungsdatum"
+* item[=].item[=].text = "Feststellungsdatum (Erstdiagnose)"
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.extension:Feststellungsdatum.valueDateTime"
 
-// Vorstellungsgrund
-* item[=].item[+].linkId = "vorstellungsgrund"
-* item[=].item[=].text = "Vorstellungsgrund"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#185387006 "New patient consultation"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#726007 "Pathology consultation, comprehensive, records and specimen with report"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#390906007 "Follow-up encounter"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#183620003 "Aftercare follow-up visit"
+// Recorded Date
+* item[=].item[+].linkId = "recorded-date"
+* item[=].item[=].text = "Dokumentationsdatum"
+* item[=].item[=].type = #date
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.recordedDate"
 
-// Screeningstatus
-* item[=].item[+].linkId = "screeningstatus"
-* item[=].item[=].text = "Screeningstatus"
+// Diagnosesicherung
+* item[=].item[+].linkId = "diagnosesicherung"
+* item[=].item[=].text = "Diagnosesicherung"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#171176006 "Breast cancer screening"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#2471000175109 "Interval cancer detected"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#129434009 "Self-examination of breast"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#261087003 "Incidental"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.verificationStatus.coding"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primaertumors"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#6 "Histologie einer Metastase"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#5 "Zytologie"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#4 "spezifische Tumormarker"
 
-// ============================================================
-// Group 2: Gynäkologische Anamnese (Observation)
-// ============================================================
-* item[+].linkId = "gynaekologische-anamnese"
-* item[=].text = "Gynäkologische Anamnese"
-* item[=].type = #group
-* item[=].required = false
-* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-* item[=].extension[=].valueExpression.language = #application/x-fhir-query
-* item[=].extension[=].valueExpression.expression = "Observation"
-
-// Menarchealter
-* item[=].item[+].linkId = "menarchealter"
-* item[=].item[=].text = "Menarchealter (Jahre)"
-* item[=].item[=].type = #integer
+// Stadium
+* item[=].item[+].linkId = "stadium-summary"
+* item[=].item[=].text = "Klinisches Stadium (Zusammenfassung)"
+* item[=].item[=].type = #string
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#42798-9 "Age at menarche"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.stage.summary.text"
 
-// Menopausenstatus
-* item[=].item[+].linkId = "menopausenstatus"
-* item[=].item[=].text = "Menopausenstatus"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#309606002 "Before menopause"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#307429007 "Perimenopausal"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76498008 "Postmenopausal state"
-
-// Gravida
-* item[=].item[+].linkId = "gravida"
-* item[=].item[=].text = "Gravida (Anzahl Schwangerschaften)"
-* item[=].item[=].type = #integer
-* item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#11996-6 "Pregnancies"
-
-// Para
-* item[=].item[+].linkId = "para"
-* item[=].item[=].text = "Para (Anzahl Geburten)"
-* item[=].item[=].type = #integer
-* item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#11977-6 "Parity"
-
-// Hormonersatztherapie
-* item[=].item[+].linkId = "hormonersatztherapie"
-* item[=].item[=].text = "Hormonersatztherapie"
-* item[=].item[=].type = #boolean
-* item[=].item[=].required = false
-
-// Orale Kontrazeption
-* item[=].item[+].linkId = "orale-kontrazeption"
-* item[=].item[=].text = "Orale Kontrazeption"
-* item[=].item[=].type = #boolean
-* item[=].item[=].required = false
-
-// Stilldauer
-* item[=].item[+].linkId = "stilldauer"
-* item[=].item[=].text = "Stilldauer"
+// Metastasen
+* item[=].item[+].linkId = "metastasen-summary"
+* item[=].item[=].text = "Metastasierungsstatus"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
+// Clinical Status
+* item[=].item[+].linkId = "clinical-status"
+* item[=].item[=].text = "Klinischer Status"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.clinicalStatus"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#active "Active"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#recurrence "Recurrence"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#remission "Remission"
+
+// Onset
+* item[=].item[+].linkId = "onset"
+* item[=].item[=].text = "Symptombeginn"
+* item[=].item[=].type = #date
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne#Condition.onsetDateTime"
+
 // ============================================================
-// Group 3: Familienanamnese (FamilyMemberHistory)
+// Group 2: Gynaekologische Anamnese (Observation)
+// ============================================================
+* item[+].linkId = "gyn-anamnese"
+* item[=].text = "Gynaekologische Anamnese"
+* item[=].type = #group
+* item[=].required = false
+
+// SDC templateExtract -> contained Observation template
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].valueReference = Reference(erstanamnese-gyn-template)
+
+// Datum der Anamneseerhebung
+* item[=].item[+].linkId = "gyn-datum"
+* item[=].item[=].text = "Datum der Anamneseerhebung"
+* item[=].item[=].type = #date
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.effectiveDateTime"
+
+// --- Komponente: Menarche ---
+* item[=].item[+].linkId = "gyn-menarche"
+* item[=].item[=].text = "Menarche"
+* item[=].item[=].type = #group
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menarche"
+
+* item[=].item[=].item[+].linkId = "gyn-menarche-alter"
+* item[=].item[=].item[=].text = "Alter bei Menarche (Jahre)"
+* item[=].item[=].item[=].type = #integer
+* item[=].item[=].item[=].required = false
+* item[=].item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menarche.valueQuantity.value"
+
+// --- Komponente: Menopause ---
+* item[=].item[+].linkId = "gyn-menopause"
+* item[=].item[=].text = "Menopause"
+* item[=].item[=].type = #group
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menopause"
+
+* item[=].item[=].item[+].linkId = "gyn-menopause-alter"
+* item[=].item[=].item[=].text = "Alter bei Menopause (Jahre)"
+* item[=].item[=].item[=].type = #integer
+* item[=].item[=].item[=].required = false
+* item[=].item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:menopause.valueQuantity.value"
+
+// --- Komponente: Schwangerschaften ---
+* item[=].item[+].linkId = "gyn-gravida"
+* item[=].item[=].text = "Schwangerschaften"
+* item[=].item[=].type = #group
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:schwangerschaften"
+
+* item[=].item[=].item[+].linkId = "gyn-gravida-anzahl"
+* item[=].item[=].item[=].text = "Anzahl Schwangerschaften (Gravida)"
+* item[=].item[=].item[=].type = #integer
+* item[=].item[=].item[=].required = false
+* item[=].item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:schwangerschaften.valueQuantity.value"
+
+// --- Komponente: HRT ---
+* item[=].item[+].linkId = "gyn-hrt"
+* item[=].item[=].text = "Hormonersatztherapie (HRT)"
+* item[=].item[=].type = #string
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component:hormonersatztherapie.valueCodeableConcept.text"
+
+// ============================================================
+// Group 3: Familienanamnese (FamilyMemberHistory, repeating)
 // ============================================================
 * item[+].linkId = "familienanamnese"
 * item[=].text = "Familienanamnese"
 * item[=].type = #group
 * item[=].required = false
+* item[=].repeats = true
 
-// Repeating group per family member
-* item[=].item[+].linkId = "familienmitglied"
-* item[=].item[=].text = "Familienmitglied"
-* item[=].item[=].type = #group
-* item[=].item[=].required = false
-* item[=].item[=].repeats = true
-* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-* item[=].item[=].extension[=].valueExpression.language = #application/x-fhir-query
-* item[=].item[=].extension[=].valueExpression.expression = "FamilyMemberHistory"
+// SDC templateExtract -> contained FamilyMemberHistory template
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].valueReference = Reference(erstanamnese-famhx-template)
 
 // Verwandtschaftsgrad
-* item[=].item[=].item[+].linkId = "verwandtschaftsgrad"
-* item[=].item[=].item[=].text = "Verwandtschaftsgrad"
-* item[=].item[=].item[=].type = #choice
-* item[=].item[=].item[=].required = true
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MTH "Mother"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#SIS "Sister"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#DAUC "Daughter"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#GRMTH "Grandmother"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#AUNT "Aunt"
+* item[=].item[+].linkId = "fam-verwandtschaft"
+* item[=].item[=].text = "Verwandtschaftsgrad"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.relationship"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MTH "Mutter"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#FTH "Vater"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#SIS "Schwester"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#DAUC "Tochter"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MGRMTH "Grossmutter muetterlicherseits"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#PGRMTH "Grossmutter vaeterlicherseits"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MAUNT "Tante muetterlicherseits"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#PAUNT "Tante vaeterlicherseits"
 
 // Erkrankung
-* item[=].item[=].item[+].linkId = "erkrankung"
-* item[=].item[=].item[=].text = "Erkrankung"
-* item[=].item[=].item[=].type = #choice
-* item[=].item[=].item[=].required = true
-* item[=].item[=].item[=].answerOption[+].valueCoding = $SCT#254837009 "Malignant neoplasm of breast"
-* item[=].item[=].item[=].answerOption[+].valueCoding = $SCT#363443007 "Malignant tumor of ovary"
-* item[=].item[=].item[=].answerOption[+].valueCoding = $SCT#74964007 "Other"
+* item[=].item[+].linkId = "fam-erkrankung"
+* item[=].item[=].text = "Erkrankung"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.condition.code"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#254837009 "Mammakarzinom"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#363443007 "Ovarialkarzinom"
 
 // Erkrankungsalter
-* item[=].item[=].item[+].linkId = "erkrankungsalter"
-* item[=].item[=].item[=].text = "Erkrankungsalter (Jahre)"
-* item[=].item[=].item[=].type = #integer
-* item[=].item[=].item[=].required = false
+* item[=].item[+].linkId = "fam-alter"
+* item[=].item[=].text = "Erkrankungsalter (Jahre)"
+* item[=].item[=].type = #integer
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.condition.onsetAge.value"
+
+// Anmerkungen
+* item[=].item[+].linkId = "fam-note"
+* item[=].item[=].text = "Anmerkungen"
+* item[=].item[=].type = #text
+* item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese#FamilyMemberHistory.note.text"

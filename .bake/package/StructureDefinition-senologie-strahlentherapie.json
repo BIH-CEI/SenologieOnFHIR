@@ -1,0 +1,103 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-strahlentherapie",
+  "extension": [
+    {
+      "url": "https://www.medizininformatik-initiative.de/fhir/modul-meta/StructureDefinition/mii-ex-meta-license-codeable",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/spdx-license",
+            "code": "CC-BY-4.0",
+            "display": "Creative Commons Attribution 4.0 International"
+          }
+        ]
+      }
+    }
+  ],
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie",
+  "version": "0.8.0",
+  "name": "Senologie_Strahlentherapie",
+  "title": "BIH Senologie Strahlentherapie",
+  "status": "draft",
+  "description": "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahlentherapie ESP-PECS'. Erbt Gesamtdosis, Boost und Seitenlokalisation von MII Onko Bestrahlung.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Procedure",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-strahlentherapie-bestrahlung-strahlentherapie",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Procedure.extension:Intention",
+        "path": "Procedure.extension",
+        "sliceName": "Intention",
+        "short": "Behandlungsintention",
+        "comment": "Aus dotbase: 'Zeitpunkt' (adjuvant, neoadjuvant, palliativ)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Procedure.extension:sessionCount",
+        "path": "Procedure.extension",
+        "sliceName": "sessionCount",
+        "short": "Anzahl der Bestrahlungssitzungen",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-session-count"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Procedure.partOf",
+        "path": "Procedure.partOf",
+        "short": "Zugehörige Strahlentherapie-Session"
+      },
+      {
+        "id": "Procedure.status",
+        "path": "Procedure.status",
+        "short": "Durchgeführt",
+        "fixedCode": "completed"
+      },
+      {
+        "id": "Procedure.code.coding",
+        "path": "Procedure.code.coding",
+        "short": "Strahlentherapie-Typ"
+      },
+      {
+        "id": "Procedure.code.text",
+        "path": "Procedure.code.text",
+        "short": "Bestrahlung"
+      },
+      {
+        "id": "Procedure.reasonReference",
+        "path": "Procedure.reasonReference",
+        "short": "Bezogene Diagnose"
+      },
+      {
+        "id": "Procedure.bodySite",
+        "path": "Procedure.bodySite",
+        "short": "Bestrahlungsregion"
+      },
+      {
+        "id": "Procedure.note",
+        "path": "Procedure.note",
+        "short": "Detaillierte Beschreibung"
+      }
+    ]
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-klinische-untersuchung",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung",
+  "version": "0.8.0",
+  "name": "Senologie_Klinische_Untersuchung",
+  "title": "BIH Senologie Klinische Untersuchung",
+  "status": "draft",
+  "description": "Observation für klinische Brustuntersuchung (Mammabefund pro Seite) aus dotbase Questionnaire 'Klinische Untersuchung'",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.status",
+        "path": "Observation.status",
+        "fixedCode": "final",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "short": "Klinische Brustuntersuchung",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "32422-8",
+              "system": "http://loinc.org",
+              "display": "Physical findings of Breast"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.subject",
+        "path": "Observation.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.effective[x]",
+        "path": "Observation.effective[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.effective[x]:effectiveDateTime",
+        "path": "Observation.effective[x]",
+        "sliceName": "effectiveDateTime",
+        "short": "Datum der Untersuchung",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.bodySite",
+        "path": "Observation.bodySite",
+        "short": "Untersuchte Seite (links/rechts)",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.bodySite.coding",
+        "path": "Observation.bodySite.coding",
+        "binding": {
+          "strength": "required",
+          "valueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite"
+        }
+      },
+      {
+        "id": "Observation.component",
+        "path": "Observation.component",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:palpationsbefund",
+        "path": "Observation.component",
+        "sliceName": "palpationsbefund",
+        "short": "Palpationsbefund",
+        "comment": "Aus dotbase: Tastbefund der Brust (Verhärtung, Knoten, etc.)",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:palpationsbefund.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "118242002",
+              "system": "http://snomed.info/sct",
+              "display": "Finding by palpation"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:palpationsbefund.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:hautveraenderungen",
+        "path": "Observation.component",
+        "sliceName": "hautveraenderungen",
+        "short": "Hautveränderungen",
+        "comment": "Aus dotbase: Hauteinziehung, Rötung, Orangenhaut etc.",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:hautveraenderungen.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "115951000119105",
+              "system": "http://snomed.info/sct",
+              "display": "Breast symptom of change in skin"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:hautveraenderungen.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:mamillenbefund",
+        "path": "Observation.component",
+        "sliceName": "mamillenbefund",
+        "short": "Mamillenbefund",
+        "comment": "Aus dotbase: Mamillensekretion, Retraktion etc.",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:mamillenbefund.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "248819006",
+              "system": "http://snomed.info/sct",
+              "display": "Nipple finding"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:mamillenbefund.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:lymphknotenstatus",
+        "path": "Observation.component",
+        "sliceName": "lymphknotenstatus",
+        "short": "Klinischer Lymphknotenstatus",
+        "comment": "Aus dotbase: Tastbare axilläre Lymphknoten",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:lymphknotenstatus.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "301782006",
+              "system": "http://snomed.info/sct",
+              "display": "Finding of lymph node of axillary region"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:lymphknotenstatus.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

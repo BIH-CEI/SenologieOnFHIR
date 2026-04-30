@@ -105,3 +105,49 @@ group MapStrahlentherapie(source src : Procedure, target tgt : BackboneElement, 
     } "MapRTZielCoding";
   } "MapRTZiel";
 }
+
+// ============================================================================
+// Endokrine Therapie: Procedure (therapieart=HO) -> EndokrineTherapie-Block
+//
+// Endokrine Therapien (Tamoxifen, Aromatasehemmer, GnRH, Fulvestrant,
+// CDK4/6-Inhibitoren) werden als Systemtherapie-Procedures mit therapieart=HO
+// modelliert. Die Substanzklasse wird ueber ATC-Codes abgeleitet:
+//   1=Tamoxifen (L02BA01), 2=Aromatasehemmer (L02BG*),
+//   3=GnRH-Analogon (L02AE*), 4=Fulvestrant (L02BA03),
+//   5=CDK4/6-Inhibitor (L01EF*), 9=sonstige
+// ============================================================================
+
+group MapEndokrineTherapie(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+
+  src -> tgt.lnr = 1 "SetEndoLnr";
+
+  // Endo_Beginn / Endo_Ende aus performedPeriod
+  src.performed as perf where $this.is(Period) then {
+    perf.start as s -> tgt.beginn = s "SetEndoBeginn";
+    perf.end as e -> tgt.ende = e "SetEndoEnde";
+  } "MapEndoPeriod";
+
+  // Endo_Stellung aus MII Onko Intention-Extension
+  src.extension as ext where url.contains('mii-ex-onko-systemische-therapie-intention') then {
+    ext.value as val then {
+      val.coding as c then {
+        c.code as cd where $this = 'K' -> tgt.stellungZurOP = 'A' "SetEndoAdj";
+        c.code as cd where $this = 'P' -> tgt.stellungZurOP = 'P' "SetEndoPal";
+        c.code as cd where $this = 'N' -> tgt.stellungZurOP = 'N' "SetEndoNeo";
+      } "MapEndoStellCoding";
+    } "MapEndoStellVal";
+  } "MapEndoStellExt";
+
+  // Endo_Substanz aus ATC-Code (Procedure.code oder usedCode)
+  // Tamoxifen = L02BA01, Aromatasehemmer = L02BG*, GnRH = L02AE*,
+  // Fulvestrant = L02BA03, CDK4/6i = L01EF*
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/atc' then {
+      c.code as cd where $this = 'L02BA01' -> tgt.substanz = '1' "SetEndoTamox";
+      c.code as cd where $this = 'L02BA03' -> tgt.substanz = '4' "SetEndoFulv";
+      c.code as cd where $this.startsWith('L02BG') -> tgt.substanz = '2' "SetEndoAI";
+      c.code as cd where $this.startsWith('L02AE') -> tgt.substanz = '3' "SetEndoGnRH";
+      c.code as cd where $this.startsWith('L01EF') -> tgt.substanz = '5' "SetEndoCDK";
+    } "MapEndoSubstanzATCCoding";
+  } "MapEndoSubstanzATC";
+}

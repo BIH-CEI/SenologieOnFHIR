@@ -1,0 +1,56 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "KomplikationKohorte",
+  "url": "https://www.senologie.org/fhir/ViewDefinition/KomplikationKohorte",
+  "name": "KomplikationKohorte",
+  "title": "Operative Komplikation-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Operative Komplikationen und Verlaufsbeobachtungen (Observation) mit Clavien-Dindo Grad.",
+  "resource": "Observation",
+  "where": [
+    {
+      "path": "meta.profile.where($this='https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation').exists()"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "observationId",
+          "type": "id"
+        },
+        {
+          "path": "subject.getReferenceKey(Patient)",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "effective.ofType(dateTime)",
+          "name": "datum",
+          "type": "dateTime"
+        },
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().display",
+          "name": "komplikation",
+          "type": "string"
+        },
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().code",
+          "name": "komplikationCode",
+          "type": "code"
+        },
+        {
+          "path": "value.ofType(CodeableConcept).coding.first().display",
+          "name": "clavienDindo",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

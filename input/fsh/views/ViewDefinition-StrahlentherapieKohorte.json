@@ -1,0 +1,61 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "StrahlentherapieKohorte",
+  "url": "https://www.senologie.org/fhir/ViewDefinition/StrahlentherapieKohorte",
+  "name": "StrahlentherapieKohorte",
+  "title": "Strahlentherapie-Kohorte",
+  "status": "draft",
+  "description": "SQL-on-FHIR ViewDefinition: Strahlentherapie-Prozeduren mit Intention, Zeitraum und Zielvolumen.",
+  "resource": "Procedure",
+  "where": [
+    {
+      "path": "meta.profile.where($this='https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie').exists()"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "path": "getResourceKey()",
+          "name": "procedureId",
+          "type": "id"
+        },
+        {
+          "path": "subject.getReferenceKey(Patient)",
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "path": "code.coding.where(system='http://snomed.info/sct').first().display",
+          "name": "art",
+          "type": "string"
+        },
+        {
+          "path": "performed.ofType(Period).start",
+          "name": "beginn",
+          "type": "dateTime"
+        },
+        {
+          "path": "performed.ofType(Period).end",
+          "name": "ende",
+          "type": "dateTime"
+        },
+        {
+          "path": "extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention').value.coding.first().display",
+          "name": "intention",
+          "type": "string"
+        },
+        {
+          "path": "bodySite.first().coding.first().display",
+          "name": "zielvolumen",
+          "type": "string"
+        },
+        {
+          "path": "status",
+          "name": "status",
+          "type": "code"
+        }
+      ]
+    }
+  ]
+}

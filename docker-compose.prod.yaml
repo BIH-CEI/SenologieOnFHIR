@@ -1,0 +1,76 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      aidbox:
+        condition: service_healthy
+
+  aidbox:
+    image: healthsamurai/aidboxone:edge
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      aidbox-db:
+        condition: service_healthy
+    expose:
+      - "8888"
+    environment:
+      AIDBOX_LICENSE: ${AIDBOX_LICENSE}
+      AIDBOX_FHIR_VERSION: 4.0.1
+      AIDBOX_PORT: 8888
+      AIDBOX_BASE_URL: ${AIDBOX_BASE_URL}
+      PGHOST: aidbox-db
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: ${PGPASSWORD}
+      PGDATABASE: aidbox
+      AIDBOX_ADMIN_ID: ${AIDBOX_ADMIN_ID}
+      AIDBOX_ADMIN_PASSWORD: ${AIDBOX_ADMIN_PASSWORD}
+      AIDBOX_CLIENT_ID: ${AIDBOX_CLIENT_ID}
+      AIDBOX_CLIENT_SECRET: ${AIDBOX_CLIENT_SECRET}
+      AIDBOX_FHIR_SCHEMA_VALIDATION: "true"
+      AIDBOX_FHIR_PACKAGES: "hl7.fhir.r4.core#4.0.1"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  aidbox-db:
+    image: healthsamurai/aidboxdb:16.1
+    pull_policy: always
+    restart: unless-stopped
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: aidbox
+    volumes:
+      - aidbox-pg-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+volumes:
+  aidbox-pg-data:
+  caddy-data:
+  caddy-config:

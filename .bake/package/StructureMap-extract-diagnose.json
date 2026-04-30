@@ -1,0 +1,327 @@
+{
+  "resourceType": "StructureMap",
+  "id": "extract-diagnose",
+  "url": "https://www.senologie.org/fhir/StructureMap/extract-diagnose",
+  "name": "ExtractSenologieDiagnose",
+  "title": "Extract Senologie Diagnose from QuestionnaireResponse",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+      "mode": "source",
+      "alias": "QR"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+      "mode": "target",
+      "alias": "Bundle"
+    },
+    {
+      "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne",
+      "mode": "target",
+      "alias": "Condition"
+    }
+  ],
+  "group": [
+    {
+      "name": "QuestionnaireResponseToBundle",
+      "typeMode": "none",
+      "input": [
+        {
+          "name": "src",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
+        },
+        {
+          "name": "tgt",
+          "type": "Bundle",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "bundleType",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "contextType": "variable",
+              "element": "type",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "transaction"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "diagnoseGroup",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'diagnose'"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "contextType": "variable",
+              "element": "entry",
+              "variable": "entry"
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "resource",
+              "variable": "condition",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Condition"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "setRequest",
+              "source": [
+                {
+                  "context": "grp"
+                }
+              ],
+              "target": [
+                {
+                  "context": "entry",
+                  "contextType": "variable",
+                  "element": "request",
+                  "variable": "req"
+                },
+                {
+                  "context": "req",
+                  "contextType": "variable",
+                  "element": "method",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "POST"
+                    }
+                  ]
+                },
+                {
+                  "context": "req",
+                  "contextType": "variable",
+                  "element": "url",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "Condition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "snomedCode",
+              "source": [
+                {
+                  "context": "grp",
+                  "element": "item",
+                  "variable": "codeItem",
+                  "condition": "linkId = 'diagnose.code'"
+                }
+              ],
+              "target": [
+                {
+                  "context": "condition",
+                  "contextType": "variable",
+                  "element": "code",
+                  "variable": "cc"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "copyCoding",
+                  "source": [
+                    {
+                      "context": "codeItem",
+                      "element": "answer",
+                      "variable": "ans"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "cc",
+                      "contextType": "variable",
+                      "element": "coding",
+                      "variable": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "ans.valueCoding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "laterality",
+              "source": [
+                {
+                  "context": "grp",
+                  "element": "item",
+                  "variable": "sideItem",
+                  "condition": "linkId = 'diagnose.seite'"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "copyBodySite",
+                  "source": [
+                    {
+                      "context": "sideItem",
+                      "element": "answer",
+                      "variable": "ans"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "condition",
+                      "contextType": "variable",
+                      "element": "bodySite",
+                      "variable": "bs"
+                    },
+                    {
+                      "context": "bs",
+                      "contextType": "variable",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "ans.valueCoding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "clinicalStatus",
+              "source": [
+                {
+                  "context": "grp"
+                }
+              ],
+              "target": [
+                {
+                  "context": "condition",
+                  "contextType": "variable",
+                  "element": "clinicalStatus",
+                  "variable": "cs"
+                },
+                {
+                  "context": "cs",
+                  "contextType": "variable",
+                  "element": "coding",
+                  "variable": "csc"
+                },
+                {
+                  "context": "csc",
+                  "contextType": "variable",
+                  "element": "system",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+                    }
+                  ]
+                },
+                {
+                  "context": "csc",
+                  "contextType": "variable",
+                  "element": "code",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "active"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "recordedDate",
+              "source": [
+                {
+                  "context": "grp",
+                  "element": "item",
+                  "variable": "dateItem",
+                  "condition": "linkId = 'diagnose.datum'"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "copyDate",
+                  "source": [
+                    {
+                      "context": "dateItem",
+                      "element": "answer",
+                      "variable": "ans"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "condition",
+                      "contextType": "variable",
+                      "element": "recordedDate",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "ans.valueDate"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "subject",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "subject",
+                  "variable": "subj"
+                }
+              ],
+              "target": [
+                {
+                  "context": "condition",
+                  "contextType": "variable",
+                  "element": "subject",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueId": "subj"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

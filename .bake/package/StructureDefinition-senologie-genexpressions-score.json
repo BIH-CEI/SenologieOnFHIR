@@ -1,0 +1,228 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-genexpressions-score",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressions-score",
+  "version": "0.8.0",
+  "name": "Senologie_Genexpressions_Score",
+  "title": "BIH PR Seno Genexpressions-Score",
+  "status": "draft",
+  "description": "Observation für den numerischen Score-Wert eines Genexpressionstests (Oncotype DX Recurrence Score, MammaPrint Index, Prosigna ROR Score, EndoPredict EPclin Score)",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.status",
+        "path": "Observation.status",
+        "short": "Abgeschlossener Befund",
+        "fixedCode": "final",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.category",
+        "path": "Observation.category",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.category:laboratory",
+        "path": "Observation.category",
+        "sliceName": "laboratory",
+        "short": "Laboruntersuchung",
+        "min": 1,
+        "max": "1",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "laboratory",
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "short": "Art des Genexpressionstests",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code.coding",
+        "path": "Observation.code.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Observation.code.coding:genexpressionstest",
+        "path": "Observation.code.coding",
+        "sliceName": "genexpressionstest",
+        "short": "Genexpressionstest-Typ",
+        "min": 1,
+        "max": "1",
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-genexpressionstest"
+        }
+      },
+      {
+        "id": "Observation.code.coding:loinc",
+        "path": "Observation.code.coding",
+        "sliceName": "loinc",
+        "short": "LOINC Code",
+        "comment": "Prosigna ROR Score: LOINC 76544-6. Für andere Tests ggf. nicht verfügbar.",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code.coding:loinc.system",
+        "path": "Observation.code.coding.system",
+        "fixedUri": "http://loinc.org"
+      },
+      {
+        "id": "Observation.subject",
+        "path": "Observation.subject",
+        "short": "Patientin",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.effective[x]",
+        "path": "Observation.effective[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.effective[x]:effectiveDateTime",
+        "path": "Observation.effective[x]",
+        "sliceName": "effectiveDateTime",
+        "short": "Datum des Testergebnisses",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.performer",
+        "path": "Observation.performer",
+        "short": "Durchführendes Labor",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation.value[x]:valueQuantity",
+        "path": "Observation.value[x]",
+        "sliceName": "valueQuantity",
+        "short": "Numerischer Score-Wert",
+        "comment": "Oncotype DX: 0–100 (Recurrence Score). MammaPrint: -1.0 bis +1.0 (70-Gene Index). Prosigna: 0–100 (ROR Score). EndoPredict: kontinuierlich (EPclin Score).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]:valueQuantity.value",
+        "path": "Observation.value[x].value",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]:valueQuantity.system",
+        "path": "Observation.value[x].system",
+        "fixedUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.value[x]:valueQuantity.code",
+        "path": "Observation.value[x].code",
+        "short": "Einheitenloser Score",
+        "fixedCode": "1"
+      },
+      {
+        "id": "Observation.note",
+        "path": "Observation.note",
+        "short": "Anmerkungen zum Testergebnis"
+      },
+      {
+        "id": "Observation.method",
+        "path": "Observation.method",
+        "short": "Testmethode",
+        "comment": "Genexpressions-Analyse",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.method.text",
+        "path": "Observation.method.text",
+        "short": "Freitext zur Methode"
+      },
+      {
+        "id": "Observation.specimen",
+        "path": "Observation.specimen",
+        "short": "Tumorgewebe-Probe"
+      }
+    ]
+  }
+}

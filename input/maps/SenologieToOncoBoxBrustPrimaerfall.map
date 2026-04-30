@@ -74,6 +74,13 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
     entry.resource as procedure -> tgt.systemtherapie as syst then MapSystemtherapie(procedure, syst, bundle) "CallMapSystemtherapie";
   } "EntrySystemtherapie";
 
+  // --- Endokrine Therapie (Systemtherapie mit therapieart=HO) ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
+    entry.resource as procedure where code.coding.exists(system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ' and code = 'HO') then {
+      procedure -> tgt.endokrineTherapie as endo then MapEndokrineTherapie(procedure, endo, bundle) "CallMapEndoTherapie";
+    } "CheckHO";
+  } "EntryEndoTherapie";
+
   // --- Strahlentherapie ---
   bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
     entry.resource as procedure -> tgt.strahlentherapie as rt then MapStrahlentherapie(procedure, rt, bundle) "CallMapStrahlentherapie";
@@ -83,6 +90,11 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
   bundle.entry as entry where resource.is(CarePlan) and resource.meta.profile.exists($this.contains('senologie-tumorboard')) then {
     entry.resource as cp -> tgt.tumorkonferenz as tk then MapTumorkonferenz(cp, tk) "CallMapTK";
   } "EntryTK";
+
+  // --- Psychoonkologie aus Procedure (senologie-psychoonkologie) ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-psychoonkologie')) then {
+    entry.resource as proc -> tgt.psychoonkologie as psych then MapPsychoonkologie(proc, psych) "CallMapPsych";
+  } "EntryPsychoonko";
 
   // --- Studienteilnahme aus ResearchSubject ---
   bundle.entry as entry where resource.is(ResearchSubject) then {
@@ -179,6 +191,25 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
       c.code as cd where $this = '51440002' -> tgt.seitenlokalisation = 'B' "SetDiagSeiteB";
     } "MapDiagSeiteSCT";
   } "MapDiagSeite";
+
+  // Histologische Sicherung praeoperativ (OncoBox 2.0)
+  // Diagnose_Histo_Praeop: 0=nein, 1=Stanzbiopsie, 2=Vakuumbiopsie, 3=FNA, 4=offene Biopsie, 9=sonstige
+  // Abgeleitet aus Specimen.type (SNOMED) praeo-OP
+  src -> tgt.histologischeSicherungPraeop = '0' "SetHistPraeopDefault";
+  bundle.entry as entry where resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat')) then {
+    entry.resource as specimen then {
+      specimen.type as t then {
+        // Stanzbiopsie (core needle biopsy)
+        t.coding as c where code = '122737001' -> tgt.histologischeSicherungPraeop = '1' "SetHistPraeopStanz";
+        // Vakuumbiopsie (vacuum-assisted biopsy)
+        t.coding as c where code = '399014008' -> tgt.histologischeSicherungPraeop = '2' "SetHistPraeopVakuum";
+        // FNA (fine needle aspiration)
+        t.coding as c where code = '119342007' -> tgt.histologischeSicherungPraeop = '3' "SetHistPraeopFNA";
+        // Offene Biopsie / Exzisionsbiopsie
+        t.coding as c where code = '119380005' -> tgt.histologischeSicherungPraeop = '4' "SetHistPraeopOffen";
+      } "MapHistPraeopType";
+    } "MapHistPraeopSpec";
+  } "EntryHistPraeop";
 
   // Bildgebung (Senologie_Bildgebung_Observation / _Befund)
   bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung')) then {
@@ -402,6 +433,23 @@ group MapTumorkonferenz(source src : CarePlan, target tgt : BackboneElement) {
       c.code as cd where $this = 'rezidiv' -> tgt.typ = '3' "SetTKTypRez";
     } "MapTKTypCoding";
   } "MapTKTyp";
+}
+
+// ============================================================================
+// Psychoonkologie -> Psychoonkologie-Block (KB-9)
+//
+// Procedure.status = completed -> erfolgt = '1', Procedure.performedDateTime -> datum
+// Procedure.status = not-done  -> erfolgt = '0'
+// ============================================================================
+
+group MapPsychoonkologie(source src : Procedure, target tgt : BackboneElement) {
+
+  // Psych_Erfolgt: completed=ja, not-done=nein
+  src.status as s where $this = 'completed' -> tgt.erfolgt = '1' "SetPsychJa";
+  src.status as s where $this = 'not-done' -> tgt.erfolgt = '0' "SetPsychNein";
+
+  // Psych_Datum aus performedDateTime
+  src.performed as perf where $this.is(dateTime) -> tgt.datum = perf "SetPsychDatum";
 }
 
 // ============================================================================
