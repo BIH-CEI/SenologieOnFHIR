@@ -73,6 +73,13 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
     entry.resource as procedure -> tgt.systemtherapie as syst then MapSystemtherapie(procedure, syst, bundle) "CallMapSystemtherapie";
   } "EntrySystemtherapie";
 
+  // --- Endokrine Therapie (Systemtherapie mit therapieart=HO) ---
+  bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
+    entry.resource as procedure where code.coding.exists(system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ' and code = 'HO') then {
+      procedure -> tgt.endokrineTherapie as endo then MapEndokrineTherapie(procedure, endo, bundle) "CallMapEndoTherapie";
+    } "CheckHO";
+  } "EntryEndoTherapie";
+
   // --- Strahlentherapie ---
   bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
     entry.resource as procedure -> tgt.strahlentherapie as rt then MapStrahlentherapie(procedure, rt, bundle) "CallMapStrahlentherapie";
