@@ -3,7 +3,7 @@
   "id": "senologie-verlauf",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf",
   "title": "Fragebogen: Verlaufsdokumentation / Nachsorge",
-  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp).",
+  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel.",
   "subjectType": [
     "Patient"
   ],
@@ -78,13 +78,6 @@
       ],
       "item": [
         {
-          "code": [
-            {
-              "code": "365275006",
-              "system": "http://snomed.info/sct",
-              "display": "Finding of general well-being"
-            }
-          ],
           "answerOption": [
             {
               "valueString": "Gut"
@@ -99,17 +92,9 @@
           "linkId": "klinisch-allgemeinzustand",
           "text": "Allgemeinzustand",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "290069002",
-              "system": "http://snomed.info/sct",
-              "display": "Finding of breast"
-            }
-          ],
           "answerOption": [
             {
               "valueString": "Unauffaellig"
@@ -121,8 +106,7 @@
           "linkId": "klinisch-lokalbefund",
           "text": "Lokalbefund Brust",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "enableWhen": [
@@ -135,8 +119,7 @@
           "linkId": "klinisch-lokalbefund-beschreibung",
           "text": "Lokalbefund Beschreibung",
           "type": "text",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.note.text"
+          "required": false
         },
         {
           "code": [
@@ -163,36 +146,19 @@
           "linkId": "klinisch-lymphoedem",
           "text": "Lymphoedem",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "301712009",
-              "system": "http://snomed.info/sct",
-              "display": "Arm circumference"
-            }
-          ],
           "linkId": "klinisch-armumfangsdifferenz",
           "text": "Armumfangsdifferenz (cm)",
           "type": "decimal",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "22253000",
-              "system": "http://snomed.info/sct",
-              "display": "Pain"
-            }
-          ],
           "linkId": "klinisch-schmerzen",
           "text": "Schmerzen",
           "type": "boolean",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         }
       ],
       "linkId": "klinischer-status",
@@ -205,7 +171,7 @@
         {
           "valueExpression": {
             "language": "application/x-fhir-query",
-            "expression": "Observation?_profile=https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+            "expression": "Observation"
           },
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
         }
@@ -248,31 +214,15 @@
           "linkId": "tumorstatus-gesamtbeurteilung",
           "text": "Gesamtbeurteilung Verlauf",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "363346000",
-              "system": "http://snomed.info/sct",
-              "display": "Malignant neoplastic disease: local recurrence"
-            }
-          ],
           "linkId": "tumorstatus-lokalrezidiv",
           "text": "Lokalrezidiv",
           "type": "boolean",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "432213005",
-              "system": "http://snomed.info/sct",
-              "display": "Date of recurrence"
-            }
-          ],
           "enableWhen": [
             {
               "question": "tumorstatus-lokalrezidiv",
@@ -283,31 +233,15 @@
           "linkId": "tumorstatus-rezidiv-datum",
           "text": "Datum Rezidiv",
           "type": "date",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "399409002",
-              "system": "http://snomed.info/sct",
-              "display": "Distant metastasis present"
-            }
-          ],
           "linkId": "tumorstatus-fernmetastasen",
           "text": "Fernmetastasen",
           "type": "boolean",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
-          "code": [
-            {
-              "code": "385421009",
-              "system": "http://snomed.info/sct",
-              "display": "Site of distant metastasis"
-            }
-          ],
           "enableWhen": [
             {
               "question": "tumorstatus-fernmetastasen",
@@ -336,8 +270,7 @@
           "text": "Metastasenlokalisation",
           "type": "choice",
           "required": false,
-          "repeats": true,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "repeats": true
         }
       ],
       "linkId": "tumorstatus",
