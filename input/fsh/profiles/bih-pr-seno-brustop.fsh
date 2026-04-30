@@ -54,6 +54,21 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * followUp[laborkontrolle] = $SCT#15220000 "Laboratory test (procedure)"
 * followUp[laborkontrolle].coding MS
 
+// Performer — Erst-/Zweitoperateur (DKG G08-G09)
+* performer MS
+* performer ^slicing.discriminator.type = #pattern
+* performer ^slicing.discriminator.path = "function"
+* performer ^slicing.rules = #open
+* performer contains erstoperateur 0..1 MS and zweitoperateur 0..1 MS
+* performer[erstoperateur].function = $SCT#304292004 "Surgeon (occupation)"
+* performer[erstoperateur].function ^short = "Erstoperateur (G08)"
+* performer[erstoperateur].actor only Reference(Practitioner or PractitionerRole)
+* performer[erstoperateur].actor MS
+* performer[zweitoperateur].function = $SCT#309388001 "Surgical assistant (occupation)"
+* performer[zweitoperateur].function ^short = "Zweitoperateur (G09)"
+* performer[zweitoperateur].actor only Reference(Practitioner or PractitionerRole)
+* performer[zweitoperateur].actor MS
+
 // usedCode — inherited slicing from MII Mamma Operation (pattern:$this)
 // Inherited: IntraoperativesImaging, PraeoperativeMarkierung
 * usedCode MS
