@@ -1,0 +1,465 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-erstanamnese",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese",
+  "version": "0.1.0",
+  "name": "QuestErstanamnese",
+  "title": "Fragebogen: Erstanamnese",
+  "status": "draft",
+  "experimental": true,
+  "subjectType": ["Patient"],
+  "contained": [
+    {
+      "resourceType": "Condition",
+      "id": "condition-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+        ]
+      },
+      "clinicalStatus": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            "code": "active",
+            "_code": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "iif(%resource.item.where(linkId='allgemeine-anamnese').item.where(linkId='diagnose-typ').answer.valueCoding.code = '255227004', 'relapse', 'active')"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "verificationStatus": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+            "code": "confirmed"
+          }
+        ]
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "'Patient/' + %patient.id"
+            }
+          ]
+        }
+      },
+      "recordedDate": "2024-01-01",
+      "_recordedDate": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='allgemeine-anamnese').item.where(linkId='anamnese-datum').answer.valueDate"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "Observation",
+      "id": "gynaek-observation-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
+        ]
+      },
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "89221-6",
+            "display": "Gynecology History and physical note"
+          }
+        ]
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "'Patient/' + %patient.id"
+            }
+          ]
+        }
+      },
+      "effectiveDateTime": "2024-01-01",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='allgemeine-anamnese').item.where(linkId='anamnese-datum').answer.valueDate"
+          }
+        ]
+      },
+      "component": [
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "42798-9",
+                "display": "Age at menarche"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 0,
+            "_value": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='gynaekologische-anamnese').item.where(linkId='menarche-alter').answer.valueInteger"
+                }
+              ]
+            },
+            "unit": "years",
+            "system": "http://unitsofmeasure.org",
+            "code": "a"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "42802-9",
+                "display": "Age at menopause"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "item.where(linkId='gynaekologische-anamnese').item.where(linkId='menopausenstatus').answer.valueCoding.code"
+                    }
+                  ]
+                },
+                "_system": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "item.where(linkId='gynaekologische-anamnese').item.where(linkId='menopausenstatus').answer.valueCoding.system"
+                    }
+                  ]
+                },
+                "_display": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "item.where(linkId='gynaekologische-anamnese').item.where(linkId='menopausenstatus').answer.valueCoding.display"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11996-6",
+                "display": "Number of pregnancies"
+              }
+            ]
+          },
+          "valueQuantity": {
+            "value": 0,
+            "_value": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='gynaekologische-anamnese').item.where(linkId='schwangerschaften').answer.valueInteger"
+                }
+              ]
+            },
+            "unit": "pregnancies",
+            "system": "http://unitsofmeasure.org",
+            "code": "1"
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "266717002",
+                "display": "Hormone replacement therapy"
+              }
+            ]
+          },
+          "valueBoolean": false,
+          "_valueBoolean": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='gynaekologische-anamnese').item.where(linkId='hrt').answer.valueBoolean"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+            "code": "patient"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#condition-template"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#gynaek-observation-template"
+      }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "allgemeine-anamnese",
+      "text": "Allgemeine Anamnese",
+      "type": "group",
+      "item": [
+        {
+          "linkId": "vorstellungsgrund",
+          "text": "Vorstellungsgrund",
+          "type": "choice",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "185387006",
+                "display": "New patient consultation (procedure)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "185389009",
+                "display": "Follow-up visit (procedure)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "281036007",
+                "display": "Second opinion (procedure)"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "diagnose-typ",
+          "text": "Diagnosetyp",
+          "type": "choice",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "63161005",
+                "display": "Principal diagnosis (contextual qualifier) (qualifier value)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "255227004",
+                "display": "Recurrent (qualifier value)"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "erstdiagnose-datum",
+          "text": "Datum der Erstdiagnose",
+          "type": "date",
+          "required": true,
+          "enableWhen": [
+            {
+              "question": "diagnose-typ",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "255227004"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "rezidivtyp",
+          "text": "Rezidivtyp",
+          "type": "choice",
+          "required": true,
+          "enableWhen": [
+            {
+              "question": "diagnose-typ",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "255227004"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "255470001",
+                "display": "Local recurrence of malignant tumor (disorder)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "277751004",
+                "display": "Regional recurrence of malignant tumor (disorder)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "260874000",
+                "display": "Distant recurrence of malignant tumor (disorder)"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "bezug-ersterkrankung",
+          "text": "Bezug zur Ersterkrankung",
+          "type": "reference",
+          "required": false,
+          "enableWhen": [
+            {
+              "question": "diagnose-typ",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "255227004"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=remission,inactive"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn",
+              "extension": [
+                {
+                  "url": "path",
+                  "valueString": "onset"
+                },
+                {
+                  "url": "label",
+                  "valueString": "Erstdiagnose-Datum"
+                }
+              ]
+            },
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn",
+              "extension": [
+                {
+                  "url": "path",
+                  "valueString": "code.text"
+                },
+                {
+                  "url": "label",
+                  "valueString": "Diagnose"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "anamnese-datum",
+          "text": "Datum der Anamnese",
+          "type": "date",
+          "required": true
+        }
+      ]
+    },
+    {
+      "linkId": "gynaekologische-anamnese",
+      "text": "Gynäkologische Anamnese",
+      "type": "group",
+      "item": [
+        {
+          "linkId": "menarche-alter",
+          "text": "Alter bei Menarche (Jahre)",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "linkId": "menopausenstatus",
+          "text": "Menopausenstatus",
+          "type": "choice",
+          "required": false,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "309606002",
+                "display": "Before menopause (finding)"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "307429007",
+                "display": "After menopause (finding)"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "schwangerschaften",
+          "text": "Anzahl Schwangerschaften (Gravida)",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "linkId": "hrt",
+          "text": "Hormonersatztherapie (HRT)",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
