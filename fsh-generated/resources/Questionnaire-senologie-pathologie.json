@@ -3,11 +3,100 @@
   "id": "senologie-pathologie",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-pathologie",
   "title": "Fragebogen: Pathologie Befund",
-  "description": "Fragebogen zur strukturierten Dokumentation des pathologischen Befundes (Praeparat, Histologie, Immunhistochemie/Rezeptorstatus, Gesamtbeurteilung). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Specimen, Observation, DiagnosticReport).",
+  "description": "Fragebogen zur strukturierten Dokumentation des pathologischen Befundes (Praeparat, Histologie, Immunhistochemie/Rezeptorstatus, Gesamtbeurteilung). Nutzt SDC Template-based Extraction mit contained Ressourcen-Templates (DiagnosticReport, Specimen, Observation).",
   "subjectType": [
     "Patient"
   ],
+  "contained": [
+    {
+      "resourceType": "DiagnosticReport",
+      "id": "patho-report-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "code": "60568-3",
+            "system": "http://loinc.org",
+            "display": "Pathology Synoptic report"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "Specimen",
+      "id": "patho-specimen-template",
+      "subject": {
+        "reference": "placeholder"
+      }
+    },
+    {
+      "resourceType": "Observation",
+      "id": "patho-histo-template",
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "code": "59847-4",
+            "system": "http://loinc.org",
+            "display": "Histology and Behavior ICD-O-3 Cancer"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "Observation",
+      "id": "patho-ihc-template",
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "code": "85331-7",
+            "system": "http://loinc.org",
+            "display": "Ki-67 [Presence] in Breast cancer specimen by Immune stain"
+          }
+        ]
+      }
+    }
+  ],
   "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#patho-report-template"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#patho-specimen-template"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#patho-histo-template"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#patho-ihc-template"
+      }
+    },
     {
       "extension": [
         {
@@ -23,26 +112,10 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-    },
-    {
-      "valueExpression": {
-        "language": "application/x-fhir-query",
-        "expression": "DiagnosticReport"
-      },
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
     }
   ],
   "item": [
     {
-      "extension": [
-        {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Specimen"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-        }
-      ],
       "item": [
         {
           "answerOption": [
@@ -88,13 +161,15 @@
           "linkId": "praeparat-art",
           "text": "Art des Praeparats",
           "type": "choice",
-          "required": true
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.type"
         },
         {
           "linkId": "praeparat-entnahmedatum",
           "text": "Entnahmedatum",
           "type": "date",
-          "required": true
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.collection.collected[x]"
         },
         {
           "answerOption": [
@@ -116,9 +191,17 @@
           "linkId": "praeparat-seite",
           "text": "Seite",
           "type": "choice",
-          "required": true
+          "required": true,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.collection.bodySite"
         },
         {
+          "code": [
+            {
+              "code": "246264006",
+              "system": "http://snomed.info/sct",
+              "display": "Site of lesion"
+            }
+          ],
           "answerOption": [
             {
               "valueCoding": {
@@ -175,15 +258,6 @@
       "required": true
     },
     {
-      "extension": [
-        {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-        }
-      ],
       "item": [
         {
           "answerOption": [
@@ -215,9 +289,17 @@
           "linkId": "histo-typ",
           "text": "Histologischer Typ",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "371469007",
+              "system": "http://snomed.info/sct",
+              "display": "Histologic grade"
+            }
+          ],
           "answerOption": [
             {
               "valueCoding": {
@@ -244,27 +326,59 @@
           "linkId": "histo-grading",
           "text": "Grading (Bloom-Richardson)",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "21889-1",
+              "system": "http://loinc.org",
+              "display": "Size Tumor"
+            }
+          ],
           "linkId": "histo-tumorgroesse",
           "text": "Tumorgroesse in mm",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "33728-7",
+              "system": "http://loinc.org",
+              "display": "Size.maximum dimension in Tumor"
+            }
+          ],
           "linkId": "histo-invasive-groesse",
           "text": "Invasive Tumorgroesse in mm",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "109889007",
+              "system": "http://snomed.info/sct",
+              "display": "Intraductal carcinoma, noninfiltrating"
+            }
+          ],
           "linkId": "histo-dcis-anteil",
           "text": "DCIS-Anteil",
           "type": "string",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "395536008",
+              "system": "http://snomed.info/sct",
+              "display": "Surgical margin finding"
+            }
+          ],
           "answerOption": [
             {
               "valueCoding": {
@@ -291,19 +405,36 @@
           "linkId": "histo-resektionsrand",
           "text": "Resektionsrand",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "92832-5",
+              "system": "http://loinc.org",
+              "display": "Sentinel lymph nodes examined [#]"
+            }
+          ],
           "linkId": "histo-sentinel-anzahl",
           "text": "Sentinel-LK Anzahl",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "92833-3",
+              "system": "http://loinc.org",
+              "display": "Sentinel lymph nodes with metastasis [#]"
+            }
+          ],
           "linkId": "histo-sentinel-befallen",
           "text": "Sentinel-LK befallen",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         }
       ],
       "linkId": "histologie",
@@ -312,15 +443,6 @@
       "required": false
     },
     {
-      "extension": [
-        {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-        }
-      ],
       "item": [
         {
           "code": [
@@ -333,13 +455,22 @@
           "linkId": "ihc-er-prozent",
           "text": "ER Prozent positiv",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "85325-9",
+              "system": "http://loinc.org",
+              "display": "Estrogen receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
+            }
+          ],
           "linkId": "ihc-er-irs",
           "text": "ER IRS Score (0-12)",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
           "code": [
@@ -352,13 +483,22 @@
           "linkId": "ihc-pr-prozent",
           "text": "PR Prozent positiv",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
+          "code": [
+            {
+              "code": "85327-5",
+              "system": "http://loinc.org",
+              "display": "Progesterone receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
+            }
+          ],
           "linkId": "ihc-pr-irs",
           "text": "PR IRS Score (0-12)",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
           "code": [
@@ -385,7 +525,8 @@
           "linkId": "ihc-her2-score",
           "text": "HER2 IHC Score",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
           "code": [
@@ -416,7 +557,8 @@
           "linkId": "ihc-her2-fish",
           "text": "HER2 ISH/FISH",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         },
         {
           "code": [
@@ -429,7 +571,8 @@
           "linkId": "ihc-ki67",
           "text": "Ki-67 Index (%)",
           "type": "integer",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
         }
       ],
       "linkId": "ihc",
@@ -443,13 +586,15 @@
           "linkId": "beurteilung-ptnm",
           "text": "pTNM Staging",
           "type": "string",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.conclusion"
         },
         {
           "linkId": "beurteilung-freitext",
           "text": "Gesamtbeurteilung (Freitext)",
           "type": "text",
-          "required": false
+          "required": false,
+          "definition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.presentedForm.data"
         }
       ],
       "linkId": "beurteilung",
