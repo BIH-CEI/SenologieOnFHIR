@@ -25,6 +25,13 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 * code.coding[sct] ^short = "SNOMED CT Diagnose"
 * code.coding[sct] from https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sct (required)
 
+// ICD-11 slice (Dual-Coding, Zukunftsvorsorge)
+* code.coding contains icd11 0..1 MS
+* code.coding[icd11] ^patternCoding.system = $ICD11
+* code.coding[icd11] ^short = "ICD-11 Code (optional, Dual-Coding)"
+* code.coding[icd11].system 1..1
+* code.coding[icd11].code 1..1
+
 // Senologie-specific slice for non-SNOMED codes
 * code.coding contains senologie 0..1 MS
 * code.coding[senologie] ^short = "Senologie-spezifischer Code"

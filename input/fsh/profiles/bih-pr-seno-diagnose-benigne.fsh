@@ -36,6 +36,13 @@ Description: "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankun
 * code.coding[sct].system 1..1
 * code.coding[sct].code 1..1
 
+// ICD-11 slice (Dual-Coding, Zukunftsvorsorge)
+* code.coding contains icd11 0..1 MS
+* code.coding[icd11] ^patternCoding.system = $ICD11
+* code.coding[icd11] ^short = "ICD-11 Code (optional, Dual-Coding)"
+* code.coding[icd11].system 1..1
+* code.coding[icd11].code 1..1
+
 // Senologie local codes (optional)
 * code.coding contains senologie 0..1 MS
 * code.coding[senologie] ^patternCoding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal"
