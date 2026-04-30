@@ -1,0 +1,116 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-ki67-proliferationsindex",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex",
+  "version": "0.1.0",
+  "name": "Senologie_Ki67_Proliferationsindex",
+  "title": "BIH Senologie Ki-67 Proliferationsindex",
+  "status": "draft",
+  "description": "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchung. Kein MII-Onko-Profil vorhanden — senologiespezifisch, orientiert am MII ER/PR-Muster (LOINC-Code + valueQuantity %).",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.status",
+        "path": "Observation.status",
+        "short": "Abgeschlossene Messung",
+        "fixedCode": "final",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code.coding",
+        "path": "Observation.code.coding",
+        "short": "Ki-67-Proliferationsindex",
+        "patternCoding": {
+          "code": "29593-1",
+          "system": "http://loinc.org",
+          "display": "Ki-67 [#/100 cells] in Tissue by Immune stain"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.subject",
+        "path": "Observation.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.effective[x]",
+        "path": "Observation.effective[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.effective[x]:effectiveDateTime",
+        "path": "Observation.effective[x]",
+        "sliceName": "effectiveDateTime",
+        "short": "Datum der immunhistochemischen Untersuchung",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "short": "Ki-67 Index (%)",
+        "comment": "Anteil Ki-67-positiver Tumorzellen in Prozent",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x].unit",
+        "path": "Observation.value[x].unit",
+        "patternString": "%"
+      },
+      {
+        "id": "Observation.value[x].system",
+        "path": "Observation.value[x].system",
+        "patternUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.value[x].code",
+        "path": "Observation.value[x].code",
+        "patternCode": "%"
+      },
+      {
+        "id": "Observation.specimen",
+        "path": "Observation.specimen",
+        "short": "Untersuchtes Praeparat"
+      }
+    ]
+  }
+}

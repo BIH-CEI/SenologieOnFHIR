@@ -35,6 +35,7 @@
 [Senologie_FollowUp]: StructureDefinition-senologie-follow-up.html
 [Senologie_Geplante_Systemtherapie]: StructureDefinition-senologie-geplante-systemtherapie.html
 [Senologie_Gynaekologische_Anamnese]: StructureDefinition-senologie-gynaekologische-anamnese.html
+[Senologie_Ki67_Proliferationsindex]: StructureDefinition-senologie-ki67-proliferationsindex.html
 [Senologie_Klinische_Untersuchung]: StructureDefinition-senologie-klinische-untersuchung.html
 [Senologie_OP_Planung]: StructureDefinition-senologie-op-planung.html
 [Senologie_Operative_Komplikation]: StructureDefinition-senologie-operative-komplikation.html
