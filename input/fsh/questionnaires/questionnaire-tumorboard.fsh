@@ -5,14 +5,30 @@
 //    Empfehlung der interdisziplinären Tumorkonferenz"
 // Ziel: Senologie_Tumorboard_Empfehlung (CarePlan)
 // Extraction: SDC Template-based Extraction
-//   Template: input/resources/Questionnaire-senologie-tumorboard-template.json
-//   Contained CarePlan mit templateExtractValue FHIRPath-Ausdrücken
+//   Contained CarePlan (#careplan-template) mit templateExtractValue
+//   FHIRPath-Ausdrücken auf primitiven Feldern
+// ============================================================
+// Mapping-Übersicht (Item → CarePlan-Pfad via templateExtractValue):
+//   tumorboard-datum        → CarePlan.period.start
+//   tumorboard-titel        → CarePlan.title
+//   tumorboard-beschreibung → CarePlan.description
+//   empfehlung-op           → CarePlan.activity[op].detail.description
+//   empfehlung-strahlentherapie → CarePlan.activity[rt].detail.description
+//   empfehlung-endokrin     → CarePlan.activity[endo].detail.description
+//   empfehlung-chemotherapie → CarePlan.activity[chemo].detail.description
+//   empfehlung-zielgerichtet → CarePlan.activity[targeted].detail.description
+//   empfehlung-immuntherapie → CarePlan.activity[immuno].detail.description
+//   empfehlung-diagnostik   → CarePlan.activity[diag].detail.description
+//   empfehlung-studie       → CarePlan.activity[trial].detail.description
+//   empfehlung-genetik      → CarePlan.activity[genetics].detail.description
+//   empfehlung-nachsorge    → CarePlan.activity[followUp].detail.description
+//   empfehlung-sonstiges    → CarePlan.note[0].text
 // ============================================================
 
 Instance: senologie-tumorboard
 InstanceOf: Questionnaire
 Title: "Fragebogen: Tumorboard Empfehlung"
-Description: "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Template-based Extraction mit dem Senologie_Tumorboard_Empfehlung-Profil (CarePlan) als Ziel. Das Extraction-Template mit contained CarePlan und templateExtractValue-Annotationen liegt unter input/resources/Questionnaire-senologie-tumorboard-template.json."
+Description: "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Template-based Extraction mit contained CarePlan und templateExtractValue-Annotationen."
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard"
@@ -23,131 +39,201 @@ Usage: #definition
 * subjectType = #Patient
 * insert Version
 
-// ---------- SDC Template-based Extraction ----------
-// Die templateExtract-Extension referenziert einen contained CarePlan (#careplan-template).
-// FHIRPath-Ausdrücke auf den primitiven Feldern des Templates (via _element-Extensions)
-// können in FSH nicht ausgedrückt werden — das vollständige Template liegt als JSON-Datei vor.
+// ---------- Contained CarePlan (Extraction Template) ----------
+* contained = careplan-template
 
+// ---------- SDC Extensions ----------
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
 * extension[=].extension[+].url = "name"
 * extension[=].extension[=].valueCoding = http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext#patient
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
 
-// ---------- Items ----------
-// Mapping-Übersicht (Item → CarePlan-Pfad):
-//   tumorboard-datum       → CarePlan.period.start
-//   tumorboard-titel       → CarePlan.title
-//   tumorboard-beschreibung → CarePlan.description
-//   empfehlung-op          → CarePlan.activity[operativeTherapy].detail.description
-//   empfehlung-strahlentherapie → CarePlan.activity[radiotherapy].detail.description
-//   empfehlung-endokrin    → CarePlan.activity[endocrineTherapy].detail.description
-//   empfehlung-chemotherapie → CarePlan.activity[chemotherapy].detail.description
-//   empfehlung-zielgerichtet → CarePlan.activity[targetedTherapy].detail.description
-//   empfehlung-immuntherapie → CarePlan.activity[immunotherapy].detail.description
-//   empfehlung-diagnostik  → CarePlan.activity[furtherDiagnostics].detail.description
-//   empfehlung-studie      → CarePlan.activity[clinicalTrial].detail.description
-//   empfehlung-genetik     → CarePlan.activity[genetics].detail.description
-//   empfehlung-nachsorge   → CarePlan.activity[followUp].detail.description
-//   empfehlung-sonstiges   → CarePlan.note[0].text
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* extension[=].valueReference = Reference(careplan-template)
 
-// Datum des Tumorboards
+// ---------- Items ----------
+
 * item[+].linkId = "tumorboard-datum"
 * item[=].text = "Datum des Tumorboards"
 * item[=].type = #date
 * item[=].required = true
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.period.start"
 
-// Titel
 * item[+].linkId = "tumorboard-titel"
 * item[=].text = "Titel der Empfehlung"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.title"
 
-// Zusammenfassung / Beschreibung
 * item[+].linkId = "tumorboard-beschreibung"
 * item[=].text = "Zusammenfassung der Empfehlung"
 * item[=].type = #text
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.description"
 
-// ---------- Therapieempfehlungen ----------
-
-// Operative Therapie
 * item[+].linkId = "empfehlung-op"
 * item[=].text = "Operative Therapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Strahlentherapie
 * item[+].linkId = "empfehlung-strahlentherapie"
 * item[=].text = "Strahlentherapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Endokrine Therapie
 * item[+].linkId = "empfehlung-endokrin"
 * item[=].text = "Endokrine Therapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Chemotherapie
 * item[+].linkId = "empfehlung-chemotherapie"
 * item[=].text = "Chemotherapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Zielgerichtete Therapie
 * item[+].linkId = "empfehlung-zielgerichtet"
 * item[=].text = "Zielgerichtete Therapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Immuntherapie
 * item[+].linkId = "empfehlung-immuntherapie"
 * item[=].text = "Immuntherapie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Weitere Diagnostik
 * item[+].linkId = "empfehlung-diagnostik"
 * item[=].text = "Weitere Diagnostik empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Klinische Studie
 * item[+].linkId = "empfehlung-studie"
 * item[=].text = "Klinische Studie empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Genetische Untersuchung
 * item[+].linkId = "empfehlung-genetik"
 * item[=].text = "Genetische Untersuchung empfohlen"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Nachsorge
 * item[+].linkId = "empfehlung-nachsorge"
 * item[=].text = "Nachsorge-Empfehlung"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.activity.detail.description"
 
-// Sonstiges
 * item[+].linkId = "empfehlung-sonstiges"
 * item[=].text = "Sonstige Anmerkungen"
 * item[=].type = #text
 * item[=].required = false
 * item[=].repeats = true
-* item[=].definition = "http://hl7.org/fhir/StructureDefinition/CarePlan#CarePlan.note.text"
+
+
+// ============================================================
+// Contained CarePlan: Template für Template-based Extraction
+// ============================================================
+
+Instance: careplan-template
+InstanceOf: CarePlan
+Usage: #inline
+
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+* status = #active
+* intent = #plan
+
+* title = "Tumorboard Empfehlung"
+* title.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* title.extension.valueString = "item.where(linkId='tumorboard-titel').answer.valueString"
+
+* description = "Zusammenfassung"
+* description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* description.extension.valueString = "item.where(linkId='tumorboard-beschreibung').answer.valueString"
+
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "'Patient/' + %patient.id"
+
+* period.start = "2024-01-01"
+* period.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* period.start.extension.valueString = "item.where(linkId='tumorboard-datum').answer.valueDate"
+
+// --- Operative Therapie ---
+* activity[+].detail.kind = #ServiceRequest
+* activity[=].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
+* activity[=].detail.description = "Operative Therapie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-op').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Strahlentherapie ---
+* activity[+].detail.kind = #ServiceRequest
+* activity[=].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[=].detail.description = "Strahlentherapie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-strahlentherapie').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Endokrine Therapie ---
+* activity[+].detail.kind = #MedicationRequest
+* activity[=].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
+* activity[=].detail.description = "Endokrine Therapie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-endokrin').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Chemotherapie ---
+* activity[+].detail.kind = #MedicationRequest
+* activity[=].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
+* activity[=].detail.description = "Chemotherapie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-chemotherapie').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Zielgerichtete Therapie ---
+* activity[+].detail.kind = #MedicationRequest
+* activity[=].detail.code = $SCT#416608005 "Drug therapy"
+* activity[=].detail.description = "Zielgerichtete Therapie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-zielgerichtet').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Immuntherapie ---
+* activity[+].detail.kind = #MedicationRequest
+* activity[=].detail.code = $SCT#76334006 "Immunotherapy (procedure)"
+* activity[=].detail.description = "Immuntherapie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-immuntherapie').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Weitere Diagnostik ---
+* activity[+].detail.kind = #ServiceRequest
+* activity[=].detail.code = $SCT#165197003 "Diagnostic assessment (procedure)"
+* activity[=].detail.description = "Weitere Diagnostik"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-diagnostik').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Klinische Studie ---
+* activity[+].detail.kind = #ServiceRequest
+* activity[=].detail.code = $SCT#110465008 "Clinical trial (procedure)"
+* activity[=].detail.description = "Klinische Studie"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-studie').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Genetische Untersuchung ---
+* activity[+].detail.kind = #ServiceRequest
+* activity[=].detail.code = $SCT#405825005 "Molecular genetic test"
+* activity[=].detail.description = "Genetische Untersuchung"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-genetik').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Nachsorge ---
+* activity[+].detail.kind = #Appointment
+* activity[=].detail.code = $SCT#390906007 "Follow-up encounter (procedure)"
+* activity[=].detail.description = "Nachsorge"
+* activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.description.extension.valueString = "item.where(linkId='empfehlung-nachsorge').answer.valueString"
+* activity[=].detail.status = #not-started
+
+// --- Sonstiges ---
+* note.text = "Sonstige Anmerkungen"
+* note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* note.text.extension.valueString = "item.where(linkId='empfehlung-sonstiges').answer.valueString"
