@@ -219,7 +219,10 @@ Nicht alle OncoBox-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet w
 | OP-Datum, OPS, Seitenlokalisation | Senologie_Operation / _BrustOP | Vorhanden |
 | ICD-10-GM, Diagnosedatum | Senologie_Diagnose_Maligne / _Benigne | Vorhanden |
 | Histologie ICD-O-3, Grading | Senologie_Pathologie_Befund | Vorhanden |
-| cTNM / pTNM | Senologie_Pathologie_Befund / MII-Onko | Vorhanden |
+| cTNM / pTNM (T/N/M + Version + UICC) | MII-Onko TNM-Klassifikation | Vorhanden |
+| pTNM Detail (ySymbol, L/V/Pn) | MII-Onko TNM-Klassifikation Komponenten | Vorhanden |
+| pTNM Groesse DCIS | Pathologie Observation (LOINC 44648-0) | Vorhanden |
+| pTNM Multifokalitaet | Observation (LOINC 44638-1, SNOMED) | Vorhanden |
 | Rezeptorstatus ER/PR/HER2, Ki-67 | MII-Onko-Observations | Vorhanden |
 | Lymphknotenstatus (regionaer + Sentinel) | Senologie_Pathologie_Befund | Vorhanden |
 | Drahtmarkierung | Senologie_OP_Planung (Extension preOpMarkierung) | Vorhanden |

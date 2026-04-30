@@ -290,6 +290,103 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
     } "MapTGInv";
   } "EntryTGInv";
 
+  // cTNM Detail-Felder aus TNM-Klassifikation Observation (LOINC 21908-9)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
+    entry.resource as obs -> tgt.cTNM as ctnm then {
+      // cTNM_Version aus Observation.method
+      obs.method as method then {
+        method.coding as c then {
+          c.code as cd -> ctnm.tnmVersion = cd "SetCTNMVersion";
+        } "ExtractCTNMVersionCode";
+      } "MapCTNMVersion";
+      // cTNM_UICC aus Observation.value (Gesamtstadium)
+      obs.value as val then {
+        val.coding as c then {
+          c.code as cd -> ctnm.uiccStadium = cd "SetCUICC";
+        } "ExtractCUICC";
+      } "MapCUICC";
+    } "MapCTNMDetail";
+  } "EntryCTNMDetail";
+
+  // pTNM Detail-Felder aus TNM-Klassifikation Observation (LOINC 21902-2)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+    entry.resource as obs -> tgt.pTNM as ptnm then {
+      // pTNM_Version aus Observation.method
+      obs.method as method then {
+        method.coding as c then {
+          c.code as cd -> ptnm.tnmVersion = cd "SetPTNMVersion";
+        } "ExtractPTNMVersionCode";
+      } "MapPTNMVersion";
+      // pTNM_UICC aus Observation.value (Gesamtstadium)
+      obs.value as val then {
+        val.coding as c then {
+          c.code as cd -> ptnm.uiccStadium = cd "SetPUICC";
+        } "ExtractPUICC";
+      } "MapPUICC";
+      // pTNM_ySymbol aus Komponente (LOINC 59479-6)
+      obs.component as comp where code.coding.exists(code = '59479-6') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> ptnm.ySymbol = cd "SetYSymbol";
+          } "ExtractYCode";
+        } "MapYValue";
+      } "MapYSymbol";
+      // pTNM_L: Lymphgefaessinvasion (LOINC 33739-4)
+      obs.component as comp where code.coding.exists(code = '33739-4') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> ptnm.l = cd "SetLKat";
+          } "ExtractLCode";
+        } "MapLValue";
+      } "MapLKat";
+      // pTNM_V: Veneninvasion (LOINC 33740-2)
+      obs.component as comp where code.coding.exists(code = '33740-2') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> ptnm.v = cd "SetVKat";
+          } "ExtractVCode";
+        } "MapVValue";
+      } "MapVKat";
+      // pTNM_Pn: Perineurale Invasion (LOINC 92837-4)
+      obs.component as comp where code.coding.exists(code = '92837-4') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> ptnm.pn = cd "SetPnKat";
+          } "ExtractPnCode";
+        } "MapPnValue";
+      } "MapPnKat";
+    } "MapPTNMDetail";
+  } "EntryPTNMDetail";
+
+  // pTNM_Groesse_DCIS (LOINC 44648-0 from Pathologie Observation)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('pathologie')) then {
+    entry.resource as obs -> tgt.pTNM as ptnm then {
+      obs.value as val then {
+        val.value as v -> ptnm.tumorgroesseDCIS = truncate(v) "SetTGDCIS";
+      } "MapTGDCISVal";
+    } "MapTGDCIS";
+  } "EntryTGDCIS";
+
+  // pTNM_Multifokal (Observation LOINC 44638-1, SNOMED-kodiert)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '44638-1') then {
+    entry.resource as obs then {
+      obs.value as val then {
+        val.coding as c then {
+          // 56061002 = unifokal (nein), 399566009 = multifokal, 367651003 = multizentrisch
+          c.code as cd where $this = '56061002' -> tgt.pTNM as ptnm then {
+            cd -> ptnm.multifokalitaet = '0' "SetMFNein";
+          } "WrapMFNein";
+          c.code as cd where $this = '399566009' -> tgt.pTNM as ptnm then {
+            cd -> ptnm.multifokalitaet = '1' "SetMFMultifokal";
+          } "WrapMFMultifokal";
+          c.code as cd where $this = '367651003' -> tgt.pTNM as ptnm then {
+            cd -> ptnm.multifokalitaet = '2' "SetMFMultizentrisch";
+          } "WrapMFMultizentrisch";
+        } "MapMFCoding";
+      } "MapMFValue";
+    } "MapMFObs";
+  } "EntryMultifokal";
+
   // Histologie ICD-O-3 (Observation LOINC 59847-4)
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
     entry.resource as obs then {
