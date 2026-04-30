@@ -128,11 +128,28 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   // Komplikationen (Senologie_Operative_Komplikation)
   bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
     entry.resource as obs -> tgt.komplikationen as komp then {
+      // Komp_Kuerzel: aus component[komplikationsart].valueCodeableConcept
+      obs.component as comp where code.coding.exists(code = '116224001') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
+          } "MapKompKuerzelCoding";
+        } "MapKompKuerzelVal";
+      } "MapKompKuerzelComp";
+
+      // Komp_Clavien: aus Observation.valueCodeableConcept (Clavien-Dindo Grad)
       obs.value as val then {
-        val.coding as c then {
-          c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
-        } "MapKompKuerzel";
-      } "MapKompVal";
+        val.coding as c where system = 'http://snomed.info/sct' then {
+          c.code as cd -> komp.clavienDindo = cd "SetKompClavien";
+        } "MapKompClavienCoding";
+      } "MapKompClavien";
     } "MapKompObs";
   } "EntryKomp";
+
+  // Komplikationen ICD-10: aus Procedure.complication (compl_icd10 Slice)
+  src.complication as comp then {
+    comp.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' -> tgt.komplikationen as komp then {
+      c.code as cd -> komp.icdCode = cd "SetKompIcdCode";
+    } "MapKompIcdCoding";
+  } "MapKompIcd";
 }
