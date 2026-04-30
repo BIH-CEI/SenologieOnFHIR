@@ -46,6 +46,7 @@ Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Te
 | [VS Senologie Genexpressionstest](ValueSet-vs-senologie-genexpressionstest.html) | Lokal | 4 | Genexpressionstests (Oncotype DX, MammaPrint, Prosigna, EndoPredict) |
 | [VS Senologie Risikoklasse](ValueSet-vs-senologie-risikoklasse.html) | HL7 risk-probability | 3 | Risikoklassen (niedrig, mittel, hoch) |
 | [VS Senologie Screeningstatus](ValueSet-vs-senologie-screeningstatus.html) | SNOMED CT | 5 | Screening-Status für Studienteilnahme |
+| [VS Senologie Studienname](ValueSet-vs-senologie-studienname.html) | Lokal | 9 | Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02) |
 
 ### ConceptMaps
 

@@ -227,9 +227,11 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
     * erfolgt 1..1 code "Soz_Erfolgt" "Sozialdienstliche Anbindung erfolgt: 0=nein, 1=ja"
     * datum 0..1 date "Soz_Datum" "Datum des ersten Kontakts"
 
-  * studienteilnahme 0..1 BackboneElement "Studienteilnahme" "Teilnahme an klinischer Studie (KB-11)"
+  * studienteilnahme 0..* BackboneElement "Studienteilnahme" "Teilnahme an klinischer Studie (KB-11)"
     * teilgenommen 1..1 code "Stud_Teilgenommen" "Studienteilnahme: 0=nein, 1=ja"
     * studienKurzname 0..1 string "Stud_Name" "Kurzname der Studie"
+    * studiennameCode 0..1 code "Stud_Name_Code" "Studienname aus Auswahlliste (K02, OncoBox 2.0)"
+    * screening 0..1 code "Stud_Screening" "Screening zur Studienteilnahme durchgefuehrt (K03, OncoBox 2.0): 0=nein, 1=ja"
     * art 0..1 code "Stud_Art" "Art der Studie: 1=interventionell, 2=nicht-interventionell, 3=Beobachtung/Register, 9=sonstige"
 
   // --- Verlauf / Outcome ---
