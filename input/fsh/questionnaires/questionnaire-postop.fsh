@@ -7,14 +7,37 @@
 // Ziele:
 //   - Senologie_Operation (Procedure)
 //   - Senologie_Operative_Komplikation (Observation)
-//   - Senologie_Implantat (Device, optional)
-// Extraktion: SDC Definition-based Extraction pro Gruppe.
+// Extraktion: SDC Template-based Extraction mit contained
+//   Procedure- und Observation-Templates. Items verwenden
+//   definition-URLs auf die jeweiligen Senologie-Profile.
 // ============================================================
 
+// --- Contained template: Procedure (Senologie_Operation) ---
+Instance: postop-procedure-template
+InstanceOf: Procedure
+Usage: #inline
+
+* id = "postop-procedure-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+* status = #completed
+* subject.reference = "placeholder"
+
+// --- Contained template: Observation (Senologie_Operative_Komplikation) ---
+Instance: postop-komplikation-template
+InstanceOf: Observation
+Usage: #inline
+
+* id = "postop-komplikation-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"
+* status = #final
+* code.coding = $SCT#789279006 "Clavien-Dindo classification grade"
+* subject.reference = "placeholder"
+
+// --- Questionnaire ---
 Instance: senologie-postop
 InstanceOf: Questionnaire
 Title: "Fragebogen: Postoperative Dokumentation"
-Description: "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, Observation)."
+Description: "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation)."
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-postop"
@@ -24,6 +47,10 @@ Usage: #definition
 * experimental = true
 * subjectType = #Patient
 * insert Version
+
+// Contained templates
+* contained[+] = postop-procedure-template
+* contained[+] = postop-komplikation-template
 
 // Launch Context
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -39,15 +66,17 @@ Usage: #definition
 * item[=].text = "Operative Therapie"
 * item[=].type = #group
 * item[=].required = true
-* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-* item[=].extension[=].valueExpression.language = #application/x-fhir-query
-* item[=].extension[=].valueExpression.expression = "Procedure"
+
+// SDC templateExtract -> contained Procedure template
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].valueReference = Reference(postop-procedure-template)
 
 // Art der Operation (Kategorie)
 * item[=].item[+].linkId = "op-kategorie"
 * item[=].item[=].text = "Art der Operation"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.category"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
 
 // Seite
@@ -55,6 +84,7 @@ Usage: #definition
 * item[=].item[=].text = "Seite"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.bodySite"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
@@ -64,18 +94,21 @@ Usage: #definition
 * item[=].item[=].text = "OP-Datum"
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.performedDateTime"
 
 // OPS-Code (Freitext)
 * item[=].item[+].linkId = "op-code-text"
 * item[=].item[=].text = "Beschreibung der OP (Freitext, z.B. \"BET links, Sentinel-LK-Biopsie\")"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.text"
 
 // Intention
 * item[=].item[+].linkId = "op-intention"
 * item[=].item[=].text = "OP-Intention"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.extension:Intention.valueCodeableConcept"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#P "palliativ"
 * item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#D "diagnostisch"
@@ -88,61 +121,53 @@ Usage: #definition
 * item[=].item[=].text = "OP-Outcome (z.B. R-Status, Sentinel)"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.outcome.text"
 
-// ============================================================
-// Group 2: Postoperative Anordnungen / Follow-up
-// ============================================================
-* item[+].linkId = "followup"
-* item[=].text = "Postoperative Anordnungen"
-* item[=].type = #group
-* item[=].required = false
-
-// Drainage
+// --- Postoperative Anordnungen (als Procedure.note) ---
 * item[=].item[+].linkId = "followup-drainage"
 * item[=].item[=].text = "Drainage"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.note.text"
 
-// Verband
 * item[=].item[+].linkId = "followup-verband"
 * item[=].item[=].text = "Verband"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
-// Antibiotika
 * item[=].item[+].linkId = "followup-antibiotika"
 * item[=].item[=].text = "Antibiotikatherapie"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
-// Mobilisation
 * item[=].item[+].linkId = "followup-mobilisation"
 * item[=].item[=].text = "Mobilisation"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
-// Laborkontrolle
 * item[=].item[+].linkId = "followup-labor"
 * item[=].item[=].text = "Laborkontrolle"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // ============================================================
-// Group 3: Operative Komplikation (Observation, optional)
+// Group 2: Operative Komplikation (Observation, optional)
 // ============================================================
 * item[+].linkId = "komplikation"
 * item[=].text = "Operative Komplikation"
 * item[=].type = #group
 * item[=].required = false
-* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-* item[=].extension[=].valueExpression.language = #application/x-fhir-query
-* item[=].extension[=].valueExpression.expression = "Observation"
+
+// SDC templateExtract -> contained Observation template
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].valueReference = Reference(postop-komplikation-template)
 
 // Clavien-Dindo Grad
 * item[=].item[+].linkId = "clavien-dindo"
 * item[=].item[=].text = "Clavien-Dindo-Grad"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.valueCodeableConcept"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#1367519000 "Clavien-Dindo classification grade I"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#1367520006 "Clavien-Dindo classification grade II"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#1367521005 "Clavien-Dindo classification grade III"
@@ -154,15 +179,17 @@ Usage: #definition
 * item[=].item[=].text = "Datum der Komplikation"
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.effectiveDateTime"
 
 // Zeitpunkt (method)
 * item[=].item[+].linkId = "komplikation-zeitpunkt"
 * item[=].item[=].text = "Zeitpunkt"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.method"
 * item[=].item[=].answerOption[+].valueString = "Intraoperativ"
 * item[=].item[=].answerOption[+].valueString = "Postoperativ"
-* item[=].item[=].answerOption[+].valueString = "Stationär"
+* item[=].item[=].answerOption[+].valueString = "Stationaer"
 * item[=].item[=].answerOption[+].valueString = "Ambulant"
 
 // Art der Komplikation (Freitext)
@@ -170,9 +197,11 @@ Usage: #definition
 * item[=].item[=].text = "Art der Komplikation (Freitext)"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.component.valueCodeableConcept.text"
 
 // Konsequenz / Kommentar
 * item[=].item[+].linkId = "komplikation-kommentar"
 * item[=].item[=].text = "Konsequenz / Kommentar"
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.note.text"

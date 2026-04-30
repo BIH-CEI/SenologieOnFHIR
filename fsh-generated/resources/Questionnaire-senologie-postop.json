@@ -3,9 +3,46 @@
   "id": "senologie-postop",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-postop",
   "title": "Fragebogen: Postoperative Dokumentation",
-  "description": "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, Observation).",
+  "description": "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation).",
   "subjectType": [
     "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Procedure",
+      "id": "postop-procedure-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "completed"
+    },
+    {
+      "resourceType": "Observation",
+      "id": "postop-komplikation-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"
+        ]
+      },
+      "code": {
+        "coding": [
+          {
+            "code": "789279006",
+            "system": "http://snomed.info/sct",
+            "display": "Clavien-Dindo classification grade"
+          }
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "status": "final"
+    }
   ],
   "extension": [
     {
@@ -29,11 +66,10 @@
     {
       "extension": [
         {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Procedure"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+          "valueReference": {
+            "reference": "#postop-procedure-template"
+          }
         }
       ],
       "item": [
@@ -42,6 +78,7 @@
           "text": "Art der Operation",
           "type": "choice",
           "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.category",
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
         },
         {
@@ -71,19 +108,22 @@
           "linkId": "op-seite",
           "text": "Seite",
           "type": "choice",
-          "required": true
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.bodySite"
         },
         {
           "linkId": "op-datum",
           "text": "OP-Datum",
           "type": "date",
-          "required": true
+          "required": true,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.performedDateTime"
         },
         {
           "linkId": "op-code-text",
           "text": "Beschreibung der OP (Freitext, z.B. \"BET links, Sentinel-LK-Biopsie\")",
           "type": "string",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.text"
         },
         {
           "answerOption": [
@@ -133,27 +173,22 @@
           "linkId": "op-intention",
           "text": "OP-Intention",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.extension:Intention.valueCodeableConcept"
         },
         {
           "linkId": "op-outcome",
           "text": "OP-Outcome (z.B. R-Status, Sentinel)",
           "type": "string",
-          "required": false
-        }
-      ],
-      "linkId": "operation",
-      "text": "Operative Therapie",
-      "type": "group",
-      "required": true
-    },
-    {
-      "item": [
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.outcome.text"
+        },
         {
           "linkId": "followup-drainage",
           "text": "Drainage",
           "type": "string",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.note.text"
         },
         {
           "linkId": "followup-verband",
@@ -180,19 +215,18 @@
           "required": false
         }
       ],
-      "linkId": "followup",
-      "text": "Postoperative Anordnungen",
+      "linkId": "operation",
+      "text": "Operative Therapie",
       "type": "group",
-      "required": false
+      "required": true
     },
     {
       "extension": [
         {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+          "valueReference": {
+            "reference": "#postop-komplikation-template"
+          }
         }
       ],
       "item": [
@@ -237,13 +271,15 @@
           "linkId": "clavien-dindo",
           "text": "Clavien-Dindo-Grad",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.valueCodeableConcept"
         },
         {
           "linkId": "komplikation-datum",
           "text": "Datum der Komplikation",
           "type": "date",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.effectiveDateTime"
         },
         {
           "answerOption": [
@@ -254,7 +290,7 @@
               "valueString": "Postoperativ"
             },
             {
-              "valueString": "Stationär"
+              "valueString": "Stationaer"
             },
             {
               "valueString": "Ambulant"
@@ -263,19 +299,22 @@
           "linkId": "komplikation-zeitpunkt",
           "text": "Zeitpunkt",
           "type": "choice",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.method"
         },
         {
           "linkId": "komplikation-art",
           "text": "Art der Komplikation (Freitext)",
           "type": "string",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.component.valueCodeableConcept.text"
         },
         {
           "linkId": "komplikation-kommentar",
           "text": "Konsequenz / Kommentar",
           "type": "text",
-          "required": false
+          "required": false,
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.note.text"
         }
       ],
       "linkId": "komplikation",
