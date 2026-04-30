@@ -331,6 +331,14 @@
       },
       {
         "reference": {
+          "reference": "StructureDefinition/senologie-follow-up"
+        },
+        "name": "BIH Senologie Follow-Up (Verlaufsmeldung)",
+        "description": "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
           "reference": "StructureDefinition/senologie-geplante-systemtherapie"
         },
         "name": "BIH Senologie Geplante Systemtherapie",
@@ -435,6 +443,14 @@
       },
       {
         "reference": {
+          "reference": "Organization/Brustzentrum-Charite"
+        },
+        "name": "Brustzentrum Charité — Universitätsmedizin Berlin",
+        "description": "Zertifiziertes Brustzentrum der Charité",
+        "exampleBoolean": true
+      },
+      {
+        "reference": {
           "reference": "StructureDefinition/ex-senologie-tumor-conference-consent"
         },
         "name": "CA-Behandlung/Tumorkonferenz-Zustimmung",
@@ -479,6 +495,14 @@
         },
         "name": "CS Senologie Diagnose Lokal",
         "description": "Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "CodeSystem/cs-senologie-follow-up"
+        },
+        "name": "CS Senologie Follow-Up",
+        "description": "Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Komponentenbezeichner und Wertcodes für Felder ohne SNOMED-CT-Äquivalent.",
         "exampleBoolean": false
       },
       {
@@ -1061,8 +1085,8 @@
           "reference": "Observation/Fall1-Verlauf-6Monate"
         },
         "name": "Fall 1: Verlaufskontrolle 6 Monate postoperativ",
-        "description": "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis",
-        "exampleBoolean": true
+        "description": "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, Patientin lebend, kein Zweittumor.",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
       },
       {
         "reference": {
@@ -1293,8 +1317,8 @@
           "reference": "Observation/Fall2-Verlauf-Progression"
         },
         "name": "Fall 2: Verlaufskontrolle bei Progression",
-        "description": "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie",
-        "exampleBoolean": true
+        "description": "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor.",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
       },
       {
         "reference": {
@@ -2109,8 +2133,24 @@
           "reference": "Observation/Fall9-Verlauf-12Monate"
         },
         "name": "Fall 9: Verlaufskontrolle 12 Monate postoperativ",
-        "description": "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie",
-        "exampleBoolean": true
+        "description": "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor.",
+        "exampleCanonical": "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-bildgebung"
+        },
+        "name": "Fragebogen: Bildgebung Mamma",
+        "description": "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-erstanamnese"
+        },
+        "name": "Fragebogen: Erstanamnese",
+        "description": "Fragebogen zur Erstanamnese (Allgemeine Anamnese, Gynäkologische Anamnese, Familienanamnese). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Observation, FamilyMemberHistory).",
+        "exampleBoolean": false
       },
       {
         "reference": {
@@ -2125,7 +2165,15 @@
           "reference": "Questionnaire/senologie-op-planung"
         },
         "name": "Fragebogen: OP Planung",
-        "description": "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel.",
+        "description": "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Definition-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-pathologie"
+        },
+        "name": "Fragebogen: Pathologie Befund",
+        "description": "Fragebogen zur strukturierten Dokumentation des pathologischen Befundes (Praeparat, Histologie, Immunhistochemie/Rezeptorstatus, Gesamtbeurteilung). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Specimen, Observation, DiagnosticReport).",
         "exampleBoolean": false
       },
       {
@@ -2141,7 +2189,15 @@
           "reference": "Questionnaire/senologie-strahlentherapie-quest"
         },
         "name": "Fragebogen: Strahlentherapie",
-        "description": "Fragebogen zur Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit dem Senologie_Strahlentherapie-Profil (Procedure) als Ziel.",
+        "description": "Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-systemtherapie"
+        },
+        "name": "Fragebogen: Systemische Therapie",
+        "description": "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, MedicationStatement, Observation).",
         "exampleBoolean": false
       },
       {
@@ -2150,6 +2206,14 @@
         },
         "name": "Fragebogen: Tumorboard Empfehlung",
         "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Definition-based Extraction mit dem Senologie_Tumorboard_Empfehlung-Profil (CarePlan) als Ziel.",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "Questionnaire/senologie-verlauf"
+        },
+        "name": "Fragebogen: Verlaufsdokumentation / Nachsorge",
+        "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp).",
         "exampleBoolean": false
       },
       {
@@ -2198,14 +2262,6 @@
         },
         "name": "OncoBox Brust N1.1.1 Meldung (Logical Model)",
         "description": "Logisches Modell einer OncoBox-Brust-Meldung gemaess OnkoZert-Spezifikation N1.1.1.\n\nDie OncoBox Brust ist das XML-basierte Exportformat fuer die jaehrliche Uebermittlung\nvon Fall- und Qualitaetsindikatordaten zertifizierter Brustzentren an OnkoZert\n(DKG-Zertifizierung). Der Datensatz besteht aus folgenden Hauptkomponenten:\n\n- **Zentrum**  -- Kennung und Berichtszeitraum\n- **Primaerfall** -- Patienten- und Falldaten (Primaerfallarten nach OnkoZert-Systematik)\n- **Diagnose** -- Diagnoseinformationen (ICD-10-GM, TNM, Bildgebung, Histologie)\n- **Therapie** -- Operationen, Systemtherapie, Strahlentherapie, Hormontherapie, Trastuzumab\n- **Tumorkonferenz** -- Praetherapeutische und postoperative Fallbesprechung\n- **Versorgungskette** -- Psychoonkologie, Sozialdienst, Studienteilnahme\n- **Nachsorge / Outcome** -- Rezidiv, Metastasierung, Tod\n- **Kennzahlen (KB-1 bis KB-20)** -- DKG-Qualitaetsindikatoren\n\nDieses Modell dient als Zielstruktur der FHIR StructureMaps fuer die Ableitung\neiner OncoBox-Brust-konformen Meldung aus einem Senologie-FHIR-Bundle.\nDie Serialisierung (XML) ist nicht Bestandteil dieses Modells.",
-        "exampleBoolean": false
-      },
-      {
-        "reference": {
-          "reference": "ConceptMap/cm-oncobox-endokrine-substanz-atc"
-        },
-        "name": "OncoBox Endokrine Substanzklasse zu ATC",
-        "description": "Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxifen, 2=Aromatasehemmer, 3=GnRH-Analogon, 4=Fulvestrant, 5=CDK4/6-Inhibitor)",
         "exampleBoolean": false
       },
       {
@@ -2426,6 +2482,14 @@
       },
       {
         "reference": {
+          "reference": "ValueSet/vs-senologie-nachsorge-art"
+        },
+        "name": "VS Senologie Nachsorge Art",
+        "description": "Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (Akten/Register) — OncoBox M03",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
           "reference": "ValueSet/vs-senologie-risikoklasse"
         },
         "name": "VS Senologie Risikoklasse",
@@ -2462,6 +2526,22 @@
         },
         "name": "VS Senologie Systemtherapie Medikation",
         "description": "Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01)",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-vitalstatus"
+        },
+        "name": "VS Senologie Vitalstatus",
+        "description": "Vitalstatus der Patientin zum Meldezeitpunkt — OncoBox M04",
+        "exampleBoolean": false
+      },
+      {
+        "reference": {
+          "reference": "ValueSet/vs-senologie-zweittumor"
+        },
+        "name": "VS Senologie Zweittumor",
+        "description": "Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08",
         "exampleBoolean": false
       }
     ],

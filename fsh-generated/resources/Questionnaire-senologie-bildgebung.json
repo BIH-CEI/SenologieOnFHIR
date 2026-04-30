@@ -1,0 +1,276 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-bildgebung",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-bildgebung",
+  "title": "Fragebogen: Bildgebung Mamma",
+  "description": "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele.",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
+  "item": [
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "DiagnosticReport"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "linkId": "untersuchung-datum",
+          "text": "Untersuchungsdatum",
+          "type": "date",
+          "required": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "24606-6",
+                "system": "http://loinc.org",
+                "display": "Mammographie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "24604-1",
+                "system": "http://loinc.org",
+                "display": "Sonographie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "24589-4",
+                "system": "http://loinc.org",
+                "display": "MRT"
+              }
+            },
+            {
+              "valueString": "Tomosynthese"
+            }
+          ],
+          "linkId": "bildgebungsart",
+          "text": "Bildgebungsart",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "80248007",
+                "system": "http://snomed.info/sct",
+                "display": "Left breast structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "73056007",
+                "system": "http://snomed.info/sct",
+                "display": "Right breast structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "63762007",
+                "system": "http://snomed.info/sct",
+                "display": "Both breasts"
+              }
+            }
+          ],
+          "linkId": "seite",
+          "text": "Seite",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "linkId": "befundender-arzt",
+          "text": "Befundender Arzt",
+          "type": "string",
+          "required": false
+        }
+      ],
+      "linkId": "untersuchung",
+      "text": "Untersuchung",
+      "type": "group",
+      "required": true
+    },
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Observation"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "code": [
+            {
+              "code": "241736003",
+              "system": "http://snomed.info/sct",
+              "display": "Breast imaging-reporting and data system"
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "397138000",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 0 – unvollständig"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397139008",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 1 – unauffällig"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397140005",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 2 – benigne"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397143007",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 3 – wahrscheinlich benigne"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397144001",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 4 – suspekt"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397145000",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 5 – hochgradig malignitätsverdächtig"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397146004",
+                "system": "http://snomed.info/sct",
+                "display": "BI-RADS 6 – histologisch gesichert"
+              }
+            }
+          ],
+          "linkId": "birads-kategorie",
+          "text": "BI-RADS Kategorie",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "A – fast vollständig fetthaltig"
+            },
+            {
+              "valueString": "B – verstreute fibroglanduläre Verdichtungen"
+            },
+            {
+              "valueString": "C – heterogen dicht"
+            },
+            {
+              "valueString": "D – extrem dicht"
+            }
+          ],
+          "linkId": "acr-brustdichte",
+          "text": "ACR Brustdichte",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "linkId": "herdbefund-beschreibung",
+          "text": "Herdbefund Beschreibung",
+          "type": "text",
+          "required": false
+        },
+        {
+          "linkId": "mikrokalk",
+          "text": "Mikrokalkifikationen vorhanden",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "mikrokalk",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "linkId": "mikrokalk-beschreibung",
+          "text": "Mikrokalkifikationen Beschreibung",
+          "type": "text",
+          "required": false
+        },
+        {
+          "linkId": "lymphknoten-auffaellig",
+          "text": "Lymphknoten auffällig",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "linkId": "befund",
+      "text": "Befund",
+      "type": "group",
+      "required": false
+    },
+    {
+      "item": [
+        {
+          "linkId": "gesamtbeurteilung",
+          "text": "Gesamtbeurteilung",
+          "type": "text",
+          "required": false
+        },
+        {
+          "linkId": "empfehlung",
+          "text": "Empfehlung",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "zusammenfassung",
+      "text": "Zusammenfassung",
+      "type": "group",
+      "required": false
+    }
+  ],
+  "name": "QuestBildgebung",
+  "status": "draft",
+  "version": "0.1.0",
+  "experimental": true
+}
