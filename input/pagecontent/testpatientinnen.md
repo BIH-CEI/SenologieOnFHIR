@@ -222,6 +222,9 @@ Kontroll-CT: neue Leberläsionen, Verdacht auf hepatische Metastasen. Biopsie be
 ### Fall 12: Renate Vogel — B3-Läsion (ADH)
 45 Jahre, prämenopausal. Screening-Mammographie → BI-RADS 4a (Mikrokalzifikationen). Vakuumbiopsie: **Atypische duktale Hyperplasie (ADH)**, B3-Kategorie. Tumorkonferenz: Nachresektion empfohlen. Offene Biopsie/Nachresektion links → kein Upgrade, R0. Keine weitere Therapie, engmaschige Nachsorge.
 
+### Fall 13: Margarete Schreiber — Synchrones bilaterales Mammakarzinom
+64 Jahre, postmenopausal. Synchrone bilaterale Diagnose: **Links**: C50.4, invasives Karzinom NST, pT1c pN0(sn) cM0, ER+/PR+/HER2-, G2 → BET + SLNB, R0. **Rechts**: C50.2, invasives Karzinom NST, pT2 pN1a cM0, ER+/PR-/HER2+, G3 → SSM + ALND Level I-II, R0. Adjuvante Chemotherapie EC-Pac-H (primär HER2+ rechts, wirkt auf beide Seiten). Demonstriert: Zwei separate Conditions mit seitenspezifischer Procedure-Zuordnung über `reasonReference` und SDC Choice Selection Pattern für Bezugsdiagnose-Auswahl bei bilateralem Karzinom.
+
 ---
 
 ## Profilabdeckung
