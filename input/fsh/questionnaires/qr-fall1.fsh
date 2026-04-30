@@ -211,3 +211,91 @@ Usage: #example
 
 * item[+].linkId = "lymphknotenstatus"
 * item[=].answer.valueString = "Axilläre Lymphknoten beidseits klinisch unauffällig"
+
+
+// ------------------------------------------------------------
+// QR 6: Erstanamnese (Diagnose + Gyn-Anamnese + Familienanamnese)
+// → Condition + Observation + FamilyMemberHistory
+// ------------------------------------------------------------
+Instance: QR-Erstanamnese-Fall1
+InstanceOf: QuestionnaireResponse
+Title: "Fall 1 — QR Erstanamnese"
+Description: "Antworten auf QuestErstanamnese fuer Fall 1 Erika Neumann. Extraktion erzeugt Condition (C50.4 links), Observation (Gyn-Anamnese: Menarche 13, Menopause 54, Gravida 2), FamilyMemberHistory (Mutter Mammakarzinom 52J)."
+Usage: #example
+
+* questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese"
+* status = #completed
+* subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
+* authored = "2025-01-15"
+
+// --- Diagnose group ---
+* item[+].linkId = "diagnose"
+
+* item[=].item[+].linkId = "diagnose-sct"
+* item[=].item[=].answer.valueCoding = $SCT#254837009 "Malignant neoplasm of breast"
+
+* item[=].item[+].linkId = "diagnose-icd10"
+* item[=].item[=].answer.valueString = "C50.4"
+
+* item[=].item[+].linkId = "diagnose-icd10-display"
+* item[=].item[=].answer.valueString = "Boesartige Neubildung: Oberer aeusserer Quadrant der Brustdruese"
+
+* item[=].item[+].linkId = "diagnose-text"
+* item[=].item[=].answer.valueString = "Invasives Mammakarzinom NST links, oberer aeusserer Quadrant"
+
+* item[=].item[+].linkId = "seitenlokalisation"
+* item[=].item[=].answer.valueCoding = $SCT#80248007 "Left breast structure"
+
+* item[=].item[+].linkId = "feststellungsdatum"
+* item[=].item[=].answer.valueDate = "2025-01-15"
+
+* item[=].item[+].linkId = "recorded-date"
+* item[=].item[=].answer.valueDate = "2025-01-15"
+
+* item[=].item[+].linkId = "diagnosesicherung"
+* item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primaertumors"
+
+* item[=].item[+].linkId = "stadium-summary"
+* item[=].item[=].answer.valueString = "UICC IA (cT1c cN0 cM0)"
+
+* item[=].item[+].linkId = "metastasen-summary"
+* item[=].item[=].answer.valueString = "cM0"
+
+* item[=].item[+].linkId = "clinical-status"
+* item[=].item[=].answer.valueCoding = http://terminology.hl7.org/CodeSystem/condition-clinical#active "Active"
+
+* item[=].item[+].linkId = "onset"
+* item[=].item[=].answer.valueDate = "2025-01-15"
+
+// --- Gynaekologische Anamnese group ---
+* item[+].linkId = "gyn-anamnese"
+
+* item[=].item[+].linkId = "gyn-datum"
+* item[=].item[=].answer.valueDate = "2025-01-15"
+
+* item[=].item[+].linkId = "gyn-menarche"
+* item[=].item[=].item[+].linkId = "gyn-menarche-alter"
+* item[=].item[=].item[=].answer.valueInteger = 13
+
+* item[=].item[+].linkId = "gyn-menopause"
+* item[=].item[=].item[+].linkId = "gyn-menopause-alter"
+* item[=].item[=].item[=].answer.valueInteger = 54
+
+* item[=].item[+].linkId = "gyn-gravida"
+* item[=].item[=].item[+].linkId = "gyn-gravida-anzahl"
+* item[=].item[=].item[=].answer.valueInteger = 2
+
+* item[=].item[+].linkId = "gyn-hrt"
+* item[=].item[=].answer.valueString = "Keine HRT"
+
+// --- Familienanamnese group ---
+* item[+].linkId = "familienanamnese"
+
+* item[=].item[+].linkId = "fam-verwandtschaft"
+* item[=].item[=].answer.valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MTH "Mutter"
+
+* item[=].item[+].linkId = "fam-erkrankung"
+* item[=].item[=].answer.valueCoding = $SCT#254837009 "Mammakarzinom"
+
+* item[=].item[+].linkId = "fam-alter"
+* item[=].item[=].answer.valueInteger = 52
