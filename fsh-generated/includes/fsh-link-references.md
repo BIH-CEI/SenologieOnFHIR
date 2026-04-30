@@ -53,6 +53,7 @@
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
+[EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
 [QR-Diagnose-Fall1]: QuestionnaireResponse-QR-Diagnose-Fall1.html
 [QR-KlinUntersuchung-Fall1]: QuestionnaireResponse-QR-KlinUntersuchung-Fall1.html

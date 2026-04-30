@@ -122,9 +122,13 @@ group MapBestrahlung(source src : Procedure, target tgt : BackboneElement) {
     } "ExtractGesamtdosisValue";
   } "MapGesamtdosis";
 
-  // Einzeldosis: nicht direkt als MII Extension vorhanden
-  // Kann aus Procedure.note oder spezieller Extension abgeleitet werden
-  // Fallback: berechnet aus Gesamtdosis / Anzahl Sitzungen (sessionCount)
+  // Einzeldosis: aus Senologie Einzeldosis-Extension
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-einzeldosis' then {
+    ext.value as val then {
+      val.value as v -> tgt.einzeldosis = v "SetEinzeldosis";
+      val.unit as u -> tgt.einzeldosisEinheit = u "SetEinzeldosisEinheit";
+    } "ExtractEinzeldosisValue";
+  } "MapEinzeldosis";
 
   // Boost: aus MII Onko Boost-Extension
   // J=ja, N=nein, SIB=simultan integrierter Boost
