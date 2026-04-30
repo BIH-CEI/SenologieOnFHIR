@@ -1,30 +1,22 @@
 // ============================================================
-// Verlaufs-Observations für oBDS-Verlaufsmeldungen
+// Verlaufs-Observations für Nachsorge / Verlaufsmeldungen (OncoBox M01-M10)
 // Für drei Fälle: Fall 1 (Nachsorge rezidivfrei), Fall 2 (Progression), Fall 9 (Nachsorge)
-// Nutzt MII_PR_Onko_Verlauf als Grundlage (kein eigenes Senologie-Profil nötig).
+// Nutzt Senologie_FollowUp (erweitert MII_PR_Onko_Verlauf um M03-M04, M08-M10).
 // Zusätzlich ECOG-Observations (oBDS-Pflichtfeld "Allgemeiner_Leistungszustand"
 // in jeder Verlaufsmeldung, nutzt MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG).
 // ============================================================
 
-Alias: $MII_ONKO_VERLAUF = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-verlauf
-Alias: $MII_CS_VERLAUF_GESAMT = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung
-Alias: $MII_CS_VERLAUF_PT = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor
-Alias: $MII_CS_VERLAUF_LK = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten
-Alias: $MII_CS_VERLAUF_FM = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen
-Alias: $MII_ONKO_ECOG = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-allgemeiner-leistungszustand-ecog
-Alias: $MII_CS_ECOG = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog
+Alias: $CS_FU_EX = https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up
 
 // ============================================================
 // Fall 1: Erika Neumann — Verlauf 6 Monate postoperativ (rezidivfrei)
 // ============================================================
 
 Instance: Fall1-Verlauf-6Monate
-InstanceOf: Observation
+InstanceOf: Senologie_FollowUp
 Title: "Fall 1: Verlaufskontrolle 6 Monate postoperativ"
-Description: "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis"
+Description: "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, Patientin lebend, kein Zweittumor."
 Usage: #example
-
-* meta.profile = $MII_ONKO_VERLAUF
 
 * status = #final
 
@@ -36,28 +28,55 @@ Usage: #example
 * focus = Reference(Condition/Fall1-Diagnose-Mammakarzinom)
 * effectiveDateTime = "2025-08-15"
 
+// M02: Melder
+* performer = Reference(Organization/Brustzentrum-Charite)
+
 // Gesamtbeurteilung: K = kein Anhalt für Resttumor
-* valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_GESAMT
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Gesamt
 * valueCodeableConcept.coding[=].code = #K
 * valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
 
-// Lokaler Tumorstatus
+// M05: Lokaler Tumorstatus
 * component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Primaertumor
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
-// Lymphknoten-Status
+// M06: Lymphknoten-Status
 * component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Lymphknoten
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
-// Fernmetastasen-Status
+// M07: Fernmetastasen-Status
 * component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Fernmetastasen
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
+
+// M03: Art der Nachsorge — aktiv
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #nachsorge-art
+* component[=].code.coding[=].display = "Art der Nachsorge"
+* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
+* component[=].valueCodeableConcept.coding[=].code = #aktiv
+* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
+
+// M04: Vitalstatus — lebend
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #vitalstatus
+* component[=].code.coding[=].display = "Vitalstatus"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #438949009
+* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+
+// M08: Zweittumor — nein
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #zweittumor
+* component[=].code.coding[=].display = "Zweittumor"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #373067005
+* component[=].valueCodeableConcept.coding[=].display = "No (qualifier value)"
 
 // ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
 Instance: Fall1-ECOG-6Monate
@@ -66,14 +85,14 @@ Title: "Fall 1: ECOG-Leistungszustand 6 Monate postoperativ"
 Description: "ECOG 0 — vollständig aktiv, keine Einschränkung"
 Usage: #example
 
-* meta.profile = $MII_ONKO_ECOG
+* meta.profile = $MII_PR_Onko_ECOG
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2025-08-15"
-* valueCodeableConcept.coding[+].system = $MII_CS_ECOG
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
 * valueCodeableConcept.coding[=].code = #0
 * valueCodeableConcept.coding[=].display = "Normale, uneingeschränkte Aktivität wie vor der Erkrankung (90 - 100 % nach Karnofsky)"
 
@@ -83,12 +102,10 @@ Usage: #example
 // ============================================================
 
 Instance: Fall2-Verlauf-Progression
-InstanceOf: Observation
+InstanceOf: Senologie_FollowUp
 Title: "Fall 2: Verlaufskontrolle bei Progression"
-Description: "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie"
+Description: "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor."
 Usage: #example
-
-* meta.profile = $MII_ONKO_VERLAUF
 
 * status = #final
 
@@ -100,28 +117,55 @@ Usage: #example
 * focus = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
 * effectiveDateTime = "2026-03-15"
 
+// M02: Melder
+* performer = Reference(Organization/Brustzentrum-Charite)
+
 // Gesamtbeurteilung: P = Progress
-* valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_GESAMT
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Gesamt
 * valueCodeableConcept.coding[=].code = #P
 * valueCodeableConcept.coding[=].display = "Progression"
 
-// Lokaler Tumorstatus: K (bereits reseziert, kein Lokalrezidiv)
+// M05: Lokaler Tumorstatus: K (bereits reseziert, kein Lokalrezidiv)
 * component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Primaertumor
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
-// Lymphknoten-Status: K
+// M06: Lymphknoten-Status: K
 * component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Lymphknoten
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
-// Fernmetastasen: N = Neu aufgetretene Fernmetastasen
+// M07: Fernmetastasen: N = Neu aufgetretene Fernmetastasen
 * component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Fernmetastasen
 * component[=].valueCodeableConcept.coding[=].code = #N
 * component[=].valueCodeableConcept.coding[=].display = "Fernmetastasen No Change"
+
+// M03: Art der Nachsorge — aktiv
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #nachsorge-art
+* component[=].code.coding[=].display = "Art der Nachsorge"
+* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
+* component[=].valueCodeableConcept.coding[=].code = #aktiv
+* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
+
+// M04: Vitalstatus — lebend
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #vitalstatus
+* component[=].code.coding[=].display = "Vitalstatus"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #438949009
+* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+
+// M08: Zweittumor — nein
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #zweittumor
+* component[=].code.coding[=].display = "Zweittumor"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #373067005
+* component[=].valueCodeableConcept.coding[=].display = "No (qualifier value)"
 
 // ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
 Instance: Fall2-ECOG-Progression
@@ -130,14 +174,14 @@ Title: "Fall 2: ECOG-Leistungszustand bei Progression"
 Description: "ECOG 2 — deutliche Einschränkung bei Progression mit Lebermetastasen"
 Usage: #example
 
-* meta.profile = $MII_ONKO_ECOG
+* meta.profile = $MII_PR_Onko_ECOG
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
 * effectiveDateTime = "2026-03-15"
-* valueCodeableConcept.coding[+].system = $MII_CS_ECOG
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
 * valueCodeableConcept.coding[=].code = #2
 * valueCodeableConcept.coding[=].display = "Gehfähig, Selbstversorgung möglich, aber nicht arbeitsfähig; kann mehr als 50 % der Wachzeit aufstehen (50 - 60 % nach Karnofsky)"
 
@@ -147,12 +191,10 @@ Usage: #example
 // ============================================================
 
 Instance: Fall9-Verlauf-12Monate
-InstanceOf: Observation
+InstanceOf: Senologie_FollowUp
 Title: "Fall 9: Verlaufskontrolle 12 Monate postoperativ"
-Description: "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie"
+Description: "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor."
 Usage: #example
-
-* meta.profile = $MII_ONKO_VERLAUF
 
 * status = #final
 
@@ -164,28 +206,55 @@ Usage: #example
 * focus = Reference(Condition/Fall9-Diagnose-Mammakarzinom)
 * effectiveDateTime = "2026-03-20"
 
+// M02: Melder
+* performer = Reference(Organization/Brustzentrum-Charite)
+
 // Gesamtbeurteilung: K = kein Anhalt für Tumor
-* valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_GESAMT
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Gesamt
 * valueCodeableConcept.coding[=].code = #K
 * valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
 
-// Lokaler Tumorstatus: K
+// M05: Lokaler Tumorstatus: K
 * component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_PT
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Primaertumor
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
 
-// Lymphknoten-Status: K
+// M06: Lymphknoten-Status: K
 * component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_LK
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Lymphknoten
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
 
-// Fernmetastasen: K
+// M07: Fernmetastasen: K
 * component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
-* component[=].valueCodeableConcept.coding[+].system = $MII_CS_VERLAUF_FM
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Fernmetastasen
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
+
+// M03: Art der Nachsorge — aktiv
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #nachsorge-art
+* component[=].code.coding[=].display = "Art der Nachsorge"
+* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
+* component[=].valueCodeableConcept.coding[=].code = #aktiv
+* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
+
+// M04: Vitalstatus — lebend
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #vitalstatus
+* component[=].code.coding[=].display = "Vitalstatus"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #438949009
+* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+
+// M08: Zweittumor — nein
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #zweittumor
+* component[=].code.coding[=].display = "Zweittumor"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #373067005
+* component[=].valueCodeableConcept.coding[=].display = "No (qualifier value)"
 
 // ECOG-Leistungszustand (oBDS-Pflichtfeld Verlauf.Allgemeiner_Leistungszustand)
 Instance: Fall9-ECOG-12Monate
@@ -194,13 +263,13 @@ Title: "Fall 9: ECOG-Leistungszustand 12 Monate postoperativ"
 Description: "ECOG 1 — leicht eingeschränkt (Residual-Lymphödem nach Axilladissektion)"
 Usage: #example
 
-* meta.profile = $MII_ONKO_ECOG
+* meta.profile = $MII_PR_Onko_ECOG
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
 * code.coding[=].display = "ECOG Performance Status"
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
 * effectiveDateTime = "2026-03-20"
-* valueCodeableConcept.coding[+].system = $MII_CS_ECOG
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
 * valueCodeableConcept.coding[=].code = #1
 * valueCodeableConcept.coding[=].display = "Einschränkung bei körperlicher Anstrengung, aber gehfähig; leichte körperliche Arbeit bzw. Arbeit im Sitzen (z. B. leichte Hausarbeit oder Büroarbeit) möglich (70 - 80 % nach Karnofsky)"
