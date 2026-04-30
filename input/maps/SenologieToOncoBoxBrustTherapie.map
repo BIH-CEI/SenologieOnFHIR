@@ -83,6 +83,20 @@ group MapStrahlentherapie(source src : Procedure, target tgt : BackboneElement, 
     } "MapRTStellVal";
   } "MapRTStellExt";
 
+  // RT_Dosis_Gy aus MII Onko Gesamtdosis-Extension
+  src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-gesamtdosis' then {
+    ext.value as val then {
+      val.value as v -> tgt.gesamtdosisGy = v "SetRTGesamtdosis";
+    } "ExtractRTGesamtdosisValue";
+  } "MapRTGesamtdosis";
+
+  // RT_Einzeldosis_Gy aus Senologie Einzeldosis-Extension
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-einzeldosis' then {
+    ext.value as val then {
+      val.value as v -> tgt.einzeldosisGy = v "SetRTEinzeldosis";
+    } "ExtractRTEinzeldosisValue";
+  } "MapRTEinzeldosis";
+
   // RT_Zielgebiet aus Procedure.bodySite (SNOMED)
   src.bodySite as bs then {
     bs.coding as c where system = 'http://snomed.info/sct' then {

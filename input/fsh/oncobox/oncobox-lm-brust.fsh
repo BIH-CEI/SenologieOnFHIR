@@ -209,6 +209,7 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
     * ende 0..1 date "RT_Ende" "Therapieende"
     * zielgebiet 0..1 code "RT_Zielgebiet" "Zielgebiet: 1=Brust/Thorax, 2=LAW, 3=Boost, 4=Fernmetastase, 9=sonstige"
     * gesamtdosisGy 0..1 decimal "RT_Dosis_Gy" "Gesamtdosis in Gy"
+    * einzeldosisGy 0..1 decimal "RT_Einzeldosis_Gy" "Einzeldosis pro Fraktion in Gy"
     * stellungZurOP 0..1 code "RT_Stellung" "Stellung zur OP: N=neoadjuvant, A=adjuvant, P=palliativ"
 
   // --- Tumorkonferenz ---
@@ -227,15 +228,37 @@ Die Serialisierung (XML) ist nicht Bestandteil dieses Modells."""
     * erfolgt 1..1 code "Soz_Erfolgt" "Sozialdienstliche Anbindung erfolgt: 0=nein, 1=ja"
     * datum 0..1 date "Soz_Datum" "Datum des ersten Kontakts"
 
-  * studienteilnahme 0..1 BackboneElement "Studienteilnahme" "Teilnahme an klinischer Studie (KB-11)"
+  * studienteilnahme 0..* BackboneElement "Studienteilnahme" "Teilnahme an klinischer Studie (KB-11)"
     * teilgenommen 1..1 code "Stud_Teilgenommen" "Studienteilnahme: 0=nein, 1=ja"
     * studienKurzname 0..1 string "Stud_Name" "Kurzname der Studie"
+    * studiennameCode 0..1 code "Stud_Name_Code" "Studienname aus Auswahlliste (K02, OncoBox 2.0)"
+    * screening 0..1 code "Stud_Screening" "Screening zur Studienteilnahme durchgefuehrt (K03, OncoBox 2.0): 0=nein, 1=ja"
     * art 0..1 code "Stud_Art" "Art der Studie: 1=interventionell, 2=nicht-interventionell, 3=Beobachtung/Register, 9=sonstige"
 
-  // --- Verlauf / Outcome ---
-  * verlauf 0..* BackboneElement "Verlauf" "Verlaufsereignis (Rezidiv, Metastasierung, Progress)"
-    * datum 1..1 date "Verlauf_Datum" "Datum des Ereignisses"
-    * ereignis 1..1 code "Verlauf_Ereignis" "Ereignis: 1=Lokalrezidiv, 2=Regionaerrezidiv, 3=Fernmetastase, 4=kontralaterales Mamma-CA, 5=Zweitmalignom, 6=Progress"
+  // --- Verlauf / Outcome (M01-M10) ---
+  * verlauf 0..* BackboneElement "Verlauf" "Verlaufsmeldung / Nachsorge (M01-M10 + Ereignisse)"
+    * meldedatum 1..1 date "Meldedatum" "Datum der Verlaufsmeldung (M01)"
+    * melder 0..1 string "Melder" "Meldende Einrichtung / Person (M02)"
+    * nachsorgeArt 0..1 code "Nachsorge_Art" "Art der Nachsorge: aktiv=persoenlich untersucht, passiv=aus Akten/Registern (M03)"
+    * vitalstatus 1..1 code "Vitalstatus" "Vitalstatus: lebend, verstorben, unbekannt (M04)"
+    * tumorstatusLokal 0..1 code "Tumorstatus_Lokal" "Lokaler Tumorstatus: K=kein Tumor, T=Tumorreste, P=Progress, N=No Change, R=Lokalrezidiv, F=fraglich, U=unbekannt, X=fehlend (M05)"
+    * tumorstatusLK 0..1 code "Tumorstatus_LK" "Lymphknoten-Tumorstatus: K, T, P, N, R, F, U, X (M06)"
+    * tumorstatusFM 0..1 code "Tumorstatus_FM" "Fernmetastasen-Tumorstatus: K, T, P, N, R, F, U, X (M07)"
+    * zweittumor 0..1 code "Zweittumor" "Zweittumor diagnostiziert: ja, nein, unbekannt (M08)"
+    * zweitttumorIcd 0..1 code "Zweittumor_ICD" "ICD-10-GM Diagnose des Zweittumors (M09)"
+    * zweitttumorDatum 0..1 date "Zweittumor_Datum" "Diagnosedatum des Zweittumors (M10)"
+    * ereignis 0..1 code "Verlauf_Ereignis" "Ereignis: 1=Lokalrezidiv, 2=Regionaerrezidiv, 3=Fernmetastase, 4=kontralaterales Mamma-CA, 5=Zweitmalignom, 6=Progress"
+
+    // --- OncoBox 2.0: FM-spezifische Felder (J03-J05) ---
+    // Nur relevant wenn ereignis = 3 (Fernmetastase). Bildet die FM-spezifischen
+    // Therapiedaten ab, die in OncoBox 2.0 neu hinzukommen.
+    * fmOperation 0..1 BackboneElement "FM_Operation" "Operation bei Fernmetastasen (OncoBox 2.0 J03/J05)"
+      * opDatum 0..1 date "FM_Op_Datum" "J03: Datum der FM-Operation (z.B. Metastasenresektion)"
+      * residualstatus 0..1 code "FM_R_Status" "J05: Residualstatus nach FM-Operation: R0, R1, R2, RX"
+    * fmTherapie 0..* BackboneElement "FM_Therapie" "Therapie bei Fernmetastasen (OncoBox 2.0 J04)"
+      * therapieart 1..1 code "FM_Therapie_Art" "Art der FM-Therapie: 1=Chemotherapie, 2=Immuntherapie, 3=zielgerichtete Therapie, 4=Strahlentherapie, 5=endokrine Therapie, 9=sonstige"
+      * beginn 0..1 date "FM_Therapie_Beginn" "Beginn der FM-Therapie"
+      * ende 0..1 date "FM_Therapie_Ende" "Ende der FM-Therapie"
 
   * tod 0..1 BackboneElement "Tod" "Tod der Patientin im Berichtszeitraum"
     * sterbedatum 1..1 date "Tod_Datum" "Sterbedatum"

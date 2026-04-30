@@ -1543,6 +1543,19 @@
         ]
       },
       {
+        "id": "oncobox-brust-meldung.primaerfall.strahlentherapie.einzeldosisGy",
+        "path": "oncobox-brust-meldung.primaerfall.strahlentherapie.einzeldosisGy",
+        "short": "RT_Einzeldosis_Gy",
+        "definition": "Einzeldosis pro Fraktion in Gy",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "decimal"
+          }
+        ]
+      },
+      {
         "id": "oncobox-brust-meldung.primaerfall.strahlentherapie.stellungZurOP",
         "path": "oncobox-brust-meldung.primaerfall.strahlentherapie.stellungZurOP",
         "short": "RT_Stellung",
@@ -1704,7 +1717,7 @@
         "short": "Studienteilnahme",
         "definition": "Teilnahme an klinischer Studie (KB-11)",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
             "code": "BackboneElement"
@@ -1738,6 +1751,32 @@
         ]
       },
       {
+        "id": "oncobox-brust-meldung.primaerfall.studienteilnahme.studiennameCode",
+        "path": "oncobox-brust-meldung.primaerfall.studienteilnahme.studiennameCode",
+        "short": "Stud_Name_Code",
+        "definition": "Studienname aus Auswahlliste (K02, OncoBox 2.0)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.studienteilnahme.screening",
+        "path": "oncobox-brust-meldung.primaerfall.studienteilnahme.screening",
+        "short": "Stud_Screening",
+        "definition": "Screening zur Studienteilnahme durchgefuehrt (K03, OncoBox 2.0): 0=nein, 1=ja",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
         "id": "oncobox-brust-meldung.primaerfall.studienteilnahme.art",
         "path": "oncobox-brust-meldung.primaerfall.studienteilnahme.art",
         "short": "Stud_Art",
@@ -1754,7 +1793,7 @@
         "id": "oncobox-brust-meldung.primaerfall.verlauf",
         "path": "oncobox-brust-meldung.primaerfall.verlauf",
         "short": "Verlauf",
-        "definition": "Verlaufsereignis (Rezidiv, Metastasierung, Progress)",
+        "definition": "Verlaufsmeldung / Nachsorge (M01-M10 + Ereignisse)",
         "min": 0,
         "max": "*",
         "type": [
@@ -1764,11 +1803,128 @@
         ]
       },
       {
-        "id": "oncobox-brust-meldung.primaerfall.verlauf.datum",
-        "path": "oncobox-brust-meldung.primaerfall.verlauf.datum",
-        "short": "Verlauf_Datum",
-        "definition": "Datum des Ereignisses",
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.meldedatum",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.meldedatum",
+        "short": "Meldedatum",
+        "definition": "Datum der Verlaufsmeldung (M01)",
         "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.melder",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.melder",
+        "short": "Melder",
+        "definition": "Meldende Einrichtung / Person (M02)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.nachsorgeArt",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.nachsorgeArt",
+        "short": "Nachsorge_Art",
+        "definition": "Art der Nachsorge: aktiv=persoenlich untersucht, passiv=aus Akten/Registern (M03)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.vitalstatus",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.vitalstatus",
+        "short": "Vitalstatus",
+        "definition": "Vitalstatus: lebend, verstorben, unbekannt (M04)",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.tumorstatusLokal",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.tumorstatusLokal",
+        "short": "Tumorstatus_Lokal",
+        "definition": "Lokaler Tumorstatus: K=kein Tumor, T=Tumorreste, P=Progress, N=No Change, R=Lokalrezidiv, F=fraglich, U=unbekannt, X=fehlend (M05)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.tumorstatusLK",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.tumorstatusLK",
+        "short": "Tumorstatus_LK",
+        "definition": "Lymphknoten-Tumorstatus: K, T, P, N, R, F, U, X (M06)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.tumorstatusFM",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.tumorstatusFM",
+        "short": "Tumorstatus_FM",
+        "definition": "Fernmetastasen-Tumorstatus: K, T, P, N, R, F, U, X (M07)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.zweittumor",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.zweittumor",
+        "short": "Zweittumor",
+        "definition": "Zweittumor diagnostiziert: ja, nein, unbekannt (M08)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.zweitttumorIcd",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.zweitttumorIcd",
+        "short": "Zweittumor_ICD",
+        "definition": "ICD-10-GM Diagnose des Zweittumors (M09)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.zweitttumorDatum",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.zweitttumorDatum",
+        "short": "Zweittumor_Datum",
+        "definition": "Diagnosedatum des Zweittumors (M10)",
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -1781,11 +1937,102 @@
         "path": "oncobox-brust-meldung.primaerfall.verlauf.ereignis",
         "short": "Verlauf_Ereignis",
         "definition": "Ereignis: 1=Lokalrezidiv, 2=Regionaerrezidiv, 3=Fernmetastase, 4=kontralaterales Mamma-CA, 5=Zweitmalignom, 6=Progress",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmOperation",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmOperation",
+        "short": "FM_Operation",
+        "definition": "Operation bei Fernmetastasen (OncoBox 2.0 J03/J05)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmOperation.opDatum",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmOperation.opDatum",
+        "short": "FM_Op_Datum",
+        "definition": "J03: Datum der FM-Operation (z.B. Metastasenresektion)",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmOperation.residualstatus",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmOperation.residualstatus",
+        "short": "FM_R_Status",
+        "definition": "J05: Residualstatus nach FM-Operation: R0, R1, R2, RX",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie",
+        "short": "FM_Therapie",
+        "definition": "Therapie bei Fernmetastasen (OncoBox 2.0 J04)",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie.therapieart",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie.therapieart",
+        "short": "FM_Therapie_Art",
+        "definition": "Art der FM-Therapie: 1=Chemotherapie, 2=Immuntherapie, 3=zielgerichtete Therapie, 4=Strahlentherapie, 5=endokrine Therapie, 9=sonstige",
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "code"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie.beginn",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie.beginn",
+        "short": "FM_Therapie_Beginn",
+        "definition": "Beginn der FM-Therapie",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
+          }
+        ]
+      },
+      {
+        "id": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie.ende",
+        "path": "oncobox-brust-meldung.primaerfall.verlauf.fmTherapie.ende",
+        "short": "FM_Therapie_Ende",
+        "definition": "Ende der FM-Therapie",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "date"
           }
         ]
       },

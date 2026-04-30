@@ -129,6 +129,8 @@ Die OncoBox-Brust-Meldung besteht aus:
 | Psychoonkologie | Procedure / Observation | erfolgt 0/1 |
 | Sozialdienst | Procedure / Observation | erfolgt 0/1 |
 | Studienteilnahme | ResearchSubject | teilgenommen 0/1 |
+| Stud_Name_Code (K02) | ResearchSubject.extension[StudiennameCode] | OncoBox 2.0: Studienname aus Auswahlliste |
+| Stud_Screening (K03) | ResearchSubject.extension[Studienscreening] | OncoBox 2.0: Screening zur Studienteilnahme 0/1 |
 
 ### DKG-Kennzahlen (KB-1 bis KB-20)
 
@@ -228,6 +230,8 @@ Nicht alle OncoBox-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet w
 | Menopausenstatus | Observation (Modul Mamma) | **Teilweise** -- Observation-Binding fehlt in Senologie-Profilen |
 | Psychoonkologie / Sozialdienst | Procedure / Observation | **Teilweise** -- eigene Profile nicht vorhanden; ableitbar ueber CarePlan oder Procedure.category |
 | Studienteilnahme | ResearchSubject / Senologie_Studienteilnahme | Vorhanden |
+| Studienname Auswahlliste (K02) | ResearchSubject.extension[StudiennameCode] | **Vorhanden** -- OncoBox 2.0 |
+| Screening Studienteilnahme (K03) | ResearchSubject.extension[Studienscreening] | **Vorhanden** -- OncoBox 2.0 |
 | Anzahl Eingriffe bis R0 (KB-14) | Aggregation Procedure (pro Fall) | **Aggregationsschritt** -- CQL erforderlich |
 | BET-Rate bei pT1 (KB-15) | Aggregation (Op_Art + pTNM) | **Aggregationsschritt** -- CQL erforderlich |
 | Tumorkonferenz-Typ (prae/post/rezidiv) | CarePlan.category | **Teilweise** -- CodeSystem fuer Typ zu ergaenzen |

@@ -1,0 +1,342 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-strahlentherapie-quest",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-strahlentherapie",
+  "title": "Fragebogen: Strahlentherapie",
+  "description": "Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel.",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
+  "item": [
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Procedure"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+        }
+      ],
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "373846009",
+                "system": "http://snomed.info/sct",
+                "display": "Adjuvant"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "373847000",
+                "system": "http://snomed.info/sct",
+                "display": "Neoadjuvant"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "363676003",
+                "system": "http://snomed.info/sct",
+                "display": "Palliativ"
+              }
+            }
+          ],
+          "linkId": "rt-intention",
+          "text": "Intention",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "linkId": "rt-startdatum",
+          "text": "Startdatum",
+          "type": "date",
+          "required": true
+        },
+        {
+          "linkId": "rt-enddatum",
+          "text": "Enddatum",
+          "type": "date",
+          "required": false
+        },
+        {
+          "linkId": "rt-bezogene-op",
+          "text": "Bezogene Operation (Referenz auf vorherige OP)",
+          "type": "string",
+          "required": false
+        }
+      ],
+      "linkId": "therapie-rahmen",
+      "text": "Therapie-Rahmen",
+      "type": "group",
+      "required": true
+    },
+    {
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "76752008",
+                "system": "http://snomed.info/sct",
+                "display": "Breast structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "78904004",
+                "system": "http://snomed.info/sct",
+                "display": "Chest wall structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "68171009",
+                "system": "http://snomed.info/sct",
+                "display": "Axillary lymph node structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "16051009",
+                "system": "http://snomed.info/sct",
+                "display": "Infraclavicular lymph node structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "76838003",
+                "system": "http://snomed.info/sct",
+                "display": "Supraclavicular lymph node structure"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "245282001",
+                "system": "http://snomed.info/sct",
+                "display": "Internal mammary lymph node group"
+              }
+            }
+          ],
+          "linkId": "rt-zielvolumen",
+          "text": "Zielvolumen",
+          "type": "choice",
+          "required": false,
+          "repeats": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "1163834000",
+                "system": "http://snomed.info/sct",
+                "display": "3D conformal radiation therapy"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "1163833006",
+                "system": "http://snomed.info/sct",
+                "display": "Intensity modulated radiation therapy"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "152198000",
+                "system": "http://snomed.info/sct",
+                "display": "Brachytherapy"
+              }
+            }
+          ],
+          "linkId": "rt-applikationsart",
+          "text": "Applikationsart",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "Gy",
+                "system": "http://unitsofmeasure.org",
+                "display": "Gy"
+              }
+            }
+          ],
+          "linkId": "rt-gesamtdosis",
+          "text": "Gesamtdosis (Gy)",
+          "type": "decimal",
+          "required": false
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "Gy",
+                "system": "http://unitsofmeasure.org",
+                "display": "Gy"
+              }
+            }
+          ],
+          "linkId": "rt-einzeldosis",
+          "text": "Einzeldosis pro Fraktion (Gy)",
+          "type": "decimal",
+          "required": false
+        },
+        {
+          "linkId": "rt-fraktionen",
+          "text": "Anzahl Fraktionen",
+          "type": "integer",
+          "required": false
+        }
+      ],
+      "linkId": "bestrahlungsplan",
+      "text": "Bestrahlungsplan",
+      "type": "group",
+      "required": false
+    },
+    {
+      "item": [
+        {
+          "linkId": "rt-boost",
+          "text": "Boost durchgeführt",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "rt-boost",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "Gy",
+                "system": "http://unitsofmeasure.org",
+                "display": "Gy"
+              }
+            }
+          ],
+          "linkId": "rt-boost-dosis",
+          "text": "Boost-Dosis (Gy)",
+          "type": "decimal",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "rt-boost",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "linkId": "rt-boost-fraktionen",
+          "text": "Boost-Fraktionen",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "rt-boost",
+              "operator": "=",
+              "answerBoolean": true
+            }
+          ],
+          "answerOption": [
+            {
+              "valueString": "Elektronen"
+            },
+            {
+              "valueString": "Photonen"
+            },
+            {
+              "valueString": "Brachytherapie"
+            }
+          ],
+          "linkId": "rt-boost-technik",
+          "text": "Boost-Technik",
+          "type": "choice",
+          "required": false
+        }
+      ],
+      "linkId": "boost",
+      "text": "Boost",
+      "type": "group",
+      "required": false
+    },
+    {
+      "item": [
+        {
+          "linkId": "rt-nebenwirkungen",
+          "text": "Akute Nebenwirkungen (Radiodermatitis, Fatigue, etc.)",
+          "type": "text",
+          "required": false
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "Abgeschlossen"
+            },
+            {
+              "valueString": "Abgebrochen"
+            },
+            {
+              "valueString": "Laufend"
+            }
+          ],
+          "linkId": "rt-therapiestatus",
+          "text": "Therapiestatus",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "rt-therapiestatus",
+              "operator": "=",
+              "answerString": "Abgebrochen"
+            }
+          ],
+          "linkId": "rt-abbruchgrund",
+          "text": "Abbruchgrund",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "ergebnis",
+      "text": "Ergebnis",
+      "type": "group",
+      "required": false
+    }
+  ],
+  "name": "QuestStrahlentherapie",
+  "status": "draft",
+  "version": "0.1.0",
+  "experimental": true
+}

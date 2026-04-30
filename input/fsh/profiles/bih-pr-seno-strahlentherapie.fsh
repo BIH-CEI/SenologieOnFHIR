@@ -36,6 +36,10 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * extension contains EX_Senologie_SessionCount named sessionCount 0..1
 * extension[sessionCount] ^short = "Anzahl der Bestrahlungssitzungen"
 
+* extension contains EX_Senologie_Einzeldosis named einzeldosis 0..1
+* extension[einzeldosis] ^short = "Einzeldosis pro Fraktion in Gy"
+* extension[einzeldosis] ^comment = "OncoBox 2.0 H10: Einzeldosis pro Tag in Gy"
+
 * note ^short = "Detaillierte Beschreibung"
 * reasonReference MS
 * reasonReference ^short = "Bezogene Diagnose"
