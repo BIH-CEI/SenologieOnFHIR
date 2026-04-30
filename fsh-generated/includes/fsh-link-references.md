@@ -32,6 +32,7 @@
 [Senologie_Bildgebung_Observation]: StructureDefinition-senologie-bildgebung-observation.html
 [Senologie_Bildgebung_Sonstige]: StructureDefinition-senologie-bildgebung-sonstige.html
 [Senologie_Familienanamnese]: StructureDefinition-senologie-familienanamnese.html
+[Senologie_FollowUp]: StructureDefinition-senologie-follow-up.html
 [Senologie_Geplante_Systemtherapie]: StructureDefinition-senologie-geplante-systemtherapie.html
 [Senologie_Gynaekologische_Anamnese]: StructureDefinition-senologie-gynaekologische-anamnese.html
 [Senologie_Klinische_Untersuchung]: StructureDefinition-senologie-klinische-untersuchung.html
@@ -51,6 +52,7 @@
 [CM-Senologie-Medikation-SCT-ASK]: ConceptMap-CM-Senologie-Medikation-SCT-ASK.html
 [CM-Senologie-Medikation-SCT-ATC]: ConceptMap-CM-Senologie-Medikation-SCT-ATC.html
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
+[CS_Senologie_FollowUp]: CodeSystem-cs-senologie-follow-up.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
 [EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
@@ -289,7 +291,10 @@
 [VS_Senologie_Diagnose_SCT]: ValueSet-vs-senologie-diagnose-sct.html
 [VS_Senologie_Genexpressionstest]: ValueSet-vs-senologie-genexpressionstest.html
 [VS_Senologie_Metastasierung]: ValueSet-vs-senologie-metastasierung.html
+[VS_Senologie_Nachsorge_Art]: ValueSet-vs-senologie-nachsorge-art.html
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html
 [VS_Senologie_Screeningstatus]: ValueSet-vs-senologie-screeningstatus.html
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
+[VS_Senologie_Vitalstatus]: ValueSet-vs-senologie-vitalstatus.html
+[VS_Senologie_Zweittumor]: ValueSet-vs-senologie-zweittumor.html

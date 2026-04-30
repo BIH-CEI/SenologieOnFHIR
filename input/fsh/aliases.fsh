@@ -13,6 +13,15 @@ Alias: $MII_PR_Onko_Systemische_Therapie_Medikation = https://www.medizininforma
 Alias: $MII_CS_Onko_Residualstatus = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus
 Alias: $MII_CS_Onko_Therapie_Ende_Grund = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-ende-grund
 
+// --- MII Onkologie Verlauf ---
+Alias: $MII_PR_Onko_Verlauf = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-verlauf
+Alias: $MII_CS_Onko_Verlauf_Gesamt = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung
+Alias: $MII_CS_Onko_Verlauf_Primaertumor = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-primaertumor
+Alias: $MII_CS_Onko_Verlauf_Lymphknoten = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-lymphknoten
+Alias: $MII_CS_Onko_Verlauf_Fernmetastasen = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen
+Alias: $MII_PR_Onko_ECOG = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-allgemeiner-leistungszustand-ecog
+Alias: $MII_CS_Onko_ECOG = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-allgemeiner-leistungszustand-ecog
+
 // --- MII Onkologie Extensions ---
 Alias: $MII_EX_Onko_Strahlentherapie_Intention = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention
 Alias: $MII_EX_Onko_Strahlentherapie_Bestrahlung_Boost = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-boost
