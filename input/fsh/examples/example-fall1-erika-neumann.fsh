@@ -260,6 +260,7 @@ Usage: #example
 * component[schwangerschaften].valueQuantity.code = #1
 
 * component[hormonersatztherapie].code = $SCT#266717002 "Hormone replacement therapy"
+* component[hormonersatztherapie].valueCodeableConcept = $SCT#373067005 "No"
 * component[hormonersatztherapie].valueCodeableConcept.text = "Keine HRT"
 
 
@@ -323,6 +324,7 @@ Usage: #example
 
 * basis = Reference(Observation/Fall1-Genexpressions-Score)
 
+* prediction.outcome = $SCT#399409002 "Distant metastasis present (finding)"
 * prediction.outcome.text = "Fernrezidiv"
 * prediction.qualitativeRisk = http://terminology.hl7.org/CodeSystem/risk-probability#low "Low likelihood"
 * prediction.probabilityDecimal = 0.12
@@ -390,12 +392,14 @@ Usage: #example
 * status = #draft
 * intent = #plan
 
+* code = $SCT#392021009 "Lumpectomy of breast"
 * code.text = "BET links + Sentinel-LK-Biopsie"
 
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 
 * bodySite.coding = $SCT#80248007 "Left breast structure"
 
+* reasonCode = $SCT#373808002 "Curative - procedure intent"
 * reasonCode.text = "Kurative Intention"
 
 * note.text = "BET links OAQ, SLNB links. Präoperative Drahtmarkierung geplant."
@@ -405,8 +409,10 @@ Usage: #example
 * extension[operationsDuration].valueDuration.system = "http://unitsofmeasure.org"
 * extension[operationsDuration].valueDuration.code = #min
 
+* extension[tumorConferenceConsent].valueCodeableConcept = $SCT#373066001 "Yes"
 * extension[tumorConferenceConsent].valueCodeableConcept.text = "Ja"
 
+* extension[preOpMarkierung].valueCodeableConcept = $SCT#1269000008 "Insertion of guide wire into breast using mammography guidance"
 * extension[preOpMarkierung].valueCodeableConcept.text = "Drahtmarkierung"
 
 

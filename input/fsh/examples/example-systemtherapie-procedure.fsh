@@ -32,4 +32,5 @@ Usage: #example
 * reasonReference = Reference(Condition/Example-Diagnose-Mammakarzinom)
 
 // Protokoll
+* usedCode = $MII_CS_Onko_Protokolle#EC-D "EC-D"
 * usedCode.text = "EC-T (4x EC q3w, 4x Docetaxel q3w)"

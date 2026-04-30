@@ -262,6 +262,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall7-Diagnose-Mammakarzinom)
 
+* usedCode = $MII_CS_Onko_Protokolle#CarboTax "CarboTax"
 * usedCode.text = "Carboplatin AUC2 + Paclitaxel 80 mg/m2 wöchentlich x12, dann Epirubicin 90 mg/m2 + Cyclophosphamid 600 mg/m2 q3w x4"
 
 

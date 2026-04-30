@@ -343,7 +343,7 @@ Usage: #example
 
 * status = #active
 
-* type.text = "Brustimplantat (Silikon)"
+* type = $SCT#465380004 "Silicone gel-filled breast implant"
 * type.text = "Silikon-Brustimplantat"
 
 * manufacturer = "Mentor"
@@ -362,7 +362,7 @@ Usage: #example
 
 * status = #active
 
-* type.text = "Brustimplantat (Silikon)"
+* type = $SCT#465380004 "Silicone gel-filled breast implant"
 * type.text = "Silikon-Brustimplantat"
 
 * manufacturer = "Mentor"
@@ -465,6 +465,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
 
+* usedCode = $MII_CS_Onko_Protokolle#CarboTax "CarboTax"
 * usedCode.text = "Carboplatin AUC5 q3w + Paclitaxel 175 mg/m2 q3w x6 Zyklen (TNBC + BRCA1)"
 
 

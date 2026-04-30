@@ -260,6 +260,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall4-Diagnose-Mammakarzinom)
 
+* usedCode = $MII_CS_Onko_Protokolle#TCH "TCH"
 * usedCode.text = "TCHP: Docetaxel 75 mg/m2 + Carboplatin AUC6 + Trastuzumab 6 mg/kg + Pertuzumab 420 mg, q3w x6 Zyklen"
 
 

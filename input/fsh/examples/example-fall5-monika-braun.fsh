@@ -321,6 +321,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall5-Diagnose-Mammakarzinom)
 
+* usedCode = $MII_CS_Onko_Protokolle#EC-D "EC-D"
 * usedCode.text = "EC (Epirubicin 90 mg/m2 + Cyclophosphamid 600 mg/m2) q3w x4, dann Docetaxel 100 mg/m2 + Trastuzumab 6 mg/kg q3w x4"
 
 

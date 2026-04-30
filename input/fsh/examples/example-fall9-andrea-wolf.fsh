@@ -253,6 +253,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall9-Diagnose-Mammakarzinom)
 
+* usedCode = $MII_CS_Onko_Protokolle#EC-P "EC-P"
 * usedCode.text = "EC (Epirubicin/Cyclophosphamid) q3w x4, dann Paclitaxel 80 mg/m2 wöchentlich x12"
 
 
@@ -402,11 +403,13 @@ Usage: #example
 
 * code.coding = $SCT#789279006 "Clavien-Dindo classification grade"
 
+* valueCodeableConcept = $SCT#1367520006 "Clavien-Dindo classification grade II"
 * valueCodeableConcept.text = "Clavien-Dindo Grad II"
 
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
 * effectiveDateTime = "2025-10-20"
 
+* method = $SCT#373864002 "Outpatient"
 * method.text = "postoperativ, ambulant"
 
 * focus = Reference(Procedure/Fall9-Operation-BET)

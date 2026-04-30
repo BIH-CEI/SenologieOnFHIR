@@ -12,6 +12,8 @@ Alias: $MII_PR_Onko_Systemische_Therapie_Medikation = https://www.medizininforma
 // --- MII Onkologie CodeSystems / ValueSets ---
 Alias: $MII_CS_Onko_Residualstatus = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus
 Alias: $MII_CS_Onko_Therapie_Ende_Grund = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-ende-grund
+Alias: $MII_CS_Onko_Protokolle = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-systemische-therapie-protokolle
+Alias: $MII_CS_Onko_OP_Komplikation = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-operation-komplikation
 
 // --- MII Onkologie Verlauf ---
 Alias: $MII_PR_Onko_Verlauf = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-verlauf

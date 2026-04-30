@@ -408,6 +408,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
 
+* usedCode = $MII_CS_Onko_Protokolle#CarboTax "CarboTax"
 * usedCode.text = "Carboplatin AUC5 + Paclitaxel 80 mg/m2 wöchentlich x12, dann AC (Doxorubicin/Cyclophosphamid) q3w x4, Pembrolizumab 200 mg q3w durchgehend"
 
 
@@ -548,6 +549,7 @@ Usage: #example
 * outcome.text = "ypT1a R0, gutes Ansprechen auf neoadjuvante Therapie"
 
 // Komplikation
+* complication = $SCT#56021002 "Seroma"
 * complication.text = "Serom postoperativ"
 
 
@@ -592,11 +594,13 @@ Usage: #example
 
 * code.coding = $SCT#789279006 "Clavien-Dindo classification grade"
 
+* valueCodeableConcept = $SCT#1367519000 "Clavien-Dindo classification grade I"
 * valueCodeableConcept.text = "Clavien-Dindo Grad I"
 
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
 * effectiveDateTime = "2025-08-10"
 
+* method = $SCT#416800000 "Inpatient"
 * method.text = "postoperativ, stationär"
 
 * focus = Reference(Procedure/Fall2-Operation-Mastektomie)
@@ -635,6 +639,7 @@ Usage: #example
 
 * reasonReference = Reference(Condition/Fall2-Diagnose-Mammakarzinom)
 
+* usedCode = $SCT#716125002 "Pembrolizumab"
 * usedCode.text = "Pembrolizumab 200 mg q3w, adjuvant Maintenance"
 
 
