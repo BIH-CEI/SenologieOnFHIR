@@ -99,6 +99,7 @@ Die OncoBox-Brust-Meldung besteht aus:
 | pTNM | Observation (LOINC 21902-2 + Komponenten) | pT/pN/pM/L/V/Pn/UICC |
 | Lymphknoten | Observations (LOINC 21894-1 / 21893-3 / 92832-5 / 92833-3) | untersucht/befallen + Sentinel |
 | Rezeptorstatus ER/PR/HER2 | Observations (LOINC 85337-4 / 85339-0 / 85319-2) | P/N/U |
+| Diagnose_Histo_Praeop | Specimen.type (SNOMED) | OncoBox 2.0: Stanze=1, Vakuum=2, FNA=3, offen=4, keine=0 |
 
 #### Primaerfall -- Operation
 
