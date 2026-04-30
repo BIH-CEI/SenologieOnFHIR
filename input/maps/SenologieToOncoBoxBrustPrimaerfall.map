@@ -315,38 +315,70 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
     } "MapSLKBef";
   } "EntrySLKBef";
 
-  // Rezeptorstatus ER (LOINC 85337-4)
+  // Rezeptorstatus ER (LOINC 85337-4): qualitativ + quantitativ
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
     entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      // Qualitativ: P/N/U
       obs.value as val then {
         val.coding as c where code = '10828004' -> rez.erStatus = 'P' "SetERPositiv";
         val.coding as c where code = '260385009' -> rez.erStatus = 'N' "SetERNegativ";
         val.coding as c where code = '261665006' -> rez.erStatus = 'U' "SetERUnbekannt";
       } "MapER";
+      // Quantitativ: ER% aus component (LOINC 85329-1 = Cells.total/100 cells ER)
+      obs.component as comp where code.coding.exists(code = '85329-1') then {
+        comp.value as val then {
+          val.value as v -> rez.erProzent = truncate(v) "SetERProzent";
+        } "MapERProzentVal";
+      } "MapERProzentComp";
     } "MapERObs";
   } "EntryER";
 
-  // Rezeptorstatus PR (LOINC 85339-0)
+  // Rezeptorstatus PR (LOINC 85339-0): qualitativ + quantitativ
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
     entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      // Qualitativ: P/N/U
       obs.value as val then {
         val.coding as c where code = '10828004' -> rez.prStatus = 'P' "SetPRPositiv";
         val.coding as c where code = '260385009' -> rez.prStatus = 'N' "SetPRNegativ";
         val.coding as c where code = '261665006' -> rez.prStatus = 'U' "SetPRUnbekannt";
       } "MapPR";
+      // Quantitativ: PR% aus component (LOINC 85331-7 = Cells.total/100 cells PR)
+      obs.component as comp where code.coding.exists(code = '85331-7') then {
+        comp.value as val then {
+          val.value as v -> rez.prProzent = truncate(v) "SetPRProzent";
+        } "MapPRProzentVal";
+      } "MapPRProzentComp";
     } "MapPRObs";
   } "EntryPR";
 
-  // Rezeptorstatus HER2 (LOINC 85319-2)
+  // Rezeptorstatus HER2 (LOINC 85319-2): qualitativ + IHC-Score
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
     entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      // Qualitativ: P/N/U
       obs.value as val then {
         val.coding as c where code = '10828004' -> rez.her2Status = 'P' "SetHER2Positiv";
         val.coding as c where code = '260385009' -> rez.her2Status = 'N' "SetHER2Negativ";
         val.coding as c where code = '261665006' -> rez.her2Status = 'U' "SetHER2Unbekannt";
       } "MapHER2";
+      // HER2 IHC-Score aus component (LOINC 85318-4 = HER2 IHC Score)
+      obs.component as comp where code.coding.exists(code = '85318-4') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> rez.her2Score = cd "SetHER2Score";
+          } "MapHER2ScoreCoding";
+        } "MapHER2ScoreVal";
+      } "MapHER2ScoreComp";
     } "MapHER2Obs";
   } "EntryHER2";
+
+  // Ki-67 Proliferationsindex (LOINC 29593-1)
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '29593-1') then {
+    entry.resource as obs -> tgt.rezeptorstatus as rez then {
+      obs.value as val then {
+        val.value as v -> rez.ki67 = truncate(v) "SetKi67";
+      } "MapKi67Val";
+    } "MapKi67Obs";
+  } "EntryKi67";
 }
 
 // ============================================================================

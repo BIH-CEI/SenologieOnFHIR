@@ -1,0 +1,98 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-ki67-proliferationsindex",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex",
+  "version": "0.1.0",
+  "name": "Senologie_Ki67_Proliferationsindex",
+  "title": "BIH Senologie Ki-67 Proliferationsindex",
+  "status": "draft",
+  "description": "Observation fuer den Ki-67-Proliferationsindex (%). LOINC 29593-1. Wert als valueQuantity in Prozent.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.status",
+        "path": "Observation.status",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "29593-1",
+              "system": "http://loinc.org",
+              "display": "Ki-67 proliferation index [Ratio] in Tissue by Immune stain"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.code.coding",
+        "path": "Observation.code.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.subject",
+        "path": "Observation.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "short": "Ki-67 Index in %",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x].value",
+        "path": "Observation.value[x].value",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x].unit",
+        "path": "Observation.value[x].unit",
+        "patternString": "%"
+      },
+      {
+        "id": "Observation.value[x].system",
+        "path": "Observation.value[x].system",
+        "patternUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.value[x].code",
+        "path": "Observation.value[x].code",
+        "patternCode": "%"
+      },
+      {
+        "id": "Observation.note",
+        "path": "Observation.note",
+        "short": "Anmerkungen zum Ki-67-Befund"
+      },
+      {
+        "id": "Observation.specimen",
+        "path": "Observation.specimen",
+        "short": "Zugehoeriges Praeparat"
+      }
+    ]
+  }
+}
