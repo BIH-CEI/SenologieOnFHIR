@@ -15,6 +15,16 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 
 // --- Senologie-specific additions: ---
 
+// Tumormanifestation (D02) — Mehrfachauswahl über category
+* category MS
+* category ^slicing.discriminator.type = #pattern
+* category ^slicing.discriminator.path = "$this"
+* category ^slicing.rules = #open
+* category contains tumormanifestation 0..* MS
+* category[tumormanifestation] from https://www.senologie.org/fhir/ValueSet/vs-senologie-tumormanifestation (required)
+* category[tumormanifestation] ^short = "Tumormanifestation (Primärtumor/Rezidiv/LK/FM)"
+* category[tumormanifestation] ^definition = "Klassifikation der Tumormanifestation bei Diagnosestellung. Mehrfachauswahl möglich, z.B. Primärtumor + regionäre Lymphknotenmetastasen."
+
 // Diagnosekode - use inherited slices
 * code MS
 * code ^short = "Diagnose"
