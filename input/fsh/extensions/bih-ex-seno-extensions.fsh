@@ -58,6 +58,12 @@ Title: "Einzeldosis pro Fraktion"
 Description: "Einzeldosis pro Bestrahlungsfraktion in Gy — OncoBox 2.0 H10, oBDS Einzeldosis"
 * value[x] only Quantity
 
+Extension: EX_Senologie_SimultaneRadiochemotherapie
+Id: ex-senologie-simultane-radiochemotherapie
+Title: "Simultane Radiochemotherapie"
+Description: "Flag ob die Strahlentherapie simultan mit Chemotherapie durchgeführt wurde (OncoBox 2.0 H03)"
+* value[x] only boolean
+
 // === Systemtherapie Medikation (2 Extensions) ===
 // Used by: Senologie_Systemtherapie_Medikation (MedicationStatement)
 
