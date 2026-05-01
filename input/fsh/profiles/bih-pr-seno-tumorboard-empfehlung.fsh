@@ -90,15 +90,6 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * activity[targetedTherapy].detail.code ^short = "Empfohlene zielgerichtete Therapie"
 * activity[targetedTherapy].detail.code ^comment = "Aus dotbase: 'Zielgerichtete Therapie' (choice)"
 * activity[targetedTherapy].detail.kind = #MedicationRequest
-* activity[targetedTherapy].detail.description MS
-* activity[targetedTherapy].detail.description ^short = "Empfehlung Details (z.B. Trastuzumab >1J)"
-* activity[targetedTherapy].detail.description ^comment = "OncoBox 2.0 E04: Freitext-Empfehlung für zielgerichtete Therapie inkl. Trastuzumab-Dauer"
-* activity[targetedTherapy].detail.scheduledPeriod MS
-* activity[targetedTherapy].detail.scheduledPeriod ^short = "Geplante Therapiedauer"
-* activity[targetedTherapy].detail.scheduledPeriod ^comment = "OncoBox 2.0 E04: Dauer >365 Tage = Trastuzumab >1J empfohlen"
-* activity[targetedTherapy].detail.productCodeableConcept MS
-* activity[targetedTherapy].detail.productCodeableConcept ^short = "Empfohlener Wirkstoff (z.B. Trastuzumab)"
-* activity[targetedTherapy].detail.productCodeableConcept ^comment = "SCT#387208009 Trastuzumab oder ATC L01FD01"
 
 // Immuntherapie
 * activity[immunotherapy].detail.code = $SCT#76334006 "Immunotherapy (procedure)"
