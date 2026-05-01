@@ -36,6 +36,7 @@ Usage: #definition
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Procedure-Pfad):
+//   bezugsdiagnose       → Procedure.reasonReference (Condition-Referenz)
 //   syst-intention       → Procedure.extension[Intention].valueCodeableConcept
 //   syst-stellung        → Procedure.extension[StellungZurOp].valueCodeableConcept
 //   syst-therapieart     → Procedure.code
@@ -45,6 +46,29 @@ Usage: #definition
 //   syst-substanz        → Procedure.note (Substanzangabe)
 //   syst-status          → Procedure.outcome
 //   syst-anmerkungen     → Procedure.note
+
+// Bezugsdiagnose: SDC Condition-Auswahl (bei bilateralem Karzinom)
+* item[+].linkId = "bezugsdiagnose"
+* item[=].text = "Bezugsdiagnose (Seite)"
+* item[=].type = #reference
+* item[=].required = true
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+* item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].extension[=].valueExpression.expression = "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+* item[=].extension[=].extension[+].url = "path"
+* item[=].extension[=].extension[=].valueString = "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+* item[=].extension[=].extension[+].url = "label"
+* item[=].extension[=].extension[=].valueString = "ICD-10"
+* item[=].extension[=].extension[+].url = "forDisplay"
+* item[=].extension[=].extension[=].valueBoolean = false
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+* item[=].extension[=].extension[+].url = "path"
+* item[=].extension[=].extension[=].valueString = "bodySite.coding.first().display"
+* item[=].extension[=].extension[+].url = "label"
+* item[=].extension[=].extension[=].valueString = "Seite"
+* item[=].extension[=].extension[+].url = "forDisplay"
+* item[=].extension[=].extension[=].valueBoolean = true
 
 // Therapieart
 * item[+].linkId = "syst-therapieart"
@@ -133,6 +157,11 @@ Usage: #inline
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
 * status = #completed
 * category = $SCT#18629005 "Administration of medication"
+
+// reasonReference -> Bezugsdiagnose (Condition) aus SDC Choice Selection
+* reasonReference.reference = "placeholder"
+* reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* reasonReference.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 * code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * code.coding.code.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.code"

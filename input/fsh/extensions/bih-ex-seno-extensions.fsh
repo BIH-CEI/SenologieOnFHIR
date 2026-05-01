@@ -96,3 +96,25 @@ Id: ex-senologie-therapy-line
 Title: "Therapielinie"
 Description: "Therapielinie (1. Linie, 2. Linie, etc.) — kein natives FHIR-Äquivalent"
 * value[x] only integer
+
+Extension: EX_Senologie_FirstLineTherapy
+Id: ex-senologie-first-line-therapy
+Title: "First-Line-Therapie bei Metastasierung"
+Description: "Flag ob es sich um die First-Line-Therapie bei metastasierter Situation handelt (OncoBox I02 / KB-8)"
+* value[x] only boolean
+
+// === Fallklassifikation (2 Extensions) ===
+// Used by: Encounter (Zentrumsfall/Primärfall D01)
+
+Extension: EX_Senologie_Primaerfallart
+Id: ex-senologie-primaerfallart
+Title: "Primaerfallart"
+Description: "OnkoZert-Primaerfallart als expliziter Override (OncoBox 2.0 D01). Ergänzt die ICD-basierte Ableitung im SM für Fälle wie Rezidiv (Code 3), die nicht aus dem ICD-Prefix ableitbar sind."
+* value[x] only CodeableConcept
+* valueCodeableConcept from VS_OncoBox_Primaerfallart (required)
+
+Extension: EX_Senologie_Zentrumsfall
+Id: ex-senologie-zentrumsfall
+Title: "Zentrumsfall"
+Description: "DKG-Zertifizierungsstatus: true = Zentrumsfall/Primärfall, false = kein Primärfall (OncoBox 2.0 D01)"
+* value[x] only boolean

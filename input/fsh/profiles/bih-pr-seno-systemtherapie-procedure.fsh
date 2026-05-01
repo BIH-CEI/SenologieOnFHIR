@@ -26,9 +26,20 @@ Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt I
 // - outcome (Ende-Grund — replaces TherapyStatus extension)
 // - usedCode (Protokolle)
 
+// Therapielinie + First-Line-Flag (OncoBox I02 / KB-8)
+* extension contains
+    EX_Senologie_TherapyLine named therapyLine 0..1 and
+    EX_Senologie_FirstLineTherapy named firstLine 0..1
+* extension[therapyLine] ^short = "Therapielinie (1, 2, 3, ...)"
+* extension[firstLine] ^short = "First-Line bei Metastasierung (KB-8)"
+
 * outcome MS
 * outcome ^short = "Therapie-Status am Ende"
 * outcome ^comment = "Aus dotbase: Status (abgeschlossen, abgebrochen, etc.) — ersetzt ehemalige TherapyStatus-Extension"
+
+* usedCode MS
+* usedCode ^short = "Therapieprotokoll (z.B. EC-Pac, TCH)"
+* usedCode ^comment = "Protokollbezeichnung aus dotbase / MII Onko Protokolle"
 
 * reasonReference MS
 * reasonReference ^short = "Bezogene Diagnose"

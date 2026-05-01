@@ -58,6 +58,17 @@ group MapSystemtherapie(source src : Procedure, target tgt : BackboneElement, so
       c.code as cd where $this = '387208009' -> tgt.enthaeltTrastuzumab = '1' "SetTrastuJa";
     } "MapTrastuCoding";
   } "MapTrastu";
+
+  // Syst_FirstLine (KB-8): First-Line bei Metastasierung aus EX_Senologie_FirstLineTherapy
+  src.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-first-line-therapy' then {
+    ext.value as val where $this = true -> tgt.firstLine = '1' "SetFirstLineJa";
+    ext.value as val where $this = false -> tgt.firstLine = '0' "SetFirstLineNein";
+  } "MapFirstLine";
+
+  // Syst_Protokoll aus usedCode.text
+  src.usedCode as uc then {
+    uc.text as t -> tgt.protokoll = t "SetSystProtokollText";
+  } "MapSystProtokoll";
 }
 
 // ============================================================================
