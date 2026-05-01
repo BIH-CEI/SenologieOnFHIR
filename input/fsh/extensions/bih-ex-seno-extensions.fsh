@@ -97,6 +97,12 @@ Title: "Therapielinie"
 Description: "Therapielinie (1. Linie, 2. Linie, etc.) — kein natives FHIR-Äquivalent"
 * value[x] only integer
 
+Extension: EX_Senologie_FirstLineTherapy
+Id: ex-senologie-first-line-therapy
+Title: "First-Line-Therapie bei Metastasierung"
+Description: "Flag ob es sich um die First-Line-Therapie bei metastasierter Situation handelt (OncoBox I02 / KB-8)"
+* value[x] only boolean
+
 // === Fallklassifikation (2 Extensions) ===
 // Used by: Encounter (Zentrumsfall/Primärfall D01)
 
