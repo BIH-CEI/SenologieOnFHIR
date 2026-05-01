@@ -1,6 +1,8 @@
-// Senologie Follow-Up Observation (OncoBox M01-M10)
+// Senologie Follow-Up Observation (OncoBox M01-M10, D27)
 // Erweitert MII_PR_Onko_Verlauf um senologiespezifische Felder:
-// Nachsorge-Art (aktiv/passiv), Vitalstatus, Zweittumor
+// Nachsorge-Art (aktiv/passiv), Vitalstatus, Zweittumor.
+// Doppelnutzung: D27 (Gesamtbeurteilung nach definitiver Therapie)
+// und M06 (Follow-Up / Nachsorge). Unterscheidung ueber Zeitpunkt.
 
 Alias: $CS_FU = https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up
 
@@ -8,10 +10,24 @@ Profile: Senologie_FollowUp
 Parent: MII_PR_Onko_Verlauf
 Id: senologie-follow-up
 Title: "BIH Senologie Follow-Up (Verlaufsmeldung)"
-Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder."
+Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder. Wird sowohl fuer Gesamtbeurteilung nach definitiver Therapie (D27) als auch fuer Nachsorge-Follow-Up (M06) verwendet — Unterscheidung ueber effectiveDateTime."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
+
+// Subject: Patientin
+* subject MS
+
+// Focus: Bezugsdiagnose (beurteilte Condition)
+* focus MS
+* focus only Reference(Senologie_Diagnose_Maligne)
+* focus ^short = "Bezugsdiagnose (beurteilte Condition)"
+* focus ^comment = "Referenz auf die beurteilte Condition (Mammakarzinom). Bei bilateralem Karzinom wird die jeweilige Seite referenziert."
+
+// Gesamtbeurteilung (geerbt von MII Verlauf valueCodeableConcept)
+* valueCodeableConcept MS
+* valueCodeableConcept ^short = "Gesamtbeurteilung Tumorstatus (D27)"
+* valueCodeableConcept ^comment = "Gesamtbeurteilung des Tumoransprechens: V=CR, T=PR, K=NC/SD, P=Progression, D=divergent, B=MR, R=CRr, Y=Rezidiv, U=unmoeglich, X=fehlend."
 
 // M01: Meldedatum (effectiveDateTime geerbt von MII Verlauf)
 * effectiveDateTime MS
@@ -26,6 +42,12 @@ Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art 
 
 // M05-M07: Tumorstatus lokal/LK/FM — geerbt von MII_PR_Onko_Verlauf
 // (Gesamtbeurteilung als valueCodeableConcept, Einzelstatus als Komponenten)
+* component[Tumor_Verlauf] MS
+* component[Tumor_Verlauf] ^short = "Lokaler Tumorstatus (M05)"
+* component[Lymphknoten_Verlauf] MS
+* component[Lymphknoten_Verlauf] ^short = "Lymphknoten-Tumorstatus (M06)"
+* component[Fernmetastasen_Verlauf] MS
+* component[Fernmetastasen_Verlauf] ^short = "Fernmetastasen-Tumorstatus (M07)"
 
 // Senologie-spezifische Zusatzkomponenten M03, M04, M08-M10
 * component contains
