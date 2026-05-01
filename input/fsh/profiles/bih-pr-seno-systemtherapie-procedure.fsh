@@ -26,9 +26,23 @@ Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt I
 // - outcome (Ende-Grund — replaces TherapyStatus extension)
 // - usedCode (Protokolle)
 
+// Therapielinie (1, 2, 3, ...)
+* extension contains EX_Senologie_TherapyLine named therapyLine 0..1
+* extension[therapyLine] ^short = "Therapielinie (1, 2, 3, ...)"
+* extension[therapyLine] ^comment = "Aus dotbase: 'Therapielinie' — klinisch relevant für Kennzahlen und Qualitätssicherung"
+
+// First-Line bei Metastasierung (KB-8)
+* extension contains EX_Senologie_FirstLineTherapy named firstLine 0..1
+* extension[firstLine] ^short = "First-Line bei Metastasierung (KB-8)"
+* extension[firstLine] ^comment = "Nur relevant bei palliativer Intention / metastasierter Situation. Ableitung: TherapyLine=1 + Intention=palliativ → firstLine=true"
+
 * outcome MS
 * outcome ^short = "Therapie-Status am Ende"
 * outcome ^comment = "Aus dotbase: Status (abgeschlossen, abgebrochen, etc.) — ersetzt ehemalige TherapyStatus-Extension"
+
+* usedCode MS
+* usedCode ^short = "Therapieprotokoll / Schema"
+* usedCode ^comment = "MII Onko Systemtherapie-Protokolle (z.B. EC-T, TAC, etc.). Freitext über usedCode.text."
 
 * reasonReference MS
 * reasonReference ^short = "Bezogene Diagnose"
