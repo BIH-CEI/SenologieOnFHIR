@@ -1,10 +1,15 @@
 // ============================================================
+<<<<<<< HEAD
 // Verlaufs-Observations für Nachsorge / Verlaufsmeldungen (OncoBox M01-M10, D27)
 // Für vier Fälle:
 //   Fall 1: Nachsorge rezidivfrei (M06, Gesamtbeurteilung K)
 //   Fall 2: Progression (M06, Gesamtbeurteilung P)
 //   Fall 4: Post-Therapie Teilremission (D27, Gesamtbeurteilung T)
 //   Fall 9: Nachsorge rezidivfrei (M06, Gesamtbeurteilung K)
+=======
+// Verlaufs-Observations für Nachsorge / Verlaufsmeldungen (OncoBox M01-M10)
+// Für drei Fälle: Fall 1 (Nachsorge rezidivfrei), Fall 2 (Progression), Fall 9 (Nachsorge)
+>>>>>>> polecat-3/se-yir-revisionsop-sm
 // Nutzt Senologie_FollowUp (erweitert MII_PR_Onko_Verlauf um M03-M04, M08-M10).
 // Zusätzlich ECOG-Observations (oBDS-Pflichtfeld "Allgemeiner_Leistungszustand"
 // in jeder Verlaufsmeldung, nutzt MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG).

@@ -1,0 +1,66 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-sozialdienst",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-sozialdienst",
+  "version": "0.1.0",
+  "name": "Senologie_Sozialdienst",
+  "title": "BIH Senologie Sozialdienst-Kontakt",
+  "status": "draft",
+  "description": "Procedure für Sozialdienst-Kontakt (OncoBox 2.0 L02, DKG OF-14). Erfasst ob eine Sozialdienst-Beratung stattgefunden hat und wann.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Procedure",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Procedure.status",
+        "path": "Procedure.status",
+        "short": "Durchgeführt oder nicht durchgeführt",
+        "comment": "completed = Kontakt stattgefunden (L02=ja), not-done = nicht stattgefunden (L02=nein)",
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.code",
+        "path": "Procedure.code",
+        "short": "Sozialdienst-Beratung",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "410321003",
+              "system": "http://snomed.info/sct",
+              "display": "Social services intervention (procedure)"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.subject",
+        "path": "Procedure.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Procedure.performed[x]",
+        "path": "Procedure.performed[x]",
+        "short": "Datum des Sozialdienst-Kontakts",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mustSupport": true
+      }
+    ]
+  }
+}

@@ -125,14 +125,61 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
     } "MapROutcomeCoding";
   } "MapROutcome";
 
+  // Revisionsoperation (OncoBox 2.0)
+  // Op_Revision: 0=nein, 1=ja
+  // Abgeleitet aus: operationsart = 5 (Revision) oder
+  // Procedure.reasonCode enthält "Revision" / SNOMED 282032007
+  src -> tgt.revisionsOp = '0' "SetRevisionDefault";
+  src.code as code then {
+    code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then {
+      // OPS-basierte Erkennung: Wenn Operationsart nicht primär (z.B. Nachresektion)
+      // wird über die reasonCode/note-Logik bestimmt
+    } "MapRevisionOPS";
+  } "MapRevisionCode";
+  src.reasonCode as rc then {
+    rc.coding as c where system = 'http://snomed.info/sct' then {
+      c.code as cd where $this = '282032007' -> tgt.revisionsOp = '1' "SetRevisionJaSCT";
+    } "MapRevisionReasonSCT";
+    rc.text as txt where $this.contains('Revision') -> tgt.revisionsOp = '1' "SetRevisionJaText";
+    rc.text as txt where $this.contains('Nachresektion') -> tgt.revisionsOp = '1' "SetRevisionJaNachresekt";
+  } "MapRevisionReason";
+
+  // Anzahl Eingriffe bis R0 (KB-14, OncoBox 2.0)
+  // Op_Anzahl_bis_R0: Aggregation aller Procedures für dieselbe Condition
+  // bis zum Erreichen von R0. In FML nur als Einzelwert setzbar —
+  // die tatsächliche Aggregation erfolgt in der CQL-Auswerteschicht.
+  // Hier wird der Defaultwert gesetzt: 1 wenn R0, sonst leer.
+  src.outcome as out then {
+    out.coding as c where system.exists() then {
+      c.code as cd where $this = 'R0' -> tgt.anzahlEingriffeR0 = 1 "SetAnzahlR0Default";
+    } "MapAnzahlR0Coding";
+  } "MapAnzahlR0";
+
   // Komplikationen (Senologie_Operative_Komplikation)
   bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
     entry.resource as obs -> tgt.komplikationen as komp then {
+      // Komp_Kuerzel: aus component[komplikationsart].valueCodeableConcept
+      obs.component as comp where code.coding.exists(code = '116224001') then {
+        comp.value as val then {
+          val.coding as c then {
+            c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
+          } "MapKompKuerzelCoding";
+        } "MapKompKuerzelVal";
+      } "MapKompKuerzelComp";
+
+      // Komp_Clavien: aus Observation.valueCodeableConcept (Clavien-Dindo Grad)
       obs.value as val then {
-        val.coding as c then {
-          c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
-        } "MapKompKuerzel";
-      } "MapKompVal";
+        val.coding as c where system = 'http://snomed.info/sct' then {
+          c.code as cd -> komp.clavienDindo = cd "SetKompClavien";
+        } "MapKompClavienCoding";
+      } "MapKompClavien";
     } "MapKompObs";
   } "EntryKomp";
+
+  // Komplikationen ICD-10: aus Procedure.complication (compl_icd10 Slice)
+  src.complication as comp then {
+    comp.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' -> tgt.komplikationen as komp then {
+      c.code as cd -> komp.icdCode = cd "SetKompIcdCode";
+    } "MapKompIcdCoding";
+  } "MapKompIcd";
 }
