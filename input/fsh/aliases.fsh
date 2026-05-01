@@ -42,6 +42,13 @@ Alias: $MII_EX_Onko_Strahlentherapie_Bestrahlung_Seitenlokalisation = https://ww
 Alias: $MII_EX_Onko_Systemische_Therapie_Intention = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention
 Alias: $MII_EX_Onko_Operation_Intention = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention
 
+// --- MII Person Profiles ---
+Alias: $MII_PR_Person_Vitalstatus = https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Vitalstatus
+Alias: $MII_CS_Person_Vitalstatus = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus
+Alias: $MII_PR_Person_Todesursache = https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Todesursache
+Alias: $MII_PR_Onko_Tod = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tod
+Alias: $MII_CS_Onko_Tod = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tod
+
 // --- MII Pathologie Profiles ---
 Alias: $MII_PR_Patho_Report = https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-report
 Alias: $MII_PR_Patho_Specimen = https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-specimen

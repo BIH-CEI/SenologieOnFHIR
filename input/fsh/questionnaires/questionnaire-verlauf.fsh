@@ -205,7 +205,60 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueString = "Sonstige"
 
 // ============================================================
-// Group 4: Weiteres Vorgehen
+// Group 4: Vitalstatus (MII_PR_Person_Vitalstatus Observation)
+// Extraction: Eine MII Vitalstatus-Observation (LOINC 67162-8)
+// mit Wert aus mii-cs-person-vitalstatus.
+// ============================================================
+* item[+].linkId = "vitalstatus"
+* item[=].text = "Vitalstatus"
+* item[=].type = #group
+* item[=].required = false
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+* item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].extension[=].valueExpression.expression = "Observation?_profile=https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/Vitalstatus"
+
+// Vitalstatus → Observation.valueCodeableConcept
+* item[=].item[+].linkId = "vitalstatus-wert"
+* item[=].item[=].text = "Vitalstatus der Patientin"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = true
+* item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus#L "Patient lebt"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus#T "Patient verstorben"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus#X "unbekannt"
+
+// Sterbedatum (enableWhen Vitalstatus = T)
+* item[=].item[+].linkId = "vitalstatus-sterbedatum"
+* item[=].item[=].text = "Sterbedatum"
+* item[=].item[=].type = #date
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "vitalstatus-wert"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus#T
+
+// Todesursache ICD-10-GM (enableWhen Vitalstatus = T)
+* item[=].item[+].linkId = "vitalstatus-todesursache"
+* item[=].item[=].text = "Todesursache (ICD-10-GM)"
+* item[=].item[=].type = #string
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "vitalstatus-wert"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus#T
+
+// Tod tumorbedingt (enableWhen Vitalstatus = T)
+* item[=].item[+].linkId = "vitalstatus-tumorbedingt"
+* item[=].item[=].text = "Tod tumorbedingt"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "vitalstatus-wert"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.medizininformatik-initiative.de/fhir/core/modul-person/CodeSystem/Vitalstatus#T
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tod#J "Ja"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tod#N "Nein"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tod#U "Unbekannt"
+
+// ============================================================
+// Group 5: Weiteres Vorgehen
 // Kein Extraction Context — organisatorische Daten bleiben in
 // der QuestionnaireResponse.
 // ============================================================
