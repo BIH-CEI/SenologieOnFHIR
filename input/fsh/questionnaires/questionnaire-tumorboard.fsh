@@ -54,6 +54,29 @@ Usage: #definition
 
 // ---------- Items ----------
 
+// Bezugsdiagnose: SDC Condition-Auswahl (bei bilateralem Karzinom)
+* item[+].linkId = "bezugsdiagnose"
+* item[=].text = "Bezugsdiagnose (Seite)"
+* item[=].type = #reference
+* item[=].required = true
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+* item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].extension[=].valueExpression.expression = "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+* item[=].extension[=].extension[+].url = "path"
+* item[=].extension[=].extension[=].valueString = "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+* item[=].extension[=].extension[+].url = "label"
+* item[=].extension[=].extension[=].valueString = "ICD-10"
+* item[=].extension[=].extension[+].url = "forDisplay"
+* item[=].extension[=].extension[=].valueBoolean = false
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+* item[=].extension[=].extension[+].url = "path"
+* item[=].extension[=].extension[=].valueString = "bodySite.coding.first().display"
+* item[=].extension[=].extension[+].url = "label"
+* item[=].extension[=].extension[=].valueString = "Seite"
+* item[=].extension[=].extension[+].url = "forDisplay"
+* item[=].extension[=].extension[=].valueBoolean = true
+
 * item[+].linkId = "tumorboard-datum"
 * item[=].text = "Datum des Tumorboards"
 * item[=].type = #date
@@ -137,6 +160,11 @@ Usage: #inline
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
 * status = #active
 * intent = #plan
+
+// addresses -> Bezugsdiagnose (Condition) aus SDC Choice Selection
+* addresses.reference = "placeholder"
+* addresses.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* addresses.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 * title = "Tumorboard Empfehlung"
 * title.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
