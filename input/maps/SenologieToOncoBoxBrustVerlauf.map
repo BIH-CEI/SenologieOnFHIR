@@ -18,11 +18,15 @@ uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" 
 // MapVerlaufFromBundle: Bundle -> OncoBox Primaerfall.verlauf (repeating)
 //
 // Extrahiert Verlaufsereignisse aus dem Bundle und mappt auf den OncoBox-
-// Verlauf-Block. Verlaufsereignisse werden aus folgenden FHIR-Ressourcen
-// abgeleitet:
+// Verlauf-Block. Drei Quellen fuer Verlaufseintraege:
 //
-// - Condition mit clinicalStatus=recurrence -> Rezidiv / Fernmetastase
-// - Observation LOINC 21907-1 (Distant metastases.clinical) -> Fernmetastase
+// 1. Senologie_FollowUp Observations (SCT 396432002) -> M01-M10 + Gesamtbeurteilung
+//    Bildet die vollstaendige Verlaufsmeldung ab inkl. Nachsorge-Art, Vitalstatus,
+//    Tumorstatus lokal/LK/FM und Zweittumor. Gesamtbeurteilung (D27) wird auf
+//    verlauf.ereignis gemappt: P->6 (Progress), Y->1 (Lokalrezidiv Default).
+//
+// 2. Condition mit clinicalStatus=recurrence -> Rezidiv / Fernmetastase
+// 3. Observation LOINC 21907-1 (Distant metastases.clinical) -> Fernmetastase
 //
 // Fuer Fernmetastasen-Ereignisse (ereignis=3) werden zusaetzlich die
 // OncoBox 2.0 Felder J03-J05 befuellt:
@@ -32,6 +36,12 @@ uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" 
 // ============================================================================
 
 group MapVerlaufFromBundle(source src : Bundle, target tgt : BackboneElement) {
+
+  // --- Senologie_FollowUp Observations -> Verlauf M01-M10 + Gesamtbeurteilung ---
+  // SCT 396432002 = "Status of regression of tumor"
+  src.entry as fuEntry where resource.is(Observation) and resource.code.coding.exists(code = '396432002') then {
+    fuEntry.resource as fuObs -> tgt.verlauf as verl then MapVerlaufFollowUp(fuObs, verl) "CallMapVerlaufFU";
+  } "EntryVerlaufFU";
 
   // --- Fernmetastasen-Observations -> Verlauf mit ereignis=3 ---
   // LOINC 21907-1 = "Distant metastases.clinical Cancer"
@@ -43,6 +53,120 @@ group MapVerlaufFromBundle(source src : Bundle, target tgt : BackboneElement) {
   src.entry as recEntry where resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence') then {
     recEntry.resource as recCond -> tgt.verlauf as verl then MapVerlaufRezidiv(recCond, verl) "CallMapVerlaufRez";
   } "EntryVerlaufRez";
+}
+
+// ============================================================================
+// MapVerlaufFollowUp: Observation (Senologie_FollowUp) -> Verlauf M01-M10
+//
+// Bildet eine Senologie_FollowUp Observation (SCT 396432002) auf den
+// vollstaendigen OncoBox-Verlauf-Block ab:
+//   M01: Meldedatum       <- effectiveDateTime
+//   M02: Melder           <- performer.display
+//   M03: Nachsorge-Art    <- component[nachsorge-art]
+//   M04: Vitalstatus      <- component[vitalstatus]
+//   M05: Tumorstatus lok. <- component[Tumor_Verlauf] (SCT 445200009)
+//   M06: Tumorstatus LK   <- component[Lymphknoten_Verlauf] (SCT 399656008)
+//   M07: Tumorstatus FM   <- component[Fernmetastasen_Verlauf] (SCT 399608002)
+//   M08: Zweittumor       <- component[zweittumor]
+//   M09: Zweittumor ICD   <- component[zweittumor-icd]
+//   M10: Zweittumor Datum <- component[zweittumor-datum]
+//   Ereignis              <- Gesamtbeurteilung (valueCodeableConcept):
+//                            P->6 (Progress), Y->1 (Lokalrezidiv Default)
+// ============================================================================
+
+group MapVerlaufFollowUp(source src : Observation, target tgt : BackboneElement) {
+
+  // M01: Meldedatum
+  src.effective as eff where $this.is(dateTime) -> tgt.meldedatum = eff "SetM01Datum";
+
+  // M02: Melder (Performer-Name als String)
+  src.performer as perf then {
+    perf.display as d -> tgt.melder = d "SetM02Melder";
+  } "MapM02Perf";
+
+  // M03: Art der Nachsorge (aus Component mit Code nachsorge-art)
+  src.component as comp where code.coding.exists(code = 'nachsorge-art') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd where $this = 'aktiv' -> tgt.nachsorgeArt = 'aktiv' "SetM03Aktiv";
+        c.code as cd where $this = 'passiv' -> tgt.nachsorgeArt = 'passiv' "SetM03Passiv";
+      } "MapM03Coding";
+    } "MapM03Val";
+  } "MapM03";
+
+  // M04: Vitalstatus (SCT 438949009=lebend, 419099009=verstorben, 261665006=unbekannt)
+  src.component as comp where code.coding.exists(code = 'vitalstatus') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd where $this = '438949009' -> tgt.vitalstatus = 'lebend' "SetM04Lebend";
+        c.code as cd where $this = '419099009' -> tgt.vitalstatus = 'verstorben' "SetM04Verstorben";
+        c.code as cd where $this = '261665006' -> tgt.vitalstatus = 'unbekannt' "SetM04Unbekannt";
+      } "MapM04Coding";
+    } "MapM04Val";
+  } "MapM04";
+
+  // M05: Lokaler Tumorstatus (SCT 445200009 = Status of residual neoplasm)
+  src.component as comp where code.coding.exists(code = '445200009') then {
+    comp.value as val then {
+      val.coding as c where system.contains('verlauf-primaertumor') then {
+        c.code as cd -> tgt.tumorstatusLokal = cd "SetM05";
+      } "MapM05Coding";
+    } "MapM05Val";
+  } "MapM05";
+
+  // M06: Lymphknoten-Tumorstatus (SCT 399656008)
+  src.component as comp where code.coding.exists(code = '399656008') then {
+    comp.value as val then {
+      val.coding as c where system.contains('verlauf-lymphknoten') then {
+        c.code as cd -> tgt.tumorstatusLK = cd "SetM06";
+      } "MapM06Coding";
+    } "MapM06Val";
+  } "MapM06";
+
+  // M07: Fernmetastasen-Tumorstatus (SCT 399608002)
+  src.component as comp where code.coding.exists(code = '399608002') then {
+    comp.value as val then {
+      val.coding as c where system.contains('verlauf-fernmetastasen') then {
+        c.code as cd -> tgt.tumorstatusFM = cd "SetM07";
+      } "MapM07Coding";
+    } "MapM07Val";
+  } "MapM07";
+
+  // M08: Zweittumor (SCT 373066001=ja, 373067005=nein, 261665006=unbekannt)
+  src.component as comp where code.coding.exists(code = 'zweittumor') then {
+    comp.value as val then {
+      val.coding as c then {
+        c.code as cd where $this = '373066001' -> tgt.zweittumor = 'ja' "SetM08Ja";
+        c.code as cd where $this = '373067005' -> tgt.zweittumor = 'nein' "SetM08Nein";
+        c.code as cd where $this = '261665006' -> tgt.zweittumor = 'unbekannt' "SetM08Unbekannt";
+      } "MapM08Coding";
+    } "MapM08Val";
+  } "MapM08";
+
+  // M09: Zweittumor ICD-10-GM
+  src.component as comp where code.coding.exists(code = 'zweittumor-icd') then {
+    comp.value as val then {
+      val.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then {
+        c.code as cd -> tgt.zweitttumorIcd = cd "SetM09";
+      } "MapM09Coding";
+    } "MapM09Val";
+  } "MapM09";
+
+  // M10: Zweittumor Diagnosedatum
+  src.component as comp where code.coding.exists(code = 'zweittumor-datum') then {
+    comp.value as val where $this.is(dateTime) -> tgt.zweitttumorDatum = val "SetM10";
+  } "MapM10";
+
+  // Gesamtbeurteilung -> Verlauf_Ereignis
+  // ConceptMap: V/T/K/B/R -> kein Ereignis (stabil); P -> 6; Y -> 1
+  src.value as val then {
+    val.coding as c where system.contains('verlauf-gesamtbeurteilung') then {
+      // P = Progression -> 6 (Progress)
+      c.code as cd where $this = 'P' -> tgt.ereignis = '6' "SetEreignisProgress";
+      // Y = Rezidiv -> 1 (Lokalrezidiv als Default)
+      c.code as cd where $this = 'Y' -> tgt.ereignis = '1' "SetEreignisRezidiv";
+    } "MapGesamtCoding";
+  } "MapGesamt";
 }
 
 // ============================================================================
