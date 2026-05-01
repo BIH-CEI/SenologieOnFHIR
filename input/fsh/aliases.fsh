@@ -9,6 +9,8 @@ Alias: $MII_PR_Onko_Strahlentherapie = https://www.medizininformatik-initiative.
 Alias: $MII_PR_Onko_Strahlentherapie_Bestrahlung = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-strahlentherapie-bestrahlung-strahlentherapie
 Alias: $MII_PR_Onko_Systemische_Therapie = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie
 Alias: $MII_PR_Onko_Systemische_Therapie_Medikation = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-systemische-therapie-medikation
+Alias: $MII_PR_Onko_Nebenwirkung = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-nebenwirkung-adverse-event
+Alias: $MII_PR_Onko_Genetische_Variante = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-genetische-variante
 
 // --- MII Onkologie CodeSystems / ValueSets ---
 Alias: $MII_CS_Onko_Residualstatus = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus
