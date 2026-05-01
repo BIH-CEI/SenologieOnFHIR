@@ -19,6 +19,19 @@
       "subject": {
         "reference": "placeholder"
       },
+      "reasonReference": [
+        {
+          "reference": "placeholder",
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+              }
+            ]
+          }
+        }
+      ],
       "status": "completed"
     },
     {
@@ -63,6 +76,55 @@
     }
   ],
   "item": [
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+            },
+            {
+              "url": "label",
+              "valueString": "ICD-10"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": false
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "bodySite.coding.first().display"
+            },
+            {
+              "url": "label",
+              "valueString": "Seite"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": true
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        }
+      ],
+      "linkId": "bezugsdiagnose",
+      "text": "Bezugsdiagnose (Seite)",
+      "type": "reference",
+      "required": true
+    },
     {
       "extension": [
         {

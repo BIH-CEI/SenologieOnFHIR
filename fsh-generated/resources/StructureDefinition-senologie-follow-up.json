@@ -6,7 +6,7 @@
   "name": "Senologie_FollowUp",
   "title": "BIH Senologie Follow-Up (Verlaufsmeldung)",
   "status": "draft",
-  "description": "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder.",
+  "description": "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder. Wird sowohl fuer Gesamtbeurteilung nach definitiver Therapie (D27) als auch fuer Nachsorge-Follow-Up (M06) verwendet — Unterscheidung ueber effectiveDateTime.",
   "fhirVersion": "4.0.1",
   "kind": "resource",
   "abstract": false,
@@ -15,6 +15,20 @@
   "derivation": "constraint",
   "differential": {
     "element": [
+      {
+        "id": "Observation.focus",
+        "path": "Observation.focus",
+        "short": "Bezugsdiagnose (beurteilte Condition)",
+        "comment": "Referenz auf die beurteilte Condition (Mammakarzinom). Bei bilateralem Karzinom wird die jeweilige Seite referenziert.",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+            ]
+          }
+        ]
+      },
       {
         "id": "Observation.effective[x]:effectiveDateTime",
         "path": "Observation.effective[x]",
@@ -42,6 +56,37 @@
           }
         ],
         "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]:valueCodeableConcept",
+        "path": "Observation.value[x]",
+        "sliceName": "valueCodeableConcept",
+        "short": "Gesamtbeurteilung Tumorstatus (D27)",
+        "comment": "Gesamtbeurteilung des Tumoransprechens: V=CR, T=PR, K=NC/SD, P=Progression, D=divergent, B=MR, R=CRr, Y=Rezidiv, U=unmoeglich, X=fehlend.",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:Tumor_Verlauf",
+        "path": "Observation.component",
+        "sliceName": "Tumor_Verlauf",
+        "short": "Lokaler Tumorstatus (M05)"
+      },
+      {
+        "id": "Observation.component:Lymphknoten_Verlauf",
+        "path": "Observation.component",
+        "sliceName": "Lymphknoten_Verlauf",
+        "short": "Lymphknoten-Tumorstatus (M06)"
+      },
+      {
+        "id": "Observation.component:Fernmetastasen_Verlauf",
+        "path": "Observation.component",
+        "sliceName": "Fernmetastasen_Verlauf",
+        "short": "Fernmetastasen-Tumorstatus (M07)"
       },
       {
         "id": "Observation.component:nachsorgeArt",

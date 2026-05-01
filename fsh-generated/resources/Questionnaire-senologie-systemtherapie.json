@@ -7,6 +7,34 @@
   "subjectType": [
     "Patient"
   ],
+  "contained": [
+    {
+      "resourceType": "Procedure",
+      "id": "postop-procedure-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+        ]
+      },
+      "subject": {
+        "reference": "placeholder"
+      },
+      "reasonReference": [
+        {
+          "reference": "placeholder",
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "completed"
+    }
+  ],
   "extension": [
     {
       "extension": [
@@ -23,6 +51,12 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#postop-procedure-template"
+      }
     }
   ],
   "item": [
@@ -31,9 +65,43 @@
         {
           "valueExpression": {
             "language": "application/x-fhir-query",
-            "expression": "Procedure"
+            "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
           },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+            },
+            {
+              "url": "label",
+              "valueString": "ICD-10"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": false
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "bodySite.coding.first().display"
+            },
+            {
+              "url": "label",
+              "valueString": "Seite"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": true
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
         }
       ],
       "item": [
@@ -139,9 +207,9 @@
           "required": false
         }
       ],
-      "linkId": "therapie-rahmen",
-      "text": "Therapie-Rahmen",
-      "type": "group",
+      "linkId": "bezugsdiagnose",
+      "text": "Bezugsdiagnose (Seite)",
+      "type": "reference",
       "required": true
     },
     {
@@ -257,38 +325,19 @@
           "text": "Ansprechen",
           "type": "choice",
           "required": false
-        },
-        {
-          "answerOption": [
-            {
-              "valueString": "Laufend"
-            },
-            {
-              "valueString": "Abgeschlossen"
-            },
-            {
-              "valueString": "Abgebrochen"
-            },
-            {
-              "valueString": "Unterbrochen"
-            }
-          ],
-          "linkId": "therapiestatus",
-          "text": "Therapiestatus",
-          "type": "choice",
-          "required": false
-        },
-        {
-          "linkId": "nebenwirkungen",
-          "text": "Nebenwirkungen",
-          "type": "text",
-          "required": false
         }
       ],
       "linkId": "therapieergebnis",
       "text": "Therapieergebnis",
       "type": "group",
       "required": false
+    },
+    {
+      "linkId": "syst-anmerkungen",
+      "text": "Anmerkungen",
+      "type": "text",
+      "required": false,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Procedure#Procedure.note.text"
     }
   ],
   "name": "QuestSystemtherapie",

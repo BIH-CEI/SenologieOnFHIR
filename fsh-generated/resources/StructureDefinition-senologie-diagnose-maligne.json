@@ -30,6 +30,34 @@
   "differential": {
     "element": [
       {
+        "id": "Condition.category",
+        "path": "Condition.category",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "open"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Condition.category:tumormanifestation",
+        "path": "Condition.category",
+        "sliceName": "tumormanifestation",
+        "short": "Tumormanifestation (Primärtumor/Rezidiv/LK/FM)",
+        "definition": "Klassifikation der Tumormanifestation bei Diagnosestellung. Mehrfachauswahl möglich, z.B. Primärtumor + regionäre Lymphknotenmetastasen.",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumormanifestation"
+        }
+      },
+      {
         "id": "Condition.code",
         "path": "Condition.code",
         "short": "Diagnose",
@@ -44,6 +72,28 @@
           "strength": "required",
           "valueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sct"
         }
+      },
+      {
+        "id": "Condition.code.coding:icd11",
+        "path": "Condition.code.coding",
+        "sliceName": "icd11",
+        "short": "ICD-11 Code (optional, Dual-Coding)",
+        "min": 0,
+        "max": "1",
+        "patternCoding": {
+          "system": "http://id.who.int/icd/release/11/mms"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Condition.code.coding:icd11.system",
+        "path": "Condition.code.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Condition.code.coding:icd11.code",
+        "path": "Condition.code.coding.code",
+        "min": 1
       },
       {
         "id": "Condition.code.coding:senologie",

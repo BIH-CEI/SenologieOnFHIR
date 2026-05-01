@@ -22,23 +22,18 @@ Usage: #definition
 * experimental = true
 * subjectType = #Patient
 
-<<<<<<< HEAD
 // ---------- Contained Procedure (Extraction Template) ----------
-* contained = procedure-template
+* contained = postop-procedure-template
 
 // ---------- SDC Extensions ----------
-=======
-// Launch Context
->>>>>>> polecat-3/se-yir-revisionsop-sm
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
 * extension[=].extension[+].url = "name"
 * extension[=].extension[=].valueCoding = http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext#patient
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
 
-<<<<<<< HEAD
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].valueReference = Reference(procedure-template)
+* extension[=].valueReference = Reference(postop-procedure-template)
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Procedure-Pfad):
@@ -52,18 +47,6 @@ Usage: #definition
 //   syst-substanz        → Procedure.note (Substanzangabe)
 //   syst-status          → Procedure.outcome
 //   syst-anmerkungen     → Procedure.note
-=======
-// ============================================================
-// Group 1: Therapie-Rahmen (Procedure)
-// ============================================================
-* item[+].linkId = "therapie-rahmen"
-* item[=].text = "Therapie-Rahmen"
-* item[=].type = #group
-* item[=].required = true
-* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-* item[=].extension[=].valueExpression.language = #application/x-fhir-query
-* item[=].extension[=].valueExpression.expression = "Procedure"
->>>>>>> polecat-3/se-yir-revisionsop-sm
 
 // Bezugsdiagnose: SDC Condition-Auswahl (bei bilateralem Karzinom)
 * item[+].linkId = "bezugsdiagnose"
@@ -225,7 +208,6 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueString = "Stable Disease"
 * item[=].item[=].answerOption[+].valueString = "Progressive Disease"
 
-<<<<<<< HEAD
 // Anmerkungen
 * item[+].linkId = "syst-anmerkungen"
 * item[=].text = "Anmerkungen"
@@ -234,86 +216,4 @@ Usage: #definition
 * item[=].definition = "http://hl7.org/fhir/StructureDefinition/Procedure#Procedure.note.text"
 
 
-// ============================================================
-// Contained Procedure: Template für Template-based Extraction
-// ============================================================
-
-Instance: procedure-template
-InstanceOf: Procedure
-Usage: #inline
-
-* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
-* status = #completed
-* category = $SCT#18629005 "Administration of medication"
-
-// reasonReference -> Bezugsdiagnose (Condition) aus SDC Choice Selection
-* reasonReference.reference = "placeholder"
-* reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* reasonReference.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
-
-* code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding.code.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.code"
-* code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding.system.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.system"
-* code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding.display.extension.valueString = "item.where(linkId='syst-therapieart').answer.valueCoding.display"
-
-* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.reference.extension.valueString = "'Patient/' + %patient.id"
-
-* performedPeriod.start = "2024-01-01"
-* performedPeriod.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* performedPeriod.start.extension.valueString = "item.where(linkId='syst-beginn').answer.valueDate"
-* performedPeriod.end = "2024-12-31"
-* performedPeriod.end.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* performedPeriod.end.extension.valueString = "item.where(linkId='syst-ende').answer.valueDate"
-
-* outcome.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* outcome.coding.code.extension.valueString = "item.where(linkId='syst-status').answer.valueCoding.code"
-* outcome.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* outcome.coding.system.extension.valueString = "item.where(linkId='syst-status').answer.valueCoding.system"
-* outcome.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* outcome.coding.display.extension.valueString = "item.where(linkId='syst-status').answer.valueCoding.display"
-
-* usedCode.text = "Therapieprotokoll"
-* usedCode.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* usedCode.text.extension.valueString = "item.where(linkId='syst-protokoll').answer.valueString"
-
-* note.text = "Anmerkungen"
-* note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* note.text.extension.valueString = "item.where(linkId='syst-anmerkungen').answer.valueString"
-
-// --- Intention (MII Onko Extension) ---
-* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-intention"
-* extension[=].valueCodeableConcept.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* extension[=].valueCodeableConcept.coding.code.extension.valueString = "item.where(linkId='syst-intention').answer.valueCoding.code"
-* extension[=].valueCodeableConcept.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* extension[=].valueCodeableConcept.coding.system.extension.valueString = "item.where(linkId='syst-intention').answer.valueCoding.system"
-* extension[=].valueCodeableConcept.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* extension[=].valueCodeableConcept.coding.display.extension.valueString = "item.where(linkId='syst-intention').answer.valueCoding.display"
-
-// --- Stellung zur OP (MII Onko Extension) ---
-* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-therapie-stellungzurop"
-* extension[=].valueCodeableConcept.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* extension[=].valueCodeableConcept.coding.code.extension.valueString = "item.where(linkId='syst-stellung').answer.valueCoding.code"
-* extension[=].valueCodeableConcept.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* extension[=].valueCodeableConcept.coding.system.extension.valueString = "item.where(linkId='syst-stellung').answer.valueCoding.system"
-* extension[=].valueCodeableConcept.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* extension[=].valueCodeableConcept.coding.display.extension.valueString = "item.where(linkId='syst-stellung').answer.valueCoding.display"
-=======
-// Therapiestatus
-* item[=].item[+].linkId = "therapiestatus"
-* item[=].item[=].text = "Therapiestatus"
-* item[=].item[=].type = #choice
-* item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "Laufend"
-* item[=].item[=].answerOption[+].valueString = "Abgeschlossen"
-* item[=].item[=].answerOption[+].valueString = "Abgebrochen"
-* item[=].item[=].answerOption[+].valueString = "Unterbrochen"
-
-// Nebenwirkungen
-* item[=].item[+].linkId = "nebenwirkungen"
-* item[=].item[=].text = "Nebenwirkungen"
-* item[=].item[=].type = #text
-* item[=].item[=].required = false
->>>>>>> polecat-3/se-yir-revisionsop-sm
+// =====================================================

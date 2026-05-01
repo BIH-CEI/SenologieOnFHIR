@@ -3,18 +3,331 @@
   "id": "senologie-tumorboard",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard",
   "title": "Fragebogen: Tumorboard Empfehlung",
-  "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Definition-based Extraction mit dem Senologie_Tumorboard_Empfehlung-Profil (CarePlan) als Ziel.",
+  "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Template-based Extraction mit contained CarePlan und templateExtractValue-Annotationen.",
   "subjectType": [
     "Patient"
   ],
-  "extension": [
+  "contained": [
     {
-      "valueExpression": {
-        "language": "application/x-fhir-query",
-        "expression": "CarePlan"
+      "resourceType": "CarePlan",
+      "id": "careplan-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+        ]
       },
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-    },
+      "addresses": [
+        {
+          "reference": "placeholder",
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+              }
+            ]
+          }
+        }
+      ],
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "'Patient/' + %patient.id"
+            }
+          ]
+        }
+      },
+      "period": {
+        "start": "2024-01-01",
+        "_start": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "item.where(linkId='tumorboard-datum').answer.valueDate"
+            }
+          ]
+        }
+      },
+      "activity": [
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "387713003",
+                  "system": "http://snomed.info/sct",
+                  "display": "Surgical procedure (procedure)"
+                }
+              ]
+            },
+            "description": "Operative Therapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-op').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "108290001",
+                  "system": "http://snomed.info/sct",
+                  "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+                }
+              ]
+            },
+            "description": "Strahlentherapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-strahlentherapie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "169413002",
+                  "system": "http://snomed.info/sct",
+                  "display": "Hormone therapy (procedure)"
+                }
+              ]
+            },
+            "description": "Endokrine Therapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-endokrin').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "385786002",
+                  "system": "http://snomed.info/sct",
+                  "display": "Chemotherapy care (regime/therapy)"
+                }
+              ]
+            },
+            "description": "Chemotherapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-chemotherapie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "416608005",
+                  "system": "http://snomed.info/sct",
+                  "display": "Drug therapy"
+                }
+              ]
+            },
+            "description": "Zielgerichtete Therapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-zielgerichtet').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "MedicationRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "76334006",
+                  "system": "http://snomed.info/sct",
+                  "display": "Immunotherapy (procedure)"
+                }
+              ]
+            },
+            "description": "Immuntherapie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-immuntherapie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "165197003",
+                  "system": "http://snomed.info/sct",
+                  "display": "Diagnostic assessment (procedure)"
+                }
+              ]
+            },
+            "description": "Weitere Diagnostik",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-diagnostik').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "110465008",
+                  "system": "http://snomed.info/sct",
+                  "display": "Clinical trial (procedure)"
+                }
+              ]
+            },
+            "description": "Klinische Studie",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-studie').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "ServiceRequest",
+            "code": {
+              "coding": [
+                {
+                  "code": "405825005",
+                  "system": "http://snomed.info/sct",
+                  "display": "Molecular genetic test"
+                }
+              ]
+            },
+            "description": "Genetische Untersuchung",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-genetik').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        },
+        {
+          "detail": {
+            "kind": "Appointment",
+            "code": {
+              "coding": [
+                {
+                  "code": "390906007",
+                  "system": "http://snomed.info/sct",
+                  "display": "Follow-up encounter (procedure)"
+                }
+              ]
+            },
+            "description": "Nachsorge",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='empfehlung-nachsorge').answer.valueString"
+                }
+              ]
+            },
+            "status": "not-started"
+          }
+        }
+      ],
+      "note": [
+        {
+          "text": "Sonstige Anmerkungen",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='empfehlung-sonstiges').answer.valueString"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "active",
+      "intent": "plan",
+      "title": "Tumorboard Empfehlung",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='tumorboard-titel').answer.valueString"
+          }
+        ]
+      },
+      "description": "Zusammenfassung",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='tumorboard-beschreibung').answer.valueString"
+          }
+        ]
+      }
+    }
+  ],
+  "extension": [
     {
       "extension": [
         {
@@ -30,9 +343,64 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#careplan-template"
+      }
     }
   ],
   "item": [
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+            },
+            {
+              "url": "label",
+              "valueString": "ICD-10"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": false
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "bodySite.coding.first().display"
+            },
+            {
+              "url": "label",
+              "valueString": "Seite"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": true
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        }
+      ],
+      "linkId": "bezugsdiagnose",
+      "text": "Bezugsdiagnose (Seite)",
+      "type": "reference",
+      "required": true
+    },
     {
       "linkId": "tumorboard-datum",
       "text": "Datum des Tumorboards",

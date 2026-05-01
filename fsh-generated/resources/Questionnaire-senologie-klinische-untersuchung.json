@@ -3,18 +3,176 @@
   "id": "senologie-klinische-untersuchung",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung",
   "title": "Fragebogen: Klinische Untersuchung Mamma",
-  "description": "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Definition-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel.",
+  "description": "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Template-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel. Das Extraction-Template liegt unter input/resources/Questionnaire-senologie-klinische-untersuchung-template.json.",
   "subjectType": [
     "Patient"
   ],
-  "extension": [
+  "contained": [
     {
-      "valueExpression": {
-        "language": "application/x-fhir-query",
-        "expression": "Observation"
+      "resourceType": "Observation",
+      "id": "observation-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
+        ]
       },
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-    },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "'Patient/' + %patient.id"
+            }
+          ]
+        }
+      },
+      "focus": [
+        {
+          "reference": "placeholder",
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+              }
+            ]
+          }
+        }
+      ],
+      "bodySite": {
+        "coding": [
+          {
+            "_code": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='seitenlokalisation').answer.valueCoding.code"
+                }
+              ]
+            },
+            "_system": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='seitenlokalisation').answer.valueCoding.system"
+                }
+              ]
+            },
+            "_display": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "item.where(linkId='seitenlokalisation').answer.valueCoding.display"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "component": [
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "118242002",
+                "system": "http://snomed.info/sct",
+                "display": "Finding by palpation"
+              }
+            ]
+          },
+          "valueString": "Palpationsbefund",
+          "_valueString": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='palpationsbefund').answer.valueString"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "115951000119105",
+                "system": "http://snomed.info/sct",
+                "display": "Breast symptom of change in skin"
+              }
+            ]
+          },
+          "valueString": "Hautveränderungen",
+          "_valueString": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='hautveraenderungen').answer.valueString"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "248819006",
+                "system": "http://snomed.info/sct",
+                "display": "Nipple finding"
+              }
+            ]
+          },
+          "valueString": "Mamillenbefund",
+          "_valueString": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='mamillenbefund').answer.valueString"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "301782006",
+                "system": "http://snomed.info/sct",
+                "display": "Finding of lymph node of axillary region"
+              }
+            ]
+          },
+          "valueString": "Lymphknotenstatus",
+          "_valueString": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='lymphknotenstatus').answer.valueString"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "final",
+      "code": {
+        "coding": [
+          {
+            "code": "32422-8",
+            "system": "http://loinc.org",
+            "display": "Physical findings of Breast"
+          }
+        ]
+      },
+      "effectiveDateTime": "2024-01-01",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "item.where(linkId='untersuchung-datum').answer.valueDate"
+          }
+        ]
+      }
+    }
+  ],
+  "extension": [
     {
       "extension": [
         {
@@ -30,14 +188,70 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
+      "valueReference": {
+        "reference": "#observation-template"
+      }
     }
   ],
   "item": [
     {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+            },
+            {
+              "url": "label",
+              "valueString": "ICD-10"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": false
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        },
+        {
+          "extension": [
+            {
+              "url": "path",
+              "valueString": "bodySite.coding.first().display"
+            },
+            {
+              "url": "label",
+              "valueString": "Seite"
+            },
+            {
+              "url": "forDisplay",
+              "valueBoolean": true
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+        }
+      ],
+      "linkId": "bezugsdiagnose",
+      "text": "Bezugsdiagnose (Seite)",
+      "type": "reference",
+      "required": true
+    },
+    {
       "linkId": "untersuchung-datum",
       "text": "Untersuchungsdatum",
       "type": "date",
-      "required": true
+      "required": true,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.effectiveDateTime"
     },
     {
       "answerOption": [
@@ -66,7 +280,8 @@
       "linkId": "seitenlokalisation",
       "text": "Untersuchte Seite",
       "type": "choice",
-      "required": true
+      "required": true,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.bodySite"
     },
     {
       "code": [
@@ -79,7 +294,8 @@
       "linkId": "palpationsbefund",
       "text": "Palpationsbefund",
       "type": "text",
-      "required": false
+      "required": false,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
     },
     {
       "code": [
@@ -92,7 +308,8 @@
       "linkId": "hautveraenderungen",
       "text": "Hautveränderungen",
       "type": "text",
-      "required": false
+      "required": false,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
     },
     {
       "code": [
@@ -105,7 +322,8 @@
       "linkId": "mamillenbefund",
       "text": "Mamillenbefund (Retraktion, Sekretion, Ekzem)",
       "type": "text",
-      "required": false
+      "required": false,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
     },
     {
       "code": [
@@ -118,7 +336,8 @@
       "linkId": "lymphknotenstatus",
       "text": "Klinischer Lymphknotenstatus (axillär)",
       "type": "text",
-      "required": false
+      "required": false,
+      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
     }
   ],
   "name": "QuestKlinischeUntersuchung",
