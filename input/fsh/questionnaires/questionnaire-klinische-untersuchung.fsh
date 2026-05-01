@@ -36,12 +36,36 @@ Usage: #definition
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Observation-Pfad):
+//   bezugsdiagnose       → Observation.focus (Condition-Referenz)
 //   untersuchung-datum   → Observation.effectiveDateTime
 //   seitenlokalisation   → Observation.bodySite
 //   palpationsbefund     → Observation.component[palpationsbefund].valueString
 //   hautveraenderungen   → Observation.component[hautveraenderungen].valueString
 //   mamillenbefund       → Observation.component[mamillenbefund].valueString
 //   lymphknotenstatus    → Observation.component[lymphknotenstatus].valueString
+
+// Bezugsdiagnose: SDC Condition-Auswahl (bei bilateralem Karzinom)
+* item[+].linkId = "bezugsdiagnose"
+* item[=].text = "Bezugsdiagnose (Seite)"
+* item[=].type = #reference
+* item[=].required = true
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+* item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].extension[=].valueExpression.expression = "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+* item[=].extension[=].extension[+].url = "path"
+* item[=].extension[=].extension[=].valueString = "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+* item[=].extension[=].extension[+].url = "label"
+* item[=].extension[=].extension[=].valueString = "ICD-10"
+* item[=].extension[=].extension[+].url = "forDisplay"
+* item[=].extension[=].extension[=].valueBoolean = false
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+* item[=].extension[=].extension[+].url = "path"
+* item[=].extension[=].extension[=].valueString = "bodySite.coding.first().display"
+* item[=].extension[=].extension[+].url = "label"
+* item[=].extension[=].extension[=].valueString = "Seite"
+* item[=].extension[=].extension[+].url = "forDisplay"
+* item[=].extension[=].extension[=].valueBoolean = true
 
 // Datum
 * item[+].linkId = "untersuchung-datum"
@@ -107,6 +131,11 @@ Usage: #inline
 
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "'Patient/' + %patient.id"
+
+// focus -> Bezugsdiagnose (Condition) aus SDC Choice Selection
+* focus.reference = "placeholder"
+* focus.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* focus.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 * effectiveDateTime = "2024-01-01"
 * effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
