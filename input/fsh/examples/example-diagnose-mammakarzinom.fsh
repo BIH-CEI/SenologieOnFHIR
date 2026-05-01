@@ -8,6 +8,10 @@ Usage: #example
 * verificationStatus.coding[+] = http://terminology.hl7.org/CodeSystem/condition-ver-status#confirmed
 * verificationStatus.coding[+] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primärtumors"
 
+// Tumormanifestation (Mehrfachauswahl: Primärtumor + regionäre LK)
+* category[tumormanifestation][+] = https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumormanifestation#primaertumor "Primärtumor"
+* category[tumormanifestation][+] = https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumormanifestation#regionaere-lk "Regionäre Lymphknotenmetastasen"
+
 // Diagnosekode SNOMED
 * code.coding[sct] = $SCT#254837009 "Malignant neoplasm of breast"
 * code.coding[icd10-gm].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
