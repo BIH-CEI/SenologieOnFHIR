@@ -96,11 +96,35 @@ jobs:
           chmod +x _genonce.sh
           ./_genonce.sh -tx http://localhost:8090/fhir
 
+      - name: Cache Java Validator
+        id: cache-validator
+        uses: actions/cache@v4
+        with:
+          path: validator_cli.jar
+          key: validator-6.5.7
+
+      - name: Download Java Validator
+        if: steps.cache-validator.outputs.cache-hit != 'true'
+        run: |
+          wget -q https://github.com/hapifhir/org.hl7.fhir.core/releases/download/6.5.7/validator_cli.jar -O validator_cli.jar
+
+      - name: Run Java Validator
+        if: always()
+        run: |
+          IG_DEPS=$(jq -r '(.dependencies) | to_entries | map("-ig " + .key + "#" + .value) | join(" ")' package.json)
+          java -jar validator_cli.jar \
+            fsh-generated/resources/*.json \
+            -version 4.0 \
+            -output-style compact \
+            $IG_DEPS \
+            -ig fsh-generated/resources \
+            -tx http://localhost:8090/fhir || true
+
       - name: Render Validation Results
         if: always()
-        uses: patrick-werner/validation-outcome-markdown-renderer@main
+        uses: patrick-werner/validation-outcome-markdown-renderer@v1
         with:
-          bundle-file: output/qa.json
+          bundle-file: output/validation.json
           include: errors
           filters: |
             # StructureMap BackboneElement paths (IG Publisher limitation)
