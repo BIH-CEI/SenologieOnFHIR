@@ -16,7 +16,121 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install SUSHI
+        run: npm install -g fsh-sushi
+
+      - name: Cache FHIR packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.fhir/packages
+          key: fhir-packages-${{ hashFiles('sushi-config.yaml') }}
+          restore-keys: fhir-packages-
+
+      - name: Run SUSHI
+        run: sushi .
+
+      - name: Setup TX Proxy (MII Ontoserver)
+        env:
+          MII_TERMSERV_CERT: ${{ secrets.MII_TERMSERV_CERT }}
+          MII_TERMSERV_PW: ${{ secrets.MII_TERMSERV_PW }}
+        run: |
+          mkdir -p nginx/certs
+          curl -sSL -o nginx/nginx.conf \
+            https://raw.githubusercontent.com/medizininformatik-initiative/kerndatensatz-meta/refs/heads/master/.github/workflows/nginx.conf
+          echo "$MII_TERMSERV_CERT" | base64 -d > nginx/certs/client.p12
+          openssl pkcs12 -in nginx/certs/client.p12 -clcerts -nokeys \
+            -out nginx/certs/client-cert.pem -passin pass:$MII_TERMSERV_PW
+          openssl pkcs12 -in nginx/certs/client.p12 -nocerts \
+            -out nginx/certs/client-key-encrypted.key \
+            -passin pass:$MII_TERMSERV_PW -passout pass:$MII_TERMSERV_PW
+          openssl rsa -in nginx/certs/client-key-encrypted.key \
+            -out nginx/certs/client-key.key -passin pass:$MII_TERMSERV_PW
+          docker run -d --name nginx-proxy \
+            -v $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
+            -v $PWD/nginx/certs:/etc/nginx/certs:ro \
+            -p 8090:80 nginx:alpine
+          sleep 5
+          for i in {1..5}; do
+            if curl --silent --fail http://localhost:8090/fhir/metadata; then
+              echo "NGINX TX proxy is ready."
+              break
+            fi
+            echo "Waiting for NGINX... attempt $i"
+            sleep 2
+          done
+
+      - name: Cache Java Validator
+        id: cache-validator
+        uses: actions/cache@v4
+        with:
+          path: validator_cli.jar
+          key: validator-6.5.7
+
+      - name: Download Java Validator
+        if: steps.cache-validator.outputs.cache-hit != 'true'
+        run: |
+          wget -q https://github.com/hapifhir/org.hl7.fhir.core/releases/download/6.5.7/validator_cli.jar -O validator_cli.jar
+
+      - name: Run Java Validator
+        run: |
+          IG_DEPS=$(jq -r '(.dependencies) | to_entries | map("-ig " + .key + "#" + .value) | join(" ")' package.json)
+          java -jar validator_cli.jar \
+            fsh-generated/resources/*.json \
+            -version 4.0 \
+            -output-style compact \
+            $IG_DEPS \
+            -ig fsh-generated/resources \
+            -tx http://localhost:8090/fhir || true
+
+      - name: Render Validation Results
+        if: always()
+        uses: patrick-werner/validation-outcome-markdown-renderer@v1
+        with:
+          bundle-file: validation.json
+          include: errors
+          filters: |
+            # StructureMap BackboneElement paths (IG Publisher limitation)
+            |SM_TARGET_PATH_INVALID||
+            |SM_SOURCE_PATH_INVALID||
+            |SM_RULEGROUP_NOT_FOUND||
+            |SM_TARGET_CONTEXT_UNKNOWN||
+            # OPS version undefined (MII Onko upstream)
+            ||version 'undefined' in the ValueSet*|
+            # TX-Proxy validate-code issues
+            ||Type-level request to $validate-code*|
+            ||A code/system pair must be provided*|
+            # Known SNOMED/LOINC/RadLex unknown codes (TX server version)
+            |UNKNOWN_CODE_IN_SYSTEM||
+            # Slicing discriminator (Follow-Up redesign pending)
+            ||Slicing kann nicht ausgewertet werden*|Observation.component*
+
+      - name: Upload validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-output
+          path: |
+            txlog.html
+            validation.html
+            validation.json
+          retention-days: 7
+
   build:
+    needs: validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -83,7 +197,7 @@ jobs:
             -p 8090:80 nginx:alpine
           sleep 5
           for i in {1..5}; do
-            if curl --head --silent --fail http://localhost:8090; then
+            if curl --silent --fail http://localhost:8090/fhir/metadata; then
               echo "NGINX TX proxy is ready."
               break
             fi
@@ -95,52 +209,6 @@ jobs:
         run: |
           chmod +x _genonce.sh
           ./_genonce.sh -tx http://localhost:8090/fhir
-
-      - name: Cache Java Validator
-        id: cache-validator
-        uses: actions/cache@v4
-        with:
-          path: validator_cli.jar
-          key: validator-6.5.7
-
-      - name: Download Java Validator
-        if: steps.cache-validator.outputs.cache-hit != 'true'
-        run: |
-          wget -q https://github.com/hapifhir/org.hl7.fhir.core/releases/download/6.5.7/validator_cli.jar -O validator_cli.jar
-
-      - name: Run Java Validator
-        if: always()
-        run: |
-          IG_DEPS=$(jq -r '(.dependencies) | to_entries | map("-ig " + .key + "#" + .value) | join(" ")' package.json)
-          java -jar validator_cli.jar \
-            fsh-generated/resources/*.json \
-            -version 4.0 \
-            -output-style compact \
-            $IG_DEPS \
-            -ig fsh-generated/resources \
-            -tx http://localhost:8090/fhir || true
-
-      - name: Render Validation Results
-        if: always()
-        uses: patrick-werner/validation-outcome-markdown-renderer@v1
-        with:
-          bundle-file: output/validation.json
-          include: errors
-          filters: |
-            # StructureMap BackboneElement paths (IG Publisher limitation)
-            |SM_TARGET_PATH_INVALID||
-            |SM_SOURCE_PATH_INVALID||
-            |SM_RULEGROUP_NOT_FOUND||
-            |SM_TARGET_CONTEXT_UNKNOWN||
-            # OPS version undefined (MII Onko upstream)
-            ||version 'undefined' in the ValueSet*|
-            # TX-Proxy validate-code issues
-            ||Type-level request to $validate-code*|
-            ||A code/system pair must be provided*|
-            # Known SNOMED/LOINC/RadLex unknown codes (TX server version)
-            |UNKNOWN_CODE_IN_SYSTEM||
-            # Slicing discriminator (Follow-Up redesign pending)
-            ||Slicing kann nicht ausgewertet werden*|Observation.component*
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
