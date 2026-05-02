@@ -61,21 +61,46 @@ jobs:
           curl -L -o input-cache/publisher.jar \
             https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar
 
+      - name: Setup TX Proxy (MII Ontoserver)
+        env:
+          MII_TERMSERV_CERT: ${{ secrets.MII_TERMSERV_CERT }}
+          MII_TERMSERV_PW: ${{ secrets.MII_TERMSERV_PW }}
+        run: |
+          mkdir -p nginx/certs
+          curl -sSL -o nginx/nginx.conf \
+            https://raw.githubusercontent.com/medizininformatik-initiative/kerndatensatz-meta/refs/heads/master/.github/workflows/nginx.conf
+          echo "$MII_TERMSERV_CERT" | base64 -d > nginx/certs/client.p12
+          openssl pkcs12 -in nginx/certs/client.p12 -clcerts -nokeys \
+            -out nginx/certs/client-cert.pem -passin pass:$MII_TERMSERV_PW
+          openssl pkcs12 -in nginx/certs/client.p12 -nocerts \
+            -out nginx/certs/client-key-encrypted.key \
+            -passin pass:$MII_TERMSERV_PW -passout pass:$MII_TERMSERV_PW
+          openssl rsa -in nginx/certs/client-key-encrypted.key \
+            -out nginx/certs/client-key.key -passin pass:$MII_TERMSERV_PW
+          docker run -d --name nginx-proxy \
+            -v $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
+            -v $PWD/nginx/certs:/etc/nginx/certs:ro \
+            -p 8090:80 nginx:alpine
+          sleep 5
+          for i in {1..5}; do
+            if curl --head --silent --fail http://localhost:8090; then
+              echo "NGINX TX proxy is ready."
+              break
+            fi
+            echo "Waiting for NGINX... attempt $i"
+            sleep 2
+          done
+
       - name: Build IG
         run: |
           chmod +x _genonce.sh
-          ./_genonce.sh
-
-      - name: Run FHIR Validator on output
-        if: always()
-        run: |
-          java -jar input-cache/publisher.jar -ig . -tx http://tx.fhir.org -validation-output output/validation.json || true
+          ./_genonce.sh -tx http://localhost:8090/fhir
 
       - name: Render Validation Results
         if: always()
         uses: patrick-werner/validation-outcome-markdown-renderer@main
         with:
-          bundle-file: output/validation.json
+          bundle-file: output/qa.json
           include: errors
           filters: |
             # StructureMap BackboneElement paths (IG Publisher limitation)
