@@ -31,7 +31,7 @@ jobs:
           node-version: '20'
 
       - name: Install SUSHI
-        run: npm install -g fsh-sushi
+        run: npm install -g fsh-sushi@${{ vars.SUSHI_VERSION || '3.19.0' }}
 
       - name: Cache FHIR packages
         uses: actions/cache@v4
@@ -78,22 +78,23 @@ jobs:
         uses: actions/cache@v4
         with:
           path: validator_cli.jar
-          key: validator-6.5.7
+          key: validator-${{ vars.JAVA_VALIDATOR_VERSION || '6.5.7' }}
 
       - name: Download Java Validator
         if: steps.cache-validator.outputs.cache-hit != 'true'
         run: |
-          wget -q https://github.com/hapifhir/org.hl7.fhir.core/releases/download/6.5.7/validator_cli.jar -O validator_cli.jar
+          JAVA_VALIDATOR_VERSION="${{ vars.JAVA_VALIDATOR_VERSION || '6.5.7' }}"
+          wget -q "https://github.com/hapifhir/org.hl7.fhir.core/releases/download/${JAVA_VALIDATOR_VERSION}/validator_cli.jar" -O validator_cli.jar
 
       - name: Run Java Validator
         run: |
           IG_DEPS=$(jq -r '(.dependencies) | to_entries | map("-ig " + .key + "#" + .value) | join(" ")' package.json)
+          UNESCAPED_IG_DEPS=$(echo $IG_DEPS | tr -d '"')
           java -jar validator_cli.jar \
             fsh-generated/resources/*.json \
             -version 4.0 \
-            -output-style compact \
-            -output validation.json \
-            $IG_DEPS \
+            ${{ vars.JAVA_VALIDATION_OPTIONS || '-output-style compact -advisor-file advisor.json -resolution-context file:fsh-generated/resources/ -show-message-ids -txLog txlog.html -forPublication -verbose -authorise-non-conformant-tx-servers -html-output validation.html -output validation.json' }} \
+            $UNESCAPED_IG_DEPS \
             -ig fsh-generated/resources \
             -tx http://localhost:8090/fhir || true
 
@@ -146,7 +147,7 @@ jobs:
           node-version: '20'
 
       - name: Install SUSHI
-        run: npm install -g fsh-sushi
+        run: npm install -g fsh-sushi@${{ vars.SUSHI_VERSION || '3.19.0' }}
 
       - uses: ruby/setup-ruby@v1
         with:
