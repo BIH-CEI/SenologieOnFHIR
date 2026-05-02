@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  checks: write
 
 concurrency:
   group: pages
@@ -64,6 +65,33 @@ jobs:
         run: |
           chmod +x _genonce.sh
           ./_genonce.sh
+
+      - name: Run FHIR Validator on output
+        if: always()
+        run: |
+          java -jar input-cache/publisher.jar -ig . -tx http://tx.fhir.org -validation-output output/validation.json || true
+
+      - name: Render Validation Results
+        if: always()
+        uses: patrick-werner/validation-outcome-markdown-renderer@main
+        with:
+          bundle-file: output/validation.json
+          include: errors
+          filters: |
+            # StructureMap BackboneElement paths (IG Publisher limitation)
+            |SM_TARGET_PATH_INVALID||
+            |SM_SOURCE_PATH_INVALID||
+            |SM_RULEGROUP_NOT_FOUND||
+            |SM_TARGET_CONTEXT_UNKNOWN||
+            # OPS version undefined (MII Onko upstream)
+            ||version 'undefined' in the ValueSet*|
+            # TX-Proxy validate-code issues
+            ||Type-level request to $validate-code*|
+            ||A code/system pair must be provided*|
+            # Known SNOMED/LOINC/RadLex unknown codes (TX server version)
+            |UNKNOWN_CODE_IN_SYSTEM||
+            # Slicing discriminator (Follow-Up redesign pending)
+            ||Slicing kann nicht ausgewertet werden*|Observation.component*
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
