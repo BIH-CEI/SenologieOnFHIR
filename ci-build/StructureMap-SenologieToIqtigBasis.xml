@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToIqtigBasis"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToIqtigBasis</b></p><a name="SenologieToIqtigBasis"> </a><a name="hcSenologieToIqtigBasis"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis<span style="color: navy">&quot; = &quot;</span>SenologieToIqtigBasis<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/patient.html" title="Patient">http://hl7.org/fhir/StructureDefinition/Patient</a><span style="color: navy">&quot; </span><b>alias </b>Patient <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/encounter.html" title="Encounter">http://hl7.org/fhir/StructureDefinition/Encounter</a><span style="color: navy">&quot; </span><b>alias </b>Encounter <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/organization.html" title="Organization">http://hl7.org/fhir/StructureDefinition/Organization</a><span style="color: navy">&quot; </span><b>alias </b>Organization <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-iqtig-mammachirurgie-181.html" title="IQTIG QS 18.1 Mammachirurgie (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style="color: navy">&quot; </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
+<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>
+<span style="color: navy">// </span><span style="color: green">errors. The element names are correct per the IQTIG 18.1 Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Teildatensatz Basis (B): Patient + Encounter + Organization -&gt; B:*</span>
+<span style="color: navy">// </span><span style="color: green">Enthaelt die administrativen und demografischen Pflichtfelder fuer die</span>
+<span style="color: navy">// </span><span style="color: green">IQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,</span>
+<span style="color: navy">// </span><span style="color: green">Geschlecht, Aufnahme/Entlassung).</span>
+<span style="color: navy">// </span><span style="color: green">Die Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle</span>
+<span style="color: navy">// </span><span style="color: green">uebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapBasis<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">--- Einrichtung (aus Organization) ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Organization)<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">org</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">B:IKNRKH - Institutionskennzeichen (IKNR)</span>
+      org.identifier<b> as </b><span style="color: maroon">id</span><b> where </b>system = 'https://fhir.de/sid/arge-ik/iknr'<b> then</b><span style="color: navy"> {
+</span>        id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.institutionskennzeichen = <span style="color: maroon">v</span> <i>&quot;SetIKNRKH&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;FilterIKNR&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">B:ENTLSTANDORT - Standort-ID</span>
+      org.identifier<b> as </b><span style="color: maroon">id</span><b> where </b>system = 'http://fhir.de/sid/standortnummer'<b> then</b><span style="color: navy"> {
+</span>        id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.entlassenderStandort = <span style="color: maroon">v</span> <i>&quot;SetStandort&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;FilterStandort&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">B:BSNR - Betriebsstaettennummer (ambulant)</span>
+      org.identifier<b> as </b><span style="color: maroon">id</span><b> where </b>system = 'http://fhir.de/sid/kbv/bsnr'<b> then</b><span style="color: navy"> {
+</span>        id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.betriebsstaettennummer = <span style="color: maroon">v</span> <i>&quot;SetBSNR&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;FilterBSNR&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;OrgContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryOrganization&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Datensatzversion (fest fuer diesen Mapper) ---</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.datensatzVersion = <span style="color: blue">'18.1_2024_V05'</span> <i>&quot;SetDatensatzVersion&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Patient ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Patient)<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">patient</span><b> then </b>MapBasisPatient<span style="color: navy">(</span><span style="color: maroon">patient</span><span style="color: navy">, </span><span style="color: maroon">tgt</span><span style="color: navy">)</span> <i>&quot;CallMapBasisPatient&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryPatient&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Encounter (Aufnahme/Entlassung) ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Encounter)<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">encounter</span><b> then </b>MapBasisEncounter<span style="color: navy">(</span><span style="color: maroon">encounter</span><span style="color: navy">, </span><span style="color: maroon">tgt</span><span style="color: navy">)</span> <i>&quot;CallMapBasisEncounter&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryEncounter&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Patient -&gt; B:VERSICHERTENIDNEU, B:GEBDATUM, B:GESCHLECHT, B:PLZ</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapBasisPatient<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Patient, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">B:VERSICHERTENIDNEU - Pseudonymisierte Versicherten-ID</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> where </b>system = 'http://fhir.de/sid/gkv/kvid-10'<b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.pseudonymId = <span style="color: maroon">v</span> <i>&quot;SetPseudonymId&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapPseudonymId&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Fallback: aus pseudonymisierter ID mit einrichtungsspezifischem System</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> where </b>system.contains('pseudonym') or system.contains('pid')<b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.pseudonymId = <span style="color: maroon">v</span> <i>&quot;SetPseudonymIdFallback&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapPseudonymIdFallback&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:GEBDATUM - Geburtsdatum</span>
+  src.birthDate<b> as </b><span style="color: maroon">bd</span><span style="color: navy"><b> -&gt; </b></span>tgt.geburtsdatum = <span style="color: maroon">bd</span> <i>&quot;SetGeburtsdatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:GESCHLECHT - Geschlecht</span>
+  <span style="color: navy">// </span><span style="color: green">male=1, female=2, other=8, unknown=9</span>
+  src.gender<b> as </b><span style="color: maroon">g</span><b> where </b>$this = 'male'<span style="color: navy"><b> -&gt; </b></span>tgt.geschlecht = <span style="color: blue">'1'</span> <i>&quot;SetGeschlechtM&quot;</i><span style="color: navy">;</span>
+  src.gender<b> as </b><span style="color: maroon">g</span><b> where </b>$this = 'female'<span style="color: navy"><b> -&gt; </b></span>tgt.geschlecht = <span style="color: blue">'2'</span> <i>&quot;SetGeschlechtF&quot;</i><span style="color: navy">;</span>
+  src.gender<b> as </b><span style="color: maroon">g</span><b> where </b>$this = 'other'<span style="color: navy"><b> -&gt; </b></span>tgt.geschlecht = <span style="color: blue">'8'</span> <i>&quot;SetGeschlechtX&quot;</i><span style="color: navy">;</span>
+  src.gender<b> as </b><span style="color: maroon">g</span><b> where </b>$this = 'unknown'<span style="color: navy"><b> -&gt; </b></span>tgt.geschlecht = <span style="color: blue">'9'</span> <i>&quot;SetGeschlechtU&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:PLZ - Postleitzahl</span>
+  src.address<b> as </b><span style="color: maroon">addr</span><b> then</b><span style="color: navy"> {
+</span>    addr.postalCode<b> as </b><span style="color: maroon">plz</span><span style="color: navy"><b> -&gt; </b></span>tgt.postleitzahl = <span style="color: maroon">plz</span> <i>&quot;SetPLZ&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapPLZ&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Encounter -&gt; B:AUFNDATUM, B:ENTLDATUM, B:AUFNGRUND, B:AUFNANLASS, B:ENTLGRUND</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapBasisEncounter<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Encounter, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">B:VORGANGSNR - Fall-ID aus Encounter.identifier</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.fallId = <span style="color: maroon">v</span> <i>&quot;SetFallId&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapFallId&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:AUFNDATUM</span>
+  src.period<b> as </b><span style="color: maroon">period</span><b> then</b><span style="color: navy"> {
+</span>    period.start<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.aufnahmedatum = <span style="color: maroon">s</span> <i>&quot;SetAufnahmedatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapAufnahmedatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:ENTLDATUM</span>
+  src.period<b> as </b><span style="color: maroon">period</span><b> then</b><span style="color: navy"> {
+</span>    period.end<b> as </b><span style="color: maroon">e</span><span style="color: navy"><b> -&gt; </b></span>tgt.entlassungsdatum = <span style="color: maroon">e</span> <i>&quot;SetEntlassungsdatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapEntlassungsdatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:AUFNANLASS - Aufnahmeanlass aus Encounter.extension (ISiK/KDS)</span>
+  src.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://gematik.de/fhir/isik/StructureDefinition/ISiKAufnahmeanlass'<b> then</b><span style="color: navy"> {
+</span>    ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.aufnahmeanlass = <span style="color: maroon">cd</span> <i>&quot;SetAufnahmeanlass&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapAufnahmeanlassCoding&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapAufnahmeanlassValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapAufnahmeanlass&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:AUFNGRUND - Aufnahmegrund Paragraph 301 SGB V</span>
+  src.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'http://fhir.de/StructureDefinition/Aufnahmegrund'<b> then</b><span style="color: navy"> {
+</span>    ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.aufnahmegrund = <span style="color: maroon">cd</span> <i>&quot;SetAufnahmegrund&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapAufnahmegrundCoding&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapAufnahmegrundValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapAufnahmegrund&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">B:ENTLGRUND - Entlassungsgrund aus hospitalization.dischargeDisposition</span>
+  src.hospitalization<b> as </b><span style="color: maroon">hosp</span><b> then</b><span style="color: navy"> {
+</span>    hosp.dischargeDisposition<b> as </b><span style="color: maroon">dd</span><b> then</b><span style="color: navy"> {
+</span>      dd.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.entlassungsgrund = <span style="color: maroon">cd</span> <i>&quot;SetEntlassungsgrund&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapEntlassungsgrundCoding&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapDischargeDisposition&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapEntlassungsgrund&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToIqtigBasis"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+    <mode value="source"/>
+    <alias value="Patient"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+    <mode value="source"/>
+    <alias value="Encounter"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+    <mode value="source"/>
+    <alias value="Organization"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181"/>
+    <mode value="target"/>
+    <alias value="IQTIG181"/>
+  </structure>
+  <group>
+    <name value="MapBasis"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH&#xD;&#xA;errors. The element names are correct per the IQTIG 18.1 Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Teildatensatz Basis (B): Patient + Encounter + Organization -&gt; B:*&#xD;&#xA;Enthaelt die administrativen und demografischen Pflichtfelder fuer die&#xD;&#xA;IQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,&#xD;&#xA;Geschlecht, Aufnahme/Entlassung).&#xD;&#xA;Die Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle&#xD;&#xA;uebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="EntryOrganization"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Organization)"/>
+      </source>
+      <rule>
+        <name value="OrgContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="org"/>
+        </source>
+        <rule>
+          <name value="FilterIKNR"/>
+          <source>
+            <context value="org"/>
+            <element value="identifier"/>
+            <variable value="id"/>
+            <condition value="system = 'https://fhir.de/sid/arge-ik/iknr'"/>
+          </source>
+          <rule>
+            <name value="SetIKNRKH"/>
+            <source>
+              <context value="id"/>
+              <element value="value"/>
+              <variable value="v"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="institutionskennzeichen"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="v"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+        <rule>
+          <name value="FilterStandort"/>
+          <source>
+            <context value="org"/>
+            <element value="identifier"/>
+            <variable value="id"/>
+            <condition value="system = 'http://fhir.de/sid/standortnummer'"/>
+          </source>
+          <rule>
+            <name value="SetStandort"/>
+            <source>
+              <context value="id"/>
+              <element value="value"/>
+              <variable value="v"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="entlassenderStandort"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="v"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+        <rule>
+          <name value="FilterBSNR"/>
+          <source>
+            <context value="org"/>
+            <element value="identifier"/>
+            <variable value="id"/>
+            <condition value="system = 'http://fhir.de/sid/kbv/bsnr'"/>
+          </source>
+          <rule>
+            <name value="SetBSNR"/>
+            <source>
+              <context value="id"/>
+              <element value="value"/>
+              <variable value="v"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="betriebsstaettennummer"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="v"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetDatensatzVersion"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="datensatzVersion"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="18.1_2024_V05"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="EntryPatient"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Patient)"/>
+      </source>
+      <rule>
+        <name value="CallMapBasisPatient"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="patient"/>
+        </source>
+        <dependent>
+          <name value="MapBasisPatient"/>
+          <variable value="patient"/>
+          <variable value="tgt"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryEncounter"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Encounter)"/>
+      </source>
+      <rule>
+        <name value="CallMapBasisEncounter"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="encounter"/>
+        </source>
+        <dependent>
+          <name value="MapBasisEncounter"/>
+          <variable value="encounter"/>
+          <variable value="tgt"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapBasisPatient"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Patient -&gt; B:VERSICHERTENIDNEU, B:GEBDATUM, B:GESCHLECHT, B:PLZ&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Patient"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="MapPseudonymId"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+        <condition value="system = 'http://fhir.de/sid/gkv/kvid-10'"/>
+      </source>
+      <rule>
+        <name value="SetPseudonymId"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="pseudonymId"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapPseudonymIdFallback"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+        <condition value="system.contains('pseudonym') or system.contains('pid')"/>
+      </source>
+      <rule>
+        <name value="SetPseudonymIdFallback"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="pseudonymId"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetGeburtsdatum"/>
+      <source>
+        <context value="src"/>
+        <element value="birthDate"/>
+        <variable value="bd"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="geburtsdatum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="bd"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetGeschlechtM"/>
+      <source>
+        <context value="src"/>
+        <element value="gender"/>
+        <variable value="g"/>
+        <condition value="$this = 'male'"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="geschlecht"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="1"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetGeschlechtF"/>
+      <source>
+        <context value="src"/>
+        <element value="gender"/>
+        <variable value="g"/>
+        <condition value="$this = 'female'"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="geschlecht"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="2"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetGeschlechtX"/>
+      <source>
+        <context value="src"/>
+        <element value="gender"/>
+        <variable value="g"/>
+        <condition value="$this = 'other'"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="geschlecht"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="8"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetGeschlechtU"/>
+      <source>
+        <context value="src"/>
+        <element value="gender"/>
+        <variable value="g"/>
+        <condition value="$this = 'unknown'"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="geschlecht"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="9"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapPLZ"/>
+      <source>
+        <context value="src"/>
+        <element value="address"/>
+        <variable value="addr"/>
+      </source>
+      <rule>
+        <name value="SetPLZ"/>
+        <source>
+          <context value="addr"/>
+          <element value="postalCode"/>
+          <variable value="plz"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="postleitzahl"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="plz"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapBasisEncounter"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Encounter -&gt; B:AUFNDATUM, B:ENTLDATUM, B:AUFNGRUND, B:AUFNANLASS, B:ENTLGRUND&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Encounter"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="MapFallId"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+      </source>
+      <rule>
+        <name value="SetFallId"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="fallId"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapAufnahmedatum"/>
+      <source>
+        <context value="src"/>
+        <element value="period"/>
+        <variable value="period"/>
+      </source>
+      <rule>
+        <name value="SetAufnahmedatum"/>
+        <source>
+          <context value="period"/>
+          <element value="start"/>
+          <variable value="s"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="aufnahmedatum"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="s"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapEntlassungsdatum"/>
+      <source>
+        <context value="src"/>
+        <element value="period"/>
+        <variable value="period"/>
+      </source>
+      <rule>
+        <name value="SetEntlassungsdatum"/>
+        <source>
+          <context value="period"/>
+          <element value="end"/>
+          <variable value="e"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="entlassungsdatum"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="e"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapAufnahmeanlass"/>
+      <source>
+        <context value="src"/>
+        <element value="extension"/>
+        <variable value="ext"/>
+        <condition value="url = 'https://gematik.de/fhir/isik/StructureDefinition/ISiKAufnahmeanlass'"/>
+      </source>
+      <rule>
+        <name value="MapAufnahmeanlassValue"/>
+        <source>
+          <context value="ext"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="MapAufnahmeanlassCoding"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetAufnahmeanlass"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="aufnahmeanlass"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapAufnahmegrund"/>
+      <source>
+        <context value="src"/>
+        <element value="extension"/>
+        <variable value="ext"/>
+        <condition value="url = 'http://fhir.de/StructureDefinition/Aufnahmegrund'"/>
+      </source>
+      <rule>
+        <name value="MapAufnahmegrundValue"/>
+        <source>
+          <context value="ext"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="MapAufnahmegrundCoding"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetAufnahmegrund"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="aufnahmegrund"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapEntlassungsgrund"/>
+      <source>
+        <context value="src"/>
+        <element value="hospitalization"/>
+        <variable value="hosp"/>
+      </source>
+      <rule>
+        <name value="MapDischargeDisposition"/>
+        <source>
+          <context value="hosp"/>
+          <element value="dischargeDisposition"/>
+          <variable value="dd"/>
+        </source>
+        <rule>
+          <name value="MapEntlassungsgrundCoding"/>
+          <source>
+            <context value="dd"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetEntlassungsgrund"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="entlassungsgrund"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

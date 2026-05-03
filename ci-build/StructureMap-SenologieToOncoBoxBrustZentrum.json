@@ -1,0 +1,222 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToOncoBoxBrustZentrum",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustZentrum</b></p><a name=\"SenologieToOncoBoxBrustZentrum\"> </a><a name=\"hcSenologieToOncoBoxBrustZentrum\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum<span style=\"color: navy\">&quot; = &quot;</span>SenologieToOncoBoxBrustZentrum<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Organization to OncoBox Brust Zentrum</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/organization.html\" title=\"Organization\">http://hl7.org/fhir/StructureDefinition/Organization</a><span style=\"color: navy\">&quot; </span><b>alias </b>Organization <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-oncobox-brust-meldung.html\" title=\"OncoBox Brust N1.1.1 Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: MapZentrum uses `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices. The IG Publisher produces SM_TARGET_PATH / SM_SOURCE_PATH errors</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">(~12). Element names are correct per the OncoBox Brust Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Zentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -&gt; Zentrum</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Konfigurationswert oder ueber Organization.identifier gepflegt. Der</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Berichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">spezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">typischerweise ueber Parameter gesetzt.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapZentrum<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">OncoBox-Spezifikationsversion (fest)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.oncoBoxVersion = <span style=\"color: blue\">'N1.1.1'</span> <i>&quot;SetOncoBoxVersion&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Meldungsdatum (fest auf Bundle-Timestamp)</span>\r\n  src.timestamp<b> as </b><span style=\"color: maroon\">ts</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldungsdatum = <span style=\"color: maroon\">ts</span> <i>&quot;SetMeldungsdatum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Zentrum aus Organization ---</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Organization)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">org</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">Zentrum_Name aus Organization.name</span>\r\n      org.name<b> as </b><span style=\"color: maroon\">name</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zentrumName = <span style=\"color: maroon\">name</span> <i>&quot;SetZentrumName&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">IKNR - Institutionskennzeichen</span>\r\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://fhir.de/sid/arge-ik/iknr'<b> then</b><span style=\"color: navy\"> {\r\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.iknr = <span style=\"color: maroon\">v</span> <i>&quot;SetIKNR&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;FilterIKNR&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Standort-ID</span>\r\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'http://fhir.de/sid/standortnummer'<b> then</b><span style=\"color: navy\"> {\r\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.standortId = <span style=\"color: maroon\">v</span> <i>&quot;SetStandortId&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;FilterStandort&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Zentrum_ID aus OnkoZert-Kennung (Organization.identifier)</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Falls keine spezifische OnkoZert-Kennung, IKNR als Fallback</span>\r\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://www.onkozert.de/sid/zentrum-id'<b> then</b><span style=\"color: navy\"> {\r\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zentrumId = <span style=\"color: maroon\">v</span> <i>&quot;SetZentrumId&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;FilterZentrumIdOZ&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: IKNR als Zentrum-ID</span>\r\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://fhir.de/sid/arge-ik/iknr'<b> then</b><span style=\"color: navy\"> {\r\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zentrumId = <span style=\"color: maroon\">v</span> <i>&quot;SetZentrumIdIKNRFallback&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;FilterZentrumIdIKNR&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;OrgContext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryOrganization&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum",
+  "version" : "0.1.0",
+  "name" : "SenologieToOncoBoxBrustZentrum",
+  "status" : "draft",
+  "date" : "2026-05-03T20:30:38+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Organization to OncoBox Brust Zentrum\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Organization",
+    "mode" : "source",
+    "alias" : "Organization"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
+    "mode" : "target",
+    "alias" : "OncoBoxBrust"
+  }],
+  "group" : [{
+    "name" : "MapZentrum",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: MapZentrum uses `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices. The IG Publisher produces SM_TARGET_PATH / SM_SOURCE_PATH errors\r\n(~12). Element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nZentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -> Zentrum\r\nDie Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als\r\nKonfigurationswert oder ueber Organization.identifier gepflegt. Der\r\nBerichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-\r\nspezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis\r\ntypischerweise ueber Parameter gesetzt.\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetOncoBoxVersion",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "oncoBoxVersion",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "N1.1.1"
+        }]
+      }]
+    },
+    {
+      "name" : "SetMeldungsdatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "timestamp",
+        "variable" : "ts"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meldungsdatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "ts"
+        }]
+      }]
+    },
+    {
+      "name" : "EntryOrganization",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Organization)"
+      }],
+      "rule" : [{
+        "name" : "OrgContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "org"
+        }],
+        "rule" : [{
+          "name" : "SetZentrumName",
+          "source" : [{
+            "context" : "org",
+            "element" : "name",
+            "variable" : "name"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "zentrumName",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "name"
+            }]
+          }]
+        },
+        {
+          "name" : "FilterIKNR",
+          "source" : [{
+            "context" : "org",
+            "element" : "identifier",
+            "variable" : "id",
+            "condition" : "system = 'https://fhir.de/sid/arge-ik/iknr'"
+          }],
+          "rule" : [{
+            "name" : "SetIKNR",
+            "source" : [{
+              "context" : "id",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "iknr",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "FilterStandort",
+          "source" : [{
+            "context" : "org",
+            "element" : "identifier",
+            "variable" : "id",
+            "condition" : "system = 'http://fhir.de/sid/standortnummer'"
+          }],
+          "rule" : [{
+            "name" : "SetStandortId",
+            "source" : [{
+              "context" : "id",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "standortId",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "FilterZentrumIdOZ",
+          "source" : [{
+            "context" : "org",
+            "element" : "identifier",
+            "variable" : "id",
+            "condition" : "system = 'https://www.onkozert.de/sid/zentrum-id'"
+          }],
+          "rule" : [{
+            "name" : "SetZentrumId",
+            "source" : [{
+              "context" : "id",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "zentrumId",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "FilterZentrumIdIKNR",
+          "source" : [{
+            "context" : "org",
+            "element" : "identifier",
+            "variable" : "id",
+            "condition" : "system = 'https://fhir.de/sid/arge-ik/iknr'"
+          }],
+          "rule" : [{
+            "name" : "SetZentrumIdIKNRFallback",
+            "source" : [{
+              "context" : "id",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "zentrumId",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}

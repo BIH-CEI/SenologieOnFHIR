@@ -1,0 +1,1672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToOncoBoxBrustKennzahlen"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustKennzahlen</b></p><a name="SenologieToOncoBoxBrustKennzahlen"> </a><a name="hcSenologieToOncoBoxBrustKennzahlen"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen<span style="color: navy">&quot; = &quot;</span>SenologieToOncoBoxBrustKennzahlen<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-oncobox-brust-meldung.html" title="OncoBox Brust N1.1.1 Meldung (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Kennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)</span>
+<span style="color: navy">// </span><span style="color: green">Die OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die</span>
+<span style="color: navy">// </span><span style="color: green">Aggregation erfolgt typischerweise ueber alle Primaerfaelle des</span>
+<span style="color: navy">// </span><span style="color: green">Berichtszeitraums. In dieser Transformation werden pro Bundle alle</span>
+<span style="color: navy">// </span><span style="color: green">20 Kennzahlen als &quot;Shell&quot;-Eintraege angelegt (Zaehler=0, Nenner=0),</span>
+<span style="color: navy">// </span><span style="color: green">die dann von einer nachgelagerten Auswerteschicht (CQL) mit den</span>
+<span style="color: navy">// </span><span style="color: green">tatsaechlichen Aggregatwerten befuellt werden.</span>
+<span style="color: navy">// </span><span style="color: green">Die tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein</span>
+<span style="color: navy">// </span><span style="color: green">Aggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern</span>
+<span style="color: navy">// </span><span style="color: green">eine CQL-basierte Auswertung erfordert.</span>
+<span style="color: navy">// </span><span style="color: green">Kurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):</span>
+<span style="color: navy">// </span><span style="color: green">KB-1  Postop. Fallbesprechung</span>
+<span style="color: navy">// </span><span style="color: green">KB-2  Praetherapeutische Fallbesprechung</span>
+<span style="color: navy">// </span><span style="color: green">KB-3  Fallbesprechung Rezidiv/Metastasen</span>
+<span style="color: navy">// </span><span style="color: green">KB-4  Adjuvante Chemotherapie (invasiv)</span>
+<span style="color: navy">// </span><span style="color: green">KB-5  Adjuvante Chemotherapie (DCIS)</span>
+<span style="color: navy">// </span><span style="color: green">KB-6  Endokrine Therapie</span>
+<span style="color: navy">// </span><span style="color: green">KB-7  Trastuzumab bei HER2+</span>
+<span style="color: navy">// </span><span style="color: green">KB-8  First-Line-Therapie bei Metastasierung</span>
+<span style="color: navy">// </span><span style="color: green">KB-9  Psychoonkologische Mitbetreuung</span>
+<span style="color: navy">// </span><span style="color: green">KB-10 Sozialdienst-Mitbetreuung</span>
+<span style="color: navy">// </span><span style="color: green">KB-11 Studienteilnahme</span>
+<span style="color: navy">// </span><span style="color: green">KB-12 Praeoperative histologische Sicherung</span>
+<span style="color: navy">// </span><span style="color: green">KB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)</span>
+<span style="color: navy">// </span><span style="color: green">KB-14 Anzahl Eingriffe bis R0</span>
+<span style="color: navy">// </span><span style="color: green">KB-15 BET-Rate bei pT1</span>
+<span style="color: navy">// </span><span style="color: green">KB-16 Mastektomien</span>
+<span style="color: navy">// </span><span style="color: green">KB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)</span>
+<span style="color: navy">// </span><span style="color: green">KB-18 Drahtmarkierung bei nicht-tastbaren Befunden</span>
+<span style="color: navy">// </span><span style="color: green">KB-19 Revisionsoperationen</span>
+<span style="color: navy">// </span><span style="color: green">KB-20 Checkliste (organisatorisch)</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapKennzahlen<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OncoBoxBrust<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">KB-1 Postop. Fallbesprechung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-1'</span> <i>&quot;SetKB1Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Postop. Fallbesprechung'</span> <i>&quot;SetKB1Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB1Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB1N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB1&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-2 Praetherapeutische Fallbesprechung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-2'</span> <i>&quot;SetKB2Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Praetherapeutische Fallbesprechung'</span> <i>&quot;SetKB2Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB2Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB2N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB2&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-3 Fallbesprechung Rezidiv/Metastasen</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-3'</span> <i>&quot;SetKB3Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Fallbesprechung Rezidiv/Metastasen'</span> <i>&quot;SetKB3Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB3Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB3N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB3&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-4 Adjuvante Chemotherapie (invasiv)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-4'</span> <i>&quot;SetKB4Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Adjuvante Chemotherapie (invasiv)'</span> <i>&quot;SetKB4Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB4Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB4N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB4&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-5 Adjuvante Chemotherapie (DCIS)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-5'</span> <i>&quot;SetKB5Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Adjuvante Chemotherapie (DCIS)'</span> <i>&quot;SetKB5Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB5Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB5N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB5&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-6 Endokrine Therapie</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-6'</span> <i>&quot;SetKB6Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Endokrine Therapie'</span> <i>&quot;SetKB6Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB6Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB6N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB6&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-7 Trastuzumab bei HER2+</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-7'</span> <i>&quot;SetKB7Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Trastuzumab bei HER2+'</span> <i>&quot;SetKB7Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB7Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB7N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB7&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-8 First-Line-Therapie bei Metastasierung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-8'</span> <i>&quot;SetKB8Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'First-Line-Therapie bei Metastasierung'</span> <i>&quot;SetKB8Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB8Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB8N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB8&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-9 Psychoonkologische Mitbetreuung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-9'</span> <i>&quot;SetKB9Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Psychoonkologische Mitbetreuung'</span> <i>&quot;SetKB9Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB9Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB9N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB9&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-10 Sozialdienst-Mitbetreuung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-10'</span> <i>&quot;SetKB10Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Sozialdienst-Mitbetreuung'</span> <i>&quot;SetKB10Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB10Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB10N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB10&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-11 Studienteilnahme</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-11'</span> <i>&quot;SetKB11Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Studienteilnahme'</span> <i>&quot;SetKB11Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB11Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB11N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB11&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-12 Praeoperative histologische Sicherung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-12'</span> <i>&quot;SetKB12Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Praeoperative histologische Sicherung'</span> <i>&quot;SetKB12Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB12Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB12N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB12&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-13 Primaerfaelle / Rezidive / Metastasen</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-13'</span> <i>&quot;SetKB13Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Primaerfaelle / Rezidive / Metastasen'</span> <i>&quot;SetKB13Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB13Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB13N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB13&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-14 Anzahl Eingriffe bis R0</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-14'</span> <i>&quot;SetKB14Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Anzahl Eingriffe bis R0'</span> <i>&quot;SetKB14Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB14Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB14N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB14&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-15 BET-Rate bei pT1</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-15'</span> <i>&quot;SetKB15Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'BET-Rate bei pT1'</span> <i>&quot;SetKB15Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB15Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB15N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB15&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-16 Mastektomien</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-16'</span> <i>&quot;SetKB16Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Mastektomien'</span> <i>&quot;SetKB16Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB16Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB16N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB16&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-17 Lymphknoten-Entfernung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-17'</span> <i>&quot;SetKB17Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Lymphknoten-Entfernung (LK-Entf.)'</span> <i>&quot;SetKB17Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB17Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB17N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB17&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-18 Drahtmarkierung</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-18'</span> <i>&quot;SetKB18Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Drahtmarkierung'</span> <i>&quot;SetKB18Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB18Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB18N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB18&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-19 Revisionsoperationen</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-19'</span> <i>&quot;SetKB19Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Revisionsoperationen'</span> <i>&quot;SetKB19Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB19Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB19N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB19&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">KB-20 Checkliste</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style="color: maroon">kz</span><b> then</b><span style="color: navy"> {
+</span>    src<span style="color: navy"><b> -&gt; </b></span>kz.id = <span style="color: blue">'KB-20'</span> <i>&quot;SetKB20Id&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.bezeichnung = <span style="color: blue">'Checkliste'</span> <i>&quot;SetKB20Name&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.zaehler = <span style="color: blue">0</span> <i>&quot;SetKB20Z&quot;</i><span style="color: navy">;</span>
+    src<span style="color: navy"><b> -&gt; </b></span>kz.nenner = <span style="color: blue">0</span> <i>&quot;SetKB20N&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;InitKB20&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToOncoBoxBrustKennzahlen"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"/>
+    <mode value="target"/>
+    <alias value="OncoBoxBrust"/>
+  </structure>
+  <group>
+    <name value="MapKennzahlen"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Kennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)&#xD;&#xA;Die OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die&#xD;&#xA;Aggregation erfolgt typischerweise ueber alle Primaerfaelle des&#xD;&#xA;Berichtszeitraums. In dieser Transformation werden pro Bundle alle&#xD;&#xA;20 Kennzahlen als &quot;Shell&quot;-Eintraege angelegt (Zaehler=0, Nenner=0),&#xD;&#xA;die dann von einer nachgelagerten Auswerteschicht (CQL) mit den&#xD;&#xA;tatsaechlichen Aggregatwerten befuellt werden.&#xD;&#xA;Die tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein&#xD;&#xA;Aggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern&#xD;&#xA;eine CQL-basierte Auswertung erfordert.&#xD;&#xA;Kurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):&#xD;&#xA;KB-1  Postop. Fallbesprechung&#xD;&#xA;KB-2  Praetherapeutische Fallbesprechung&#xD;&#xA;KB-3  Fallbesprechung Rezidiv/Metastasen&#xD;&#xA;KB-4  Adjuvante Chemotherapie (invasiv)&#xD;&#xA;KB-5  Adjuvante Chemotherapie (DCIS)&#xD;&#xA;KB-6  Endokrine Therapie&#xD;&#xA;KB-7  Trastuzumab bei HER2+&#xD;&#xA;KB-8  First-Line-Therapie bei Metastasierung&#xD;&#xA;KB-9  Psychoonkologische Mitbetreuung&#xD;&#xA;KB-10 Sozialdienst-Mitbetreuung&#xD;&#xA;KB-11 Studienteilnahme&#xD;&#xA;KB-12 Praeoperative histologische Sicherung&#xD;&#xA;KB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)&#xD;&#xA;KB-14 Anzahl Eingriffe bis R0&#xD;&#xA;KB-15 BET-Rate bei pT1&#xD;&#xA;KB-16 Mastektomien&#xD;&#xA;KB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)&#xD;&#xA;KB-18 Drahtmarkierung bei nicht-tastbaren Befunden&#xD;&#xA;KB-19 Revisionsoperationen&#xD;&#xA;KB-20 Checkliste (organisatorisch)&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="OncoBoxBrust"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="InitKB1"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB1Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-1"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB1Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Postop. Fallbesprechung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB1Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB1N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB2"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB2Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-2"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB2Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Praetherapeutische Fallbesprechung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB2Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB2N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB3"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB3Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-3"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB3Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Fallbesprechung Rezidiv/Metastasen"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB3Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB3N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB4"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB4Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-4"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB4Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Adjuvante Chemotherapie (invasiv)"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB4Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB4N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB5"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB5Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-5"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB5Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Adjuvante Chemotherapie (DCIS)"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB5Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB5N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB6"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB6Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-6"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB6Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Endokrine Therapie"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB6Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB6N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB7"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB7Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-7"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB7Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Trastuzumab bei HER2+"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB7Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB7N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB8"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB8Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-8"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB8Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="First-Line-Therapie bei Metastasierung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB8Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB8N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB9"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB9Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-9"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB9Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Psychoonkologische Mitbetreuung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB9Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB9N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB10"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB10Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-10"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB10Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Sozialdienst-Mitbetreuung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB10Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB10N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB11"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB11Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-11"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB11Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Studienteilnahme"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB11Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB11N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB12"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB12Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-12"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB12Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Praeoperative histologische Sicherung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB12Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB12N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB13"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB13Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-13"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB13Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Primaerfaelle / Rezidive / Metastasen"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB13Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB13N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB14"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB14Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-14"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB14Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Anzahl Eingriffe bis R0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB14Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB14N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB15"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB15Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-15"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB15Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="BET-Rate bei pT1"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB15Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB15N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB16"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB16Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-16"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB16Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Mastektomien"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB16Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB16N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB17"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB17Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-17"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB17Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Lymphknoten-Entfernung (LK-Entf.)"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB17Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB17N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB18"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB18Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-18"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB18Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Drahtmarkierung"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB18Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB18N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB19"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB19Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-19"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB19Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Revisionsoperationen"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB19Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB19N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="InitKB20"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="kennzahl"/>
+        <variable value="kz"/>
+      </target>
+      <rule>
+        <name value="SetKB20Id"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="id"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="KB-20"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB20Name"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Checkliste"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB20Z"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="zaehler"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetKB20N"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="kz"/>
+          <contextType value="variable"/>
+          <element value="nenner"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueInteger value="0"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

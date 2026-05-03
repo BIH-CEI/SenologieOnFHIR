@@ -1,0 +1,663 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToObdsST> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToObdsST"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsST</b></p><a name=\"SenologieToObdsST\"> </a><a name=\"hcSenologieToObdsST\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsST<span style=\"color: navy\">\" = \"</span>SenologieToObdsST<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie FHIR to oBDS Strahlentherapie (ST)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<b>imports</b><span style=\"color: navy\"> \"</span><a href=\"StructureMap-SenologieToObdsTumorzuordnung.html\" title=\"SenologieToObdsTumorzuordnung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style=\"color: navy\">\"#xD;\n</span><b>imports</b><span style=\"color: navy\"> \"</span><a href=\"StructureMap-SenologieToObdsNebenwirkung.html\" title=\"SenologieToObdsNebenwirkung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung</a><span style=\"color: navy\">\"#xD;\n</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapST, MapBestrahlung) use</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement` because FML has no syntax to declare the</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Logical Model sub-path for BackboneElement slices passed from parent groups.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">The IG Publisher produces SM_TARGET_PATH errors (~19). The element names are</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">correct per the oBDS Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hauptgruppe: Bundle → oBDS ST (Strahlentherapie)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Ein Bundle enthaelt Strahlentherapie-Procedures (einzelne Bestrahlungsserien)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">und ggf. Observations fuer Nebenwirkungen (CTCAE).</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>SenologieToObdsST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OBDSMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Strahlentherapie-Procedure extrahieren</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">proc</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.st<b> as </b><span style=\"color: maroon\">st</span><b> then </b>MapST<span style=\"color: navy\">(</span><span style=\"color: maroon\">proc</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">st</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>\"CallMapST\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryST\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapST: Procedure → oBDS ST Basisdaten</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">ST_ID: Procedure.id</span>#xD;\n  src.id<b> as </b><span style=\"color: maroon\">id</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.stID = <span style=\"color: maroon\">id</span> <i>\"SetStID\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Meldeanlass: abgeleitet aus vorhandenem Enddatum</span>#xD;\n  src<b> where </b>performedPeriod.end.exists()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'behandlungsende'</span> <i>\"MeldeanlassEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  src<b> where </b>performedPeriod.end.exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'behandlungsbeginn'</span> <i>\"MeldeanlassBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Intention: aus MII Onko Strahlentherapie-Intention Extension</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">valueCodeableConcept -&gt; translate zu oBDS (K, P, O, S, X)</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.intention = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>\"TranslateIntention\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractIntentionCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapIntention\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)</span>#xD;\n  src.category<b> as </b><span style=\"color: maroon\">cat</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    cat.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungOP = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>\"TranslateStellungOP\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapStellungOP\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Bestrahlung: jede Procedure bildet eine einzelne Bestrahlungsserie ab</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Im Senologie-Profil ist jede Procedure eine Bestrahlung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bestrahlungen<b> as </b><span style=\"color: maroon\">best</span><b> then </b>MapBestrahlung<span style=\"color: navy\">(</span><span style=\"color: maroon\">src</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">best</span><span style=\"color: navy\">)</span> <i>\"CallMapBestrahlung\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Ende-Grund: aus Procedure.outcome.coding</span>#xD;\n  src.outcome<b> as </b><span style=\"color: maroon\">oc</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    oc.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.endeGrund = <span style=\"color: navy\">(</span>c.code<span style=\"color: navy\">)</span> <i>\"SetEndeGrundCode\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEndeGrund\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (ST-Variante)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.nebenwirkungen<b> as </b><span style=\"color: maroon\">nw</span><b> then </b>MapNebenwirkungenST<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">nw</span><span style=\"color: navy\">)</span> <i>\"CallMapNebenwirkungen\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapBestrahlung: Procedure → oBDS Bestrahlung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Extrahiert Bestrahlungsdetails: Zeitraum, Applikationsart, Zielgebiet,</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Dosis und Boost aus den MII Onko Extensions</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapBestrahlung<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Beginn: aus performedPeriod.start</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.beginn = <span style=\"color: maroon\">s</span> <i>\"SetBestrahlungBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapBestrahlungBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Ende: aus performedPeriod.end</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.end<b> as </b><span style=\"color: maroon\">e</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.ende = <span style=\"color: maroon\">e</span> <i>\"SetBestrahlungEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapBestrahlungEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Applikationsart: aus Procedure.code oder MII Extension</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Perkutan vs. Kontakt (Brachytherapie)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">OPS 8-522 = Perkutane Hochvoltstrahlentherapie</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">OPS 8-524 = Brachytherapie</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code.startsWith('8-522')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.applikationsart = <span style=\"color: blue\">'P'</span> <i>\"ApplikationsartPerkutan\"</i><span style=\"color: navy\">;</span>#xD;\n    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code.startsWith('8-524')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.applikationsart = <span style=\"color: blue\">'K'</span> <i>\"ApplikationsartKontakt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapApplikationsart\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Zielgebiet: aus Procedure.bodySite.coding</span>#xD;\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.display<b> as </b><span style=\"color: maroon\">d</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zielgebiet = <span style=\"color: maroon\">d</span> <i>\"SetZielgebiet\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractZielgebietCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapZielgebiet\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Seite des Zielgebiets: aus bodySite-Extension Seitenlokalisation</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">oder abgeleitet aus bodySite-SNOMED-Code (z.B. \"Left breast\")</span>#xD;\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    bs.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-seitenlokalisation'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.seiteZielgebiet = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>\"TranslateSeiteZielgebiet\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractSeiteCoding\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapSeiteExtension\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapSeiteZielgebiet\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Gesamtdosis: aus MII Onko Gesamtdosis-Extension</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-gesamtdosis'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtdosis = <span style=\"color: maroon\">v</span> <i>\"SetGesamtdosis\"</i><span style=\"color: navy\">;</span>#xD;\n      val.unit<b> as </b><span style=\"color: maroon\">u</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtdosisEinheit = <span style=\"color: maroon\">u</span> <i>\"SetGesamtdosisEinheit\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractGesamtdosisValue\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapGesamtdosis\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Einzeldosis: aus Senologie Einzeldosis-Extension</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-einzeldosis'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.einzeldosis = <span style=\"color: maroon\">v</span> <i>\"SetEinzeldosis\"</i><span style=\"color: navy\">;</span>#xD;\n      val.unit<b> as </b><span style=\"color: maroon\">u</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.einzeldosisEinheit = <span style=\"color: maroon\">u</span> <i>\"SetEinzeldosisEinheit\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractEinzeldosisValue\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEinzeldosis\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Boost: aus MII Onko Boost-Extension</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">J=ja, N=nein, SIB=simultan integrierter Boost</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-boost'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.boost = <span style=\"color: navy\">(</span>c.code<span style=\"color: navy\">)</span> <i>\"SetBoost\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractBoostCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapBoost\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsST"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsST>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToObdsST"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-03T20:30:38+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie FHIR to oBDS Strahlentherapie (ST)\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/obds-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OBDSMeldung" ]
+  ] ) ; # 
+  fhir:import ( [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung>
+  ] [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung>
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "SenologieToObdsST" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups (MapST, MapBestrahlung) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nLogical Model sub-path for BackboneElement slices passed from parent groups.\r\nThe IG Publisher produces SM_TARGET_PATH errors (~19). The element names are\r\ncorrect per the oBDS Logical Model.\r\n============================================================================\r\nHauptgruppe: Bundle → oBDS ST (Strahlentherapie)\r\nEin Bundle enthaelt Strahlentherapie-Procedures (einzelne Bestrahlungsserien)\r\nund ggf. Observations fuer Nebenwirkungen (CTCAE).\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "OBDSMeldung" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "EntryST" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "entry" ] ;
+         fhir:condition [ fhir:v "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapST" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "entry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "proc" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "st" ] ;
+           fhir:variable [ fhir:v "st" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapST" ] ;
+           fhir:variable ( [ fhir:v "proc" ] [ fhir:v "st" ] [ fhir:v "src" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapST" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapST: Procedure → oBDS ST Basisdaten\r\nMapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Procedure" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetStID" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:variable [ fhir:v "id" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "stID" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "id"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MeldeanlassEnde" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "performedPeriod.end.exists()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldeanlass" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "behandlungsende"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MeldeanlassBeginn" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "performedPeriod.end.exists().not()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldeanlass" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "behandlungsbeginn"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapIntention" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractIntentionCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "TranslateIntention" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "intention" ] ;
+             fhir:transform [ fhir:v "translate" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "c"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "code"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapStellungOP" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "category" ] ;
+         fhir:variable [ fhir:v "cat" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "TranslateStellungOP" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "cat" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "stellungOP" ] ;
+           fhir:transform [ fhir:v "translate" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "c"
+             ]
+           ] [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung"
+             ]
+           ] [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "code"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "CallMapBestrahlung" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "bestrahlungen" ] ;
+         fhir:variable [ fhir:v "best" ]
+       ] ) ;
+       fhir:dependent ( [
+         fhir:name [ fhir:v "MapBestrahlung" ] ;
+         fhir:variable ( [ fhir:v "src" ] [ fhir:v "best" ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEndeGrund" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "outcome" ] ;
+         fhir:variable [ fhir:v "oc" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetEndeGrundCode" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "oc" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "endeGrund" ] ;
+           fhir:transform [ fhir:v "evaluate" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "c.code"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "CallMapNebenwirkungen" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "nebenwirkungen" ] ;
+         fhir:variable [ fhir:v "nw" ]
+       ] ) ;
+       fhir:dependent ( [
+         fhir:name [ fhir:v "MapNebenwirkungenST" ] ;
+         fhir:variable ( [ fhir:v "bundle" ] [ fhir:v "nw" ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapBestrahlung" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapBestrahlung: Procedure → oBDS Bestrahlung\r\nExtrahiert Bestrahlungsdetails: Zeitraum, Applikationsart, Zielgebiet,\r\nDosis und Boost aus den MII Onko Extensions\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Procedure" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapBestrahlungBeginn" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetBestrahlungBeginn" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "start" ] ;
+           fhir:variable [ fhir:v "s" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "beginn" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "s"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapBestrahlungEnde" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetBestrahlungEnde" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "end" ] ;
+           fhir:variable [ fhir:v "e" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "ende" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "e"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapApplikationsart" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ApplikationsartPerkutan" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "code.startsWith('8-522')" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "applikationsart" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "P"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "ApplikationsartKontakt" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "code.startsWith('8-524')" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "applikationsart" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "K"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapZielgebiet" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "bodySite" ] ;
+         fhir:variable [ fhir:v "bs" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractZielgebietCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "bs" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetZielgebiet" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "display" ] ;
+             fhir:variable [ fhir:v "d" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "zielgebiet" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "d"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapSeiteZielgebiet" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "bodySite" ] ;
+         fhir:variable [ fhir:v "bs" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapSeiteExtension" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "bs" ] ;
+           fhir:element [ fhir:v "extension" ] ;
+           fhir:variable [ fhir:v "ext" ] ;
+           fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-seitenlokalisation'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "ExtractSeiteCoding" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "ext" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "TranslateSeiteZielgebiet" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "seiteZielgebiet" ] ;
+               fhir:transform [ fhir:v "translate" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "c"
+                 ]
+               ] [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation"
+                 ]
+               ] [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "code"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapGesamtdosis" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-gesamtdosis'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractGesamtdosisValue" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetGesamtdosis" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "gesamtdosis" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetGesamtdosisEinheit" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "unit" ] ;
+             fhir:variable [ fhir:v "u" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "gesamtdosisEinheit" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "u"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEinzeldosis" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-einzeldosis'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractEinzeldosisValue" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetEinzeldosis" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "einzeldosis" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetEinzeldosisEinheit" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "unit" ] ;
+             fhir:variable [ fhir:v "u" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "einzeldosisEinheit" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "u"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapBoost" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-boost'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractBoostCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetBoost" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "boost" ] ;
+             fhir:transform [ fhir:v "evaluate" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "c.code"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

@@ -1,0 +1,548 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToObdsVerlauf",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsVerlauf</b></p><a name=\"SenologieToObdsVerlauf\"> </a><a name=\"hcSenologieToObdsVerlauf\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf<span style=\"color: navy\">&quot; = &quot;</span>SenologieToObdsVerlauf<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>\r\n\r\n<b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsTumorzuordnung.html\" title=\"SenologieToObdsTumorzuordnung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsTNM.html\" title=\"SenologieToObdsTNM\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsHistologie.html\" title=\"SenologieToObdsHistologie\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsModulMamma.html\" title=\"SenologieToObdsModulMamma\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsFernmetastasen.html\" title=\"SenologieToObdsFernmetastasen\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsLeistungszustand.html\" title=\"SenologieToObdsLeistungszustand\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand</a><span style=\"color: navy\">&quot;\r\n</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapVerlauf) use `target tgt : BackboneElement`.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">See SenologieToObdsTNM.map for details.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hauptgruppe: Bundle -&gt; oBDS Verlaufsmeldung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Das Bundle enthaelt eine Condition (Rezidiv, clinicalStatus = recurrence)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">sowie zugehoerige Observations (TNM, Histologie, Fernmetastasen,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hormonrezeptoren, Leistungszustand).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>SenologieToObdsVerlauf<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OBDSMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Tumorzuordnung: aus der Condition-Ressource (Rezidiv verweist auf gleichen Tumor)</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">condition</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      condition<span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style=\"color: maroon\">tz</span><b> then </b>MapTumorzuordnung<span style=\"color: navy\">(</span><span style=\"color: maroon\">condition</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tz</span><span style=\"color: navy\">)</span> <i>&quot;CallMapTumorzuordnung&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;ConditionContext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryConditionTZ&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf: aus der Condition (Rezidiv) + Observations aus dem Bundle</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">condition</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style=\"color: maroon\">verl</span><b> then </b>MapVerlauf<span style=\"color: navy\">(</span><span style=\"color: maroon\">condition</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">verl</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>&quot;CallMapVerlauf&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryConditionVerlauf&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf: Condition (Rezidiv) -&gt; OBDSMeldung.verlauf</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_ID, Meldeanlass, Untersuchungsdatum, Gesamtbeurteilung Tumorstatus,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">lokaler Tumorstatus, LK-Status, FM-Status</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapVerlauf<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_ID: aus Condition.identifier</span>\r\n  src.identifier<b> as </b><span style=\"color: maroon\">id</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlaufID = <span style=\"color: maroon\">v</span> <i>&quot;SetVerlaufID&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapVerlaufID&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Meldeanlass: Verlaufsmeldung ist immer &quot;statusaenderung&quot;</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'statusaenderung'</span> <i>&quot;SetMeldeanlass&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Untersuchungsdatum: aus Condition.extension[Feststellungsdatum] oder recordedDate</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum'<b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.untersuchungsdatum = <span style=\"color: maroon\">val</span> <i>&quot;SetUntersuchungsdatumExt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapUntersuchungsdatumExt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: recordedDate als Untersuchungsdatum</span>\r\n  src.recordedDate<b> as </b><span style=\"color: maroon\">rd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.untersuchungsdatum = <span style=\"color: maroon\">rd</span> <i>&quot;SetUntersuchungsdatumFallback&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Gesamtbeurteilung Tumorstatus: aus Condition.stage (Verlaufsbeurteilung)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Uebersetzung SNOMED -&gt; oBDS via ConceptMap</span>\r\n  src.stage<b> as </b><span style=\"color: maroon\">stg</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    stg.summary<b> as </b><span style=\"color: maroon\">sum</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      sum.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilungTumorstatus = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateGesamtbeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;ExtractGesamtbeurteilungCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapGesamtbeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: Bei Rezidiv (clinicalStatus = recurrence) -&gt; Y (Rezidiv)</span>\r\n  src.clinicalStatus<b> as </b><span style=\"color: maroon\">cs</span><b> where </b>coding.exists(code = 'recurrence')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilungTumorstatus = <span style=\"color: blue\">'Y'</span> <i>&quot;SetGesamtbeurteilungRezidiv&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Lokaler_Tumorstatus: aus Extension oder Observation im Bundle</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">MII Onko Verlauf lokaler Tumorstatus</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-verlauf-lokaler-tumorstatus'<b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlaufLokalerTumorstatus = <span style=\"color: maroon\">cd</span> <i>&quot;SetLokalerTumorstatus&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractLokalerStatus&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapLokalerStatusValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapLokalerTumorstatus&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Tumorstatus_Lymphknoten: aus Extension</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-verlauf-tumorstatus-lymphknoten'<b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlaufTumorstatusLymphknoten = <span style=\"color: maroon\">cd</span> <i>&quot;SetLKStatus&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractLKStatus&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapLKStatusValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapTumorstatusLymphknoten&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Tumorstatus_Fernmetastasen: aus Extension</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-verlauf-tumorstatus-fernmetastasen'<b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlaufTumorstatusFernmetastasen = <span style=\"color: maroon\">cd</span> <i>&quot;SetFMStatus&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractFMStatus&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMStatusValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapTumorstatusFernmetastasen&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fernmetastasen: Delegiert an die gemeinsame Fernmetastasen-Map</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt<b> then </b>MapFernmetastasenFromBundle<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>&quot;CallMapFernmetastasen&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Histologie: aus Observation im Bundle (Re-Biopsie im Verlauf)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 59847-4 = &quot;Histology and Behavior ICD-O-3 Cancer&quot;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Delegiert an die gemeinsame Histologie-Map</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style=\"color: navy\"> {\r\n</span>    histEntry.resource<b> as </b><span style=\"color: maroon\">histObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.histologie<b> as </b><span style=\"color: maroon\">histo</span><b> then </b>MapHistologie<span style=\"color: navy\">(</span><span style=\"color: maroon\">histObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">histo</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapHistologie&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryHistologie&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">TNM: aus TNM-Observation im Bundle (Rezidiv-Staging)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Kann klinisch (21908-9) oder pathologisch (21902-2) sein</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Delegiert an die gemeinsame TNM-Map</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21908-9')<b> then</b><span style=\"color: navy\"> {\r\n</span>    tnmEntry.resource<b> as </b><span style=\"color: maroon\">tnmObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tnm<b> as </b><span style=\"color: maroon\">tnm</span><b> then </b>MapTNM<span style=\"color: navy\">(</span><span style=\"color: maroon\">tnmObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tnm</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapTNMClinical&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryTNMClinical&quot;</i><span style=\"color: navy\">;</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style=\"color: navy\"> {\r\n</span>    tnmEntry.resource<b> as </b><span style=\"color: maroon\">tnmObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tnm<b> as </b><span style=\"color: maroon\">tnm</span><b> then </b>MapTNM<span style=\"color: navy\">(</span><span style=\"color: maroon\">tnmObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tnm</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapTNMPathological&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryTNMPathological&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Allgemeiner Leistungszustand (ECOG): Delegiert an die gemeinsame Leistungszustand-Map</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt<b> then </b>MapLeistungszustandFromBundle<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>&quot;CallMapLeistungszustand&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle (Rezidiv-Testung)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Delegiert an die gemeinsame ModulMamma-Map</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.modulMamma<b> as </b><span style=\"color: maroon\">mamma</span><b> then </b>MapModulMamma<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">mamma</span><span style=\"color: navy\">)</span> <i>&quot;CallMapModulMamma&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf",
+  "version" : "0.1.0",
+  "name" : "SenologieToObdsVerlauf",
+  "status" : "draft",
+  "date" : "2026-05-03T20:30:38+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
+    "mode" : "target",
+    "alias" : "OBDSMeldung"
+  }],
+  "import" : ["https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand"],
+  "group" : [{
+    "name" : "SenologieToObdsVerlauf",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups (MapVerlauf) use `target tgt : BackboneElement`.\r\nSee SenologieToObdsTNM.map for details.\r\n============================================================================\r\nHauptgruppe: Bundle -> oBDS Verlaufsmeldung\r\nDas Bundle enthaelt eine Condition (Rezidiv, clinicalStatus = recurrence)\r\nsowie zugehoerige Observations (TNM, Histologie, Fernmetastasen,\r\nHormonrezeptoren, Leistungszustand).\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "OBDSMeldung",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "EntryConditionTZ",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Condition)"
+      }],
+      "rule" : [{
+        "name" : "ConditionContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "condition"
+        }],
+        "rule" : [{
+          "name" : "CallMapTumorzuordnung",
+          "source" : [{
+            "context" : "condition"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "tumorzuordnung",
+            "variable" : "tz"
+          }],
+          "dependent" : [{
+            "name" : "MapTumorzuordnung",
+            "variable" : ["condition",
+            "tz"]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryConditionVerlauf",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Condition)"
+      }],
+      "rule" : [{
+        "name" : "CallMapVerlauf",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "condition"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl"
+        }],
+        "dependent" : [{
+          "name" : "MapVerlauf",
+          "variable" : ["condition",
+          "verl",
+          "src"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapVerlauf",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nVerlauf: Condition (Rezidiv) -> OBDSMeldung.verlauf\r\nVerlauf_ID, Meldeanlass, Untersuchungsdatum, Gesamtbeurteilung Tumorstatus,\r\nlokaler Tumorstatus, LK-Status, FM-Status\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Condition",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    }],
+    "rule" : [{
+      "name" : "MapVerlaufID",
+      "source" : [{
+        "context" : "src",
+        "element" : "identifier",
+        "variable" : "id"
+      }],
+      "rule" : [{
+        "name" : "SetVerlaufID",
+        "source" : [{
+          "context" : "id",
+          "element" : "value",
+          "variable" : "v"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlaufID",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "v"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetMeldeanlass",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meldeanlass",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "statusaenderung"
+        }]
+      }]
+    },
+    {
+      "name" : "MapUntersuchungsdatumExt",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum'"
+      }],
+      "rule" : [{
+        "name" : "SetUntersuchungsdatumExt",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val",
+          "condition" : "$this.is(dateTime)"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "untersuchungsdatum",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "val"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetUntersuchungsdatumFallback",
+      "source" : [{
+        "context" : "src",
+        "element" : "recordedDate",
+        "variable" : "rd"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "untersuchungsdatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "rd"
+        }]
+      }]
+    },
+    {
+      "name" : "MapGesamtbeurteilung",
+      "source" : [{
+        "context" : "src",
+        "element" : "stage",
+        "variable" : "stg"
+      }],
+      "rule" : [{
+        "name" : "ExtractGesamtbeurteilungCoding",
+        "source" : [{
+          "context" : "stg",
+          "element" : "summary",
+          "variable" : "sum"
+        }],
+        "rule" : [{
+          "name" : "TranslateGesamtbeurteilung",
+          "source" : [{
+            "context" : "sum",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system = 'http://snomed.info/sct'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "gesamtbeurteilungTumorstatus",
+            "transform" : "translate",
+            "parameter" : [{
+              "valueId" : "c"
+            },
+            {
+              "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
+            },
+            {
+              "valueString" : "code"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetGesamtbeurteilungRezidiv",
+      "source" : [{
+        "context" : "src",
+        "element" : "clinicalStatus",
+        "variable" : "cs",
+        "condition" : "coding.exists(code = 'recurrence')"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "gesamtbeurteilungTumorstatus",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "Y"
+        }]
+      }]
+    },
+    {
+      "name" : "MapLokalerTumorstatus",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-verlauf-lokaler-tumorstatus'"
+      }],
+      "rule" : [{
+        "name" : "MapLokalerStatusValue",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "ExtractLokalerStatus",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetLokalerTumorstatus",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "verlaufLokalerTumorstatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapTumorstatusLymphknoten",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-verlauf-tumorstatus-lymphknoten'"
+      }],
+      "rule" : [{
+        "name" : "MapLKStatusValue",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "ExtractLKStatus",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetLKStatus",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "verlaufTumorstatusLymphknoten",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapTumorstatusFernmetastasen",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-verlauf-tumorstatus-fernmetastasen'"
+      }],
+      "rule" : [{
+        "name" : "MapFMStatusValue",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "ExtractFMStatus",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetFMStatus",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "verlaufTumorstatusFernmetastasen",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "CallMapFernmetastasen",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable"
+      }],
+      "dependent" : [{
+        "name" : "MapFernmetastasenFromBundle",
+        "variable" : ["bundle",
+        "tgt"]
+      }]
+    },
+    {
+      "name" : "EntryHistologie",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "histEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+      }],
+      "rule" : [{
+        "name" : "CallMapHistologie",
+        "source" : [{
+          "context" : "histEntry",
+          "element" : "resource",
+          "variable" : "histObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "histologie",
+          "variable" : "histo"
+        }],
+        "dependent" : [{
+          "name" : "MapHistologie",
+          "variable" : ["histObs",
+          "histo",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTNMClinical",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tnmEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
+      }],
+      "rule" : [{
+        "name" : "CallMapTNMClinical",
+        "source" : [{
+          "context" : "tnmEntry",
+          "element" : "resource",
+          "variable" : "tnmObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "tnm",
+          "variable" : "tnm"
+        }],
+        "dependent" : [{
+          "name" : "MapTNM",
+          "variable" : ["tnmObs",
+          "tnm",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTNMPathological",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tnmEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
+      }],
+      "rule" : [{
+        "name" : "CallMapTNMPathological",
+        "source" : [{
+          "context" : "tnmEntry",
+          "element" : "resource",
+          "variable" : "tnmObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "tnm",
+          "variable" : "tnm"
+        }],
+        "dependent" : [{
+          "name" : "MapTNM",
+          "variable" : ["tnmObs",
+          "tnm",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "CallMapLeistungszustand",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable"
+      }],
+      "dependent" : [{
+        "name" : "MapLeistungszustandFromBundle",
+        "variable" : ["bundle",
+        "tgt"]
+      }]
+    },
+    {
+      "name" : "CallMapModulMamma",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "modulMamma",
+        "variable" : "mamma"
+      }],
+      "dependent" : [{
+        "name" : "MapModulMamma",
+        "variable" : ["bundle",
+        "mamma"]
+      }]
+    }]
+  }]
+}

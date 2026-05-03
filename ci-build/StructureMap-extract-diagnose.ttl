@@ -1,0 +1,301 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/extract-diagnose> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "extract-diagnose"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap extract-diagnose</b></p><a name=\"extract-diagnose\"> </a><a name=\"hcextract-diagnose\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/extract-diagnose<span style=\"color: navy\">\" = \"</span>ExtractSenologieDiagnose<span style=\"color: navy\">\"#xD;\n#xD;\n</span><b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/questionnaireresponse.html\" title=\"QuestionnaireResponse\">http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse</a><span style=\"color: navy\">\" </span><b>alias </b>QR <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>target</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-senologie-diagnose-maligne.html\" title=\"BIH PR Seno Diagnose Maligne\">https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne</a><span style=\"color: navy\">\" </span><b>alias </b>Condition <b>as </b><b>target</b>#xD;\n#xD;\n<b>group </b>QuestionnaireResponseToBundle<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>QuestionnaireResponse, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.type = <span style=\"color: blue\">'transaction'</span> <i>\"bundleType\"</i><span style=\"color: navy\">;</span>#xD;\n  src.item<b> as </b><span style=\"color: maroon\">grp</span><b> where </b>linkId = 'diagnose'<span style=\"color: navy\"><b> -&gt; </b></span> tgt.entry<b> as </b><span style=\"color: maroon\">entry</span><span style=\"color: navy\">, </span> entry.resource = <b>create</b><span style=\"color: navy\">(</span><span style=\"color: blue\">'Condition'</span><span style=\"color: navy\">)</span><b> as </b><span style=\"color: maroon\">condition</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    grp<span style=\"color: navy\"><b> -&gt; </b></span> entry.request<b> as </b><span style=\"color: maroon\">req</span><span style=\"color: navy\">, </span> req.method = <span style=\"color: blue\">'POST'</span><span style=\"color: navy\">, </span> req.url = <span style=\"color: blue\">'Condition'</span> <i>\"setRequest\"</i><span style=\"color: navy\">;</span>#xD;\n    grp.item<b> as </b><span style=\"color: maroon\">codeItem</span><b> where </b>linkId = 'diagnose.code'<span style=\"color: navy\"><b> -&gt; </b></span>condition.code<b> as </b><span style=\"color: maroon\">cc</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      codeItem.answer<b> as </b><span style=\"color: maroon\">ans</span><span style=\"color: navy\"><b> -&gt; </b></span>cc.coding = <span style=\"color: maroon\">ans.valueCoding</span><b> as </b><span style=\"color: maroon\">coding</span> <i>\"copyCoding\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"snomedCode\"</i><span style=\"color: navy\">;</span>#xD;\n    grp.item<b> as </b><span style=\"color: maroon\">sideItem</span><b> where </b>linkId = 'diagnose.seite'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      sideItem.answer<b> as </b><span style=\"color: maroon\">ans</span><span style=\"color: navy\"><b> -&gt; </b></span> condition.bodySite<b> as </b><span style=\"color: maroon\">bs</span><span style=\"color: navy\">, </span> bs.coding = <span style=\"color: maroon\">ans.valueCoding</span> <i>\"copyBodySite\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"laterality\"</i><span style=\"color: navy\">;</span>#xD;\n    grp<span style=\"color: navy\"><b> -&gt; </b></span> condition.clinicalStatus<b> as </b><span style=\"color: maroon\">cs</span><span style=\"color: navy\">, </span> cs.coding<b> as </b><span style=\"color: maroon\">csc</span><span style=\"color: navy\">, </span> csc.system = <span style=\"color: blue\">'http://terminology.hl7.org/CodeSystem/condition-clinical'</span><span style=\"color: navy\">, </span> csc.code = <span style=\"color: blue\">'active'</span> <i>\"clinicalStatus\"</i><span style=\"color: navy\">;</span>#xD;\n    grp.item<b> as </b><span style=\"color: maroon\">dateItem</span><b> where </b>linkId = 'diagnose.datum'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      dateItem.answer<b> as </b><span style=\"color: maroon\">ans</span><span style=\"color: navy\"><b> -&gt; </b></span>condition.recordedDate = <span style=\"color: maroon\">ans.valueDate</span> <i>\"copyDate\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"recordedDate\"</i><span style=\"color: navy\">;</span>#xD;\n    src.subject<b> as </b><span style=\"color: maroon\">subj</span><span style=\"color: navy\"><b> -&gt; </b></span>condition.subject = <span style=\"color: maroon\">subj</span><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"diagnoseGroup\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/extract-diagnose"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/extract-diagnose>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "ExtractSenologieDiagnose"] ; # 
+  fhir:title [ fhir:v "Extract Senologie Diagnose from QuestionnaireResponse"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-03T20:30:38+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "QR" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "Condition" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "QuestionnaireResponseToBundle" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "QuestionnaireResponse" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "bundleType" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "type" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "transaction"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "diagnoseGroup" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:variable [ fhir:v "grp" ] ;
+         fhir:condition [ fhir:v "linkId = 'diagnose'" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "entry" ]
+       ] [
+         fhir:context [ fhir:v "entry" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "resource" ] ;
+         fhir:variable [ fhir:v "condition" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Condition"
+           ]
+         ] )
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "setRequest" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "grp" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "entry" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "request" ] ;
+           fhir:variable [ fhir:v "req" ]
+         ] [
+           fhir:context [ fhir:v "req" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "method" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "POST"
+             ]
+           ] )
+         ] [
+           fhir:context [ fhir:v "req" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "url" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Condition"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "snomedCode" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "grp" ] ;
+           fhir:element [ fhir:v "item" ] ;
+           fhir:variable [ fhir:v "codeItem" ] ;
+           fhir:condition [ fhir:v "linkId = 'diagnose.code'" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "condition" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "code" ] ;
+           fhir:variable [ fhir:v "cc" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "copyCoding" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "codeItem" ] ;
+             fhir:element [ fhir:v "answer" ] ;
+             fhir:variable [ fhir:v "ans" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "cc" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "coding" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "ans.valueCoding"
+               ]
+             ] )
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "laterality" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "grp" ] ;
+           fhir:element [ fhir:v "item" ] ;
+           fhir:variable [ fhir:v "sideItem" ] ;
+           fhir:condition [ fhir:v "linkId = 'diagnose.seite'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "copyBodySite" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "sideItem" ] ;
+             fhir:element [ fhir:v "answer" ] ;
+             fhir:variable [ fhir:v "ans" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "condition" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "bodySite" ] ;
+             fhir:variable [ fhir:v "bs" ]
+           ] [
+             fhir:context [ fhir:v "bs" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "ans.valueCoding"
+               ]
+             ] )
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "clinicalStatus" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "grp" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "condition" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "clinicalStatus" ] ;
+           fhir:variable [ fhir:v "cs" ]
+         ] [
+           fhir:context [ fhir:v "cs" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "csc" ]
+         ] [
+           fhir:context [ fhir:v "csc" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "system" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "http://terminology.hl7.org/CodeSystem/condition-clinical"
+             ]
+           ] )
+         ] [
+           fhir:context [ fhir:v "csc" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "code" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "active"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "recordedDate" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "grp" ] ;
+           fhir:element [ fhir:v "item" ] ;
+           fhir:variable [ fhir:v "dateItem" ] ;
+           fhir:condition [ fhir:v "linkId = 'diagnose.datum'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "copyDate" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "dateItem" ] ;
+             fhir:element [ fhir:v "answer" ] ;
+             fhir:variable [ fhir:v "ans" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "condition" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "recordedDate" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "ans.valueDate"
+               ]
+             ] )
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "subject" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ] ;
+           fhir:element [ fhir:v "subject" ] ;
+           fhir:variable [ fhir:v "subj" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "condition" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "subject" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "subj"
+             ]
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

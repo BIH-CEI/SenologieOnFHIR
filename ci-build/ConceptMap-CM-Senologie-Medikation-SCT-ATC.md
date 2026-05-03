@@ -1,0 +1,218 @@
+# ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie) - Kerndatensatz Senologie v0.1.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie)**
+
+## ConceptMap: ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie) 
+
+| | |
+| :--- | :--- |
+| *Official URL*:https://www.senologie.org/fhir/ConceptMap/CM-Senologie-Medikation-SCT-ATC | *Version*:0.1.0 |
+| Draft as of 2026-03-14 | *Computable Name*: |
+
+ 
+Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf ATC (BfArM 2026). Validiert über fhir-terminology MCP Server gegen lokale Snowstorm- und ATC-Instanz. 
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "ConceptMap",
+  "id" : "CM-Senologie-Medikation-SCT-ATC",
+  "url" : "https://www.senologie.org/fhir/ConceptMap/CM-Senologie-Medikation-SCT-ATC",
+  "version" : "0.1.0",
+  "title" : "ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie)",
+  "status" : "draft",
+  "date" : "2026-03-14",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf ATC (BfArM 2026). Validiert über fhir-terminology MCP Server gegen lokale Snowstorm- und ATC-Instanz.",
+  "sourceUri" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation",
+  "group" : [{
+    "source" : "http://snomed.info/sct",
+    "target" : "http://fhir.de/CodeSystem/bfarm/atc",
+    "element" : [{
+      "code" : "715958001",
+      "display" : "Palbociclib",
+      "target" : [{
+        "code" : "L01EF01",
+        "display" : "Palbociclib",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "732257004",
+      "display" : "Ribociclib",
+      "target" : [{
+        "code" : "L01EF02",
+        "display" : "Ribociclib",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "761851004",
+      "display" : "Abemaciclib",
+      "target" : [{
+        "code" : "L01EF03",
+        "display" : "Abemaciclib",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "387381009",
+      "display" : "Methotrexate",
+      "target" : [{
+        "code" : "L01BA01",
+        "display" : "Methotrexat",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "387172005",
+      "display" : "Fluorouracil",
+      "target" : [{
+        "code" : "L01BC02",
+        "display" : "Fluorouracil",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "386920008",
+      "display" : "Gemcitabine",
+      "target" : [{
+        "code" : "L01BC05",
+        "display" : "Gemcitabin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "386906001",
+      "display" : "Capecitabine",
+      "target" : [{
+        "code" : "L01BC06",
+        "display" : "Capecitabin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "372817009",
+      "display" : "Doxorubicin",
+      "target" : [{
+        "code" : "L01DB01",
+        "display" : "Doxorubicin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "772118008",
+      "display" : "Doxorubicin hydrochloride pegylated liposome",
+      "target" : [{
+        "code" : "L01DB01",
+        "display" : "Doxorubicin",
+        "equivalence" : "wider",
+        "comment" : "ATC unterscheidet nicht zwischen konventionellem und pegyliert liposomalem Doxorubicin"
+      }]
+    },
+    {
+      "code" : "372715008",
+      "display" : "Daunorubicin",
+      "target" : [{
+        "code" : "L01DB02",
+        "display" : "Daunorubicin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "417916005",
+      "display" : "Epirubicin",
+      "target" : [{
+        "code" : "L01DB03",
+        "display" : "Epirubicin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "372539000",
+      "display" : "Idarubicin",
+      "target" : [{
+        "code" : "L01DB06",
+        "display" : "Idarubicin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "386913001",
+      "display" : "Mitoxantrone",
+      "target" : [{
+        "code" : "L01DB07",
+        "display" : "Mitoxantron",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "386918005",
+      "display" : "Docetaxel",
+      "target" : [{
+        "code" : "L01CD02",
+        "display" : "Docetaxel",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "387318005",
+      "display" : "Cisplatin",
+      "target" : [{
+        "code" : "L01XA01",
+        "display" : "Cisplatin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "386905002",
+      "display" : "Carboplatin",
+      "target" : [{
+        "code" : "L01XA02",
+        "display" : "Carboplatin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "387420009",
+      "display" : "Cyclophosphamide",
+      "target" : [{
+        "code" : "L01AA01",
+        "display" : "Cyclophosphamid",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "387331000",
+      "display" : "Mitomycin",
+      "target" : [{
+        "code" : "L01DC03",
+        "display" : "Mitomycin",
+        "equivalence" : "equivalent"
+      }]
+    },
+    {
+      "code" : "708166000",
+      "display" : "Eribulin",
+      "target" : [{
+        "code" : "L01XX41",
+        "display" : "Eribulin",
+        "equivalence" : "equivalent"
+      }]
+    }]
+  }]
+}
+
+```

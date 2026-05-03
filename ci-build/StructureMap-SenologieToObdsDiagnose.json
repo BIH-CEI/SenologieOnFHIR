@@ -1,0 +1,597 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToObdsDiagnose",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsDiagnose</b></p><a name=\"SenologieToObdsDiagnose\"> </a><a name=\"hcSenologieToObdsDiagnose\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose<span style=\"color: navy\">&quot; = &quot;</span>SenologieToObdsDiagnose<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Diagnose Bundle to oBDS Diagnosemeldung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/riskassessment.html\" title=\"RiskAssessment\">http://hl7.org/fhir/StructureDefinition/RiskAssessment</a><span style=\"color: navy\">&quot; </span><b>alias </b>RiskAssessment <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>\r\n\r\n<b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsTumorzuordnung.html\" title=\"SenologieToObdsTumorzuordnung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsTNM.html\" title=\"SenologieToObdsTNM\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsHistologie.html\" title=\"SenologieToObdsHistologie\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsModulMamma.html\" title=\"SenologieToObdsModulMamma\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToObdsLeistungszustand.html\" title=\"SenologieToObdsLeistungszustand\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand</a><span style=\"color: navy\">&quot;\r\n</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapDiagnose, MapWeitereKlassifikation) use</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement`. See SenologieToObdsTNM.map for details.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hauptgruppe: Bundle -&gt; oBDS Diagnosemeldung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Das Bundle enthaelt eine Condition (Diagnose) sowie zugehoerige</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Observations (TNM, Histologie, Hormonrezeptoren).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>SenologieToObdsDiagnose<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OBDSMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Tumorzuordnung: aus der Condition-Ressource</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">condition</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      condition<span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style=\"color: maroon\">tz</span><b> then </b>MapTumorzuordnung<span style=\"color: navy\">(</span><span style=\"color: maroon\">condition</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tz</span><span style=\"color: navy\">)</span> <i>&quot;CallMapTumorzuordnung&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;ConditionContext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryConditionTZ&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Diagnose: aus der Condition-Ressource + Observations aus dem Bundle</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">condition</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style=\"color: maroon\">dx</span><b> then </b>MapDiagnose<span style=\"color: navy\">(</span><span style=\"color: maroon\">condition</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">dx</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>&quot;CallMapDiagnose&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryConditionDX&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Diagnose: Condition -&gt; OBDSMeldung.diagnose</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Freitextdiagnose, ICD-O Topographie, Diagnosesicherung, fruehere Erkrankungen</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapDiagnose<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Primaertumor_Diagnosetext: aus Condition.code.text</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.primaertumorDiagnosetext = <span style=\"color: maroon\">t</span> <i>&quot;SetDiagnosetext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapDiagnosetext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Primaertumor_Topographie_ICD_O: ICD-O Topographie aus Condition.bodySite</span>\r\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'urn:oid:2.16.840.1.113883.6.43.1'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.primaertumorTopographieICDO<b> as </b><span style=\"color: maroon\">topo</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>topo.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetTopoCode&quot;</i><span style=\"color: navy\">;</span>\r\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>topo.version = <span style=\"color: maroon\">v</span> <i>&quot;SetTopoVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapTopoCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapTopographie&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Primaertumor_Topographie_Freitext: aus Condition.bodySite.text</span>\r\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    bs.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.primaertumorTopographieFreitext = <span style=\"color: maroon\">t</span> <i>&quot;SetTopoFreitext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapTopoFreitext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Diagnosesicherung: aus verificationStatus (MII Onko Diagnosesicherung Coding)</span>\r\n  src.verificationStatus<b> as </b><span style=\"color: maroon\">vs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    vs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnosesicherung = <span style=\"color: maroon\">cd</span> <i>&quot;SetDiagnosesicherung&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;ExtractDiagnosesicherungCode&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapDiagnosesicherung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fruehere Tumorerkrankungen: aus Condition.extension (falls vorhanden)</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'http://hl7.org/fhir/StructureDefinition/condition-related'<b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">ref</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.fruehereErkrankungen<b> as </b><span style=\"color: maroon\">fe</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      ref.display<b> as </b><span style=\"color: maroon\">d</span><span style=\"color: navy\"><b> -&gt; </b></span>fe.freitext = <span style=\"color: maroon\">d</span> <i>&quot;SetFrueherFreitext&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFruehereErkrankung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapFruehereErkrankungen&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Histologie: aus Observations im Bundle (DiagnosticReport-referenzierte Pathologie)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style=\"color: navy\"> {\r\n</span>    histEntry.resource<b> as </b><span style=\"color: maroon\">histObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.histologie<b> as </b><span style=\"color: maroon\">histo</span><b> then </b>MapHistologie<span style=\"color: navy\">(</span><span style=\"color: maroon\">histObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">histo</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapHistologie&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryHistologie&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">cTNM: aus TNM-Observation im Bundle (klinisches Staging)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21908-9')<b> then</b><span style=\"color: navy\"> {\r\n</span>    tnmEntry.resource<b> as </b><span style=\"color: maroon\">tnmObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cTNM<b> as </b><span style=\"color: maroon\">ctnm</span><b> then </b>MapTNM<span style=\"color: navy\">(</span><span style=\"color: maroon\">tnmObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">ctnm</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapCTNM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryCTNM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Allgemeiner Leistungszustand (ECOG): aus Observation im Bundle</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Delegiert an die gemeinsame Leistungszustand-Map</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt<b> then </b>MapLeistungszustandFromBundle<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>&quot;CallMapLeistungszustand&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.modulMamma<b> as </b><span style=\"color: maroon\">mamma</span><b> then </b>MapModulMamma<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">mamma</span><span style=\"color: navy\">)</span> <i>&quot;CallMapModulMamma&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Weitere Klassifikationen: Genexpressionstests (Oncotype DX, MammaPrint, ...)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">aus RiskAssessment-Ressourcen (Senologie_Genexpressionstest) im Bundle</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">raEntry</span><b> where </b>resource.is(RiskAssessment)<b> then</b><span style=\"color: navy\"> {\r\n</span>    raEntry.resource<b> as </b><span style=\"color: maroon\">ra</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.weitereKlassifikationen<b> as </b><span style=\"color: maroon\">wk</span><b> then </b>MapWeitereKlassifikation<span style=\"color: navy\">(</span><span style=\"color: maroon\">ra</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">wk</span><span style=\"color: navy\">)</span> <i>&quot;CallMapWeitereKlassifikation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryWeitereKlassifikation&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Weitere Klassifikation: RiskAssessment (Genexpressionstest) -&gt; Menge_Weitere_Klassifikation</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Mappt Genexpressionstests wie Oncotype DX, MammaPrint auf das oBDS-Element</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">&quot;Weitere_Klassifikation&quot; (Datum, Name, Stadium/Ergebnis).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapWeitereKlassifikation<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>RiskAssessment, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Datum: aus RiskAssessment.occurrenceDateTime</span>\r\n  src.occurrence<b> as </b><span style=\"color: maroon\">occ</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.datum = <span style=\"color: maroon\">occ</span> <i>&quot;SetWKDatum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Name: aus RiskAssessment.method.coding.display oder method.text</span>\r\n  src.method<b> as </b><span style=\"color: maroon\">m</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    m.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.display<b> as </b><span style=\"color: maroon\">d</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.name = <span style=\"color: maroon\">d</span> <i>&quot;SetWKNameDisplay&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapWKMethodCoding&quot;</i><span style=\"color: navy\">;</span>\r\n    m.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.name = <span style=\"color: maroon\">t</span> <i>&quot;SetWKNameText&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapWKMethod&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Stadium: aus RiskAssessment.prediction[0].qualitativeRisk.text + basis-Observation</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Format: &quot;&lt;Score&gt; (&lt;RiskCategory&gt;)&quot;</span>\r\n  src.prediction<b> as </b><span style=\"color: maroon\">pred</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    pred.qualitativeRisk<b> as </b><span style=\"color: maroon\">qr</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      qr.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.stadium = <span style=\"color: maroon\">t</span> <i>&quot;SetWKStadiumQualitativeText&quot;</i><span style=\"color: navy\">;</span>\r\n      qr.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.display<b> as </b><span style=\"color: maroon\">d</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.stadium = <span style=\"color: maroon\">d</span> <i>&quot;SetWKStadiumQualitativeDisplay&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapWKQRCoding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapWKQR&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapWKPrediction&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose",
+  "version" : "0.1.0",
+  "name" : "SenologieToObdsDiagnose",
+  "status" : "draft",
+  "date" : "2026-05-03T20:30:38+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Diagnose Bundle to oBDS Diagnosemeldung\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/RiskAssessment",
+    "mode" : "source",
+    "alias" : "RiskAssessment"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
+    "mode" : "target",
+    "alias" : "OBDSMeldung"
+  }],
+  "import" : ["https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand"],
+  "group" : [{
+    "name" : "SenologieToObdsDiagnose",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups (MapDiagnose, MapWeitereKlassifikation) use\r\n`target tgt : BackboneElement`. See SenologieToObdsTNM.map for details.\r\n============================================================================\r\nHauptgruppe: Bundle -> oBDS Diagnosemeldung\r\nDas Bundle enthaelt eine Condition (Diagnose) sowie zugehoerige\r\nObservations (TNM, Histologie, Hormonrezeptoren).\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "OBDSMeldung",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "EntryConditionTZ",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Condition)"
+      }],
+      "rule" : [{
+        "name" : "ConditionContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "condition"
+        }],
+        "rule" : [{
+          "name" : "CallMapTumorzuordnung",
+          "source" : [{
+            "context" : "condition"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "tumorzuordnung",
+            "variable" : "tz"
+          }],
+          "dependent" : [{
+            "name" : "MapTumorzuordnung",
+            "variable" : ["condition",
+            "tz"]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryConditionDX",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Condition)"
+      }],
+      "rule" : [{
+        "name" : "CallMapDiagnose",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "condition"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "dx"
+        }],
+        "dependent" : [{
+          "name" : "MapDiagnose",
+          "variable" : ["condition",
+          "dx",
+          "src"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapDiagnose",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nDiagnose: Condition -> OBDSMeldung.diagnose\r\nFreitextdiagnose, ICD-O Topographie, Diagnosesicherung, fruehere Erkrankungen\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Condition",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    }],
+    "rule" : [{
+      "name" : "MapDiagnosetext",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "SetDiagnosetext",
+        "source" : [{
+          "context" : "code",
+          "element" : "text",
+          "variable" : "t"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "primaertumorDiagnosetext",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "t"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapTopographie",
+      "source" : [{
+        "context" : "src",
+        "element" : "bodySite",
+        "variable" : "bs"
+      }],
+      "rule" : [{
+        "name" : "MapTopoCoding",
+        "source" : [{
+          "context" : "bs",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'urn:oid:2.16.840.1.113883.6.43.1'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "primaertumorTopographieICDO",
+          "variable" : "topo"
+        }],
+        "rule" : [{
+          "name" : "SetTopoCode",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "topo",
+            "contextType" : "variable",
+            "element" : "code",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetTopoVersion",
+          "source" : [{
+            "context" : "c",
+            "element" : "version",
+            "variable" : "v"
+          }],
+          "target" : [{
+            "context" : "topo",
+            "contextType" : "variable",
+            "element" : "version",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "v"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapTopoFreitext",
+      "source" : [{
+        "context" : "src",
+        "element" : "bodySite",
+        "variable" : "bs"
+      }],
+      "rule" : [{
+        "name" : "SetTopoFreitext",
+        "source" : [{
+          "context" : "bs",
+          "element" : "text",
+          "variable" : "t"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "primaertumorTopographieFreitext",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "t"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapDiagnosesicherung",
+      "source" : [{
+        "context" : "src",
+        "element" : "verificationStatus",
+        "variable" : "vs"
+      }],
+      "rule" : [{
+        "name" : "ExtractDiagnosesicherungCode",
+        "source" : [{
+          "context" : "vs",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung'"
+        }],
+        "rule" : [{
+          "name" : "SetDiagnosesicherung",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "diagnosesicherung",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapFruehereErkrankungen",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'http://hl7.org/fhir/StructureDefinition/condition-related'"
+      }],
+      "rule" : [{
+        "name" : "MapFruehereErkrankung",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "ref"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "fruehereErkrankungen",
+          "variable" : "fe"
+        }],
+        "rule" : [{
+          "name" : "SetFrueherFreitext",
+          "source" : [{
+            "context" : "ref",
+            "element" : "display",
+            "variable" : "d"
+          }],
+          "target" : [{
+            "context" : "fe",
+            "contextType" : "variable",
+            "element" : "freitext",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "d"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryHistologie",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "histEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+      }],
+      "rule" : [{
+        "name" : "CallMapHistologie",
+        "source" : [{
+          "context" : "histEntry",
+          "element" : "resource",
+          "variable" : "histObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "histologie",
+          "variable" : "histo"
+        }],
+        "dependent" : [{
+          "name" : "MapHistologie",
+          "variable" : ["histObs",
+          "histo",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCTNM",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tnmEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
+      }],
+      "rule" : [{
+        "name" : "CallMapCTNM",
+        "source" : [{
+          "context" : "tnmEntry",
+          "element" : "resource",
+          "variable" : "tnmObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "cTNM",
+          "variable" : "ctnm"
+        }],
+        "dependent" : [{
+          "name" : "MapTNM",
+          "variable" : ["tnmObs",
+          "ctnm",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "CallMapLeistungszustand",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable"
+      }],
+      "dependent" : [{
+        "name" : "MapLeistungszustandFromBundle",
+        "variable" : ["bundle",
+        "tgt"]
+      }]
+    },
+    {
+      "name" : "CallMapModulMamma",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "modulMamma",
+        "variable" : "mamma"
+      }],
+      "dependent" : [{
+        "name" : "MapModulMamma",
+        "variable" : ["bundle",
+        "mamma"]
+      }]
+    },
+    {
+      "name" : "EntryWeitereKlassifikation",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "raEntry",
+        "condition" : "resource.is(RiskAssessment)"
+      }],
+      "rule" : [{
+        "name" : "CallMapWeitereKlassifikation",
+        "source" : [{
+          "context" : "raEntry",
+          "element" : "resource",
+          "variable" : "ra"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "weitereKlassifikationen",
+          "variable" : "wk"
+        }],
+        "dependent" : [{
+          "name" : "MapWeitereKlassifikation",
+          "variable" : ["ra",
+          "bundle",
+          "wk"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapWeitereKlassifikation",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nWeitere Klassifikation: RiskAssessment (Genexpressionstest) -> Menge_Weitere_Klassifikation\r\nMappt Genexpressionstests wie Oncotype DX, MammaPrint auf das oBDS-Element\r\n\"Weitere_Klassifikation\" (Datum, Name, Stadium/Ergebnis).\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "RiskAssessment",
+      "mode" : "source"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetWKDatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "occurrence",
+        "variable" : "occ",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "datum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "occ"
+        }]
+      }]
+    },
+    {
+      "name" : "MapWKMethod",
+      "source" : [{
+        "context" : "src",
+        "element" : "method",
+        "variable" : "m"
+      }],
+      "rule" : [{
+        "name" : "MapWKMethodCoding",
+        "source" : [{
+          "context" : "m",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest'"
+        }],
+        "rule" : [{
+          "name" : "SetWKNameDisplay",
+          "source" : [{
+            "context" : "c",
+            "element" : "display",
+            "variable" : "d"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "name",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "d"
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "SetWKNameText",
+        "source" : [{
+          "context" : "m",
+          "element" : "text",
+          "variable" : "t"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "name",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "t"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapWKPrediction",
+      "source" : [{
+        "context" : "src",
+        "element" : "prediction",
+        "variable" : "pred"
+      }],
+      "rule" : [{
+        "name" : "MapWKQR",
+        "source" : [{
+          "context" : "pred",
+          "element" : "qualitativeRisk",
+          "variable" : "qr"
+        }],
+        "rule" : [{
+          "name" : "SetWKStadiumQualitativeText",
+          "source" : [{
+            "context" : "qr",
+            "element" : "text",
+            "variable" : "t"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "stadium",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "t"
+            }]
+          }]
+        },
+        {
+          "name" : "MapWKQRCoding",
+          "source" : [{
+            "context" : "qr",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetWKStadiumQualitativeDisplay",
+            "source" : [{
+              "context" : "c",
+              "element" : "display",
+              "variable" : "d"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "stadium",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "d"
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}

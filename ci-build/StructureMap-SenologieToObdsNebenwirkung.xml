@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsNebenwirkung"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsNebenwirkung</b></p><a name="SenologieToObdsNebenwirkung"> </a><a name="hcSenologieToObdsNebenwirkung"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung<span style="color: navy">&quot; = &quot;</span>SenologieToObdsNebenwirkung<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
+<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">slices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names</span>
+<span style="color: navy">// </span><span style="color: green">are correct per the oBDS Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Gemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)</span>
+<span style="color: navy">// </span><span style="color: green">aus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.</span>
+<span style="color: navy">// </span><span style="color: green">Wird von SYST und ST importiert.</span>
+<span style="color: navy">// </span><span style="color: green">MII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event</span>
+<span style="color: navy">// </span><span style="color: green">Die Nebenwirkung wird als Observation modelliert mit:</span>
+<span style="color: navy">// </span><span style="color: green">- code: CTCAE-Term (NCI Thesaurus Code + Text)</span>
+<span style="color: navy">// </span><span style="color: green">- value: CTCAE-Grad als CodeableConcept</span>
+<span style="color: navy">// </span><span style="color: green">- method: CTCAE-Version</span>
+<span style="color: navy">// </span><span style="color: green">oBDS-Struktur:</span>
+<span style="color: navy">// </span><span style="color: green">nebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen</span>
+<span style="color: navy">// </span><span style="color: green">Grad &lt;=2 oder unbekannt sind, wird hier &quot;2&quot; oder &quot;U&quot; gesetzt.</span>
+<span style="color: navy">// </span><span style="color: green">nebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad &gt;=3</span>
+<span style="color: navy">// </span><span style="color: green">mit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapNebenwirkungenSYST: Bundle -&gt; oBDS Nebenwirkungen (fuer Systemtherapie)</span>
+<span style="color: navy">// </span><span style="color: green">Bei SYST: Observations mit CTCAE-Codierung extrahieren,</span>
+<span style="color: navy">// </span><span style="color: green">Grad &gt;=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapNebenwirkungenSYST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Default: Wenn keine Nebenwirkungen vorhanden -&gt; U (unbekannt)</span>
+  src<b> where </b>entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.gradMaximal2OderUnbekannt = <span style="color: blue">'U'</span> <i>&quot;SetGradUnbekannt&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Nebenwirkungen mit CTCAE-Codierung: jede Observation einzeln verarbeiten</span>
+  src.entry<b> as </b><span style="color: maroon">obsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')<b> then</b><span style="color: navy"> {
+</span>    obsEntry.resource<b> as </b><span style="color: maroon">obs</span><b> then </b>MapNebenwirkungEinzeln<span style="color: navy">(</span><span style="color: maroon">obs</span><span style="color: navy">, </span><span style="color: maroon">tgt</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungEinzeln&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryNebenwirkungen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapNebenwirkungenST: Bundle -&gt; oBDS Nebenwirkungen (fuer Strahlentherapie)</span>
+<span style="color: navy">// </span><span style="color: green">Gleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapNebenwirkungenST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Default: Wenn keine Nebenwirkungen vorhanden -&gt; U (unbekannt)</span>
+  src<b> where </b>entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.gradMaximal2OderUnbekannt = <span style="color: blue">'U'</span> <i>&quot;SetGradUnbekannt&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Nebenwirkungen mit CTCAE-Codierung</span>
+  src.entry<b> as </b><span style="color: maroon">obsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')<b> then</b><span style="color: navy"> {
+</span>    obsEntry.resource<b> as </b><span style="color: maroon">obs</span><b> then </b>MapNebenwirkungEinzeln<span style="color: navy">(</span><span style="color: maroon">obs</span><span style="color: navy">, </span><span style="color: maroon">tgt</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungEinzeln&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryNebenwirkungen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapNebenwirkungEinzeln: Observation -&gt; oBDS Nebenwirkung (einzeln)</span>
+<span style="color: navy">// </span><span style="color: green">Erzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapNebenwirkungEinzeln<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Observation, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Einzelne Nebenwirkung</span>
+  src.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>    val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.nebenwirkung<b> as </b><span style="color: maroon">nw</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">Art/Bezeichnung der Nebenwirkung (aus Observation.code)</span>
+      src.code<b> as </b><span style="color: maroon">obsCode</span><b> then</b><span style="color: navy"> {
+</span>        obsCode.text<b> as </b><span style="color: maroon">t</span><span style="color: navy"><b> -&gt; </b></span>nw.artBezeichnung = <span style="color: maroon">t</span> <i>&quot;SetNwBezeichnung&quot;</i><span style="color: navy">;</span>
+        obsCode.coding<b> as </b><span style="color: maroon">coding</span><b> then</b><span style="color: navy"> {
+</span>          coding.display<b> as </b><span style="color: maroon">d</span><b> where </b>%obsCode.text.exists().not()<span style="color: navy"><b> -&gt; </b></span>nw.artBezeichnung = <span style="color: maroon">d</span> <i>&quot;SetNwBezeichnungDisplay&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;FallbackNwBezeichnung&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractNwBezeichnung&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">CTCAE-Grad (1-5)</span>
+      c.code<b> as </b><span style="color: maroon">g</span><span style="color: navy"><b> -&gt; </b></span>nw.grad = <span style="color: maroon">g</span> <i>&quot;SetNwGrad&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">CTCAE-Version (z.B. &quot;4.03&quot;, &quot;5.0&quot;)</span>
+      src.method<b> as </b><span style="color: maroon">method</span><b> then</b><span style="color: navy"> {
+</span>        method.text<b> as </b><span style="color: maroon">t</span><span style="color: navy"><b> -&gt; </b></span>nw.version = <span style="color: maroon">t</span> <i>&quot;SetNwVersion&quot;</i><span style="color: navy">;</span>
+        method.coding<b> as </b><span style="color: maroon">mc</span><b> then</b><span style="color: navy"> {
+</span>          mc.code<b> as </b><span style="color: maroon">v</span><b> where </b>%method.text.exists().not()<span style="color: navy"><b> -&gt; </b></span>nw.version = <span style="color: maroon">v</span> <i>&quot;SetNwVersionFromCoding&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;FallbackNwVersion&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractNwVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;CreateNebenwirkung&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapNebenwirkungGrad&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsNebenwirkung"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <group>
+    <name value="MapNebenwirkungenSYST"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names&#xD;&#xA;are correct per the oBDS Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Gemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)&#xD;&#xA;aus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.&#xD;&#xA;Wird von SYST und ST importiert.&#xD;&#xA;MII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event&#xD;&#xA;Die Nebenwirkung wird als Observation modelliert mit:&#xD;&#xA;- code: CTCAE-Term (NCI Thesaurus Code + Text)&#xD;&#xA;- value: CTCAE-Grad als CodeableConcept&#xD;&#xA;- method: CTCAE-Version&#xD;&#xA;oBDS-Struktur:&#xD;&#xA;nebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen&#xD;&#xA;Grad &lt;=2 oder unbekannt sind, wird hier &quot;2&quot; oder &quot;U&quot; gesetzt.&#xD;&#xA;nebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad &gt;=3&#xD;&#xA;mit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.&#xD;&#xA;============================================================================&#xD;&#xA;============================================================================&#xD;&#xA;MapNebenwirkungenSYST: Bundle -&gt; oBDS Nebenwirkungen (fuer Systemtherapie)&#xD;&#xA;Bei SYST: Observations mit CTCAE-Codierung extrahieren,&#xD;&#xA;Grad &gt;=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="SetGradUnbekannt"/>
+      <source>
+        <context value="src"/>
+        <condition value="entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="gradMaximal2OderUnbekannt"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="U"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="EntryNebenwirkungen"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="obsEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')"/>
+      </source>
+      <rule>
+        <name value="CallMapNebenwirkungEinzeln"/>
+        <source>
+          <context value="obsEntry"/>
+          <element value="resource"/>
+          <variable value="obs"/>
+        </source>
+        <dependent>
+          <name value="MapNebenwirkungEinzeln"/>
+          <variable value="obs"/>
+          <variable value="tgt"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapNebenwirkungenST"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;MapNebenwirkungenST: Bundle -&gt; oBDS Nebenwirkungen (fuer Strahlentherapie)&#xD;&#xA;Gleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="SetGradUnbekannt"/>
+      <source>
+        <context value="src"/>
+        <condition value="entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="gradMaximal2OderUnbekannt"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="U"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="EntryNebenwirkungen"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="obsEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')"/>
+      </source>
+      <rule>
+        <name value="CallMapNebenwirkungEinzeln"/>
+        <source>
+          <context value="obsEntry"/>
+          <element value="resource"/>
+          <variable value="obs"/>
+        </source>
+        <dependent>
+          <name value="MapNebenwirkungEinzeln"/>
+          <variable value="obs"/>
+          <variable value="tgt"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapNebenwirkungEinzeln"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;MapNebenwirkungEinzeln: Observation -&gt; oBDS Nebenwirkung (einzeln)&#xD;&#xA;Erzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Observation"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="MapNebenwirkungGrad"/>
+      <source>
+        <context value="src"/>
+        <element value="value"/>
+        <variable value="val"/>
+      </source>
+      <rule>
+        <name value="CreateNebenwirkung"/>
+        <source>
+          <context value="val"/>
+          <element value="coding"/>
+          <variable value="c"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="nebenwirkung"/>
+          <variable value="nw"/>
+        </target>
+        <rule>
+          <name value="ExtractNwBezeichnung"/>
+          <source>
+            <context value="src"/>
+            <element value="code"/>
+            <variable value="obsCode"/>
+          </source>
+          <rule>
+            <name value="SetNwBezeichnung"/>
+            <source>
+              <context value="obsCode"/>
+              <element value="text"/>
+              <variable value="t"/>
+            </source>
+            <target>
+              <context value="nw"/>
+              <contextType value="variable"/>
+              <element value="artBezeichnung"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="t"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="FallbackNwBezeichnung"/>
+            <source>
+              <context value="obsCode"/>
+              <element value="coding"/>
+              <variable value="coding"/>
+            </source>
+            <rule>
+              <name value="SetNwBezeichnungDisplay"/>
+              <source>
+                <context value="coding"/>
+                <element value="display"/>
+                <variable value="d"/>
+                <condition value="%obsCode.text.exists().not()"/>
+              </source>
+              <target>
+                <context value="nw"/>
+                <contextType value="variable"/>
+                <element value="artBezeichnung"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="d"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+        <rule>
+          <name value="SetNwGrad"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="g"/>
+          </source>
+          <target>
+            <context value="nw"/>
+            <contextType value="variable"/>
+            <element value="grad"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="g"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="ExtractNwVersion"/>
+          <source>
+            <context value="src"/>
+            <element value="method"/>
+            <variable value="method"/>
+          </source>
+          <rule>
+            <name value="SetNwVersion"/>
+            <source>
+              <context value="method"/>
+              <element value="text"/>
+              <variable value="t"/>
+            </source>
+            <target>
+              <context value="nw"/>
+              <contextType value="variable"/>
+              <element value="version"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="t"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="FallbackNwVersion"/>
+            <source>
+              <context value="method"/>
+              <element value="coding"/>
+              <variable value="mc"/>
+            </source>
+            <rule>
+              <name value="SetNwVersionFromCoding"/>
+              <source>
+                <context value="mc"/>
+                <element value="code"/>
+                <variable value="v"/>
+                <condition value="%method.text.exists().not()"/>
+              </source>
+              <target>
+                <context value="nw"/>
+                <contextType value="variable"/>
+                <element value="version"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="v"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

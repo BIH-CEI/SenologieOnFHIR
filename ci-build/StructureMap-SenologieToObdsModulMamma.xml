@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsModulMamma"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsModulMamma</b></p><a name="SenologieToObdsModulMamma"> </a><a name="hcSenologieToObdsModulMamma"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma<span style="color: navy">&quot; = &quot;</span>SenologieToObdsModulMamma<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/servicerequest.html" title="ServiceRequest">http://hl7.org/fhir/StructureDefinition/ServiceRequest</a><span style="color: navy">&quot; </span><b>alias </b>ServiceRequest <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
+<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher produces SM_TARGET_PATH</span>
+<span style="color: navy">// </span><span style="color: green">/ SM_SOURCE_PATH errors (~22). The element names are correct per the oBDS</span>
+<span style="color: navy">// </span><span style="color: green">Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Gemeinsame Modul-Mamma-Map: Extrahiert mammaspezifische Observations aus</span>
+<span style="color: navy">// </span><span style="color: green">dem Bundle und mappt auf das oBDS Modul_Mamma BackboneElement.</span>
+<span style="color: navy">// </span><span style="color: green">Wird von Diagnose, OP und Verlauf importiert.</span>
+<span style="color: navy">// </span><span style="color: green">MII Onko Mamma-Profile:</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-mamma-rezeptorstatus-estrogen (LOINC 85337-4)</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-mamma-rezeptorstatus-progesteron (LOINC 85339-0)</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-mamma-her2neu-status (LOINC 85319-2)</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-mamma-menopause-status (LOINC 63612-8)</span>
+<span style="color: navy">// </span><span style="color: green">SNOMED-CT Werte:</span>
+<span style="color: navy">// </span><span style="color: green">10828004 = Positive (qualifier value) -&gt; P</span>
+<span style="color: navy">// </span><span style="color: green">260385009 = Negative (qualifier value) -&gt; N</span>
+<span style="color: navy">// </span><span style="color: green">261665006 = Unknown (qualifier value) -&gt; U</span>
+<span style="color: navy">// </span><span style="color: green">Menopausenstatus:</span>
+<span style="color: navy">// </span><span style="color: green">309606002 = Before menopause (finding) -&gt; 1 (praemenopausal)</span>
+<span style="color: navy">// </span><span style="color: green">309607006 = During menopause (finding) -&gt; 2 (perimenopausal, nicht oBDS-konform, gemappt auf U)</span>
+<span style="color: navy">// </span><span style="color: green">309608001 = After menopause (finding) -&gt; 3 (postmenopausal)</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapModulMamma: Bundle -&gt; oBDS Modul_Mamma</span>
+<span style="color: navy">// </span><span style="color: green">Extrahiert Hormonrezeptoren, HER2 und Menopausenstatus aus Observations</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapModulMamma<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Oestrogenrezeptor (LOINC 85337-4 = Estrogen receptor Ag [Presence])</span>
+  src.entry<b> as </b><span style="color: maroon">erEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85337-4')<b> then</b><span style="color: navy"> {
+</span>    erEntry.resource<b> as </b><span style="color: maroon">erObs</span><b> then</b><span style="color: navy"> {
+</span>      erObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '10828004'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusOestrogen = <span style="color: blue">'P'</span> <i>&quot;SetERPositiv&quot;</i><span style="color: navy">;</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '260385009'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusOestrogen = <span style="color: blue">'N'</span> <i>&quot;SetERNegativ&quot;</i><span style="color: navy">;</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusOestrogen = <span style="color: blue">'U'</span> <i>&quot;SetERUnbekannt&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapERValue&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapERObs&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryER&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Progesteronrezeptor (LOINC 85339-0 = Progesterone receptor Ag [Presence])</span>
+  src.entry<b> as </b><span style="color: maroon">prEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85339-0')<b> then</b><span style="color: navy"> {
+</span>    prEntry.resource<b> as </b><span style="color: maroon">prObs</span><b> then</b><span style="color: navy"> {
+</span>      prObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '10828004'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusProgesteron = <span style="color: blue">'P'</span> <i>&quot;SetPRPositiv&quot;</i><span style="color: navy">;</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '260385009'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusProgesteron = <span style="color: blue">'N'</span> <i>&quot;SetPRNegativ&quot;</i><span style="color: navy">;</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusProgesteron = <span style="color: blue">'U'</span> <i>&quot;SetPRUnbekannt&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapPRValue&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapPRObs&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryPR&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">HER2-Status (LOINC 85319-2 = HER2 [Presence] in Breast cancer specimen)</span>
+  src.entry<b> as </b><span style="color: maroon">herEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85319-2')<b> then</b><span style="color: navy"> {
+</span>    herEntry.resource<b> as </b><span style="color: maroon">herObs</span><b> then</b><span style="color: navy"> {
+</span>      herObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '10828004'<span style="color: navy"><b> -&gt; </b></span>tgt.her2neuStatus = <span style="color: blue">'P'</span> <i>&quot;SetHER2Positiv&quot;</i><span style="color: navy">;</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '260385009'<span style="color: navy"><b> -&gt; </b></span>tgt.her2neuStatus = <span style="color: blue">'N'</span> <i>&quot;SetHER2Negativ&quot;</i><span style="color: navy">;</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.her2neuStatus = <span style="color: blue">'U'</span> <i>&quot;SetHER2Unbekannt&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapHER2Value&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapHER2Obs&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryHER2&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Menopausenstatus (LOINC 63612-8 = Menopause status)</span>
+  <span style="color: navy">// </span><span style="color: green">Nur in Diagnose und Verlauf relevant (nicht OP)</span>
+  src.entry<b> as </b><span style="color: maroon">menoEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '63612-8')<b> then</b><span style="color: navy"> {
+</span>    menoEntry.resource<b> as </b><span style="color: maroon">menoObs</span><b> then</b><span style="color: navy"> {
+</span>      menoObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>        <span style="color: navy">// </span><span style="color: green">Praemenopausal: SNOMED 309606002 -&gt; oBDS 1</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '309606002'<span style="color: navy"><b> -&gt; </b></span>tgt.praetherapeutischerMenopausenstatus = <span style="color: blue">'1'</span> <i>&quot;SetMenoPrae&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">// </span><span style="color: green">Postmenopausal: SNOMED 309608001 -&gt; oBDS 3</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '309608001'<span style="color: navy"><b> -&gt; </b></span>tgt.praetherapeutischerMenopausenstatus = <span style="color: blue">'3'</span> <i>&quot;SetMenoPost&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">// </span><span style="color: green">Perimenopausal: SNOMED 309607006 -&gt; oBDS U (kein oBDS-Code fuer perimenopausal)</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '309607006'<span style="color: navy"><b> -&gt; </b></span>tgt.praetherapeutischerMenopausenstatus = <span style="color: blue">'U'</span> <i>&quot;SetMenoPeri&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">// </span><span style="color: green">Unbekannt: SNOMED 261665006 -&gt; oBDS U</span>
+        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.praetherapeutischerMenopausenstatus = <span style="color: blue">'U'</span> <i>&quot;SetMenoUnbekannt&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapMenoValue&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapMenoObs&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryMenopause&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Praeoperative Drahtmarkierung (aus Senologie_OP_Planung ServiceRequest.extension[preOpMarkierung])</span>
+  <span style="color: navy">// </span><span style="color: green">ValueCodeableConcept mit code M/S/T/N/U oder Freitext; wird nur fuer OP-Meldung verwendet.</span>
+  src.entry<b> as </b><span style="color: maroon">srEntry</span><b> where </b>resource.is(ServiceRequest)<b> then</b><span style="color: navy"> {
+</span>    srEntry.resource<b> as </b><span style="color: maroon">sr</span><b> then</b><span style="color: navy"> {
+</span>      sr.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'<b> then</b><span style="color: navy"> {
+</span>        ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'M'<span style="color: navy"><b> -&gt; </b></span>tgt.praeopDrahtmarkierung = <span style="color: blue">'M'</span> <i>&quot;SetDrahtMammografie&quot;</i><span style="color: navy">;</span>
+          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'S'<span style="color: navy"><b> -&gt; </b></span>tgt.praeopDrahtmarkierung = <span style="color: blue">'S'</span> <i>&quot;SetDrahtSonografie&quot;</i><span style="color: navy">;</span>
+          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'T'<span style="color: navy"><b> -&gt; </b></span>tgt.praeopDrahtmarkierung = <span style="color: blue">'T'</span> <i>&quot;SetDrahtMRT&quot;</i><span style="color: navy">;</span>
+          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'N'<span style="color: navy"><b> -&gt; </b></span>tgt.praeopDrahtmarkierung = <span style="color: blue">'N'</span> <i>&quot;SetDrahtNein&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapDrahtValue&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapDrahtExt&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapDrahtSR&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryDrahtmarkierung&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Intraoperative Praeparatkontrolle (QI-3) — aus Specimen im Bundle</span>
+  <span style="color: navy">// </span><span style="color: green">Specimen.processing.procedure.coding mit oBDS-Kode (M/S/N/U)</span>
+  src.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen)<b> then</b><span style="color: navy"> {
+</span>    specEntry.resource<b> as </b><span style="color: maroon">spec</span><b> then</b><span style="color: navy"> {
+</span>      spec.processing<b> as </b><span style="color: maroon">proc</span><b> then</b><span style="color: navy"> {
+</span>        proc.procedure<b> as </b><span style="color: maroon">p</span><b> then</b><span style="color: navy"> {
+</span>          p.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-obds-intraop-praeparatkontrolle'<span style="color: navy"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style="color: navy">(</span>c.code<span style="color: navy">)</span> <i>&quot;SetIntraopKontrolle&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapIntraopProc&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapIntraopProcessing&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapIntraopSpec&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryIntraopKontrolle&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Tumorgroesse invasiv (LOINC 33728-7 = Size of tumor in Specimen; component/valueQuantity in mm)</span>
+  src.entry<b> as </b><span style="color: maroon">sizeEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '33728-7')<b> then</b><span style="color: navy"> {
+</span>    sizeEntry.resource<b> as </b><span style="color: maroon">sizeObs</span><b> then</b><span style="color: navy"> {
+</span>      sizeObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.tumorgroesseInvasiv = <span style="color: maroon">v</span> <i>&quot;SetTumorgroesseInvasiv&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapSizeInvasiv&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapSizeObs&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryTumorSize&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsModulMamma"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/ServiceRequest"/>
+    <mode value="source"/>
+    <alias value="ServiceRequest"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+    <mode value="source"/>
+    <alias value="Specimen"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <group>
+    <name value="MapModulMamma"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups. The IG Publisher produces SM_TARGET_PATH&#xD;&#xA;/ SM_SOURCE_PATH errors (~22). The element names are correct per the oBDS&#xD;&#xA;Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Gemeinsame Modul-Mamma-Map: Extrahiert mammaspezifische Observations aus&#xD;&#xA;dem Bundle und mappt auf das oBDS Modul_Mamma BackboneElement.&#xD;&#xA;Wird von Diagnose, OP und Verlauf importiert.&#xD;&#xA;MII Onko Mamma-Profile:&#xD;&#xA;- mii-pr-onko-mamma-rezeptorstatus-estrogen (LOINC 85337-4)&#xD;&#xA;- mii-pr-onko-mamma-rezeptorstatus-progesteron (LOINC 85339-0)&#xD;&#xA;- mii-pr-onko-mamma-her2neu-status (LOINC 85319-2)&#xD;&#xA;- mii-pr-onko-mamma-menopause-status (LOINC 63612-8)&#xD;&#xA;SNOMED-CT Werte:&#xD;&#xA;10828004 = Positive (qualifier value) -&gt; P&#xD;&#xA;260385009 = Negative (qualifier value) -&gt; N&#xD;&#xA;261665006 = Unknown (qualifier value) -&gt; U&#xD;&#xA;Menopausenstatus:&#xD;&#xA;309606002 = Before menopause (finding) -&gt; 1 (praemenopausal)&#xD;&#xA;309607006 = During menopause (finding) -&gt; 2 (perimenopausal, nicht oBDS-konform, gemappt auf U)&#xD;&#xA;309608001 = After menopause (finding) -&gt; 3 (postmenopausal)&#xD;&#xA;============================================================================&#xD;&#xA;============================================================================&#xD;&#xA;MapModulMamma: Bundle -&gt; oBDS Modul_Mamma&#xD;&#xA;Extrahiert Hormonrezeptoren, HER2 und Menopausenstatus aus Observations&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="EntryER"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="erEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '85337-4')"/>
+      </source>
+      <rule>
+        <name value="MapERObs"/>
+        <source>
+          <context value="erEntry"/>
+          <element value="resource"/>
+          <variable value="erObs"/>
+        </source>
+        <rule>
+          <name value="MapERValue"/>
+          <source>
+            <context value="erObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="SetERPositiv"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '10828004'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="hormonrezeptorStatusOestrogen"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="P"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetERNegativ"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '260385009'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="hormonrezeptorStatusOestrogen"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="N"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetERUnbekannt"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '261665006'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="hormonrezeptorStatusOestrogen"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="U"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryPR"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="prEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '85339-0')"/>
+      </source>
+      <rule>
+        <name value="MapPRObs"/>
+        <source>
+          <context value="prEntry"/>
+          <element value="resource"/>
+          <variable value="prObs"/>
+        </source>
+        <rule>
+          <name value="MapPRValue"/>
+          <source>
+            <context value="prObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="SetPRPositiv"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '10828004'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="hormonrezeptorStatusProgesteron"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="P"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetPRNegativ"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '260385009'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="hormonrezeptorStatusProgesteron"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="N"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetPRUnbekannt"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '261665006'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="hormonrezeptorStatusProgesteron"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="U"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryHER2"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="herEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '85319-2')"/>
+      </source>
+      <rule>
+        <name value="MapHER2Obs"/>
+        <source>
+          <context value="herEntry"/>
+          <element value="resource"/>
+          <variable value="herObs"/>
+        </source>
+        <rule>
+          <name value="MapHER2Value"/>
+          <source>
+            <context value="herObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="SetHER2Positiv"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '10828004'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="her2neuStatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="P"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetHER2Negativ"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '260385009'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="her2neuStatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="N"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetHER2Unbekannt"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '261665006'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="her2neuStatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="U"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryMenopause"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="menoEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '63612-8')"/>
+      </source>
+      <rule>
+        <name value="MapMenoObs"/>
+        <source>
+          <context value="menoEntry"/>
+          <element value="resource"/>
+          <variable value="menoObs"/>
+        </source>
+        <rule>
+          <name value="MapMenoValue"/>
+          <source>
+            <context value="menoObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="SetMenoPrae"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '309606002'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="praetherapeutischerMenopausenstatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="1"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetMenoPost"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '309608001'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="praetherapeutischerMenopausenstatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="3"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetMenoPeri"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '309607006'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="praetherapeutischerMenopausenstatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="U"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetMenoUnbekannt"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+              <condition value="code = '261665006'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="praetherapeutischerMenopausenstatus"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="U"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryDrahtmarkierung"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="srEntry"/>
+        <condition value="resource.is(ServiceRequest)"/>
+      </source>
+      <rule>
+        <name value="MapDrahtSR"/>
+        <source>
+          <context value="srEntry"/>
+          <element value="resource"/>
+          <variable value="sr"/>
+        </source>
+        <rule>
+          <name value="MapDrahtExt"/>
+          <source>
+            <context value="sr"/>
+            <element value="extension"/>
+            <variable value="ext"/>
+            <condition value="url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'"/>
+          </source>
+          <rule>
+            <name value="MapDrahtValue"/>
+            <source>
+              <context value="ext"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <rule>
+              <name value="SetDrahtMammografie"/>
+              <source>
+                <context value="val"/>
+                <element value="coding"/>
+                <variable value="c"/>
+                <condition value="code = 'M'"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="praeopDrahtmarkierung"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueString value="M"/>
+                </parameter>
+              </target>
+            </rule>
+            <rule>
+              <name value="SetDrahtSonografie"/>
+              <source>
+                <context value="val"/>
+                <element value="coding"/>
+                <variable value="c"/>
+                <condition value="code = 'S'"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="praeopDrahtmarkierung"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueString value="S"/>
+                </parameter>
+              </target>
+            </rule>
+            <rule>
+              <name value="SetDrahtMRT"/>
+              <source>
+                <context value="val"/>
+                <element value="coding"/>
+                <variable value="c"/>
+                <condition value="code = 'T'"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="praeopDrahtmarkierung"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueString value="T"/>
+                </parameter>
+              </target>
+            </rule>
+            <rule>
+              <name value="SetDrahtNein"/>
+              <source>
+                <context value="val"/>
+                <element value="coding"/>
+                <variable value="c"/>
+                <condition value="code = 'N'"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="praeopDrahtmarkierung"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueString value="N"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryIntraopKontrolle"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="specEntry"/>
+        <condition value="resource.is(Specimen)"/>
+      </source>
+      <rule>
+        <name value="MapIntraopSpec"/>
+        <source>
+          <context value="specEntry"/>
+          <element value="resource"/>
+          <variable value="spec"/>
+        </source>
+        <rule>
+          <name value="MapIntraopProcessing"/>
+          <source>
+            <context value="spec"/>
+            <element value="processing"/>
+            <variable value="proc"/>
+          </source>
+          <rule>
+            <name value="MapIntraopProc"/>
+            <source>
+              <context value="proc"/>
+              <element value="procedure"/>
+              <variable value="p"/>
+            </source>
+            <rule>
+              <name value="SetIntraopKontrolle"/>
+              <source>
+                <context value="p"/>
+                <element value="coding"/>
+                <variable value="c"/>
+                <condition value="system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-obds-intraop-praeparatkontrolle'"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="intraopPraeparatkontrolle"/>
+                <transform value="evaluate"/>
+                <parameter>
+                  <valueString value="c.code"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryTumorSize"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="sizeEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '33728-7')"/>
+      </source>
+      <rule>
+        <name value="MapSizeObs"/>
+        <source>
+          <context value="sizeEntry"/>
+          <element value="resource"/>
+          <variable value="sizeObs"/>
+        </source>
+        <rule>
+          <name value="MapSizeInvasiv"/>
+          <source>
+            <context value="sizeObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="SetTumorgroesseInvasiv"/>
+            <source>
+              <context value="val"/>
+              <element value="value"/>
+              <variable value="v"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="tumorgroesseInvasiv"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="v"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

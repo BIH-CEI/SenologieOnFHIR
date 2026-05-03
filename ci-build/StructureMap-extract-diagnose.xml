@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="extract-diagnose"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap extract-diagnose</b></p><a name="extract-diagnose"> </a><a name="hcextract-diagnose"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/extract-diagnose<span style="color: navy">&quot; = &quot;</span>ExtractSenologieDiagnose<span style="color: navy">&quot;
+
+</span><b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/questionnaireresponse.html" title="QuestionnaireResponse">http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse</a><span style="color: navy">&quot; </span><b>alias </b>QR <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>target</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-senologie-diagnose-maligne.html" title="BIH PR Seno Diagnose Maligne">https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>target</b>
+
+<b>group </b>QuestionnaireResponseToBundle<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>QuestionnaireResponse, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+</span>  src<span style="color: navy"><b> -&gt; </b></span>tgt.type = <span style="color: blue">'transaction'</span> <i>&quot;bundleType&quot;</i><span style="color: navy">;</span>
+  src.item<b> as </b><span style="color: maroon">grp</span><b> where </b>linkId = 'diagnose'<span style="color: navy"><b> -&gt; </b></span> tgt.entry<b> as </b><span style="color: maroon">entry</span><span style="color: navy">, </span> entry.resource = <b>create</b><span style="color: navy">(</span><span style="color: blue">'Condition'</span><span style="color: navy">)</span><b> as </b><span style="color: maroon">condition</span><b> then</b><span style="color: navy"> {
+</span>    grp<span style="color: navy"><b> -&gt; </b></span> entry.request<b> as </b><span style="color: maroon">req</span><span style="color: navy">, </span> req.method = <span style="color: blue">'POST'</span><span style="color: navy">, </span> req.url = <span style="color: blue">'Condition'</span> <i>&quot;setRequest&quot;</i><span style="color: navy">;</span>
+    grp.item<b> as </b><span style="color: maroon">codeItem</span><b> where </b>linkId = 'diagnose.code'<span style="color: navy"><b> -&gt; </b></span>condition.code<b> as </b><span style="color: maroon">cc</span><b> then</b><span style="color: navy"> {
+</span>      codeItem.answer<b> as </b><span style="color: maroon">ans</span><span style="color: navy"><b> -&gt; </b></span>cc.coding = <span style="color: maroon">ans.valueCoding</span><b> as </b><span style="color: maroon">coding</span> <i>&quot;copyCoding&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;snomedCode&quot;</i><span style="color: navy">;</span>
+    grp.item<b> as </b><span style="color: maroon">sideItem</span><b> where </b>linkId = 'diagnose.seite'<b> then</b><span style="color: navy"> {
+</span>      sideItem.answer<b> as </b><span style="color: maroon">ans</span><span style="color: navy"><b> -&gt; </b></span> condition.bodySite<b> as </b><span style="color: maroon">bs</span><span style="color: navy">, </span> bs.coding = <span style="color: maroon">ans.valueCoding</span> <i>&quot;copyBodySite&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;laterality&quot;</i><span style="color: navy">;</span>
+    grp<span style="color: navy"><b> -&gt; </b></span> condition.clinicalStatus<b> as </b><span style="color: maroon">cs</span><span style="color: navy">, </span> cs.coding<b> as </b><span style="color: maroon">csc</span><span style="color: navy">, </span> csc.system = <span style="color: blue">'http://terminology.hl7.org/CodeSystem/condition-clinical'</span><span style="color: navy">, </span> csc.code = <span style="color: blue">'active'</span> <i>&quot;clinicalStatus&quot;</i><span style="color: navy">;</span>
+    grp.item<b> as </b><span style="color: maroon">dateItem</span><b> where </b>linkId = 'diagnose.datum'<b> then</b><span style="color: navy"> {
+</span>      dateItem.answer<b> as </b><span style="color: maroon">ans</span><span style="color: navy"><b> -&gt; </b></span>condition.recordedDate = <span style="color: maroon">ans.valueDate</span> <i>&quot;copyDate&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;recordedDate&quot;</i><span style="color: navy">;</span>
+    src.subject<b> as </b><span style="color: maroon">subj</span><span style="color: navy"><b> -&gt; </b></span>condition.subject = <span style="color: maroon">subj</span><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;diagnoseGroup&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/extract-diagnose"/>
+  <version value="0.1.0"/>
+  <name value="ExtractSenologieDiagnose"/>
+  <title value="Extract Senologie Diagnose from QuestionnaireResponse"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+    <mode value="source"/>
+    <alias value="QR"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="target"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"/>
+    <mode value="target"/>
+    <alias value="Condition"/>
+  </structure>
+  <group>
+    <name value="QuestionnaireResponseToBundle"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <type value="QuestionnaireResponse"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="Bundle"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="bundleType"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="type"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="transaction"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="diagnoseGroup"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <variable value="grp"/>
+        <condition value="linkId = 'diagnose'"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+      </target>
+      <target>
+        <context value="entry"/>
+        <contextType value="variable"/>
+        <element value="resource"/>
+        <variable value="condition"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Condition"/>
+        </parameter>
+      </target>
+      <rule>
+        <name value="setRequest"/>
+        <source>
+          <context value="grp"/>
+        </source>
+        <target>
+          <context value="entry"/>
+          <contextType value="variable"/>
+          <element value="request"/>
+          <variable value="req"/>
+        </target>
+        <target>
+          <context value="req"/>
+          <contextType value="variable"/>
+          <element value="method"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="POST"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="req"/>
+          <contextType value="variable"/>
+          <element value="url"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="Condition"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="snomedCode"/>
+        <source>
+          <context value="grp"/>
+          <element value="item"/>
+          <variable value="codeItem"/>
+          <condition value="linkId = 'diagnose.code'"/>
+        </source>
+        <target>
+          <context value="condition"/>
+          <contextType value="variable"/>
+          <element value="code"/>
+          <variable value="cc"/>
+        </target>
+        <rule>
+          <name value="copyCoding"/>
+          <source>
+            <context value="codeItem"/>
+            <element value="answer"/>
+            <variable value="ans"/>
+          </source>
+          <target>
+            <context value="cc"/>
+            <contextType value="variable"/>
+            <element value="coding"/>
+            <variable value="coding"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="ans.valueCoding"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+      <rule>
+        <name value="laterality"/>
+        <source>
+          <context value="grp"/>
+          <element value="item"/>
+          <variable value="sideItem"/>
+          <condition value="linkId = 'diagnose.seite'"/>
+        </source>
+        <rule>
+          <name value="copyBodySite"/>
+          <source>
+            <context value="sideItem"/>
+            <element value="answer"/>
+            <variable value="ans"/>
+          </source>
+          <target>
+            <context value="condition"/>
+            <contextType value="variable"/>
+            <element value="bodySite"/>
+            <variable value="bs"/>
+          </target>
+          <target>
+            <context value="bs"/>
+            <contextType value="variable"/>
+            <element value="coding"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="ans.valueCoding"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+      <rule>
+        <name value="clinicalStatus"/>
+        <source>
+          <context value="grp"/>
+        </source>
+        <target>
+          <context value="condition"/>
+          <contextType value="variable"/>
+          <element value="clinicalStatus"/>
+          <variable value="cs"/>
+        </target>
+        <target>
+          <context value="cs"/>
+          <contextType value="variable"/>
+          <element value="coding"/>
+          <variable value="csc"/>
+        </target>
+        <target>
+          <context value="csc"/>
+          <contextType value="variable"/>
+          <element value="system"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="csc"/>
+          <contextType value="variable"/>
+          <element value="code"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="active"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="recordedDate"/>
+        <source>
+          <context value="grp"/>
+          <element value="item"/>
+          <variable value="dateItem"/>
+          <condition value="linkId = 'diagnose.datum'"/>
+        </source>
+        <rule>
+          <name value="copyDate"/>
+          <source>
+            <context value="dateItem"/>
+            <element value="answer"/>
+            <variable value="ans"/>
+          </source>
+          <target>
+            <context value="condition"/>
+            <contextType value="variable"/>
+            <element value="recordedDate"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="ans.valueDate"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+      <rule>
+        <name value="subject"/>
+        <source>
+          <context value="src"/>
+          <element value="subject"/>
+          <variable value="subj"/>
+        </source>
+        <target>
+          <context value="condition"/>
+          <contextType value="variable"/>
+          <element value="subject"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="subj"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

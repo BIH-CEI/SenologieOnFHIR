@@ -1,0 +1,237 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToObdsTumorzuordnung",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsTumorzuordnung</b></p><a name=\"SenologieToObdsTumorzuordnung\"> </a><a name=\"hcSenologieToObdsTumorzuordnung\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung<span style=\"color: navy\">&quot; = &quot;</span>SenologieToObdsTumorzuordnung<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Diagnose to oBDS Tumorzuordnung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: MapTumorzuordnung uses `target tgt : BackboneElement`</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">because FML has no syntax to declare the Logical Model sub-path for</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">BackboneElement slices. The IG Publisher produces SM_TARGET_PATH errors (~5).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Element names are correct per the oBDS Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Tumorzuordnung: Condition (Diagnose) -&gt; OBDSMeldung.tumorzuordnung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Wird von allen Meldungstypen importiert, da die Tumorzuordnung in jeder</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">oBDS-Meldung enthalten sein muss.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapTumorzuordnung<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Tumor_ID: aus Condition.identifier (Tumor-Kennung)</span>\r\n  src.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://www.senologie.org/fhir/sid/tumor-id'<b> then</b><span style=\"color: navy\"> {\r\n</span>    id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorID = <span style=\"color: maroon\">v</span> <i>&quot;SetTumorID&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapTumorID&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Primaertumor_ICD: ICD-10-GM Code und Version aus Condition.code</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.primaertumorICD<b> as </b><span style=\"color: maroon\">icd</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>icd.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetICDCode&quot;</i><span style=\"color: navy\">;</span>\r\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>icd.version = <span style=\"color: maroon\">v</span> <i>&quot;SetICDVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapICD10Coding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapPrimaertumorICD&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Diagnosedatum: aus Condition.onsetDateTime</span>\r\n  src.onset<b> as </b><span style=\"color: maroon\">onset</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnosedatum = <span style=\"color: maroon\">onset</span> <i>&quot;SetDiagnosedatum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Seitenlokalisation: aus Condition.bodySite mit Uebersetzung SNOMED -&gt; oBDS</span>\r\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateSeitenlokalisation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapSeitenlokalisation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Morphologie_ICD_O: aus Condition.code ICD-O Morphologie (falls vorhanden)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'urn:oid:2.16.840.1.113883.6.43.1'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.morphologieICDO<b> as </b><span style=\"color: maroon\">morph</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>morph.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetMorphCode&quot;</i><span style=\"color: navy\">;</span>\r\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>morph.version = <span style=\"color: maroon\">v</span> <i>&quot;SetMorphVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapMorphCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapMorphologieICDO&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung",
+  "version" : "0.1.0",
+  "name" : "SenologieToObdsTumorzuordnung",
+  "status" : "draft",
+  "date" : "2026-05-03T20:30:38+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Diagnose to oBDS Tumorzuordnung\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
+    "mode" : "target",
+    "alias" : "OBDSMeldung"
+  }],
+  "group" : [{
+    "name" : "MapTumorzuordnung",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: MapTumorzuordnung uses `target tgt : BackboneElement`\r\nbecause FML has no syntax to declare the Logical Model sub-path for\r\nBackboneElement slices. The IG Publisher produces SM_TARGET_PATH errors (~5).\r\nElement names are correct per the oBDS Logical Model.\r\n============================================================================\r\nTumorzuordnung: Condition (Diagnose) -> OBDSMeldung.tumorzuordnung\r\nWird von allen Meldungstypen importiert, da die Tumorzuordnung in jeder\r\noBDS-Meldung enthalten sein muss.\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Condition",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "MapTumorID",
+      "source" : [{
+        "context" : "src",
+        "element" : "identifier",
+        "variable" : "id",
+        "condition" : "system = 'https://www.senologie.org/fhir/sid/tumor-id'"
+      }],
+      "rule" : [{
+        "name" : "SetTumorID",
+        "source" : [{
+          "context" : "id",
+          "element" : "value",
+          "variable" : "v"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "tumorID",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "v"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapPrimaertumorICD",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapICD10Coding",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "primaertumorICD",
+          "variable" : "icd"
+        }],
+        "rule" : [{
+          "name" : "SetICDCode",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "icd",
+            "contextType" : "variable",
+            "element" : "code",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetICDVersion",
+          "source" : [{
+            "context" : "c",
+            "element" : "version",
+            "variable" : "v"
+          }],
+          "target" : [{
+            "context" : "icd",
+            "contextType" : "variable",
+            "element" : "version",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "v"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetDiagnosedatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "onset",
+        "variable" : "onset",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "diagnosedatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "onset"
+        }]
+      }]
+    },
+    {
+      "name" : "MapSeitenlokalisation",
+      "source" : [{
+        "context" : "src",
+        "element" : "bodySite",
+        "variable" : "bs"
+      }],
+      "rule" : [{
+        "name" : "TranslateSeitenlokalisation",
+        "source" : [{
+          "context" : "bs",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "seitenlokalisation",
+          "transform" : "translate",
+          "parameter" : [{
+            "valueId" : "c"
+          },
+          {
+            "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-seitenlokalisation"
+          },
+          {
+            "valueString" : "code"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapMorphologieICDO",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapMorphCoding",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'urn:oid:2.16.840.1.113883.6.43.1'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "morphologieICDO",
+          "variable" : "morph"
+        }],
+        "rule" : [{
+          "name" : "SetMorphCode",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "morph",
+            "contextType" : "variable",
+            "element" : "code",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetMorphVersion",
+          "source" : [{
+            "context" : "c",
+            "element" : "version",
+            "variable" : "v"
+          }],
+          "target" : [{
+            "context" : "morph",
+            "contextType" : "variable",
+            "element" : "version",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "v"
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}

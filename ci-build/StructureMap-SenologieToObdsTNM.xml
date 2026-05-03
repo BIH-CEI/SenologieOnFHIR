@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsTNM"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsTNM</b></p><a name="SenologieToObdsTNM"> </a><a name="hcSenologieToObdsTNM"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM<span style="color: navy">&quot; = &quot;</span>SenologieToObdsTNM<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie TNM Observations to oBDS TNM BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">Known limitation: MapTNM uses `target tgt : BackboneElement` because FML</span>
+<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">slices passed from parent groups (diagnose.cTNM, diagnose.pTNM, op.tnm,</span>
+<span style="color: navy">// </span><span style="color: green">verlauf.tnm). The IG Publisher produces SM_TARGET_PATH errors (~24). The</span>
+<span style="color: navy">// </span><span style="color: green">element names are correct per the oBDS Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Gemeinsame TNM-Map: Extrahiert TNM-Staging aus einer TNM-Klassifikation-</span>
+<span style="color: navy">// </span><span style="color: green">Observation (MII Onko) und mappt auf das oBDS TNM-BackboneElement.</span>
+<span style="color: navy">// </span><span style="color: green">Wird von Diagnose (cTNM), OP (pTNM) und Verlauf (c/pTNM) importiert.</span>
+<span style="color: navy">// </span><span style="color: green">Die TNM-Klassifikation-Observation enthaelt T/N/M/L/V/Pn als components</span>
+<span style="color: navy">// </span><span style="color: green">mit LOINC-kodierten Codes.</span>
+<span style="color: navy">// </span><span style="color: green">MII Onko TNM LOINC-Codes:</span>
+<span style="color: navy">// </span><span style="color: green">Klinisch: 21908-9 (Gesamt), 21905-5 (cT), 21906-3 (cN), 21907-1 (cM)</span>
+<span style="color: navy">// </span><span style="color: green">Pathologisch: 21902-2 (Gesamt), 21899-0 (pT), 21900-6 (pN), 21901-4 (pM)</span>
+<span style="color: navy">// </span><span style="color: green">Symbole: 59479-6 (y), 21983-2 (r), 101659-7 (a), 42030-7 (m)</span>
+<span style="color: navy">// </span><span style="color: green">Zusatz: 33739-4 (L), 33740-2 (V), 92837-4 (Pn)</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapTNM: Observation (TNM-Klassifikation) -&gt; oBDS TNM BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">Generische Gruppe, die sowohl klinisches als auch pathologisches TNM</span>
+<span style="color: navy">// </span><span style="color: green">verarbeitet. Der c/p/u-Praefix wird aus dem jeweiligen LOINC-Code</span>
+<span style="color: navy">// </span><span style="color: green">der T/N/M-Komponenten abgeleitet.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapTNM<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Observation, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Datum der TNM-Klassifikation</span>
+  src.effective<b> as </b><span style="color: maroon">eff</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.datum = <span style="color: maroon">eff</span> <i>&quot;SetTNMDatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">TNM-Auflage (Version): aus Observation.method</span>
+  src.method<b> as </b><span style="color: maroon">method</span><b> then</b><span style="color: navy"> {
+</span>    method.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.version = <span style="color: maroon">cd</span> <i>&quot;SetTNMVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;ExtractTNMVersionCode&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapTNMVersion&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">y-Symbol (nach multimodaler Therapie) — LOINC 59479-6</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '59479-6')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.ySymbol = <span style="color: maroon">cd</span> <i>&quot;SetYSymbol&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractYCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapYValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapYSymbol&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">r-Symbol (Rezidivklassifikation) — LOINC 21983-2</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21983-2')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.rSymbol = <span style="color: maroon">cd</span> <i>&quot;SetRSymbol&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractRCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapRValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapRSymbol&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">a-Symbol (Autopsie) — LOINC 101659-7</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '101659-7')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.aSymbol = <span style="color: maroon">cd</span> <i>&quot;SetASymbol&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractACode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapAValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapASymbol&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- T-Kategorie ---</span>
+  <span style="color: navy">// </span><span style="color: green">T klinisch (LOINC 21905-5) -&gt; Praefix c</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21905-5')<b> then</b><span style="color: navy"> {
+</span>    comp<span style="color: navy"><b> -&gt; </b></span>tgt.cpuPraefixT = <span style="color: blue">'c'</span> <i>&quot;SetCPrefixT&quot;</i><span style="color: navy">;</span>
+    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.t = <span style="color: maroon">cd</span> <i>&quot;SetTClinical&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractTClinCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapTClinValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapTClinical&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">T pathologisch (LOINC 21899-0) -&gt; Praefix p</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21899-0')<b> then</b><span style="color: navy"> {
+</span>    comp<span style="color: navy"><b> -&gt; </b></span>tgt.cpuPraefixT = <span style="color: blue">'p'</span> <i>&quot;SetPPrefixT&quot;</i><span style="color: navy">;</span>
+    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.t = <span style="color: maroon">cd</span> <i>&quot;SetTPathological&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractTPathCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapTPathValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapTPathological&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">m_Symbol: multiple Primaertumoren — LOINC 42030-7</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '42030-7')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.mSymbol = <span style="color: maroon">cd</span> <i>&quot;SetMSymbol&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractMSymbolCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapMSymbolValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMSymbol&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- N-Kategorie ---</span>
+  <span style="color: navy">// </span><span style="color: green">N klinisch (LOINC 21906-3) -&gt; Praefix c</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21906-3')<b> then</b><span style="color: navy"> {
+</span>    comp<span style="color: navy"><b> -&gt; </b></span>tgt.cpuPraefixN = <span style="color: blue">'c'</span> <i>&quot;SetCPrefixN&quot;</i><span style="color: navy">;</span>
+    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.n = <span style="color: maroon">cd</span> <i>&quot;SetNClinical&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractNClinCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapNClinValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapNClinical&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">N pathologisch (LOINC 21900-6) -&gt; Praefix p</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21900-6')<b> then</b><span style="color: navy"> {
+</span>    comp<span style="color: navy"><b> -&gt; </b></span>tgt.cpuPraefixN = <span style="color: blue">'p'</span> <i>&quot;SetPPrefixN&quot;</i><span style="color: navy">;</span>
+    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.n = <span style="color: maroon">cd</span> <i>&quot;SetNPathological&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractNPathCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapNPathValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapNPathological&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- M-Kategorie ---</span>
+  <span style="color: navy">// </span><span style="color: green">M klinisch (LOINC 21907-1) -&gt; Praefix c</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21907-1')<b> then</b><span style="color: navy"> {
+</span>    comp<span style="color: navy"><b> -&gt; </b></span>tgt.cpuPraefixM = <span style="color: blue">'c'</span> <i>&quot;SetCPrefixM&quot;</i><span style="color: navy">;</span>
+    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.m = <span style="color: maroon">cd</span> <i>&quot;SetMClinical&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractMClinCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapMClinValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMClinical&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">M pathologisch (LOINC 21901-4) -&gt; Praefix p</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21901-4')<b> then</b><span style="color: navy"> {
+</span>    comp<span style="color: navy"><b> -&gt; </b></span>tgt.cpuPraefixM = <span style="color: blue">'p'</span> <i>&quot;SetPPrefixM&quot;</i><span style="color: navy">;</span>
+    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.m = <span style="color: maroon">cd</span> <i>&quot;SetMPathological&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractMPathCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapMPathValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMPathological&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Zusatzklassifikationen ---</span>
+  <span style="color: navy">// </span><span style="color: green">L: Lymphgefaessinvasion — LOINC 33739-4</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '33739-4')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.l = <span style="color: maroon">cd</span> <i>&quot;SetL&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractLCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapLValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapL&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">V: Veneninvasion — LOINC 33740-2</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '33740-2')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.v = <span style="color: maroon">cd</span> <i>&quot;SetV&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractVCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapVValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapV&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Pn: Perineurale Invasion — LOINC 92837-4</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '92837-4')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.pn = <span style="color: maroon">cd</span> <i>&quot;SetPn&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractPnCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapPnValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapPn&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">S: Serumtumormarker (z.B. bei Hodentumoren, selten bei Mamma)</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21924-6')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.s = <span style="color: maroon">cd</span> <i>&quot;SetS&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractSCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapSValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapS&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">UICC-Stadium: aus Observation.value (Gesamtstadium)</span>
+  src.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>    val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.uiccStadium = <span style="color: maroon">cd</span> <i>&quot;SetUICC&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;ExtractUICC&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapUICC&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsTNM"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie TNM Observations to oBDS TNM BackboneElement&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <group>
+    <name value="MapTNM"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: MapTNM uses `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups (diagnose.cTNM, diagnose.pTNM, op.tnm,&#xD;&#xA;verlauf.tnm). The IG Publisher produces SM_TARGET_PATH errors (~24). The&#xD;&#xA;element names are correct per the oBDS Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Gemeinsame TNM-Map: Extrahiert TNM-Staging aus einer TNM-Klassifikation-&#xD;&#xA;Observation (MII Onko) und mappt auf das oBDS TNM-BackboneElement.&#xD;&#xA;Wird von Diagnose (cTNM), OP (pTNM) und Verlauf (c/pTNM) importiert.&#xD;&#xA;Die TNM-Klassifikation-Observation enthaelt T/N/M/L/V/Pn als components&#xD;&#xA;mit LOINC-kodierten Codes.&#xD;&#xA;MII Onko TNM LOINC-Codes:&#xD;&#xA;Klinisch: 21908-9 (Gesamt), 21905-5 (cT), 21906-3 (cN), 21907-1 (cM)&#xD;&#xA;Pathologisch: 21902-2 (Gesamt), 21899-0 (pT), 21900-6 (pN), 21901-4 (pM)&#xD;&#xA;Symbole: 59479-6 (y), 21983-2 (r), 101659-7 (a), 42030-7 (m)&#xD;&#xA;Zusatz: 33739-4 (L), 33740-2 (V), 92837-4 (Pn)&#xD;&#xA;============================================================================&#xD;&#xA;============================================================================&#xD;&#xA;MapTNM: Observation (TNM-Klassifikation) -&gt; oBDS TNM BackboneElement&#xD;&#xA;Generische Gruppe, die sowohl klinisches als auch pathologisches TNM&#xD;&#xA;verarbeitet. Der c/p/u-Praefix wird aus dem jeweiligen LOINC-Code&#xD;&#xA;der T/N/M-Komponenten abgeleitet.&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Observation"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <input>
+      <name value="bundle"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <rule>
+      <name value="SetTNMDatum"/>
+      <source>
+        <context value="src"/>
+        <element value="effective"/>
+        <variable value="eff"/>
+        <condition value="$this.is(dateTime)"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="datum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="eff"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapTNMVersion"/>
+      <source>
+        <context value="src"/>
+        <element value="method"/>
+        <variable value="method"/>
+      </source>
+      <rule>
+        <name value="ExtractTNMVersionCode"/>
+        <source>
+          <context value="method"/>
+          <element value="coding"/>
+          <variable value="c"/>
+        </source>
+        <rule>
+          <name value="SetTNMVersion"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="version"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapYSymbol"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '59479-6')"/>
+      </source>
+      <rule>
+        <name value="MapYValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractYCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetYSymbol"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="ySymbol"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapRSymbol"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21983-2')"/>
+      </source>
+      <rule>
+        <name value="MapRValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractRCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetRSymbol"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="rSymbol"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapASymbol"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '101659-7')"/>
+      </source>
+      <rule>
+        <name value="MapAValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractACode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetASymbol"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="aSymbol"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapTClinical"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21905-5')"/>
+      </source>
+      <rule>
+        <name value="SetCPrefixT"/>
+        <source>
+          <context value="comp"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="cpuPraefixT"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="c"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="MapTClinValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractTClinCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetTClinical"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="t"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapTPathological"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21899-0')"/>
+      </source>
+      <rule>
+        <name value="SetPPrefixT"/>
+        <source>
+          <context value="comp"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="cpuPraefixT"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="p"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="MapTPathValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractTPathCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetTPathological"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="t"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapMSymbol"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '42030-7')"/>
+      </source>
+      <rule>
+        <name value="MapMSymbolValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractMSymbolCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetMSymbol"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="mSymbol"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapNClinical"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21906-3')"/>
+      </source>
+      <rule>
+        <name value="SetCPrefixN"/>
+        <source>
+          <context value="comp"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="cpuPraefixN"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="c"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="MapNClinValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractNClinCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetNClinical"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="n"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapNPathological"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21900-6')"/>
+      </source>
+      <rule>
+        <name value="SetPPrefixN"/>
+        <source>
+          <context value="comp"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="cpuPraefixN"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="p"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="MapNPathValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractNPathCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetNPathological"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="n"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapMClinical"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21907-1')"/>
+      </source>
+      <rule>
+        <name value="SetCPrefixM"/>
+        <source>
+          <context value="comp"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="cpuPraefixM"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="c"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="MapMClinValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractMClinCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetMClinical"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="m"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapMPathological"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21901-4')"/>
+      </source>
+      <rule>
+        <name value="SetPPrefixM"/>
+        <source>
+          <context value="comp"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="cpuPraefixM"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="p"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="MapMPathValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractMPathCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetMPathological"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="m"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapL"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '33739-4')"/>
+      </source>
+      <rule>
+        <name value="MapLValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractLCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetL"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="l"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapV"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '33740-2')"/>
+      </source>
+      <rule>
+        <name value="MapVValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractVCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetV"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="v"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapPn"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '92837-4')"/>
+      </source>
+      <rule>
+        <name value="MapPnValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractPnCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetPn"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="pn"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapS"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21924-6')"/>
+      </source>
+      <rule>
+        <name value="MapSValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractSCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <rule>
+            <name value="SetS"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="s"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapUICC"/>
+      <source>
+        <context value="src"/>
+        <element value="value"/>
+        <variable value="val"/>
+      </source>
+      <rule>
+        <name value="ExtractUICC"/>
+        <source>
+          <context value="val"/>
+          <element value="coding"/>
+          <variable value="c"/>
+        </source>
+        <rule>
+          <name value="SetUICC"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="uiccStadium"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

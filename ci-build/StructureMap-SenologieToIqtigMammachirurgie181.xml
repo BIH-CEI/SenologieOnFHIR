@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToIqtigMammachirurgie181"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToIqtigMammachirurgie181</b></p><a name="SenologieToIqtigMammachirurgie181"> </a><a name="hcSenologieToIqtigMammachirurgie181"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181<span style="color: navy">&quot; = &quot;</span>SenologieToIqtigMammachirurgie181<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator)</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/patient.html" title="Patient">http://hl7.org/fhir/StructureDefinition/Patient</a><span style="color: navy">&quot; </span><b>alias </b>Patient <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/encounter.html" title="Encounter">http://hl7.org/fhir/StructureDefinition/Encounter</a><span style="color: navy">&quot; </span><b>alias </b>Encounter <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/condition.html" title="Condition">http://hl7.org/fhir/StructureDefinition/Condition</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/procedure.html" title="Procedure">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style="color: navy">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/organization.html" title="Organization">http://hl7.org/fhir/StructureDefinition/Organization</a><span style="color: navy">&quot; </span><b>alias </b>Organization <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-iqtig-mammachirurgie-181.html" title="IQTIG QS 18.1 Mammachirurgie (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style="color: navy">&quot; </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>
+
+<b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToIqtigBasis.html" title="SenologieToIqtigBasis">https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToIqtigBrust.html" title="SenologieToIqtigBrust">https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToIqtigOperation.html" title="SenologieToIqtigOperation">https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation</a><span style="color: navy">&quot;
+</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Master Orchestrator: Bundle -&gt; IQTIG QS 18.1 Mammachirurgie</span>
+<span style="color: navy">// </span><span style="color: green">Empfaengt ein FHIR Bundle mit Senologie-Ressourcen (Patient, Encounter,</span>
+<span style="color: navy">// </span><span style="color: green">Condition, Procedure, Specimen, Observations) und erzeugt eine vollstaendige</span>
+<span style="color: navy">// </span><span style="color: green">IQTIG-QS-Meldung mit den drei Teildatensaetzen:</span>
+<span style="color: navy">// </span><span style="color: green">- Teildatensatz Basis (B): Patient + Encounter</span>
+<span style="color: navy">// </span><span style="color: green">- Teildatensatz Brust (BRUST): Condition + Pathologie (ein Eintrag je Seite)</span>
+<span style="color: navy">// </span><span style="color: green">- Teildatensatz Operation (O): Procedure + Specimen (ein Eintrag je OP)</span>
+<span style="color: navy">// </span><span style="color: green">Analog zur IRegG-Meldung wird eine einzelne QS-Meldung pro Behandlungsfall</span>
+<span style="color: navy">// </span><span style="color: green">erzeugt. Die Zuordnung der Teildatensaetze Brust und Operation erfolgt ueber</span>
+<span style="color: navy">// </span><span style="color: green">die laufenden Nummern (LNRBRUST, LNROP).</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>SenologieToIqtigMammachirurgie181<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>IQTIG181<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">--- Teildatensatz Basis (B) ---</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.teildatensatzBasis<b> as </b><span style="color: maroon">basis</span><b> then </b>MapBasis<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">basis</span><span style="color: navy">)</span> <i>&quot;CallMapBasis&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Teildatensatz Brust (BRUST): pro Condition mit Brust-Diagnose ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition) and (resource.meta.profile.exists($this.contains('senologie-diagnose')) or resource.code.coding.exists((system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C50')))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><span style="color: navy"><b> -&gt; </b></span>tgt.teildatensatzBrust<b> as </b><span style="color: maroon">brust</span><b> then </b>MapBrust<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">brust</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapBrust&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryBrust&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Teildatensatz Operation (O): pro Procedure (Senologie_BrustOP / Senologie_Operation) ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation'))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.teildatensatzOperation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryOperation&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToIqtigMammachirurgie181"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator)&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+    <mode value="source"/>
+    <alias value="Patient"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+    <mode value="source"/>
+    <alias value="Encounter"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+    <mode value="source"/>
+    <alias value="Condition"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+    <mode value="source"/>
+    <alias value="Procedure"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+    <mode value="source"/>
+    <alias value="Specimen"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+    <mode value="source"/>
+    <alias value="Organization"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181"/>
+    <mode value="target"/>
+    <alias value="IQTIG181"/>
+  </structure>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation"/>
+  <group>
+    <name value="SenologieToIqtigMammachirurgie181"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Master Orchestrator: Bundle -&gt; IQTIG QS 18.1 Mammachirurgie&#xD;&#xA;Empfaengt ein FHIR Bundle mit Senologie-Ressourcen (Patient, Encounter,&#xD;&#xA;Condition, Procedure, Specimen, Observations) und erzeugt eine vollstaendige&#xD;&#xA;IQTIG-QS-Meldung mit den drei Teildatensaetzen:&#xD;&#xA;- Teildatensatz Basis (B): Patient + Encounter&#xD;&#xA;- Teildatensatz Brust (BRUST): Condition + Pathologie (ein Eintrag je Seite)&#xD;&#xA;- Teildatensatz Operation (O): Procedure + Specimen (ein Eintrag je OP)&#xD;&#xA;Analog zur IRegG-Meldung wird eine einzelne QS-Meldung pro Behandlungsfall&#xD;&#xA;erzeugt. Die Zuordnung der Teildatensaetze Brust und Operation erfolgt ueber&#xD;&#xA;die laufenden Nummern (LNRBRUST, LNROP).&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="IQTIG181"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="CallMapBasis"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="teildatensatzBasis"/>
+        <variable value="basis"/>
+      </target>
+      <dependent>
+        <name value="MapBasis"/>
+        <variable value="src"/>
+        <variable value="basis"/>
+      </dependent>
+    </rule>
+    <rule>
+      <name value="EntryBrust"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Condition) and (resource.meta.profile.exists($this.contains('senologie-diagnose')) or resource.code.coding.exists((system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C50')))"/>
+      </source>
+      <rule>
+        <name value="CallMapBrust"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="condition"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="teildatensatzBrust"/>
+          <variable value="brust"/>
+        </target>
+        <dependent>
+          <name value="MapBrust"/>
+          <variable value="condition"/>
+          <variable value="brust"/>
+          <variable value="src"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryOperation"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation'))"/>
+      </source>
+      <rule>
+        <name value="CallMapOperation"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="procedure"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="teildatensatzOperation"/>
+          <variable value="op"/>
+        </target>
+        <dependent>
+          <name value="MapOperation"/>
+          <variable value="procedure"/>
+          <variable value="op"/>
+          <variable value="src"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

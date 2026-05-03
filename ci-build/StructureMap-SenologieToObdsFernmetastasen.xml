@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsFernmetastasen"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsFernmetastasen</b></p><a name="SenologieToObdsFernmetastasen"> </a><a name="hcSenologieToObdsFernmetastasen"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen<span style="color: navy">&quot; = &quot;</span>SenologieToObdsFernmetastasen<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Fernmetastasen Observations to oBDS Fernmetastasen BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
+<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher produces SM_TARGET_PATH</span>
+<span style="color: navy">// </span><span style="color: green">errors. The element names are correct per the oBDS Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Gemeinsame Fernmetastasen-Map: Extrahiert Fernmetastasen-Observations</span>
+<span style="color: navy">// </span><span style="color: green">aus dem Bundle und mappt auf das oBDS Fernmetastasen-BackboneElement.</span>
+<span style="color: navy">// </span><span style="color: green">Wird von Diagnose und Verlauf importiert.</span>
+<span style="color: navy">// </span><span style="color: green">MII Onko Profil: mii-pr-onko-fernmetastasen</span>
+<span style="color: navy">// </span><span style="color: green">- LOINC 21907-1: Distant metastases.clinical Cancer</span>
+<span style="color: navy">// </span><span style="color: green">- Alternative: LOINC 97956-3 (Fernmetastasen-Assessment)</span>
+<span style="color: navy">// </span><span style="color: green">Jede Fernmetastasen-Observation erzeugt einen separaten Eintrag mit</span>
+<span style="color: navy">// </span><span style="color: green">Diagnosedatum und Lokalisation. Die Lokalisation wird via ConceptMap</span>
+<span style="color: navy">// </span><span style="color: green">von SNOMED zu oBDS-Kuerzeln (PUL, OSS, HEP, BRA, etc.) uebersetzt.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapFernmetastasenFromBundle: Bundle -&gt; oBDS Fernmetastasen (repeating)</span>
+<span style="color: navy">// </span><span style="color: green">Iteriert ueber alle Fernmetastasen-Observations im Bundle</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapFernmetastasenFromBundle<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Fernmetastasen: LOINC 21907-1 (Distant metastases.clinical)</span>
+  src.entry<b> as </b><span style="color: maroon">fmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21907-1')<b> then</b><span style="color: navy"> {
+</span>    fmEntry.resource<b> as </b><span style="color: maroon">fmObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.fernmetastasen<b> as </b><span style="color: maroon">fm</span><b> then </b>MapFernmetastase<span style="color: navy">(</span><span style="color: maroon">fmObs</span><span style="color: navy">, </span><span style="color: maroon">fm</span><span style="color: navy">)</span> <i>&quot;CallMapFernmetastase&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryFernmetastasen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Alternative: LOINC 97956-3 (Fernmetastasen-Assessment)</span>
+  src.entry<b> as </b><span style="color: maroon">fmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '97956-3')<b> then</b><span style="color: navy"> {
+</span>    fmEntry.resource<b> as </b><span style="color: maroon">fmObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.fernmetastasen<b> as </b><span style="color: maroon">fm</span><b> then </b>MapFernmetastase<span style="color: navy">(</span><span style="color: maroon">fmObs</span><span style="color: navy">, </span><span style="color: maroon">fm</span><span style="color: navy">)</span> <i>&quot;CallMapFernmetastaseAlt&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryFernmetastasenAlt&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapFernmetastase: Observation -&gt; oBDS Fernmetastase (einzeln)</span>
+<span style="color: navy">// </span><span style="color: green">Diagnosedatum und Lokalisation einer Fernmetastase</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapFernmetastase<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Observation, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Diagnosedatum: aus Observation.effectiveDateTime</span>
+  src.effective<b> as </b><span style="color: maroon">eff</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.diagnosedatum = <span style="color: maroon">eff</span> <i>&quot;SetFMDiagnosedatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Lokalisation: aus Observation.bodySite, Uebersetzung SNOMED -&gt; oBDS</span>
+  src.bodySite<b> as </b><span style="color: maroon">bs</span><b> then</b><span style="color: navy"> {
+</span>    bs.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<span style="color: navy"><b> -&gt; </b></span>tgt.lokalisation = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateFMLokalisation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapFMLokalisation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Fallback: Lokalisation aus Observation.value (falls bodySite nicht vorhanden)</span>
+  src.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>    val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<span style="color: navy"><b> -&gt; </b></span>tgt.lokalisation = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateFMLokalisationValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapFMLokalisationValue&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsFernmetastasen"/>
+  <status value="draft"/>
+  <date value="2026-05-03T20:30:38+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Fernmetastasen Observations to oBDS Fernmetastasen BackboneElement&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <group>
+    <name value="MapFernmetastasenFromBundle"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups. The IG Publisher produces SM_TARGET_PATH&#xD;&#xA;errors. The element names are correct per the oBDS Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Gemeinsame Fernmetastasen-Map: Extrahiert Fernmetastasen-Observations&#xD;&#xA;aus dem Bundle und mappt auf das oBDS Fernmetastasen-BackboneElement.&#xD;&#xA;Wird von Diagnose und Verlauf importiert.&#xD;&#xA;MII Onko Profil: mii-pr-onko-fernmetastasen&#xD;&#xA;- LOINC 21907-1: Distant metastases.clinical Cancer&#xD;&#xA;- Alternative: LOINC 97956-3 (Fernmetastasen-Assessment)&#xD;&#xA;Jede Fernmetastasen-Observation erzeugt einen separaten Eintrag mit&#xD;&#xA;Diagnosedatum und Lokalisation. Die Lokalisation wird via ConceptMap&#xD;&#xA;von SNOMED zu oBDS-Kuerzeln (PUL, OSS, HEP, BRA, etc.) uebersetzt.&#xD;&#xA;============================================================================&#xD;&#xA;============================================================================&#xD;&#xA;MapFernmetastasenFromBundle: Bundle -&gt; oBDS Fernmetastasen (repeating)&#xD;&#xA;Iteriert ueber alle Fernmetastasen-Observations im Bundle&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="EntryFernmetastasen"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="fmEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21907-1')"/>
+      </source>
+      <rule>
+        <name value="CallMapFernmetastase"/>
+        <source>
+          <context value="fmEntry"/>
+          <element value="resource"/>
+          <variable value="fmObs"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="fernmetastasen"/>
+          <variable value="fm"/>
+        </target>
+        <dependent>
+          <name value="MapFernmetastase"/>
+          <variable value="fmObs"/>
+          <variable value="fm"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryFernmetastasenAlt"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="fmEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '97956-3')"/>
+      </source>
+      <rule>
+        <name value="CallMapFernmetastaseAlt"/>
+        <source>
+          <context value="fmEntry"/>
+          <element value="resource"/>
+          <variable value="fmObs"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="fernmetastasen"/>
+          <variable value="fm"/>
+        </target>
+        <dependent>
+          <name value="MapFernmetastase"/>
+          <variable value="fmObs"/>
+          <variable value="fm"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapFernmetastase"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;MapFernmetastase: Observation -&gt; oBDS Fernmetastase (einzeln)&#xD;&#xA;Diagnosedatum und Lokalisation einer Fernmetastase&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Observation"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="SetFMDiagnosedatum"/>
+      <source>
+        <context value="src"/>
+        <element value="effective"/>
+        <variable value="eff"/>
+        <condition value="$this.is(dateTime)"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="diagnosedatum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="eff"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapFMLokalisation"/>
+      <source>
+        <context value="src"/>
+        <element value="bodySite"/>
+        <variable value="bs"/>
+      </source>
+      <rule>
+        <name value="TranslateFMLokalisation"/>
+        <source>
+          <context value="bs"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://snomed.info/sct'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="lokalisation"/>
+          <transform value="translate"/>
+          <parameter>
+            <valueId value="c"/>
+          </parameter>
+          <parameter>
+            <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation"/>
+          </parameter>
+          <parameter>
+            <valueString value="code"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapFMLokalisationValue"/>
+      <source>
+        <context value="src"/>
+        <element value="value"/>
+        <variable value="val"/>
+      </source>
+      <rule>
+        <name value="TranslateFMLokalisationValue"/>
+        <source>
+          <context value="val"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://snomed.info/sct'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="lokalisation"/>
+          <transform value="translate"/>
+          <parameter>
+            <valueId value="c"/>
+          </parameter>
+          <parameter>
+            <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-fm-lokalisation"/>
+          </parameter>
+          <parameter>
+            <valueString value="code"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

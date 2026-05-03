@@ -1,0 +1,405 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToObdsTod"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsTod</b></p><a name=\"SenologieToObdsTod\"> </a><a name=\"hcSenologieToObdsTod\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod<span style=\"color: navy\">\" = \"</span>SenologieToObdsTod<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Patient + Conditions to oBDS Todesmeldung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/patient.html\" title=\"Patient\">http://hl7.org/fhir/StructureDefinition/Patient</a><span style=\"color: navy\">\" </span><b>alias </b>Patient <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">\" </span><b>alias </b>Condition <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<b>imports</b><span style=\"color: navy\"> \"</span><a href=\"StructureMap-SenologieToObdsTumorzuordnung.html\" title=\"SenologieToObdsTumorzuordnung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style=\"color: navy\">\"#xD;\n</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapTod, MapTodesursache) use</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement` because FML has no syntax to declare the</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Logical Model sub-path for BackboneElement slices. The IG Publisher produces</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">SM_TARGET_PATH errors (~10). Element names are correct per the oBDS LM.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hauptgruppe: Bundle -&gt; oBDS Todesmeldung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Das Bundle enthaelt einen Patient (mit deceasedDateTime) und ggf.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Conditions fuer Todesursachen (category = cause-of-death).</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die Tumorzuordnung wird aus der Tumor-Condition abgeleitet.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>SenologieToObdsTod<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OBDSMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Tumorzuordnung: aus der Tumor-Condition (nicht cause-of-death)</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'encounter-diagnosis')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">condition</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      condition<span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style=\"color: maroon\">tz</span><b> then </b>MapTumorzuordnung<span style=\"color: navy\">(</span><span style=\"color: maroon\">condition</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tz</span><span style=\"color: navy\">)</span> <i>\"CallMapTumorzuordnung\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ConditionContext\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryConditionTZ\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Tod: aus Patient + Todesursachen-Conditions</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">patEntry</span><b> where </b>resource.is(Patient)<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    patEntry.resource<b> as </b><span style=\"color: maroon\">patient</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tod<b> as </b><span style=\"color: maroon\">tod</span><b> then </b>MapTod<span style=\"color: navy\">(</span><span style=\"color: maroon\">patient</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tod</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>\"CallMapTod\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryPatient\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Tod: Patient -&gt; OBDSMeldung.tod</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Sterbedatum, Tod tumorbedingt, Todesursachen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapTod<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Patient, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Abschluss_ID: aus Patient.identifier oder generiert</span>#xD;\n  src.id<b> as </b><span style=\"color: maroon\">id</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.abschlussID = <span style=\"color: maroon\">id</span> <i>\"SetAbschlussID\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Sterbedatum: aus Patient.deceasedDateTime</span>#xD;\n  src.deceased<b> as </b><span style=\"color: maroon\">d</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.sterbedatum = <span style=\"color: maroon\">d</span> <i>\"SetSterbedatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Tod_tumorbedingt: wird ueber die Todesursachen-Conditions ermittelt</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Wenn eine cause-of-death Condition einen ICD-Code C00-C97 (Krebs) hat -&gt; J</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Standardmaessig U (unbekannt), ueberschrieben durch Todesursachen-Analyse</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.todTumorbedingt = <span style=\"color: blue\">'U'</span> <i>\"SetTodTumorbedingtDefault\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Tod tumorbedingt: Ja, wenn eine Todesursache einen C-Code (Malignom) enthaelt</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">codEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    codEntry.resource<b> as </b><span style=\"color: maroon\">codCondition</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      codCondition.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c<span style=\"color: navy\"><b> -&gt; </b></span>tgt.todTumorbedingt = <span style=\"color: blue\">'J'</span> <i>\"SetTodTumorbedingtJa\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"CheckIsCancer\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"CheckCodCode\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"AnalyseCodCondition\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryCheckTumorbedingt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Tod tumorbedingt: aus Extension (falls explizit angegeben)</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-tod-tumorbedingt'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.todTumorbedingt = <span style=\"color: maroon\">cd</span> <i>\"SetTodTumorbedingtExplicit\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractTodTumorbedingtCode\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapTodTumorbedingtValue\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapTodTumorbedingtExtension\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Todesursachen: aus cause-of-death Conditions im Bundle</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">codEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    codEntry.resource<b> as </b><span style=\"color: maroon\">codCondition</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.todesursachen<b> as </b><span style=\"color: maroon\">tu</span><b> then </b>MapTodesursache<span style=\"color: navy\">(</span><span style=\"color: maroon\">codCondition</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tu</span><span style=\"color: navy\">)</span> <i>\"CallMapTodesursache\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryTodesursachen\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Todesursache: Condition (cause-of-death) -&gt; OBDSMeldung.tod.todesursachen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">ICD-10-GM Code und Version der Todesursache</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapTodesursache<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">ICD-10-Code der Todesursache</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.code = <span style=\"color: maroon\">cd</span> <i>\"SetTodesursacheCode\"</i><span style=\"color: navy\">;</span>#xD;\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.version = <span style=\"color: maroon\">v</span> <i>\"SetTodesursacheVersion\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractTodesursacheICD\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapTodesursacheCode\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToObdsTod"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-03T20:30:38+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Patient + Conditions to oBDS Todesmeldung\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Patient"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Patient>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Patient" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Condition"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Condition>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Condition" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/obds-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OBDSMeldung" ]
+  ] ) ; # 
+  fhir:import ( [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung>
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "SenologieToObdsTod" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups (MapTod, MapTodesursache) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nLogical Model sub-path for BackboneElement slices. The IG Publisher produces\r\nSM_TARGET_PATH errors (~10). Element names are correct per the oBDS LM.\r\n============================================================================\r\nHauptgruppe: Bundle -> oBDS Todesmeldung\r\nDas Bundle enthaelt einen Patient (mit deceasedDateTime) und ggf.\r\nConditions fuer Todesursachen (category = cause-of-death).\r\nDie Tumorzuordnung wird aus der Tumor-Condition abgeleitet.\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "OBDSMeldung" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "EntryConditionTZ" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "entry" ] ;
+         fhir:condition [ fhir:v "resource.is(Condition) and resource.category.coding.exists(code = 'encounter-diagnosis')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ConditionContext" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "entry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "condition" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "CallMapTumorzuordnung" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "condition" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "tumorzuordnung" ] ;
+             fhir:variable [ fhir:v "tz" ]
+           ] ) ;
+           fhir:dependent ( [
+             fhir:name [ fhir:v "MapTumorzuordnung" ] ;
+             fhir:variable ( [ fhir:v "condition" ] [ fhir:v "tz" ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryPatient" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "patEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Patient)" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapTod" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "patEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "patient" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "tod" ] ;
+           fhir:variable [ fhir:v "tod" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapTod" ] ;
+           fhir:variable ( [ fhir:v "patient" ] [ fhir:v "tod" ] [ fhir:v "src" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapTod" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nTod: Patient -> OBDSMeldung.tod\r\nSterbedatum, Tod tumorbedingt, Todesursachen\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Patient" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetAbschlussID" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:variable [ fhir:v "id" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "abschlussID" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "id"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetSterbedatum" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "deceased" ] ;
+         fhir:variable [ fhir:v "d" ] ;
+         fhir:condition [ fhir:v "$this.is(dateTime)" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "sterbedatum" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "d"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetTodTumorbedingtDefault" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "todTumorbedingt" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "U"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryCheckTumorbedingt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "codEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "AnalyseCodCondition" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "codEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "codCondition" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "CheckCodCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "codCondition" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "code" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "CheckIsCancer" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "code" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ] ;
+               fhir:condition [ fhir:v "(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C')" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetTodTumorbedingtJa" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "todTumorbedingt" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:String ;
+                     fhir:v "J"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapTodTumorbedingtExtension" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-tod-tumorbedingt'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapTodTumorbedingtValue" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "ExtractTodTumorbedingtCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetTodTumorbedingtExplicit" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "c" ] ;
+               fhir:element [ fhir:v "code" ] ;
+               fhir:variable [ fhir:v "cd" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "todTumorbedingt" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "cd"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryTodesursachen" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "codEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapTodesursache" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "codEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "codCondition" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "todesursachen" ] ;
+           fhir:variable [ fhir:v "tu" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapTodesursache" ] ;
+           fhir:variable ( [ fhir:v "codCondition" ] [ fhir:v "tu" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapTodesursache" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nTodesursache: Condition (cause-of-death) -> OBDSMeldung.tod.todesursachen\r\nICD-10-GM Code und Version der Todesursache\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Condition" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapTodesursacheCode" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractTodesursacheICD" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetTodesursacheCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "cd"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetTodesursacheVersion" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "version" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "version" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

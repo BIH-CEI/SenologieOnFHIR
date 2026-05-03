@@ -1,0 +1,256 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToOncoBoxBrustZentrum"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustZentrum</b></p><a name=\"SenologieToOncoBoxBrustZentrum\"> </a><a name=\"hcSenologieToOncoBoxBrustZentrum\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum<span style=\"color: navy\">\" = \"</span>SenologieToOncoBoxBrustZentrum<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Organization to OncoBox Brust Zentrum</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/organization.html\" title=\"Organization\">http://hl7.org/fhir/StructureDefinition/Organization</a><span style=\"color: navy\">\" </span><b>alias </b>Organization <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-oncobox-brust-meldung.html\" title=\"OncoBox Brust N1.1.1 Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: MapZentrum uses `target tgt : BackboneElement` because FML</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices. The IG Publisher produces SM_TARGET_PATH / SM_SOURCE_PATH errors</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">(~12). Element names are correct per the OncoBox Brust Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Zentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -&gt; Zentrum</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Konfigurationswert oder ueber Organization.identifier gepflegt. Der</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Berichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">spezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">typischerweise ueber Parameter gesetzt.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapZentrum<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">OncoBox-Spezifikationsversion (fest)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.oncoBoxVersion = <span style=\"color: blue\">'N1.1.1'</span> <i>\"SetOncoBoxVersion\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Meldungsdatum (fest auf Bundle-Timestamp)</span>#xD;\n  src.timestamp<b> as </b><span style=\"color: maroon\">ts</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldungsdatum = <span style=\"color: maroon\">ts</span> <i>\"SetMeldungsdatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Zentrum aus Organization ---</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Organization)<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">org</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">Zentrum_Name aus Organization.name</span>#xD;\n      org.name<b> as </b><span style=\"color: maroon\">name</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zentrumName = <span style=\"color: maroon\">name</span> <i>\"SetZentrumName\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">IKNR - Institutionskennzeichen</span>#xD;\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://fhir.de/sid/arge-ik/iknr'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.iknr = <span style=\"color: maroon\">v</span> <i>\"SetIKNR\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"FilterIKNR\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Standort-ID</span>#xD;\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'http://fhir.de/sid/standortnummer'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.standortId = <span style=\"color: maroon\">v</span> <i>\"SetStandortId\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"FilterStandort\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Zentrum_ID aus OnkoZert-Kennung (Organization.identifier)</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Falls keine spezifische OnkoZert-Kennung, IKNR als Fallback</span>#xD;\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://www.onkozert.de/sid/zentrum-id'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zentrumId = <span style=\"color: maroon\">v</span> <i>\"SetZentrumId\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"FilterZentrumIdOZ\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: IKNR als Zentrum-ID</span>#xD;\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://fhir.de/sid/arge-ik/iknr'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zentrumId = <span style=\"color: maroon\">v</span> <i>\"SetZentrumIdIKNRFallback\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"FilterZentrumIdIKNR\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"OrgContext\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryOrganization\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToOncoBoxBrustZentrum"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-03T20:30:38+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Organization to OncoBox Brust Zentrum\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Organization"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Organization>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Organization" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OncoBoxBrust" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapZentrum" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: MapZentrum uses `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices. The IG Publisher produces SM_TARGET_PATH / SM_SOURCE_PATH errors\r\n(~12). Element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nZentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -> Zentrum\r\nDie Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als\r\nKonfigurationswert oder ueber Organization.identifier gepflegt. Der\r\nBerichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-\r\nspezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis\r\ntypischerweise ueber Parameter gesetzt.\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetOncoBoxVersion" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "oncoBoxVersion" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "N1.1.1"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetMeldungsdatum" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "timestamp" ] ;
+         fhir:variable [ fhir:v "ts" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldungsdatum" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "ts"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryOrganization" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "entry" ] ;
+         fhir:condition [ fhir:v "resource.is(Organization)" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "OrgContext" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "entry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "org" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetZentrumName" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "org" ] ;
+             fhir:element [ fhir:v "name" ] ;
+             fhir:variable [ fhir:v "name" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "zentrumName" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "name"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "FilterIKNR" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "org" ] ;
+             fhir:element [ fhir:v "identifier" ] ;
+             fhir:variable [ fhir:v "id" ] ;
+             fhir:condition [ fhir:v "system = 'https://fhir.de/sid/arge-ik/iknr'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetIKNR" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "id" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:variable [ fhir:v "v" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "iknr" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "v"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "FilterStandort" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "org" ] ;
+             fhir:element [ fhir:v "identifier" ] ;
+             fhir:variable [ fhir:v "id" ] ;
+             fhir:condition [ fhir:v "system = 'http://fhir.de/sid/standortnummer'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetStandortId" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "id" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:variable [ fhir:v "v" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "standortId" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "v"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "FilterZentrumIdOZ" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "org" ] ;
+             fhir:element [ fhir:v "identifier" ] ;
+             fhir:variable [ fhir:v "id" ] ;
+             fhir:condition [ fhir:v "system = 'https://www.onkozert.de/sid/zentrum-id'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetZentrumId" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "id" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:variable [ fhir:v "v" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "zentrumId" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "v"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "FilterZentrumIdIKNR" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "org" ] ;
+             fhir:element [ fhir:v "identifier" ] ;
+             fhir:variable [ fhir:v "id" ] ;
+             fhir:condition [ fhir:v "system = 'https://fhir.de/sid/arge-ik/iknr'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetZentrumIdIKNRFallback" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "id" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:variable [ fhir:v "v" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "zentrumId" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "v"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

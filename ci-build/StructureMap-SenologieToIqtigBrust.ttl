@@ -1,0 +1,1026 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToIqtigBrust"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIqtigBrust</b></p><a name=\"SenologieToIqtigBrust\"> </a><a name=\"hcSenologieToIqtigBrust\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust<span style=\"color: navy\">\" = \"</span>SenologieToIqtigBrust<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">\" </span><b>alias </b>Condition <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">\" </span><b>alias </b>Observation <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/servicerequest.html\" title=\"ServiceRequest\">http://hl7.org/fhir/StructureDefinition/ServiceRequest</a><span style=\"color: navy\">\" </span><b>alias </b>ServiceRequest <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-iqtig-mammachirurgie-181.html\" title=\"IQTIG QS 18.1 Mammachirurgie (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style=\"color: navy\">\" </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors. The element names are correct per the IQTIG 18.1 Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Teildatensatz Brust (BRUST): Condition + Observations -&gt; BRUST:*</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Pro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Zuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Quellen:</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Condition (Senologie_Diagnose_Maligne / _Benigne) -&gt; Indikation, ICD,</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Seitenlokalisation, Diagnosedatum</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (BI-RADS, bildgebende Methode, Praeopbefund) -&gt; Befund</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- ServiceRequest (Senologie_OP_Planung) -&gt; Drahtmarkierung, Neoadjuvanz</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (cTNM, Tumorgroesse klinisch) -&gt; Staging-Felder</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapBrust<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:LNRBRUST - Standardwert 1 (kann durch Slicing ueberschrieben werden)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.laufendeNummer = <span style=\"color: blue\">1</span> <i>\"SetLnrBrust\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:SEITE - Seitenlokalisation aus Condition.bodySite (SNOMED CT)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">24028007=right, 7771000=left, 51440002=bilateral</span>#xD;\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '24028007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'R'</span> <i>\"SetSeiteR\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '7771000'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'L'</span> <i>\"SetSeiteL\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '51440002'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'B'</span> <i>\"SetSeiteB\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapSeiteSCT\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapSeitenlokalisation\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:INDIKATION - Indikation aus ICD-10-GM-Code</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">C50.* = maligne (1), D05.* = DCIS (2), D24 = benigne (3), Z40.* = Risikoreduktion (4)</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('C50')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'1'</span> <i>\"SetIndikMaligne\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('D05')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'2'</span> <i>\"SetIndikDCIS\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('D24')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'3'</span> <i>\"SetIndikBenigne\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('Z40')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'4'</span> <i>\"SetIndikRisiko\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('Z42')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'5'</span> <i>\"SetIndikRekon\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapIndikationICD\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapIndikation\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:DIAGICD - ICD-10-GM-Kodierung der Diagnose</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnoseICD<b> as </b><span style=\"color: maroon\">icd</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>icd.code = <span style=\"color: maroon\">cd</span> <i>\"SetICDCode\"</i><span style=\"color: navy\">;</span>#xD;\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>icd.version = <span style=\"color: maroon\">v</span> <i>\"SetICDVersion\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapICDCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapDiagnoseICD\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:DIAGDATUM - Diagnosedatum aus Condition.onsetDateTime</span>#xD;\n  src.onset<b> as </b><span style=\"color: maroon\">onset</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnosedatum = <span style=\"color: maroon\">onset</span> <i>\"SetDiagnosedatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:CT / BRUST:CN / BRUST:CM - klinische TNM aus Observation (LOINC 21908-9 Stage group)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Hier ueber TNM-Komponenten: T=21905-5, N=21906-3, M=21907-1</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">tEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21905-5')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    tEntry.resource<b> as </b><span style=\"color: maroon\">tObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      tObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cT = <span style=\"color: maroon\">cd</span> <i>\"SetCT\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapCTCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapCTValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapCTObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryCT\"</i><span style=\"color: navy\">;</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">nEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21906-3')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    nEntry.resource<b> as </b><span style=\"color: maroon\">nObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      nObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cN = <span style=\"color: maroon\">cd</span> <i>\"SetCN\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapCNCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapCNValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapCNObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryCN\"</i><span style=\"color: navy\">;</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">mEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21907-1')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    mEntry.resource<b> as </b><span style=\"color: maroon\">mObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      mObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cM = <span style=\"color: maroon\">cd</span> <i>\"SetCM\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapCMCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapCMValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapCMObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryCM\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:UICCKLIN - klinisches UICC-Stadium (LOINC 21902-2 Stage group.clinical)</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">uiccEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    uiccEntry.resource<b> as </b><span style=\"color: maroon\">uiccObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      uiccObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.uiccStadiumKlinisch = <span style=\"color: maroon\">cd</span> <i>\"SetUICCKlin\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapUICCKlinCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapUICCKlinValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapUICCKlinObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryUICCKlin\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:TGROESSEKLIN - praetherapeutische Tumorgroesse aus Bildgebung</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 44648-0 (Breast tumor size, imaging) oder Senologie_Bildgebung_Observation</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">tgEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '44648-0')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    tgEntry.resource<b> as </b><span style=\"color: maroon\">tgObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      tgObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorgroesseKlinisch = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>\"SetTGroesseKlin\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapTGroesseKlinValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapTGroesseKlinObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryTGroesseKlin\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:BILDGMETHODE - Eingesetzte bildgebende Methode aus Senologie_Bildgebung_Befund</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 24604-1 (Breast imaging report) oder Senologie-spezifisch</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">bildEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung'))<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    bildEntry.resource<b> as </b><span style=\"color: maroon\">bildObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      bildObs.method<b> as </b><span style=\"color: maroon\">m</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        m.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>          <span style=\"color: navy\">// </span><span style=\"color: green\">71651007=Mammografie, 16310003=Sonografie, 113091000=MRT, 710324008=Tomosynthese</span>#xD;\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '71651007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'1'</span> <i>\"SetMethMammo\"</i><span style=\"color: navy\">;</span>#xD;\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '16310003'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'2'</span> <i>\"SetMethSono\"</i><span style=\"color: navy\">;</span>#xD;\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '113091000'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'3'</span> <i>\"SetMethMRT\"</i><span style=\"color: navy\">;</span>#xD;\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '710324008'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'4'</span> <i>\"SetMethTomo\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapBildMethodCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapBildMethod\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapBildObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryBildgebung\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:BIRADS - BI-RADS-Klassifikation aus Observation</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 72133-2 (Breast imaging BI-RADS)</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">biradsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '72133-2')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    biradsEntry.resource<b> as </b><span style=\"color: maroon\">biradsObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      biradsObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.birads = <span style=\"color: maroon\">cd</span> <i>\"SetBIRADS\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapBIRADSCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapBIRADSValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapBIRADSObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryBIRADS\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:BEFUND - Praeoperativer Befund (B-Klassifikation) aus Pathologie-Befund</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">befEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund'))<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    befEntry.resource<b> as </b><span style=\"color: maroon\">befObs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      befObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.befundcode = <span style=\"color: maroon\">cd</span> <i>\"SetBefundB\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapBefundBCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapBefundValue\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapBefundObs\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryBefund\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:HISTPRAEOP - Praeoperative histologische Sicherung aus Procedure (Biopsie-OPS)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Abgeleitet aus Verification-Status / Procedure-Kontext; Default = 0 (nein)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.histologischeSicherungPraeop = <span style=\"color: blue\">'0'</span> <i>\"SetHistPraeopDefault\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:DRAHT - Praeoperative Drahtmarkierung aus ServiceRequest-Extension</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">srEntry</span><b> where </b>resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung'))<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    srEntry.resource<b> as </b><span style=\"color: maroon\">sr</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      sr.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>            <span style=\"color: navy\">// </span><span style=\"color: green\">M=Mammo -&gt; 1, S=Sono -&gt; 2, T=MRT -&gt; 3, N=keine -&gt; 0</span>#xD;\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'M'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'1'</span> <i>\"SetDrahtMammo\"</i><span style=\"color: navy\">;</span>#xD;\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'S'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'2'</span> <i>\"SetDrahtSono\"</i><span style=\"color: navy\">;</span>#xD;\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'T'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'3'</span> <i>\"SetDrahtMRT\"</i><span style=\"color: navy\">;</span>#xD;\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'N'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'0'</span> <i>\"SetDrahtKeine\"</i><span style=\"color: navy\">;</span>#xD;\n          <span style=\"color: navy\">}</span> <i>\"MapDrahtCoding\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"MapDrahtValue\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapDrahtExt\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"SRContext\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryDraht\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:NEOADJ - Neoadjuvante Therapie erhalten (Default = 0, konkrete Ableitung aus</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">bestehender Systemtherapie-Procedure mit stellungOP=N noetig)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.neoadjuvanteTherapie = <span style=\"color: blue\">'0'</span> <i>\"SetNeoadjDefault\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:TKPRAEOP - Praetherapeutische Tumorkonferenz-Empfehlung</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Aus Senologie_Tumorboard_Empfehlung (CarePlan) mit Typ \"praetherapeutisch\"</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorkonferenzPraeop = <span style=\"color: blue\">'9'</span> <i>\"SetTKPraeopDefault\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToIqtigBrust"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-03T20:30:38+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Condition"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Condition>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Condition" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Observation"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Observation>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Observation" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/ServiceRequest"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/ServiceRequest>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "ServiceRequest" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "IQTIG181" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapBrust" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the IQTIG 18.1 Logical Model.\r\n============================================================================\r\nTeildatensatz Brust (BRUST): Condition + Observations -> BRUST:*\r\nPro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die\r\nZuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).\r\nQuellen:\r\n- Condition (Senologie_Diagnose_Maligne / _Benigne) -> Indikation, ICD,\r\nSeitenlokalisation, Diagnosedatum\r\n- Observation (BI-RADS, bildgebende Methode, Praeopbefund) -> Befund\r\n- ServiceRequest (Senologie_OP_Planung) -> Drahtmarkierung, Neoadjuvanz\r\n- Observation (cTNM, Tumorgroesse klinisch) -> Staging-Felder\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Condition" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetLnrBrust" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "laufendeNummer" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Integer ;
+             fhir:v 1
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapSeitenlokalisation" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "bodySite" ] ;
+         fhir:variable [ fhir:v "bs" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapSeiteSCT" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "bs" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://snomed.info/sct'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetSeiteR" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '24028007'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "seitenlokalisation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "R"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetSeiteL" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '7771000'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "seitenlokalisation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "L"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetSeiteB" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '51440002'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "seitenlokalisation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "B"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapIndikation" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapIndikationICD" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetIndikMaligne" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('C50')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "indikation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "1"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetIndikDCIS" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('D05')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "indikation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "2"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetIndikBenigne" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('D24')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "indikation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "3"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetIndikRisiko" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('Z40')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "indikation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "4"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetIndikRekon" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('Z42')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "indikation" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "5"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapDiagnoseICD" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapICDCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "diagnoseICD" ] ;
+           fhir:variable [ fhir:v "icd" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetICDCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "icd" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "cd"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetICDVersion" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "version" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "icd" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "version" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetDiagnosedatum" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "onset" ] ;
+         fhir:variable [ fhir:v "onset" ] ;
+         fhir:condition [ fhir:v "$this.is(dateTime)" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "diagnosedatum" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "onset"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryCT" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "tEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '21905-5')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapCTObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "tEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "tObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapCTValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "tObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapCTCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetCT" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "cT" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "cd"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryCN" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "nEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '21906-3')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapCNObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "nEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "nObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapCNValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "nObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapCNCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetCN" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "cN" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "cd"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryCM" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "mEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '21907-1')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapCMObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "mEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "mObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapCMValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "mObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapCMCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetCM" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "cM" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "cd"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryUICCKlin" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "uiccEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapUICCKlinObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "uiccEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "uiccObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapUICCKlinValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "uiccObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapUICCKlinCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetUICCKlin" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "uiccStadiumKlinisch" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "cd"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryTGroesseKlin" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "tgEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '44648-0')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapTGroesseKlinObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "tgEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "tgObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapTGroesseKlinValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "tgObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetTGroesseKlin" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:variable [ fhir:v "v" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "tumorgroesseKlinisch" ] ;
+               fhir:transform [ fhir:v "truncate" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "v"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryBildgebung" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "bildEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung'))" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapBildObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "bildEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "bildObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapBildMethod" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "bildObs" ] ;
+             fhir:element [ fhir:v "method" ] ;
+             fhir:variable [ fhir:v "m" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapBildMethodCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "m" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ] ;
+               fhir:condition [ fhir:v "system = 'http://snomed.info/sct'" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetMethMammo" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ] ;
+                 fhir:condition [ fhir:v "$this = '71651007'" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "bildgebendeMethode" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:String ;
+                     fhir:v "1"
+                   ]
+                 ] )
+               ] )
+             ] [
+               fhir:name [ fhir:v "SetMethSono" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ] ;
+                 fhir:condition [ fhir:v "$this = '16310003'" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "bildgebendeMethode" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:String ;
+                     fhir:v "2"
+                   ]
+                 ] )
+               ] )
+             ] [
+               fhir:name [ fhir:v "SetMethMRT" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ] ;
+                 fhir:condition [ fhir:v "$this = '113091000'" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "bildgebendeMethode" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:String ;
+                     fhir:v "3"
+                   ]
+                 ] )
+               ] )
+             ] [
+               fhir:name [ fhir:v "SetMethTomo" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ] ;
+                 fhir:condition [ fhir:v "$this = '710324008'" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "bildgebendeMethode" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:String ;
+                     fhir:v "4"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryBIRADS" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "biradsEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '72133-2')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapBIRADSObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "biradsEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "biradsObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapBIRADSValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "biradsObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapBIRADSCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetBIRADS" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "birads" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "cd"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryBefund" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "befEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund'))" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapBefundObs" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "befEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "befObs" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapBefundValue" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "befObs" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapBefundBCoding" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ] ;
+               fhir:condition [ fhir:v "system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b'" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetBefundB" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "c" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "cd" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "tgt" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "befundcode" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "cd"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetHistPraeopDefault" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "histologischeSicherungPraeop" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "0"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryDraht" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "srEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung'))" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SRContext" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "srEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "sr" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapDrahtExt" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "sr" ] ;
+             fhir:element [ fhir:v "extension" ] ;
+             fhir:variable [ fhir:v "ext" ] ;
+             fhir:condition [ fhir:v "url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "MapDrahtValue" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "ext" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:variable [ fhir:v "val" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "MapDrahtCoding" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "val" ] ;
+                 fhir:element [ fhir:v "coding" ] ;
+                 fhir:variable [ fhir:v "c" ]
+               ] ) ;
+               fhir:rule ( [
+                 fhir:name [ fhir:v "SetDrahtMammo" ] ;
+                 fhir:source ( [
+                   fhir:context [ fhir:v "c" ] ;
+                   fhir:element [ fhir:v "code" ] ;
+                   fhir:variable [ fhir:v "cd" ] ;
+                   fhir:condition [ fhir:v "$this = 'M'" ]
+                 ] ) ;
+                 fhir:target ( [
+                   fhir:context [ fhir:v "tgt" ] ;
+                   fhir:contextType [ fhir:v "variable" ] ;
+                   fhir:element [ fhir:v "drahtmarkierung" ] ;
+                   fhir:transform [ fhir:v "copy" ] ;
+                   fhir:parameter ( [
+                     fhir:value [
+                       a fhir:String ;
+                       fhir:v "1"
+                     ]
+                   ] )
+                 ] )
+               ] [
+                 fhir:name [ fhir:v "SetDrahtSono" ] ;
+                 fhir:source ( [
+                   fhir:context [ fhir:v "c" ] ;
+                   fhir:element [ fhir:v "code" ] ;
+                   fhir:variable [ fhir:v "cd" ] ;
+                   fhir:condition [ fhir:v "$this = 'S'" ]
+                 ] ) ;
+                 fhir:target ( [
+                   fhir:context [ fhir:v "tgt" ] ;
+                   fhir:contextType [ fhir:v "variable" ] ;
+                   fhir:element [ fhir:v "drahtmarkierung" ] ;
+                   fhir:transform [ fhir:v "copy" ] ;
+                   fhir:parameter ( [
+                     fhir:value [
+                       a fhir:String ;
+                       fhir:v "2"
+                     ]
+                   ] )
+                 ] )
+               ] [
+                 fhir:name [ fhir:v "SetDrahtMRT" ] ;
+                 fhir:source ( [
+                   fhir:context [ fhir:v "c" ] ;
+                   fhir:element [ fhir:v "code" ] ;
+                   fhir:variable [ fhir:v "cd" ] ;
+                   fhir:condition [ fhir:v "$this = 'T'" ]
+                 ] ) ;
+                 fhir:target ( [
+                   fhir:context [ fhir:v "tgt" ] ;
+                   fhir:contextType [ fhir:v "variable" ] ;
+                   fhir:element [ fhir:v "drahtmarkierung" ] ;
+                   fhir:transform [ fhir:v "copy" ] ;
+                   fhir:parameter ( [
+                     fhir:value [
+                       a fhir:String ;
+                       fhir:v "3"
+                     ]
+                   ] )
+                 ] )
+               ] [
+                 fhir:name [ fhir:v "SetDrahtKeine" ] ;
+                 fhir:source ( [
+                   fhir:context [ fhir:v "c" ] ;
+                   fhir:element [ fhir:v "code" ] ;
+                   fhir:variable [ fhir:v "cd" ] ;
+                   fhir:condition [ fhir:v "$this = 'N'" ]
+                 ] ) ;
+                 fhir:target ( [
+                   fhir:context [ fhir:v "tgt" ] ;
+                   fhir:contextType [ fhir:v "variable" ] ;
+                   fhir:element [ fhir:v "drahtmarkierung" ] ;
+                   fhir:transform [ fhir:v "copy" ] ;
+                   fhir:parameter ( [
+                     fhir:value [
+                       a fhir:String ;
+                       fhir:v "0"
+                     ]
+                   ] )
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetNeoadjDefault" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "neoadjuvanteTherapie" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "0"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "SetTKPraeopDefault" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "tumorkonferenzPraeop" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "9"
+           ]
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

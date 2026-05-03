@@ -1,0 +1,141 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToObdsLeistungszustand"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsLeistungszustand</b></p><a name=\"SenologieToObdsLeistungszustand\"> </a><a name=\"hcSenologieToObdsLeistungszustand\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand<span style=\"color: navy\">\" = \"</span>SenologieToObdsLeistungszustand<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">\" </span><b>alias </b>Observation <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher produces SM_TARGET_PATH</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors. The element names are correct per the oBDS Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Gemeinsame Leistungszustand-Map: Extrahiert den ECOG Performance Status</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">aus einer Observation und mappt auf das oBDS-Element allgemeinerLeistungszustand.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Wird von Diagnose und Verlauf importiert.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MII Onko Profil: mii-pr-onko-allgemeiner-leistungszustand-ecog</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 89247-1 = \"ECOG Performance Status\"</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">ECOG-Score: 0-4 (direkte Uebernahme), U = unbekannt</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die MII Onko Observation codiert den ECOG-Score als valueCodeableConcept</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">mit dem Karnofsky/ECOG-CodeSystem.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapLeistungszustandFromBundle: Bundle -&gt; allgemeinerLeistungszustand</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Sucht die ECOG-Observation im Bundle und extrahiert den Score</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapLeistungszustandFromBundle<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">ECOG Performance Status (LOINC 89247-1)</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">ecogEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '89247-1')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ecogEntry.resource<b> as </b><span style=\"color: maroon\">ecogObs</span><b> then </b>MapLeistungszustand<span style=\"color: navy\">(</span><span style=\"color: maroon\">ecogObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>\"CallMapLeistungszustand\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryECOG\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapLeistungszustand: Observation -&gt; allgemeinerLeistungszustand (code)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Extrahiert den ECOG-Score (0-4) aus der Observation</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapLeistungszustand<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Observation, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">ECOG-Score: aus valueCodeableConcept.coding.code</span>#xD;\n  src.value<b> as </b><span style=\"color: maroon\">v</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    v.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.allgemeinerLeistungszustand = <span style=\"color: maroon\">cd</span> <i>\"SetECOG\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractECOGCode\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapECOGValue\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToObdsLeistungszustand"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-03T20:30:38+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Observation"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Observation>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Observation" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/obds-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OBDSMeldung" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapLeistungszustandFromBundle" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher produces SM_TARGET_PATH\r\nerrors. The element names are correct per the oBDS Logical Model.\r\n============================================================================\r\nGemeinsame Leistungszustand-Map: Extrahiert den ECOG Performance Status\r\naus einer Observation und mappt auf das oBDS-Element allgemeinerLeistungszustand.\r\nWird von Diagnose und Verlauf importiert.\r\nMII Onko Profil: mii-pr-onko-allgemeiner-leistungszustand-ecog\r\nLOINC 89247-1 = \"ECOG Performance Status\"\r\nECOG-Score: 0-4 (direkte Uebernahme), U = unbekannt\r\nDie MII Onko Observation codiert den ECOG-Score als valueCodeableConcept\r\nmit dem Karnofsky/ECOG-CodeSystem.\r\n============================================================================\r\n============================================================================\r\nMapLeistungszustandFromBundle: Bundle -> allgemeinerLeistungszustand\r\nSucht die ECOG-Observation im Bundle und extrahiert den Score\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "EntryECOG" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "ecogEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(code = '89247-1')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapLeistungszustand" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ecogEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "ecogObs" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapLeistungszustand" ] ;
+           fhir:variable ( [ fhir:v "ecogObs" ] [ fhir:v "tgt" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapLeistungszustand" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapLeistungszustand: Observation -> allgemeinerLeistungszustand (code)\r\nExtrahiert den ECOG-Score (0-4) aus der Observation\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Observation" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapECOGValue" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "value" ] ;
+         fhir:variable [ fhir:v "v" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractECOGCode" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "v" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetECOG" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "allgemeinerLeistungszustand" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "cd"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+
