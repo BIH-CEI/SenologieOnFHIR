@@ -1,0 +1,125 @@
+name: Release IG Version
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g. 0.9.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install SUSHI
+        run: npm install -g fsh-sushi@${{ vars.SUSHI_VERSION || '3.19.0' }}
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install Jekyll
+        run: gem install jekyll
+
+      - name: Cache FHIR packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.fhir/packages
+          key: fhir-packages-${{ hashFiles('sushi-config.yaml') }}
+          restore-keys: fhir-packages-
+
+      - name: Cache IG Publisher JAR
+        uses: actions/cache@v4
+        id: cache-publisher
+        with:
+          path: input-cache/publisher.jar
+          key: ig-publisher-latest
+
+      - name: Download IG Publisher
+        if: steps.cache-publisher.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p input-cache
+          curl -L -o input-cache/publisher.jar \
+            https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar
+
+      - name: Setup TX Proxy (MII Ontoserver)
+        env:
+          MII_TERMSERV_CERT: ${{ secrets.MII_TERMSERV_CERT }}
+          MII_TERMSERV_PW: ${{ secrets.MII_TERMSERV_PW }}
+        run: |
+          mkdir -p nginx/certs
+          curl -sSL -o nginx/nginx.conf \
+            https://raw.githubusercontent.com/medizininformatik-initiative/kerndatensatz-meta/refs/heads/master/.github/workflows/nginx.conf
+          echo "$MII_TERMSERV_CERT" | base64 -d > nginx/certs/client.p12
+          openssl pkcs12 -in nginx/certs/client.p12 -clcerts -nokeys \
+            -out nginx/certs/client-cert.pem -passin pass:$MII_TERMSERV_PW
+          openssl pkcs12 -in nginx/certs/client.p12 -nocerts \
+            -out nginx/certs/client-key-encrypted.key \
+            -passin pass:$MII_TERMSERV_PW -passout pass:$MII_TERMSERV_PW
+          openssl rsa -in nginx/certs/client-key-encrypted.key \
+            -out nginx/certs/client-key.key -passin pass:$MII_TERMSERV_PW
+          docker run -d --name nginx-proxy \
+            -v $PWD/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
+            -v $PWD/nginx/certs:/etc/nginx/certs:ro \
+            -p 8090:80 nginx:alpine
+          sleep 5
+          for i in {1..5}; do
+            if curl --silent --fail http://localhost:8090/fhir/metadata; then
+              echo "NGINX TX proxy is ready."
+              break
+            fi
+            echo "Waiting for NGINX... attempt $i"
+            sleep 2
+          done
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+            VERSION="${VERSION#v}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Publishing version: $VERSION"
+
+      - name: Build IG
+        run: |
+          chmod +x _genonce.sh
+          ./_genonce.sh -tx http://localhost:8090/fhir
+
+      - name: Deploy Release to GitHub Pages
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages:gh-pages 2>/dev/null || git checkout --orphan gh-pages
+          git checkout gh-pages
+          # Add versioned directory (never overwrite existing releases)
+          if [ -d "$VERSION" ]; then
+            echo "WARNING: Version $VERSION already exists, overwriting"
+            rm -rf "$VERSION"
+          fi
+          cp -r output "$VERSION"
+          # Update index to point to latest release
+          echo "<html><head><meta http-equiv=\"refresh\" content=\"0; url=${VERSION}/index.html\"></head><body>Redirecting to <a href=\"${VERSION}/index.html\">${VERSION}</a> | <a href=\"ci-build/index.html\">CI Build</a></body></html>" > index.html
+          git add "$VERSION/" index.html
+          git commit -m "release: ${VERSION}"
+          git push origin gh-pages
