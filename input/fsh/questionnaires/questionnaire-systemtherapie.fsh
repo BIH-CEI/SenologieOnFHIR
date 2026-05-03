@@ -33,7 +33,7 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Patient
 
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].valueReference = Reference(postop-procedure-template)
+* extension[=].extension[template].valueReference = Reference(postop-procedure-template)
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Procedure-Pfad):
