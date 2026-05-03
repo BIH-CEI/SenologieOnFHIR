@@ -22,15 +22,13 @@ Profile: [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senolog
 
 **value**: Vollremission (complete remission, CR)
 
+**method**: Aktive Nachsorge
+
 > **component****code**: Status of residual neoplasm (observable entity)**value**: kein Tumor nachweisbar
 
 > **component****code**: Presence of metastatic neoplasm in regional lymph node (observable entity)**value**: kein Lymphknotenbefall nachweisbar
 
 > **component****code**: Status of distant metastasis (observable entity)**value**: keine Fernmetastasen nachweisbar
-
-> **component****code**: Art der Nachsorge**value**: Aktive Nachsorge
-
-> **component****code**: Vitalstatus**value**: Alive (finding)
 
 > **component****code**: Zweittumor**value**: No (qualifier value)
 
@@ -68,6 +66,13 @@ Profile: [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senolog
       "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
       "code" : "V",
       "display" : "Vollremission (complete remission, CR)"
+    }]
+  },
+  "method" : {
+    "coding" : [{
+      "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
+      "code" : "aktiv",
+      "display" : "Aktive Nachsorge"
     }]
   },
   "component" : [{
@@ -115,38 +120,6 @@ Profile: [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senolog
         "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
         "code" : "K",
         "display" : "keine Fernmetastasen nachweisbar"
-      }]
-    }
-  },
-  {
-    "code" : {
-      "coding" : [{
-        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-        "code" : "nachsorge-art",
-        "display" : "Art der Nachsorge"
-      }]
-    },
-    "valueCodeableConcept" : {
-      "coding" : [{
-        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-        "code" : "aktiv",
-        "display" : "Aktive Nachsorge"
-      }]
-    }
-  },
-  {
-    "code" : {
-      "coding" : [{
-        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-        "code" : "vitalstatus",
-        "display" : "Vitalstatus"
-      }]
-    },
-    "valueCodeableConcept" : {
-      "coding" : [{
-        "system" : "http://snomed.info/sct",
-        "code" : "438949009",
-        "display" : "Alive (finding)"
       }]
     }
   },

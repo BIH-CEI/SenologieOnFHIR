@@ -64,6 +64,10 @@ Der pathologische Befund wird als `DiagnosticReport` (Profil: MII Pathologie Rep
 | Ki-67 | Observation | LOINC 29593-1, Prozent |
 | Resektionsrand | Observation | R0/R1/R2/RX (MII Onko Residualstatus) |
 
+### Weiterführend: Pathologiebericht im Brustkrebskontext
+
+Auch wenn derzeit kein normativer Standard für einen strukturierten Pathologiebericht in der Senologie vorliegt, demonstriert der [Breast Cancer Pathology Specification](https://bih-cei.github.io/BreastCancerSpec/) anhand konkreter Beispiele, wie ein FHIR-basierter Pathologiebericht im Brustkrebskontext aussehen kann.
+
 ### Diagnostischer Pfad
 
 Der typische Ablauf von der Bildgebung bis zur Therapieentscheidung:

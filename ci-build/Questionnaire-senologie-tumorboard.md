@@ -95,10 +95,13 @@ Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplin√
     "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
   },
   {
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
-    "valueReference" : {
-      "reference" : "#careplan-template"
-    }
+    "extension" : [{
+      "url" : "template",
+      "valueReference" : {
+        "reference" : "#careplan-template"
+      }
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
   }],
   "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard",
   "version" : "0.1.0",
@@ -107,7 +110,7 @@ Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplin√
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charit√© (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charit√© (BIH)",

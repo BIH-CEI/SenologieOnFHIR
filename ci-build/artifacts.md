@@ -73,7 +73,7 @@ These define constraints on FHIR resources for systems conforming to this implem
 | [BIH Senologie Bildgebung Sonstige](StructureDefinition-senologie-bildgebung-sonstige.md) | DiagnosticReport für nicht-mammaspezifische Bildgebung im Rahmen des Stagings oder der Verlaufskontrolle (z.B. Skelettszintigraphie, CT, PET-CT, Röntgen Thorax, Lebersonographie). |
 | [BIH Senologie Checkliste Erbliche Belastung](StructureDefinition-senologie-checkliste-erbliche-belastung.md) | Observation für die DKG-Checkliste zur Identifikation erblicher Tumorbelastung (D24/D25). Erfasst ob die Checkliste durchgeführt wurde und ggf. den Score. |
 | [BIH Senologie Familienanamnese](StructureDefinition-senologie-familienanamnese.md) | FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom aus dotbase Questionnaire 'Familienanamnese' |
-| [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senologie-follow-up.md) | Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder. Wird sowohl fuer Gesamtbeurteilung nach definitiver Therapie (D27) als auch fuer Nachsorge-Follow-Up (M06) verwendet — Unterscheidung ueber effectiveDateTime. |
+| [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senologie-follow-up.md) | Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert. |
 | [BIH Senologie Geplante Systemtherapie](StructureDefinition-senologie-geplante-systemtherapie.md) | MedicationRequest für geplante Systemtherapie aus dotbase Questionnaire 'Geplante Systemtherapie' |
 | [BIH Senologie Gynäkologische Anamnese](StructureDefinition-senologie-gynaekologische-anamnese.md) | Observation für gynäkologische Anamnese (Menarche, Menopause, Schwangerschaften, HRT) aus dotbase Questionnaire 'Gynäkologische Anamnese' |
 | [BIH Senologie Ki-67 Proliferationsindex](StructureDefinition-senologie-ki67-proliferationsindex.md) | Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchung. Kein MII-Onko-Profil vorhanden — senologiespezifisch, orientiert am MII ER/PR-Muster (LOINC-Code + valueQuantity %). |
@@ -143,7 +143,6 @@ These define sets of codes used by systems conforming to this implementation gui
 | [VS Senologie Studienname](ValueSet-vs-senologie-studienname.md) | Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02). Enthält häufige Mammakarzinom-Studien. Die Liste ist erweiterbar (extensible Binding). |
 | [VS Senologie Systemtherapie Medikation](ValueSet-vs-senologie-systemtherapie-medikation.md) | Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01) |
 | [VS Senologie Tumormanifestation](ValueSet-vs-senologie-tumormanifestation.md) | Tumormanifestation bei Diagnosestellung (Mehrfachauswahl möglich) |
-| [VS Senologie Vitalstatus](ValueSet-vs-senologie-vitalstatus.md) | Vitalstatus der Patientin zum Meldezeitpunkt — OncoBox M04 |
 | [VS Senologie Zweittumor](ValueSet-vs-senologie-zweittumor.md) | Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08 |
 | [ValueSet Diagnosesicherung](ValueSet-vs-senologie-diagnosesicherung.md) | Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen |
 | [ValueSet Senologie ICD-10-GM](ValueSet-vs-senologie-icd10.md) | ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotbase Codebook |
@@ -156,7 +155,7 @@ These define new code systems used by systems conforming to this implementation 
 | :--- | :--- |
 | [CS OncoBox Primaerfallart](CodeSystem-cs-oncobox-primaerfallart.md) | Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01) |
 | [CS Senologie Diagnose Lokal](CodeSystem-cs-senologie-diagnose-lokal.md) | Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase) |
-| [CS Senologie Follow-Up](CodeSystem-cs-senologie-follow-up.md) | Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Komponentenbezeichner und Wertcodes für Felder ohne SNOMED-CT-Äquivalent. |
+| [CS Senologie Follow-Up](CodeSystem-cs-senologie-follow-up.md) | Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes. |
 | [CS Senologie Genexpressionstest](CodeSystem-cs-senologie-genexpressionstest.md) | Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom |
 | [CS Senologie Metastasierung](CodeSystem-cs-senologie-metastasierung.md) | Metastasierungsstatus für Senologie |
 | [CS Senologie Studienname](CodeSystem-cs-senologie-studienname.md) | Auswahlliste klinischer Studien am Brustzentrum für die OncoBox 2.0 Meldung (K02). Enthält häufige interventionelle und nicht-interventionelle Mammakarzinom-Studien. |
@@ -341,7 +340,7 @@ These are example instances that show what data produced and consumed by systems
 | [Fall 1: Skelettszintigraphie (Staging)](DiagnosticReport-Fall1-Bildgebung-Skelettszintigraphie.md) | Skelettszintigraphie im Rahmen des Stagings — kein Hinweis auf ossäre Metastasen |
 | [Fall 1: Stanzbiopsie-Präparat links OAQ](Specimen-Fall1-Pathologie-Praeparat.md) | Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust |
 | [Fall 1: Tumorboard-Empfehlung](CarePlan-Fall1-Tumorboard.md) | Empfehlung: BET + SLNB, adjuvante RT, endokrine Therapie, keine Chemotherapie |
-| [Fall 1: Verlaufskontrolle 6 Monate postoperativ](Observation-Fall1-Verlauf-6Monate.md) | Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, Patientin lebend, kein Zweittumor. |
+| [Fall 1: Verlaufskontrolle 6 Monate postoperativ](Observation-Fall1-Verlauf-6Monate.md) | Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor. |
 | [Fall 1: Vitalstatus — lebend](Observation-Fall1-Vitalstatus-Lebend.md) | Vitalstatus-Observation gemäß MII Person-Modul: Patientin Erika Neumann lebt zum Zeitpunkt der 6-Monats-Nachsorge. |
 | [Fall 2: Adjuvante Bestrahlung Thoraxwand + supraklavikulär 50 Gy](Procedure-Fall2-Strahlentherapie.md) | Adjuvante Bestrahlung der Thoraxwand und supraklavikulärer Lymphabflusswege |
 | [Fall 2: Adjuvante Pembrolizumab Maintenance](Procedure-Fall2-Systemtherapie-Adjuvant.md) | Adjuvante Pembrolizumab Maintenance nach Operation |
@@ -376,7 +375,7 @@ These are example instances that show what data produced and consumed by systems
 | [Fall 2: Todesursache — sekundäre Leberkarzinose](Condition-Fall2-Todesursache.md) | Todesursache gemäß MII Person-Modul: sekundäre bösartige Neubildung der Leber (ICD-10-GM C78.7) bei metastasiertem triple-negativen Mammakarzinom. |
 | [Fall 2: Triple-negatives Mammakarzinom rechts, cT3 cN2a cM1(OSS)](Condition-Fall2-Diagnose-Mammakarzinom.md) | Triple-negatives invasiv-duktales Mammakarzinom rechts, zentraler Drüsenkörper, G3, UICC IV |
 | [Fall 2: Tumorboard bei Progression](CarePlan-Fall2-Tumorboard-Progression.md) | Empfehlung: Palliativkonzept bei hepatischer Metastasierung |
-| [Fall 2: Verlaufskontrolle bei Progression](Observation-Fall2-Verlauf-Progression.md) | Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor. |
+| [Fall 2: Verlaufskontrolle bei Progression](Observation-Fall2-Verlauf-Progression.md) | Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, kein Zweittumor. |
 | [Fall 2: Verlaufsmeldung bei Tod](Observation-Fall2-Verlauf-Tod.md) | Abschließende Verlaufsmeldung für Lena Hoffmann: Patientin verstorben an hepatischen Metastasen. Passive Nachsorge (Totenschein/Register). |
 | [Fall 2: Vitalstatus — verstorben](Observation-Fall2-Vitalstatus-Verstorben.md) | Vitalstatus-Observation gemäß MII Person-Modul: Patientin Lena Hoffmann ist am Tumorleiden verstorben. |
 | [Fall 3: Adjuvante Bestrahlung Thoraxwand 50 Gy](Procedure-Fall3-Strahlentherapie.md) | Adjuvante Bestrahlung der Thoraxwand rechts nach Mastektomie |
@@ -488,5 +487,5 @@ These are example instances that show what data produced and consumed by systems
 | [Fall 9: Postoperative Komplikation — Lymphödem Arm links, Clavien-Dindo II](Observation-Fall9-Komplikation-Lymphoedem.md) | Lymphödem Arm links nach Axilladissektion, Clavien-Dindo Grad II |
 | [Fall 9: Stanzbiopsie-Präparat links OAQ](Specimen-Fall9-Pathologie-Praeparat.md) | Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust |
 | [Fall 9: Tumorboard-Empfehlung](CarePlan-Fall9-Tumorboard.md) | Empfehlung: adjuvante Chemotherapie EC→Paclitaxel, BET + Axilladissektion, RT, endokrine Therapie |
-| [Fall 9: Verlaufskontrolle 12 Monate postoperativ](Observation-Fall9-Verlauf-12Monate.md) | Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor. |
+| [Fall 9: Verlaufskontrolle 12 Monate postoperativ](Observation-Fall9-Verlauf-12Monate.md) | Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, kein Zweittumor. |
 

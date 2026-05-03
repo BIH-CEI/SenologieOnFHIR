@@ -57,10 +57,13 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
     "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
   },
   {
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
-    "valueReference" : {
-      "reference" : "#postop-procedure-template"
-    }
+    "extension" : [{
+      "url" : "template",
+      "valueReference" : {
+        "reference" : "#postop-procedure-template"
+      }
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
   }],
   "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie",
   "version" : "0.1.0",
@@ -69,7 +72,7 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

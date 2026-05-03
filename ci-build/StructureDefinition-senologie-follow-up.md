@@ -12,7 +12,7 @@
 | Draft as of 2026-05-03 | *Computable Name*:Senologie_FollowUp |
 
  
-Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder. Wird sowohl fuer Gesamtbeurteilung nach definitiver Therapie (D27) als auch fuer Nachsorge-Follow-Up (M06) verwendet — Unterscheidung ueber effectiveDateTime. 
+Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert. 
 
 **Usages:**
 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
   "name" : "Senologie_FollowUp",
   "title" : "BIH Senologie Follow-Up (Verlaufsmeldung)",
   "status" : "draft",
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -50,7 +50,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder. Wird sowohl fuer Gesamtbeurteilung nach definitiver Therapie (D27) als auch fuer Nachsorge-Follow-Up (M06) verwendet — Unterscheidung ueber effectiveDateTime.",
+  "description" : "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert.",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
     "identity" : "oBDS",
@@ -140,6 +140,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
       "mustSupport" : true
     },
     {
+      "id" : "Observation.method",
+      "path" : "Observation.method",
+      "short" : "Art der Nachsorge (M03)",
+      "comment" : "Aktive Nachsorge = Patientin persoenlich untersucht. Passive Nachsorge = Information aus Akten/Registern.",
+      "mustSupport" : true,
+      "binding" : {
+        "strength" : "required",
+        "valueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-art"
+      }
+    },
+    {
       "id" : "Observation.component:Tumor_Verlauf",
       "path" : "Observation.component",
       "sliceName" : "Tumor_Verlauf",
@@ -158,85 +169,22 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
       "short" : "Fernmetastasen-Tumorstatus (M07)"
     },
     {
-      "id" : "Observation.component:nachsorgeArt",
-      "path" : "Observation.component",
-      "sliceName" : "nachsorgeArt",
-      "short" : "Art der Nachsorge (M03)",
-      "comment" : "Aktive Nachsorge = Patientin persönlich untersucht. Passive Nachsorge = Information aus Akten/Registern.",
-      "min" : 0,
-      "max" : "1",
-      "mustSupport" : true
-    },
-    {
-      "id" : "Observation.component:nachsorgeArt.code",
-      "path" : "Observation.component.code",
-      "patternCodeableConcept" : {
-        "coding" : [{
-          "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-          "code" : "nachsorge-art"
-        }]
-      }
-    },
-    {
-      "id" : "Observation.component:nachsorgeArt.value[x]",
-      "path" : "Observation.component.value[x]",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }],
-      "binding" : {
-        "strength" : "required",
-        "valueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-art"
-      }
-    },
-    {
-      "id" : "Observation.component:vitalstatus",
-      "path" : "Observation.component",
-      "sliceName" : "vitalstatus",
-      "short" : "Vitalstatus der Patientin (M04)",
-      "comment" : "Vitalstatus zum Meldezeitpunkt: lebend, verstorben oder unbekannt.",
-      "min" : 0,
-      "max" : "1",
-      "mustSupport" : true
-    },
-    {
-      "id" : "Observation.component:vitalstatus.code",
-      "path" : "Observation.component.code",
-      "patternCodeableConcept" : {
-        "coding" : [{
-          "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-          "code" : "vitalstatus"
-        }]
-      }
-    },
-    {
-      "id" : "Observation.component:vitalstatus.value[x]",
-      "path" : "Observation.component.value[x]",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }],
-      "binding" : {
-        "strength" : "required",
-        "valueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-vitalstatus"
-      }
-    },
-    {
       "id" : "Observation.component:zweittumor",
       "path" : "Observation.component",
       "sliceName" : "zweittumor",
       "short" : "Zweittumor diagnostiziert (M08)",
-      "comment" : "Wurde bei der Patientin ein zweiter Primärtumor (nicht Rezidiv/Metastase) diagnostiziert?",
+      "comment" : "Wurde bei der Patientin ein zweiter Primaertumor (nicht Rezidiv/Metastase) diagnostiziert? Details (ICD, Datum) werden als eigene Condition dokumentiert.",
       "min" : 0,
       "max" : "1",
       "mustSupport" : true
     },
     {
-      "id" : "Observation.component:zweittumor.code",
-      "path" : "Observation.component.code",
-      "patternCodeableConcept" : {
-        "coding" : [{
-          "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-          "code" : "zweittumor"
-        }]
+      "id" : "Observation.component:zweittumor.code.coding",
+      "path" : "Observation.component.code.coding",
+      "min" : 1,
+      "patternCoding" : {
+        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
+        "code" : "zweittumor"
       }
     },
     {
@@ -249,60 +197,6 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
         "strength" : "required",
         "valueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-zweittumor"
       }
-    },
-    {
-      "id" : "Observation.component:zweittumorIcd",
-      "path" : "Observation.component",
-      "sliceName" : "zweittumorIcd",
-      "short" : "ICD-10-GM Diagnose des Zweittumors (M09)",
-      "comment" : "ICD-10-GM-Code der Zweittumor-Diagnose, nur wenn Zweittumor = ja.",
-      "min" : 0,
-      "max" : "1",
-      "mustSupport" : true
-    },
-    {
-      "id" : "Observation.component:zweittumorIcd.code",
-      "path" : "Observation.component.code",
-      "patternCodeableConcept" : {
-        "coding" : [{
-          "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-          "code" : "zweittumor-icd"
-        }]
-      }
-    },
-    {
-      "id" : "Observation.component:zweittumorIcd.value[x]",
-      "path" : "Observation.component.value[x]",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "Observation.component:zweittumorDatum",
-      "path" : "Observation.component",
-      "sliceName" : "zweittumorDatum",
-      "short" : "Diagnosedatum des Zweittumors (M10)",
-      "comment" : "Datum der Erstdiagnose des Zweittumors, nur wenn Zweittumor = ja.",
-      "min" : 0,
-      "max" : "1",
-      "mustSupport" : true
-    },
-    {
-      "id" : "Observation.component:zweittumorDatum.code",
-      "path" : "Observation.component.code",
-      "patternCodeableConcept" : {
-        "coding" : [{
-          "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-          "code" : "zweittumor-datum"
-        }]
-      }
-    },
-    {
-      "id" : "Observation.component:zweittumorDatum.value[x]",
-      "path" : "Observation.component.value[x]",
-      "type" : [{
-        "code" : "dateTime"
-      }]
     }]
   }
 }

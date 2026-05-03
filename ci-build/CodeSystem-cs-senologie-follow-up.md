@@ -12,7 +12,7 @@
 | Draft as of 2026-05-03 | *Computable Name*:CS_Senologie_FollowUp |
 
  
-Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Komponentenbezeichner und Wertcodes für Felder ohne SNOMED-CT-Äquivalent. 
+Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes. 
 
  This Code system is referenced in the content logical definition of the following value sets: 
 
@@ -31,7 +31,7 @@ Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Kompon
   "name" : "CS_Senologie_FollowUp",
   "title" : "CS Senologie Follow-Up",
   "status" : "draft",
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -40,39 +40,19 @@ Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Kompon
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Komponentenbezeichner und Wertcodes für Felder ohne SNOMED-CT-Äquivalent.",
+  "description" : "Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes.",
   "caseSensitive" : true,
   "content" : "complete",
-  "count" : 7,
+  "count" : 3,
   "concept" : [{
-    "code" : "nachsorge-art",
-    "display" : "Art der Nachsorge",
-    "definition" : "Komponente: Aktive oder passive Nachsorge (M03)"
-  },
-  {
-    "code" : "vitalstatus",
-    "display" : "Vitalstatus",
-    "definition" : "Komponente: Vitalstatus der Patientin zum Meldezeitpunkt (M04)"
-  },
-  {
     "code" : "zweittumor",
     "display" : "Zweittumor",
     "definition" : "Komponente: Zweittumor ja/nein/unbekannt (M08)"
   },
   {
-    "code" : "zweittumor-icd",
-    "display" : "Zweittumor ICD-10-GM Diagnose",
-    "definition" : "Komponente: ICD-10-GM-Code des Zweittumors (M09)"
-  },
-  {
-    "code" : "zweittumor-datum",
-    "display" : "Zweittumor Diagnosedatum",
-    "definition" : "Komponente: Diagnosedatum des Zweittumors (M10)"
-  },
-  {
     "code" : "aktiv",
     "display" : "Aktive Nachsorge",
-    "definition" : "Patientin wurde persönlich untersucht oder befragt"
+    "definition" : "Patientin wurde persoenlich untersucht oder befragt"
   },
   {
     "code" : "passiv",

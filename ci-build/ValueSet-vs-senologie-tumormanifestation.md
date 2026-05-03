@@ -50,7 +50,7 @@ Tumormanifestation bei Diagnosestellung (Mehrfachauswahl möglich)
   "name" : "VS_Senologie_Tumormanifestation",
   "title" : "VS Senologie Tumormanifestation",
   "status" : "draft",
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

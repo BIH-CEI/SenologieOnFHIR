@@ -51,7 +51,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-strahlenth
   "name" : "Senologie_Strahlentherapie",
   "title" : "BIH Senologie Strahlentherapie",
   "status" : "draft",
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

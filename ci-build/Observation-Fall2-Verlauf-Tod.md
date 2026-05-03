@@ -22,15 +22,13 @@ Profile: [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senolog
 
 **value**: Progression
 
+**method**: Passive Nachsorge
+
 > **component****code**: Status of residual neoplasm (observable entity)**value**: kein Tumor nachweisbar
 
 > **component****code**: Presence of metastatic neoplasm in regional lymph node (observable entity)**value**: kein Lymphknotenbefall nachweisbar
 
 > **component****code**: Status of distant metastasis (observable entity)**value**: Progression
-
-> **component****code**: Art der Nachsorge**value**: Passive Nachsorge
-
-> **component****code**: Vitalstatus**value**: Dead (finding)
 
 > **component****code**: Zweittumor**value**: No (qualifier value)
 
@@ -68,6 +66,13 @@ Profile: [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senolog
       "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung",
       "code" : "P",
       "display" : "Progression"
+    }]
+  },
+  "method" : {
+    "coding" : [{
+      "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
+      "code" : "passiv",
+      "display" : "Passive Nachsorge"
     }]
   },
   "component" : [{
@@ -115,38 +120,6 @@ Profile: [BIH Senologie Follow-Up (Verlaufsmeldung)](StructureDefinition-senolog
         "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-fernmetastasen",
         "code" : "P",
         "display" : "Progression"
-      }]
-    }
-  },
-  {
-    "code" : {
-      "coding" : [{
-        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-        "code" : "nachsorge-art",
-        "display" : "Art der Nachsorge"
-      }]
-    },
-    "valueCodeableConcept" : {
-      "coding" : [{
-        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-        "code" : "passiv",
-        "display" : "Passive Nachsorge"
-      }]
-    }
-  },
-  {
-    "code" : {
-      "coding" : [{
-        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up",
-        "code" : "vitalstatus",
-        "display" : "Vitalstatus"
-      }]
-    },
-    "valueCodeableConcept" : {
-      "coding" : [{
-        "system" : "http://snomed.info/sct",
-        "code" : "419099009",
-        "display" : "Dead (finding)"
       }]
     }
   },

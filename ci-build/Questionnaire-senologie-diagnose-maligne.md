@@ -160,10 +160,13 @@
     "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
   },
   {
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract",
-    "valueReference" : {
-      "reference" : "#condition-template"
-    }
+    "extension" : [{
+      "url" : "template",
+      "valueReference" : {
+        "reference" : "#condition-template"
+      }
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
   }],
   "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose-maligne",
   "version" : "0.1.0",
@@ -171,7 +174,7 @@
   "title" : "Fragebogen: Senologie Diagnose",
   "status" : "draft",
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T20:30:38+00:00",
+  "date" : "2026-05-03T21:28:00+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

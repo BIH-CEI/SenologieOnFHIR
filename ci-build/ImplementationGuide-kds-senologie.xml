@@ -11,7 +11,7 @@
   <name value="SenologieKDS"/>
   <title value="Kerndatensatz Senologie"/>
   <status value="draft"/>
-  <date value="2026-05-03T20:30:38+00:00"/>
+  <date value="2026-05-03T21:28:00+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -867,7 +867,7 @@
         <reference value="StructureDefinition/senologie-follow-up"/>
       </reference>
       <name value="BIH Senologie Follow-Up (Verlaufsmeldung)"/>
-      <description value="Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art (M03), Vitalstatus (M04), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor (M08-M10). Erweitert MII_PR_Onko_Verlauf um OncoBox-2.0-spezifische Felder. Wird sowohl fuer Gesamtbeurteilung nach definitiver Therapie (D27) als auch fuer Nachsorge-Follow-Up (M06) verwendet — Unterscheidung ueber effectiveDateTime."/>
+      <description value="Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert."/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -1197,7 +1197,7 @@
         <reference value="CodeSystem/cs-senologie-follow-up"/>
       </reference>
       <name value="CS Senologie Follow-Up"/>
-      <description value="Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Komponentenbezeichner und Wertcodes für Felder ohne SNOMED-CT-Äquivalent."/>
+      <description value="Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes."/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
@@ -2285,7 +2285,7 @@
         <reference value="Observation/Fall1-Verlauf-6Monate"/>
       </reference>
       <name value="Fall 1: Verlaufskontrolle 6 Monate postoperativ"/>
-      <description value="Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, Patientin lebend, kein Zweittumor."/>
+      <description value="Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor."/>
       <exampleCanonical value="https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"/>
     </resource>
     <resource>
@@ -2670,7 +2670,7 @@
         <reference value="Observation/Fall2-Verlauf-Progression"/>
       </reference>
       <name value="Fall 2: Verlaufskontrolle bei Progression"/>
-      <description value="Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor."/>
+      <description value="Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, kein Zweittumor."/>
       <exampleCanonical value="https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"/>
     </resource>
     <resource>
@@ -3902,7 +3902,7 @@
         <reference value="Observation/Fall9-Verlauf-12Monate"/>
       </reference>
       <name value="Fall 9: Verlaufskontrolle 12 Monate postoperativ"/>
-      <description value="Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor."/>
+      <description value="Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, kein Zweittumor."/>
       <exampleCanonical value="https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"/>
     </resource>
     <resource>
@@ -4518,17 +4518,6 @@
       </reference>
       <name value="VS Senologie Tumormanifestation"/>
       <description value="Tumormanifestation bei Diagnosestellung (Mehrfachauswahl möglich)"/>
-      <exampleBoolean value="false"/>
-    </resource>
-    <resource>
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/resource-information">
-        <valueString value="ValueSet"/>
-      </extension>
-      <reference>
-        <reference value="ValueSet/vs-senologie-vitalstatus"/>
-      </reference>
-      <name value="VS Senologie Vitalstatus"/>
-      <description value="Vitalstatus der Patientin zum Meldezeitpunkt — OncoBox M04"/>
       <exampleBoolean value="false"/>
     </resource>
     <resource>
