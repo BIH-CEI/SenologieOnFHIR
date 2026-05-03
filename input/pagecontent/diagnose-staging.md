@@ -1,5 +1,7 @@
 # Diagnose & Staging
 
+<img src="senologie-diagnose.png" alt="UML Diagnose & Staging" style="max-width:100%"/>
+
 ## Spektrum der senologischen Diagnosen
 
 Ein Brustzentrum versorgt nicht ausschließlich Krebspatientinnen. Das Diagnose-Spektrum umfasst:

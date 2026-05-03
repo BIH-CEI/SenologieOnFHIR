@@ -1,5 +1,7 @@
 # Nachsorge & Verlauf
 
+<img src="senologie-nachsorge.png" alt="UML Nachsorge & Verlauf" style="max-width:100%"/>
+
 ## Klinische Nachsorge vs. Verlaufsmeldung
 
 In der Senologie treffen zwei unterschiedliche Perspektiven auf den Verlauf zusammen:

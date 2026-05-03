@@ -1,5 +1,7 @@
 # Systemtherapie & Medikation
 
+<img src="senologie-systemtherapie.png" alt="UML Systemtherapie" style="max-width:100%"/>
+
 ## Überblick
 
 Die systemische Therapie umfasst alle medikamentösen Behandlungen des Mammakarzinoms. Die Auswahl richtet sich nach dem molekularen Subtyp (HR+/HER2-, HER2+, Triple-Negative), dem Stadium und der klinischen Situation (neoadjuvant, adjuvant, palliativ). Die Komplexität liegt darin, dass mehrere Therapiearten kombiniert werden, sich über Monate erstrecken und ihre Dokumentation sowohl die Empfehlung als auch die tatsächliche Durchführung abbilden muss.

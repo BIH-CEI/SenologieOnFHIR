@@ -1,5 +1,7 @@
 # Bildgebung & Pathologie
 
+<img src="senologie-bildgebung.png" alt="UML Bildgebung & Pathologie" style="max-width:100%"/>
+
 ## Strukturierte Befunde in der Senologie
 
 Bildgebung und Pathologie liefern die diagnostischen Grundlagen für Staging und Therapieentscheidung. Obwohl beide Disziplinen mit etablierten Klassifikationssystemen arbeiten (BI-RADS, TNM, Allred-Score), kommen ihre Ergebnisse aus spezialisierten Subsystemen, die Befunde bislang selten in einem einheitlich strukturierten, maschinenlesbaren Format bereitstellen. Perspektivisch können technische Standards wie der HL7 Europe Imaging Study Report oder die MII Pathologie-Spezifikation hier eine Brücke schaffen — vorausgesetzt, die fachlichen Vorgaben zu Inhalten und Terminologien werden durch die Fachgesellschaften getragen.

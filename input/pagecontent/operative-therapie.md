@@ -1,5 +1,7 @@
 # Operative Therapie
 
+<img src="senologie-operation.png" alt="UML Operative Therapie" style="max-width:100%"/>
+
 ## Stellenwert der operativen Therapie
 
 Die Operation ist bei den meisten Mammakarzinomen zentraler Bestandteil der Behandlung — entweder als erster therapeutischer Schritt oder nach neoadjuvanter Systemtherapie, und wird ihrerseits durch adjuvante Therapien (Strahlentherapie, Systemtherapie) flankiert. Das Spektrum umfasst brusterhaltende Eingriffe, Mastektomien, axilläre Eingriffe zur Lymphknoten-Diagnostik sowie rekonstruktive Operationen. Darüber hinaus werden an Brustzentren auch risikoreduzierende Eingriffe (z.B. bei BRCA-Mutationsträgerinnen) und Revisionsoperationen (z.B. bei Implantat-Komplikationen) durchgeführt.
