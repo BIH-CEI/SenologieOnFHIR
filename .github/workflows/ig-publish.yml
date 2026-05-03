@@ -105,23 +105,16 @@ jobs:
           bundle-file: validation.json
           include: errors
           filters: |
-            # Profile without snapshot (validator needs -snapshot flag)
-            ||Validation_VAL_Profile_NoSnapshot||
+            # Profile without snapshot (validator cannot validate without snapshot)
+            ||*has no snapshot*|
             # Wrong Display Name (case sensitivity, TX version mismatch)
-            |invalid||Wrong Display Name*|
-            # Unknown codes (TX server version doesn't have code)
-            |code-invalid||Unknown code*|
+            ||*Wrong Display Name*|
+            # Unknown codes (TX server LOINC/SNOMED version)
+            ||*Unknown code*|
             # OPS version undefined (MII Onko upstream)
-            ||version 'undefined' in the ValueSet*|
-            # SDC Extensions not recognized
-            ||Validation_VAL_Profile_NoSnapshot|Questionnaire.extension*
-            # ConceptMap source/target must be ValueSet
-            |invalid|CONCEPTMAP_VS_NOT_A_VS||
-            # StructureMap errors (IG Publisher limitation)
-            |SM_TARGET_PATH_INVALID|||
-            |SM_SOURCE_PATH_INVALID|||
-            |SM_RULEGROUP_NOT_FOUND|||
-            |SM_TARGET_CONTEXT_UNKNOWN|||
+            ||*version 'undefined' in the ValueSet*|
+            # ConceptMap source must be ValueSet
+            ||*Reference must be to a ValueSet*|
 
       - name: Upload validation artifacts
         if: always()
