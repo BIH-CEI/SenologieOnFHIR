@@ -11,7 +11,7 @@ Usage: #example
 
 // Art der Bildgebung: Mammographie
 * code.coding[mammography].system = "http://loinc.org"
-* code.coding[mammography].code = #18781-5
+* code.coding[mammography].code = #24606-6
 * code.coding[mammography].display = "Mammography of bilateral breasts"
 * code.text = "Mammographie bilateral"
 

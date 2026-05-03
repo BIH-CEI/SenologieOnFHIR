@@ -27,13 +27,13 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
     mri 0..1 and
     tomosynthesis 0..1
 * code.coding[mammography] ^patternCoding.system = "http://loinc.org"
-* code.coding[mammography] ^patternCoding.code = #18781-5
-* code.coding[mammography] ^short = "Mammography of bilateral breasts"
+* code.coding[mammography] ^patternCoding.code = #24606-6
+* code.coding[mammography] ^short = "MG Breast Screening"
 * code.coding[ultrasound] ^patternCoding.system = "http://loinc.org"
-* code.coding[ultrasound] ^patternCoding.code = #18740-1
-* code.coding[ultrasound] ^short = "Ultrasound of bilateral breasts"
+* code.coding[ultrasound] ^patternCoding.code = #24601-7
+* code.coding[ultrasound] ^short = "US Breast"
 * code.coding[mri] ^patternCoding.system = "http://loinc.org"
-* code.coding[mri] ^patternCoding.code = #36581-3
+* code.coding[mri] ^patternCoding.code = #30794-2
 * code.coding[mri] ^short = "MRI of breast"
 * code.coding[tomosynthesis] ^patternCoding.system = "http://radlex.org"
 * code.coding[tomosynthesis] ^patternCoding.code = #RID40755

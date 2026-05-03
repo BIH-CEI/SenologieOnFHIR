@@ -1,0 +1,70 @@
+@startuml senologie-systemtherapie
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<therapy>> #E8EAF6
+  BorderColor<<therapy>> #283593
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+  BackgroundColor<<tumorboard>> #EDE7F6
+  BorderColor<<tumorboard>> #4527A0
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+}
+
+title **Systemtherapie & Medikation**
+
+class "**CarePlan**\n//Tumorboard-Empfehlung//" <<tumorboard>> {
+  activity[chemo] : empfohlen / nicht empfohlen
+  activity[endocrine] : empfohlen
+  activity[targeted] : empfohlen
+  activity[immuno] : empfohlen
+}
+
+class "**MedicationRequest**\n//Geplante Systemtherapie//" <<therapy>> {
+  intent : plan
+  medication : ATC-Code
+  courseOfTherapy : Protokoll
+  extension : Therapielinie (1, 2, 3...)
+  reasonReference → Condition
+}
+
+class "**Procedure**\n//Systemtherapie (Durchführung)//" <<therapy>> {
+  code : Systemtherapie
+  category : CH / HO / IM / ZS (MII Onko)
+  performedPeriod : Beginn – Ende
+  extension : Intention (neo/adjuvant/palliativ)
+  extension : FirstLine (bei Metastasierung)
+  usedCode : Protokoll (MII Onko)
+}
+
+class "**MedicationStatement**\n//Medikation//" <<therapy>> {
+  medication : ATC-Code
+  effective : Zeitraum
+  dosage
+  partOf → Procedure
+}
+
+class "**Observation**\n//Nebenwirkung (CTCAE)//" <<observation>> {
+  code : Nebenwirkungsart
+  value : Grad 1–5 (NCI CTCAE)
+}
+
+class "**Condition**\n//Diagnose//" <<condition>> {
+  //Bezugsdiagnose//
+}
+
+' === Beziehungen ===
+"**MedicationRequest**\n//Geplante Systemtherapie//" -up-> "**CarePlan**\n//Tumorboard-Empfehlung//" : basedOn
+"**Procedure**\n//Systemtherapie (Durchführung)//" --> "**Condition**\n//Diagnose//" : reasonReference
+"**Procedure**\n//Systemtherapie (Durchführung)//" -up-> "**MedicationRequest**\n//Geplante Systemtherapie//" : basedOn
+"**MedicationStatement**\n//Medikation//" -up-> "**Procedure**\n//Systemtherapie (Durchführung)//" : partOf
+"**Observation**\n//Nebenwirkung (CTCAE)//" --> "**Procedure**\n//Systemtherapie (Durchführung)//" : ..caused by..
+
+@enduml

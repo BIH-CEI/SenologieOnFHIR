@@ -1,0 +1,81 @@
+@startuml senologie-operation
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<procedure>> #E8F5E9
+  BorderColor<<procedure>> #2E7D32
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+  BackgroundColor<<device>> #E0F7FA
+  BorderColor<<device>> #00838F
+  BackgroundColor<<tumorboard>> #EDE7F6
+  BorderColor<<tumorboard>> #4527A0
+}
+
+title **Operative Therapie**
+
+class "**CarePlan**\n//Tumorboard-Empfehlung//" <<tumorboard>> {
+  activity : OP empfohlen
+  intent : plan
+}
+
+class "**ServiceRequest**\n//OP-Planung//" <<procedure>> {
+  code : geplante OP-Art
+  bodySite : Seite
+  reasonCode : Intention
+}
+
+class "**Procedure**\n//Hauptoperation//" <<procedure>> {
+  code : OPS (+ SNOMED optional)
+  bodySite : Seite
+  performedDateTime
+  outcome : R0 / R1 / R2
+  extension : Intention (kurativ/palliativ)
+}
+
+class "**Procedure**\n//SLNB (Unterprozedur)//" <<procedure>> {
+  code : OPS 5-401.11
+  partOf → Hauptoperation
+  outcome : pN0(sn) / pN+
+}
+
+class "**Procedure**\n//Nachresektion//" <<procedure>> {
+  code : OPS
+  reasonReference → Hauptoperation
+  outcome : R0
+}
+
+class "**Observation**\n//Komplikation//" <<observation>> {
+  code : ICD-10-GM
+  value : Clavien-Dindo I–V
+  focus → Procedure
+}
+
+class "**Device**\n//Implantat//" <<device>> {
+  type : Silikon / Expander
+  manufacturer, UDI
+  //→ Implantatregister//
+}
+
+class "**Condition**\n//Diagnose//" <<condition>> {
+  //Bezugsdiagnose//
+}
+
+' === Beziehungen ===
+"**ServiceRequest**\n//OP-Planung//" -up-> "**CarePlan**\n//Tumorboard-Empfehlung//" : basedOn
+"**Procedure**\n//Hauptoperation//" --> "**Condition**\n//Diagnose//" : reasonReference
+"**Procedure**\n//Hauptoperation//" -up-> "**ServiceRequest**\n//OP-Planung//" : basedOn
+"**Procedure**\n//SLNB (Unterprozedur)//" -up-> "**Procedure**\n//Hauptoperation//" : partOf
+"**Procedure**\n//Nachresektion//" --> "**Procedure**\n//Hauptoperation//" : reasonReference
+"**Observation**\n//Komplikation//" --> "**Procedure**\n//Hauptoperation//" : focus
+"**Device**\n//Implantat//" -up-> "**Procedure**\n//Hauptoperation//" : ..eingesetzt bei..
+
+@enduml

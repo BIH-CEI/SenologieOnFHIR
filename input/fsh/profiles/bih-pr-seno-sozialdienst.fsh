@@ -12,7 +12,7 @@ Description: "Procedure für Sozialdienst-Kontakt (OncoBox 2.0 L02, DKG OF-14). 
 * status ^comment = "completed = Kontakt stattgefunden (L02=ja), not-done = nicht stattgefunden (L02=nein)"
 
 * code MS
-* code = $SCT#410321003 "Social services intervention (procedure)"
+* code = $SCT#310134006 "Social services"
 * code ^short = "Sozialdienst-Beratung"
 
 * subject MS

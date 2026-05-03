@@ -54,7 +54,7 @@ Usage: #example
 * category = $SCT#234262008 "Excision of axillary lymph node"
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2024"
+* code.coding[=].version = "2025"
 * code.coding[=].code = #5-401.11
 * code.coding[=].display = "Exzision einzelner Lymphknoten und Lymphgefäße: Axillär: Mit Radionuklidmarkierung (Sentinel-Lymphonodektomie)"
 * code.text = "Sentinel-Lymphknoten-Biopsie"

@@ -1,0 +1,82 @@
+@startuml senologie-anamnese
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+  BackgroundColor<<family>> #E8F5E9
+  BorderColor<<family>> #2E7D32
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+  BackgroundColor<<patient>> #E3F2FD
+  BorderColor<<patient>> #1565C0
+}
+
+title **Vorgeschichte & Anamnese**
+
+class "**Patient**" <<patient>> {
+  name, birthDate, gender
+  address
+}
+
+class "**Observation**\n//Gynäkologische Anamnese//" <<observation>> {
+  component : Menarche-Alter
+  component : Menopause-Alter
+  component : Schwangerschaften
+  component : Hormonersatztherapie
+  component : Hormonelle Verhütung
+}
+
+class "**Observation**\n//Raucherstatus//" <<observation>> {
+  code : LOINC 72166-2
+  value : Never / Former / Current
+  //ISiK-kompatibel//
+}
+
+class "**Observation**\n//Klinische Untersuchung//" <<observation>> {
+  component : Palpationsbefund
+  component : Hautveränderungen
+  component : Mamillenbefund
+  component : Lymphknotenstatus
+}
+
+class "**Observation**\n//ECOG Leistungsstatus//" <<observation>> {
+  code : LOINC 89247-1
+  value : 0–4
+  //MII Onko Profil//
+}
+
+class "**FamilyMemberHistory**\n//Familienanamnese//" <<family>> {
+  relationship : Mutter / Schwester
+  condition : Mammakarzinom
+  condition.onsetAge
+}
+
+class "**Condition**\n//Komorbiditäten//" <<condition>> {
+  code : ICD-10-GM
+  //Herz-Kreislauf, Diabetes,//
+  //Lunge, Leber, etc.//
+}
+
+class "**Observation**\n//Checkliste erbliche Belastung//" <<observation>> {
+  value : durchgeführt (ja/nein)
+  component : Score (0–n)
+  focus → FamilyMemberHistory
+}
+
+' === Beziehungen ===
+"**Observation**\n//Gynäkologische Anamnese//" -up-> "**Patient**" : subject
+"**Observation**\n//Raucherstatus//" -up-> "**Patient**" : subject
+"**Observation**\n//Klinische Untersuchung//" -up-> "**Patient**" : subject
+"**Observation**\n//ECOG Leistungsstatus//" -up-> "**Patient**" : subject
+"**FamilyMemberHistory**\n//Familienanamnese//" -up-> "**Patient**" : patient
+"**Condition**\n//Komorbiditäten//" -up-> "**Patient**" : subject
+"**Observation**\n//Checkliste erbliche Belastung//" --> "**FamilyMemberHistory**\n//Familienanamnese//" : focus
+
+@enduml

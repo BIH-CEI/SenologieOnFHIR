@@ -60,8 +60,8 @@ Usage: #definition
 * item[=].item[=].text = "Screeningstatus"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#171176006 "Breast cancer screening"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#2471000175109 "Interval cancer detected"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#268547008 "Screening for malignant neoplasm of breast"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#444589003 "Malignant neoplasm detection during interval between recommended screening examinations"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#129434009 "Self-examination of breast"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#261087003 "Incidental"
 
@@ -89,7 +89,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].answerOption[+].valueCoding = $SCT#309606002 "Before menopause"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#307429007 "Perimenopausal"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#161541000119104 "Perimenopausal state"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#76498008 "Postmenopausal state"
 
 // Gravida
@@ -97,7 +97,7 @@ Usage: #definition
 * item[=].item[=].text = "Gravida (Anzahl Schwangerschaften)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#11996-6 "Pregnancies"
+* item[=].item[=].code[+] = $LOINC#11996-6 "[#] Pregnancies"
 
 // Para
 * item[=].item[+].linkId = "para"

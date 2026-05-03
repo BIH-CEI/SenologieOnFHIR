@@ -1,0 +1,82 @@
+@startuml senologie-bildgebung
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<imaging>> #E3F2FD
+  BorderColor<<imaging>> #1565C0
+  BackgroundColor<<pathology>> #FCE4EC
+  BorderColor<<pathology>> #C62828
+  BackgroundColor<<specimen>> #FFF8E1
+  BorderColor<<specimen>> #F9A825
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+  BackgroundColor<<body>> #F3E5F5
+  BorderColor<<body>> #6A1B9A
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+}
+
+title **Bildgebung & Pathologie**
+
+class "**Condition**\n//Diagnose//" <<condition>> {
+  //Zentrale Referenz//
+}
+
+class "**BodyStructure**\n//Tumorlokalisation//" <<body>> {
+  location : Brust
+  qualifier : Seite, Quadrant
+}
+
+class "**DiagnosticReport**\n//Bildgebung//" <<imaging>> {
+  code : Modalität (LOINC)
+  conclusion
+  effectiveDateTime
+}
+
+class "**Observation**\n//BI-RADS//" <<imaging>> {
+  code : LOINC 72018-2
+  value : Kategorie 0–6
+  bodySite : Seite
+}
+
+class "**Observation**\n//ACR-Dichte//" <<imaging>> {
+  code : LOINC 89180-4
+  value : a / b / c / d
+}
+
+class "**DiagnosticReport**\n//Pathologie Befund//" <<pathology>> {
+  code : LOINC 60568-3
+  category : SP
+  conclusion
+}
+
+class "**Specimen**\n//Präparat//" <<specimen>> {
+  type : Stanz / Vakuum / OP
+  collection.bodySite
+  collection.method
+  collection.collectedDateTime
+}
+
+class "**Observation**\n//Histologie//" <<observation>> {
+  Histologischer Typ (ICD-O-3)
+  Grading (G1–G3)
+  Resektionsrand (R0/R1/R2)
+}
+
+' === Beziehungen ===
+"**DiagnosticReport**\n//Bildgebung//" -down-> "**Observation**\n//BI-RADS//" : result
+"**DiagnosticReport**\n//Bildgebung//" -down-> "**Observation**\n//ACR-Dichte//" : result
+"**Observation**\n//BI-RADS//" --> "**BodyStructure**\n//Tumorlokalisation//" : focus
+"**DiagnosticReport**\n//Pathologie Befund//" --> "**Specimen**\n//Präparat//" : specimen
+"**DiagnosticReport**\n//Pathologie Befund//" -down-> "**Observation**\n//Histologie//" : result
+"**Specimen**\n//Präparat//" --> "**BodyStructure**\n//Tumorlokalisation//" : collection.bodySite
+"**DiagnosticReport**\n//Bildgebung//" -up-> "**Condition**\n//Diagnose//" : ..führt zu..
+"**DiagnosticReport**\n//Pathologie Befund//" -up-> "**Condition**\n//Diagnose//" : ..bestätigt..
+
+@enduml

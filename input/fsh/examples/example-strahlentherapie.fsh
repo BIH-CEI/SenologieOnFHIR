@@ -9,7 +9,7 @@ Usage: #example
 
 // Code (MII parent requires code.coding with OPS or SCT)
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2024"
+* code.coding[=].version = "2025"
 * code.coding[=].code = #8-522.d1
 * code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
 // code.text already set by profile to "Bestrahlung"

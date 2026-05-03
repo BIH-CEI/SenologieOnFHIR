@@ -43,7 +43,7 @@ Description: "Observation für gynäkologische Anamnese (Menarche, Menopause, Sc
 * component[menopause] ^comment = "Aus dotbase: prä-/postmenopausal, Alter bei Menopause"
 * component[menopause].value[x] only Quantity or CodeableConcept
 
-* component[schwangerschaften].code = $LOINC#11996-6 "Number of pregnancies"
+* component[schwangerschaften].code = $LOINC#11996-6 "[#] Pregnancies"
 * component[schwangerschaften] ^short = "Anzahl Schwangerschaften"
 * component[schwangerschaften] ^comment = "Aus dotbase: Gravida"
 * component[schwangerschaften].value[x] only Quantity

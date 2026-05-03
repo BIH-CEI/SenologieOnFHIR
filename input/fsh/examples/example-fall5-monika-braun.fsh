@@ -67,7 +67,7 @@ Usage: #example
 * category.coding = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
 
 * code.coding[mammography].system = "http://loinc.org"
-* code.coding[mammography].code = #18781-5
+* code.coding[mammography].code = #24606-6
 * code.coding[mammography].display = "Mammography of bilateral breasts"
 * code.text = "Mammographie bilateral"
 
@@ -114,7 +114,7 @@ Usage: #example
 * category.coding = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
 
 * code.coding[ultrasound].system = "http://loinc.org"
-* code.coding[ultrasound].code = #18740-1
+* code.coding[ultrasound].code = #24601-7
 * code.coding[ultrasound].display = "Ultrasound of bilateral breasts"
 * code.text = "Sonographie bilateral"
 
@@ -135,7 +135,7 @@ Usage: #example
 * category.coding = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
 
 * code.coding[mri].system = "http://loinc.org"
-* code.coding[mri].code = #36581-3
+* code.coding[mri].code = #30794-2
 * code.coding[mri].display = "MRI of breast"
 * code.text = "MRT Mamma"
 

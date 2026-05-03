@@ -122,7 +122,7 @@ Usage: #definition
 * item[=].type = #choice
 * item[=].required = false
 * item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.valueCodeableConcept"
-* item[=].answerOption[+].valueCoding = $SCT#129125009 "Procedure with device"
+* item[=].answerOption[+].valueCoding = $SCT#405815000 "Procedure device"
 * item[=].answerOption[+].valueCoding = $SCT#397956004 "Wire guided localization of breast lesion"
 * item[=].answerOption[+].valueCoding = $SCT#77343006 "Angiography"
 * item[=].answerOption[+].valueString = "Keine"

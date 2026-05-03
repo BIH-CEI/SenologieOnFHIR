@@ -50,9 +50,9 @@ Usage: #definition
 * item[=].item[=].text = "Bildgebungsart"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $LOINC#24606-6 "Mammographie"
-* item[=].item[=].answerOption[+].valueCoding = $LOINC#24604-1 "Sonographie"
-* item[=].item[=].answerOption[+].valueCoding = $LOINC#24589-4 "MRT"
+* item[=].item[=].answerOption[+].valueCoding = $LOINC#24606-6 "MG Breast Screening"
+* item[=].item[=].answerOption[+].valueCoding = $LOINC#24601-7 "US Breast"
+* item[=].item[=].answerOption[+].valueCoding = $LOINC#30794-2 "MR Breast"
 * item[=].item[=].answerOption[+].valueString = "Tomosynthese"
 
 // Seite
@@ -87,13 +87,13 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#241736003 "Breast imaging-reporting and data system"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397138000 "BI-RADS 0 – unvollständig"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397139008 "BI-RADS 1 – unauffällig"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397140005 "BI-RADS 2 – benigne"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397143007 "BI-RADS 3 – wahrscheinlich benigne"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397144001 "BI-RADS 4 – suspekt"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397145000 "BI-RADS 5 – hochgradig malignitätsverdächtig"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#397146004 "BI-RADS 6 – histologisch gesichert"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397138000 "Mammography assessment (Category 0) - Need additional imaging evaluation"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397140005 "Mammography assessment (Category 1) - Negative"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397141009 "Mammography assessment (Category 2) - Benign finding"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397143007 "Mammography assessment (Category 3) - Probably benign finding, short interval follow-up"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397144001 "Mammography assessment (Category 4) - Suspicious abnormality, biopsy should be considered"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#6111000179101 "Mammography assessment (Category 6) - known biopsy, proven malignancy"
 
 // ACR Brustdichte
 * item[=].item[+].linkId = "acr-brustdichte"

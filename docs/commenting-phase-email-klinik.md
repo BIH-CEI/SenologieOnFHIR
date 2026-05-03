@@ -93,6 +93,16 @@ Mit freundlichen Grüßen
 - Dr. med. Therese Pross — Charité Brustzentrum
 - Thomas Debertshäuser — Berlin Institute of Health at Charité (BIH)
 
+In Zusammenarbeit mit:
+
+- **Prof. Dr. med. Andreas Schneeweiss** — Vorsitzender, Deutsche Gesellschaft für Senologie (DGS)
+- **Prof. Dr. med. Wolfgang Janni** — Vertreter Arbeitsgemeinschaft Gynäkologische Onkologie, Deutsche Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)
+- **Prof. Dr. med. Markus Wallwiener** — Sprecher Kommission Digitale Medizin, DGGG / Stellvertretender Vorsitzender AGO
+- **Prof. Dr. med. Volkmar Müller** — Sprecher Kommission Mamma, Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)
+- **Prof. Dr. med. Achim Wöckel** — Leitlinienkoordination S3-Leitlinie Mammakarzinom
+- **PD Dr. rer. nat. Christoph Kowalski** — Versorgungsforschung, Deutsche Krebsgesellschaft (DKG)
+- **Prof. Dr. med. Dipl.-Ing. Sylvia Thun** — Berlin Institute of Health at Charité (BIH)
+
 ---
 
 *Kerndatensatz Senologie – FHIR Implementation Guide v0.9.0 (Draft)*

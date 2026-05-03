@@ -12,7 +12,7 @@ Usage: #example
 
 // Code (MII parent requires code.coding with OPS or SCT)
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2024"
+* code.coding[=].version = "2025"
 * code.coding[=].code = #8-54
 * code.coding[=].display = "Zytostatische Chemotherapie, Immuntherapie und antiretrovirale Therapie"
 // code.text already set by profile to "Systemtherapie"

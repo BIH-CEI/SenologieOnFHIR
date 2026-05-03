@@ -76,7 +76,7 @@ Usage: #definition
 * item[=].item[=].text = "Therapieart"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#385786002 "Chemotherapy"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#385786002 "Chemotherapy care"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#169413002 "Endocrine therapy"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#432105003 "Targeted therapy"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#76334006 "Immunotherapy"
@@ -86,9 +86,9 @@ Usage: #definition
 * item[=].item[=].text = "Intention"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neo-adjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliative"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neoadjuvant intent"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant - intent"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliative intent"
 
 // Protokoll/Schema
 * item[=].item[+].linkId = "protokoll"

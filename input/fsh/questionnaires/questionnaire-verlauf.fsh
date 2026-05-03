@@ -81,7 +81,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $SCT#365275006 "Finding of general well-being"
+* item[=].item[=].code[+] = $SCT#365275006 "General well-being finding"
 * item[=].item[=].answerOption[+].valueString = "Gut"
 * item[=].item[=].answerOption[+].valueString = "Eingeschraenkt"
 * item[=].item[=].answerOption[+].valueString = "Schlecht"
@@ -92,7 +92,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $SCT#290069002 "Finding of breast"
+* item[=].item[=].code[+] = $SCT#116339002 "Breast finding"
 * item[=].item[=].answerOption[+].valueString = "Unauffaellig"
 * item[=].item[=].answerOption[+].valueString = "Auffaellig"
 
@@ -112,7 +112,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $SCT#449620005 "Lymphedema"
+* item[=].item[=].code[+] = $SCT#449620005 "Lymphedema of upper limb"
 * item[=].item[=].answerOption[+].valueString = "Kein"
 * item[=].item[=].answerOption[+].valueString = "Grad I"
 * item[=].item[=].answerOption[+].valueString = "Grad II"
@@ -149,9 +149,9 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#103338009 "Complete remission"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#268910001 "Partial remission"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#58158008 "Stable disease"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#103338009 "In full remission"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#103337004 "In partial remission"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#58158008 "Stable"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#271299001 "Tumor progression"
 * item[=].item[=].answerOption[+].valueString = "Kein Anhalt fuer Tumor"
 
@@ -161,7 +161,7 @@ Usage: #definition
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $SCT#363346000 "Malignant neoplastic disease: local recurrence"
+* item[=].item[=].code[+] = $SCT#363346000 "Malignant neoplastic disease"
 
 // Datum Rezidiv (enableWhen Lokalrezidiv = true)
 * item[=].item[+].linkId = "tumorstatus-rezidiv-datum"
@@ -169,7 +169,7 @@ Usage: #definition
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $SCT#432213005 "Date of recurrence"
+* item[=].item[=].code[+] = $SCT#432213005 "Date of diagnosis"
 * item[=].item[=].enableWhen[+].question = "tumorstatus-lokalrezidiv"
 * item[=].item[=].enableWhen[=].operator = #=
 * item[=].item[=].enableWhen[=].answerBoolean = true

@@ -1,0 +1,52 @@
+@startuml senologie-nachsorge
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+  BackgroundColor<<procedure>> #E8F5E9
+  BorderColor<<procedure>> #2E7D32
+}
+
+title **Nachsorge & Verlauf**
+
+class "**Condition**\n//Diagnose//" <<condition>> {
+  clinicalStatus : active → remission → relapse
+}
+
+class "**Observation**\n//Verlauf (MII Onko)//" <<observation>> {
+  value : Gesamtbeurteilung (CR/PR/SD/PD)
+  component : Tumorstatus lokal
+  component : Tumorstatus LK
+  component : Tumorstatus FM
+  effectiveDateTime : Meldedatum
+}
+
+class "**Observation**\n//ECOG//" <<observation>> {
+  value : 0–4
+  effectiveDateTime
+}
+
+class "**Procedure**\n//Psychoonkologie-Kontakt//" <<procedure>> {
+  status : completed / not-done
+  performedDateTime
+}
+
+class "**Procedure**\n//Sozialdienst-Kontakt//" <<procedure>> {
+  status : completed / not-done
+  performedDateTime
+}
+
+' === Beziehungen ===
+"**Observation**\n//Verlauf (MII Onko)//" --> "**Condition**\n//Diagnose//" : focus
+"**Observation**\n//ECOG//" --> "**Condition**\n//Diagnose//" : ..im Kontext..
+
+@enduml

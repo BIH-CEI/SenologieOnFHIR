@@ -41,9 +41,9 @@ Usage: #definition
 * item[=].item[=].text = "Intention"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neoadjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliativ"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant - intent"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neoadjuvant intent"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliative intent"
 
 // Startdatum
 * item[=].item[+].linkId = "rt-startdatum"
@@ -80,8 +80,8 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueCoding = $SCT#76752008 "Breast structure"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#78904004 "Chest wall structure"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#68171009 "Axillary lymph node structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#16051009 "Infraclavicular lymph node structure"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76838003 "Supraclavicular lymph node structure"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#16051009 "Structure of apical axillary lymph node"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#76838003 "Structure of supraclavicular lymph node"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#245282001 "Internal mammary lymph node group"
 
 // Applikationsart

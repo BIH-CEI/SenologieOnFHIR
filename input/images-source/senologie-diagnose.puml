@@ -1,0 +1,99 @@
+@startuml Senologie — Diagnose & Staging
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam classHeaderBackgroundColor #F8F8F8
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+  BackgroundColor<<observation>> #ECEFF1
+  BorderColor<<observation>> #455A64
+  BackgroundColor<<body>> #F3E5F5
+  BorderColor<<body>> #6A1B9A
+  BackgroundColor<<risk>> #E0F7FA
+  BorderColor<<risk>> #00838F
+  BackgroundColor<<family>> #E8F5E9
+  BorderColor<<family>> #2E7D32
+}
+
+title **Diagnose & Staging**\n//Condition als Zentrum des Versorgungsfalls//
+
+class "**Condition**\n//Diagnose Maligne//" <<condition>> {
+  code : ICD-10-GM + SNOMED CT + (ICD-11)
+  clinicalStatus : active | remission | relapse
+  verificationStatus : confirmed
+  bodySite : Links / Rechts (SNOMED)
+  stage[tnm] : cTNM / pTNM (UICC)
+  stage[metastasis] : cM0 / cM1
+  onset : Erstdiagnosedatum
+  extension : Feststellungsdatum
+}
+
+class "**Condition**\n//Diagnose Benigne//" <<condition>> {
+  code : ICD-10-GM + SNOMED CT
+  bodySite : Seite
+  //Kein Staging, keine Meldepflicht//
+}
+
+class "**BodyStructure**\n//Tumorlokalisation//" <<body>> {
+  location : Brust (SNOMED)
+  locationQualifier : Seite (L/R)
+  locationQualifier : Quadrant
+  locationQualifier : Uhrzeitposition
+}
+
+class "**Observation**\n//Rezeptorstatus ER/PR//" <<observation>> {
+  code : LOINC
+  value : positiv / negativ (MII Onko)
+  component : Anteil positive Zellen (%)
+  component : Färbeintensität (0–3+)
+  component : IRS (0–12)
+}
+
+class "**Observation**\n//HER2-Status//" <<observation>> {
+  code : LOINC
+  value : positiv / low / negativ (MII Onko)
+  component : IHC-Score (0/1+/2+/3+)
+  component : ISH-Ergebnis
+}
+
+class "**Observation**\n//Ki-67//" <<observation>> {
+  code : LOINC 29593-1
+  value : Quantity (%)
+}
+
+class "**Observation**\n//TNM L/V/Pn//" <<observation>> {
+  L-Kategorie : L0 / L1 / LX
+  V-Kategorie : V0 / V1 / V2 / VX
+  Pn-Kategorie : Pn0 / Pn1 / PnX
+  //MII Onko Profile//
+}
+
+class "**RiskAssessment**\n//Genexpressionstest//" <<risk>> {
+  method : Oncotype DX / EndoPredict / ...
+  prediction.qualitativeRisk : low / high
+  prediction.probability : Fernrezidivrisiko (%)
+  basis → Score-Observation
+}
+
+class "**FamilyMemberHistory**\n//Familienanamnese//" <<family>> {
+  relationship : Mutter / Schwester / ...
+  condition : Mammakarzinom
+  condition.onsetAge
+}
+
+' === Beziehungen ===
+"**Condition**\n//Diagnose Maligne//" -right-> "**BodyStructure**\n//Tumorlokalisation//" : bodySite
+"**Observation**\n//Rezeptorstatus ER/PR//" -up-> "**Condition**\n//Diagnose Maligne//" : focus
+"**Observation**\n//HER2-Status//" -up-> "**Condition**\n//Diagnose Maligne//" : focus
+"**Observation**\n//Ki-67//" -up-> "**Condition**\n//Diagnose Maligne//" : focus
+"**Observation**\n//TNM L/V/Pn//" -up-> "**Condition**\n//Diagnose Maligne//" : focus
+"**RiskAssessment**\n//Genexpressionstest//" -up-> "**Condition**\n//Diagnose Maligne//" : condition
+"**FamilyMemberHistory**\n//Familienanamnese//" -left-> "**Condition**\n//Diagnose Maligne//" : ..risk factor..
+
+@enduml

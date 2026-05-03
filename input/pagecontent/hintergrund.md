@@ -34,6 +34,18 @@ Dieser Implementation Guide richtet sich an unterschiedliche Nutzergruppen:
 
 Dieses Datenmodell baut auf dem Kerndatensatz der Medizininformatik-Initiative (MII KDS Onkologie) auf und ist kompatibel mit den Informationstechnischen Systemen im Krankenhaus (ISiK). Die Konformität mit europäischen Standards (EHDS, European Patient Summary) wird angestrebt.
 
+## Inhaltlich unterstützt durch
+
+| Person | Institution / Funktion |
+|--------|----------------------|
+| Prof. Dr. med. Wolfgang Janni | DGGG, Vertreter der Arbeitsgemeinschaft Gynäkologische Onkologie |
+| Prof. Dr. med. Markus Wallwiener | DGGG, Sprecher der Kommission Digitale Medizin; AGO, Stellvertretender Vorsitzender |
+| Prof. Dr. med. Andreas Schneeweiß | DGS, Vorsitzender der Deutschen Gesellschaft für Senologie |
+| Prof. Dr. med. Volkmar Müller | AGO, Sprecher Kommission Mamma |
+| Prof. Dr. med. Achim Wöckel | S3-Leitlinienkoordination Mammakarzinom |
+| PD Dr. rer. nat. Christoph Kowalski | Deutsche Krebsgesellschaft, Versorgungsforschung |
+| Prof. Dr. med. Dipl.-Ing. Sylvia Thun | Berlin Institute of Health at Charité (BIH) |
+
 ## Hinweis zum Status
 
 Die vorliegende Spezifikation ist nicht als normative Vorgabe zu verstehen, sondern als wissenschaftliche Einladung zur gemeinsamen, intersektoralen Ausgestaltung eines einzelnen medizinischen Fachgebietes in seiner gesamten Granularität. Rückmeldungen, Korrekturen und Erweiterungsvorschläge sind ausdrücklich erwünscht.

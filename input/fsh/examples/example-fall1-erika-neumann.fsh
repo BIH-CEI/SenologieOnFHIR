@@ -72,7 +72,7 @@ Usage: #example
 * category.coding = http://terminology.hl7.org/CodeSystem/v2-0074#RAD "Radiology"
 
 * code.coding[mammography].system = "http://loinc.org"
-* code.coding[mammography].code = #18781-5
+* code.coding[mammography].code = #24606-6
 * code.coding[mammography].display = "Mammography of bilateral breasts"
 * code.text = "Mammographie bilateral"
 
@@ -253,7 +253,7 @@ Usage: #example
 * component[menopause].valueQuantity.system = "http://unitsofmeasure.org"
 * component[menopause].valueQuantity.code = #a
 
-* component[schwangerschaften].code = $LOINC#11996-6 "Number of pregnancies"
+* component[schwangerschaften].code = $LOINC#11996-6 "[#] Pregnancies"
 * component[schwangerschaften].valueQuantity.value = 2
 * component[schwangerschaften].valueQuantity.unit = "Schwangerschaften"
 * component[schwangerschaften].valueQuantity.system = "http://unitsofmeasure.org"

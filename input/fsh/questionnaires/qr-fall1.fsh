@@ -293,7 +293,7 @@ Usage: #example
 * item[=].item[=].answer.valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MTH "Mutter"
 
 * item[=].item[+].linkId = "fam-erkrankung"
-* item[=].item[=].answer.valueCoding = $SCT#254837009 "Mammakarzinom"
+* item[=].item[=].answer.valueCoding = $SCT#254837009 "Malignant neoplasm of breast"
 
 * item[=].item[+].linkId = "fam-alter"
 * item[=].item[=].answer.valueInteger = 52
@@ -322,7 +322,7 @@ Usage: #example
 * item[=].item[=].answer.valueDate = "2025-01-15"
 
 * item[=].item[+].linkId = "bildgebungsart"
-* item[=].item[=].answer.valueCoding = $LOINC#24606-6 "Mammographie"
+* item[=].item[=].answer.valueCoding = $LOINC#24606-6 "MG Breast Screening"
 
 * item[=].item[+].linkId = "seite"
 * item[=].item[=].answer.valueCoding = $SCT#80248007 "Left breast structure"
@@ -334,7 +334,7 @@ Usage: #example
 * item[+].linkId = "befund"
 
 * item[=].item[+].linkId = "birads-kategorie"
-* item[=].item[=].answer.valueCoding = $SCT#397145000 "BI-RADS 5 – hochgradig malignitätsverdächtig"
+* item[=].item[=].answer.valueCoding = $SCT#397145000 "Mammography assessment (Category 5) - Highly suggestive of malignancy"
 
 * item[=].item[+].linkId = "acr-brustdichte"
 * item[=].item[=].answer.valueString = "C – heterogen dicht"
@@ -388,7 +388,7 @@ Usage: #example
 * item[=].item[=].answer.valueCoding = $SCT#80248007 "Left breast structure"
 
 * item[=].item[+].linkId = "praeparat-quadrant"
-* item[=].item[=].answer.valueCoding = $SCT#77831004 "Upper outer quadrant of breast"
+* item[=].item[=].answer.valueCoding = $SCT#76365002 "Structure of upper outer quadrant of breast"
 
 // --- Histologie group (Observation) ---
 * item[+].linkId = "histologie"
@@ -409,7 +409,7 @@ Usage: #example
 * item[=].item[=].answer.valueString = "Kein begleitendes DCIS"
 
 * item[=].item[+].linkId = "histo-resektionsrand"
-* item[=].item[=].answer.valueCoding = $SCT#258254000 "R0 - no residual tumour"
+* item[=].item[=].answer.valueCoding = $SCT#258254000 "Residual tumor stage R0"
 
 * item[=].item[+].linkId = "histo-sentinel-anzahl"
 * item[=].item[=].answer.valueInteger = 2
@@ -467,7 +467,7 @@ Usage: #example
 * item[+].linkId = "therapie-rahmen"
 
 * item[=].item[+].linkId = "rt-intention"
-* item[=].item[=].answer.valueCoding = $SCT#373846009 "Adjuvant"
+* item[=].item[=].answer.valueCoding = $SCT#373846009 "Adjuvant - intent"
 
 * item[=].item[+].linkId = "rt-startdatum"
 * item[=].item[=].answer.valueDate = "2025-03-10"

@@ -60,7 +60,7 @@ Usage: #definition
 * item[=].item[=].required = true
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.type"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#86273004 "Biopsy"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#129300006 "Puncture - Loss of vacuum"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#129300006 "Puncture - action"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#65801008 "Excision"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#392021009 "Lumpectomy of breast"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#172043006 "Simple mastectomy"
@@ -88,8 +88,8 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#246264006 "Site of lesion"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#77831004 "Upper outer quadrant of breast"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76365002 "Upper inner quadrant of breast"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#76365002 "Structure of upper outer quadrant of breast"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#77831004 "Structure of upper inner quadrant of breast"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#33564002 "Lower outer quadrant of breast"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#19100000 "Lower inner quadrant of breast"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#24142002 "Nipple structure"
@@ -111,7 +111,7 @@ Usage: #definition
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#82711006 "Infiltrating duct carcinoma"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#443451005 "Invasive lobular carcinoma of breast"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#109889007 "Intraductal carcinoma, noninfiltrating"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#109889007 "Ductal carcinoma in situ of breast"
 * item[=].item[=].answerOption[+].valueString = "Sonstiges"
 
 // Grading (Bloom-Richardson)
@@ -147,7 +147,7 @@ Usage: #definition
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $SCT#109889007 "Intraductal carcinoma, noninfiltrating"
+* item[=].item[=].code[+] = $SCT#109889007 "Ductal carcinoma in situ of breast"
 
 // Resektionsrand
 * item[=].item[+].linkId = "histo-resektionsrand"
@@ -156,9 +156,9 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
 * item[=].item[=].code[+] = $SCT#395536008 "Surgical margin finding"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#258254000 "R0 - no residual tumour"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#258255004 "R1 - microscopic residual tumour"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#258257007 "RX - presence of residual tumour cannot be assessed"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#258254000 "Residual tumor stage R0"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#278271003 "Residual tumor stage R1"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#258253006 "Residual tumor stage RX"
 
 // Sentinel-LK Anzahl
 * item[=].item[+].linkId = "histo-sentinel-anzahl"
@@ -166,7 +166,7 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#92832-5 "Sentinel lymph nodes examined [#]"
+* item[=].item[=].code[+] = $LOINC#85347-3 "Sentinel lymph nodes examined [#] in Cancer specimen by Light microscopy"
 
 // Sentinel-LK befallen
 * item[=].item[+].linkId = "histo-sentinel-befallen"
@@ -174,7 +174,7 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#92833-3 "Sentinel lymph nodes with metastasis [#]"
+* item[=].item[=].code[+] = $LOINC#92832-5 "Sentinel lymph nodes with metastasis [#] in Cancer specimen"
 
 // ============================================================
 // Group 3: Immunhistochemie / Rezeptorstatus (Observation)
@@ -198,7 +198,7 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#85325-9 "Estrogen receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
+* item[=].item[=].code[+] = $LOINC#85310-1 "Estrogen receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
 
 // PR Prozent positiv
 * item[=].item[+].linkId = "ihc-pr-prozent"
@@ -214,7 +214,7 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#85327-5 "Progesterone receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
+* item[=].item[=].code[+] = $LOINC#85331-7 "Progesterone receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
 
 // HER2 IHC Score
 * item[=].item[+].linkId = "ihc-her2-score"
@@ -222,7 +222,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#85319-2 "HER2 [Interpretation] in Breast cancer specimen by Immune stain"
+* item[=].item[=].code[+] = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen by Immune stain"
 * item[=].item[=].answerOption[+].valueString = "0"
 * item[=].item[=].answerOption[+].valueString = "1+"
 * item[=].item[=].answerOption[+].valueString = "2+"
@@ -234,7 +234,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#85318-4 "HER2 [Presence] in Breast cancer specimen by FISH"
+* item[=].item[=].code[+] = $LOINC#85318-4 "ERBB2 gene duplication [Presence] in Breast cancer specimen by FISH"
 * item[=].item[=].enableWhen[+].question = "ihc-her2-score"
 * item[=].item[=].enableWhen[=].operator = #=
 * item[=].item[=].enableWhen[=].answerString = "2+"
@@ -248,7 +248,7 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
-* item[=].item[=].code[+] = $LOINC#85331-7 "Ki-67 [Presence] in Breast cancer specimen by Immune stain"
+* item[=].item[=].code[+] = $LOINC#85330-9 "Cells.Ki-67 nuclear Ag/cells in Breast cancer specimen by Immune stain"
 
 // =====================================================// ============================================================
 * item[+].linkId = "beurteilung"
