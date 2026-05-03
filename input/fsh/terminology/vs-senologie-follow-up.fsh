@@ -14,19 +14,6 @@ Description: "Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (
 * $CS_FOLLOWUP_VS#passiv "Passive Nachsorge"
 
 
-ValueSet: VS_Senologie_Vitalstatus
-Id: vs-senologie-vitalstatus
-Title: "VS Senologie Vitalstatus"
-Description: "Vitalstatus der Patientin zum Meldezeitpunkt — OncoBox M04"
-
-* ^status = #draft
-* ^version = "0.1.0"
-
-* $SCT#438949009 "Alive (finding)"
-* $SCT#419099009 "Dead (finding)"
-* $SCT#261665006 "Unknown (qualifier value)"
-
-
 ValueSet: VS_Senologie_Zweittumor
 Id: vs-senologie-zweittumor
 Title: "VS Senologie Zweittumor"

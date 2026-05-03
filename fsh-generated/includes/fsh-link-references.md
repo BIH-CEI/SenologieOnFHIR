@@ -366,6 +366,5 @@
 [VS_Senologie_Studienname]: ValueSet-vs-senologie-studienname.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
 [VS_Senologie_Tumormanifestation]: ValueSet-vs-senologie-tumormanifestation.html
-[VS_Senologie_Vitalstatus]: ValueSet-vs-senologie-vitalstatus.html
 [VS_Senologie_Zweittumor]: ValueSet-vs-senologie-zweittumor.html
 [EX_Senologie_Zentrumsfall]: StructureDefinition-ex-senologie-zentrumsfall.html

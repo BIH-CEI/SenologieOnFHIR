@@ -5,7 +5,8 @@
 //   Fall 2: Progression (M06, Gesamtbeurteilung P)
 //   Fall 4: Post-Therapie Teilremission (D27, Gesamtbeurteilung T)
 //   Fall 9: Nachsorge rezidivfrei (M06, Gesamtbeurteilung K)
-// Nutzt Senologie_FollowUp (erweitert MII_PR_Onko_Verlauf um M03-M04, M08-M10).
+// Nutzt Senologie_FollowUp (erweitert MII_PR_Onko_Verlauf um method=Nachsorge-Art, M08).
+// Vitalstatus: Patient.deceased. Zweittumor-Details: eigene Condition.
 // Zusätzlich ECOG-Observations (oBDS-Pflichtfeld "Allgemeiner_Leistungszustand"
 // in jeder Verlaufsmeldung, nutzt MII_PR_Onko_Allgemeiner_Leistungszustand_ECOG).
 // ============================================================
@@ -19,7 +20,7 @@ Alias: $CS_FU_EX = https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow
 Instance: Fall1-Verlauf-6Monate
 InstanceOf: Senologie_FollowUp
 Title: "Fall 1: Verlaufskontrolle 6 Monate postoperativ"
-Description: "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, Patientin lebend, kein Zweittumor."
+Description: "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor."
 Usage: #example
 
 * status = #final
@@ -58,21 +59,10 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
 
-// M03: Art der Nachsorge — aktiv
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #nachsorge-art
-* component[=].code.coding[=].display = "Art der Nachsorge"
-* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
-* component[=].valueCodeableConcept.coding[=].code = #aktiv
-* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
-
-// M04: Vitalstatus — lebend
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #vitalstatus
-* component[=].code.coding[=].display = "Vitalstatus"
-* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
-* component[=].valueCodeableConcept.coding[=].code = #438949009
-* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+// M03: Art der Nachsorge — aktiv (method)
+* method.coding[+].system = $CS_FU_EX
+* method.coding[=].code = #aktiv
+* method.coding[=].display = "Aktive Nachsorge"
 
 // M08: Zweittumor — nein
 * component[+].code.coding[+].system = $CS_FU_EX
@@ -108,7 +98,7 @@ Usage: #example
 Instance: Fall2-Verlauf-Progression
 InstanceOf: Senologie_FollowUp
 Title: "Fall 2: Verlaufskontrolle bei Progression"
-Description: "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor."
+Description: "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, kein Zweittumor."
 Usage: #example
 
 * status = #final
@@ -147,21 +137,10 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[=].code = #N
 * component[=].valueCodeableConcept.coding[=].display = "Fernmetastasen No Change"
 
-// M03: Art der Nachsorge — aktiv
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #nachsorge-art
-* component[=].code.coding[=].display = "Art der Nachsorge"
-* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
-* component[=].valueCodeableConcept.coding[=].code = #aktiv
-* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
-
-// M04: Vitalstatus — lebend
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #vitalstatus
-* component[=].code.coding[=].display = "Vitalstatus"
-* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
-* component[=].valueCodeableConcept.coding[=].code = #438949009
-* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+// M03: Art der Nachsorge — aktiv (method)
+* method.coding[+].system = $CS_FU_EX
+* method.coding[=].code = #aktiv
+* method.coding[=].display = "Aktive Nachsorge"
 
 // M08: Zweittumor — nein
 * component[+].code.coding[+].system = $CS_FU_EX
@@ -197,7 +176,7 @@ Usage: #example
 Instance: Fall9-Verlauf-12Monate
 InstanceOf: Senologie_FollowUp
 Title: "Fall 9: Verlaufskontrolle 12 Monate postoperativ"
-Description: "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, Patientin lebend, kein Zweittumor."
+Description: "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, kein Zweittumor."
 Usage: #example
 
 * status = #final
@@ -236,21 +215,10 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
 
-// M03: Art der Nachsorge — aktiv
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #nachsorge-art
-* component[=].code.coding[=].display = "Art der Nachsorge"
-* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
-* component[=].valueCodeableConcept.coding[=].code = #aktiv
-* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
-
-// M04: Vitalstatus — lebend
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #vitalstatus
-* component[=].code.coding[=].display = "Vitalstatus"
-* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
-* component[=].valueCodeableConcept.coding[=].code = #438949009
-* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+// M03: Art der Nachsorge — aktiv (method)
+* method.coding[+].system = $CS_FU_EX
+* method.coding[=].code = #aktiv
+* method.coding[=].display = "Aktive Nachsorge"
 
 // M08: Zweittumor — nein
 * component[+].code.coding[+].system = $CS_FU_EX
@@ -325,21 +293,10 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
 
-// M03: Art der Nachsorge — aktiv (direkte Beurteilung nach Therapie)
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #nachsorge-art
-* component[=].code.coding[=].display = "Art der Nachsorge"
-* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
-* component[=].valueCodeableConcept.coding[=].code = #aktiv
-* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
-
-// M04: Vitalstatus — lebend
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #vitalstatus
-* component[=].code.coding[=].display = "Vitalstatus"
-* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
-* component[=].valueCodeableConcept.coding[=].code = #438949009
-* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+// M03: Art der Nachsorge — aktiv (method, direkte Beurteilung nach Therapie)
+* method.coding[+].system = $CS_FU_EX
+* method.coding[=].code = #aktiv
+* method.coding[=].display = "Aktive Nachsorge"
 
 // M08: Zweittumor — nein
 * component[+].code.coding[+].system = $CS_FU_EX
@@ -414,21 +371,10 @@ Usage: #example
 * component[=].valueCodeableConcept.coding[=].code = #K
 * component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
 
-// M03: Art der Nachsorge — aktiv
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #nachsorge-art
-* component[=].code.coding[=].display = "Art der Nachsorge"
-* component[=].valueCodeableConcept.coding[+].system = $CS_FU_EX
-* component[=].valueCodeableConcept.coding[=].code = #aktiv
-* component[=].valueCodeableConcept.coding[=].display = "Aktive Nachsorge"
-
-// M04: Vitalstatus — lebend
-* component[+].code.coding[+].system = $CS_FU_EX
-* component[=].code.coding[=].code = #vitalstatus
-* component[=].code.coding[=].display = "Vitalstatus"
-* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
-* component[=].valueCodeableConcept.coding[=].code = #438949009
-* component[=].valueCodeableConcept.coding[=].display = "Alive (finding)"
+// M03: Art der Nachsorge — aktiv (method)
+* method.coding[+].system = $CS_FU_EX
+* method.coding[=].code = #aktiv
+* method.coding[=].display = "Aktive Nachsorge"
 
 // M08: Zweittumor — nein
 * component[+].code.coding[+].system = $CS_FU_EX

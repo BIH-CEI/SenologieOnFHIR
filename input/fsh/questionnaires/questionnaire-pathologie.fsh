@@ -30,13 +30,17 @@ Usage: #definition
 
 // SDC templateExtract -> contained templates
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].extension[template].valueReference = Reference(TODO-patho-report-template)
+* extension[=].extension[+].url = "template"
+* extension[=].extension[=].valueReference = Reference(TODO-patho-report-template)
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].extension[template].valueReference = Reference(TODO-patho-specimen-template)
+* extension[=].extension[+].url = "template"
+* extension[=].extension[=].valueReference = Reference(TODO-patho-specimen-template)
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].extension[template].valueReference = Reference(TODO-patho-histo-template)
+* extension[=].extension[+].url = "template"
+* extension[=].extension[=].valueReference = Reference(TODO-patho-histo-template)
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].extension[template].valueReference = Reference(TODO-patho-ihc-template)
+* extension[=].extension[+].url = "template"
+* extension[=].extension[=].valueReference = Reference(TODO-patho-ihc-template)
 
 // Launch Context
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"

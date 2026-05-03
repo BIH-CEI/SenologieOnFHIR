@@ -42,7 +42,8 @@ Usage: #definition
 
 // SDC templateExtract -> contained ServiceRequest template
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].extension[template].valueReference = Reference(op-planung-template)
+* extension[=].extension[+].url = "template"
+* extension[=].extension[=].valueReference = Reference(op-planung-template)
 
 // Launch Context
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"

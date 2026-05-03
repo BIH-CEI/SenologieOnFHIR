@@ -32,7 +32,8 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Patient
 
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* extension[=].extension[template].valueReference = Reference(observation-template)
+* extension[=].extension[+].url = "template"
+* extension[=].extension[=].valueReference = Reference(observation-template)
 
 // ---------- Items ----------
 // Mapping-Übersicht (Item → Observation-Pfad):

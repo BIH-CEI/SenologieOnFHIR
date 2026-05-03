@@ -101,7 +101,8 @@ Usage: #definition
 
 // SDC templateExtract -> contained Procedure template
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* item[=].extension[=].extension[template].valueReference = Reference(postop-procedure-template)
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(postop-procedure-template)
 
 // Art der Operation (Kategorie)
 * item[=].item[+].linkId = "op-kategorie"
@@ -192,7 +193,8 @@ Usage: #definition
 
 // SDC templateExtract -> contained Observation template
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-* item[=].extension[=].extension[template].valueReference = Reference(postop-komplikation-template)
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(postop-komplikation-template)
 
 // Clavien-Dindo Grad
 * item[=].item[+].linkId = "clavien-dindo"

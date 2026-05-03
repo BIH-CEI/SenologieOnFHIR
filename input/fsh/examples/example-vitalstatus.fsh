@@ -135,19 +135,10 @@ Usage: #example
 * component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
 * component[=].valueCodeableConcept.coding = $MII_CS_Onko_Verlauf_Fernmetastasen#P "Progression"
 
-// M03: Art der Nachsorge — passiv (Totenschein)
-* component[+].code.coding[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
-* component[=].code.coding[=].code = #nachsorge-art
-* component[=].code.coding[=].display = "Art der Nachsorge"
-* component[=].valueCodeableConcept.coding[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
-* component[=].valueCodeableConcept.coding[=].code = #passiv
-* component[=].valueCodeableConcept.coding[=].display = "Passive Nachsorge"
-
-// M04: Vitalstatus — verstorben
-* component[+].code.coding[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
-* component[=].code.coding[=].code = #vitalstatus
-* component[=].code.coding[=].display = "Vitalstatus"
-* component[=].valueCodeableConcept.coding = $SCT#419099009 "Dead (finding)"
+// M03: Art der Nachsorge — passiv (method, Totenschein)
+* method.coding[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
+* method.coding[=].code = #passiv
+* method.coding[=].display = "Passive Nachsorge"
 
 // M08: Zweittumor — nein
 * component[+].code.coding[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
