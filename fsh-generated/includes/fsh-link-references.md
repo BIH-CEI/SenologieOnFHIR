@@ -312,6 +312,7 @@
 [Fall9-Verlauf-12Monate]: Observation-Fall9-Verlauf-12Monate.html
 [EX_Senologie_FirstLineTherapy]: StructureDefinition-ex-senologie-first-line-therapy.html
 [senologie-bildgebung]: Questionnaire-senologie-bildgebung.html
+[senologie-diagnose]: Questionnaire-senologie-diagnose.html
 [senologie-erstanamnese]: Questionnaire-senologie-erstanamnese.html
 [senologie-klinische-untersuchung]: Questionnaire-senologie-klinische-untersuchung.html
 [senologie-op-planung]: Questionnaire-senologie-op-planung.html

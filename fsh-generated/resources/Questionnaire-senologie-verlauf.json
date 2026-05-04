@@ -3,9 +3,57 @@
   "id": "senologie-verlauf",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf",
   "title": "Fragebogen: Verlaufsdokumentation / Nachsorge",
-  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp).",
+  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus.",
   "subjectType": [
     "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Observation",
+      "id": "verlauf-klinisch-template",
+      "code": {
+        "coding": [
+          {
+            "code": "11323-3",
+            "system": "http://loinc.org",
+            "display": "Health status"
+          }
+        ],
+        "text": "Klinischer Status Verlauf"
+      },
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%patient"
+          }
+        ]
+      },
+      "status": "final"
+    },
+    {
+      "resourceType": "Observation",
+      "id": "verlauf-tumorstatus-template",
+      "code": {
+        "coding": [
+          {
+            "code": "88040-1",
+            "system": "http://loinc.org",
+            "display": "Response to cancer treatment"
+          }
+        ],
+        "text": "Tumorstatus Verlauf"
+      },
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%patient"
+          }
+        ]
+      },
+      "status": "final"
+    }
   ],
   "extension": [
     {
@@ -43,7 +91,7 @@
               "valueString": "12-Monats-Kontrolle"
             },
             {
-              "valueString": "Ausserplanmaessig"
+              "valueString": "Außerplanmäßig"
             },
             {
               "valueString": "Abschlusskontrolle"
@@ -51,6 +99,20 @@
           ],
           "linkId": "kontrolltermin-art",
           "text": "Art der Kontrolle",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "Aktiv (persönlich untersucht)"
+            },
+            {
+              "valueString": "Passiv (aus Akten/Registern)"
+            }
+          ],
+          "linkId": "kontrolltermin-art-nachsorge",
+          "text": "Art der Nachsorge",
           "type": "choice",
           "required": true
         },
@@ -69,11 +131,15 @@
     {
       "extension": [
         {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "extension": [
+            {
+              "url": "template",
+              "valueReference": {
+                "reference": "#verlauf-klinisch-template"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
         }
       ],
       "item": [
@@ -90,7 +156,7 @@
               "valueString": "Gut"
             },
             {
-              "valueString": "Eingeschraenkt"
+              "valueString": "Eingeschränkt"
             },
             {
               "valueString": "Schlecht"
@@ -99,8 +165,7 @@
           "linkId": "klinisch-allgemeinzustand",
           "text": "Allgemeinzustand",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -112,31 +177,29 @@
           ],
           "answerOption": [
             {
-              "valueString": "Unauffaellig"
+              "valueString": "Unauffällig"
             },
             {
-              "valueString": "Auffaellig"
+              "valueString": "Auffällig"
             }
           ],
           "linkId": "klinisch-lokalbefund",
           "text": "Lokalbefund Brust",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "enableWhen": [
             {
               "question": "klinisch-lokalbefund",
               "operator": "=",
-              "answerString": "Auffaellig"
+              "answerString": "Auffällig"
             }
           ],
           "linkId": "klinisch-lokalbefund-beschreibung",
           "text": "Lokalbefund Beschreibung",
           "type": "text",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.note.text"
+          "required": false
         },
         {
           "code": [
@@ -161,10 +224,9 @@
             }
           ],
           "linkId": "klinisch-lymphoedem",
-          "text": "Lymphoedem",
+          "text": "Lymphödem",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -177,8 +239,7 @@
           "linkId": "klinisch-armumfangsdifferenz",
           "text": "Armumfangsdifferenz (cm)",
           "type": "decimal",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -191,8 +252,7 @@
           "linkId": "klinisch-schmerzen",
           "text": "Schmerzen",
           "type": "boolean",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         }
       ],
       "linkId": "klinischer-status",
@@ -203,11 +263,15 @@
     {
       "extension": [
         {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation?_profile=https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "extension": [
+            {
+              "url": "template",
+              "valueReference": {
+                "reference": "#verlauf-tumorstatus-template"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
         }
       ],
       "item": [
@@ -242,14 +306,13 @@
               }
             },
             {
-              "valueString": "Kein Anhalt fuer Tumor"
+              "valueString": "Kein Anhalt für Tumor"
             }
           ],
           "linkId": "tumorstatus-gesamtbeurteilung",
           "text": "Gesamtbeurteilung Verlauf",
           "type": "choice",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -262,8 +325,7 @@
           "linkId": "tumorstatus-lokalrezidiv",
           "text": "Lokalrezidiv",
           "type": "boolean",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -283,8 +345,7 @@
           "linkId": "tumorstatus-rezidiv-datum",
           "text": "Datum Rezidiv",
           "type": "date",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -297,8 +358,7 @@
           "linkId": "tumorstatus-fernmetastasen",
           "text": "Fernmetastasen",
           "type": "boolean",
-          "required": false,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "required": false
         },
         {
           "code": [
@@ -336,8 +396,7 @@
           "text": "Metastasenlokalisation",
           "type": "choice",
           "required": false,
-          "repeats": true,
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]"
+          "repeats": true
         }
       ],
       "linkId": "tumorstatus",
@@ -349,7 +408,7 @@
       "item": [
         {
           "linkId": "vorgehen-naechster-termin",
-          "text": "Naechster Kontrolltermin",
+          "text": "Nächster Kontrolltermin",
           "type": "date",
           "required": false
         },

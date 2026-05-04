@@ -1,0 +1,380 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "senologie-diagnose",
+  "url": "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose",
+  "title": "Fragebogen: Diagnose Mamma",
+  "description": "Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Spektrum von invasivem Karzinom über DCIS und B3-Läsionen bis hin zu benignen Befunden. Nutzt SDC Template-based Extraction zur Erzeugung einer Condition-Ressource.",
+  "subjectType": [
+    "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Condition",
+      "id": "diagnose-maligne-template",
+      "verificationStatus": {
+        "coding": [
+          {
+            "code": "confirmed",
+            "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+          }
+        ]
+      },
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%patient"
+          }
+        ]
+      },
+      "clinicalStatus": {
+        "coding": [
+          {
+            "code": "active",
+            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+          }
+        ]
+      }
+    }
+  ],
+  "extension": [
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "url": "template",
+          "valueReference": {
+            "reference": "#diagnose-maligne-template"
+          }
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }
+  ],
+  "item": [
+    {
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueString": "Erstdiagnose"
+            },
+            {
+              "valueString": "Rezidiv"
+            }
+          ],
+          "linkId": "diagnose-typ",
+          "text": "Falltyp",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "254837009",
+                "system": "http://snomed.info/sct",
+                "display": "Mammakarzinom"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "109889007",
+                "system": "http://snomed.info/sct",
+                "display": "Carcinoma in situ (DCIS)"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "439401001",
+                "system": "http://snomed.info/sct",
+                "display": "B3-Läsion"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "254845004",
+                "system": "http://snomed.info/sct",
+                "display": "Fibroadenom"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "27431007",
+                "system": "http://snomed.info/sct",
+                "display": "Fibrozystische Mastopathie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "53430007",
+                "system": "http://snomed.info/sct",
+                "display": "Mastodynie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "4754008",
+                "system": "http://snomed.info/sct",
+                "display": "Gynäkomastie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "83620003",
+                "system": "http://snomed.info/sct",
+                "display": "Mastitis non-puerperalis"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "399123008",
+                "system": "http://snomed.info/sct",
+                "display": "Einfache Mammazyste"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "449837001",
+                "system": "http://snomed.info/sct",
+                "display": "Komplexe Mammazyste"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "718220008",
+                "system": "http://snomed.info/sct",
+                "display": "Genetische Hochrisikosituation"
+              }
+            }
+          ],
+          "linkId": "diagnose-sct",
+          "text": "Diagnose",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "linkId": "diagnose-icd10",
+          "text": "ICD-10-GM Code",
+          "type": "string",
+          "required": false
+        },
+        {
+          "linkId": "diagnose-icd10-display",
+          "text": "ICD-10-GM Bezeichnung",
+          "type": "string",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "diagnose-sct",
+              "operator": "=",
+              "answerCoding": {
+                "code": "439401001",
+                "system": "http://snomed.info/sct"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "427785007",
+                "system": "http://snomed.info/sct",
+                "display": "ADH — Atypische duktale Hyperplasie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "860895001",
+                "system": "http://snomed.info/sct",
+                "display": "FEA — Flache epitheliale Atypie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "99571000119102",
+                "system": "http://snomed.info/sct",
+                "display": "Papillom ohne Atypie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "1144917006",
+                "system": "http://snomed.info/sct",
+                "display": "Atypisches Papillom"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "390787006",
+                "system": "http://snomed.info/sct",
+                "display": "Radiäre Narbe / komplex sklerosierende Läsion"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "450697004",
+                "system": "http://snomed.info/sct",
+                "display": "LIN — ALH (Atypische lobuläre Hyperplasie)"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "444739008",
+                "system": "http://snomed.info/sct",
+                "display": "LIN — klassisches LCIS"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "444591006",
+                "system": "http://snomed.info/sct",
+                "display": "LIN — nicht-klassisches (pleomorphes) LCIS"
+              }
+            }
+          ],
+          "linkId": "diagnose-b3-detail",
+          "text": "Details B3-Läsion",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "linkId": "diagnose-sonstiges",
+          "text": "Details Sonstiges",
+          "type": "string",
+          "required": false
+        }
+      ],
+      "linkId": "diagnose-gruppe",
+      "text": "Diagnose Mamma",
+      "type": "group",
+      "required": true
+    },
+    {
+      "item": [
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "24028007",
+                "system": "http://snomed.info/sct",
+                "display": "Rechts"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "7771000",
+                "system": "http://snomed.info/sct",
+                "display": "Links"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "51440002",
+                "system": "http://snomed.info/sct",
+                "display": "Beidseits"
+              }
+            }
+          ],
+          "linkId": "diagnose-seite",
+          "text": "Seitenlokalisation",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "linkId": "diagnose-datum",
+          "text": "Erstdiagnosedatum",
+          "type": "date",
+          "required": true
+        }
+      ],
+      "linkId": "lokalisation-zeit",
+      "text": "Lokalisation & Zeitpunkt",
+      "type": "group",
+      "required": true
+    },
+    {
+      "item": [
+        {
+          "linkId": "staging-ct",
+          "text": "cT",
+          "type": "string",
+          "required": false
+        },
+        {
+          "linkId": "staging-cn",
+          "text": "cN",
+          "type": "string",
+          "required": false
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "cM0"
+            },
+            {
+              "valueString": "cM1"
+            },
+            {
+              "valueString": "cMX"
+            }
+          ],
+          "linkId": "staging-cm",
+          "text": "cM",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "linkId": "staging-uicc",
+          "text": "UICC-Stadium",
+          "type": "string",
+          "required": false
+        },
+        {
+          "answerOption": [
+            {
+              "valueString": "G1"
+            },
+            {
+              "valueString": "G2"
+            },
+            {
+              "valueString": "G3"
+            },
+            {
+              "valueString": "G4"
+            }
+          ],
+          "linkId": "staging-grading",
+          "text": "Grading",
+          "type": "choice",
+          "required": false
+        }
+      ],
+      "linkId": "staging",
+      "text": "Staging",
+      "type": "group",
+      "required": false
+    }
+  ],
+  "name": "QuestDiagnose",
+  "status": "draft",
+  "version": "0.1.0",
+  "experimental": true
+}
