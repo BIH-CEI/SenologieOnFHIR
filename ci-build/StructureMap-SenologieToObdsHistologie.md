@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToObdsHistologie |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToObdsHistologie |
 
  
 title: Senologie Histologie Observations to oBDS Histologie BackboneElement status: draft 
@@ -26,7 +26,7 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
   "version" : "0.1.0",
   "name" : "SenologieToObdsHistologie",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

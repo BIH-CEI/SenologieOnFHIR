@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-primaerfallart | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:EX_Senologie_Primaerfallart |
+| Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_Primaerfallart |
 
 OnkoZert-Primaerfallart als expliziter Override (OncoBox 2.0 D01). Ergänzt die ICD-basierte Ableitung im SM für Fälle wie Rezidiv (Code 3), die nicht aus dem ICD-Prefix ableitbar sind.
 
@@ -48,7 +48,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-primaer
   "name" : "EX_Senologie_Primaerfallart",
   "title" : "Primaerfallart",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

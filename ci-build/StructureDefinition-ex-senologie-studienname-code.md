@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:EX_Senologie_StudiennameCode |
+| Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_StudiennameCode |
 
 OncoBox 2.0 K02: Kodierter Studienname aus Auswahlliste. Ergänzt die study-Referenz um einen strukturierten Code für die OncoBox-Meldung.
 
@@ -48,7 +48,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-studien
   "name" : "EX_Senologie_StudiennameCode",
   "title" : "Studienname (kodiert)",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

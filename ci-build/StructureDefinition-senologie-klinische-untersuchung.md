@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Klinische_Untersuchung |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Klinische_Untersuchung |
 
  
 Observation für klinische Brustuntersuchung (Mammabefund pro Seite) aus dotbase Questionnaire 'Klinische Untersuchung' 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-klinische-
   "name" : "Senologie_Klinische_Untersuchung",
   "title" : "BIH Senologie Klinische Untersuchung",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

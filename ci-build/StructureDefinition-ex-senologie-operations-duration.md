@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-operations-duration | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:EX_Senologie_OperationsDuration |
+| Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_OperationsDuration |
 
 Geplante OP-Dauer in Minuten — ServiceRequest hat kein duration-Element
 
@@ -47,7 +47,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-operati
   "name" : "EX_Senologie_OperationsDuration",
   "title" : "Geplante OP-Dauer",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

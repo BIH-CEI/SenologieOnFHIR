@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-operation | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Operation |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Operation |
 
  
 Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation. 
@@ -51,7 +51,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-operation.
   "name" : "Senologie_Operation",
   "title" : "BIH LM Senologie Brustwand-Operation",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

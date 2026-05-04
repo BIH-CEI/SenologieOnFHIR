@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/CodeSystem/cs-senologie-studienname | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:CS_Senologie_Studienname |
+| Draft as of 2026-05-04 | *Computable Name*:CS_Senologie_Studienname |
 
  
 Auswahlliste klinischer Studien am Brustzentrum für die OncoBox 2.0 Meldung (K02). Enthält häufige interventionelle und nicht-interventionelle Mammakarzinom-Studien. 
@@ -31,7 +31,7 @@ Auswahlliste klinischer Studien am Brustzentrum für die OncoBox 2.0 Meldung (K0
   "name" : "CS_Senologie_Studienname",
   "title" : "CS Senologie Studienname",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

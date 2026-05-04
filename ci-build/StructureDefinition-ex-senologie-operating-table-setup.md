@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-operating-table-setup | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:EX_Senologie_OperatingTableSetup |
+| Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_OperatingTableSetup |
 
 OP-Lagerung und Tischanordnung — kein natives FHIR-Äquivalent
 
@@ -46,7 +46,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-operati
   "name" : "EX_Senologie_OperatingTableSetup",
   "title" : "OP-Lagerung/Tischanordnung",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

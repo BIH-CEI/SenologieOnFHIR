@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*: |
+| Draft as of 2026-05-04 | *Computable Name*: |
 
  
 Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus (R0, R1, R2, RX) 
@@ -26,7 +26,7 @@ Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus (R0, R1, R2, 
   "version" : "0.1.0",
   "title" : "SNOMED CT to oBDS Residualstatus",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_FollowUp |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_FollowUp |
 
  
 Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert. 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
   "name" : "Senologie_FollowUp",
   "title" : "BIH Senologie Follow-Up (Verlaufsmeldung)",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

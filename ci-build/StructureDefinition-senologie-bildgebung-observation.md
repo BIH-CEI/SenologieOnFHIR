@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Bildgebung_Observation |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Bildgebung_Observation |
 
  
 Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status) aus dotbase Questionnaire 'Bildgebung Mamma V1.0' 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-bildgebung
   "name" : "Senologie_Bildgebung_Observation",
   "title" : "BIH Senologie Bildgebung Observation",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

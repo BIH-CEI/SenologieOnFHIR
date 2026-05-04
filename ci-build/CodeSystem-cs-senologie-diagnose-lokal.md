@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:CS_Senologie_Diagnose_Lokal |
+| Draft as of 2026-05-04 | *Computable Name*:CS_Senologie_Diagnose_Lokal |
 
  
 Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase) 
@@ -32,7 +32,7 @@ Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase)
   "name" : "CS_Senologie_Diagnose_Lokal",
   "title" : "CS Senologie Diagnose Lokal",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-zweittumor | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:VS_Senologie_Zweittumor |
+| Draft as of 2026-05-04 | *Computable Name*:VS_Senologie_Zweittumor |
 
  
 Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08 
@@ -50,7 +50,7 @@ Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08
   "name" : "VS_Senologie_Zweittumor",
   "title" : "VS Senologie Zweittumor",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-lokal | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:VS_Senologie_Diagnose_Lokal |
+| Draft as of 2026-05-04 | *Computable Name*:VS_Senologie_Diagnose_Lokal |
 
  
 Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senologie-Slice) 
@@ -51,7 +51,7 @@ Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senologie-Slice)
   "title" : "VS Senologie Diagnose Lokal",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

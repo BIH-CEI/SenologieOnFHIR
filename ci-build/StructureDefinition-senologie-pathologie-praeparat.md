@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Pathologie_Praeparat |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Pathologie_Praeparat |
 
  
 Specimen für pathologische Präparate aus dotbase (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details 
@@ -51,7 +51,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pathologie
   "name" : "Senologie_Pathologie_Praeparat",
   "title" : "BIH Senologie Pathologisches Präparat",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

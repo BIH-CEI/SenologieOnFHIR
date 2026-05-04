@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsST | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToObdsST |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToObdsST |
 
  
 title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsST",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

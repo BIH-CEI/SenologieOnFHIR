@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToOncoBoxBrustVerlauf |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToOncoBoxBrustVerlauf |
 
  
 title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J03-J05) status: draft 
@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustVerlauf",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

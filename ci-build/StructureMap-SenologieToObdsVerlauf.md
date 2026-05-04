@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToObdsVerlauf |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToObdsVerlauf |
 
  
 title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung status: draft 
@@ -26,7 +26,7 @@ title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsVerlauf",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

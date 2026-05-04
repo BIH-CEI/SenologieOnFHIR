@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-pdl1-status | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_PDL1_Status |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_PDL1_Status |
 
  
 PD-L1 Immunhistochemie-Befund für Mamma-Karzinom. Erbt TPS, CPS, ICS und TC-Score Slices vom MII MTB PD-L1 Profil. Klinisch relevant bei TNBC (Pembrolizumab-Indikation bei CPS >= 10, KEYNOTE-522). 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pdl1-statu
   "name" : "Senologie_PDL1_Status",
   "title" : "BIH Senologie PD-L1 Status",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

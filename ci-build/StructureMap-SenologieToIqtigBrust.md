@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToIqtigBrust |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToIqtigBrust |
 
  
 title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust status: draft 
@@ -26,7 +26,7 @@ title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust status
   "version" : "0.1.0",
   "name" : "SenologieToIqtigBrust",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Pathologie_Befund |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Pathologie_Befund |
 
  
 DiagnosticReport für pathologische Befunde aus dotbase Questionnaire 'Pathologie'. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert. 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pathologie
   "name" : "Senologie_Pathologie_Befund",
   "title" : "BIH Senologie Pathologie Befund",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

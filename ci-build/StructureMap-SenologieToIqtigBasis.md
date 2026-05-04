@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBasis | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToIqtigBasis |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToIqtigBasis |
 
  
 title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis status: draft 
@@ -26,7 +26,7 @@ title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis status: d
   "version" : "0.1.0",
   "name" : "SenologieToIqtigBasis",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

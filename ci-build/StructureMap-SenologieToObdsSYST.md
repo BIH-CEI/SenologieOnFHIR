@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToObdsSYST |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToObdsSYST |
 
  
 title: Senologie FHIR to oBDS Systemische Therapie (SYST) status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Systemische Therapie (SYST) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsSYST",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

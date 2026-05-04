@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181 | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToIqtigMammachirurgie181 |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToIqtigMammachirurgie181 |
 
  
 title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator) status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator) stat
   "version" : "0.1.0",
   "name" : "SenologieToIqtigMammachirurgie181",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

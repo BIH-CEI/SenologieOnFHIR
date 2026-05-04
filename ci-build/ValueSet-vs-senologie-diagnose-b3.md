@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-b3 | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:VS_Senologie_Diagnose_B3 |
+| Draft as of 2026-05-04 | *Computable Name*:VS_Senologie_Diagnose_B3 |
 
  
 B3 Läsionen der Mamma nach S3-Leitlinie 
@@ -50,7 +50,7 @@ This value set is not used here; it may be used elsewhere (e.g. specifications a
   "name" : "VS_Senologie_Diagnose_B3",
   "title" : "VS Senologie B3 Läsionen",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

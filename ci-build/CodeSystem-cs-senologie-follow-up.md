@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:CS_Senologie_FollowUp |
+| Draft as of 2026-05-04 | *Computable Name*:CS_Senologie_FollowUp |
 
  
 Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes. 
@@ -31,7 +31,7 @@ Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes 
   "name" : "CS_Senologie_FollowUp",
   "title" : "CS Senologie Follow-Up",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

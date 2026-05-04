@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/CodeSystem/cs-oncobox-primaerfallart | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:CS_OncoBox_Primaerfallart |
+| Draft as of 2026-05-04 | *Computable Name*:CS_OncoBox_Primaerfallart |
 
  
 Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01) 
@@ -31,7 +31,7 @@ Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01)
   "name" : "CS_OncoBox_Primaerfallart",
   "title" : "CS OncoBox Primaerfallart",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

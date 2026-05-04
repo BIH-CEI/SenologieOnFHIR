@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-studienname | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:VS_Senologie_Studienname |
+| Draft as of 2026-05-04 | *Computable Name*:VS_Senologie_Studienname |
 
  
 Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02). Enthält häufige Mammakarzinom-Studien. Die Liste ist erweiterbar (extensible Binding). 
@@ -50,7 +50,7 @@ Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02). Enthält häu
   "name" : "VS_Senologie_Studienname",
   "title" : "VS Senologie Studienname",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

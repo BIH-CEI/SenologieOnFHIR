@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Tumorboard_Empfehlung |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Tumorboard_Empfehlung |
 
  
 CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard) aus dotbase Questionnaire 'Empfehlung der interdisziplinären Tumorkonferenz V2.0' 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-tumorboard
   "name" : "Senologie_Tumorboard_Empfehlung",
   "title" : "BIH Senologie Tumorboard Empfehlung",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-verlauf | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:QuestVerlauf |
+| Draft as of 2026-05-04 | *Computable Name*:QuestVerlauf |
 
  
 Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp). 
@@ -43,7 +43,7 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

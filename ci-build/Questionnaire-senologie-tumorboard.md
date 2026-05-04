@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:QuestTumorboard |
+| Draft as of 2026-05-04 | *Computable Name*:QuestTumorboard |
 
  
 Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Template-based Extraction mit contained CarePlan und templateExtractValue-Annotationen. 
@@ -110,7 +110,7 @@ Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplin�
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

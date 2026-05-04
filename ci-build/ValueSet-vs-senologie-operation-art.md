@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Operation_Art |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Operation_Art |
 
  
 Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie 
@@ -51,7 +51,7 @@ Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie
   "name" : "Senologie_Operation_Art",
   "title" : "BIH LM Senologie Operation",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

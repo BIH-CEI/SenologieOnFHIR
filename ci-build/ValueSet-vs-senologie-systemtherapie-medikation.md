@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:VS_Senologie_Systemtherapie_Medikation |
+| Draft as of 2026-05-04 | *Computable Name*:VS_Senologie_Systemtherapie_Medikation |
 
  
 Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01) 
@@ -52,7 +52,7 @@ Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Termin
   "title" : "VS Senologie Systemtherapie Medikation",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*: |
+| Draft as of 2026-05-04 | *Computable Name*: |
 
  
 Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S) 
@@ -26,7 +26,7 @@ Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S)
   "version" : "0.1.0",
   "title" : "SNOMED CT to oBDS Therapie-Stellung zur OP",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

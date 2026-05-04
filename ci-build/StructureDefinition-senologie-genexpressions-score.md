@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressions-score | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Genexpressions_Score |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Genexpressions_Score |
 
  
 Observation für den numerischen Score-Wert eines Genexpressionstests (Oncotype DX Recurrence Score, MammaPrint Index, Prosigna ROR Score, EndoPredict EPclin Score) 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-genexpress
   "name" : "Senologie_Genexpressions_Score",
   "title" : "BIH PR Seno Genexpressions-Score",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

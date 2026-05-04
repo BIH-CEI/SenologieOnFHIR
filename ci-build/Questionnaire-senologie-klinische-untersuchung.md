@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:QuestKlinischeUntersuchung |
+| Draft as of 2026-05-04 | *Computable Name*:QuestKlinischeUntersuchung |
 
  
 Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Template-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel. Das Extraction-Template liegt unter input/resources/Questionnaire-senologie-klinische-untersuchung-template.json. 
@@ -177,7 +177,7 @@ Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nu
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-aufklaerungsdatum | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:EX_Senologie_Aufklaerungsdatum |
+| Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_Aufklaerungsdatum |
 
 Datum der Aufklärung der Patientin über die Studie
 
@@ -47,7 +47,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-aufklae
   "name" : "EX_Senologie_Aufklaerungsdatum",
   "title" : "Aufklärungsdatum",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

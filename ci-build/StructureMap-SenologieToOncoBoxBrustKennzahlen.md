@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:SenologieToOncoBoxBrustKennzahlen |
+| Draft as of 2026-05-04 | *Computable Name*:SenologieToOncoBoxBrustKennzahlen |
 
  
 title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status: draft 
@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustKennzahlen",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

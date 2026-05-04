@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-sozialdienst | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:Senologie_Sozialdienst |
+| Draft as of 2026-05-04 | *Computable Name*:Senologie_Sozialdienst |
 
  
 Procedure für Sozialdienst-Kontakt (OncoBox 2.0 L02, DKG OF-14). Erfasst ob eine Sozialdienst-Beratung stattgefunden hat und wann. 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-sozialdien
   "name" : "Senologie_Sozialdienst",
   "title" : "BIH Senologie Sozialdienst-Kontakt",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-icdo3-mamma-topographie | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:CM_SCT_To_ICDO3_Mamma_Topographie |
+| Draft as of 2026-05-04 | *Computable Name*:CM_SCT_To_ICDO3_Mamma_Topographie |
 
  
 Übersetzung der SNOMED-CT-kodierten Brustquadranten in ICD-O-3 Topographie-Codes (C50.0–C50.9) für die oBDS-Krebsregistermeldung. Quelle: BodyStructure.locationQualifier[quadrant]. 
@@ -27,7 +27,7 @@
   "name" : "CM_SCT_To_ICDO3_Mamma_Topographie",
   "title" : "CM SNOMED CT Brustquadrant zu ICD-O-3 Topographie",
   "status" : "draft",
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie | *Version*:0.1.0 |
-| Draft as of 2026-05-03 | *Computable Name*:QuestSystemtherapie |
+| Draft as of 2026-05-04 | *Computable Name*:QuestSystemtherapie |
 
  
 Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, MedicationStatement, Observation). 
@@ -72,7 +72,7 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-03T21:28:00+00:00",
+  "date" : "2026-05-04T06:23:23+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
