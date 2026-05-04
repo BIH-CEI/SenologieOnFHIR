@@ -31,7 +31,7 @@ Auswahlliste klinischer Studien am Brustzentrum für die OncoBox 2.0 Meldung (K0
   "name" : "CS_Senologie_Studienname",
   "title" : "CS Senologie Studienname",
   "status" : "draft",
-  "date" : "2026-05-04T06:44:52+00:00",
+  "date" : "2026-05-04T07:06:34+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

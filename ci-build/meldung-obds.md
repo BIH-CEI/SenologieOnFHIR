@@ -12,7 +12,7 @@
 
 Die Krebsregistermeldung nach dem Onkologischen Basisdatensatz (oBDS) ist eine zentrale Meldepflicht zertifizierter Brustzentren. Ziel dieser Transformation ist die **automatische Ableitung von oBDS-konformen XML-Meldungen aus klinischen FHIR-Daten**, die auf den Senologie-Profilen dieses IGs basieren.
 
-* **Quellformat**: FHIR Bundle mit Senologie-Profilen (dieser IG)
+* **Qüllformat**: FHIR Bundle mit Senologie-Profilen (dieser IG)
 * **Zielformat**: oBDS XML, Schema-Version **v3.0.5**
 * **Methode**: FHIR StructureMaps (FML) mit oBDS Logical Model als Zielstruktur
 * **Ausführung**: [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke
@@ -69,7 +69,7 @@ Der oBDS enthält ein mammaspezifisches Modul (`<Modul_Mamma>`), das bei Diagnos
 
 | | | |
 | :--- | :--- | :--- |
-| `HormonrezeptorStatus_Oestrogen` | P / N / U | Observation (Östrogenrezeptor-Status) |
+| `HormonrezeptorStatus_Östrogen` | P / N / U | Observation (Östrogenrezeptor-Status) |
 | `HormonrezeptorStatus_Progesteron` | P / N / U | Observation (Progesteronrezeptor-Status) |
 | `Her2neuStatus` | P / N / U | Observation (HER2-Status) |
 | `PräoperativeMarkierung` | **(Kodierung nach oBDS)** | Senologie_Operation (Extension) |
@@ -95,7 +95,7 @@ Für die Medikamenten-Übersetzung stehen bereits ConceptMaps in diesem IG berei
 
 ### Datenverfügbarkeit und offene Lücken
 
-Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen abgeleitet werden. Für eine korrekte Krebsregistermeldung müssen zusätzliche Datenquellen eingebunden werden.
+Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen abgeleitet werden. Für eine korrekte Krebsregistermeldung müssen zusätzliche Datenqüllen eingebunden werden.
 
 | | | |
 | :--- | :--- | :--- |
@@ -117,23 +117,23 @@ Nicht alle oBDS-Pflichtfelder können vollständig aus den Senologie-Profilen ab
 | Modul Mamma: TumorgrößeInvasiv / TumorgrößeDCIS | Senologie_Pathologie_Befund (LOINC 33728-7) | Vorhanden — strukturierte Tumorgröße in mm |
 | Topographie ICD-O (C50.x) | Senologie_Tumorlokalisation (BodyStructure.locationQualifier[quadrant]) | **Vorhanden**— Quadrant → C50.0–C50.9 via[ConceptMap](ConceptMap-cm-sct-to-icdo3-mamma-topographie.md), Seite separat aus locationQualifier[seitenlokalisation] |
 | Genexpressionstests (Oncotype DX, MammaPrint) → Menge_Weitere_Klassifikation | Senologie_Genexpressionstest (RiskAssessment) | Vorhanden — wird als`<Weitere_Klassifikation>`mit Name + Stadium/Score abgebildet |
-| Frühere Tumorerkrankungen | MII Onko (`mii-pr-onko-fruehere-tumorerkrankung`) | **Teilweise abbildbar**— MII-Profil vorhanden, aber aktuell nicht als Senologie-Testdatum; Datenlage im Brustzentrum meist anamnestisch → siehe OF-13 |
+| Frühere Tumorerkrankungen | MII Onko (`mii-pr-onko-frühere-tumorerkrankung`) | **Teilweise abbildbar**— MII-Profil vorhanden, aber aktüll nicht als Senologie-Testdatum; Datenlage im Brustzentrum meist anamnestisch → siehe OF-13 |
 | Allgemeiner Leistungszustand (ECOG) | MII Onko (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) | **Vorhanden**— MII Onko Profil, kein eigenes Senologie-Profil nötig. Testdaten: Fall 1, 2, 9 (Verlauf) |
-| Absender/Melder-Daten (IKNR, Arzt, Anschrift, Bankdaten) | KIS / Verwaltung | **Externe Quelle**— administrative Daten |
-| Meldebegründung, Eigene Leistung | KIS / Verwaltung | **Externe Quelle** |
-| Sterbedatum, Todesursache | KIS / Standesamt | **Externe Quelle** |
+| Absender/Melder-Daten (IKNR, Arzt, Anschrift, Bankdaten) | KIS / Verwaltung | **Externe Qülle**— administrative Daten |
+| Meldebegründung, Eigene Leistung | KIS / Verwaltung | **Externe Qülle** |
+| Sterbedatum, Todesursache | KIS / Standesamt | **Externe Qülle** |
 | Nebenwirkungen Systemtherapie (CTCAE-Grad) | MII Onko (`mii-pr-onko-nebenwirkung-adverse-event`) | **Vorhanden**— AdverseEvent mit CTCAE-Art, Grad und Verursacher-Referenz |
 | Nebenwirkungen Strahlentherapie (CTCAE) | MII Onko (`mii-pr-onko-nebenwirkung-adverse-event`) | **Vorhanden**— gleiches Profil, suspectEntity verweist auf RT-Procedure |
 | Nebenwirkung Art: MedDRA-Code (alternativ zu Bezeichnung) | MII Onko AdverseEvent | **Vorhanden im LM**— in StructureMap noch nicht ausgeschrieben |
 | Sozialdienstkontakt (Modul_Allgemein) | MII Onko (`mii-pr-onko-mamma-sozialdienst`) | **Teilweise abbildbar**— MII-Profil existiert, aber nicht im Senologie-Scope dokumentiert → siehe OF-14 |
-| Strukturierte ycTNM / ypTNM bei neoadjuvanter Therapie (Fall 4, 5, 7) | MII Onko TNM-Profile | **Lücke in Testdaten**— aktuell nur narrativ in Procedure.outcome.text; benötigt TNM-Observations mit y-Symbol |
+| Strukturierte ycTNM / ypTNM bei neoadjuvanter Therapie (Fall 4, 5, 7) | MII Onko TNM-Profile | **Lücke in Testdaten**— aktüll nur narrativ in Procedure.outcome.text; benötigt TNM-Observations mit y-Symbol |
 
 #### Handlungsoptionen
 
 1. **CTCAE-Nebenwirkungen** — Über das bestehende MII Onko Profil `mii-pr-onko-nebenwirkung-adverse-event` (AdverseEvent) abbildbar. CTCAE-Art, Grad und CTCAE-Version sind als MS-Elemente definiert. Die `suspectEntity`-Referenz verknüpft die Nebenwirkung mit der verursachenden Therapie. Kein eigenes Senologie-Profil nötig.
 1. **ICD-O-Topographie** — Wird aus der BodyStructure (Tumorlokalisation) abgeleitet: SNOMED-Quadrant → ICD-O-3 C50.x via ConceptMap. Seitenlokalisation separat. Die [ConceptMap SNOMED → ICD-O-3](ConceptMap-cm-sct-to-icdo3-mamma-topographie.md) deckt alle 7 Quadranten ab, mit Fallback auf C50.9.
 1. **ECOG-Leistungszustand** — Über das bestehende MII Onko Profil (`mii-pr-onko-allgemeiner-leistungszustand-ecog`) abbildbar. Muss im Brustzentrum bei Diagnose und Verlauf dokumentiert und als Observation im Bundle mitgeliefert werden. Testdaten für Verlaufs-ECOG liegen für Fall 1, 2 und 9 vor.
-1. **Mamma-spezifische Modulfelder (QI-3, Drahtmarkierung, Tumorgröße)** — Die Felder `PraeopDrahtmarkierung`, `IntraopPraeparatkontrolle` (QI-3), `TumorgroesseInvasiv` und `TumorgroesseDCIS` sind im Logical Model ergänzt. Die Drahtmarkierung wird aus der OP-Planung (ServiceRequest-Extension `preOpMarkierung`) übernommen; die QI-3-Präparatkontrolle aus `Specimen.processing.procedure`; Tumorgröße aus der Pathologie (LOINC 33728-7).
+1. **Mamma-spezifische Modulfelder (QI-3, Drahtmarkierung, Tumorgröße)** — Die Felder `PräopDrahtmarkierung`, `IntraopPraeparatkontrolle` (QI-3), `TumorgroesseInvasiv` und `TumorgroesseDCIS` sind im Logical Model ergänzt. Die Drahtmarkierung wird aus der OP-Planung (ServiceRequest-Extension `preOpMarkierung`) übernommen; die QI-3-Präparatkontrolle aus `Specimen.processing.procedure`; Tumorgröße aus der Pathologie (LOINC 33728-7).
 1. **Genexpressionstests** — Oncotype DX, MammaPrint, Prosigna etc. werden als `<Weitere_Klassifikation>` (oBDS `Menge_Weitere_Klassifikation`) exportiert. Mapping aus `Senologie_Genexpressionstest` (RiskAssessment): `method.coding.display` → Name, `occurrenceDateTime` → Datum, `prediction.qualitativeRisk` → Stadium.
 1. **Administrative Daten über ETL** — Absender, Melder, Bankdaten, Meldebegründung kommen aus dem KIS bzw. der Krankenhausverwaltung und werden in der ETL-Strecke ergänzt, in Abstimmung mit der GB IT.
 
@@ -153,7 +153,7 @@ Als Referenz für die oBDS-Struktur dient der Testdatensatz der [Plattform §65c
 
 Der Testdatensatz enthält **10 Meldungen** (1 Diagnose, 2 Operationen, 2 Systemtherapien, 1 Strahlentherapie, 2 Tumorkonferenzen, 1 Verlauf, 1 Tod) und deckt damit alle relevanten Meldungstypen ab.
 
-> **Hinweis**: Die Testdaten verwenden oBDS-Schema v3.0.1. Die Zielversion dieser Transformation ist v3.0.5. Unterschiede zwischen den Versionen (insbesondere neue Pflichtfelder und erweiterte Module) müssen bei der StructureMap-Entwicklung berücksichtigt werden.
+> **Hinweis**: Die Testdaten verwenden oBDS-Schema v3.0.1. Die Zielversion dieser Transformation ist v3.0.5. Unterschiede zwischen den Versionen (insbesondere neü Pflichtfelder und erweiterte Module) müssen bei der StructureMap-Entwicklung berücksichtigt werden.
 
 ### Ausführung
 
@@ -181,7 +181,7 @@ Content-Type: application/fhir+json
     },
     {
       "name": "source",
-      "valueUri": "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose"
+      "valüUri": "https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose"
     }
   ]
 }

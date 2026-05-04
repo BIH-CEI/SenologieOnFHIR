@@ -26,7 +26,7 @@ Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, R, S, X)
   "version" : "0.1.0",
   "title" : "SNOMED CT to oBDS Intention",
   "status" : "draft",
-  "date" : "2026-05-04T06:44:52+00:00",
+  "date" : "2026-05-04T07:06:34+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

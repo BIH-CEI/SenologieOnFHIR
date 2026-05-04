@@ -50,7 +50,7 @@ Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen
   "name" : "VSSenologieDiagnosesicherung",
   "title" : "ValueSet Diagnosesicherung",
   "status" : "draft",
-  "date" : "2026-05-04T06:44:52+00:00",
+  "date" : "2026-05-04T07:06:34+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -261,14 +261,14 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <div class="markdown-toc">
 <ul id="markdown-toc">
   <li><a href="#iregg-meldungstransformation-brustimplantate" id="markdown-toc-iregg-meldungstransformation-brustimplantate">IRegG-Meldungstransformation (Brustimplantate)</a>    <ul>
-      <li><a href="#ueberblick" id="markdown-toc-ueberblick">Ueberblick</a></li>
+      <li><a href="#überblick" id="markdown-toc-überblick">Überblick</a></li>
       <li><a href="#architektur" id="markdown-toc-architektur">Architektur</a></li>
-      <li><a href="#structuremap-uebersicht" id="markdown-toc-structuremap-uebersicht">StructureMap-Uebersicht</a></li>
+      <li><a href="#structuremap-übersicht" id="markdown-toc-structuremap-übersicht">StructureMap-Übersicht</a></li>
       <li><a href="#mapping-tabelle-fhir-elemente-zu-iregg-xml" id="markdown-toc-mapping-tabelle-fhir-elemente-zu-iregg-xml">Mapping-Tabelle: FHIR-Elemente zu IRegG-XML</a></li>
-      <li><a href="#code-uebersetzung" id="markdown-toc-code-uebersetzung">Code-Uebersetzung</a></li>
+      <li><a href="#code-übersetzung" id="markdown-toc-code-übersetzung">Code-Übersetzung</a></li>
       <li><a href="#datenverfügbarkeit-und-offene-lücken" id="markdown-toc-datenverfügbarkeit-und-offene-lücken">Datenverfügbarkeit und offene Lücken</a></li>
       <li><a href="#iregg-spezifikation" id="markdown-toc-iregg-spezifikation">IRegG-Spezifikation</a></li>
-      <li><a href="#ausfuehrung" id="markdown-toc-ausfuehrung">Ausfuehrung</a></li>
+      <li><a href="#ausführung" id="markdown-toc-ausführung">Ausführung</a></li>
     </ul>
   </li>
 </ul>
@@ -276,21 +276,21 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 </div>
 <h1 id="iregg-meldungstransformation-brustimplantate">IRegG-Meldungstransformation (Brustimplantate)</h1>
 
-<h3 id="ueberblick">Ueberblick</h3>
+<h3 id="überblick">Überblick</h3>
 
-<p>Das Implantateregistergesetz (IRegG) verpflichtet Gesundheitseinrichtungen zur Meldung bei Einsatz, Wechsel oder Entfernung von Brustimplantaten an das Deutsche Institut fuer Medizinische Dokumentation und Information (DIMDI). Diese Transformation erzeugt <strong>IRegG-konforme XML-Meldungen aus klinischen FHIR-Daten</strong>, die auf den Senologie-Profilen dieses IGs basieren.</p>
+<p>Das Implantateregistergesetz (IRegG) verpflichtet Gesundheitseinrichtungen zur Meldung bei Einsatz, Wechsel oder Entfernung von Brustimplantaten an das Deutsche Institut für Medizinische Dokumentation und Information (DIMDI). Diese Transformation erzeugt <strong>IRegG-konforme XML-Meldungen aus klinischen FHIR-Daten</strong>, die auf den Senologie-Profilen dieses IGs basieren.</p>
 
 <ul>
-  <li><strong>Quellformat</strong>: FHIR Bundle mit Senologie-Profilen (dieser IG)</li>
+  <li><strong>Qüllformat</strong>: FHIR Bundle mit Senologie-Profilen (dieser IG)</li>
   <li><strong>Zielformat</strong>: IRegG XML (GEMeldung), Spezifikation <strong>V4.1.1</strong></li>
   <li><strong>Methode</strong>: FHIR StructureMaps (FML) mit IRegG Logical Model als Zielstruktur</li>
-  <li><strong>Ausfuehrung</strong>: <a href="https://github.com/ahdis/matchbox">Matchbox</a> als lokale ETL-Strecke</li>
+  <li><strong>Ausführung</strong>: <a href="https://github.com/ahdis/matchbox">Matchbox</a> als lokale ETL-Strecke</li>
   <li><strong>Scope</strong>: Nur Brustimplantate – keine Endoprothesen, keine Aortenklappen</li>
 </ul>
 
 <h3 id="architektur">Architektur</h3>
 
-<p>Die Transformation folgt dem gleichen Muster wie die <a href="meldung-obds.html">oBDS-Transformation</a>: FHIR-Ressourcen werden ueber StructureMaps auf ein Logical Model abgebildet, das anschliessend als XML serialisiert wird.</p>
+<p>Die Transformation folgt dem gleichen Muster wie die <a href="meldung-obds.html">oBDS-Transformation</a>: FHIR-Ressourcen werden über StructureMaps auf ein Logical Model abgebildet, das anschliessend als XML serialisiert wird.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────┐
 │  FHIR Bundle                │
@@ -318,14 +318,14 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung <strong>eine einzelne GEMeldung pro Behandlungsfall</strong> (statt mehrerer Meldungen pro klinischem Ereignis). Alle relevanten Informationen (Patient, Operation, Implantat, Entlassung) werden in einer Meldung zusammengefasst.</p>
 
-<h3 id="structuremap-uebersicht">StructureMap-Uebersicht</h3>
+<h3 id="structuremap-übersicht">StructureMap-Übersicht</h3>
 
 <table>
   <thead>
     <tr>
       <th>StructureMap</th>
       <th>Aufgabe</th>
-      <th>Quell-Profile</th>
+      <th>Qüll-Profile</th>
       <th>Ziel (Logical Model)</th>
     </tr>
   </thead>
@@ -365,7 +365,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <thead>
     <tr>
       <th>IRegG-Feld</th>
-      <th>FHIR-Quelle</th>
+      <th>FHIR-Qülle</th>
       <th>Anmerkung</th>
     </tr>
   </thead>
@@ -383,7 +383,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <tr>
       <td>MEL_Bsnr</td>
       <td>Organization.identifier (BSNR)</td>
-      <td>Betriebsstaettennummer</td>
+      <td>Betriebsstättennummer</td>
     </tr>
     <tr>
       <td>MEL_IrdSpezVersion</td>
@@ -404,7 +404,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <thead>
     <tr>
       <th>IRegG-Feld</th>
-      <th>FHIR-Quelle</th>
+      <th>FHIR-Qülle</th>
       <th>Anmerkung</th>
     </tr>
   </thead>
@@ -443,7 +443,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <thead>
     <tr>
       <th>IRegG-Feld</th>
-      <th>FHIR-Quelle</th>
+      <th>FHIR-Qülle</th>
       <th>Anmerkung</th>
     </tr>
   </thead>
@@ -456,12 +456,12 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <tr>
       <td>PAT_Groesse</td>
       <td>Observation (LOINC 8302-2)</td>
-      <td>Koerpergroesse in cm</td>
+      <td>Körpergroesse in cm</td>
     </tr>
     <tr>
       <td>PAT_Gewicht</td>
       <td>Observation (LOINC 29463-7)</td>
-      <td>Koerpergewicht in kg</td>
+      <td>Körpergewicht in kg</td>
     </tr>
     <tr>
       <td>PAT_GeschlechtSchluessel</td>
@@ -492,7 +492,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <thead>
     <tr>
       <th>IRegG-Feld</th>
-      <th>FHIR-Quelle</th>
+      <th>FHIR-Qülle</th>
       <th>Anmerkung</th>
     </tr>
   </thead>
@@ -561,7 +561,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <thead>
     <tr>
       <th>IRegG-Feld</th>
-      <th>FHIR-Quelle</th>
+      <th>FHIR-Qülle</th>
       <th>Anmerkung</th>
     </tr>
   </thead>
@@ -622,8 +622,8 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <td>enum_0128</td>
     </tr>
     <tr>
-      <td>ABI_FuellungSchluessel</td>
-      <td>Device.extension (ireg-implantat-fuellung)</td>
+      <td>ABI_FüllungSchluessel</td>
+      <td>Device.extension (ireg-implantat-füllung)</td>
       <td>enum_0124</td>
     </tr>
     <tr>
@@ -640,7 +640,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <thead>
     <tr>
       <th>IRegG-Feld</th>
-      <th>FHIR-Quelle</th>
+      <th>FHIR-Qülle</th>
       <th>Anmerkung</th>
     </tr>
   </thead>
@@ -663,9 +663,9 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   </tbody>
 </table>
 
-<h3 id="code-uebersetzung">Code-Uebersetzung</h3>
+<h3 id="code-übersetzung">Code-Übersetzung</h3>
 
-<p>Die IRegG-Meldung verwendet eigene Enumerationen (enum_0044, enum_0050, enum_0065, etc.) statt SNOMED CT oder anderer Standardterminologien. Die Uebersetzung erfolgt direkt in den StructureMaps:</p>
+<p>Die IRegG-Meldung verwendet eigene Enumerationen (enum_0044, enum_0050, enum_0065, etc.) statt SNOMED CT oder anderer Standardterminologien. Die Übersetzung erfolgt direkt in den StructureMaps:</p>
 
 <table>
   <thead>
@@ -673,7 +673,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <th>Datenelement</th>
       <th>FHIR-Kodierung</th>
       <th>IRegG-Enumeration</th>
-      <th>Uebersetzungsmethode</th>
+      <th>Übersetzungsmethode</th>
     </tr>
   </thead>
   <tbody>
@@ -712,15 +712,15 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h3 id="datenverfügbarkeit-und-offene-lücken">Datenverfügbarkeit und offene Lücken</h3>
 
-<p class="stu-note">Nicht alle IRegG-Pflichtfelder können aus den Senologie-Profilen abgeleitet werden. Für eine vollständige IRegG-Meldung müssen zusätzliche Datenquellen eingebunden werden.</p>
+<p class="stu-note">Nicht alle IRegG-Pflichtfelder können aus den Senologie-Profilen abgeleitet werden. Für eine vollständige IRegG-Meldung müssen zusätzliche Datenqüllen eingebunden werden.</p>
 
-<p>Die folgende Tabelle zeigt, welche IRegG-Daten aus welcher Quelle kommen:</p>
+<p>Die folgende Tabelle zeigt, welche IRegG-Daten aus welcher Qülle kommen:</p>
 
 <table>
   <thead>
     <tr>
       <th>IRegG-Datenpunkt</th>
-      <th>Quelle</th>
+      <th>Qülle</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -743,7 +743,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <tr>
       <td>Implantat: UDI-DI, Form, Oberfläche, Füllung, Volumen</td>
       <td>Senologie_Implantat</td>
-      <td><strong>Erweiterung nötig</strong> — Profil aktuell zu dünn</td>
+      <td><strong>Erweiterung nötig</strong> — Profil aktüll zu dünn</td>
     </tr>
     <tr>
       <td>Implantatlage (submuskulär/subfaszial etc.)</td>
@@ -772,23 +772,23 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     </tr>
     <tr>
       <td>Transfernummer (Pseudonym)</td>
-      <td>Vertrauensstelle</td>
-      <td><strong>Externe Quelle</strong> — nicht klinisch, wird vom Vertrauensdienst vergeben</td>
+      <td>Vertraünsstelle</td>
+      <td><strong>Externe Qülle</strong> — nicht klinisch, wird vom Vertraünsdienst vergeben</td>
     </tr>
     <tr>
       <td>Körpergröße, Gewicht, Alter</td>
       <td>KIS / Allgemeine Anamnese</td>
-      <td><strong>Externe Quelle</strong> — nicht im Senologie-Scope (→ IPS/KIS)</td>
+      <td><strong>Externe Qülle</strong> — nicht im Senologie-Scope (→ IPS/KIS)</td>
     </tr>
     <tr>
       <td>Geschlecht bei Geburt</td>
       <td>KIS / Patient</td>
-      <td><strong>Externe Quelle</strong> — Patient.extension</td>
+      <td><strong>Externe Qülle</strong> — Patient.extension</td>
     </tr>
     <tr>
       <td>Entlassungsdatum, -grund</td>
       <td>KIS / Encounter</td>
-      <td><strong>Externe Quelle</strong> — ISiK-Encounter</td>
+      <td><strong>Externe Qülle</strong> — ISiK-Encounter</td>
     </tr>
     <tr>
       <td>IRegG-Befundcodes (Infektion, Kapselfibrose, BIA-ALCL etc.)</td>
@@ -810,7 +810,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
     <p><strong>Eigenes IRegG-Erfassungsformular</strong> — Separater SDC-Questionnaire speziell für die IRegG-Meldung, der die fehlenden Felder nacherfasst. Wird nach der OP ausgefüllt und ergänzt die klinische Dokumentation. Vorteil: klare Trennung klinisch vs. regulatorisch. Nachteil: Doppelerfassung möglich.</p>
   </li>
   <li>
-    <p><strong>Hausinterne ETL-Strecke</strong> — Die fehlenden Daten (ASA, Vitals, Entlassung, Transfernummer) werden aus KIS, Anästhesiesystem und Vertrauensstelle zusammengeführt und mit den Senologie-Daten zu einer vollständigen IRegG-Meldung kombiniert. Vorteil: nutzt bestehende Datenquellen. Nachteil: standortspezifische Integration nötig.</p>
+    <p><strong>Hausinterne ETL-Strecke</strong> — Die fehlenden Daten (ASA, Vitals, Entlassung, Transfernummer) werden aus KIS, Anästhesiesystem und Vertraünsstelle zusammengeführt und mit den Senologie-Daten zu einer vollständigen IRegG-Meldung kombiniert. Vorteil: nutzt bestehende Datenqüllen. Nachteil: standortspezifische Integration nötig.</p>
   </li>
 </ol>
 
@@ -830,9 +830,9 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <p><strong>Hinweis</strong>: Die IRegG-Spezifikation deckt drei Produktgruppen ab: Brustimplantate, Endoprothesen und Aortenklappen. Dieser IG bildet ausschliesslich den <strong>Brustimplantat-Anteil</strong> ab. Die weiteren Produktgruppen werden durch andere IGs oder Erweiterungen abgedeckt.</p>
 </blockquote>
 
-<h3 id="ausfuehrung">Ausfuehrung</h3>
+<h3 id="ausführung">Ausführung</h3>
 
-<p>Die Transformation wird analog zur oBDS-Transformation ueber <a href="https://github.com/ahdis/matchbox">Matchbox</a> als lokale ETL-Strecke ausgefuehrt.</p>
+<p>Die Transformation wird analog zur oBDS-Transformation über <a href="https://github.com/ahdis/matchbox">Matchbox</a> als lokale ETL-Strecke ausgeführt.</p>
 
 <p><strong>Transformation:</strong></p>
 
@@ -848,13 +848,13 @@ Content-Type: application/fhir+json
     },
     {
       "name": "source",
-      "valueUri": "https://www.senologie.org/fhir/StructureMap/SenologieToIRegMeldung"
+      "valüUri": "https://www.senologie.org/fhir/StructureMap/SenologieToIRegMeldung"
     }
   ]
 }
 </code></pre></div></div>
 
-<p>Das Ergebnis ist eine Instanz des IRegG Logical Models, die als XML serialisiert und an das DIMDI uebermittelt werden kann.</p>
+<p>Das Ergebnis ist eine Instanz des IRegG Logical Models, die als XML serialisiert und an das DIMDI übermittelt werden kann.</p>
 
 
 
@@ -875,7 +875,7 @@ Content-Type: application/fhir+json
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 06:44+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 07:06+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

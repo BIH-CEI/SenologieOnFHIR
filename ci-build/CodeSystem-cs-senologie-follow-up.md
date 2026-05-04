@@ -31,7 +31,7 @@ Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes 
   "name" : "CS_Senologie_FollowUp",
   "title" : "CS Senologie Follow-Up",
   "status" : "draft",
-  "date" : "2026-05-04T06:44:52+00:00",
+  "date" : "2026-05-04T07:06:34+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
