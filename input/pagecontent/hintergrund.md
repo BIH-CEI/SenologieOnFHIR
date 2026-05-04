@@ -6,6 +6,8 @@ Zertifizierte Brustzentren dokumentieren die Versorgung ihrer Patientinnen für 
 
 ## Zielsetzung
 
+<img src="senologie-meldewege-uebersicht.png" alt="Klinische Dokumentation → FHIR → Meldewege" style="max-width:100%"/>
+
 Dieser Implementation Guide definiert ein gemeinsames Datenmodell für die strukturierte Dokumentation der Brustkrebsversorgung. Ziel ist es, klinische Informationen einmalig zu erfassen und daraus die verschiedenen Meldungen und Berichte abzuleiten. Anstatt für jeden Meldeweg ein eigenes System zu pflegen, wird ein geteiltes Modell geschaffen, das die Anforderungen aller Beteiligten abdeckt.
 
 ## Analyse der Meldewege
