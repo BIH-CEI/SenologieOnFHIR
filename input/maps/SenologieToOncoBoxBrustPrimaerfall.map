@@ -66,7 +66,54 @@ group MapPrimaerfall(source src : Condition, target tgt : BackboneElement, sourc
 
   // --- Operationen ---
   bundle.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation')) then {
-    entry.resource as procedure -> tgt.operation as op then MapOperation(procedure, op, bundle) "CallMapOperation";
+    entry.resource as procedure -> tgt.operation as op then MapOperation(procedure, op) "CallMapOperation";
+
+    // --- Op: Drahtmarkierung aus ServiceRequest (moved from MapOperation) ---
+    bundle.entry as srEntry where resource.is(ServiceRequest) then {
+      srEntry.resource as sr then {
+        sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung' then {
+          ext.value as val then {
+            val.coding as c where code = 'N' -> op.drahtmarkierung = '0' "SetDrahtKeine";
+            val.coding as c where code = 'S' -> op.drahtmarkierung = '1' "SetDrahtSono";
+            val.coding as c where code = 'M' -> op.drahtmarkierung = '2' "SetDrahtMammo";
+            val.coding as c where code = 'T' -> op.drahtmarkierung = '3' "SetDrahtMRT";
+          } "MapDrahtVal";
+        } "MapDrahtExt";
+      } "MapDrahtSR";
+    } "EntryDrahtSR";
+
+    // --- Op: Schnellschnitt / Praeparatkontrolle aus Specimen (moved from MapOperation) ---
+    bundle.entry as specEntry where resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat')) then {
+      specEntry.resource as specimen then {
+        specimen.processing as proc where procedure.coding.exists(code = '123038009') -> op.intraopSchnellschnitt = '1' "SetSSJa";
+        specimen.processing as proc then {
+          proc.procedure as p then {
+            p.coding as c where system = 'http://snomed.info/sct' then {
+              c.code as cd where $this = '71651007' -> op.intraopPraeparatkontrolle = '1' "SetPKMammo";
+              c.code as cd where $this = '16310003' -> op.intraopPraeparatkontrolle = '2' "SetPKSono";
+            } "MapPKCoding";
+          } "MapPKProcedure";
+        } "MapPKProcessing";
+      } "SpecCtx";
+    } "EntrySpecimen";
+
+    // --- Op: Komplikationen aus Observations (moved from MapOperation) ---
+    bundle.entry as kompEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
+      kompEntry.resource as obs -> op.komplikationen as komp then {
+        obs.component as comp where code.coding.exists(code = '116224001') then {
+          comp.value as val then {
+            val.coding as c then {
+              c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
+            } "MapKompKuerzelCoding";
+          } "MapKompKuerzelVal";
+        } "MapKompKuerzelComp";
+        obs.value as val then {
+          val.coding as c where system = 'http://snomed.info/sct' then {
+            c.code as cd -> komp.clavienDindo = cd "SetKompClavien";
+          } "MapKompClavienCoding";
+        } "MapKompClavien";
+      } "MapKompObs";
+    } "EntryKomp";
   } "EntryOperation";
 
   // --- Systemtherapie ---

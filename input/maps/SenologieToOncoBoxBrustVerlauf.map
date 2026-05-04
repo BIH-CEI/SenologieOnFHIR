@@ -46,7 +46,38 @@ group MapVerlaufFromBundle(source src : Bundle, target tgt : BackboneElement) {
   // --- Fernmetastasen-Observations -> Verlauf mit ereignis=3 ---
   // LOINC 21907-1 = "Distant metastases.clinical Cancer"
   src.entry as fmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
-    fmEntry.resource as fmObs -> tgt.verlauf as verl then MapVerlaufFernmetastase(fmObs, verl, src) "CallMapVerlaufFM";
+    fmEntry.resource as fmObs -> tgt.verlauf as verl then MapVerlaufFernmetastase(fmObs, verl) "CallMapVerlaufFM";
+
+    // === OncoBox 2.0: J03 — FM_OP_Datum (moved from MapVerlaufFernmetastase) ===
+    src.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+      opEntry.resource as proc then {
+        proc.extension as ext where url.contains('Intention') then {
+          ext.value as val then {
+            val.coding as c where code = 'P' then {
+              proc.performed as perf where $this.is(dateTime) -> verl.fmOperation as fmOp, fmOp.opDatum = perf "SetFMOpDatum";
+            } "CheckIntentionPalliativ";
+          } "MapIntentionValue";
+        } "MapIntentionExt";
+      } "MapFMOpProc";
+    } "EntryFMOp";
+
+    // === OncoBox 2.0: J04 — FM_Therapien (moved from MapVerlaufFernmetastase) ===
+    fmEntry.resource as fmObsCtx -> verl.fmTherapie as fmTh then MapFMTherapien(src, fmTh) "CallMapFMTherapien";
+
+    // === OncoBox 2.0: J05 — FM_Residualstatus (moved from MapVerlaufFernmetastase) ===
+    src.entry as opEntry2 where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+      opEntry2.resource as proc then {
+        proc.extension as ext where url.contains('Intention') then {
+          ext.value as val then {
+            val.coding as c where code = 'P' then {
+              proc.outcome as oc then {
+                oc.coding as rc where system.contains('residualstatus') -> verl.fmOperation as fmOp, fmOp.residualstatus = rc "SetFMResidualCode";
+              } "MapFMResidualCoding";
+            } "CheckIntentionPalliativR";
+          } "MapIntentionValueR";
+        } "MapIntentionExtR";
+      } "MapFMResidualProc";
+    } "EntryFMResidual";
   } "EntryVerlaufFM";
 
   // --- Conditions mit recurrence -> Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---
@@ -181,47 +212,13 @@ group MapVerlaufFollowUp(source src : Observation, target tgt : BackboneElement)
 // - extension:Intention mit code 'P' (palliativ) als FM-Kontextindikator
 // ============================================================================
 
-group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
+group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneElement) {
 
   // Verlauf_Datum: aus Observation.effectiveDateTime
   src.effective as eff where $this.is(dateTime) -> tgt.meldedatum = eff "SetVerlaufDatumFM";
 
   // Verlauf_Ereignis: 3 = Fernmetastase
   src -> tgt.ereignis = '3' "SetEreignisFM";
-
-  // === OncoBox 2.0: J03 — FM_OP_Datum ===
-  // Operationsdatum bei Fernmetastasen: aus Procedure (Operation) mit
-  // palliativer Intention im selben Bundle
-  bundle.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
-    opEntry.resource as proc then {
-      proc.extension as ext where url.contains('Intention') then {
-        ext.value as val then {
-          val.coding as c where code = 'P' then {
-            proc.performed as perf where $this.is(dateTime) -> tgt.fmOperation as fmOp, fmOp.opDatum = perf "SetFMOpDatum";
-          } "CheckIntentionPalliativ";
-        } "MapIntentionValue";
-      } "MapIntentionExt";
-    } "MapFMOpProc";
-  } "EntryFMOp";
-
-  // === OncoBox 2.0: J04 — FM_Therapien ===
-  src -> tgt.fmTherapie as fmTh then MapFMTherapien(bundle, fmTh) "CallMapFMTherapien";
-
-  // === OncoBox 2.0: J05 — FM_Residualstatus ===
-  // Aus Procedure.outcome der FM-Operation (palliativer Kontext)
-  bundle.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
-    opEntry.resource as proc then {
-      proc.extension as ext where url.contains('Intention') then {
-        ext.value as val then {
-          val.coding as c where code = 'P' then {
-            proc.outcome as oc then {
-              oc.coding as rc where system.contains('residualstatus') -> tgt.fmOperation as fmOp, fmOp.residualstatus = rc "SetFMResidualCode";
-            } "MapFMResidualCoding";
-          } "CheckIntentionPalliativR";
-        } "MapIntentionValueR";
-      } "MapIntentionExtR";
-    } "MapFMResidualProc";
-  } "EntryFMResidual";
 }
 
 // ============================================================================

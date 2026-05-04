@@ -23,7 +23,7 @@ uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" 
 // Residualstatus und Komplikationen.
 // ============================================================================
 
-group MapOperation(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+group MapOperation(source src : Procedure, target tgt : BackboneElement) {
 
   // LNR Default 1
   src -> tgt.lnr = 1 "SetOpLnr";
@@ -80,37 +80,6 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
     } "MapAxDissOPS";
   } "MapAxDiss";
 
-  // Op_Drahtmarkierung (aus Senologie_OP_Planung Extension preOpMarkierung)
-  // Werte: M=Mammografie (2), S=Sonografie (1), T=MRT (3), N=keine (0)
-  // Quelle: oft am ServiceRequest (Senologie_OP_Planung), ggf. auch am Procedure.
-  bundle.entry as srEntry where resource.is(ServiceRequest) then {
-    srEntry.resource as sr then {
-      sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung' then {
-        ext.value as val then {
-          val.coding as c where code = 'N' -> tgt.drahtmarkierung = '0' "SetDrahtKeine";
-          val.coding as c where code = 'S' -> tgt.drahtmarkierung = '1' "SetDrahtSono";
-          val.coding as c where code = 'M' -> tgt.drahtmarkierung = '2' "SetDrahtMammo";
-          val.coding as c where code = 'T' -> tgt.drahtmarkierung = '3' "SetDrahtMRT";
-        } "MapDrahtVal";
-      } "MapDrahtExt";
-    } "MapDrahtSR";
-  } "EntryDrahtSR";
-
-  // Op_Schnellschnitt / Op_Praeparatkontrolle aus Specimen.processing
-  bundle.entry as entry where resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat')) then {
-    entry.resource as specimen then {
-      specimen.processing as proc where procedure.coding.exists(code = '123038009') -> tgt.intraopSchnellschnitt = '1' "SetSSJa";
-      specimen.processing as proc then {
-        proc.procedure as p then {
-          p.coding as c where system = 'http://snomed.info/sct' then {
-            c.code as cd where $this = '71651007' -> tgt.intraopPraeparatkontrolle = '1' "SetPKMammo";
-            c.code as cd where $this = '16310003' -> tgt.intraopPraeparatkontrolle = '2' "SetPKSono";
-          } "MapPKCoding";
-        } "MapPKProcedure";
-      } "MapPKProcessing";
-    } "SpecCtx";
-  } "EntrySpecimen";
-
   // Residualstatus aus Procedure.outcome (SNOMED)
   src.outcome as out then {
     out.coding as c where system = 'http://snomed.info/sct' then {
@@ -154,27 +123,6 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
       c.code as cd where $this = 'R0' -> tgt.anzahlEingriffeR0 = 1 "SetAnzahlR0Default";
     } "MapAnzahlR0Coding";
   } "MapAnzahlR0";
-
-  // Komplikationen (Senologie_Operative_Komplikation)
-  bundle.entry as entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
-    entry.resource as obs -> tgt.komplikationen as komp then {
-      // Komp_Kuerzel: aus component[komplikationsart].valueCodeableConcept
-      obs.component as comp where code.coding.exists(code = '116224001') then {
-        comp.value as val then {
-          val.coding as c then {
-            c.code as cd -> komp.kuerzel = cd "SetKompKuerzel";
-          } "MapKompKuerzelCoding";
-        } "MapKompKuerzelVal";
-      } "MapKompKuerzelComp";
-
-      // Komp_Clavien: aus Observation.valueCodeableConcept (Clavien-Dindo Grad)
-      obs.value as val then {
-        val.coding as c where system = 'http://snomed.info/sct' then {
-          c.code as cd -> komp.clavienDindo = cd "SetKompClavien";
-        } "MapKompClavienCoding";
-      } "MapKompClavien";
-    } "MapKompObs";
-  } "EntryKomp";
 
   // Komplikationen ICD-10: aus Procedure.complication (compl_icd10 Slice)
   src.complication as comp then {
