@@ -31,6 +31,11 @@ Diese Kontakte haben unterschiedliche `Encounter.class` (ambulant, stationär, t
 - Genügt ISiKKontaktGesundheitseinrichtung als Encounter-Profil, ergänzt um eine Extension für Erst-/Verlaufsvorstellung?
 - ISiK definiert kein EpisodeOfCare-Profil — ist das eine Lücke oder bewusste Entscheidung?
 
+**Implikation für Zentrumsfall/Indexfall (OncoBox D01):**
+Die OnkoZert-Zertifizierung erfordert die Klassifikation des **Indexfalls** (Primärfall vs. Rezidiv vs. Zentrumsfall). Verlauf-Ereignisse (Lokalrezidiv, Fernmetastase, Zweittumor) beziehen sich immer auf diesen Indexfall. Ohne EpisodeOfCare fehlt die explizite Verknüpfung zwischen Encounter und Index-Condition. Aktuell wird die Primaerfallart im SM aus dem ICD-10-Prefix abgeleitet (C50 → invasiv, D05 → DCIS), was für Rezidiv-Fälle (ebenfalls C50) nicht ausreicht.
+
+**Externes Projekt:** Die Modellierung von EpisodeOfCare für die Onkologie wird aktuell in einem separaten Projekt erarbeitet. Sobald ein EpisodeOfCare-Profil verfügbar ist, kann es als Klammer für Indexfall, Verlauf und Zentrumsfall-Zuordnung genutzt werden.
+
 ---
 
 ## OF-2: Ambulanztyp und Abrechnungskontext
