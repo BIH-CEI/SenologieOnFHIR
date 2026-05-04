@@ -1,4 +1,4 @@
-# Fall 5: Komorbidität — Diabetes mellitus Typ 2 - Kerndatensatz Senologie v0.1.0
+# Fall 5: Komorbidität — Diabetes mellitus Typ 2 - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

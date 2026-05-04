@@ -1,4 +1,4 @@
-# BIH Senologie Somatische Mutation - Kerndatensatz Senologie v0.1.0
+# BIH Senologie Somatische Mutation - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:Senologie_Somatische_Mutation |
 
  
@@ -37,11 +37,11 @@ Other representations of profile: [CSV](StructureDefinition-senologie-somatische
   "resourceType" : "StructureDefinition",
   "id" : "senologie-somatische-mutation",
   "url" : "https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "Senologie_Somatische_Mutation",
   "title" : "BIH Senologie Somatische Mutation",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

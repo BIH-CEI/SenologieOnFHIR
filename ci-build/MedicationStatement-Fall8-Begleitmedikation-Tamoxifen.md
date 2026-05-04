@@ -1,4 +1,4 @@
-# Fall 8: Endokrine Therapie Tamoxifen 20 mg - Kerndatensatz Senologie v0.1.0
+# Fall 8: Endokrine Therapie Tamoxifen 20 mg - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

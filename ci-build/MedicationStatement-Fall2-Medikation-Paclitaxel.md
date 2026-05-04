@@ -1,4 +1,4 @@
-# Fall 2: Paclitaxel 80 mg/m2, Zyklus 1, Tag 1 - Kerndatensatz Senologie v0.1.0
+# Fall 2: Paclitaxel 80 mg/m2, Zyklus 1, Tag 1 - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

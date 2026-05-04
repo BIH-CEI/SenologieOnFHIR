@@ -1,4 +1,4 @@
-# Fall 6: Pathologie Vakuumbiopsie — DCIS G2, ER+ - Kerndatensatz Senologie v0.1.0
+# Fall 6: Pathologie Vakuumbiopsie — DCIS G2, ER+ - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

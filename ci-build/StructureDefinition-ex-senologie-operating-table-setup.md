@@ -1,4 +1,4 @@
-# OP-Lagerung/Tischanordnung - Kerndatensatz Senologie v0.1.0
+# OP-Lagerung/Tischanordnung - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-operating-table-setup | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-operating-table-setup | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_OperatingTableSetup |
 
 OP-Lagerung und Tischanordnung — kein natives FHIR-Äquivalent
@@ -42,11 +42,11 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-operati
   "resourceType" : "StructureDefinition",
   "id" : "ex-senologie-operating-table-setup",
   "url" : "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-operating-table-setup",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "EX_Senologie_OperatingTableSetup",
   "title" : "OP-Lagerung/Tischanordnung",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

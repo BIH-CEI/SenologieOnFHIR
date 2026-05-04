@@ -1,4 +1,4 @@
-# Fragebogen: Tumorboard Empfehlung - Kerndatensatz Senologie v0.1.0
+# Fragebogen: Tumorboard Empfehlung - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:QuestTumorboard |
 
  
@@ -104,13 +104,13 @@ Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplin�
     "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
   }],
   "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "QuestTumorboard",
   "title" : "Fragebogen: Tumorboard Empfehlung",
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

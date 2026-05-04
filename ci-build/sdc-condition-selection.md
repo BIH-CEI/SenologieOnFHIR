@@ -1,4 +1,4 @@
-# SDC Bezugsdiagnose-Auswahl - Kerndatensatz Senologie v0.1.0
+# SDC Bezugsdiagnose-Auswahl - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Datenmodell**](datenmodell.md)

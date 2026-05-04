@@ -1,4 +1,4 @@
-# Fall 9: Endokrine Therapie Tamoxifen 20 mg (initial, prämenopausal) - Kerndatensatz Senologie v0.1.0
+# Fall 9: Endokrine Therapie Tamoxifen 20 mg (initial, prämenopausal) - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

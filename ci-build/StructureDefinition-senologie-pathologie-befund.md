@@ -1,4 +1,4 @@
-# BIH Senologie Pathologie Befund - Kerndatensatz Senologie v0.1.0
+# BIH Senologie Pathologie Befund - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:Senologie_Pathologie_Befund |
 
  
@@ -37,11 +37,11 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pathologie
   "resourceType" : "StructureDefinition",
   "id" : "senologie-pathologie-befund",
   "url" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "Senologie_Pathologie_Befund",
   "title" : "BIH Senologie Pathologie Befund",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

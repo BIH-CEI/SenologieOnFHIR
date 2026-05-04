@@ -1,4 +1,4 @@
-# SNOMED CT to oBDS Intention - Kerndatensatz Senologie v0.1.0
+# SNOMED CT to oBDS Intention - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*: |
 
  
@@ -23,10 +23,10 @@ Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, R, S, X)
   "resourceType" : "ConceptMap",
   "id" : "cm-sct-to-obds-intention",
   "url" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "title" : "SNOMED CT to oBDS Intention",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

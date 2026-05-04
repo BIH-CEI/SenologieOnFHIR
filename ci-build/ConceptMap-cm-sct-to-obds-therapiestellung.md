@@ -1,4 +1,4 @@
-# SNOMED CT to oBDS Therapie-Stellung zur OP - Kerndatensatz Senologie v0.1.0
+# SNOMED CT to oBDS Therapie-Stellung zur OP - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*: |
 
  
@@ -23,10 +23,10 @@ Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S)
   "resourceType" : "ConceptMap",
   "id" : "cm-sct-to-obds-therapiestellung",
   "url" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "title" : "SNOMED CT to oBDS Therapie-Stellung zur OP",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

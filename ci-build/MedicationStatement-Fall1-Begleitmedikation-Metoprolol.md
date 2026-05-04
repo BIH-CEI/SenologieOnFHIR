@@ -1,4 +1,4 @@
-# Fall 1: Begleitmedikation Metoprolol 47,5 mg - Kerndatensatz Senologie v0.1.0
+# Fall 1: Begleitmedikation Metoprolol 47,5 mg - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

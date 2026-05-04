@@ -1,4 +1,4 @@
-# Beispiel: Invasiv-duktales Karzinom G2, ER+/PR+/HER2- - Kerndatensatz Senologie v0.1.0
+# Beispiel: Invasiv-duktales Karzinom G2, ER+/PR+/HER2- - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

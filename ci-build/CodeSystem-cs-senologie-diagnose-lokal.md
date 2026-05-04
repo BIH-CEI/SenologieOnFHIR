@@ -1,4 +1,4 @@
-# CS Senologie Diagnose Lokal - Kerndatensatz Senologie v0.1.0
+# CS Senologie Diagnose Lokal - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:CS_Senologie_Diagnose_Lokal |
 
  
@@ -28,11 +28,11 @@ Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase)
   "resourceType" : "CodeSystem",
   "id" : "cs-senologie-diagnose-lokal",
   "url" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "CS_Senologie_Diagnose_Lokal",
   "title" : "CS Senologie Diagnose Lokal",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

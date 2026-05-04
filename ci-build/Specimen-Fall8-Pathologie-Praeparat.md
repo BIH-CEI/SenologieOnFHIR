@@ -1,4 +1,4 @@
-# Fall 8: Stanzbiopsie-Präparat rechts retromamillär - Kerndatensatz Senologie v0.1.0
+# Fall 8: Stanzbiopsie-Präparat rechts retromamillär - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

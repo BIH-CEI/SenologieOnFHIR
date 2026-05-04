@@ -1,4 +1,4 @@
-# Präoperative Blutabnahme - Kerndatensatz Senologie v0.1.0
+# Präoperative Blutabnahme - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-blutabnahme | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-blutabnahme | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:EX_Senologie_PreOpBlutabnahme |
 
 Präoperative Blutabnahme geplant — kein natives FHIR-Äquivalent
@@ -42,11 +42,11 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-pre-op-
   "resourceType" : "StructureDefinition",
   "id" : "ex-senologie-pre-op-blutabnahme",
   "url" : "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-blutabnahme",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "EX_Senologie_PreOpBlutabnahme",
   "title" : "Präoperative Blutabnahme",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

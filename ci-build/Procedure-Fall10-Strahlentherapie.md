@@ -1,4 +1,4 @@
-# Fall 10: Adjuvante Bestrahlung Thoraxwand rechts 50 Gy - Kerndatensatz Senologie v0.1.0
+# Fall 10: Adjuvante Bestrahlung Thoraxwand rechts 50 Gy - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

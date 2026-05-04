@@ -1,4 +1,4 @@
-# Checkliste erbliche Belastung — durchgeführt (Score 3) - Kerndatensatz Senologie v0.1.0
+# Checkliste erbliche Belastung — durchgeführt (Score 3) - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

@@ -1,4 +1,4 @@
-# OncoBox Endokrine Substanzklasse zu ATC - Kerndatensatz Senologie v0.1.0
+# OncoBox Endokrine Substanzklasse zu ATC - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-oncobox-endokrine-substanz-atc | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-oncobox-endokrine-substanz-atc | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*: |
 
  
@@ -23,11 +23,11 @@ Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxi
   "resourceType" : "ConceptMap",
   "id" : "cm-oncobox-endokrine-substanz-atc",
   "url" : "https://www.senologie.org/fhir/ConceptMap/cm-oncobox-endokrine-substanz-atc",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "title" : "OncoBox Endokrine Substanzklasse zu ATC",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

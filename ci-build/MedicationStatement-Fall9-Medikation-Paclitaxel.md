@@ -1,4 +1,4 @@
-# Fall 9: Paclitaxel 80 mg/m2 wöchentlich, Woche 1 - Kerndatensatz Senologie v0.1.0
+# Fall 9: Paclitaxel 80 mg/m2 wöchentlich, Woche 1 - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

@@ -1,4 +1,4 @@
-# SenologieToObdsLeistungszustand - Kerndatensatz Senologie v0.1.0
+# SenologieToObdsLeistungszustand - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:SenologieToObdsLeistungszustand |
 
  
@@ -23,10 +23,10 @@ title: Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand status: d
   "resourceType" : "StructureMap",
   "id" : "SenologieToObdsLeistungszustand",
   "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "SenologieToObdsLeistungszustand",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

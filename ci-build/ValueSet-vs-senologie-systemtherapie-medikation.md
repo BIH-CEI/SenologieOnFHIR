@@ -1,4 +1,4 @@
-# VS Senologie Systemtherapie Medikation - Kerndatensatz Senologie v0.1.0
+# VS Senologie Systemtherapie Medikation - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:VS_Senologie_Systemtherapie_Medikation |
 
  
@@ -47,12 +47,12 @@ Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Termin
   "resourceType" : "ValueSet",
   "id" : "vs-senologie-systemtherapie-medikation",
   "url" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "VS_Senologie_Systemtherapie_Medikation",
   "title" : "VS Senologie Systemtherapie Medikation",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -1,4 +1,4 @@
-# Hintergrund & Motivation - Kerndatensatz Senologie v0.1.0
+# Hintergrund & Motivation - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * **Hintergrund & Motivation**

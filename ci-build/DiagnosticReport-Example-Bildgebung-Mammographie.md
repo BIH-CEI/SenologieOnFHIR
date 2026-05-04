@@ -1,4 +1,4 @@
-# Beispiel: Mammographie bilateral, BI-RADS 5 links - Kerndatensatz Senologie v0.1.0
+# Beispiel: Mammographie bilateral, BI-RADS 5 links - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

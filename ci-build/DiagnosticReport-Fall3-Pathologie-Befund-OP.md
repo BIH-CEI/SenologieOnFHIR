@@ -1,4 +1,4 @@
-# Fall 3: Pathologie OP-Präparat — pT2 pN1a(2/12) - Kerndatensatz Senologie v0.1.0
+# Fall 3: Pathologie OP-Präparat — pT2 pN1a(2/12) - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

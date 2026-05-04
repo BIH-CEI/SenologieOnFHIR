@@ -1,4 +1,4 @@
-# Beispielfall - Kerndatensatz Senologie v0.1.0
+# Beispielfall - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * **Beispielfall**

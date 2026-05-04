@@ -1,4 +1,4 @@
-# oBDS Meldung - Kerndatensatz Senologie v0.1.0
+# oBDS Meldung - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/obds-meldung | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/StructureDefinition/obds-meldung | *Version*:0.9.0 |
 | Draft as of 2026-05-04 | *Computable Name*:OBDSMeldung |
 
  
@@ -37,11 +37,11 @@ Other representations of profile: [CSV](StructureDefinition-obds-meldung.csv), [
   "resourceType" : "StructureDefinition",
   "id" : "obds-meldung",
   "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "name" : "OBDSMeldung",
   "title" : "oBDS Meldung",
   "status" : "draft",
-  "date" : "2026-05-04T15:18:17+00:00",
+  "date" : "2026-05-04T15:40:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

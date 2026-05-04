@@ -1,4 +1,4 @@
-# Fall 12: ADH (B3-Läsion), D48.6 - Kerndatensatz Senologie v0.1.0
+# Fall 12: ADH (B3-Läsion), D48.6 - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

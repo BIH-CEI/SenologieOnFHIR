@@ -1,4 +1,4 @@
-# Fall 5: Endokrine Therapie Letrozol 2,5 mg - Kerndatensatz Senologie v0.1.0
+# Fall 5: Endokrine Therapie Letrozol 2,5 mg - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

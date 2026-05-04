@@ -1,4 +1,4 @@
-# Fall 12: Pathologie Nachresektion — ADH, kein Upgrade, R0 - Kerndatensatz Senologie v0.1.0
+# Fall 12: Pathologie Nachresektion — ADH, kein Upgrade, R0 - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

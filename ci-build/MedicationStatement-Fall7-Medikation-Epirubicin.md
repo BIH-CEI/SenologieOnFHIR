@@ -1,4 +1,4 @@
-# Fall 7: Epirubicin 90 mg/m2, Zyklus 1 (EC), Tag 1 - Kerndatensatz Senologie v0.1.0
+# Fall 7: Epirubicin 90 mg/m2, Zyklus 1 (EC), Tag 1 - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

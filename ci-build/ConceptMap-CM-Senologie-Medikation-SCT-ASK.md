@@ -1,4 +1,4 @@
-# ConceptMap: SNOMED CT → ASK (Senologie Systemtherapie) - Kerndatensatz Senologie v0.1.0
+# ConceptMap: SNOMED CT → ASK (Senologie Systemtherapie) - Kerndatensatz Senologie v0.9.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:https://www.senologie.org/fhir/ConceptMap/CM-Senologie-Medikation-SCT-ASK | *Version*:0.1.0 |
+| *Official URL*:https://www.senologie.org/fhir/ConceptMap/CM-Senologie-Medikation-SCT-ASK | *Version*:0.9.0 |
 | Draft as of 2026-03-14 | *Computable Name*: |
 
  
@@ -23,7 +23,7 @@ Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf Arzneistoffkat
   "resourceType" : "ConceptMap",
   "id" : "CM-Senologie-Medikation-SCT-ASK",
   "url" : "https://www.senologie.org/fhir/ConceptMap/CM-Senologie-Medikation-SCT-ASK",
-  "version" : "0.1.0",
+  "version" : "0.9.0",
   "title" : "ConceptMap: SNOMED CT → ASK (Senologie Systemtherapie)",
   "status" : "draft",
   "date" : "2026-03-14",
