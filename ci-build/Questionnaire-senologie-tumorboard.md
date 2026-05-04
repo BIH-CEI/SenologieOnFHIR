@@ -110,7 +110,7 @@ Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplin�
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T08:11:13+00:00",
+  "date" : "2026-05-04T08:32:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

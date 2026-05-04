@@ -26,7 +26,7 @@ title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplan
   "version" : "0.1.0",
   "name" : "SenologieToIRegEntlassung",
   "status" : "draft",
-  "date" : "2026-05-04T08:11:13+00:00",
+  "date" : "2026-05-04T08:32:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -73,7 +73,7 @@ title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplan
     {
       "name" : "bundle",
       "type" : "Bundle",
-      "mode" : "target"
+      "mode" : "source"
     }],
     "rule" : [{
       "name" : "MapEntlassungsDatum",

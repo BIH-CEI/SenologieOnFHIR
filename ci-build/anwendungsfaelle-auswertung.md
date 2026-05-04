@@ -10,7 +10,9 @@
 
 ### Überblick
 
-Die strukturierten FHIR-Daten des Senologie-Moduls ermöglichen die Sekundärnutzung für Versorgungsforschung, Qualitätssicherung und klinische Studien. Die einheitliche Profilierung stellt sicher, dass Daten standortübergreifend vergleichbar und auswertbar sind.
+Die strukturierten FHIR-Daten des Kerndatensatz Senologie ermöglichen die Sekundärnutzung für Versorgungsforschung, Qualitätssicherung und klinische Studien. Die einheitliche Profilierung stellt sicher, dass Daten standortübergreifend vergleichbar und auswertbar sind.
+
+**Auswertungspipeline — Kohortendefinition über Ein-/Ausschlusskriterien, tabellarische Projektion via ViewDefinitions, Kalkulation über CQL oder SQL**
 
 ### Auswertungsszenarien
 

@@ -56,19 +56,7 @@ Die Profile sind so gestaltet, dass sie mit folgenden Standards kompatibel sind:
 
 ### Datenfluss
 
-```
-dotbase          KIS              DIZ            MII-Portal
-  │                │                │                │
-  ├─ FHIR ────────►│                │                │
-  │  Ressourcen     ├─ ETL ────────►│                │
-  │                 │               ├─ Föderiert ───►│
-  │                 ├─ oBDS ───────►│                │
-  │                 │  Meldung      │   Krebsregister│
-  │                 ├─ DIMDI ──────►│                │
-  │                 │  Implantat    │   Implantate-  │
-  │                 │               │   register     │
-
-```
+**Datenaustausch — vom Dokumentationssystem über KIS und DIZ zu Meldewegen und MII**
 
 ### Terminologie-Mapping
 

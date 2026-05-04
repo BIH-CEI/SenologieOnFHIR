@@ -12,7 +12,7 @@
 | Draft as of 2026-05-04 | *Computable Name*:QuestSystemtherapie |
 
  
-Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, MedicationStatement, Observation). 
+Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement. 
 
 
 
@@ -24,16 +24,23 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
   "id" : "senologie-systemtherapie",
   "contained" : [{
     "resourceType" : "Procedure",
-    "id" : "postop-procedure-template",
-    "meta" : {
-      "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-operation"]
-    },
+    "id" : "syst-procedure-template",
     "status" : "completed",
+    "code" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "367336001",
+        "display" : "Chemotherapy"
+      }],
+      "text" : "Systemtherapie"
+    },
     "subject" : {
-      "reference" : "placeholder"
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
     },
     "reasonReference" : [{
-      "reference" : "placeholder",
       "_reference" : {
         "extension" : [{
           "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
@@ -41,6 +48,20 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
         }]
       }
     }]
+  },
+  {
+    "resourceType" : "MedicationStatement",
+    "id" : "syst-medikation-template",
+    "status" : "active",
+    "medicationCodeableConcept" : {
+      "text" : "Substanz"
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
   }],
   "extension" : [{
     "extension" : [{
@@ -55,15 +76,6 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
       "valueCode" : "Patient"
     }],
     "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-  },
-  {
-    "extension" : [{
-      "url" : "template",
-      "valueReference" : {
-        "reference" : "#postop-procedure-template"
-      }
-    }],
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
   }],
   "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie",
   "version" : "0.1.0",
@@ -72,7 +84,7 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T08:11:13+00:00",
+  "date" : "2026-05-04T08:32:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -81,29 +93,14 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, MedicationStatement, Observation).",
+  "description" : "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement.",
   "item" : [{
     "extension" : [{
       "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
       "valueExpression" : {
         "language" : "application/x-fhir-query",
-        "expression" : "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+        "expression" : "Condition?patient={{%patient.id}}&clinical-status=active"
       }
-    },
-    {
-      "extension" : [{
-        "url" : "path",
-        "valueString" : "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
-      },
-      {
-        "url" : "label",
-        "valueString" : "ICD-10"
-      },
-      {
-        "url" : "forDisplay",
-        "valueBoolean" : false
-      }],
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
     },
     {
       "extension" : [{
@@ -121,8 +118,23 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
       "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
     }],
     "linkId" : "bezugsdiagnose",
-    "text" : "Bezugsdiagnose (Seite)",
+    "text" : "Bezugsdiagnose",
     "type" : "reference",
+    "required" : true
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#syst-procedure-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
+    "linkId" : "therapie-rahmen",
+    "text" : "Therapie-Rahmen",
+    "type" : "group",
     "required" : true,
     "item" : [{
       "linkId" : "therapieart",
@@ -133,28 +145,28 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "385786002",
-          "display" : "Chemotherapy care"
+          "display" : "Chemotherapie"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "169413002",
-          "display" : "Endocrine therapy"
+          "display" : "Endokrine Therapie"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "432105003",
-          "display" : "Targeted therapy"
+          "display" : "Zielgerichtete Therapie"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "76334006",
-          "display" : "Immunotherapy"
+          "display" : "Immuntherapie"
         }
       }]
     },
@@ -167,27 +179,41 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "373847000",
-          "display" : "Neoadjuvant intent"
+          "display" : "Neoadjuvant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "373846009",
-          "display" : "Adjuvant - intent"
+          "display" : "Adjuvant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "363676003",
-          "display" : "Palliative intent"
+          "display" : "Palliativ"
         }
       }]
     },
     {
+      "linkId" : "first-line",
+      "text" : "First-Line-Therapie bei Metastasierung",
+      "type" : "boolean",
+      "enableWhen" : [{
+        "question" : "intention",
+        "operator" : "=",
+        "answerCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "363676003"
+        }
+      }],
+      "required" : false
+    },
+    {
       "linkId" : "protokoll",
-      "text" : "Protokoll/Schema (z.B. \"EC → Paclitaxel\", \"TCbHP\")",
+      "text" : "Protokoll/Schema (z.B. EC-Pac, TCbHP)",
       "type" : "string",
       "required" : false
     },
@@ -216,19 +242,41 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
       "required" : false
     },
     {
+      "linkId" : "therapiestatus",
+      "text" : "Therapiestatus",
+      "type" : "choice",
+      "required" : false,
+      "answerOption" : [{
+        "valueString" : "Abgeschlossen"
+      },
+      {
+        "valueString" : "Abgebrochen"
+      },
+      {
+        "valueString" : "Laufend"
+      }]
+    },
+    {
       "linkId" : "abbruchgrund",
       "text" : "Abbruchgrund",
       "type" : "text",
+      "enableWhen" : [{
+        "question" : "therapiestatus",
+        "operator" : "=",
+        "answerString" : "Abgebrochen"
+      }],
       "required" : false
     }]
   },
   {
     "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-      "valueExpression" : {
-        "language" : "application/x-fhir-query",
-        "expression" : "MedicationStatement"
-      }
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#syst-medikation-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }],
     "linkId" : "medikamentengabe",
     "text" : "Medikamentengabe",
@@ -239,7 +287,7 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
       "linkId" : "substanz",
       "text" : "Substanz",
       "type" : "choice",
-      "required" : false,
+      "required" : true,
       "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation"
     },
     {
@@ -265,7 +313,7 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
     },
     {
       "linkId" : "zyklus-nummer",
-      "text" : "Zyklus-Nummer",
+      "text" : "Zyklus",
       "type" : "integer",
       "required" : false
     },
@@ -298,39 +346,7 @@ Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine
     }]
   },
   {
-    "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-      "valueExpression" : {
-        "language" : "application/x-fhir-query",
-        "expression" : "Observation"
-      }
-    }],
-    "linkId" : "therapieergebnis",
-    "text" : "Therapieergebnis",
-    "type" : "group",
-    "required" : false,
-    "item" : [{
-      "linkId" : "ansprechen",
-      "text" : "Ansprechen",
-      "type" : "choice",
-      "required" : false,
-      "answerOption" : [{
-        "valueString" : "Complete Response"
-      },
-      {
-        "valueString" : "Partial Response"
-      },
-      {
-        "valueString" : "Stable Disease"
-      },
-      {
-        "valueString" : "Progressive Disease"
-      }]
-    }]
-  },
-  {
     "linkId" : "syst-anmerkungen",
-    "definition" : "http://hl7.org/fhir/StructureDefinition/Procedure#Procedure.note.text",
     "text" : "Anmerkungen",
     "type" : "text",
     "required" : false
