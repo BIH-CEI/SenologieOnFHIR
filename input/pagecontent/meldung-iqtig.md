@@ -1,18 +1,18 @@
 # IQTIG-QS-Transformation (QS-Verfahren 18.1 Mammachirurgie)
 
-### Ueberblick
+### Überblick
 
-Zertifizierte Brustzentren und Krankenhaeuser mit mammachirurgischer Leistung unterliegen der externen stationaeren Qualitaetssicherung nach SGB V Paragraph 136. Der fuer das Thema relevante Leistungsbereich ist **QS-Verfahren 18.1 Mammachirurgie** des IQTIG (Institut fuer Qualitaetssicherung und Transparenz im Gesundheitswesen). Diese Transformation erzeugt **IQTIG-konforme QS-Datensaetze aus klinischen FHIR-Daten**, die auf den Senologie-Profilen dieses IGs basieren.
+Zertifizierte Brustzentren und Krankenhaeuser mit mammachirurgischer Leistung unterliegen der externen stationaeren Qualitätssicherung nach SGB V Paragraph 136. Der für das Thema relevante Leistungsbereich ist **QS-Verfahren 18.1 Mammachirurgie** des IQTIG (Institut für Qualitätssicherung und Transparenz im Gesundheitswesen). Diese Transformation erzeugt **IQTIG-konforme QS-Datensätze aus klinischen FHIR-Daten**, die auf den Senologie-Profilen dieses IGs basieren.
 
-- **Quellformat**: FHIR Bundle mit Senologie-Profilen (dieser IG)
+- **Qüllformat**: FHIR Bundle mit Senologie-Profilen (dieser IG)
 - **Zielformat**: IQTIG QS-Datensatz 18.1 Mammachirurgie, **Spezifikation 2024 V05**
 - **Methode**: FHIR StructureMaps (FML) mit IQTIG Logical Model als Zielstruktur
-- **Ausfuehrung**: [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke
+- **Ausführung**: [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke
 - **Scope**: **Nur QS-Verfahren 18.1 Mammachirurgie** -- nicht 18.2 (Ovar), nicht weitere IQTIG-Leistungsbereiche
 
 ### Architektur
 
-Die Transformation folgt dem gleichen Muster wie die [oBDS-](meldung-obds.html) und [IRegG-Transformation](meldung-ireg.html): FHIR-Ressourcen werden ueber StructureMaps auf ein Logical Model abgebildet, das anschliessend serialisiert werden kann (CSV/XML gemaess IQTIG-Datenpruefprogramm).
+Die Transformation folgt dem gleichen Muster wie die [oBDS-](meldung-obds.html) und [IRegG-Transformation](meldung-ireg.html): FHIR-Ressourcen werden über StructureMaps auf ein Logical Model abgebildet, das anschliessend serialisiert werden kann (CSV/XML gemaess IQTIG-Datenprüfprogramm).
 
 ```
 ┌─────────────────────────────┐
@@ -40,19 +40,19 @@ Die Transformation folgt dem gleichen Muster wie die [oBDS-](meldung-obds.html) 
 └─────────────────────────────┘
 ```
 
-Der IQTIG-Datensatz besteht aus drei Teildatensaetzen:
+Der IQTIG-Datensatz besteht aus drei Teildatensätzen:
 
 - **Teildatensatz Basis (B)** -- administrative und demografische Falldaten
 - **Teildatensatz Brust (BRUST)** -- brustspezifische Diagnose- und Befunddaten (ein Eintrag je behandelter Seite)
 - **Teildatensatz Operation (O)** -- Operationsdaten, Histologie, R-Status (ein Eintrag je Eingriff)
 
-### StructureMap-Uebersicht
+### StructureMap-Übersicht
 
-| StructureMap | Aufgabe | Quell-Profile | Ziel (Logical Model) |
+| StructureMap | Aufgabe | Qüll-Profile | Ziel (Logical Model) |
 |---|---|---|---|
 | **SenologieToIqtigMammachirurgie181** | Orchestrator: dispatcht an Teil-Maps | Bundle (alle Profile) | IQTIGMammachirurgie181 |
 | **SenologieToIqtigBasis** | Patient + Encounter + Organization | Patient, Encounter, Organization | teildatensatzBasis (B:*) |
-| **SenologieToIqtigBrust** | Diagnose + Bildgebung + Praeopbefund | Condition, Observation, ServiceRequest | teildatensatzBrust (BRUST:*) |
+| **SenologieToIqtigBrust** | Diagnose + Bildgebung + Präopbefund | Condition, Observation, ServiceRequest | teildatensatzBrust (BRUST:*) |
 | **SenologieToIqtigOperation** | OP + Specimen + Pathologie | Procedure, Specimen, Observation | teildatensatzOperation (O:*) |
 
 ### Mapping-Tabellen
@@ -63,7 +63,7 @@ Der IQTIG-Datensatz besteht aus drei Teildatensaetzen:
 |---|---|---|
 | B:IKNRKH | Organization.identifier (arge-ik/iknr) | Institutionskennzeichen 9-stellig |
 | B:ENTLSTANDORT | Organization.identifier (standortnummer) | Standortkennung |
-| B:BSNR | Organization.identifier (kbv/bsnr) | Betriebsstaettennummer (ambulant) |
+| B:BSNR | Organization.identifier (kbv/bsnr) | Betriebsstättennummer (ambulant) |
 | B:VERSICHERTENIDNEU | Patient.identifier (gkv/kvid-10) | Versicherten-ID (pseudonymisiert) |
 | B:VORGANGSNR | Encounter.identifier | Fall-/Vorgangsnummer |
 | B:DS_VERSION | fest: 18.1_2024_V05 | Datensatzversion |
@@ -90,11 +90,11 @@ Der IQTIG-Datensatz besteht aus drei Teildatensaetzen:
 | BRUST:UICCKLIN | Observation (LOINC 21902-2) | klinisches UICC-Stadium |
 | BRUST:BILDGMETHODE | Senologie_Bildgebung.method (SNOMED) | Mammografie=1, Sono=2, MRT=3, Tomo=4 |
 | BRUST:BIRADS | Observation (LOINC 72133-2) | BI-RADS 0-6 |
-| BRUST:BEFUND | Senologie_Pathologie_Befund (B1-B5) | Praeoperativer B-Kode |
-| BRUST:HISTPRAEOP | Procedure (Biopsie-OPS) | Praeoperative histologische Sicherung |
+| BRUST:BEFUND | Senologie_Pathologie_Befund (B1-B5) | Präoperativer B-Kode |
+| BRUST:HISTPRAEOP | Procedure (Biopsie-OPS) | Präoperative histologische Sicherung |
 | BRUST:DRAHT | Senologie_OP_Planung (preOpMarkierung) | M/S/T/N -> 1/2/3/0 |
 | BRUST:NEOADJ | Senologie_Systemtherapie_Procedure (stellungOP=N) | Neoadjuvante Therapie erhalten |
-| BRUST:TKPRAEOP | Senologie_Tumorboard_Empfehlung (Typ praeth) | Praetherapeutische Tumorkonferenz |
+| BRUST:TKPRAEOP | Senologie_Tumorboard_Empfehlung (Typ präth) | Prätherapeutische Tumorkonferenz |
 
 #### Teildatensatz Operation (O)
 
@@ -122,14 +122,14 @@ Der IQTIG-Datensatz besteht aus drei Teildatensaetzen:
 | O:LKUNTERSUCHT / LKBEFALLEN | Observations (LOINC 21894-1 / 21893-3) | Lymphknoten |
 | O:SLKUNTERSUCHT / SLKBEFALLEN | Observations (LOINC 92832-5 / 92833-3) | Sentinel-LK |
 | O:ERSTATUS / PRSTATUS / HER2STATUS | MII-Onko-Observations (LOINC 85337-4 / 85339-0 / 85319-2) | P/N/U |
-| O:KOMPL | Senologie_Operative_Komplikation | Kuerzel + ICD |
-| O:REVISION | Procedure (Revisionsart oder Sequenz) | 0/1 |
+| O:KOMPL | Senologie_Operative_Komplikation | Kürzel + ICD |
+| O:REVISION | Procedure (Revisionsart oder Seqünz) | 0/1 |
 
-### Code-Uebersetzung
+### Code-Übersetzung
 
-Die IQTIG-Datensaetze verwenden eigene Schluessel (numerische Kodierungen, Buchstabenkuerzel). Die Uebersetzung erfolgt innerhalb der StructureMaps:
+Die IQTIG-Datensätze verwenden eigene Schluessel (numerische Kodierungen, Buchstabenkürzel). Die Übersetzung erfolgt innerhalb der StructureMaps:
 
-| Datenelement | FHIR-Kodierung | IQTIG-Schluessel | Uebersetzungsmethode |
+| Datenelement | FHIR-Kodierung | IQTIG-Schluessel | Übersetzungsmethode |
 |---|---|---|---|
 | Geschlecht | Patient.gender | 1/2/8/9 | Direkte Zuordnung in FML |
 | Seitenlokalisation | SNOMED CT (24028007/7771000/51440002) | R/L/B | Direkte Zuordnung in FML |
@@ -142,7 +142,7 @@ Die IQTIG-Datensaetze verwenden eigene Schluessel (numerische Kodierungen, Buchs
 ### Datenverfuegbarkeit und offene Luecken
 
 {:.stu-note}
-Nicht alle IQTIG-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet werden. Fuer eine vollstaendige QS-Meldung muessen zusaetzliche Datenquellen eingebunden werden (KIS, Verwaltung, Vertrauensstelle).
+Nicht alle IQTIG-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet werden. Für eine vollständige QS-Meldung muessen zusätzliche Datenqüllen eingebunden werden (KIS, Verwaltung, Vertraünsstelle).
 
 | IQTIG-Datenpunkt | Quelle | Status |
 |---|---|---|
@@ -153,59 +153,59 @@ Nicht alle IQTIG-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet wer
 | Residualstatus R0/R1/R2 | Senologie_Operation.outcome | Vorhanden |
 | Lymphknotenstatus (regionaer + Sentinel) | Senologie_Pathologie_Befund | Vorhanden |
 | Rezeptorstatus ER/PR/HER2 | MII-Onko-Observations | Vorhanden |
-| Praeoperative Drahtmarkierung | Senologie_OP_Planung (Extension preOpMarkierung) | Vorhanden |
+| Präoperative Drahtmarkierung | Senologie_OP_Planung (Extension preOpMarkierung) | Vorhanden |
 | Intraoperative Praeparatkontrolle (QI-3) | Specimen.processing | Vorhanden |
 | BI-RADS / bildgebende Methode | Senologie_Bildgebung_Observation / _Befund | Vorhanden |
-| Praeoperative B-Klassifikation (B1-B5) | Senologie_Pathologie_Befund | **Teilweise** -- eigenes CodeSystem noch nicht finalisiert |
-| Multifokalitaet / Multizentritaet | Pathologie-Befund | **Teilweise** -- freitextlich, benoetigt codierte Observation |
+| Präoperative B-Klassifikation (B1-B5) | Senologie_Pathologie_Befund | **Teilweise** -- eigenes CodeSystem noch nicht finalisiert |
+| Multifokalität / Multizentrität | Pathologie-Befund | **Teilweise** -- freitextlich, benoetigt codierte Observation |
 | Neoadjuvante Therapie (ja/nein) | Senologie_Systemtherapie_Procedure (stellungOP=N) | **Teilweise** -- ableitbar, aber IQTIG-Binding fehlt |
-| Praetherapeutische Tumorkonferenz | Senologie_Tumorboard_Empfehlung | **Teilweise** -- Typ=praetherapeutisch muss kodiert werden |
+| Prätherapeutische Tumorkonferenz | Senologie_Tumorboard_Empfehlung | **Teilweise** -- Typ=prätherapeutisch muss kodiert werden |
 | IKNR, Standortkennung, BSNR | Organization (KIS/Stammdaten) | **Externe Quelle** -- nicht klinisch |
 | Aufnahmegrund / Aufnahmeanlass (Paragraph 301) | Encounter (KIS/ISiK) | **Externe Quelle** -- ISiK-Extension |
 | Entlassungsgrund (Paragraph 301) | Encounter.hospitalization.dischargeDisposition | **Externe Quelle** -- ISiK |
 | Einwilligung Landesstelle/G-BA | Consent / KIS | **Externe Quelle** -- administrative Erfassung |
-| Versicherten-ID (pseudonymisiert) | Patient.identifier (kvid-10) | **Externe Quelle** -- Pseudonymisierung durch Vertrauensstelle |
-| Revisionsoperation im selben Aufenthalt | Procedure (Sequenz + Art) | **Teilweise** -- aus OP-Reihenfolge ableitbar |
-| Perioperative Komplikationen mit IQTIG-Kuerzel | Senologie_Operative_Komplikation | **Teilweise** -- IQTIG-Kuerzel-Binding noch zu ergaenzen |
+| Versicherten-ID (pseudonymisiert) | Patient.identifier (kvid-10) | **Externe Quelle** -- Pseudonymisierung durch Vertraünsstelle |
+| Revisionsoperation im selben Aufenthalt | Procedure (Seqünz + Art) | **Teilweise** -- aus OP-Reihenfolge ableitbar |
+| Perioperative Komplikationen mit IQTIG-Kürzel | Senologie_Operative_Komplikation | **Teilweise** -- IQTIG-Kürzel-Binding noch zu ergänzen |
 
 #### Handlungsoptionen
 
 Analog zur IRegG-Transformation:
 
-1. **Senologie-Profile erweitern** -- B-Klassifikation als eigenes CodeSystem, Multifokalitaet als codierte Observation, Neoadjuvanz-Flag am Procedure-Profil.
+1. **Senologie-Profile erweitern** -- B-Klassifikation als eigenes CodeSystem, Multifokalität als codierte Observation, Neoadjuvanz-Flag am Procedure-Profil.
 
-2. **Eigener IQTIG-Erfassungsbogen (SDC Questionnaire)** -- Die administrativen Felder (Aufnahmeanlass, Einwilligung, Paragraph 301-Codes) werden ueber einen QS-spezifischen Fragebogen erfasst und ergaenzen die klinische Dokumentation.
+2. **Eigener IQTIG-Erfassungsbogen (SDC Questionnaire)** -- Die administrativen Felder (Aufnahmeanlass, Einwilligung, Paragraph 301-Codes) werden über einen QS-spezifischen Fragebogen erfasst und ergänzen die klinische Dokumentation.
 
-3. **ETL-Strecke** -- IKNR, Standort, Fallkennungen, Paragraph 301-Codes und pseudonymisierte Versicherten-ID werden aus KIS und Vertrauensstelle nachgezogen und mit den Senologie-Daten zu einer vollstaendigen QS-Meldung kombiniert.
+3. **ETL-Strecke** -- IKNR, Standort, Fallkennungen, Paragraph 301-Codes und pseudonymisierte Versicherten-ID werden aus KIS und Vertraünsstelle nachgezogen und mit den Senologie-Daten zu einer vollständigen QS-Meldung kombiniert.
 
-**Empfehlung**: Kombination aus Option 1 (klinische Profil-Erweiterungen) und Option 3 (ETL fuer administrative Daten). Der QS-Datensatz 18.1 enthaelt ein hoeheres Mass an administrativen Pflichtfeldern als der oBDS, daher ist die ETL-Integration hier besonders wichtig.
+**Empfehlung**: Kombination aus Option 1 (klinische Profil-Erweiterungen) und Option 3 (ETL für administrative Daten). Der QS-Datensatz 18.1 enthaelt ein hoeheres Mass an administrativen Pflichtfeldern als der oBDS, daher ist die ETL-Integration hier besonders wichtig.
 
 ### IQTIG-Spezifikation
 
-Die Transformation basiert auf den **Ausfuellhinweisen des IQTIG fuer QS-Verfahren 18.1 Mammachirurgie**:
+Die Transformation basiert auf den **Ausfüllhinweisen des IQTIG für QS-Verfahren 18.1 Mammachirurgie**:
 
 - **Spezifikation**: 2024 V05 (Erfassungsjahr 2024)
 - **Logical Model**: [IQTIGMammachirurgie181](StructureDefinition-iqtig-mammachirurgie-181.html) -- bildet die Teildatensatz-Struktur als FHIR-StructureDefinition ab
-- **Offizielle Quelle**: [iqtig.org/downloads/erfassung/2024/v05/181/Ausfuellhinweise_18_1.html](https://iqtig.org/downloads/erfassung/2024/v05/181/Ausfuellhinweise_18_1.html)
+- **Offizielle Quelle**: [iqtig.org/downloads/erfassung/2024/v05/181/Ausfüllhinweise_18_1.html](https://iqtig.org/downloads/erfassung/2024/v05/181/Ausfüllhinweise_18_1.html)
 - **Scope**: Nur Leistungsbereich 18.1 Mammachirurgie (nicht 18.2 Ovarialkarzinom, nicht weitere IQTIG-Bereiche)
 
 > **Hinweis**: Die IQTIG-Spezifikation wird jaehrlich aktualisiert. Die hier abgebildete Struktur entspricht der Spezifikation 2024 V05. Bei Aktualisierung der Spezifikation sind das Logical Model und die StructureMaps entsprechend zu versionieren.
 
 ### Abgrenzung zu oBDS und IRegG
 
-Die drei Meldeformate decken unterschiedliche regulatorische Zwecke ab und enthalten ueberlappende, aber nicht identische Datenpunkte:
+Die drei Meldeformate decken unterschiedliche regulatorische Zwecke ab und enthalten überlappende, aber nicht identische Datenpunkte:
 
-| Format | Zweck | Empfaenger | Zeitpunkt |
+| Format | Zweck | Empfänger | Zeitpunkt |
 |---|---|---|---|
 | **oBDS** | Krebsregistermeldung | Klinisches Krebsregister | Pro klinisches Ereignis (Diagnose, Therapie, Verlauf, Tod) |
 | **IRegG** | Implantatregistermeldung | BfArM / Implantateregister | Pro Implantationseingriff |
-| **IQTIG 18.1** | Externe Qualitaetssicherung (SGB V Paragraph 136) | IQTIG / G-BA | Pro Behandlungsfall Mammachirurgie |
+| **IQTIG 18.1** | Externe Qualitätssicherung (SGB V Paragraph 136) | IQTIG / G-BA | Pro Behandlungsfall Mammachirurgie |
 
-Die Senologie-FHIR-Profile bilden die gemeinsame klinische Datenbasis; die drei Transformations-Pipelines (StructureMaps) ziehen daraus jeweils die fuer das Zielformat erforderlichen Felder.
+Die Senologie-FHIR-Profile bilden die gemeinsame klinische Datenbasis; die drei Transformations-Pipelines (StructureMaps) ziehen daraus jeweils die für das Zielformat erforderlichen Felder.
 
-### Ausfuehrung
+### Ausführung
 
-Die Transformation wird analog zur oBDS- und IRegG-Transformation ueber [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke ausgefuehrt.
+Die Transformation wird analog zur oBDS- und IRegG-Transformation über [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke ausgeführt.
 
 **Transformation:**
 
@@ -222,10 +222,10 @@ Content-Type: application/fhir+json
     },
     {
       "name": "source",
-      "valueUri": "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181"
+      "valüUri": "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181"
     }
   ]
 }
 ```
 
-Das Ergebnis ist eine Instanz des IQTIG Logical Models, die ueber das IQTIG-Datenpruefprogramm (DPP) in das offizielle QS-Format (CSV/XML) exportiert und an die Bundesauswertungsstelle (IQTIG) uebermittelt werden kann.
+Das Ergebnis ist eine Instanz des IQTIG Logical Models, die über das IQTIG-Datenprüfprogramm (DPP) in das offizielle QS-Format (CSV/XML) exportiert und an die Bundesauswertungsstelle (IQTIG) übermittelt werden kann.
