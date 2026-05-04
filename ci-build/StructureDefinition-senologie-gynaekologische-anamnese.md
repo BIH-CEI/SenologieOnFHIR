@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-gynaekolog
   "name" : "Senologie_Gynaekologische_Anamnese",
   "title" : "BIH Senologie Gynäkologische Anamnese",
   "status" : "draft",
-  "date" : "2026-05-04T11:25:12+00:00",
+  "date" : "2026-05-04T11:47:21+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -7,6 +7,8 @@
 
 # Beispielfall: Erika Neumann
 
+> **[Bundle herunterladen (JSON)](Bundle-Fall1-Erika-Neumann.json)** — Alle 22 Ressourcen als FHIR Transaction Bundle. Kann in [clinFHIR Bundle Viewer](https://test.clinfhir.com/clinfhir/bundleViewer.html) visualisiert oder in einen FHIR-Server importiert werden.
+
 ## Auf einen Blick
 
 | | |

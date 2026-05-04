@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustKennzahlen",
   "status" : "draft",
-  "date" : "2026-05-04T11:25:12+00:00",
+  "date" : "2026-05-04T11:47:21+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
