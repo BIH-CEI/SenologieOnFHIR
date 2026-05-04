@@ -66,13 +66,21 @@ Version 0.9.0 ist fertig — und bereit für Ihre Rückmeldung. Wir suchen Persp
 
 ### Zugang
 
-- Implementation Guide: **https://bih-cei.github.io/SenologieOnFHIR/**
-- Feedback über GitHub: **https://github.com/BIH-CEI/SenologieOnFHIR/issues**
-- Alternativ per E-Mail — wir überführen Rückmeldungen in das öffentliche Tracking
+- Implementation Guide: **https://bih-cei.github.io/SenologieOnFHIR/0.9.0/**
+- Feedback über das Ballotierungsportal von HL7 Deutschland: **https://ballotierungsportal.hl7.de/**
+- Alternativ per E-Mail
 
 Bitte vermerken Sie bei Kommentaren zu offenen Fragen die jeweilige Kennung (z.B. „OF-3").
 
-Während der Kommentierungsphase finden zwei offene Online-Begleittermine statt, zu denen wir gesondert einladen werden. Im Anschluss werden alle Rückmeldungen in einem Review-Workshop konsolidiert und in die nächste Version eingearbeitet.
+Während der Kommentierungsphase finden zwei offene Online-Begleittermine statt:
+
+- **Mittwoch, 7. Mai 2026, 13:00–14:00 Uhr** — Überblick, Fragebögen, Meldewege, offene Fragen
+  [Teilnahme über Microsoft Teams](https://teams.microsoft.com/meet/374140685691940?p=obAJmYwU1fX3qKW23J)
+
+- **Dienstag, 26. Mai 2026, 15:00–16:00 Uhr** — Zwischenbilanz, Vertiefung, Ausblick
+  [Teilnahme über Microsoft Teams](https://teams.microsoft.com/meet/311724552426312?p=8HMhToeNcz1u9R65M9)
+
+Im Anschluss werden alle Rückmeldungen in einem Review-Workshop konsolidiert und in die nächste Version eingearbeitet.
 
 ### Kontakt
 
@@ -101,6 +109,7 @@ In Zusammenarbeit mit:
 - **Prof. Dr. med. Volkmar Müller** — Sprecher Kommission Mamma, Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)
 - **Prof. Dr. med. Achim Wöckel** — Leitlinienkoordination S3-Leitlinie Mammakarzinom
 - **PD Dr. rer. nat. Christoph Kowalski** — Versorgungsforschung, Deutsche Krebsgesellschaft (DKG)
+- **Prof. Dr. med. Maria Margarete Karsten** — Leitung Brustzentrum, Charité – Universitätsmedizin Berlin
 - **Prof. Dr. med. Dipl.-Ing. Sylvia Thun** — Berlin Institute of Health at Charité (BIH)
 
 ---

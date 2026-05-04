@@ -55,19 +55,27 @@ Der Kerndatensatz kann nur funktionieren, wenn er aus der klinischen Realität k
 
 ### Zugang
 
-Implementation Guide: **https://bih-cei.github.io/SenologieOnFHIR/**
+Implementation Guide: **https://bih-cei.github.io/SenologieOnFHIR/0.9.0/**
 Quellen und Feedback: **https://github.com/BIH-CEI/SenologieOnFHIR**
 
 ### Wie Sie Feedback geben können
 
-Wir bitten um strukturierte Rückmeldung über **GitHub Issues**:
-https://github.com/BIH-CEI/SenologieOnFHIR/issues
+Wir bitten um strukturierte Rückmeldung über das **Ballotierungsportal von HL7 Deutschland**:
+https://ballotierungsportal.hl7.de/
 
-Bei Kommentaren zu einer offenen Frage vermerken Sie bitte die entsprechende Kennung (z.B. „OF-3"). Alternativ nehmen wir Rückmeldungen auch per E-Mail entgegen; wir überführen diese in das öffentliche Tracking.
+Bei Kommentaren zu einer offenen Frage vermerken Sie bitte die entsprechende Kennung (z.B. „OF-3"). Alternativ nehmen wir Rückmeldungen auch per E-Mail entgegen.
 
 ### Frist und Begleittermine
 
-Die Kommentierungsphase läuft vom **4. Mai bis 31. Mai 2026**. Während dieser Zeit finden zwei offene Online-Begleittermine statt, zu denen gesondert eingeladen wird. Im Anschluss werden die Rückmeldungen in einem Review-Workshop konsolidiert und in die nächste Version überführt.
+Die Kommentierungsphase läuft vom **4. Mai bis 31. Mai 2026**. Während dieser Zeit finden zwei offene Online-Begleittermine statt:
+
+- **Mittwoch, 7. Mai 2026, 13:00–14:00 Uhr** — Überblick, SDC-Fragebögen, Meldewege, offene Fragen
+  [Teilnahme über Microsoft Teams](https://teams.microsoft.com/meet/374140685691940?p=obAJmYwU1fX3qKW23J)
+
+- **Dienstag, 26. Mai 2026, 15:00–16:00 Uhr** — Zwischenbilanz, Vertiefung, StructureMaps, Ausblick
+  [Teilnahme über Microsoft Teams](https://teams.microsoft.com/meet/311724552426312?p=8HMhToeNcz1u9R65M9)
+
+Im Anschluss werden die Rückmeldungen in einem Review-Workshop konsolidiert und in die nächste Version überführt.
 
 ### Kontakt
 
@@ -93,6 +101,7 @@ In Zusammenarbeit mit:
 - **Prof. Dr. med. Volkmar Müller** — Sprecher Kommission Mamma, Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)
 - **Prof. Dr. med. Achim Wöckel** — Leitlinienkoordination S3-Leitlinie Mammakarzinom
 - **PD Dr. rer. nat. Christoph Kowalski** — Versorgungsforschung, Deutsche Krebsgesellschaft (DKG)
+- **Prof. Dr. med. Maria Margarete Karsten** — Leitung Brustzentrum, Charité – Universitätsmedizin Berlin
 - **Prof. Dr. med. Dipl.-Ing. Sylvia Thun** — Berlin Institute of Health at Charité (BIH)
 
 ---
