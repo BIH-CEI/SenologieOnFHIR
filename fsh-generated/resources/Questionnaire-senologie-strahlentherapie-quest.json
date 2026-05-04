@@ -3,9 +3,55 @@
   "id": "senologie-strahlentherapie-quest",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-strahlentherapie",
   "title": "Fragebogen: Strahlentherapie",
-  "description": "Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel.",
+  "description": "Fragebogen zur strukturierten Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit contained Procedure-Template.",
   "subjectType": [
     "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Procedure",
+      "id": "strahlentherapie-procedure-template",
+      "code": {
+        "coding": [
+          {
+            "code": "108290001",
+            "system": "http://snomed.info/sct",
+            "display": "Radiation oncology AND/OR radiotherapy"
+          }
+        ],
+        "text": "Strahlentherapie"
+      },
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%patient"
+          }
+        ]
+      },
+      "reasonReference": [
+        {
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "completed",
+      "category": {
+        "coding": [
+          {
+            "code": "1287742003",
+            "system": "http://snomed.info/sct",
+            "display": "Radiotherapy"
+          }
+        ]
+      }
+    }
   ],
   "extension": [
     {
@@ -31,9 +77,28 @@
         {
           "valueExpression": {
             "language": "application/x-fhir-query",
-            "expression": "Procedure"
+            "expression": "Condition?patient={{%patient.id}}&clinical-status=active"
           },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+        }
+      ],
+      "linkId": "bezugsdiagnose",
+      "text": "Bezugsdiagnose",
+      "type": "reference",
+      "required": true
+    },
+    {
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "template",
+              "valueReference": {
+                "reference": "#strahlentherapie-procedure-template"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
         }
       ],
       "item": [
@@ -43,21 +108,21 @@
               "valueCoding": {
                 "code": "373846009",
                 "system": "http://snomed.info/sct",
-                "display": "Adjuvant - intent"
+                "display": "Adjuvant"
               }
             },
             {
               "valueCoding": {
                 "code": "373847000",
                 "system": "http://snomed.info/sct",
-                "display": "Neoadjuvant intent"
+                "display": "Neoadjuvant"
               }
             },
             {
               "valueCoding": {
                 "code": "363676003",
                 "system": "http://snomed.info/sct",
-                "display": "Palliative intent"
+                "display": "Palliativ"
               }
             }
           ],
@@ -79,9 +144,38 @@
           "required": false
         },
         {
-          "linkId": "rt-bezogene-op",
-          "text": "Bezogene Operation (Referenz auf vorherige OP)",
-          "type": "string",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "80248007",
+                "system": "http://snomed.info/sct",
+                "display": "Links"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "73056007",
+                "system": "http://snomed.info/sct",
+                "display": "Rechts"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "63762007",
+                "system": "http://snomed.info/sct",
+                "display": "Beidseits"
+              }
+            }
+          ],
+          "linkId": "rt-seite",
+          "text": "Bestrahlte Seite",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "linkId": "rt-simultane-rct",
+          "text": "Simultane Radiochemotherapie",
+          "type": "boolean",
           "required": false
         }
       ],
@@ -98,42 +192,35 @@
               "valueCoding": {
                 "code": "76752008",
                 "system": "http://snomed.info/sct",
-                "display": "Breast structure"
+                "display": "Ganze Brust"
               }
             },
             {
               "valueCoding": {
                 "code": "78904004",
                 "system": "http://snomed.info/sct",
-                "display": "Chest wall structure"
+                "display": "Brustwand"
               }
             },
             {
               "valueCoding": {
                 "code": "68171009",
                 "system": "http://snomed.info/sct",
-                "display": "Axillary lymph node structure"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "16051009",
-                "system": "http://snomed.info/sct",
-                "display": "Structure of apical axillary lymph node"
+                "display": "Axilläre Lymphknoten"
               }
             },
             {
               "valueCoding": {
                 "code": "76838003",
                 "system": "http://snomed.info/sct",
-                "display": "Structure of supraclavicular lymph node"
+                "display": "Supraklavikuläre Lymphknoten"
               }
             },
             {
               "valueCoding": {
                 "code": "245282001",
                 "system": "http://snomed.info/sct",
-                "display": "Internal mammary lymph node group"
+                "display": "Parasternale Lymphknoten"
               }
             }
           ],
@@ -149,21 +236,21 @@
               "valueCoding": {
                 "code": "1163834000",
                 "system": "http://snomed.info/sct",
-                "display": "3D conformal radiation therapy"
+                "display": "3D-konformale Bestrahlung"
               }
             },
             {
               "valueCoding": {
                 "code": "1163833006",
                 "system": "http://snomed.info/sct",
-                "display": "Intensity modulated radiation therapy"
+                "display": "IMRT (intensitätsmoduliert)"
               }
             },
             {
               "valueCoding": {
                 "code": "152198000",
                 "system": "http://snomed.info/sct",
-                "display": "Brachytherapy"
+                "display": "Brachytherapie"
               }
             }
           ],
@@ -259,30 +346,6 @@
           "text": "Boost-Fraktionen",
           "type": "integer",
           "required": false
-        },
-        {
-          "enableWhen": [
-            {
-              "question": "rt-boost",
-              "operator": "=",
-              "answerBoolean": true
-            }
-          ],
-          "answerOption": [
-            {
-              "valueString": "Elektronen"
-            },
-            {
-              "valueString": "Photonen"
-            },
-            {
-              "valueString": "Brachytherapie"
-            }
-          ],
-          "linkId": "rt-boost-technik",
-          "text": "Boost-Technik",
-          "type": "choice",
-          "required": false
         }
       ],
       "linkId": "boost",
@@ -294,7 +357,7 @@
       "item": [
         {
           "linkId": "rt-nebenwirkungen",
-          "text": "Akute Nebenwirkungen (Radiodermatitis, Fatigue, etc.)",
+          "text": "Akute Nebenwirkungen",
           "type": "text",
           "required": false
         },
