@@ -2,9 +2,9 @@
 
 ## Überblick
 
-Die adjuvante Strahlentherapie ist nach brusterhaltender Operation Standardbestandteil der Behandlung und wird bei bestimmten Risikofaktoren auch nach Mastektomie durchgeführt. Die Bestrahlung erfolgt in der Regel durch eine eigenständige Strahlentherapie-Abteilung oder ein externes Zentrum mit eigenem Dokumentationssystem.
+Die Strahlentherapie ist ein zentraler Bestandteil der Behandlung des Mammakarzinoms und wird je nach klinischer Situation in unterschiedlichen Settings eingesetzt. Nach brusterhaltender Operation stellt sie einen Standardbestandteil der adjuvanten Therapie dar und wird bei definierten Risikokonstellationen auch nach Mastektomie durchgeführt. Darüber hinaus kann sie intraoperativ appliziert werden sowie im metastasierten Setting zur Symptomkontrolle beitragen.
 
-Die Strahlentherapie-Daten werden am Brustzentrum selbst nicht primär erfasst, sind aber für die Meldung an Krebsregister (oBDS), DKG-Zertifizierung (OncoBox) und Qualitätssicherung (IQTIG) erforderlich. Das Datenmodell definiert daher die Struktur, in der diese Informationen empfangen, vorgehalten und an die verschiedenen Meldewege weitergeleitet werden können.
+Die Durchführung erfolgt in der Regel durch eine eigenständige Strahlentherapie-Abteilung oder ein externes Zentrum mit eigenem Dokumentationssystem. Die entsprechenden Daten werden am Brustzentrum häufig nicht primär erfasst, sind jedoch für die Meldung an Krebsregister (oBDS), Zertifizierungsanforderungen (DKG/OncoBox) und Maßnahmen der Qualitätssicherung (IQTIG) erforderlich. Das Datenmodell definiert daher die Struktur, in der diese Informationen empfangen, vorgehalten und an die verschiedenen Meldewege weitergeleitet werden können.
 
 ## Relevante Datenpunkte
 

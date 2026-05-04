@@ -10,7 +10,7 @@ Die Operation ist bei den meisten Mammakarzinomen zentraler Bestandteil der Beha
 
 Da im Rahmen einer Operation häufig mehrere Einzelprozeduren durchgeführt werden — etwa eine brusterhaltende Exzision zusammen mit einer Sentinel-Lymphknoten-Biopsie und einer intraoperativen Präparatradiographie — bildet das Datenmodell eine übergreifende Operation mit zugehörigen Unterprozeduren ab. Die Hauptprozedur repräsentiert den operativen Eingriff als Ganzes (Zeitpunkt, Intention, Gesamtergebnis), während die Unterprozeduren die einzelnen chirurgischen Maßnahmen mit ihren spezifischen OPS-Codes dokumentieren.
 
-## Kodierung operativer Eingriffe
+### Kodierung operativer Eingriffe
 
 Die Kodierung operativer Eingriffe erfolgt in Deutschland über den Operationen- und Prozedurenschlüssel (OPS). Die exakten OPS-Codes werden über das KIS erfasst und können von dort übernommen werden. Eine vollständige Abbildung der OPS-Systematik auf SNOMED CT ist ohne umfangreiche Nutzung von Postkoordination nicht möglich und liegt daher außerhalb der ersten Version dieses Moduls. Das Datenmodell sieht beide Kodiersysteme als Coding-Slices vor — OPS als Primärkodierung aus dem KIS, SNOMED CT optional als internationale Ergänzung wo eindeutige Mappings bestehen.
 
@@ -22,17 +22,17 @@ Die Kodierung operativer Eingriffe erfolgt in Deutschland über den Operationen-
 | Axilla-Dissektion | 5-402 | 79544006 Axillary dissection |
 | Brustrekonstruktion (Implantat) | 5-886 | 33496007 Mammoplasty |
 
-## Von der Empfehlung zur Durchführung
+### Von der Empfehlung zur Durchführung
 
 Die operative Versorgung folgt einem definierten Pfad: Die interdisziplinäre Tumorkonferenz spricht eine Therapieempfehlung aus. Daraus entsteht eine OP-Planung mit Angaben zu Seitenlokalisation, geplanter Operationsart und ggf. präoperativer Markierung. Nach Durchführung dokumentiert der Operateur das Ergebnis — einschließlich des Residualstatus (R0/R1/R2), der sich aus dem pathologischen Befund des OP-Präparats ergibt.
 
-## Axilläre Chirurgie
+### Axilläre Chirurgie
 
 Axilläre chirurgische Maßnahmen erfüllen diagnostische, prognostische und therapeutische Funktionen. Entsprechend variiert das operative Vorgehen in Abhängigkeit vom klinischen Befund und der systemischen Therapiestrategie. Die Sentinel-Lymphknoten-Biopsie stellt bei klinisch unauffälliger Axilla ein etabliertes Verfahren dar, wird jedoch im Zuge aktueller Deeskalationskonzepte zunehmend kritisch hinterfragt. Bei suspekten Lymphknoten kommt weiterhin selektiv eine axilläre Dissektion, zunehmend auch eine Target Axillary Dissection zum Einsatz.
 
 Das Ergebnis — Anzahl entnommener und befallener Lymphknoten — fließt in das pathologische N-Staging ein.
 
-## Nachresektion
+### Nachresektion
 
 Wird kein tumorfreier Resektionsrand erreicht (R1-Situation), folgt eine Nachresektion. Die Anzahl der Eingriffe bis zum Erreichen von R0 ist eine ableitbare Qualitätskennzahl für die DKG-Zertifizierung.
 
