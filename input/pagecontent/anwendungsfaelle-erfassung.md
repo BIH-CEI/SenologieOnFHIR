@@ -24,10 +24,16 @@ Das Modul definiert SDC-Questionnaires für die zentralen Dokumentationsschritte
 
 | Formular | Klinischer Kontext | Extrahierte Ressourcen |
 |---|---|---|
-| OP-Dokumentation | Intra-/postoperative Dokumentation | Procedure, Device, Observation (Komplikation) |
-| OP-Planung | Präoperative Planung | ServiceRequest |
-| Diagnose | Primärdiagnose und Staging | Condition |
-| Bildgebung | Mammographie, Sonographie, MRT | DiagnosticReport, Observation |
+| [Erstanamnese](Questionnaire-senologie-erstanamnese.html) | Aufnahme, Vorgeschichte, gynäkologische Anamnese | Patient, Observation, FamilyMemberHistory |
+| [Klinische Untersuchung](Questionnaire-senologie-klinische-untersuchung.html) | Brustuntersuchung, Tastbefund, LK-Status | Observation |
+| [Bildgebung](Questionnaire-senologie-bildgebung.html) | Mammographie, Sonographie, MRT | DiagnosticReport, Observation |
+| [Pathologie](Questionnaire-senologie-pathologie.html) | Histologie, Rezeptorstatus, Grading | DiagnosticReport, Observation, Specimen |
+| [Tumorboard](Questionnaire-senologie-tumorboard.html) | Therapieempfehlung, interdisziplinäre Konferenz | CarePlan |
+| [OP-Planung](Questionnaire-senologie-op-planung.html) | Präoperative Planung, Markierung | ServiceRequest |
+| [Postoperativ](Questionnaire-senologie-postop.html) | Intra-/postoperative Dokumentation | Procedure, Device, Observation |
+| [Systemtherapie](Questionnaire-senologie-systemtherapie.html) | Chemo, Immun, endokrine Therapie | Procedure, MedicationStatement |
+| [Strahlentherapie](Questionnaire-senologie-strahlentherapie-quest.html) | Bestrahlung, Dosierung | Procedure |
+| [Verlauf](Questionnaire-senologie-verlauf.html) | Nachsorge, Tumorstatus, Follow-Up | Observation |
 
 ### Formular-First: Warum?
 
@@ -65,4 +71,4 @@ Die Questionnaires nutzen folgende SDC-Features:
 
 ### Quellsystem
 
-Die Formulare werden aktuell im klinischen Dokumentationssystem **dotbase** gepflegt und als SDC-Questionnaires exportiert. Das Senologie-Modul definiert die FHIR-Zielstruktur, in die die Formulardaten extrahiert werden.
+Die Formulare werden als SDC-Questionnaires definiert und können in beliebigen FHIR-fähigen Dokumentationssystemen eingesetzt werden. Das Senologie-Modul definiert die FHIR-Zielstruktur, in die die Formulardaten extrahiert werden.
