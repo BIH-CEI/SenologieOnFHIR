@@ -26,7 +26,7 @@
 <span style="color: navy">// </span><span style="color: green">Die Artikelidentifikation (Device -&gt; ARI_* + ARB_* + ABI_*) wird ueber</span>
 <span style="color: navy">// </span><span style="color: green">Procedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">--- OPE_* Basisdaten ---</span>
   <span style="color: navy">// </span><span style="color: green">OPE_LaufendeNummer: aus Procedure.identifier oder Sequenz</span>
   src.identifier<b> as </b><span style="color: maroon">id</span><b> then</b><span style="color: navy"> {
@@ -57,26 +57,6 @@
   src<span style="color: navy"><b> -&gt; </b></span>tgt.implantattypSchluessel = <span style="color: blue">'3'</span> <i>&quot;SetImplantattypBrust&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- OBI_* Brustimplantat-spezifische Operationsdaten ---</span>
   src<span style="color: navy"><b> -&gt; </b></span>tgt.operationBrustimplantat<b> as </b><span style="color: maroon">obi</span><b> then </b>MapOperationBrustimplantat<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">obi</span><span style="color: navy">)</span> <i>&quot;CallMapOBI&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">--- Artikelidentifikation: Device-Ressourcen ---</span>
-  <span style="color: navy">// </span><span style="color: green">Aufloesen ueber Procedure.focalDevice.manipulated (Device-Referenz)</span>
-  src.focalDevice<b> as </b><span style="color: maroon">fd</span><b> then</b><span style="color: navy"> {
-</span>    fd.manipulated<b> as </b><span style="color: maroon">ref</span><b> then</b><span style="color: navy"> {
-</span>      <span style="color: navy">// </span><span style="color: green">Suche die referenzierte Device-Ressource im Bundle</span>
-      bundle.entry<b> as </b><span style="color: maroon">devEntry</span><b> where </b>resource.is(Device) and (fullUrl = (%ref.reference))<b> then</b><span style="color: navy"> {
-</span>        devEntry.resource<b> as </b><span style="color: maroon">device</span><span style="color: navy"><b> -&gt; </b></span>tgt.artikelidentifikation<b> as </b><span style="color: maroon">art</span><b> then </b>MapArtikelidentifikation<span style="color: navy">(</span><span style="color: maroon">device</span><span style="color: navy">, </span><span style="color: maroon">art</span><span style="color: navy">)</span> <i>&quot;CallMapArtikel&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;ResolveDeviceRef&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapDeviceRef&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;MapFocalDevice&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Fallback: alle Device-Ressourcen im Bundle, falls kein focalDevice vorhanden</span>
-  src<b> where </b>focalDevice.exists().not()<b> then</b><span style="color: navy"> {
-</span>    bundle.entry<b> as </b><span style="color: maroon">devEntry</span><b> where </b>resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat'))<b> then</b><span style="color: navy"> {
-</span>      devEntry.resource<b> as </b><span style="color: maroon">device</span><span style="color: navy"><b> -&gt; </b></span>tgt.artikelidentifikation<b> as </b><span style="color: maroon">art</span><b> then </b>MapArtikelidentifikation<span style="color: navy">(</span><span style="color: maroon">device</span><span style="color: navy">, </span><span style="color: maroon">art</span><span style="color: navy">)</span> <i>&quot;CallMapArtikelFallback&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntryDeviceFallback&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;FallbackDevice&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">--- Zubehoer (ADM/Netz): Device mit Zubehoer-Profil ---</span>
-  bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">device</span><span style="color: navy"><b> -&gt; </b></span>tgt.zubehoer<b> as </b><span style="color: maroon">zub</span><b> then </b>MapZubehoer<span style="color: navy">(</span><span style="color: maroon">device</span><span style="color: navy">, </span><span style="color: maroon">zub</span><span style="color: navy">)</span> <i>&quot;CallMapZubehoer&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryZubehoer&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
 </span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
@@ -411,7 +391,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToIRegOperation"/>
   <status value="draft"/>
-  <date value="2026-05-04T08:32:13+00:00"/>
+  <date value="2026-05-04T09:30:07+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -454,11 +434,6 @@
       <name value="tgt"/>
       <type value="BackboneElement"/>
       <mode value="target"/>
-    </input>
-    <input>
-      <name value="bundle"/>
-      <type value="Bundle"/>
-      <mode value="source"/>
     </input>
     <rule>
       <name value="MapOpLaufendeNummer"/>
@@ -663,113 +638,6 @@
         <variable value="src"/>
         <variable value="obi"/>
       </dependent>
-    </rule>
-    <rule>
-      <name value="MapFocalDevice"/>
-      <source>
-        <context value="src"/>
-        <element value="focalDevice"/>
-        <variable value="fd"/>
-      </source>
-      <rule>
-        <name value="MapDeviceRef"/>
-        <source>
-          <context value="fd"/>
-          <element value="manipulated"/>
-          <variable value="ref"/>
-        </source>
-        <rule>
-          <name value="ResolveDeviceRef"/>
-          <source>
-            <context value="bundle"/>
-            <element value="entry"/>
-            <variable value="devEntry"/>
-            <condition value="resource.is(Device) and (fullUrl = (%ref.reference))"/>
-          </source>
-          <rule>
-            <name value="CallMapArtikel"/>
-            <source>
-              <context value="devEntry"/>
-              <element value="resource"/>
-              <variable value="device"/>
-            </source>
-            <target>
-              <context value="tgt"/>
-              <contextType value="variable"/>
-              <element value="artikelidentifikation"/>
-              <variable value="art"/>
-            </target>
-            <dependent>
-              <name value="MapArtikelidentifikation"/>
-              <variable value="device"/>
-              <variable value="art"/>
-            </dependent>
-          </rule>
-        </rule>
-      </rule>
-    </rule>
-    <rule>
-      <name value="FallbackDevice"/>
-      <source>
-        <context value="src"/>
-        <condition value="focalDevice.exists().not()"/>
-      </source>
-      <rule>
-        <name value="EntryDeviceFallback"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="devEntry"/>
-          <condition value="resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat'))"/>
-        </source>
-        <rule>
-          <name value="CallMapArtikelFallback"/>
-          <source>
-            <context value="devEntry"/>
-            <element value="resource"/>
-            <variable value="device"/>
-          </source>
-          <target>
-            <context value="tgt"/>
-            <contextType value="variable"/>
-            <element value="artikelidentifikation"/>
-            <variable value="art"/>
-          </target>
-          <dependent>
-            <name value="MapArtikelidentifikation"/>
-            <variable value="device"/>
-            <variable value="art"/>
-          </dependent>
-        </rule>
-      </rule>
-    </rule>
-    <rule>
-      <name value="EntryZubehoer"/>
-      <source>
-        <context value="bundle"/>
-        <element value="entry"/>
-        <variable value="entry"/>
-        <condition value="resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer'))"/>
-      </source>
-      <rule>
-        <name value="CallMapZubehoer"/>
-        <source>
-          <context value="entry"/>
-          <element value="resource"/>
-          <variable value="device"/>
-        </source>
-        <target>
-          <context value="tgt"/>
-          <contextType value="variable"/>
-          <element value="zubehoer"/>
-          <variable value="zub"/>
-        </target>
-        <dependent>
-          <name value="MapZubehoer"/>
-          <variable value="device"/>
-          <variable value="zub"/>
-        </dependent>
-      </rule>
     </rule>
   </group>
   <group>

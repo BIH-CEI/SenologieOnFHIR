@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustVerlauf",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -716,7 +716,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
       "target" : [{
         "context" : "tgt",
         "contextType" : "variable",
-        "element" : "datum",
+        "element" : "meldedatum",
         "transform" : "copy",
         "parameter" : [{
           "valueId" : "eff"
@@ -787,7 +787,13 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
                 "target" : [{
                   "context" : "tgt",
                   "contextType" : "variable",
-                  "element" : "fmOpDatum",
+                  "element" : "fmOperation",
+                  "variable" : "fmOp"
+                },
+                {
+                  "context" : "fmOp",
+                  "contextType" : "variable",
+                  "element" : "opDatum",
                   "transform" : "copy",
                   "parameter" : [{
                     "valueId" : "perf"
@@ -807,7 +813,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
       "target" : [{
         "context" : "tgt",
         "contextType" : "variable",
-        "element" : "fmTherapien",
+        "element" : "fmTherapie",
         "variable" : "fmTh"
       }],
       "dependent" : [{
@@ -871,7 +877,13 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
                   "target" : [{
                     "context" : "tgt",
                     "contextType" : "variable",
-                    "element" : "fmResidualstatus",
+                    "element" : "fmOperation",
+                    "variable" : "fmOp"
+                  },
+                  {
+                    "context" : "fmOp",
+                    "contextType" : "variable",
+                    "element" : "residualstatus",
                     "transform" : "copy",
                     "parameter" : [{
                       "valueId" : "rc"

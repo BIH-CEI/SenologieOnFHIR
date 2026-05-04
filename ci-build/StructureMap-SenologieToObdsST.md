@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsST",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -26,7 +26,7 @@ title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation s
   "version" : "0.1.0",
   "name" : "SenologieToIRegOperation",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -69,11 +69,6 @@ title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation s
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "MapOpLaufendeNummer",
@@ -276,110 +271,6 @@ title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation s
       "dependent" : [{
         "name" : "MapOperationBrustimplantat",
         "variable" : ["src", "obi"]
-      }]
-    },
-    {
-      "name" : "MapFocalDevice",
-      "source" : [{
-        "context" : "src",
-        "element" : "focalDevice",
-        "variable" : "fd"
-      }],
-      "rule" : [{
-        "name" : "MapDeviceRef",
-        "source" : [{
-          "context" : "fd",
-          "element" : "manipulated",
-          "variable" : "ref"
-        }],
-        "rule" : [{
-          "name" : "ResolveDeviceRef",
-          "source" : [{
-            "context" : "bundle",
-            "element" : "entry",
-            "variable" : "devEntry",
-            "condition" : "resource.is(Device) and (fullUrl = (%ref.reference))"
-          }],
-          "rule" : [{
-            "name" : "CallMapArtikel",
-            "source" : [{
-              "context" : "devEntry",
-              "element" : "resource",
-              "variable" : "device"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "artikelidentifikation",
-              "variable" : "art"
-            }],
-            "dependent" : [{
-              "name" : "MapArtikelidentifikation",
-              "variable" : ["device", "art"]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "FallbackDevice",
-      "source" : [{
-        "context" : "src",
-        "condition" : "focalDevice.exists().not()"
-      }],
-      "rule" : [{
-        "name" : "EntryDeviceFallback",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "devEntry",
-          "condition" : "resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat'))"
-        }],
-        "rule" : [{
-          "name" : "CallMapArtikelFallback",
-          "source" : [{
-            "context" : "devEntry",
-            "element" : "resource",
-            "variable" : "device"
-          }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "artikelidentifikation",
-            "variable" : "art"
-          }],
-          "dependent" : [{
-            "name" : "MapArtikelidentifikation",
-            "variable" : ["device", "art"]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryZubehoer",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer'))"
-      }],
-      "rule" : [{
-        "name" : "CallMapZubehoer",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "device"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "zubehoer",
-          "variable" : "zub"
-        }],
-        "dependent" : [{
-          "name" : "MapZubehoer",
-          "variable" : ["device", "zub"]
-        }]
       }]
     }]
   },

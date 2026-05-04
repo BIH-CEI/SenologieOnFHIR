@@ -26,7 +26,7 @@ title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplan
   "version" : "0.1.0",
   "name" : "SenologieToIRegEntlassung",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -69,11 +69,6 @@ title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplan
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "MapEntlassungsDatum",
@@ -162,143 +157,6 @@ title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplan
               "transform" : "copy",
               "parameter" : [{
                 "valueId" : "cd"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryDbiCondition",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Condition)"
-      }],
-      "rule" : [{
-        "name" : "DbiConditionContext",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "condition"
-        }],
-        "rule" : [{
-          "name" : "MapDbiCode",
-          "source" : [{
-            "context" : "condition",
-            "element" : "code",
-            "variable" : "code"
-          }],
-          "rule" : [{
-            "name" : "MapDbiIcd",
-            "source" : [{
-              "context" : "code",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "diagnoseBrustimplantat",
-              "variable" : "dbi"
-            }],
-            "rule" : [{
-              "name" : "SetDbiIcdCode",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "dbi",
-                "contextType" : "variable",
-                "element" : "icdSchluessel",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            },
-            {
-              "name" : "MapDbiSeite",
-              "source" : [{
-                "context" : "condition",
-                "element" : "bodySite",
-                "variable" : "bs"
-              }],
-              "rule" : [{
-                "name" : "MapDbiSeiteSCT",
-                "source" : [{
-                  "context" : "bs",
-                  "element" : "coding",
-                  "variable" : "bsc",
-                  "condition" : "system = 'http://snomed.info/sct'"
-                }],
-                "rule" : [{
-                  "name" : "AppendSeiteRechts",
-                  "source" : [{
-                    "context" : "bsc",
-                    "element" : "code",
-                    "variable" : "bscd",
-                    "condition" : "$this = '24028007'"
-                  }],
-                  "target" : [{
-                    "context" : "dbi",
-                    "contextType" : "variable",
-                    "element" : "icdSchluessel",
-                    "transform" : "append",
-                    "parameter" : [{
-                      "valueId" : "cd"
-                    },
-                    {
-                      "valueString" : ":R"
-                    }]
-                  }]
-                },
-                {
-                  "name" : "AppendSeiteLinks",
-                  "source" : [{
-                    "context" : "bsc",
-                    "element" : "code",
-                    "variable" : "bscd",
-                    "condition" : "$this = '7771000'"
-                  }],
-                  "target" : [{
-                    "context" : "dbi",
-                    "contextType" : "variable",
-                    "element" : "icdSchluessel",
-                    "transform" : "append",
-                    "parameter" : [{
-                      "valueId" : "cd"
-                    },
-                    {
-                      "valueString" : ":L"
-                    }]
-                  }]
-                },
-                {
-                  "name" : "AppendSeiteBeidseits",
-                  "source" : [{
-                    "context" : "bsc",
-                    "element" : "code",
-                    "variable" : "bscd",
-                    "condition" : "$this = '51440002'"
-                  }],
-                  "target" : [{
-                    "context" : "dbi",
-                    "contextType" : "variable",
-                    "element" : "icdSchluessel",
-                    "transform" : "append",
-                    "parameter" : [{
-                      "valueId" : "cd"
-                    },
-                    {
-                      "valueString" : ":B"
-                    }]
-                  }]
-                }]
               }]
             }]
           }]

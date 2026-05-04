@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator) stat
   "version" : "0.1.0",
   "name" : "SenologieToIRegMeldung",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -568,7 +568,119 @@ title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator) stat
         }],
         "dependent" : [{
           "name" : "MapOperation",
-          "variable" : ["procedure", "op", "bundle"]
+          "variable" : ["procedure", "op"]
+        }]
+      },
+      {
+        "name" : "DeviceLookupContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "procedure"
+        }],
+        "rule" : [{
+          "name" : "MapFocalDevice",
+          "source" : [{
+            "context" : "procedure",
+            "element" : "focalDevice",
+            "variable" : "fd"
+          }],
+          "rule" : [{
+            "name" : "MapDeviceRef",
+            "source" : [{
+              "context" : "fd",
+              "element" : "manipulated",
+              "variable" : "ref"
+            }],
+            "rule" : [{
+              "name" : "ResolveDeviceRef",
+              "source" : [{
+                "context" : "bundle",
+                "element" : "entry",
+                "variable" : "devEntry",
+                "condition" : "resource.is(Device) and (fullUrl = (%ref.reference))"
+              }],
+              "rule" : [{
+                "name" : "CallMapArtikel",
+                "source" : [{
+                  "context" : "devEntry",
+                  "element" : "resource",
+                  "variable" : "device"
+                }],
+                "target" : [{
+                  "context" : "op",
+                  "contextType" : "variable",
+                  "element" : "artikelidentifikation",
+                  "variable" : "art"
+                }],
+                "dependent" : [{
+                  "name" : "MapArtikelidentifikation",
+                  "variable" : ["device", "art"]
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "FallbackDevice",
+          "source" : [{
+            "context" : "procedure",
+            "condition" : "focalDevice.exists().not()"
+          }],
+          "rule" : [{
+            "name" : "EntryDeviceFallback",
+            "source" : [{
+              "context" : "bundle",
+              "element" : "entry",
+              "variable" : "devEntry",
+              "condition" : "resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat'))"
+            }],
+            "rule" : [{
+              "name" : "CallMapArtikelFallback",
+              "source" : [{
+                "context" : "devEntry",
+                "element" : "resource",
+                "variable" : "device"
+              }],
+              "target" : [{
+                "context" : "op",
+                "contextType" : "variable",
+                "element" : "artikelidentifikation",
+                "variable" : "art"
+              }],
+              "dependent" : [{
+                "name" : "MapArtikelidentifikation",
+                "variable" : ["device", "art"]
+              }]
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "EntryZubehoer",
+        "source" : [{
+          "context" : "bundle",
+          "element" : "entry",
+          "variable" : "zubEntry",
+          "condition" : "resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer'))"
+        }],
+        "rule" : [{
+          "name" : "CallMapZubehoer",
+          "source" : [{
+            "context" : "zubEntry",
+            "element" : "resource",
+            "variable" : "device"
+          }],
+          "target" : [{
+            "context" : "op",
+            "contextType" : "variable",
+            "element" : "zubehoer",
+            "variable" : "zub"
+          }],
+          "dependent" : [{
+            "name" : "MapZubehoer",
+            "variable" : ["device", "zub"]
+          }]
         }]
       }]
     },
@@ -585,7 +697,144 @@ title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator) stat
       }],
       "dependent" : [{
         "name" : "MapEntlassung",
-        "variable" : ["src", "entl", "bundle"]
+        "variable" : ["src", "entl"]
+      }]
+    },
+    {
+      "name" : "EntryDbiCondition",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Condition)"
+      }],
+      "rule" : [{
+        "name" : "DbiConditionContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "condition"
+        }],
+        "rule" : [{
+          "name" : "MapDbiCode",
+          "source" : [{
+            "context" : "condition",
+            "element" : "code",
+            "variable" : "code"
+          }],
+          "rule" : [{
+            "name" : "MapDbiIcd",
+            "source" : [{
+              "context" : "code",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+            }],
+            "target" : [{
+              "context" : "entl",
+              "contextType" : "variable",
+              "element" : "diagnoseBrustimplantat",
+              "variable" : "dbi"
+            }],
+            "rule" : [{
+              "name" : "SetDbiIcdCode",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "dbi",
+                "contextType" : "variable",
+                "element" : "icdSchluessel",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            },
+            {
+              "name" : "MapDbiSeite",
+              "source" : [{
+                "context" : "condition",
+                "element" : "bodySite",
+                "variable" : "bs"
+              }],
+              "rule" : [{
+                "name" : "MapDbiSeiteSCT",
+                "source" : [{
+                  "context" : "bs",
+                  "element" : "coding",
+                  "variable" : "bsc",
+                  "condition" : "system = 'http://snomed.info/sct'"
+                }],
+                "rule" : [{
+                  "name" : "AppendSeiteRechts",
+                  "source" : [{
+                    "context" : "bsc",
+                    "element" : "code",
+                    "variable" : "bscd",
+                    "condition" : "$this = '24028007'"
+                  }],
+                  "target" : [{
+                    "context" : "dbi",
+                    "contextType" : "variable",
+                    "element" : "icdSchluessel",
+                    "transform" : "append",
+                    "parameter" : [{
+                      "valueId" : "cd"
+                    },
+                    {
+                      "valueString" : ":R"
+                    }]
+                  }]
+                },
+                {
+                  "name" : "AppendSeiteLinks",
+                  "source" : [{
+                    "context" : "bsc",
+                    "element" : "code",
+                    "variable" : "bscd",
+                    "condition" : "$this = '7771000'"
+                  }],
+                  "target" : [{
+                    "context" : "dbi",
+                    "contextType" : "variable",
+                    "element" : "icdSchluessel",
+                    "transform" : "append",
+                    "parameter" : [{
+                      "valueId" : "cd"
+                    },
+                    {
+                      "valueString" : ":L"
+                    }]
+                  }]
+                },
+                {
+                  "name" : "AppendSeiteBeidseits",
+                  "source" : [{
+                    "context" : "bsc",
+                    "element" : "code",
+                    "variable" : "bscd",
+                    "condition" : "$this = '51440002'"
+                  }],
+                  "target" : [{
+                    "context" : "dbi",
+                    "contextType" : "variable",
+                    "element" : "icdSchluessel",
+                    "transform" : "append",
+                    "parameter" : [{
+                      "valueId" : "cd"
+                    },
+                    {
+                      "valueString" : ":B"
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
       }]
     }]
   }]

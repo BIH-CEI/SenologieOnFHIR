@@ -164,7 +164,7 @@
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
 <b>group </b>MapVerlaufFernmetastase<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Observation, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Verlauf_Datum: aus Observation.effectiveDateTime</span>
-  src.effective<b> as </b><span style="color: maroon">eff</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.datum = <span style="color: maroon">eff</span> <i>&quot;SetVerlaufDatumFM&quot;</i><span style="color: navy">;</span>
+  src.effective<b> as </b><span style="color: maroon">eff</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.meldedatum = <span style="color: maroon">eff</span> <i>&quot;SetVerlaufDatumFM&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Verlauf_Ereignis: 3 = Fernmetastase</span>
   src<span style="color: navy"><b> -&gt; </b></span>tgt.ereignis = <span style="color: blue">'3'</span> <i>&quot;SetEreignisFM&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">=== OncoBox 2.0: J03 — FM_OP_Datum ===</span>
@@ -175,14 +175,14 @@
 </span>      proc.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style="color: navy"> {
 </span>        ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
 </span>          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'P'<b> then</b><span style="color: navy"> {
-</span>            proc.performed<b> as </b><span style="color: maroon">perf</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.fmOpDatum = <span style="color: maroon">perf</span> <i>&quot;SetFMOpDatum&quot;</i><span style="color: navy">;</span>
+</span>            proc.performed<b> as </b><span style="color: maroon">perf</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span> tgt.fmOperation<b> as </b><span style="color: maroon">fmOp</span><span style="color: navy">, </span> fmOp.opDatum = <span style="color: maroon">perf</span> <i>&quot;SetFMOpDatum&quot;</i><span style="color: navy">;</span>
           <span style="color: navy">}</span> <i>&quot;CheckIntentionPalliativ&quot;</i><span style="color: navy">;</span>
         <span style="color: navy">}</span> <i>&quot;MapIntentionValue&quot;</i><span style="color: navy">;</span>
       <span style="color: navy">}</span> <i>&quot;MapIntentionExt&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapFMOpProc&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryFMOp&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">=== OncoBox 2.0: J04 — FM_Therapien ===</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt.fmTherapien<b> as </b><span style="color: maroon">fmTh</span><b> then </b>MapFMTherapien<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">fmTh</span><span style="color: navy">)</span> <i>&quot;CallMapFMTherapien&quot;</i><span style="color: navy">;</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.fmTherapie<b> as </b><span style="color: maroon">fmTh</span><b> then </b>MapFMTherapien<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">fmTh</span><span style="color: navy">)</span> <i>&quot;CallMapFMTherapien&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">=== OncoBox 2.0: J05 — FM_Residualstatus ===</span>
   <span style="color: navy">// </span><span style="color: green">Aus Procedure.outcome der FM-Operation (palliativer Kontext)</span>
   bundle.entry<b> as </b><span style="color: maroon">opEntry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style="color: navy"> {
@@ -191,7 +191,7 @@
 </span>        ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
 </span>          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'P'<b> then</b><span style="color: navy"> {
 </span>            proc.outcome<b> as </b><span style="color: maroon">oc</span><b> then</b><span style="color: navy"> {
-</span>              oc.coding<b> as </b><span style="color: maroon">rc</span><b> where </b>system.contains('residualstatus')<span style="color: navy"><b> -&gt; </b></span>tgt.fmResidualstatus = <span style="color: maroon">rc</span> <i>&quot;SetFMResidualCode&quot;</i><span style="color: navy">;</span>
+</span>              oc.coding<b> as </b><span style="color: maroon">rc</span><b> where </b>system.contains('residualstatus')<span style="color: navy"><b> -&gt; </b></span> tgt.fmOperation<b> as </b><span style="color: maroon">fmOp</span><span style="color: navy">, </span> fmOp.residualstatus = <span style="color: maroon">rc</span> <i>&quot;SetFMResidualCode&quot;</i><span style="color: navy">;</span>
             <span style="color: navy">}</span> <i>&quot;MapFMResidualCoding&quot;</i><span style="color: navy">;</span>
           <span style="color: navy">}</span> <i>&quot;CheckIntentionPalliativR&quot;</i><span style="color: navy">;</span>
         <span style="color: navy">}</span> <i>&quot;MapIntentionValueR&quot;</i><span style="color: navy">;</span>
@@ -287,7 +287,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToOncoBoxBrustVerlauf"/>
   <status value="draft"/>
-  <date value="2026-05-04T08:32:13+00:00"/>
+  <date value="2026-05-04T09:30:07+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -981,7 +981,7 @@
       <target>
         <context value="tgt"/>
         <contextType value="variable"/>
-        <element value="datum"/>
+        <element value="meldedatum"/>
         <transform value="copy"/>
         <parameter>
           <valueId value="eff"/>
@@ -1052,7 +1052,13 @@
                 <target>
                   <context value="tgt"/>
                   <contextType value="variable"/>
-                  <element value="fmOpDatum"/>
+                  <element value="fmOperation"/>
+                  <variable value="fmOp"/>
+                </target>
+                <target>
+                  <context value="fmOp"/>
+                  <contextType value="variable"/>
+                  <element value="opDatum"/>
                   <transform value="copy"/>
                   <parameter>
                     <valueId value="perf"/>
@@ -1072,7 +1078,7 @@
       <target>
         <context value="tgt"/>
         <contextType value="variable"/>
-        <element value="fmTherapien"/>
+        <element value="fmTherapie"/>
         <variable value="fmTh"/>
       </target>
       <dependent>
@@ -1137,7 +1143,13 @@
                   <target>
                     <context value="tgt"/>
                     <contextType value="variable"/>
-                    <element value="fmResidualstatus"/>
+                    <element value="fmOperation"/>
+                    <variable value="fmOp"/>
+                  </target>
+                  <target>
+                    <context value="fmOp"/>
+                    <contextType value="variable"/>
+                    <element value="residualstatus"/>
                     <transform value="copy"/>
                     <parameter>
                       <valueId value="rc"/>

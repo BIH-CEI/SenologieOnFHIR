@@ -452,10 +452,53 @@ status: draft</p>
   <span style="color: navy">}</span> <i>&quot;EntryPatient&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Operationen: Procedure (Senologie_Operation) mit Device ---</span>
   bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.operation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.operation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Artikelidentifikation: Device-Ressourcen ---</span>
+    <span style="color: navy">// </span><span style="color: green">Aufloesen ueber Procedure.focalDevice.manipulated (Device-Referenz)</span>
+    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
+</span>      procedure.focalDevice<b> as </b><span style="color: maroon">fd</span><b> then</b><span style="color: navy"> {
+</span>        fd.manipulated<b> as </b><span style="color: maroon">ref</span><b> then</b><span style="color: navy"> {
+</span>          <span style="color: navy">// </span><span style="color: green">Suche die referenzierte Device-Ressource im Bundle</span>
+          bundle.entry<b> as </b><span style="color: maroon">devEntry</span><b> where </b>resource.is(Device) and (fullUrl = (%ref.reference))<b> then</b><span style="color: navy"> {
+</span>            devEntry.resource<b> as </b><span style="color: maroon">device</span><span style="color: navy"><b> -&gt; </b></span>op.artikelidentifikation<b> as </b><span style="color: maroon">art</span><b> then </b>MapArtikelidentifikation<span style="color: navy">(</span><span style="color: maroon">device</span><span style="color: navy">, </span><span style="color: maroon">art</span><span style="color: navy">)</span> <i>&quot;CallMapArtikel&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;ResolveDeviceRef&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapDeviceRef&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapFocalDevice&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">Fallback: alle Device-Ressourcen im Bundle, falls kein focalDevice vorhanden</span>
+      procedure<b> where </b>focalDevice.exists().not()<b> then</b><span style="color: navy"> {
+</span>        bundle.entry<b> as </b><span style="color: maroon">devEntry</span><b> where </b>resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat'))<b> then</b><span style="color: navy"> {
+</span>          devEntry.resource<b> as </b><span style="color: maroon">device</span><span style="color: navy"><b> -&gt; </b></span>op.artikelidentifikation<b> as </b><span style="color: maroon">art</span><b> then </b>MapArtikelidentifikation<span style="color: navy">(</span><span style="color: maroon">device</span><span style="color: navy">, </span><span style="color: maroon">art</span><span style="color: navy">)</span> <i>&quot;CallMapArtikelFallback&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;EntryDeviceFallback&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;FallbackDevice&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;DeviceLookupContext&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Zubehoer (ADM/Netz): Device mit Zubehoer-Profil ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">zubEntry</span><b> where </b>resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer'))<b> then</b><span style="color: navy"> {
+</span>      zubEntry.resource<b> as </b><span style="color: maroon">device</span><span style="color: navy"><b> -&gt; </b></span>op.zubehoer<b> as </b><span style="color: maroon">zub</span><b> then </b>MapZubehoer<span style="color: navy">(</span><span style="color: maroon">device</span><span style="color: navy">, </span><span style="color: maroon">zub</span><span style="color: navy">)</span> <i>&quot;CallMapZubehoer&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryZubehoer&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryOperation&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Entlassung: Encounter + Conditions ---</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt.entlassung<b> as </b><span style="color: maroon">entl</span><b> then </b>MapEntlassung<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">entl</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapEntlassung&quot;</i><span style="color: navy">;</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.entlassung<b> as </b><span style="color: maroon">entl</span><b> then </b>MapEntlassung<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">entl</span><span style="color: navy">)</span> <i>&quot;CallMapEntlassung&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- DBI_* Brustimplantat-spezifische Entlassungsdiagnosen ---</span>
+  <span style="color: navy">// </span><span style="color: green">Alle Condition-Ressourcen im Bundle mit ICD-10-GM-Kodierung</span>
+  bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><b> then</b><span style="color: navy"> {
+</span>      condition.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>        code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style="color: navy"><b> -&gt; </b></span>entl.diagnoseBrustimplantat<b> as </b><span style="color: maroon">dbi</span><b> then</b><span style="color: navy"> {
+</span>          <span style="color: navy">// </span><span style="color: green">DBI_IcdSchluessel: ICD-10-GM Kode mit optionaler Seitenlokalisation</span>
+          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>dbi.icdSchluessel = <span style="color: maroon">cd</span> <i>&quot;SetDbiIcdCode&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">// </span><span style="color: green">Seitenlokalisation an ICD-Code anhaengen falls vorhanden</span>
+          <span style="color: navy">// </span><span style="color: green">Format: Z99.9:R (rechts), Z99.9:L (links), Z99.9:B (beidseits)</span>
+          condition.bodySite<b> as </b><span style="color: maroon">bs</span><b> then</b><span style="color: navy"> {
+</span>            bs.coding<b> as </b><span style="color: maroon">bsc</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>              bsc.code<b> as </b><span style="color: maroon">bscd</span><b> where </b>$this = '24028007'<span style="color: navy"><b> -&gt; </b></span>dbi.icdSchluessel = <b>append</b><span style="color: navy">(</span><span style="color: maroon">cd</span><span style="color: navy">, </span><span style="color: blue">':R'</span><span style="color: navy">)</span> <i>&quot;AppendSeiteRechts&quot;</i><span style="color: navy">;</span>
+              bsc.code<b> as </b><span style="color: maroon">bscd</span><b> where </b>$this = '7771000'<span style="color: navy"><b> -&gt; </b></span>dbi.icdSchluessel = <b>append</b><span style="color: navy">(</span><span style="color: maroon">cd</span><span style="color: navy">, </span><span style="color: blue">':L'</span><span style="color: navy">)</span> <i>&quot;AppendSeiteLinks&quot;</i><span style="color: navy">;</span>
+              bsc.code<b> as </b><span style="color: maroon">bscd</span><b> where </b>$this = '51440002'<span style="color: navy"><b> -&gt; </b></span>dbi.icdSchluessel = <b>append</b><span style="color: navy">(</span><span style="color: maroon">cd</span><span style="color: navy">, </span><span style="color: blue">':B'</span><span style="color: navy">)</span> <i>&quot;AppendSeiteBeidseits&quot;</i><span style="color: navy">;</span>
+            <span style="color: navy">}</span> <i>&quot;MapDbiSeiteSCT&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapDbiSeite&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapDbiIcd&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapDbiCode&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;DbiConditionContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryDbiCondition&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
 </span></pre></div>
@@ -483,7 +526,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 08:32+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:30+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

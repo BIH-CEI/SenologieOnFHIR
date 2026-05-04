@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator) stat
   "version" : "0.1.0",
   "name" : "SenologieToIqtigMammachirurgie181",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -164,7 +164,7 @@ title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator) stat
         }],
         "dependent" : [{
           "name" : "MapOperation",
-          "variable" : ["procedure", "op", "src"]
+          "variable" : ["procedure", "op"]
         }]
       }]
     }]

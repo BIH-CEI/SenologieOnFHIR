@@ -26,7 +26,7 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
   "version" : "0.1.0",
   "name" : "SenologieToObdsHistologie",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -69,11 +69,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "MapHistologieID",
@@ -140,74 +135,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
           "transform" : "copy",
           "parameter" : [{
             "valueId" : "v"
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntrySpecimen",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "specEntry",
-        "condition" : "resource.is(Specimen)"
-      }],
-      "rule" : [{
-        "name" : "SpecimenContext",
-        "source" : [{
-          "context" : "specEntry",
-          "element" : "resource",
-          "variable" : "specimen"
-        }],
-        "rule" : [{
-          "name" : "MapAccessionId",
-          "source" : [{
-            "context" : "specimen",
-            "element" : "accessionIdentifier",
-            "variable" : "accId"
-          }],
-          "rule" : [{
-            "name" : "SetEinsendeNrFromSpecimen",
-            "source" : [{
-              "context" : "accId",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "histologieEinsendeNr",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapSpecimenCollection",
-          "source" : [{
-            "context" : "specimen",
-            "element" : "collection",
-            "variable" : "coll"
-          }],
-          "rule" : [{
-            "name" : "SetHistologiedatumFromSpecimen",
-            "source" : [{
-              "context" : "coll",
-              "element" : "collected",
-              "variable" : "collDt",
-              "condition" : "$this.is(dateTime)"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "tumorHistologiedatum",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueId" : "collDt"
-              }]
-            }]
           }]
         }]
       }]
@@ -335,54 +262,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
       }]
     },
     {
-      "name" : "EntryGrading",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "gradEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59542-1')"
-      }],
-      "rule" : [{
-        "name" : "MapGradingSepObs",
-        "source" : [{
-          "context" : "gradEntry",
-          "element" : "resource",
-          "variable" : "gradObs"
-        }],
-        "rule" : [{
-          "name" : "MapGradingSepValue",
-          "source" : [{
-            "context" : "gradObs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "TranslateGradingSeparate",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "grading",
-              "transform" : "translate",
-              "parameter" : [{
-                "valueId" : "c"
-              },
-              {
-                "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"
-              },
-              {
-                "valueString" : "code"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
       "name" : "MapLKUntersucht",
       "source" : [{
         "context" : "src",
@@ -404,40 +283,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
           "transform" : "copy",
           "parameter" : [{
             "valueId" : "val"
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryLKUntersucht",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "lkEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"
-      }],
-      "rule" : [{
-        "name" : "MapLKUntersuchtSep",
-        "source" : [{
-          "context" : "lkEntry",
-          "element" : "resource",
-          "variable" : "lkObs"
-        }],
-        "rule" : [{
-          "name" : "SetLKUntersuchtSeparate",
-          "source" : [{
-            "context" : "lkObs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "lkUntersucht",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueId" : "val"
-            }]
           }]
         }]
       }]
@@ -469,40 +314,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
       }]
     },
     {
-      "name" : "EntryLKBefallen",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "lkbEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"
-      }],
-      "rule" : [{
-        "name" : "MapLKBefallenSep",
-        "source" : [{
-          "context" : "lkbEntry",
-          "element" : "resource",
-          "variable" : "lkbObs"
-        }],
-        "rule" : [{
-          "name" : "SetLKBefallenSeparate",
-          "source" : [{
-            "context" : "lkbObs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "lkBefallen",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueId" : "val"
-            }]
-          }]
-        }]
-      }]
-    },
-    {
       "name" : "MapSentinelLKUntersucht",
       "source" : [{
         "context" : "src",
@@ -529,40 +340,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
       }]
     },
     {
-      "name" : "EntrySentinelLKUntersucht",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "slkEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"
-      }],
-      "rule" : [{
-        "name" : "MapSentinelLKUntersuchtSep",
-        "source" : [{
-          "context" : "slkEntry",
-          "element" : "resource",
-          "variable" : "slkObs"
-        }],
-        "rule" : [{
-          "name" : "SetSentinelLKUntersuchtSeparate",
-          "source" : [{
-            "context" : "slkObs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "sentinelLKUntersucht",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueId" : "val"
-            }]
-          }]
-        }]
-      }]
-    },
-    {
       "name" : "MapSentinelLKBefallen",
       "source" : [{
         "context" : "src",
@@ -584,40 +361,6 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
           "transform" : "copy",
           "parameter" : [{
             "valueId" : "val"
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntrySentinelLKBefallen",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "slkbEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92831-7')"
-      }],
-      "rule" : [{
-        "name" : "MapSentinelLKBefallenSep",
-        "source" : [{
-          "context" : "slkbEntry",
-          "element" : "resource",
-          "variable" : "slkbObs"
-        }],
-        "rule" : [{
-          "name" : "SetSentinelLKBefallenSeparate",
-          "source" : [{
-            "context" : "slkbObs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "sentinelLKBefallen",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueId" : "val"
-            }]
           }]
         }]
       }]

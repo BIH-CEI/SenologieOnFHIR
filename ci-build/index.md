@@ -32,7 +32,7 @@ Das Modul bildet den gesamten klinischen Workflow der Senologie ab:
 
 ### Einordnung in die MII
 
-Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz — kein MII-Modul. Er orientiert sich an den Anforderungen der [Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/) und der S3-Leitlinie Mammakarzinom.
+Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz — kein MII-Modul.
 
 ![](dgs-logo.png)
 
@@ -90,7 +90,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
   "name" : "SenologieKDS",
   "title" : "Kerndatensatz Senologie",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

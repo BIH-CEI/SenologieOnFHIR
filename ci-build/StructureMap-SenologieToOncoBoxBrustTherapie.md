@@ -26,7 +26,7 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustTherapie",
   "status" : "draft",
-  "date" : "2026-05-04T08:32:13+00:00",
+  "date" : "2026-05-04T09:30:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -69,11 +69,6 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetSystLnr",
@@ -394,11 +389,6 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetRTLnr",
@@ -664,11 +654,6 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetEndoLnr",
