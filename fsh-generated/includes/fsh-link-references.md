@@ -66,7 +66,6 @@
 [CS_Senologie_FollowUp]: CodeSystem-cs-senologie-follow-up.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
-[CS_Senologie_Studienname]: CodeSystem-cs-senologie-studienname.html
 [CS_Senologie_Tumormanifestation]: CodeSystem-cs-senologie-tumormanifestation.html
 [EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
@@ -347,7 +346,6 @@
 [cm-sct-to-obds-therapieart]: ConceptMap-cm-sct-to-obds-therapieart.html
 [cm-sct-to-obds-verlauf-gesamtbeurteilung]: ConceptMap-cm-sct-to-obds-verlauf-gesamtbeurteilung.html
 [EX_Senologie_ExaminationLocation]: StructureDefinition-ex-senologie-examination-location.html
-[EX_Senologie_StudiennameCode]: StructureDefinition-ex-senologie-studienname-code.html
 [EX_Senologie_DayInCycle]: StructureDefinition-ex-senologie-day-in-cycle.html
 [EX_Senologie_TherapyCycle]: StructureDefinition-ex-senologie-therapy-cycle.html
 [EX_Senologie_TherapyLine]: StructureDefinition-ex-senologie-therapy-line.html
@@ -364,7 +362,6 @@
 [VS_Senologie_Risikoklasse]: ValueSet-vs-senologie-risikoklasse.html
 [VS_Senologie_Screeningstatus]: ValueSet-vs-senologie-screeningstatus.html
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
-[VS_Senologie_Studienname]: ValueSet-vs-senologie-studienname.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
 [VS_Senologie_Tumormanifestation]: ValueSet-vs-senologie-tumormanifestation.html
 [VS_Senologie_Zweittumor]: ValueSet-vs-senologie-zweittumor.html
