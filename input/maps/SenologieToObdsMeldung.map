@@ -56,9 +56,22 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
     entry.resource as condition then {
       // Tumorzuordnung
       condition -> tgt.tumorzuordnung as tz then MapTumorzuordnung(condition, tz) "DiagnoseTZ";
-      // Diagnose: delegiert an SenologieToObdsDiagnose.MapDiagnose
+      // Diagnose-Basisfelder
       condition -> tgt.diagnose as dx then MapDiagnose(condition, dx) "DiagnoseDX";
     } "DiagnoseConditionContext";
+
+    // Bundle-Lookups fuer Diagnose (Histologie, TNM, ECOG, ModulMamma, Klassifikationen)
+    src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+      histEntry.resource as histObs -> tgt.diagnose as dx, dx.histologie as histo then MapHistologie(histObs, histo) "DiagCallHisto";
+    } "DiagEntryHisto";
+    src.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
+      tnmEntry.resource as tnmObs -> tgt.diagnose as dx, dx.cTNM as ctnm then MapTNM(tnmObs, ctnm) "DiagCallCTNM";
+    } "DiagEntryCTNM";
+    entry.resource as cond2 -> tgt.diagnose as dx then MapLeistungszustandFromBundle(src, dx) "DiagCallECOG";
+    entry.resource as cond3 -> tgt.diagnose as dx, dx.modulMamma as mamma then MapModulMamma(src, mamma) "DiagCallModulMamma";
+    src.entry as raEntry where resource.is(RiskAssessment) then {
+      raEntry.resource as ra -> tgt.diagnose as dx, dx.weitereKlassifikationen as wk then MapWeitereKlassifikation(ra, wk) "DiagCallWK";
+    } "DiagEntryWK";
   } "EntryDiagnose";
 
   // --- Verlauf: Condition mit clinicalStatus = recurrence (Rezidiv) ---
@@ -74,9 +87,17 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
   // --- OP: Procedure mit Senologie-Operation-Profil ---
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
     entry.resource as procedure then {
-      // OP: delegiert an SenologieToObdsOP.MapOP
       procedure -> tgt.op as op then MapOP(procedure, op) "OPMap";
     } "OPProcedureContext";
+
+    // Bundle-Lookups fuer OP (Histologie, pTNM, ModulMamma)
+    src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+      histEntry.resource as histObs -> tgt.op as op, op.histologie as histo then MapHistologie(histObs, histo) "OPCallHisto";
+    } "OPEntryHisto";
+    src.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+      tnmEntry.resource as tnmObs -> tgt.op as op, op.tnm as ptnm then MapTNM(tnmObs, ptnm) "OPCallPTNM";
+    } "OPEntryPTNM";
+    entry.resource as proc2 -> tgt.op as op, op.modulMamma as mamma then MapModulMamma(src, mamma) "OPCallModulMamma";
   } "EntryOP";
 
   // --- Systemische Therapie: Procedure mit Systemtherapie-Profil ---

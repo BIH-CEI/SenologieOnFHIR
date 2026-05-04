@@ -144,3 +144,19 @@ Bei neoadjuvanter Systemtherapie ist die TNM-Klassifikation mit `y`-Symbol melde
 **Offene Teilfragen:**
 - Sollen die Testdaten um strukturierte cTNM- und ypTNM-Observations ergänzt werden?
 - Wie wird die Reihenfolge (cTNM → ycTNM → ypTNM) zeitlich abgebildet, wenn eine Condition mehrere Stagings durchläuft?
+
+---
+
+## OF-9: Strukturierung der Strahlentherapie-Dokumentation
+
+{:.stu-note}
+Gibt es Vorarbeiten zur strukturierten Abbildung der Strahlentherapie im deutschen Kontext?
+
+Die aktuelle Strahlentherapie-Dokumentation im Senologie-IG beschränkt sich auf ein einfaches Procedure-Profil mit Gesamtdosis, Einzeldosis, Fraktionen und Zielvolumen. Die Strahlentherapie wird typischerweise extern durchgeführt und die Daten liegen am Brustzentrum nicht primär strukturiert vor.
+
+Für eine tiefere Strukturierung könnte der [HL7 CodeX Radiation Therapy IG](https://build.fhir.org/ig/HL7/codex-radiation-therapy/branches/master/en/overview.html) als Orientierung dienen. Dieser US-amerikanische IG bildet Bestrahlungspläne, Phasen, Fraktionierungsschemata und Dosisverteilungen detailliert ab.
+
+**Offene Teilfragen:**
+- Gibt es deutsche Vorarbeiten zur FHIR-basierten Strahlentherapie-Dokumentation (z.B. im MII-Kontext)?
+- Welcher Detailgrad ist für die Senologie-Meldungen erforderlich vs. was ist "nice to have"?
+- Kann der CodeX RT IG als internationale Referenz adaptiert werden oder sind die Anforderungen zu unterschiedlich?
