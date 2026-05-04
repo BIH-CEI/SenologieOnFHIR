@@ -1,4 +1,11 @@
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+<img src="dgs-logo.png" alt="DGS Logo" style="height: 80px;"/>
+<div>
+
 # Kerndatensatz Senologie
+
+</div>
+</div>
 
 Willkommen beim Implementation Guide für den **Kerndatensatz Senologie**.
 
