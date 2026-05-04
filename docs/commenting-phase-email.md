@@ -60,10 +60,10 @@ Quellen und Feedback: **https://github.com/BIH-CEI/SenologieOnFHIR**
 
 ### Wie Sie Feedback geben können
 
-Wir bitten um strukturierte Rückmeldung über das **Ballotierungsportal von HL7 Deutschland**:
-https://ballotierungsportal.hl7.de/
+Wir bitten um strukturierte Rückmeldung über das **Kommentierungsportal von HL7 Deutschland**:
+https://hl7germany.atlassian.net/servicedesk/customer/portal/3
 
-Bei Kommentaren zu einer offenen Frage vermerken Sie bitte die entsprechende Kennung (z.B. „OF-3"). Alternativ nehmen wir Rückmeldungen auch per E-Mail entgegen.
+Bitte wählen Sie als Projekt **„Kerndatensatz Senologie Charité"**. Bei Kommentaren zu einer offenen Frage vermerken Sie bitte die entsprechende Kennung (z.B. „OF-3"). Alternativ nehmen wir Rückmeldungen auch per E-Mail entgegen.
 
 ### Frist und Begleittermine
 

@@ -1,0 +1,75 @@
+@startuml senologie-tumorkonferenz
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam defaultFontName "Helvetica"
+skinparam shadowing false
+skinparam roundcorner 8
+
+skinparam class {
+  BackgroundColor<<tumorboard>> #EDE7F6
+  BorderColor<<tumorboard>> #4527A0
+  BackgroundColor<<procedure>> #E8F5E9
+  BorderColor<<procedure>> #2E7D32
+  BackgroundColor<<therapy>> #E8EAF6
+  BorderColor<<therapy>> #283593
+  BackgroundColor<<condition>> #FFF3E0
+  BorderColor<<condition>> #E65100
+}
+
+title **Tumorkonferenz — Empfehlung bis Durchführung**
+
+class "**Condition**\n//Diagnose//" <<condition>> {
+  //Bezugsdiagnose//
+}
+
+class "**CarePlan**\n//Tumorboard-Empfehlung//" <<tumorboard>> {
+  activity[OP] : empfohlen
+  activity[RT] : empfohlen
+  activity[Chemo] : nicht empfohlen
+  activity[Endokrin] : empfohlen
+  activity[Zielgerichtet] : —
+  activity[Immuno] : —
+}
+
+class "**ServiceRequest**\n//OP-Planung//" <<procedure>> {
+  code : BET + SLNB
+  bodySite : Links
+  intent : plan
+}
+
+class "**MedicationRequest**\n//Geplante Systemtherapie//" <<therapy>> {
+  medication : ATC-Code
+  intent : plan
+  courseOfTherapy : Protokoll
+}
+
+class "**Procedure**\n//OP (Durchführung)//" <<procedure>> {
+  code : OPS
+  outcome : R0
+  status : completed
+}
+
+class "**Procedure**\n//Systemtherapie//" <<therapy>> {
+  category : HO / CH / IM / ZS
+  performedPeriod
+}
+
+class "**Procedure**\n//Strahlentherapie//" <<procedure>> {
+  Gesamtdosis (Gy)
+  Fraktionen
+}
+
+' === Beziehungen ===
+"**CarePlan**\n//Tumorboard-Empfehlung//" --> "**Condition**\n//Diagnose//" : addresses
+"**ServiceRequest**\n//OP-Planung//" -up-> "**CarePlan**\n//Tumorboard-Empfehlung//" : basedOn
+"**MedicationRequest**\n//Geplante Systemtherapie//" -up-> "**CarePlan**\n//Tumorboard-Empfehlung//" : basedOn
+"**Procedure**\n//OP (Durchführung)//" -up-> "**ServiceRequest**\n//OP-Planung//" : basedOn
+"**Procedure**\n//Systemtherapie//" -up-> "**MedicationRequest**\n//Geplante Systemtherapie//" : basedOn
+"**Procedure**\n//Strahlentherapie//" -up-> "**CarePlan**\n//Tumorboard-Empfehlung//" : basedOn
+"**Procedure**\n//OP (Durchführung)//" --> "**Condition**\n//Diagnose//" : reasonReference
+"**Procedure**\n//Systemtherapie//" --> "**Condition**\n//Diagnose//" : reasonReference
+"**Procedure**\n//Strahlentherapie//" --> "**Condition**\n//Diagnose//" : reasonReference
+
+@enduml

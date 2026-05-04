@@ -392,6 +392,8 @@ Usage: #example
 * status = #draft
 * intent = #plan
 
+* basedOn = Reference(CarePlan/Fall1-Tumorboard)
+
 * code = $SCT#392021009 "Lumpectomy of breast"
 * code.text = "BET links + Sentinel-LK-Biopsie"
 
@@ -424,6 +426,9 @@ Description: "Brusterhaltende Therapie links mit Sentinel-LK-Biopsie, R0"
 Usage: #example
 
 * status = #completed
+
+// Bezug auf OP-Planung
+* basedOn = Reference(ServiceRequest/Fall1-OP-Planung)
 
 // Intention
 * extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"

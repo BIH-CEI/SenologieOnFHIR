@@ -1,5 +1,7 @@
 # Tumorkonferenz
 
+<img src="senologie-tumorkonferenz.png" alt="UML Tumorkonferenz — Empfehlung bis Durchführung" style="max-width:100%"/>
+
 ## Stellenwert
 
 Die interdisziplinäre Tumorkonferenz (Tumorboard) ist der zentrale Entscheidungsort in der Brustkrebsversorgung. Hier treffen Senologie, Radiologie, Pathologie, Strahlentherapie, Onkologie und ggf. weitere Disziplinen zusammen, um auf Basis aller verfügbaren Befunde eine individuelle Therapieempfehlung auszusprechen. Die DKG-Zertifizierung fordert die Vorstellung aller Patientinnen mit maligner Diagnose — sowohl prätherapeutisch (KB-2) als auch postoperativ (KB-1).

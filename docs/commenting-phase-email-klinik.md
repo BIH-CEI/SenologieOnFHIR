@@ -67,7 +67,7 @@ Version 0.9.0 ist fertig — und bereit für Ihre Rückmeldung. Wir suchen Persp
 ### Zugang
 
 - Implementation Guide: **https://bih-cei.github.io/SenologieOnFHIR/0.9.0/**
-- Feedback über das Ballotierungsportal von HL7 Deutschland: **https://ballotierungsportal.hl7.de/**
+- Feedback über das Kommentierungsportal von HL7 Deutschland: **https://hl7germany.atlassian.net/servicedesk/customer/portal/3** (Projekt: „Kerndatensatz Senologie Charité")
 - Alternativ per E-Mail
 
 Bitte vermerken Sie bei Kommentaren zu offenen Fragen die jeweilige Kennung (z.B. „OF-3").
