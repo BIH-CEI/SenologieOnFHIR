@@ -2,7 +2,7 @@
 
 Willkommen beim Implementation Guide für den **Kerndatensatz Senologie**.
 
-Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der **Brustkrebsversorgung** an zertifizierten Brustzentren und darüber hinaus. Die technische Umsetzung erfolgt durch das **Berlin Institute of Health at Charité (BIH)**, die inhaltliche Abstimmung mit der **[Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/)**.
+Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der **Brustkrebsversorgung** an zertifizierten Brustzentren und darüber hinaus. Die technische Umsetzung erfolgt durch das **Berlin Institute of Health at Charité (BIH)**, die inhaltliche Abstimmung mit der **[Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/)**, der **[Deutschen Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)](https://www.dggg.de/)** und der **[Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)](https://www.ago-online.de/)**.
 
 ### Zielsetzung
 
@@ -36,16 +36,19 @@ Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis
 | [MII Onkologie](https://simplifier.net/medizininformatikinitiative-modulonkologie) | Diagnose, Operation, Systemtherapie, Strahlentherapie |
 | [MII Pathologie](https://simplifier.net/medizininformatikinitiative-modulpathologie) | Pathologiebefund, Präparat |
 | [MII Bildgebung](https://simplifier.net/medizininformatikinitiative-modulbildgebung) | Tumorlokalisation (BodyStructure) |
-| [ISiK 5.0](https://simplifier.net/isik) | Basisprofil-Kompatibilität |
+| [ISiK](https://simplifier.net/isik) | Basisprofil-Kompatibilität |
+| [IPS](http://hl7.org/fhir/uv/ips/) | International Patient Summary |
 | [HL7 SDC](http://hl7.org/fhir/uv/sdc/) | Formularbasierte Datenerfassung |
 
-### Leitlinien und Standards
+### Inhaltliche Abhängigkeiten
 
-Die Profilierung orientiert sich an:
-
-- **S3-Leitlinie Mammakarzinom** (AWMF 032-045OL) -- Leitlinien-Annotation
-- **Onkologischer Basisdatensatz (oBDS)** — Krebsregistermeldungen
-- **DKG-Zertifizierungskriterien** für Brustzentren
+| Datensatz / Standard | Kontext |
+|---|---|
+| **S3-Leitlinie Mammakarzinom** (AWMF 032-045OL) | Klinische Empfehlungen |
+| **Onkologischer Basisdatensatz (oBDS)** | Krebsregistermeldungen |
+| **DKG-Zertifizierungskriterien** | Qualitätssicherung Brustzentren |
+| **IQTIG QS-Verfahren 18/1 Mammachirurgie** | Externe stationäre Qualitätssicherung |
+| **Implantatregister (IRegG)** | Meldepflicht Brustimplantate |
 
 ### Designprinzip: Formular-First
 
