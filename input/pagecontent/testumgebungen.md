@@ -46,7 +46,7 @@ python3 scripts/load-to-pathling.py                     # → Pathling
 # Jupyter Notebook:        jupyter notebook notebooks/senologie-analyse.ipynb
 ```
 
-### Ports
+### Standardports
 
 | Service | Port | URL |
 |---------|------|-----|
@@ -54,6 +54,8 @@ python3 scripts/load-to-pathling.py                     # → Pathling
 | Matchbox | 8080 | [http://localhost:8080](http://localhost:8080) |
 | Pathling | 8091 | [http://localhost:8091](http://localhost:8091) |
 | Postgres (Aidbox) | 5437 | — |
+
+Die Ports können über die `.env`-Datei oder die jeweiligen Docker-Compose-Dateien angepasst werden.
 
 ### Synthetische Testdaten
 
