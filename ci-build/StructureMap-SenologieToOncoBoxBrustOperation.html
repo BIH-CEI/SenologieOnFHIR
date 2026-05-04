@@ -363,7 +363,7 @@ status: draft</p>
 <span style="color: navy">// </span><span style="color: green">Seitenlokalisation, OPS-Kodes, Operationsart, Drahtmarkierung, Sentinel,</span>
 <span style="color: navy">// </span><span style="color: green">Residualstatus und Komplikationen.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">LNR Default 1</span>
   src<span style="color: navy"><b> -&gt; </b></span>tgt.lnr = <span style="color: blue">1</span> <i>&quot;SetOpLnr&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Op_Datum</span>
@@ -412,35 +412,6 @@ status: draft</p>
 </span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-402')<span style="color: navy"><b> -&gt; </b></span>tgt.axillaDissektion = <span style="color: blue">'1'</span> <i>&quot;SetAxDissJa&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapAxDissOPS&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapAxDiss&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Op_Drahtmarkierung (aus Senologie_OP_Planung Extension preOpMarkierung)</span>
-  <span style="color: navy">// </span><span style="color: green">Werte: M=Mammografie (2), S=Sonografie (1), T=MRT (3), N=keine (0)</span>
-  <span style="color: navy">// </span><span style="color: green">Quelle: oft am ServiceRequest (Senologie_OP_Planung), ggf. auch am Procedure.</span>
-  bundle.entry<b> as </b><span style="color: maroon">srEntry</span><b> where </b>resource.is(ServiceRequest)<b> then</b><span style="color: navy"> {
-</span>    srEntry.resource<b> as </b><span style="color: maroon">sr</span><b> then</b><span style="color: navy"> {
-</span>      sr.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'<b> then</b><span style="color: navy"> {
-</span>        ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'N'<span style="color: navy"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style="color: blue">'0'</span> <i>&quot;SetDrahtKeine&quot;</i><span style="color: navy">;</span>
-          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'S'<span style="color: navy"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style="color: blue">'1'</span> <i>&quot;SetDrahtSono&quot;</i><span style="color: navy">;</span>
-          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'M'<span style="color: navy"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style="color: blue">'2'</span> <i>&quot;SetDrahtMammo&quot;</i><span style="color: navy">;</span>
-          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'T'<span style="color: navy"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style="color: blue">'3'</span> <i>&quot;SetDrahtMRT&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapDrahtVal&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapDrahtExt&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapDrahtSR&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryDrahtSR&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Op_Schnellschnitt / Op_Praeparatkontrolle aus Specimen.processing</span>
-  bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
-</span>      specimen.processing<b> as </b><span style="color: maroon">proc</span><b> where </b>procedure.coding.exists(code = '123038009')<span style="color: navy"><b> -&gt; </b></span>tgt.intraopSchnellschnitt = <span style="color: blue">'1'</span> <i>&quot;SetSSJa&quot;</i><span style="color: navy">;</span>
-      specimen.processing<b> as </b><span style="color: maroon">proc</span><b> then</b><span style="color: navy"> {
-</span>        proc.procedure<b> as </b><span style="color: maroon">p</span><b> then</b><span style="color: navy"> {
-</span>          p.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
-</span>            c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '71651007'<span style="color: navy"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style="color: blue">'1'</span> <i>&quot;SetPKMammo&quot;</i><span style="color: navy">;</span>
-            c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '16310003'<span style="color: navy"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style="color: blue">'2'</span> <i>&quot;SetPKSono&quot;</i><span style="color: navy">;</span>
-          <span style="color: navy">}</span> <i>&quot;MapPKCoding&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapPKProcedure&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapPKProcessing&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;SpecCtx&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntrySpecimen&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Residualstatus aus Procedure.outcome (SNOMED)</span>
   src.outcome<b> as </b><span style="color: maroon">out</span><b> then</b><span style="color: navy"> {
 </span>    out.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
@@ -479,25 +450,6 @@ status: draft</p>
 </span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = 'R0'<span style="color: navy"><b> -&gt; </b></span>tgt.anzahlEingriffeR0 = <span style="color: blue">1</span> <i>&quot;SetAnzahlR0Default&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapAnzahlR0Coding&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapAnzahlR0&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Komplikationen (Senologie_Operative_Komplikation)</span>
-  bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">obs</span><span style="color: navy"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style="color: maroon">komp</span><b> then</b><span style="color: navy"> {
-</span>      <span style="color: navy">// </span><span style="color: green">Komp_Kuerzel: aus component[komplikationsart].valueCodeableConcept</span>
-      obs.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '116224001')<b> then</b><span style="color: navy"> {
-</span>        comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>          val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>            c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>komp.kuerzel = <span style="color: maroon">cd</span> <i>&quot;SetKompKuerzel&quot;</i><span style="color: navy">;</span>
-          <span style="color: navy">}</span> <i>&quot;MapKompKuerzelCoding&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapKompKuerzelVal&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapKompKuerzelComp&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">// </span><span style="color: green">Komp_Clavien: aus Observation.valueCodeableConcept (Clavien-Dindo Grad)</span>
-      obs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>komp.clavienDindo = <span style="color: maroon">cd</span> <i>&quot;SetKompClavien&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapKompClavienCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapKompClavien&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapKompObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryKomp&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Komplikationen ICD-10: aus Procedure.complication (compl_icd10 Slice)</span>
   src.complication<b> as </b><span style="color: maroon">comp</span><b> then</b><span style="color: navy"> {
 </span>    comp.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style="color: navy"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style="color: maroon">komp</span><b> then</b><span style="color: navy"> {
@@ -531,7 +483,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:30+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

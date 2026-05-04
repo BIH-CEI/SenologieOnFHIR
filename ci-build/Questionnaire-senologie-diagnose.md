@@ -74,7 +74,7 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T09:30:07+00:00",
+  "date" : "2026-05-04T09:51:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

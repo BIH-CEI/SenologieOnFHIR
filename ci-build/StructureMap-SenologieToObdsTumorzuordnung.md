@@ -26,7 +26,7 @@ title: Senologie Diagnose to oBDS Tumorzuordnung status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsTumorzuordnung",
   "status" : "draft",
-  "date" : "2026-05-04T09:30:07+00:00",
+  "date" : "2026-05-04T09:51:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

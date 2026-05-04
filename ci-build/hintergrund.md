@@ -9,7 +9,7 @@
 
 ## Ausgangslage
 
-Zertifizierte Brustzentren dokumentieren die Versorgung ihrer Patientinnen für unterschiedliche Zwecke: die DKG-Zertifizierung (OnkoZert), die Krebsregistermeldung (oBDS), die gesetzliche Qualitätssicherung (IQTIG), das Implantatregister und die klinische Forschung. Obwohl sich die inhaltlichen Anforderungen dieser Meldewege weitgehend überschneiden, werden die Daten häufig redundant erfasst, in unterschiedlichen Formaten vorgehalten und separat ausgeleitet. Da die Datenanforderungen jeweils von den Empfängern her definiert werden, entsteht ein erheblicher Aufwand bei der Zuordnung und Transformation der klinischen Daten in die jeweiligen Zielformate. Hinzu kommen eigene und standortübergreifende Studien, die ihrerseits spezifische Datenanforderungen mitbringen. Die parallele Pflege all dieser Dokumentationsstränge führt zu Inkonsistenzen, Fehleranfälligkeit und einem Aufwand, der mit den verfügbaren Ressourcen kaum zu bewältigen ist.
+Zertifizierte Brustzentren dokumentieren die Versorgung ihrer Patientinnen in erster Linie, um eine kontinuierliche, sichere und nachvollziehbare klinische Behandlung zu gewährleisten: Bereits bei der Erstvorstellung werden Befunde, Einschätzungen und Empfehlungen so festgehalten, dass bei allen weiteren Kontakten jederzeit klar ist, um welche Patientin es sich handelt, welche Diagnosen vorliegen, welche Maßnahmen bereits erfolgt sind und welche weiteren Schritte geplant sind. Auf dieser essenziellen Primärdokumentation bauen anschließend die weiterführenden Dokumentationspflichten auf: die DKG-Zertifizierung (OnkoZert), die Krebsregistermeldung (oBDS), die gesetzliche Qualitätssicherung (IQTIG), das Implantatregister und die klinische Forschung. Obwohl sich die inhaltlichen Anforderungen dieser Meldewege weitgehend überschneiden, werden die Daten häufig redundant erfasst, in unterschiedlichen Formaten vorgehalten und separat ausgeleitet. Da die Datenanforderungen jeweils von den Empfängern her definiert werden, entsteht ein erheblicher Aufwand bei der Zuordnung und Transformation der klinischen Daten in die jeweiligen Zielformate. Hinzu kommen eigene und standortübergreifende Studien, die ihrerseits spezifische Datenanforderungen mitbringen. Die parallele Pflege all dieser Dokumentationsstränge führt zu Inkonsistenzen, Fehleranfälligkeit und einem Aufwand, der mit den verfügbaren Ressourcen kaum zu bewältigen ist.
 
 ## Zielsetzung
 
@@ -53,6 +53,7 @@ Dieses Datenmodell baut auf dem Kerndatensatz der Medizininformatik-Initiative (
 | Prof. Dr. med. Volkmar Müller | AGO, Sprecher Kommission Mamma |
 | Prof. Dr. med. Achim Wöckel | S3-Leitlinienkoordination Mammakarzinom |
 | PD Dr. rer. nat. Christoph Kowalski | Deutsche Krebsgesellschaft, Versorgungsforschung |
+| Prof. Dr. med. Maria Margarete Karsten | Leitung Brustzentrum, Charité — Universitätsmedizin Berlin |
 | Prof. Dr. med. Dipl.-Ing. Sylvia Thun | Berlin Institute of Health at Charité (BIH) |
 
 ## Hinweis zum Status

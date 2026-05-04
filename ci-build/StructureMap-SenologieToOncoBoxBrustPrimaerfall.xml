@@ -62,7 +62,51 @@
   src<span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">diag</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">diag</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapDiagnose&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Operationen ---</span>
   bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.operation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.operation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Op: Drahtmarkierung aus ServiceRequest (moved from MapOperation) ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">srEntry</span><b> where </b>resource.is(ServiceRequest)<b> then</b><span style="color: navy"> {
+</span>      srEntry.resource<b> as </b><span style="color: maroon">sr</span><b> then</b><span style="color: navy"> {
+</span>        sr.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'<b> then</b><span style="color: navy"> {
+</span>          ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'N'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'0'</span> <i>&quot;SetDrahtKeine&quot;</i><span style="color: navy">;</span>
+            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'S'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'1'</span> <i>&quot;SetDrahtSono&quot;</i><span style="color: navy">;</span>
+            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'M'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'2'</span> <i>&quot;SetDrahtMammo&quot;</i><span style="color: navy">;</span>
+            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'T'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'3'</span> <i>&quot;SetDrahtMRT&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapDrahtVal&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapDrahtExt&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapDrahtSR&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryDrahtSR&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Op: Schnellschnitt / Praeparatkontrolle aus Specimen (moved from MapOperation) ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))<b> then</b><span style="color: navy"> {
+</span>      specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
+</span>        specimen.processing<b> as </b><span style="color: maroon">proc</span><b> where </b>procedure.coding.exists(code = '123038009')<span style="color: navy"><b> -&gt; </b></span>op.intraopSchnellschnitt = <span style="color: blue">'1'</span> <i>&quot;SetSSJa&quot;</i><span style="color: navy">;</span>
+        specimen.processing<b> as </b><span style="color: maroon">proc</span><b> then</b><span style="color: navy"> {
+</span>          proc.procedure<b> as </b><span style="color: maroon">p</span><b> then</b><span style="color: navy"> {
+</span>            p.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>              c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '71651007'<span style="color: navy"><b> -&gt; </b></span>op.intraopPraeparatkontrolle = <span style="color: blue">'1'</span> <i>&quot;SetPKMammo&quot;</i><span style="color: navy">;</span>
+              c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '16310003'<span style="color: navy"><b> -&gt; </b></span>op.intraopPraeparatkontrolle = <span style="color: blue">'2'</span> <i>&quot;SetPKSono&quot;</i><span style="color: navy">;</span>
+            <span style="color: navy">}</span> <i>&quot;MapPKCoding&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapPKProcedure&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapPKProcessing&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;SpecCtx&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntrySpecimen&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Op: Komplikationen aus Observations (moved from MapOperation) ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">kompEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))<b> then</b><span style="color: navy"> {
+</span>      kompEntry.resource<b> as </b><span style="color: maroon">obs</span><span style="color: navy"><b> -&gt; </b></span>op.komplikationen<b> as </b><span style="color: maroon">komp</span><b> then</b><span style="color: navy"> {
+</span>        obs.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '116224001')<b> then</b><span style="color: navy"> {
+</span>          comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>            val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>              c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>komp.kuerzel = <span style="color: maroon">cd</span> <i>&quot;SetKompKuerzel&quot;</i><span style="color: navy">;</span>
+            <span style="color: navy">}</span> <i>&quot;MapKompKuerzelCoding&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapKompKuerzelVal&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapKompKuerzelComp&quot;</i><span style="color: navy">;</span>
+        obs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>            c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>komp.clavienDindo = <span style="color: maroon">cd</span> <i>&quot;SetKompClavien&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapKompClavienCoding&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapKompClavien&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapKompObs&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryKomp&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryOperation&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Systemtherapie ---</span>
   bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
@@ -501,7 +545,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToOncoBoxBrustPrimaerfall"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:30:07+00:00"/>
+  <date value="2026-05-04T09:51:52+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -827,8 +871,308 @@
           <name value="MapOperation"/>
           <variable value="procedure"/>
           <variable value="op"/>
-          <variable value="bundle"/>
         </dependent>
+      </rule>
+      <rule>
+        <name value="EntryDrahtSR"/>
+        <source>
+          <context value="bundle"/>
+          <element value="entry"/>
+          <variable value="srEntry"/>
+          <condition value="resource.is(ServiceRequest)"/>
+        </source>
+        <rule>
+          <name value="MapDrahtSR"/>
+          <source>
+            <context value="srEntry"/>
+            <element value="resource"/>
+            <variable value="sr"/>
+          </source>
+          <rule>
+            <name value="MapDrahtExt"/>
+            <source>
+              <context value="sr"/>
+              <element value="extension"/>
+              <variable value="ext"/>
+              <condition value="url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'"/>
+            </source>
+            <rule>
+              <name value="MapDrahtVal"/>
+              <source>
+                <context value="ext"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <rule>
+                <name value="SetDrahtKeine"/>
+                <source>
+                  <context value="val"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                  <condition value="code = 'N'"/>
+                </source>
+                <target>
+                  <context value="op"/>
+                  <contextType value="variable"/>
+                  <element value="drahtmarkierung"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueString value="0"/>
+                  </parameter>
+                </target>
+              </rule>
+              <rule>
+                <name value="SetDrahtSono"/>
+                <source>
+                  <context value="val"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                  <condition value="code = 'S'"/>
+                </source>
+                <target>
+                  <context value="op"/>
+                  <contextType value="variable"/>
+                  <element value="drahtmarkierung"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueString value="1"/>
+                  </parameter>
+                </target>
+              </rule>
+              <rule>
+                <name value="SetDrahtMammo"/>
+                <source>
+                  <context value="val"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                  <condition value="code = 'M'"/>
+                </source>
+                <target>
+                  <context value="op"/>
+                  <contextType value="variable"/>
+                  <element value="drahtmarkierung"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueString value="2"/>
+                  </parameter>
+                </target>
+              </rule>
+              <rule>
+                <name value="SetDrahtMRT"/>
+                <source>
+                  <context value="val"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                  <condition value="code = 'T'"/>
+                </source>
+                <target>
+                  <context value="op"/>
+                  <contextType value="variable"/>
+                  <element value="drahtmarkierung"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueString value="3"/>
+                  </parameter>
+                </target>
+              </rule>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="EntrySpecimen"/>
+        <source>
+          <context value="bundle"/>
+          <element value="entry"/>
+          <variable value="specEntry"/>
+          <condition value="resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))"/>
+        </source>
+        <rule>
+          <name value="SpecCtx"/>
+          <source>
+            <context value="specEntry"/>
+            <element value="resource"/>
+            <variable value="specimen"/>
+          </source>
+          <rule>
+            <name value="SetSSJa"/>
+            <source>
+              <context value="specimen"/>
+              <element value="processing"/>
+              <variable value="proc"/>
+              <condition value="procedure.coding.exists(code = '123038009')"/>
+            </source>
+            <target>
+              <context value="op"/>
+              <contextType value="variable"/>
+              <element value="intraopSchnellschnitt"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="1"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="MapPKProcessing"/>
+            <source>
+              <context value="specimen"/>
+              <element value="processing"/>
+              <variable value="proc"/>
+            </source>
+            <rule>
+              <name value="MapPKProcedure"/>
+              <source>
+                <context value="proc"/>
+                <element value="procedure"/>
+                <variable value="p"/>
+              </source>
+              <rule>
+                <name value="MapPKCoding"/>
+                <source>
+                  <context value="p"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                  <condition value="system = 'http://snomed.info/sct'"/>
+                </source>
+                <rule>
+                  <name value="SetPKMammo"/>
+                  <source>
+                    <context value="c"/>
+                    <element value="code"/>
+                    <variable value="cd"/>
+                    <condition value="$this = '71651007'"/>
+                  </source>
+                  <target>
+                    <context value="op"/>
+                    <contextType value="variable"/>
+                    <element value="intraopPraeparatkontrolle"/>
+                    <transform value="copy"/>
+                    <parameter>
+                      <valueString value="1"/>
+                    </parameter>
+                  </target>
+                </rule>
+                <rule>
+                  <name value="SetPKSono"/>
+                  <source>
+                    <context value="c"/>
+                    <element value="code"/>
+                    <variable value="cd"/>
+                    <condition value="$this = '16310003'"/>
+                  </source>
+                  <target>
+                    <context value="op"/>
+                    <contextType value="variable"/>
+                    <element value="intraopPraeparatkontrolle"/>
+                    <transform value="copy"/>
+                    <parameter>
+                      <valueString value="2"/>
+                    </parameter>
+                  </target>
+                </rule>
+              </rule>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="EntryKomp"/>
+        <source>
+          <context value="bundle"/>
+          <element value="entry"/>
+          <variable value="kompEntry"/>
+          <condition value="resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))"/>
+        </source>
+        <rule>
+          <name value="MapKompObs"/>
+          <source>
+            <context value="kompEntry"/>
+            <element value="resource"/>
+            <variable value="obs"/>
+          </source>
+          <target>
+            <context value="op"/>
+            <contextType value="variable"/>
+            <element value="komplikationen"/>
+            <variable value="komp"/>
+          </target>
+          <rule>
+            <name value="MapKompKuerzelComp"/>
+            <source>
+              <context value="obs"/>
+              <element value="component"/>
+              <variable value="comp"/>
+              <condition value="code.coding.exists(code = '116224001')"/>
+            </source>
+            <rule>
+              <name value="MapKompKuerzelVal"/>
+              <source>
+                <context value="comp"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <rule>
+                <name value="MapKompKuerzelCoding"/>
+                <source>
+                  <context value="val"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                </source>
+                <rule>
+                  <name value="SetKompKuerzel"/>
+                  <source>
+                    <context value="c"/>
+                    <element value="code"/>
+                    <variable value="cd"/>
+                  </source>
+                  <target>
+                    <context value="komp"/>
+                    <contextType value="variable"/>
+                    <element value="kuerzel"/>
+                    <transform value="copy"/>
+                    <parameter>
+                      <valueId value="cd"/>
+                    </parameter>
+                  </target>
+                </rule>
+              </rule>
+            </rule>
+          </rule>
+          <rule>
+            <name value="MapKompClavien"/>
+            <source>
+              <context value="obs"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <rule>
+              <name value="MapKompClavienCoding"/>
+              <source>
+                <context value="val"/>
+                <element value="coding"/>
+                <variable value="c"/>
+                <condition value="system = 'http://snomed.info/sct'"/>
+              </source>
+              <rule>
+                <name value="SetKompClavien"/>
+                <source>
+                  <context value="c"/>
+                  <element value="code"/>
+                  <variable value="cd"/>
+                </source>
+                <target>
+                  <context value="komp"/>
+                  <contextType value="variable"/>
+                  <element value="clavienDindo"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueId value="cd"/>
+                  </parameter>
+                </target>
+              </rule>
+            </rule>
+          </rule>
+        </rule>
       </rule>
     </rule>
     <rule>

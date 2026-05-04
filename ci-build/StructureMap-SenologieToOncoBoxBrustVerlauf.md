@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustVerlauf",
   "status" : "draft",
-  "date" : "2026-05-04T09:30:07+00:00",
+  "date" : "2026-05-04T09:51:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -125,7 +125,167 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
         }],
         "dependent" : [{
           "name" : "MapVerlaufFernmetastase",
-          "variable" : ["fmObs", "verl", "src"]
+          "variable" : ["fmObs", "verl"]
+        }]
+      },
+      {
+        "name" : "EntryFMOp",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "opEntry",
+          "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
+        }],
+        "rule" : [{
+          "name" : "MapFMOpProc",
+          "source" : [{
+            "context" : "opEntry",
+            "element" : "resource",
+            "variable" : "proc"
+          }],
+          "rule" : [{
+            "name" : "MapIntentionExt",
+            "source" : [{
+              "context" : "proc",
+              "element" : "extension",
+              "variable" : "ext",
+              "condition" : "url.contains('Intention')"
+            }],
+            "rule" : [{
+              "name" : "MapIntentionValue",
+              "source" : [{
+                "context" : "ext",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "rule" : [{
+                "name" : "CheckIntentionPalliativ",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "code = 'P'"
+                }],
+                "rule" : [{
+                  "name" : "SetFMOpDatum",
+                  "source" : [{
+                    "context" : "proc",
+                    "element" : "performed",
+                    "variable" : "perf",
+                    "condition" : "$this.is(dateTime)"
+                  }],
+                  "target" : [{
+                    "context" : "verl",
+                    "contextType" : "variable",
+                    "element" : "fmOperation",
+                    "variable" : "fmOp"
+                  },
+                  {
+                    "context" : "fmOp",
+                    "contextType" : "variable",
+                    "element" : "opDatum",
+                    "transform" : "copy",
+                    "parameter" : [{
+                      "valueId" : "perf"
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "CallMapFMTherapien",
+        "source" : [{
+          "context" : "fmEntry",
+          "element" : "resource",
+          "variable" : "fmObsCtx"
+        }],
+        "target" : [{
+          "context" : "verl",
+          "contextType" : "variable",
+          "element" : "fmTherapie",
+          "variable" : "fmTh"
+        }],
+        "dependent" : [{
+          "name" : "MapFMTherapien",
+          "variable" : ["src", "fmTh"]
+        }]
+      },
+      {
+        "name" : "EntryFMResidual",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "opEntry2",
+          "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
+        }],
+        "rule" : [{
+          "name" : "MapFMResidualProc",
+          "source" : [{
+            "context" : "opEntry2",
+            "element" : "resource",
+            "variable" : "proc"
+          }],
+          "rule" : [{
+            "name" : "MapIntentionExtR",
+            "source" : [{
+              "context" : "proc",
+              "element" : "extension",
+              "variable" : "ext",
+              "condition" : "url.contains('Intention')"
+            }],
+            "rule" : [{
+              "name" : "MapIntentionValueR",
+              "source" : [{
+                "context" : "ext",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "rule" : [{
+                "name" : "CheckIntentionPalliativR",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "code = 'P'"
+                }],
+                "rule" : [{
+                  "name" : "MapFMResidualCoding",
+                  "source" : [{
+                    "context" : "proc",
+                    "element" : "outcome",
+                    "variable" : "oc"
+                  }],
+                  "rule" : [{
+                    "name" : "SetFMResidualCode",
+                    "source" : [{
+                      "context" : "oc",
+                      "element" : "coding",
+                      "variable" : "rc",
+                      "condition" : "system.contains('residualstatus')"
+                    }],
+                    "target" : [{
+                      "context" : "verl",
+                      "contextType" : "variable",
+                      "element" : "fmOperation",
+                      "variable" : "fmOp"
+                    },
+                    {
+                      "context" : "fmOp",
+                      "contextType" : "variable",
+                      "element" : "residualstatus",
+                      "transform" : "copy",
+                      "parameter" : [{
+                        "valueId" : "rc"
+                      }]
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
         }]
       }]
     },
@@ -699,11 +859,6 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetVerlaufDatumFM",
@@ -735,164 +890,6 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
         "transform" : "copy",
         "parameter" : [{
           "valueString" : "3"
-        }]
-      }]
-    },
-    {
-      "name" : "EntryFMOp",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "opEntry",
-        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
-      }],
-      "rule" : [{
-        "name" : "MapFMOpProc",
-        "source" : [{
-          "context" : "opEntry",
-          "element" : "resource",
-          "variable" : "proc"
-        }],
-        "rule" : [{
-          "name" : "MapIntentionExt",
-          "source" : [{
-            "context" : "proc",
-            "element" : "extension",
-            "variable" : "ext",
-            "condition" : "url.contains('Intention')"
-          }],
-          "rule" : [{
-            "name" : "MapIntentionValue",
-            "source" : [{
-              "context" : "ext",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "CheckIntentionPalliativ",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c",
-                "condition" : "code = 'P'"
-              }],
-              "rule" : [{
-                "name" : "SetFMOpDatum",
-                "source" : [{
-                  "context" : "proc",
-                  "element" : "performed",
-                  "variable" : "perf",
-                  "condition" : "$this.is(dateTime)"
-                }],
-                "target" : [{
-                  "context" : "tgt",
-                  "contextType" : "variable",
-                  "element" : "fmOperation",
-                  "variable" : "fmOp"
-                },
-                {
-                  "context" : "fmOp",
-                  "contextType" : "variable",
-                  "element" : "opDatum",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueId" : "perf"
-                  }]
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "CallMapFMTherapien",
-      "source" : [{
-        "context" : "src"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable",
-        "element" : "fmTherapie",
-        "variable" : "fmTh"
-      }],
-      "dependent" : [{
-        "name" : "MapFMTherapien",
-        "variable" : ["bundle", "fmTh"]
-      }]
-    },
-    {
-      "name" : "EntryFMResidual",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "opEntry",
-        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
-      }],
-      "rule" : [{
-        "name" : "MapFMResidualProc",
-        "source" : [{
-          "context" : "opEntry",
-          "element" : "resource",
-          "variable" : "proc"
-        }],
-        "rule" : [{
-          "name" : "MapIntentionExtR",
-          "source" : [{
-            "context" : "proc",
-            "element" : "extension",
-            "variable" : "ext",
-            "condition" : "url.contains('Intention')"
-          }],
-          "rule" : [{
-            "name" : "MapIntentionValueR",
-            "source" : [{
-              "context" : "ext",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "CheckIntentionPalliativR",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c",
-                "condition" : "code = 'P'"
-              }],
-              "rule" : [{
-                "name" : "MapFMResidualCoding",
-                "source" : [{
-                  "context" : "proc",
-                  "element" : "outcome",
-                  "variable" : "oc"
-                }],
-                "rule" : [{
-                  "name" : "SetFMResidualCode",
-                  "source" : [{
-                    "context" : "oc",
-                    "element" : "coding",
-                    "variable" : "rc",
-                    "condition" : "system.contains('residualstatus')"
-                  }],
-                  "target" : [{
-                    "context" : "tgt",
-                    "contextType" : "variable",
-                    "element" : "fmOperation",
-                    "variable" : "fmOp"
-                  },
-                  {
-                    "context" : "fmOp",
-                    "contextType" : "variable",
-                    "element" : "residualstatus",
-                    "transform" : "copy",
-                    "parameter" : [{
-                      "valueId" : "rc"
-                    }]
-                  }]
-                }]
-              }]
-            }]
-          }]
         }]
       }]
     }]

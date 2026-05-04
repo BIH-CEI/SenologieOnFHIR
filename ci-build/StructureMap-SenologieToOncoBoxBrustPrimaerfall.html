@@ -399,7 +399,51 @@ status: draft</p>
   src<span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">diag</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">diag</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapDiagnose&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Operationen ---</span>
   bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.operation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.operation<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperation<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;CallMapOperation&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Op: Drahtmarkierung aus ServiceRequest (moved from MapOperation) ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">srEntry</span><b> where </b>resource.is(ServiceRequest)<b> then</b><span style="color: navy"> {
+</span>      srEntry.resource<b> as </b><span style="color: maroon">sr</span><b> then</b><span style="color: navy"> {
+</span>        sr.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'<b> then</b><span style="color: navy"> {
+</span>          ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'N'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'0'</span> <i>&quot;SetDrahtKeine&quot;</i><span style="color: navy">;</span>
+            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'S'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'1'</span> <i>&quot;SetDrahtSono&quot;</i><span style="color: navy">;</span>
+            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'M'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'2'</span> <i>&quot;SetDrahtMammo&quot;</i><span style="color: navy">;</span>
+            val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'T'<span style="color: navy"><b> -&gt; </b></span>op.drahtmarkierung = <span style="color: blue">'3'</span> <i>&quot;SetDrahtMRT&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapDrahtVal&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapDrahtExt&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapDrahtSR&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryDrahtSR&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Op: Schnellschnitt / Praeparatkontrolle aus Specimen (moved from MapOperation) ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))<b> then</b><span style="color: navy"> {
+</span>      specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
+</span>        specimen.processing<b> as </b><span style="color: maroon">proc</span><b> where </b>procedure.coding.exists(code = '123038009')<span style="color: navy"><b> -&gt; </b></span>op.intraopSchnellschnitt = <span style="color: blue">'1'</span> <i>&quot;SetSSJa&quot;</i><span style="color: navy">;</span>
+        specimen.processing<b> as </b><span style="color: maroon">proc</span><b> then</b><span style="color: navy"> {
+</span>          proc.procedure<b> as </b><span style="color: maroon">p</span><b> then</b><span style="color: navy"> {
+</span>            p.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>              c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '71651007'<span style="color: navy"><b> -&gt; </b></span>op.intraopPraeparatkontrolle = <span style="color: blue">'1'</span> <i>&quot;SetPKMammo&quot;</i><span style="color: navy">;</span>
+              c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '16310003'<span style="color: navy"><b> -&gt; </b></span>op.intraopPraeparatkontrolle = <span style="color: blue">'2'</span> <i>&quot;SetPKSono&quot;</i><span style="color: navy">;</span>
+            <span style="color: navy">}</span> <i>&quot;MapPKCoding&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapPKProcedure&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapPKProcessing&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;SpecCtx&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntrySpecimen&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">--- Op: Komplikationen aus Observations (moved from MapOperation) ---</span>
+    bundle.entry<b> as </b><span style="color: maroon">kompEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))<b> then</b><span style="color: navy"> {
+</span>      kompEntry.resource<b> as </b><span style="color: maroon">obs</span><span style="color: navy"><b> -&gt; </b></span>op.komplikationen<b> as </b><span style="color: maroon">komp</span><b> then</b><span style="color: navy"> {
+</span>        obs.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '116224001')<b> then</b><span style="color: navy"> {
+</span>          comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>            val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>              c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>komp.kuerzel = <span style="color: maroon">cd</span> <i>&quot;SetKompKuerzel&quot;</i><span style="color: navy">;</span>
+            <span style="color: navy">}</span> <i>&quot;MapKompKuerzelCoding&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapKompKuerzelVal&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapKompKuerzelComp&quot;</i><span style="color: navy">;</span>
+        obs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>          val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>            c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>komp.clavienDindo = <span style="color: maroon">cd</span> <i>&quot;SetKompClavien&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapKompClavienCoding&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapKompClavien&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapKompObs&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryKomp&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryOperation&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Systemtherapie ---</span>
   bundle.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
@@ -857,7 +901,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:30+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

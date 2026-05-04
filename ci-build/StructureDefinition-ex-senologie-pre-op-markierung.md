@@ -47,7 +47,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-pre-op-
   "name" : "EX_Senologie_PreOpMarkierung",
   "title" : "Präoperative Markierung",
   "status" : "draft",
-  "date" : "2026-05-04T09:30:07+00:00",
+  "date" : "2026-05-04T09:51:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

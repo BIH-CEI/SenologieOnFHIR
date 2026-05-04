@@ -26,7 +26,7 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustPrimaerfall",
   "status" : "draft",
-  "date" : "2026-05-04T09:30:07+00:00",
+  "date" : "2026-05-04T09:51:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -345,7 +345,308 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
         }],
         "dependent" : [{
           "name" : "MapOperation",
-          "variable" : ["procedure", "op", "bundle"]
+          "variable" : ["procedure", "op"]
+        }]
+      },
+      {
+        "name" : "EntryDrahtSR",
+        "source" : [{
+          "context" : "bundle",
+          "element" : "entry",
+          "variable" : "srEntry",
+          "condition" : "resource.is(ServiceRequest)"
+        }],
+        "rule" : [{
+          "name" : "MapDrahtSR",
+          "source" : [{
+            "context" : "srEntry",
+            "element" : "resource",
+            "variable" : "sr"
+          }],
+          "rule" : [{
+            "name" : "MapDrahtExt",
+            "source" : [{
+              "context" : "sr",
+              "element" : "extension",
+              "variable" : "ext",
+              "condition" : "url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung'"
+            }],
+            "rule" : [{
+              "name" : "MapDrahtVal",
+              "source" : [{
+                "context" : "ext",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "rule" : [{
+                "name" : "SetDrahtKeine",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "code = 'N'"
+                }],
+                "target" : [{
+                  "context" : "op",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "0"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetDrahtSono",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "code = 'S'"
+                }],
+                "target" : [{
+                  "context" : "op",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "1"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetDrahtMammo",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "code = 'M'"
+                }],
+                "target" : [{
+                  "context" : "op",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "2"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetDrahtMRT",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "code = 'T'"
+                }],
+                "target" : [{
+                  "context" : "op",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "3"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "EntrySpecimen",
+        "source" : [{
+          "context" : "bundle",
+          "element" : "entry",
+          "variable" : "specEntry",
+          "condition" : "resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))"
+        }],
+        "rule" : [{
+          "name" : "SpecCtx",
+          "source" : [{
+            "context" : "specEntry",
+            "element" : "resource",
+            "variable" : "specimen"
+          }],
+          "rule" : [{
+            "name" : "SetSSJa",
+            "source" : [{
+              "context" : "specimen",
+              "element" : "processing",
+              "variable" : "proc",
+              "condition" : "procedure.coding.exists(code = '123038009')"
+            }],
+            "target" : [{
+              "context" : "op",
+              "contextType" : "variable",
+              "element" : "intraopSchnellschnitt",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "1"
+              }]
+            }]
+          },
+          {
+            "name" : "MapPKProcessing",
+            "source" : [{
+              "context" : "specimen",
+              "element" : "processing",
+              "variable" : "proc"
+            }],
+            "rule" : [{
+              "name" : "MapPKProcedure",
+              "source" : [{
+                "context" : "proc",
+                "element" : "procedure",
+                "variable" : "p"
+              }],
+              "rule" : [{
+                "name" : "MapPKCoding",
+                "source" : [{
+                  "context" : "p",
+                  "element" : "coding",
+                  "variable" : "c",
+                  "condition" : "system = 'http://snomed.info/sct'"
+                }],
+                "rule" : [{
+                  "name" : "SetPKMammo",
+                  "source" : [{
+                    "context" : "c",
+                    "element" : "code",
+                    "variable" : "cd",
+                    "condition" : "$this = '71651007'"
+                  }],
+                  "target" : [{
+                    "context" : "op",
+                    "contextType" : "variable",
+                    "element" : "intraopPraeparatkontrolle",
+                    "transform" : "copy",
+                    "parameter" : [{
+                      "valueString" : "1"
+                    }]
+                  }]
+                },
+                {
+                  "name" : "SetPKSono",
+                  "source" : [{
+                    "context" : "c",
+                    "element" : "code",
+                    "variable" : "cd",
+                    "condition" : "$this = '16310003'"
+                  }],
+                  "target" : [{
+                    "context" : "op",
+                    "contextType" : "variable",
+                    "element" : "intraopPraeparatkontrolle",
+                    "transform" : "copy",
+                    "parameter" : [{
+                      "valueString" : "2"
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "EntryKomp",
+        "source" : [{
+          "context" : "bundle",
+          "element" : "entry",
+          "variable" : "kompEntry",
+          "condition" : "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))"
+        }],
+        "rule" : [{
+          "name" : "MapKompObs",
+          "source" : [{
+            "context" : "kompEntry",
+            "element" : "resource",
+            "variable" : "obs"
+          }],
+          "target" : [{
+            "context" : "op",
+            "contextType" : "variable",
+            "element" : "komplikationen",
+            "variable" : "komp"
+          }],
+          "rule" : [{
+            "name" : "MapKompKuerzelComp",
+            "source" : [{
+              "context" : "obs",
+              "element" : "component",
+              "variable" : "comp",
+              "condition" : "code.coding.exists(code = '116224001')"
+            }],
+            "rule" : [{
+              "name" : "MapKompKuerzelVal",
+              "source" : [{
+                "context" : "comp",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "rule" : [{
+                "name" : "MapKompKuerzelCoding",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c"
+                }],
+                "rule" : [{
+                  "name" : "SetKompKuerzel",
+                  "source" : [{
+                    "context" : "c",
+                    "element" : "code",
+                    "variable" : "cd"
+                  }],
+                  "target" : [{
+                    "context" : "komp",
+                    "contextType" : "variable",
+                    "element" : "kuerzel",
+                    "transform" : "copy",
+                    "parameter" : [{
+                      "valueId" : "cd"
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          },
+          {
+            "name" : "MapKompClavien",
+            "source" : [{
+              "context" : "obs",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "MapKompClavienCoding",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "system = 'http://snomed.info/sct'"
+              }],
+              "rule" : [{
+                "name" : "SetKompClavien",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd"
+                }],
+                "target" : [{
+                  "context" : "komp",
+                  "contextType" : "variable",
+                  "element" : "clavienDindo",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "cd"
+                  }]
+                }]
+              }]
+            }]
+          }]
         }]
       }]
     },

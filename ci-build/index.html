@@ -304,7 +304,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <li><a href="#klinischer-versorgungspfad" id="markdown-toc-klinischer-versorgungspfad">Klinischer Versorgungspfad</a></li>
       <li><a href="#einordnung-in-die-mii" id="markdown-toc-einordnung-in-die-mii">Einordnung in die MII</a></li>
       <li><a href="#technische-abhängigkeiten" id="markdown-toc-technische-abhängigkeiten">Technische Abhängigkeiten</a></li>
-      <li><a href="#leitlinien-und-standards" id="markdown-toc-leitlinien-und-standards">Leitlinien und Standards</a></li>
+      <li><a href="#inhaltliche-abhängigkeiten" id="markdown-toc-inhaltliche-abhängigkeiten">Inhaltliche Abhängigkeiten</a></li>
       <li><a href="#designprinzip-formular-first" id="markdown-toc-designprinzip-formular-first">Designprinzip: Formular-First</a></li>
       <li><a href="#übersicht" id="markdown-toc-übersicht">Übersicht</a></li>
       <li><a href="#geplante-weiterentwicklungen" id="markdown-toc-geplante-weiterentwicklungen">Geplante Weiterentwicklungen</a></li>
@@ -317,7 +317,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>Willkommen beim Implementation Guide für den <strong>Kerndatensatz Senologie</strong>.</p>
 
-<p>Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der <strong>Brustkrebsversorgung</strong> an zertifizierten Brustzentren und darüber hinaus. Die technische Umsetzung erfolgt durch das <strong>Berlin Institute of Health at Charité (BIH)</strong>, die inhaltliche Abstimmung mit der <strong><a href="https://www.senologie.org/">Deutschen Gesellschaft für Senologie (DGS)</a></strong>.</p>
+<p>Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der <strong>Brustkrebsversorgung</strong> an zertifizierten Brustzentren und darüber hinaus. Die technische Umsetzung erfolgt durch das <strong>Berlin Institute of Health at Charité (BIH)</strong>, die inhaltliche Abstimmung mit der <strong><a href="https://www.senologie.org/">Deutschen Gesellschaft für Senologie (DGS)</a></strong>, der <strong><a href="https://www.dggg.de/">Deutschen Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)</a></strong> und der <strong><a href="https://www.ago-online.de/">Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)</a></strong>.</p>
 
 <h3 id="zielsetzung">Zielsetzung</h3>
 
@@ -369,8 +369,12 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <td>Tumorlokalisation (BodyStructure)</td>
     </tr>
     <tr>
-      <td><a href="https://simplifier.net/isik">ISiK 5.0</a></td>
+      <td><a href="https://simplifier.net/isik">ISiK</a></td>
       <td>Basisprofil-Kompatibilität</td>
+    </tr>
+    <tr>
+      <td><a href="http://hl7.org/fhir/uv/ips/">IPS</a></td>
+      <td>International Patient Summary</td>
     </tr>
     <tr>
       <td><a href="http://hl7.org/fhir/uv/sdc/">HL7 SDC</a></td>
@@ -379,15 +383,38 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   </tbody>
 </table>
 
-<h3 id="leitlinien-und-standards">Leitlinien und Standards</h3>
+<h3 id="inhaltliche-abhängigkeiten">Inhaltliche Abhängigkeiten</h3>
 
-<p>Die Profilierung orientiert sich an:</p>
-
-<ul>
-  <li><strong>S3-Leitlinie Mammakarzinom</strong> (AWMF 032-045OL) – Leitlinien-Annotation</li>
-  <li><strong>Onkologischer Basisdatensatz (oBDS)</strong> — Krebsregistermeldungen</li>
-  <li><strong>DKG-Zertifizierungskriterien</strong> für Brustzentren</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Datensatz / Standard</th>
+      <th>Kontext</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>S3-Leitlinie Mammakarzinom</strong> (AWMF 032-045OL)</td>
+      <td>Klinische Empfehlungen</td>
+    </tr>
+    <tr>
+      <td><strong>Onkologischer Basisdatensatz (oBDS)</strong></td>
+      <td>Krebsregistermeldungen</td>
+    </tr>
+    <tr>
+      <td><strong>DKG-Zertifizierungskriterien</strong></td>
+      <td>Qualitätssicherung Brustzentren</td>
+    </tr>
+    <tr>
+      <td><strong>IQTIG QS-Verfahren 18/1 Mammachirurgie</strong></td>
+      <td>Externe stationäre Qualitätssicherung</td>
+    </tr>
+    <tr>
+      <td><strong>Implantatregister (IRegG)</strong></td>
+      <td>Meldepflicht Brustimplantate</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3 id="designprinzip-formular-first">Designprinzip: Formular-First</h3>
 
@@ -413,7 +440,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
   <li><strong>Implantateregister-Meldung (IRegG)</strong> — StructureMaps für die automatische Ableitung von Implantateregisterdaten aus Device- und Procedure-Ressourcen, analog zum <a href="meldung-obds.html">oBDS-Transformationsansatz</a></li>
   <li><strong>CQL-basierte Qualitätsindikatoren</strong> — Formale Definition der DKG-Kennzahlen und deskriptiver Statistiken als <a href="http://cql.hl7.org/">CQL</a> Measures für automatisierte Auswertung</li>
   <li><strong>Synthetische Testkohorte</strong> — Regelbasiert generierte Testdaten (100 Patientinnen mit Variation von Subtypen, Stadien und Therapien) als Docker-Container für SQL on FHIR und CQL-Auswertungen</li>
-  <li><strong>PRO-Integration</strong> — Referenzierung von PRO-CTCAE und EORTC QLQ-BR42 aus dem MII PRO-Modul für therapiebegleitende Patientinnenbefragungen</li>
+  <li><strong>PRO-Integration</strong> — Referenzierung von PRO-CTCAE und EORTC QLQ-BR23/BR45/BR42 aus dem MII PRO-Modul für therapiebegleitende Patientinnenbefragungen</li>
 </ul>
 
 
@@ -435,7 +462,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:30+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
