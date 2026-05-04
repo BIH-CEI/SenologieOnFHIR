@@ -186,3 +186,26 @@ Content-Type: application/fhir+json
 Das Ergebnis ist eine Instanz des oBDS Logical Models, die als XML serialisiert und an das Krebsregister übermittelt werden kann.
 
 **Perspektive**: Langfristig ist eine Umstellung der Krebsregister auf FHIR-basierte Meldungen wahrscheinlich. Die StructureMap-basierte Architektur ermöglicht einen fließenden Übergang: Sobald Krebsregister FHIR-Bundles akzeptieren, entfällt der XML-Serialisierungsschritt, und die Transformation reduziert sich auf ein Profil-Mapping.
+
+### Validierung der Transformationsergebnisse
+
+Die Transformation wurde mit Matchbox `$transform` gegen das Fall-1-Bundle (Erika Neumann) getestet. Anschließend wurde der Output gegen das oBDS Logical Model validiert.
+
+{:.stu-note}
+Die folgenden Pflichtfelder des oBDS Logical Models werden durch die StructureMaps **nicht** befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden. Dies betrifft insbesondere administrative Daten und Felder, die im Brustzentrum derzeit nicht strukturiert dokumentiert werden.
+
+| Fehlendes Pflichtfeld | Ursache | Ergänzung durch |
+|---|---|---|
+| `melderID` | Administrative Melder-Identifikation (IKNR, BSNR) | KIS / ETL-Strecke |
+| `tumorzuordnung.tumorID` | Eindeutige Tumor-ID innerhalb des Melderegisters | KIS / Krebsregister-Software |
+| `st.intention` | Intention der Strahlentherapie (kurativ/palliativ) | Derzeit nicht strukturiert dokumentiert im Brustzentrum |
+| `st.stellungOP` | Stellung der ST zur Operation (neoadjuvant/adjuvant) | Derzeit nicht strukturiert dokumentiert im Brustzentrum |
+| `st.nebenwirkungen` | CTCAE-Nebenwirkungen der Strahlentherapie | Derzeit nicht strukturiert dokumentiert im Brustzentrum |
+| `tumorkonferenz.typ` | Typ der Tumorkonferenz (prä-/postoperativ) | Map-Erweiterung nötig — Feld ist in MII Onko Tumorkonferenz (CarePlan.category) vorhanden, muss in der StructureMap ausgelesen werden |
+
+**Erfolgreich befüllte Felder** (Auswahl):
+- Tumorzuordnung: ICD-10-GM C50.4, Diagnosedatum
+- Diagnose: Freitext, Diagnosesicherung, ECOG-Leistungszustand (0), Genexpressionstest (Oncotype DX)
+- OP: Intention (K), Datum, OPS-Codes (5-870.a1, 5-401.11), Residualstatus R0
+- Strahlentherapie: Beginn/Ende, Applikationsart, Zielgebiet
+- Tumorkonferenz: Datum, Therapieempfehlungen (SNOMED-Codes)

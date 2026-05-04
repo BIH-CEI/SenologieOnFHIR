@@ -192,6 +192,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
 
 * title = "Tumorboard-Empfehlung Andrea Wolf"
 * description = "Empfehlung: Adjuvante Chemotherapie (EC x4 → Paclitaxel wöchentlich x12) aufgrund N3a-Befall, BET links + Axilladissektion Level I-III, adjuvante Strahlentherapie inkl. Lymphabfluss, endokrine Therapie Tamoxifen (prämenopausal)."

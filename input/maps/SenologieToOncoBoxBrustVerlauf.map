@@ -80,6 +80,14 @@ group MapVerlaufFromBundle(source src : Bundle, target tgt : BackboneElement) {
     } "EntryFMResidual";
   } "EntryVerlaufFM";
 
+  // --- Vitalstatus aus Patient.deceased (Fallback fuer Verlauf ohne FollowUp) ---
+  src.entry as patEntry where resource.is(Patient) then {
+    patEntry.resource as patient then {
+      patient where deceased.exists() -> tgt.verlauf as verl, verl.vitalstatus = 'verstorben' "SetVSVerstorben";
+      patient where deceased.exists().not() -> tgt.verlauf as verl, verl.vitalstatus = 'lebend' "SetVSLebend";
+    } "PatientCtx";
+  } "EntryPatVS";
+
   // --- Conditions mit recurrence -> Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---
   src.entry as recEntry where resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence') then {
     recEntry.resource as recCond -> tgt.verlauf as verl then MapVerlaufRezidiv(recCond, verl) "CallMapVerlaufRez";

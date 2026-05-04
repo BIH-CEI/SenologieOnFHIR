@@ -54,18 +54,21 @@ group MapSYST(source src : Procedure, target tgt : BackboneElement) {
   src where performedPeriod.end.exists().not() -> tgt.meldeanlass = 'behandlungsbeginn' "MeldeanlassBeginn";
 
   // Intention: aus MII Onko Extension mii-ex-onko-systemische-therapie-intention
-  // valueCodeableConcept mit MII Onko Intentions-CodeSystem -> translate zu oBDS (K, P, S, X)
+  // MII Onko CodeSystem nutzt bereits oBDS-Codes (K, P, D, R, S, X)
   src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention' then {
     ext.value as val then {
-      val.coding as c -> tgt.intention = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention', 'code') "TranslateIntention";
+      val.coding as c then {
+        c.code as cd -> tgt.intention = cd "SetIntention";
+      } "ExtractIntentionCode";
     } "ExtractIntentionCoding";
   } "MapIntention";
 
   // Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)
-  // category.coding mit System mii-cs-onko-therapie-stellungzurop -> translate zu oBDS (O, A, N, I, S)
+  // MII Onko CodeSystem nutzt bereits oBDS-Codes (O, A, N, I, S)
   src.category as cat then {
-    cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'
-      -> tgt.stellungOP = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung', 'code') "TranslateStellungOP";
+    cat.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop' then {
+      c.code as cd -> tgt.stellungOP = cd "SetStellungOP";
+    } "ExtractStellungCode";
   } "MapStellungOP";
 
   // Therapieart: aus Procedure.category (MII Onko Therapietyp-CodeSystem)

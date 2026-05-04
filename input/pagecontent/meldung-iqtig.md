@@ -229,3 +229,19 @@ Content-Type: application/fhir+json
 ```
 
 Das Ergebnis ist eine Instanz des IQTIG Logical Models, die über das IQTIG-Datenprüfprogramm (DPP) in das offizielle QS-Format (CSV/XML) exportiert und an die Bundesauswertungsstelle (IQTIG) übermittelt werden kann.
+
+### Validierung der Transformationsergebnisse
+
+{:.stu-note}
+Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.
+
+| Fehlendes Pflichtfeld | Ursache | Ergänzung durch |
+|---|---|---|
+| `teildatensatzBasis.institutionskennzeichen` | IKNR der Einrichtung | KIS / Einrichtungsstammdaten |
+| `teildatensatzBasis.pseudonymId` | Pseudonymisierte Patienten-ID | Pseudonymisierungsdienst |
+| `teildatensatzBasis.fallId` | Fall-Identifikator | KIS / Fallmanagement |
+| `teildatensatzBasis.aufnahmedatum` | Aufnahmedatum des Falls | KIS (Encounter.period.start) |
+| `teildatensatzBasis.entlassungsdatum` | Entlassungsdatum | KIS (Encounter.period.end) |
+| `teildatensatzBrust.seitenlokalisation` | Seite der Erkrankung | Map-Erweiterung nötig (Condition.bodySite) |
+| `teildatensatzOperation.seitenlokalisation` | Seite der OP | Map-Erweiterung nötig (Procedure.bodySite) |
+| `teildatensatzOperation.operationsart` | Klassifikation der OP-Art | Map-Erweiterung nötig (Procedure.category) |

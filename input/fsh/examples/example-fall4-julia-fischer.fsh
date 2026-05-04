@@ -203,6 +203,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
 
 * title = "Tumorboard-Empfehlung Julia Fischer"
 * description = "Empfehlung: Neoadjuvante Chemotherapie TCHP (Docetaxel, Carboplatin, Trastuzumab, Pertuzumab) x6 Zyklen. Dann BET + SLNB. Adjuvant: Trastuzumab/Pertuzumab Erhaltung 1 Jahr, Ganzbrustbestrahlung."

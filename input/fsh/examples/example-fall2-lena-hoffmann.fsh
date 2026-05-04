@@ -271,6 +271,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
 
 * title = "Tumorboard-Empfehlung Lena Hoffmann — Erstvorstellung"
 * description = "Empfehlung: Neoadjuvante Chemotherapie (Carboplatin/Paclitaxel) + Pembrolizumab (KEYNOTE-522), dann modifiziert radikale Mastektomie rechts + Axilladissektion, adjuvante Thoraxwandbestrahlung + supraklavikulär, Pembrolizumab Maintenance, MTB-Überweisung für Genompanel."
@@ -320,6 +321,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#postth "posttherapeutisch"
 
 * title = "Tumorboard-Empfehlung Lena Hoffmann — Progression"
 * description = "Hepatische Metastasen nach 18 Monaten. Empfehlung: Umstellung auf palliatives Therapiekonzept. Sacituzumab govitecan als Zweitlinientherapie. Best Supportive Care."

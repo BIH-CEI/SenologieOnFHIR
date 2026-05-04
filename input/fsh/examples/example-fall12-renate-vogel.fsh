@@ -183,6 +183,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
 
 * title = "Tumorboard-Empfehlung Renate Vogel — ADH B3"
 * description = "B3-Läsion (ADH) in Vakuumbiopsie. Nachresektion (offene Biopsie) empfohlen zum Ausschluss eines DCIS oder invasiven Karzinoms. Bei reiner ADH nach Nachresektion: keine weitere Therapie, engmaschige Nachsorge."

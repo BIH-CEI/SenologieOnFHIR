@@ -225,6 +225,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
 
 * title = "Tumorboard-Empfehlung Monika Braun — Erstvorstellung"
 * description = "Empfehlung: Neoadjuvante Chemotherapie EC x4, dann Docetaxel + Trastuzumab x4. Anschließend BET rechts + SLNB. Adjuvant: Trastuzumab Erhaltung 1 Jahr, Ganzbrustbestrahlung, Letrozol."
@@ -269,6 +270,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#postop "postoperativ"
 
 * title = "Tumorboard-Empfehlung Monika Braun — Postoperativ"
 * description = "Postoperativ ypT1a ypN0(sn)(0/3) R0, gutes Ansprechen. Bestätigung: Trastuzumab Erhaltung fortsetzen, adjuvante RT, Letrozol starten."

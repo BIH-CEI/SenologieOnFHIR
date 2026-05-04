@@ -204,6 +204,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
 
 * title = "Tumorboard-Empfehlung Kathrin Mueller"
 * description = "Empfehlung: Neoadjuvante Chemotherapie Carboplatin/Paclitaxel wöchentlich x12, dann EC q3w x4. Dann BET rechts + SLNB. Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy. Keine endokrine Therapie (triple-negativ)."
