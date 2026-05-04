@@ -45,6 +45,6 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
 
   // --- Teildatensatz Operation (O): pro Procedure (Senologie_BrustOP / Senologie_Operation) ---
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation')) then {
-    entry.resource as procedure -> tgt.teildatensatzOperation as op then MapOperation(procedure, op, src) "CallMapOperation";
+    entry.resource as procedure -> tgt.teildatensatzOperation as op then MapOperation(procedure, op) "CallMapOperation";
   } "EntryOperation";
 }

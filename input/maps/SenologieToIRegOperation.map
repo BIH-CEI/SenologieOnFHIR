@@ -24,7 +24,7 @@ uses "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-mel
 // Procedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.
 // ============================================================================
 
-group MapOperation(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+group MapOperation(source src : Procedure, target tgt : BackboneElement) {
 
   // --- OPE_* Basisdaten ---
 
@@ -64,28 +64,6 @@ group MapOperation(source src : Procedure, target tgt : BackboneElement, source 
   // --- OBI_* Brustimplantat-spezifische Operationsdaten ---
   src -> tgt.operationBrustimplantat as obi then MapOperationBrustimplantat(src, obi) "CallMapOBI";
 
-  // --- Artikelidentifikation: Device-Ressourcen ---
-  // Aufloesen ueber Procedure.focalDevice.manipulated (Device-Referenz)
-  src.focalDevice as fd then {
-    fd.manipulated as ref then {
-      // Suche die referenzierte Device-Ressource im Bundle
-      bundle.entry as devEntry where resource.is(Device) and fullUrl = (%ref.reference) then {
-        devEntry.resource as device -> tgt.artikelidentifikation as art then MapArtikelidentifikation(device, art) "CallMapArtikel";
-      } "ResolveDeviceRef";
-    } "MapDeviceRef";
-  } "MapFocalDevice";
-
-  // Fallback: alle Device-Ressourcen im Bundle, falls kein focalDevice vorhanden
-  src where focalDevice.exists().not() then {
-    bundle.entry as devEntry where resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat')) then {
-      devEntry.resource as device -> tgt.artikelidentifikation as art then MapArtikelidentifikation(device, art) "CallMapArtikelFallback";
-    } "EntryDeviceFallback";
-  } "FallbackDevice";
-
-  // --- Zubehoer (ADM/Netz): Device mit Zubehoer-Profil ---
-  bundle.entry as entry where resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer')) then {
-    entry.resource as device -> tgt.zubehoer as zub then MapZubehoer(device, zub) "CallMapZubehoer";
-  } "EntryZubehoer";
 }
 
 // ============================================================================

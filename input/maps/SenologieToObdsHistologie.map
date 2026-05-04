@@ -36,7 +36,7 @@ uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBD
 // Grading und Lymphknoten-Daten aus deren components.
 // ============================================================================
 
-group MapHistologie(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
+group MapHistologie(source src : Observation, target tgt : BackboneElement) {
 
   // Histologie_ID: aus Observation.identifier
   src.identifier as id then {
@@ -50,21 +50,6 @@ group MapHistologie(source src : Observation, target tgt : BackboneElement, sour
   src.identifier as id where system = 'http://pathologie.charite.de/fhir/sid/einsende-nr' then {
     id.value as v -> tgt.histologieEinsendeNr = v "SetEinsendeNr";
   } "MapEinsendeNr";
-
-  // Histologiedatum aus Specimen.collection.collectedDateTime (falls vorhanden)
-  // Das Specimen wird ueber Observation.specimen referenziert
-  bundle.entry as specEntry where resource.is(Specimen) then {
-    specEntry.resource as specimen then {
-      // Einsende-Nummer aus Specimen.accessionIdentifier
-      specimen.accessionIdentifier as accId then {
-        accId.value as v -> tgt.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen";
-      } "MapAccessionId";
-      // Histologiedatum aus Specimen.collection.collectedDateTime
-      specimen.collection as coll then {
-        coll.collected as collDt where $this.is(dateTime) -> tgt.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen";
-      } "MapSpecimenCollection";
-    } "SpecimenContext";
-  } "EntrySpecimen";
 
   // Morphologie_ICD_O: aus Observation.value (ICD-O Morphologie)
   src.value as val then {
@@ -86,60 +71,24 @@ group MapHistologie(source src : Observation, target tgt : BackboneElement, sour
     } "MapGradingValue";
   } "MapGrading";
 
-  // Grading: aus separater Observation im Bundle (Fallback)
-  bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
-    gradEntry.resource as gradObs then {
-      gradObs.value as val then {
-        val.coding as c -> tgt.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
-      } "MapGradingSepValue";
-    } "MapGradingSepObs";
-  } "EntryGrading";
-
   // LK_untersucht: Anzahl untersuchter Lymphknoten (LOINC 21894-1)
   src.component as comp where code.coding.exists(code = '21894-1') then {
     comp.value as val -> tgt.lkUntersucht = val "SetLKUntersucht";
   } "MapLKUntersucht";
-
-  // LK_untersucht: aus separater Observation im Bundle (Fallback)
-  bundle.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
-    lkEntry.resource as lkObs then {
-      lkObs.value as val -> tgt.lkUntersucht = val "SetLKUntersuchtSeparate";
-    } "MapLKUntersuchtSep";
-  } "EntryLKUntersucht";
 
   // LK_befallen: Anzahl befallener Lymphknoten (LOINC 21893-3)
   src.component as comp where code.coding.exists(code = '21893-3') then {
     comp.value as val -> tgt.lkBefallen = val "SetLKBefallen";
   } "MapLKBefallen";
 
-  // LK_befallen: aus separater Observation im Bundle (Fallback)
-  bundle.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
-    lkbEntry.resource as lkbObs then {
-      lkbObs.value as val -> tgt.lkBefallen = val "SetLKBefallenSeparate";
-    } "MapLKBefallenSep";
-  } "EntryLKBefallen";
-
   // Sentinel_LK_untersucht (LOINC 92832-5)
   src.component as comp where code.coding.exists(code = '92832-5') then {
     comp.value as val -> tgt.sentinelLKUntersucht = val "SetSentinelLKUntersucht";
   } "MapSentinelLKUntersucht";
-
-  // Sentinel_LK_untersucht: aus separater Observation im Bundle (Fallback)
-  bundle.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
-    slkEntry.resource as slkObs then {
-      slkObs.value as val -> tgt.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate";
-    } "MapSentinelLKUntersuchtSep";
-  } "EntrySentinelLKUntersucht";
 
   // Sentinel_LK_befallen (LOINC 92831-7)
   src.component as comp where code.coding.exists(code = '92831-7') then {
     comp.value as val -> tgt.sentinelLKBefallen = val "SetSentinelLKBefallen";
   } "MapSentinelLKBefallen";
 
-  // Sentinel_LK_befallen: aus separater Observation im Bundle (Fallback)
-  bundle.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
-    slkbEntry.resource as slkbObs then {
-      slkbObs.value as val -> tgt.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate";
-    } "MapSentinelLKBefallenSep";
-  } "EntrySentinelLKBefallen";
 }

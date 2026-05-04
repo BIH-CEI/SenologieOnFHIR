@@ -184,7 +184,7 @@ group MapVerlaufFollowUp(source src : Observation, target tgt : BackboneElement)
 group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneElement, source bundle : Bundle) {
 
   // Verlauf_Datum: aus Observation.effectiveDateTime
-  src.effective as eff where $this.is(dateTime) -> tgt.datum = eff "SetVerlaufDatumFM";
+  src.effective as eff where $this.is(dateTime) -> tgt.meldedatum = eff "SetVerlaufDatumFM";
 
   // Verlauf_Ereignis: 3 = Fernmetastase
   src -> tgt.ereignis = '3' "SetEreignisFM";
@@ -197,7 +197,7 @@ group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneEle
       proc.extension as ext where url.contains('Intention') then {
         ext.value as val then {
           val.coding as c where code = 'P' then {
-            proc.performed as perf where $this.is(dateTime) -> tgt.fmOpDatum = perf "SetFMOpDatum";
+            proc.performed as perf where $this.is(dateTime) -> tgt.fmOperation as fmOp, fmOp.opDatum = perf "SetFMOpDatum";
           } "CheckIntentionPalliativ";
         } "MapIntentionValue";
       } "MapIntentionExt";
@@ -205,7 +205,7 @@ group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneEle
   } "EntryFMOp";
 
   // === OncoBox 2.0: J04 — FM_Therapien ===
-  src -> tgt.fmTherapien as fmTh then MapFMTherapien(bundle, fmTh) "CallMapFMTherapien";
+  src -> tgt.fmTherapie as fmTh then MapFMTherapien(bundle, fmTh) "CallMapFMTherapien";
 
   // === OncoBox 2.0: J05 — FM_Residualstatus ===
   // Aus Procedure.outcome der FM-Operation (palliativer Kontext)
@@ -215,7 +215,7 @@ group MapVerlaufFernmetastase(source src : Observation, target tgt : BackboneEle
         ext.value as val then {
           val.coding as c where code = 'P' then {
             proc.outcome as oc then {
-              oc.coding as rc where system.contains('residualstatus') -> tgt.fmResidualstatus = rc "SetFMResidualCode";
+              oc.coding as rc where system.contains('residualstatus') -> tgt.fmOperation as fmOp, fmOp.residualstatus = rc "SetFMResidualCode";
             } "MapFMResidualCoding";
           } "CheckIntentionPalliativR";
         } "MapIntentionValueR";
