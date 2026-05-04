@@ -1,0 +1,101 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sct: <http://snomed.info/id/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/RiskAssessment/Fall1-Genexpressionstest> a fhir:RiskAssessment ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "Fall1-Genexpressionstest"] ; # 
+  fhir:meta [
+     fhir:profile ( [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressionstest"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressionstest>
+     ] )
+  ] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: RiskAssessment Fall1-Genexpressionstest</b></p><a name=\"Fall1-Genexpressionstest\"> </a><a name=\"hcFall1-Genexpressionstest\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"StructureDefinition-senologie-genexpressionstest.html\">BIH PR Seno Genexpressionstest</a></p></div><p><b>status</b>: Final</p><p><b>method</b>: <span title=\"Codes:{https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest oncotype-dx}\">Oncotype DX</span></p><p><b>subject</b>: <a href=\"Patient-Fall1-Patient-Erika-Neumann.html\">Erika Neumann  Female, DoB: 1966-03-12 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-001)</a></p><p><b>occurrence</b>: 2025-01-25</p><p><b>condition</b>: <a href=\"Condition-Fall1-Diagnose-Mammakarzinom.html\">Condition Malignant neoplasm of breast</a></p><p><b>basis</b>: <a href=\"Observation-Fall1-Genexpressions-Score.html\">Observation Oncotype DX</a></p><h3>Predictions</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Outcome</b></td><td><b>Probability[x]</b></td><td><b>QualitativeRisk</b></td><td><b>When[x]</b></td></tr><tr><td style=\"display: none\">*</td><td><span title=\"Codes:{http://snomed.info/sct 399409002}\">Fernrezidiv</span></td><td>0.12</td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/risk-probability low}\">Low likelihood</span></td><td>0-10 Jahre</td></tr></table></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:status [ fhir:v "final"] ; # 
+  fhir:method [
+     fhir:coding ( [
+       fhir:system [
+         fhir:v "https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest"^^xsd:anyURI ;
+         fhir:l <https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest>
+       ] ;
+       fhir:code [ fhir:v "oncotype-dx" ] ;
+       fhir:display [ fhir:v "Oncotype DX" ]
+     ] )
+  ] ; # 
+  fhir:subject [
+     fhir:l <https://www.senologie.org/fhir/Patient/Fall1-Patient-Erika-Neumann> ;
+     fhir:reference [ fhir:v "Patient/Fall1-Patient-Erika-Neumann" ]
+  ] ; # 
+  fhir:occurrence [
+     a fhir:DateTime ;
+     fhir:v "2025-01-25"^^xsd:date
+  ] ; # 
+  fhir:condition [
+     fhir:l <https://www.senologie.org/fhir/Condition/Fall1-Diagnose-Mammakarzinom> ;
+     fhir:reference [ fhir:v "Condition/Fall1-Diagnose-Mammakarzinom" ]
+  ] ; # 
+  fhir:basis ( [
+     fhir:l <https://www.senologie.org/fhir/Observation/Fall1-Genexpressions-Score> ;
+     fhir:reference [ fhir:v "Observation/Fall1-Genexpressions-Score" ]
+  ] ) ; # 
+  fhir:prediction ( [
+     fhir:outcome [
+       fhir:coding ( [
+         a sct:399409002 ;
+         fhir:system [
+           fhir:v "http://snomed.info/sct"^^xsd:anyURI ;
+           fhir:l <http://snomed.info/sct>
+         ] ;
+         fhir:code [ fhir:v "399409002" ] ;
+         fhir:display [ fhir:v "Distant metastasis present (finding)" ]
+       ] ) ;
+       fhir:text [ fhir:v "Fernrezidiv" ]
+     ] ;
+     fhir:probability [
+       a fhir:Decimal ;
+       fhir:v 0.12
+     ] ;
+     fhir:qualitativeRisk [
+       fhir:coding ( [
+         fhir:system [
+           fhir:v "http://terminology.hl7.org/CodeSystem/risk-probability"^^xsd:anyURI ;
+           fhir:l <http://terminology.hl7.org/CodeSystem/risk-probability>
+         ] ;
+         fhir:code [ fhir:v "low" ] ;
+         fhir:display [ fhir:v "Low likelihood" ]
+       ] )
+     ] ;
+     fhir:when [
+       a fhir:Range ;
+       fhir:low [
+         fhir:value [ fhir:v "0"^^xsd:decimal ] ;
+         fhir:unit [ fhir:v "Jahre" ] ;
+         fhir:system [
+           fhir:v "http://unitsofmeasure.org"^^xsd:anyURI ;
+           fhir:l <http://unitsofmeasure.org>
+         ] ;
+         fhir:code [ fhir:v "a" ]
+       ] ;
+       fhir:high [
+         fhir:value [ fhir:v "10"^^xsd:decimal ] ;
+         fhir:unit [ fhir:v "Jahre" ] ;
+         fhir:system [
+           fhir:v "http://unitsofmeasure.org"^^xsd:anyURI ;
+           fhir:l <http://unitsofmeasure.org>
+         ] ;
+         fhir:code [ fhir:v "a" ]
+       ]
+     ]
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

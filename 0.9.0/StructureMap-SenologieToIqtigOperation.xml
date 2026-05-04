@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToIqtigOperation"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToIqtigOperation</b></p><a name="SenologieToIqtigOperation"> </a><a name="hcSenologieToIqtigOperation"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation<span style="color: navy">&quot; = &quot;</span>SenologieToIqtigOperation<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/procedure.html" title="Procedure">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style="color: navy">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/condition.html" title="Condition">http://hl7.org/fhir/StructureDefinition/Condition</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>
+
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">context (teildatensatzOperation). Omitting the root-level target type avoids</span>
+<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH false positives where the validator would resolve property</span>
+<span style="color: navy">// </span><span style="color: green">names against iqtig-mammachirurgie-181 root.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Teildatensatz Operation (O): Procedure + Specimen + Observations -&gt; O:*</span>
+<span style="color: navy">// </span><span style="color: green">Pro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:</span>
+<span style="color: navy">// </span><span style="color: green">- Procedure (Senologie_BrustOP / Senologie_Operation) -&gt; OP-Datum, OPS,</span>
+<span style="color: navy">// </span><span style="color: green">Seitenlokalisation, Operationsart</span>
+<span style="color: navy">// </span><span style="color: green">- Specimen (Senologie_Pathologie_Praeparat) -&gt; Schnellschnitt,</span>
+<span style="color: navy">// </span><span style="color: green">Praeparatkontrolle, Praeparat-spezifische Daten</span>
+<span style="color: navy">// </span><span style="color: green">- Observation (Pathologie-Befund) -&gt; Histologie, Grading, pTNM, R-Status</span>
+<span style="color: navy">// </span><span style="color: green">- Observation (Rezeptorstatus: ER/PR/HER2) -&gt; QI-relevante Felder</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">O:LNROP - Laufende Nummer der Operation (Default 1; ueber Slicing iterierbar)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.laufendeNummer = <span style="color: blue">1</span> <i>&quot;SetLnrOp&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">O:LNRBRUST - Zuordnung zum Brust-Teildatensatz (Default 1)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.bezugLnrBrust = <span style="color: blue">1</span> <i>&quot;SetLnrBrustRef&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">O:OPDATUM - aus Procedure.performedDateTime</span>
+  src.performed<b> as </b><span style="color: maroon">perf</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.operationsdatum = <span style="color: maroon">perf</span> <i>&quot;SetOpDatum&quot;</i><span style="color: navy">;</span>
+  src.performed<b> as </b><span style="color: maroon">perf</span><b> where </b>$this.is(Period)<b> then</b><span style="color: navy"> {
+</span>    perf.start<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.operationsdatum = <span style="color: maroon">s</span> <i>&quot;SetOpDatumPeriod&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOpDatumPeriod&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">O:SEITE - Seitenlokalisation aus Procedure.bodySite (SNOMED CT)</span>
+  src.bodySite<b> as </b><span style="color: maroon">bs</span><b> then</b><span style="color: navy"> {
+</span>    bs.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '24028007'<span style="color: navy"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style="color: blue">'R'</span> <i>&quot;SetOpSeiteR&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '7771000'<span style="color: navy"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style="color: blue">'L'</span> <i>&quot;SetOpSeiteL&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '51440002'<span style="color: navy"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style="color: blue">'B'</span> <i>&quot;SetOpSeiteB&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapOpSeiteSCT&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOpSeitenlokalisation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">O:OPSCHLUESSEL - OPS-Kodes aus Procedure.code</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<span style="color: navy"><b> -&gt; </b></span>tgt.prozeduren<b> as </b><span style="color: maroon">opsItem</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>opsItem.code = <span style="color: maroon">cd</span> <i>&quot;SetOpsCode&quot;</i><span style="color: navy">;</span>
+      c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>opsItem.version = <span style="color: maroon">v</span> <i>&quot;SetOpsVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapOpsCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapProzeduren&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">O:OPART - Operationsart aus Procedure.category oder Senologie-Operation-Art VS</span>
+  <span style="color: navy">// </span><span style="color: green">BET (5-870) -&gt; 1, Mastektomie einfach (5-871) -&gt; 2, Mastektomie SSM (5-872) -&gt; 3,</span>
+  <span style="color: navy">// </span><span style="color: green">Mastektomie NSM (5-883) -&gt; 4, Revision -&gt; 5, Wiederaufbau (5-885) -&gt; 6</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-870')<span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: blue">'1'</span> <i>&quot;SetOpArtBET&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-871')<span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: blue">'2'</span> <i>&quot;SetOpArtMastEinfach&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-872')<span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: blue">'3'</span> <i>&quot;SetOpArtMastSSM&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-883')<span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: blue">'4'</span> <i>&quot;SetOpArtMastNSM&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-885')<span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: blue">'6'</span> <i>&quot;SetOpArtRekon&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapOpArtOPS&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOpArtFromOPS&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Direkter Map aus Senologie-Operation-Art CodeSystem (falls vorhanden)</span>
+  src.category<b> as </b><span style="color: maroon">cat</span><b> then</b><span style="color: navy"> {
+</span>    cat.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: maroon">cd</span> <i>&quot;SetOpArtDirect&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapOpArtCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOpArtCategory&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Bundle lookups for O:DIGNITAET, O:SCHNELLSCHNITT, O:PRAEPKONTROLLE,</span>
+  <span style="color: navy">// </span><span style="color: green">O:HISTMORPH, O:GRADING, O:TGROESSEINV, O:TGROESSEDCIS, O:MULTIFOK,</span>
+  <span style="color: navy">// </span><span style="color: green">O:PT/PN/PM, O:UICCPATHO have been moved to the calling orchestrator</span>
+  <span style="color: navy">// </span><span style="color: green">(SenologieToIqtigMammachirurgie181.map) to avoid multiple source parameters.</span>
+  <span style="color: navy">// </span><span style="color: green">--- Residualstatus R0/R1/R2 aus Procedure.outcome ---</span>
+  <span style="color: navy">// </span><span style="color: green">O:RSTATUSLOK / O:RSTATUSGES - aus Procedure.outcome (SNOMED CT)</span>
+  <span style="color: navy">// </span><span style="color: green">122538001=R0, 122539009=R1, 122540006=R2, 122541005=RX</span>
+  src.outcome<b> as </b><span style="color: maroon">out</span><b> then</b><span style="color: navy"> {
+</span>    out.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122538001'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style="color: blue">'R0'</span> <i>&quot;SetRStatusLokR0&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122538001'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style="color: blue">'R0'</span> <i>&quot;SetRStatusGesR0&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122539009'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style="color: blue">'R1'</span> <i>&quot;SetRStatusLokR1&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122539009'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style="color: blue">'R1'</span> <i>&quot;SetRStatusGesR1&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122540006'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style="color: blue">'R2'</span> <i>&quot;SetRStatusLokR2&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122540006'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style="color: blue">'R2'</span> <i>&quot;SetRStatusGesR2&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122541005'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style="color: blue">'RX'</span> <i>&quot;SetRStatusLokRX&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '122541005'<span style="color: navy"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style="color: blue">'RX'</span> <i>&quot;SetRStatusGesRX&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapOutcomeCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapResidualstatus&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Lymphknoten aus Pathologie-Observations ---</span>
+  <span style="color: navy">// </span><span style="color: green">O:SENTINEL - Sentinel-Biopsie durchgefuehrt (OPS 5-401.1*)</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-401.1')<span style="color: navy"><b> -&gt; </b></span>tgt.sentinelDurchgefuehrt = <span style="color: blue">'1'</span> <i>&quot;SetSentinelJa&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapSentinelOPS&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapSentinel&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">O:AXDISSEKTION - Axilladissektion (OPS 5-402)</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-402')<span style="color: navy"><b> -&gt; </b></span>tgt.axillaDissektion = <span style="color: blue">'1'</span> <i>&quot;SetAxDissJa&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapAxDissOPS&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapAxillaDissektion&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">LK counts, Rezeptorstatus, and Komplikationen bundle lookups</span>
+<span style="color: navy">// </span><span style="color: green">have been moved to the calling orchestrator.</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation"/>
+  <version value="0.9.0"/>
+  <name value="SenologieToIqtigOperation"/>
+  <status value="draft"/>
+  <date value="2026-05-04T15:31:53+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+    <mode value="source"/>
+    <alias value="Procedure"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+    <mode value="source"/>
+    <alias value="Specimen"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+    <mode value="source"/>
+    <alias value="Condition"/>
+  </structure>
+  <group>
+    <name value="MapOperation"/>
+    <typeMode value="none"/>
+    <documentation value="Import-only map: no target `uses` declaration — the calling map&#xD;&#xA;(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement&#xD;&#xA;context (teildatensatzOperation). Omitting the root-level target type avoids&#xD;&#xA;SM_TARGET_PATH false positives where the validator would resolve property&#xD;&#xA;names against iqtig-mammachirurgie-181 root.&#xD;&#xA;============================================================================&#xD;&#xA;Teildatensatz Operation (O): Procedure + Specimen + Observations -&gt; O:*&#xD;&#xA;Pro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:&#xD;&#xA;- Procedure (Senologie_BrustOP / Senologie_Operation) -&gt; OP-Datum, OPS,&#xD;&#xA;Seitenlokalisation, Operationsart&#xD;&#xA;- Specimen (Senologie_Pathologie_Praeparat) -&gt; Schnellschnitt,&#xD;&#xA;Praeparatkontrolle, Praeparat-spezifische Daten&#xD;&#xA;- Observation (Pathologie-Befund) -&gt; Histologie, Grading, pTNM, R-Status&#xD;&#xA;- Observation (Rezeptorstatus: ER/PR/HER2) -&gt; QI-relevante Felder&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Procedure"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="SetLnrOp"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="laufendeNummer"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueInteger value="1"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetLnrBrustRef"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="bezugLnrBrust"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueInteger value="1"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetOpDatum"/>
+      <source>
+        <context value="src"/>
+        <element value="performed"/>
+        <variable value="perf"/>
+        <condition value="$this.is(dateTime)"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="operationsdatum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="perf"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapOpDatumPeriod"/>
+      <source>
+        <context value="src"/>
+        <element value="performed"/>
+        <variable value="perf"/>
+        <condition value="$this.is(Period)"/>
+      </source>
+      <rule>
+        <name value="SetOpDatumPeriod"/>
+        <source>
+          <context value="perf"/>
+          <element value="start"/>
+          <variable value="s"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="operationsdatum"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="s"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapOpSeitenlokalisation"/>
+      <source>
+        <context value="src"/>
+        <element value="bodySite"/>
+        <variable value="bs"/>
+      </source>
+      <rule>
+        <name value="MapOpSeiteSCT"/>
+        <source>
+          <context value="bs"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://snomed.info/sct'"/>
+        </source>
+        <rule>
+          <name value="SetOpSeiteR"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '24028007'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="seitenlokalisation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpSeiteL"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '7771000'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="seitenlokalisation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="L"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpSeiteB"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '51440002'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="seitenlokalisation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="B"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapProzeduren"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapOpsCoding"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/ops'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="prozeduren"/>
+          <variable value="opsItem"/>
+        </target>
+        <rule>
+          <name value="SetOpsCode"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="opsItem"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpsVersion"/>
+          <source>
+            <context value="c"/>
+            <element value="version"/>
+            <variable value="v"/>
+          </source>
+          <target>
+            <context value="opsItem"/>
+            <contextType value="variable"/>
+            <element value="version"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="v"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapOpArtFromOPS"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapOpArtOPS"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/ops'"/>
+        </source>
+        <rule>
+          <name value="SetOpArtBET"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-870')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="operationsart"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="1"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpArtMastEinfach"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-871')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="operationsart"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="2"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpArtMastSSM"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-872')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="operationsart"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="3"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpArtMastNSM"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-883')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="operationsart"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="4"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOpArtRekon"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-885')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="operationsart"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="6"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapOpArtCategory"/>
+      <source>
+        <context value="src"/>
+        <element value="category"/>
+        <variable value="cat"/>
+      </source>
+      <rule>
+        <name value="MapOpArtCoding"/>
+        <source>
+          <context value="cat"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art'"/>
+        </source>
+        <rule>
+          <name value="SetOpArtDirect"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="operationsart"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapResidualstatus"/>
+      <source>
+        <context value="src"/>
+        <element value="outcome"/>
+        <variable value="out"/>
+      </source>
+      <rule>
+        <name value="MapOutcomeCoding"/>
+        <source>
+          <context value="out"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://snomed.info/sct'"/>
+        </source>
+        <rule>
+          <name value="SetRStatusLokR0"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122538001'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusLokal"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R0"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusGesR0"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122538001'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusGesamt"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R0"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusLokR1"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122539009'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusLokal"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R1"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusGesR1"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122539009'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusGesamt"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R1"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusLokR2"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122540006'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusLokal"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R2"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusGesR2"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122540006'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusGesamt"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R2"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusLokRX"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122541005'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusLokal"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="RX"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetRStatusGesRX"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '122541005'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="residualstatusGesamt"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="RX"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapSentinel"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapSentinelOPS"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/ops'"/>
+        </source>
+        <rule>
+          <name value="SetSentinelJa"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-401.1')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="sentinelDurchgefuehrt"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="1"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapAxillaDissektion"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapAxDissOPS"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/ops'"/>
+        </source>
+        <rule>
+          <name value="SetAxDissJa"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('5-402')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="axillaDissektion"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="1"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>
