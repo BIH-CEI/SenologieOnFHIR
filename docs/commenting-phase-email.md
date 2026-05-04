@@ -69,7 +69,7 @@ Bitte wählen Sie als Projekt **„Kerndatensatz Senologie Charité"**. Bei Komm
 
 Die Kommentierungsphase läuft vom **4. Mai bis 31. Mai 2026**. Während dieser Zeit finden zwei offene Online-Begleittermine statt:
 
-- **Mittwoch, 7. Mai 2026, 13:00–14:00 Uhr** — Überblick, SDC-Fragebögen, Meldewege, offene Fragen
+- **Donnerstag, 7. Mai 2026, 13:00–14:00 Uhr** — Überblick, SDC-Fragebögen, Meldewege, offene Fragen
   [Teilnahme über Microsoft Teams](https://teams.microsoft.com/meet/374140685691940?p=obAJmYwU1fX3qKW23J)
 
 - **Dienstag, 26. Mai 2026, 15:00–16:00 Uhr** — Zwischenbilanz, Vertiefung, StructureMaps, Ausblick
