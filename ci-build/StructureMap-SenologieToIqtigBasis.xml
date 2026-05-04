@@ -13,12 +13,12 @@
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/patient.html" title="Patient">http://hl7.org/fhir/StructureDefinition/Patient</a><span style="color: navy">&quot; </span><b>alias </b>Patient <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/encounter.html" title="Encounter">http://hl7.org/fhir/StructureDefinition/Encounter</a><span style="color: navy">&quot; </span><b>alias </b>Encounter <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/organization.html" title="Organization">http://hl7.org/fhir/StructureDefinition/Organization</a><span style="color: navy">&quot; </span><b>alias </b>Organization <b>as </b><b>source</b>
-<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-iqtig-mammachirurgie-181.html" title="IQTIG QS 18.1 Mammachirurgie (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style="color: navy">&quot; </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>
 
-<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
-<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
-<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>
-<span style="color: navy">// </span><span style="color: green">errors. The element names are correct per the IQTIG 18.1 Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">context (teildatensatzBasis). Omitting the root-level target type avoids</span>
+<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH false positives where the validator would resolve property</span>
+<span style="color: navy">// </span><span style="color: green">names against iqtig-mammachirurgie-181 root.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
 <span style="color: navy">// </span><span style="color: green">Teildatensatz Basis (B): Patient + Encounter + Organization -&gt; B:*</span>
 <span style="color: navy">// </span><span style="color: green">Enthaelt die administrativen und demografischen Pflichtfelder fuer die</span>
@@ -131,7 +131,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToIqtigBasis"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:51:52+00:00"/>
+  <date value="2026-05-04T11:25:12+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -161,15 +161,10 @@
     <mode value="source"/>
     <alias value="Organization"/>
   </structure>
-  <structure>
-    <url value="https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181"/>
-    <mode value="target"/>
-    <alias value="IQTIG181"/>
-  </structure>
   <group>
     <name value="MapBasis"/>
     <typeMode value="none"/>
-    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH&#xD;&#xA;errors. The element names are correct per the IQTIG 18.1 Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Teildatensatz Basis (B): Patient + Encounter + Organization -&gt; B:*&#xD;&#xA;Enthaelt die administrativen und demografischen Pflichtfelder fuer die&#xD;&#xA;IQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,&#xD;&#xA;Geschlecht, Aufnahme/Entlassung).&#xD;&#xA;Die Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle&#xD;&#xA;uebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.&#xD;&#xA;============================================================================"/>
+    <documentation value="Import-only map: no target `uses` declaration — the calling map&#xD;&#xA;(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement&#xD;&#xA;context (teildatensatzBasis). Omitting the root-level target type avoids&#xD;&#xA;SM_TARGET_PATH false positives where the validator would resolve property&#xD;&#xA;names against iqtig-mammachirurgie-181 root.&#xD;&#xA;============================================================================&#xD;&#xA;Teildatensatz Basis (B): Patient + Encounter + Organization -&gt; B:*&#xD;&#xA;Enthaelt die administrativen und demografischen Pflichtfelder fuer die&#xD;&#xA;IQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,&#xD;&#xA;Geschlecht, Aufnahme/Entlassung).&#xD;&#xA;Die Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle&#xD;&#xA;uebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.&#xD;&#xA;============================================================================"/>
     <input>
       <name value="src"/>
       <type value="Bundle"/>

@@ -14,12 +14,12 @@
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/servicerequest.html" title="ServiceRequest">http://hl7.org/fhir/StructureDefinition/ServiceRequest</a><span style="color: navy">&quot; </span><b>alias </b>ServiceRequest <b>as </b><b>source</b>
-<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-oncobox-brust-meldung.html" title="OncoBox Brust N1.1.1 Meldung (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>
 
-<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
-<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
-<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>
-<span style="color: navy">// </span><span style="color: green">errors. The element names are correct per the OncoBox Brust Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">context (primaerfall.operation). Omitting the root-level target type avoids</span>
+<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH false positives where the validator would resolve property</span>
+<span style="color: navy">// </span><span style="color: green">names against oncobox-brust-meldung root.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
 <span style="color: navy">// </span><span style="color: green">Operation: Procedure (+ Specimen / Observation) -&gt; Operation-Block</span>
 <span style="color: navy">// </span><span style="color: green">Pro Brust-Procedure wird ein Operation-Block erzeugt mit OP-Datum,</span>
@@ -127,7 +127,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToOncoBoxBrustOperation"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:51:52+00:00"/>
+  <date value="2026-05-04T11:25:12+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -162,15 +162,10 @@
     <mode value="source"/>
     <alias value="ServiceRequest"/>
   </structure>
-  <structure>
-    <url value="https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"/>
-    <mode value="target"/>
-    <alias value="OncoBoxBrust"/>
-  </structure>
   <group>
     <name value="MapOperation"/>
     <typeMode value="none"/>
-    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH&#xD;&#xA;errors. The element names are correct per the OncoBox Brust Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Operation: Procedure (+ Specimen / Observation) -&gt; Operation-Block&#xD;&#xA;Pro Brust-Procedure wird ein Operation-Block erzeugt mit OP-Datum,&#xD;&#xA;Seitenlokalisation, OPS-Kodes, Operationsart, Drahtmarkierung, Sentinel,&#xD;&#xA;Residualstatus und Komplikationen.&#xD;&#xA;============================================================================"/>
+    <documentation value="Import-only map: no target `uses` declaration — the calling map&#xD;&#xA;(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement&#xD;&#xA;context (primaerfall.operation). Omitting the root-level target type avoids&#xD;&#xA;SM_TARGET_PATH false positives where the validator would resolve property&#xD;&#xA;names against oncobox-brust-meldung root.&#xD;&#xA;============================================================================&#xD;&#xA;Operation: Procedure (+ Specimen / Observation) -&gt; Operation-Block&#xD;&#xA;Pro Brust-Procedure wird ein Operation-Block erzeugt mit OP-Datum,&#xD;&#xA;Seitenlokalisation, OPS-Kodes, Operationsart, Drahtmarkierung, Sentinel,&#xD;&#xA;Residualstatus und Komplikationen.&#xD;&#xA;============================================================================"/>
     <input>
       <name value="src"/>
       <type value="Procedure"/>

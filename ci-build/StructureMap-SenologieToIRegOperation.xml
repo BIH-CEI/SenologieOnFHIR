@@ -12,12 +12,12 @@
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/procedure.html" title="Procedure">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style="color: navy">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/device.html" title="Device">http://hl7.org/fhir/StructureDefinition/Device</a><span style="color: navy">&quot; </span><b>alias </b>Device <b>as </b><b>source</b>
-<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-ireg-brustimplantat-meldung.html" title="IRegG Brustimplantat Meldung (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung</a><span style="color: navy">&quot; </span><b>alias </b>IRegMeldung <b>as </b><b>target</b>
 
-<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
-<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
-<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>
-<span style="color: navy">// </span><span style="color: green">errors. The element names are correct per the IRegG Brustimplantat LM.</span>
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToIRegMeldung) provides the correct BackboneElement context</span>
+<span style="color: navy">// </span><span style="color: green">(fall.operation / operation.artikelidentifikation / operation.zubehoer).</span>
+<span style="color: navy">// </span><span style="color: green">Omitting the root-level target type avoids SM_TARGET_PATH false positives</span>
+<span style="color: navy">// </span><span style="color: green">where the validator would resolve property names against ireg-brustimplantat-meldung root.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
 <span style="color: navy">// </span><span style="color: green">Operation: Procedure -&gt; OPE_* + OBI_*</span>
 <span style="color: navy">// </span><span style="color: green">Bildet eine Senologie_Operation (Procedure) auf die IRegG-Operationsstruktur</span>
@@ -391,7 +391,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToIRegOperation"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:51:52+00:00"/>
+  <date value="2026-05-04T11:25:12+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -416,15 +416,10 @@
     <mode value="source"/>
     <alias value="Device"/>
   </structure>
-  <structure>
-    <url value="https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung"/>
-    <mode value="target"/>
-    <alias value="IRegMeldung"/>
-  </structure>
   <group>
     <name value="MapOperation"/>
     <typeMode value="none"/>
-    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement` because FML&#xD;&#xA;has no syntax to declare the Logical Model sub-path for BackboneElement&#xD;&#xA;slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH&#xD;&#xA;errors. The element names are correct per the IRegG Brustimplantat LM.&#xD;&#xA;============================================================================&#xD;&#xA;Operation: Procedure -&gt; OPE_* + OBI_*&#xD;&#xA;Bildet eine Senologie_Operation (Procedure) auf die IRegG-Operationsstruktur&#xD;&#xA;ab. Umfasst Basisdaten (Datum, Seitenlokalisation, ASA, Implantattyp) sowie&#xD;&#xA;brustimplantat-spezifische Angaben (Art des Eingriffs, Grund, Lage, Zugang).&#xD;&#xA;Die Artikelidentifikation (Device -&gt; ARI_* + ARB_* + ABI_*) wird ueber&#xD;&#xA;Procedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.&#xD;&#xA;============================================================================"/>
+    <documentation value="Import-only map: no target `uses` declaration — the calling map&#xD;&#xA;(SenologieToIRegMeldung) provides the correct BackboneElement context&#xD;&#xA;(fall.operation / operation.artikelidentifikation / operation.zubehoer).&#xD;&#xA;Omitting the root-level target type avoids SM_TARGET_PATH false positives&#xD;&#xA;where the validator would resolve property names against ireg-brustimplantat-meldung root.&#xD;&#xA;============================================================================&#xD;&#xA;Operation: Procedure -&gt; OPE_* + OBI_*&#xD;&#xA;Bildet eine Senologie_Operation (Procedure) auf die IRegG-Operationsstruktur&#xD;&#xA;ab. Umfasst Basisdaten (Datum, Seitenlokalisation, ASA, Implantattyp) sowie&#xD;&#xA;brustimplantat-spezifische Angaben (Art des Eingriffs, Grund, Lage, Zugang).&#xD;&#xA;Die Artikelidentifikation (Device -&gt; ARI_* + ARB_* + ABI_*) wird ueber&#xD;&#xA;Procedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.&#xD;&#xA;============================================================================"/>
     <input>
       <name value="src"/>
       <type value="Procedure"/>

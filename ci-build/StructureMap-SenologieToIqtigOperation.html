@@ -351,12 +351,12 @@ status: draft</p>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/condition.html" title="Condition">http://hl7.org/fhir/StructureDefinition/Condition</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>
-<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-iqtig-mammachirurgie-181.html" title="IQTIG QS 18.1 Mammachirurgie (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style="color: navy">&quot; </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>
 
-<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>
-<span style="color: navy">// </span><span style="color: green">has no syntax to declare the Logical Model sub-path for BackboneElement</span>
-<span style="color: navy">// </span><span style="color: green">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>
-<span style="color: navy">// </span><span style="color: green">errors. The element names are correct per the IQTIG 18.1 Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">context (teildatensatzOperation). Omitting the root-level target type avoids</span>
+<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH false positives where the validator would resolve property</span>
+<span style="color: navy">// </span><span style="color: green">names against iqtig-mammachirurgie-181 root.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
 <span style="color: navy">// </span><span style="color: green">Teildatensatz Operation (O): Procedure + Specimen + Observations -&gt; O:*</span>
 <span style="color: navy">// </span><span style="color: green">Pro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:</span>
@@ -367,7 +367,7 @@ status: draft</p>
 <span style="color: navy">// </span><span style="color: green">- Observation (Pathologie-Befund) -&gt; Histologie, Grading, pTNM, R-Status</span>
 <span style="color: navy">// </span><span style="color: green">- Observation (Rezeptorstatus: ER/PR/HER2) -&gt; QI-relevante Felder</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapOperation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">O:LNROP - Laufende Nummer der Operation (Default 1; ueber Slicing iterierbar)</span>
   src<span style="color: navy"><b> -&gt; </b></span>tgt.laufendeNummer = <span style="color: blue">1</span> <i>&quot;SetLnrOp&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">O:LNRBRUST - Zuordnung zum Brust-Teildatensatz (Default 1)</span>
@@ -410,130 +410,10 @@ status: draft</p>
 </span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.operationsart = <span style="color: maroon">cd</span> <i>&quot;SetOpArtDirect&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapOpArtCoding&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapOpArtCategory&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:DIGNITAET - Intraoperative Dignitaet aus Pathologie-Schnellschnitt (Observation)</span>
-  bundle.entry<b> as </b><span style="color: maroon">digEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '22748-9')<b> then</b><span style="color: navy"> {
-</span>    digEntry.resource<b> as </b><span style="color: maroon">digObs</span><b> then</b><span style="color: navy"> {
-</span>      digObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          <span style="color: navy">// </span><span style="color: green">1222584008=maligne -&gt; 1, 36103009=benigne -&gt; 2</span>
-          c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '1222584008'<span style="color: navy"><b> -&gt; </b></span>tgt.dignitaetIntraop = <span style="color: blue">'1'</span> <i>&quot;SetDigMaligne&quot;</i><span style="color: navy">;</span>
-          c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '36103009'<span style="color: navy"><b> -&gt; </b></span>tgt.dignitaetIntraop = <span style="color: blue">'2'</span> <i>&quot;SetDigBenigne&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapDigCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapDigValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapDigObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryDignitaet&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:SCHNELLSCHNITT - Intraoperativer Schnellschnitt durchgefuehrt</span>
-  <span style="color: navy">// </span><span style="color: green">aus Specimen.processing.procedure (Schnellschnitt-Kodierung)</span>
-  bundle.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))<b> then</b><span style="color: navy"> {
-</span>    specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
-</span>      specimen.processing<b> as </b><span style="color: maroon">proc</span><b> where </b>procedure.coding.exists(code = '123038009')<span style="color: navy"><b> -&gt; </b></span>tgt.intraopSchnellschnitt = <span style="color: blue">'1'</span> <i>&quot;SetSchnellschnittJa&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;SpecContextSS&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntrySchnellschnitt&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:PRAEPKONTROLLE - QI-3 Intraoperative Praeparatkontrolle aus Specimen.processing</span>
-  <span style="color: navy">// </span><span style="color: green">Mammografisch=1, Sonografisch=2</span>
-  bundle.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen)<b> then</b><span style="color: navy"> {
-</span>    specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
-</span>      specimen.processing<b> as </b><span style="color: maroon">proc</span><b> then</b><span style="color: navy"> {
-</span>        proc.procedure<b> as </b><span style="color: maroon">p</span><b> then</b><span style="color: navy"> {
-</span>          p.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
-</span>            c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '71651007'<span style="color: navy"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style="color: blue">'1'</span> <i>&quot;SetPraepkMammo&quot;</i><span style="color: navy">;</span>
-            c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '16310003'<span style="color: navy"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style="color: blue">'2'</span> <i>&quot;SetPraepkSono&quot;</i><span style="color: navy">;</span>
-          <span style="color: navy">}</span> <i>&quot;MapPraepkCoding&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapPraepkProcedure&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapPraepkProcessing&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;SpecContextPK&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryPraeparatkontrolle&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">--- Histologie / Pathologie aus Pathologie-Befund Observations ---</span>
-  <span style="color: navy">// </span><span style="color: green">O:HISTMORPH - ICD-O-3 Morphologie aus Observation (LOINC 59847-4)</span>
-  bundle.entry<b> as </b><span style="color: maroon">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style="color: navy"> {
-</span>    histEntry.resource<b> as </b><span style="color: maroon">histObs</span><b> then</b><span style="color: navy"> {
-</span>      histObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'urn:oid:2.16.840.1.113883.6.43.1'<span style="color: navy"><b> -&gt; </b></span>tgt.histologieICDO<b> as </b><span style="color: maroon">histo</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>histo.code = <span style="color: maroon">cd</span> <i>&quot;SetHistCode&quot;</i><span style="color: navy">;</span>
-          c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>histo.version = <span style="color: maroon">v</span> <i>&quot;SetHistVersion&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapHistICDO&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapHistValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapHistObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryHistologie&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:GRADING - Histopathologisches Grading aus Observation (LOINC 33732-9)</span>
-  bundle.entry<b> as </b><span style="color: maroon">gradEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '33732-9')<b> then</b><span style="color: navy"> {
-</span>    gradEntry.resource<b> as </b><span style="color: maroon">gradObs</span><b> then</b><span style="color: navy"> {
-</span>      gradObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.grading = <span style="color: maroon">cd</span> <i>&quot;SetGrading&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapGradingCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapGradingValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapGradingObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryGrading&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:TGROESSEINV - Tumorgroesse invasiv (LOINC 33728-7)</span>
-  bundle.entry<b> as </b><span style="color: maroon">tgInvEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '33728-7')<b> then</b><span style="color: navy"> {
-</span>    tgInvEntry.resource<b> as </b><span style="color: maroon">tgInvObs</span><b> then</b><span style="color: navy"> {
-</span>      tgInvObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.tumorgroesseInvasiv = <b>truncate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">)</span> <i>&quot;SetTGroesseInv&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapTGroesseInvValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapTGroesseInvObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryTGroesseInv&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:TGROESSEDCIS - Tumorgroesse DCIS</span>
-  bundle.entry<b> as </b><span style="color: maroon">tgDcisEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('pathologie'))<b> then</b><span style="color: navy"> {
-</span>    tgDcisEntry.resource<b> as </b><span style="color: maroon">tgDcisObs</span><b> then</b><span style="color: navy"> {
-</span>      tgDcisObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.tumorgroesseDCIS = <b>truncate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">)</span> <i>&quot;SetTGroesseDCIS&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapTGroesseDCISValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapTGroesseDCISObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryTGroesseDCIS&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:MULTIFOK - Multifokalitaet aus Observation (SNOMED 399566009 fuer multifokal)</span>
-  bundle.entry<b> as </b><span style="color: maroon">mfEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '44638-1')<b> then</b><span style="color: navy"> {
-</span>    mfEntry.resource<b> as </b><span style="color: maroon">mfObs</span><b> then</b><span style="color: navy"> {
-</span>      mfObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '56061002'<span style="color: navy"><b> -&gt; </b></span>tgt.multifokalitaet = <span style="color: blue">'0'</span> <i>&quot;SetMFNein&quot;</i><span style="color: navy">;</span>
-          c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '399566009'<span style="color: navy"><b> -&gt; </b></span>tgt.multifokalitaet = <span style="color: blue">'1'</span> <i>&quot;SetMFJa&quot;</i><span style="color: navy">;</span>
-          c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '367651003'<span style="color: navy"><b> -&gt; </b></span>tgt.multifokalitaet = <span style="color: blue">'2'</span> <i>&quot;SetMFMZ&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapMFCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapMFValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapMFObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryMultifokal&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">--- pTNM aus TNM-Observation (LOINC 21902-2 mit c/p-Praefix) ---</span>
-  <span style="color: navy">// </span><span style="color: green">O:PT - pT aus Observation (LOINC 21899-0 Primary tumor.pathology)</span>
-  bundle.entry<b> as </b><span style="color: maroon">ptEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21899-0')<b> then</b><span style="color: navy"> {
-</span>    ptEntry.resource<b> as </b><span style="color: maroon">ptObs</span><b> then</b><span style="color: navy"> {
-</span>      ptObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.pT = <span style="color: maroon">cd</span> <i>&quot;SetPT&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapPTCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapPTValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapPTObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryPT&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:PN - pN aus Observation (LOINC 21900-6 Regional lymph nodes.pathology)</span>
-  bundle.entry<b> as </b><span style="color: maroon">pnEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21900-6')<b> then</b><span style="color: navy"> {
-</span>    pnEntry.resource<b> as </b><span style="color: maroon">pnObs</span><b> then</b><span style="color: navy"> {
-</span>      pnObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.pN = <span style="color: maroon">cd</span> <i>&quot;SetPN&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapPNCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapPNValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapPNObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryPN&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:PM - pM aus Observation (LOINC 21901-4 Distant metastases.pathology)</span>
-  bundle.entry<b> as </b><span style="color: maroon">pmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21901-4')<b> then</b><span style="color: navy"> {
-</span>    pmEntry.resource<b> as </b><span style="color: maroon">pmObs</span><b> then</b><span style="color: navy"> {
-</span>      pmObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.pM = <span style="color: maroon">cd</span> <i>&quot;SetPM&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapPMCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapPMValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapPMObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryPM&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:UICCPATHO - pathologisches UICC-Stadium (LOINC 21902-2)</span>
-  bundle.entry<b> as </b><span style="color: maroon">uiccEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style="color: navy"> {
-</span>    uiccEntry.resource<b> as </b><span style="color: maroon">uiccObs</span><b> then</b><span style="color: navy"> {
-</span>      uiccObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.uiccStadiumPatho = <span style="color: maroon">cd</span> <i>&quot;SetUICCPatho&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapUICCPathoCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapUICCPathoValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapUICCPathoObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryUICCPatho&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Bundle lookups for O:DIGNITAET, O:SCHNELLSCHNITT, O:PRAEPKONTROLLE,</span>
+  <span style="color: navy">// </span><span style="color: green">O:HISTMORPH, O:GRADING, O:TGROESSEINV, O:TGROESSEDCIS, O:MULTIFOK,</span>
+  <span style="color: navy">// </span><span style="color: green">O:PT/PN/PM, O:UICCPATHO have been moved to the calling orchestrator</span>
+  <span style="color: navy">// </span><span style="color: green">(SenologieToIqtigMammachirurgie181.map) to avoid multiple source parameters.</span>
   <span style="color: navy">// </span><span style="color: green">--- Residualstatus R0/R1/R2 aus Procedure.outcome ---</span>
   <span style="color: navy">// </span><span style="color: green">O:RSTATUSLOK / O:RSTATUSGES - aus Procedure.outcome (SNOMED CT)</span>
   <span style="color: navy">// </span><span style="color: green">122538001=R0, 122539009=R1, 122540006=R2, 122541005=RX</span>
@@ -562,89 +442,8 @@ status: draft</p>
 </span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('5-402')<span style="color: navy"><b> -&gt; </b></span>tgt.axillaDissektion = <span style="color: blue">'1'</span> <i>&quot;SetAxDissJa&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapAxDissOPS&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapAxillaDissektion&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:LKUNTERSUCHT - Anzahl untersuchter LK (LOINC 21894-1)</span>
-  bundle.entry<b> as </b><span style="color: maroon">lkuEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21894-1')<b> then</b><span style="color: navy"> {
-</span>    lkuEntry.resource<b> as </b><span style="color: maroon">lkuObs</span><b> then</b><span style="color: navy"> {
-</span>      lkuObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.lkUntersucht = <b>truncate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">)</span> <i>&quot;SetLKUntersucht&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapLKUntersuchtValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapLKUntersuchtObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryLKUntersucht&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:LKBEFALLEN - Anzahl befallener LK (LOINC 21893-3)</span>
-  bundle.entry<b> as </b><span style="color: maroon">lkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21893-3')<b> then</b><span style="color: navy"> {
-</span>    lkbEntry.resource<b> as </b><span style="color: maroon">lkbObs</span><b> then</b><span style="color: navy"> {
-</span>      lkbObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.lkBefallen = <b>truncate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">)</span> <i>&quot;SetLKBefallen&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapLKBefallenValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapLKBefallenObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryLKBefallen&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:SLKUNTERSUCHT / O:SLKBEFALLEN - Sentinel-LK (LOINC 92832-5 / 92833-3)</span>
-  bundle.entry<b> as </b><span style="color: maroon">slkuEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92832-5')<b> then</b><span style="color: navy"> {
-</span>    slkuEntry.resource<b> as </b><span style="color: maroon">slkuObs</span><b> then</b><span style="color: navy"> {
-</span>      slkuObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.sentinelLkUntersucht = <b>truncate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">)</span> <i>&quot;SetSLKUntersucht&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapSLKUntersuchtValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapSLKUntersuchtObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntrySLKUntersucht&quot;</i><span style="color: navy">;</span>
-  bundle.entry<b> as </b><span style="color: maroon">slkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92833-3')<b> then</b><span style="color: navy"> {
-</span>    slkbEntry.resource<b> as </b><span style="color: maroon">slkbObs</span><b> then</b><span style="color: navy"> {
-</span>      slkbObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.sentinelLkBefallen = <b>truncate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">)</span> <i>&quot;SetSLKBefallen&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapSLKBefallenValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapSLKBefallenObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntrySLKBefallen&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">--- Rezeptorstatus (identisches Muster wie in SenologieToObdsModulMamma) ---</span>
-  <span style="color: navy">// </span><span style="color: green">O:ERSTATUS - Oestrogenrezeptor (LOINC 85337-4)</span>
-  bundle.entry<b> as </b><span style="color: maroon">erEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85337-4')<b> then</b><span style="color: navy"> {
-</span>    erEntry.resource<b> as </b><span style="color: maroon">erObs</span><b> then</b><span style="color: navy"> {
-</span>      erObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '10828004'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusER = <span style="color: blue">'P'</span> <i>&quot;SetERPositiv&quot;</i><span style="color: navy">;</span>
-        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '260385009'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusER = <span style="color: blue">'N'</span> <i>&quot;SetERNegativ&quot;</i><span style="color: navy">;</span>
-        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusER = <span style="color: blue">'U'</span> <i>&quot;SetERUnbekannt&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapERValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapERObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryER&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:PRSTATUS - Progesteronrezeptor (LOINC 85339-0)</span>
-  bundle.entry<b> as </b><span style="color: maroon">prEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85339-0')<b> then</b><span style="color: navy"> {
-</span>    prEntry.resource<b> as </b><span style="color: maroon">prObs</span><b> then</b><span style="color: navy"> {
-</span>      prObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '10828004'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusPR = <span style="color: blue">'P'</span> <i>&quot;SetPRPositiv&quot;</i><span style="color: navy">;</span>
-        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '260385009'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusPR = <span style="color: blue">'N'</span> <i>&quot;SetPRNegativ&quot;</i><span style="color: navy">;</span>
-        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.hormonrezeptorStatusPR = <span style="color: blue">'U'</span> <i>&quot;SetPRUnbekannt&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapPRValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapPRObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryPR&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">O:HER2STATUS - HER2-Status (LOINC 85319-2)</span>
-  bundle.entry<b> as </b><span style="color: maroon">herEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85319-2')<b> then</b><span style="color: navy"> {
-</span>    herEntry.resource<b> as </b><span style="color: maroon">herObs</span><b> then</b><span style="color: navy"> {
-</span>      herObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '10828004'<span style="color: navy"><b> -&gt; </b></span>tgt.her2Status = <span style="color: blue">'P'</span> <i>&quot;SetHER2Positiv&quot;</i><span style="color: navy">;</span>
-        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '260385009'<span style="color: navy"><b> -&gt; </b></span>tgt.her2Status = <span style="color: blue">'N'</span> <i>&quot;SetHER2Negativ&quot;</i><span style="color: navy">;</span>
-        val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = '261665006'<span style="color: navy"><b> -&gt; </b></span>tgt.her2Status = <span style="color: blue">'U'</span> <i>&quot;SetHER2Unbekannt&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapHER2Value&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapHER2Obs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryHER2&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">--- Komplikationen ---</span>
-  <span style="color: navy">// </span><span style="color: green">O:KOMPL - Aus Senologie_Operative_Komplikation (Observation oder Condition)</span>
-  bundle.entry<b> as </b><span style="color: maroon">kompEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))<b> then</b><span style="color: navy"> {
-</span>    kompEntry.resource<b> as </b><span style="color: maroon">kompObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style="color: maroon">kompItem</span><b> then</b><span style="color: navy"> {
-</span>      kompObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>        val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>kompItem.kuerzel = <span style="color: maroon">cd</span> <i>&quot;SetKomplKuerzel&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapKomplKuerzelCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapKomplValue&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapKomplObs&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryKomplikationen&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Auch aus Condition-basierten Komplikationen</span>
-  bundle.entry<b> as </b><span style="color: maroon">kcEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item')<b> then</b><span style="color: navy"> {
-</span>    kcEntry.resource<b> as </b><span style="color: maroon">kcCond</span><span style="color: navy"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style="color: maroon">kompItem</span><b> then</b><span style="color: navy"> {
-</span>      kcCond.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
-</span>        code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style="color: navy"> {
-</span>          c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>kompItem.icdCode = <span style="color: maroon">cd</span> <i>&quot;SetKomplICD&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapKomplICDCoding&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapKomplCondCode&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;MapKomplCondItem&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryKomplikationenCond&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">LK counts, Rezeptorstatus, and Komplikationen bundle lookups</span>
+<span style="color: navy">// </span><span style="color: green">have been moved to the calling orchestrator.</span>
 <span style="color: navy">}
 
 </span></pre></div>
@@ -672,7 +471,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 11:25+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

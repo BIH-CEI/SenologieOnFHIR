@@ -372,7 +372,20 @@ status: draft</p>
   <span style="color: navy">}</span> <i>&quot;EntryConditionTZ&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Tod: aus Patient + Todesursachen-Conditions</span>
   src.entry<b> as </b><span style="color: maroon">patEntry</span><b> where </b>resource.is(Patient)<b> then</b><span style="color: navy"> {
-</span>    patEntry.resource<b> as </b><span style="color: maroon">patient</span><span style="color: navy"><b> -&gt; </b></span>tgt.tod<b> as </b><span style="color: maroon">tod</span><b> then </b>MapTod<span style="color: navy">(</span><span style="color: maroon">patient</span><span style="color: navy">, </span><span style="color: maroon">tod</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapTod&quot;</i><span style="color: navy">;</span>
+</span>    patEntry.resource<b> as </b><span style="color: maroon">patient</span><span style="color: navy"><b> -&gt; </b></span>tgt.tod<b> as </b><span style="color: maroon">tod</span><b> then </b>MapTod<span style="color: navy">(</span><span style="color: maroon">patient</span><span style="color: navy">, </span><span style="color: maroon">tod</span><span style="color: navy">)</span> <i>&quot;CallMapTod&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Bundle lookups moved from MapTod</span>
+    src.entry<b> as </b><span style="color: maroon">codEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')<b> then</b><span style="color: navy"> {
+</span>      codEntry.resource<b> as </b><span style="color: maroon">codCondition</span><b> then</b><span style="color: navy"> {
+</span>        codCondition.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>          code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C')<b> then</b><span style="color: navy"> {
+</span>            c<span style="color: navy"><b> -&gt; </b></span>tod.todTumorbedingt = <span style="color: blue">'J'</span> <i>&quot;SetTodTumorbedingtJa&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;CheckIsCancer&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;CheckCodCode&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;AnalyseCodCondition&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryCheckTumorbedingt&quot;</i><span style="color: navy">;</span>
+    src.entry<b> as </b><span style="color: maroon">codEntry2</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')<b> then</b><span style="color: navy"> {
+</span>      codEntry2.resource<b> as </b><span style="color: maroon">codCondition</span><span style="color: navy"><b> -&gt; </b></span>tod.todesursachen<b> as </b><span style="color: maroon">tu</span><b> then </b>MapTodesursache<span style="color: navy">(</span><span style="color: maroon">codCondition</span><span style="color: navy">, </span><span style="color: maroon">tu</span><span style="color: navy">)</span> <i>&quot;CallMapTodesursache&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryTodesursachen&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryPatient&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
@@ -380,25 +393,13 @@ status: draft</p>
 <span style="color: navy">// </span><span style="color: green">Tod: Patient -&gt; OBDSMeldung.tod</span>
 <span style="color: navy">// </span><span style="color: green">Sterbedatum, Tod tumorbedingt, Todesursachen</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapTod<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Patient, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapTod<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Patient, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Abschluss_ID: aus Patient.identifier oder generiert</span>
   src.id<b> as </b><span style="color: maroon">id</span><span style="color: navy"><b> -&gt; </b></span>tgt.abschlussID = <span style="color: maroon">id</span> <i>&quot;SetAbschlussID&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Sterbedatum: aus Patient.deceasedDateTime</span>
   src.deceased<b> as </b><span style="color: maroon">d</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.sterbedatum = <span style="color: maroon">d</span> <i>&quot;SetSterbedatum&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Tod_tumorbedingt: wird ueber die Todesursachen-Conditions ermittelt</span>
-  <span style="color: navy">// </span><span style="color: green">Wenn eine cause-of-death Condition einen ICD-Code C00-C97 (Krebs) hat -&gt; J</span>
-  <span style="color: navy">// </span><span style="color: green">Standardmaessig U (unbekannt), ueberschrieben durch Todesursachen-Analyse</span>
+  <span style="color: navy">// </span><span style="color: green">Tod_tumorbedingt: Default U; bundle lookups moved to calling group.</span>
   src<span style="color: navy"><b> -&gt; </b></span>tgt.todTumorbedingt = <span style="color: blue">'U'</span> <i>&quot;SetTodTumorbedingtDefault&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Tod tumorbedingt: Ja, wenn eine Todesursache einen C-Code (Malignom) enthaelt</span>
-  bundle.entry<b> as </b><span style="color: maroon">codEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')<b> then</b><span style="color: navy"> {
-</span>    codEntry.resource<b> as </b><span style="color: maroon">codCondition</span><b> then</b><span style="color: navy"> {
-</span>      codCondition.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
-</span>        code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C')<b> then</b><span style="color: navy"> {
-</span>          c<span style="color: navy"><b> -&gt; </b></span>tgt.todTumorbedingt = <span style="color: blue">'J'</span> <i>&quot;SetTodTumorbedingtJa&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;CheckIsCancer&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;CheckCodCode&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;AnalyseCodCondition&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryCheckTumorbedingt&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Tod tumorbedingt: aus Extension (falls explizit angegeben)</span>
   src.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-tod-tumorbedingt'<b> then</b><span style="color: navy"> {
 </span>    ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
@@ -407,10 +408,6 @@ status: draft</p>
       <span style="color: navy">}</span> <i>&quot;ExtractTodTumorbedingtCode&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapTodTumorbedingtValue&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapTodTumorbedingtExtension&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Todesursachen: aus cause-of-death Conditions im Bundle</span>
-  bundle.entry<b> as </b><span style="color: maroon">codEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')<b> then</b><span style="color: navy"> {
-</span>    codEntry.resource<b> as </b><span style="color: maroon">codCondition</span><span style="color: navy"><b> -&gt; </b></span>tgt.todesursachen<b> as </b><span style="color: maroon">tu</span><b> then </b>MapTodesursache<span style="color: navy">(</span><span style="color: maroon">codCondition</span><span style="color: navy">, </span><span style="color: maroon">tu</span><span style="color: navy">)</span> <i>&quot;CallMapTodesursache&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryTodesursachen&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
 </span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
@@ -452,7 +449,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 11:25+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

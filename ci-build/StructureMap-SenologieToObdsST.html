@@ -365,7 +365,9 @@ status: draft</p>
 <b>group </b>SenologieToObdsST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Strahlentherapie-Procedure extrahieren</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapST&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">)</span> <i>&quot;CallMapST&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Nebenwirkungen (moved from MapST)</span>
+    entry.resource<b> as </b><span style="color: maroon">proc2</span><span style="color: navy"><b> -&gt; </b></span> tgt.st<b> as </b><span style="color: maroon">st2</span><span style="color: navy">, </span> st2.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenST<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryST&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
@@ -373,7 +375,7 @@ status: draft</p>
 <span style="color: navy">// </span><span style="color: green">MapST: Procedure → oBDS ST Basisdaten</span>
 <span style="color: navy">// </span><span style="color: green">Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">ST_ID: Procedure.id</span>
   src.id<b> as </b><span style="color: maroon">id</span><span style="color: navy"><b> -&gt; </b></span>tgt.stID = <span style="color: maroon">id</span> <i>&quot;SetStID&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Meldeanlass: abgeleitet aus vorhandenem Enddatum</span>
@@ -397,8 +399,7 @@ status: draft</p>
   src.outcome<b> as </b><span style="color: maroon">oc</span><b> then</b><span style="color: navy"> {
 </span>    oc.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.endeGrund = <span style="color: navy">(</span>c.code<span style="color: navy">)</span> <i>&quot;SetEndeGrundCode&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapEndeGrund&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (ST-Variante)</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenST<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">Nebenwirkungen bundle lookup moved to calling group.</span>
 <span style="color: navy">}
 
 </span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
@@ -486,7 +487,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 11:25+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

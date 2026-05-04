@@ -26,7 +26,7 @@ title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElemen
   "version" : "0.1.0",
   "name" : "SenologieToObdsNebenwirkung",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -45,16 +45,11 @@ title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElemen
     "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
     "mode" : "source",
     "alias" : "Observation"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
-    "mode" : "target",
-    "alias" : "OBDSMeldung"
   }],
   "group" : [{
     "name" : "MapNebenwirkungenSYST",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names\r\nare correct per the oBDS Logical Model.\r\n============================================================================\r\nGemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)\r\naus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.\r\nWird von SYST und ST importiert.\r\nMII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event\r\nDie Nebenwirkung wird als Observation modelliert mit:\r\n- code: CTCAE-Term (NCI Thesaurus Code + Text)\r\n- value: CTCAE-Grad als CodeableConcept\r\n- method: CTCAE-Version\r\noBDS-Struktur:\r\nnebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen\r\nGrad <=2 oder unbekannt sind, wird hier \"2\" oder \"U\" gesetzt.\r\nnebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad >=3\r\nmit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.\r\n============================================================================\r\n============================================================================\r\nMapNebenwirkungenSYST: Bundle -> oBDS Nebenwirkungen (fuer Systemtherapie)\r\nBei SYST: Observations mit CTCAE-Codierung extrahieren,\r\nGrad >=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map (SYST / ST)\r\nprovides the correct BackboneElement context (syst.nebenwirkungen / st.nebenwirkungen).\r\nOmitting the root-level target type avoids SM_TARGET_PATH false positives\r\nwhere the validator would resolve property names against obds-meldung root.\r\n============================================================================\r\nGemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)\r\naus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.\r\nWird von SYST und ST importiert.\r\nMII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event\r\nDie Nebenwirkung wird als Observation modelliert mit:\r\n- code: CTCAE-Term (NCI Thesaurus Code + Text)\r\n- value: CTCAE-Grad als CodeableConcept\r\n- method: CTCAE-Version\r\noBDS-Struktur:\r\nnebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen\r\nGrad <=2 oder unbekannt sind, wird hier \"2\" oder \"U\" gesetzt.\r\nnebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad >=3\r\nmit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.\r\n============================================================================\r\n============================================================================\r\nMapNebenwirkungenSYST: Bundle -> oBDS Nebenwirkungen (fuer Systemtherapie)\r\nBei SYST: Observations mit CTCAE-Codierung extrahieren,\r\nGrad >=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Bundle",

@@ -26,7 +26,7 @@ title: Senologie Procedure + Specimen to OncoBox Brust Operation status: draft
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustOperation",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -60,16 +60,11 @@ title: Senologie Procedure + Specimen to OncoBox Brust Operation status: draft
     "url" : "http://hl7.org/fhir/StructureDefinition/ServiceRequest",
     "mode" : "source",
     "alias" : "ServiceRequest"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
-    "mode" : "target",
-    "alias" : "OncoBoxBrust"
   }],
   "group" : [{
     "name" : "MapOperation",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nOperation: Procedure (+ Specimen / Observation) -> Operation-Block\r\nPro Brust-Procedure wird ein Operation-Block erzeugt mit OP-Datum,\r\nSeitenlokalisation, OPS-Kodes, Operationsart, Drahtmarkierung, Sentinel,\r\nResidualstatus und Komplikationen.\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement\r\ncontext (primaerfall.operation). Omitting the root-level target type avoids\r\nSM_TARGET_PATH false positives where the validator would resolve property\r\nnames against oncobox-brust-meldung root.\r\n============================================================================\r\nOperation: Procedure (+ Specimen / Observation) -> Operation-Block\r\nPro Brust-Procedure wird ein Operation-Block erzeugt mit OP-Datum,\r\nSeitenlokalisation, OPS-Kodes, Operationsart, Drahtmarkierung, Sentinel,\r\nResidualstatus und Komplikationen.\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Procedure",

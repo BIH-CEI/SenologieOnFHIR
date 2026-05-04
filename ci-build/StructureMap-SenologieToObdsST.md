@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsST",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -85,7 +85,31 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
         }],
         "dependent" : [{
           "name" : "MapST",
-          "variable" : ["proc", "st", "src"]
+          "variable" : ["proc", "st"]
+        }]
+      },
+      {
+        "name" : "CallMapNebenwirkungen",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "proc2"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "st",
+          "variable" : "st2"
+        },
+        {
+          "context" : "st2",
+          "contextType" : "variable",
+          "element" : "nebenwirkungen",
+          "variable" : "nw"
+        }],
+        "dependent" : [{
+          "name" : "MapNebenwirkungenST",
+          "variable" : ["src", "nw"]
         }]
       }]
     }]
@@ -103,11 +127,6 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetStID",
@@ -269,22 +288,6 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
             "valueString" : "c.code"
           }]
         }]
-      }]
-    },
-    {
-      "name" : "CallMapNebenwirkungen",
-      "source" : [{
-        "context" : "src"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable",
-        "element" : "nebenwirkungen",
-        "variable" : "nw"
-      }],
-      "dependent" : [{
-        "name" : "MapNebenwirkungenST",
-        "variable" : ["bundle", "nw"]
       }]
     }]
   },

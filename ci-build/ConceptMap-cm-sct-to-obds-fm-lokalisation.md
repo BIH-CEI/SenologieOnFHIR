@@ -26,7 +26,7 @@ Mapping von SNOMED CT Koerperstruktur-Codes zu oBDS Fernmetastasen-Lokalisation 
   "version" : "0.1.0",
   "title" : "SNOMED CT to oBDS Fernmetastasen-Lokalisation",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsMeldung",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -158,7 +158,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
           }],
           "dependent" : [{
             "name" : "MapDiagnose",
-            "variable" : ["condition", "dx", "src"]
+            "variable" : ["condition", "dx"]
           }]
         }]
       }]
@@ -207,7 +207,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
           }],
           "dependent" : [{
             "name" : "MapVerlauf",
-            "variable" : ["condition", "verl", "src"]
+            "variable" : ["condition", "verl"]
           }]
         }]
       }]
@@ -240,7 +240,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
           }],
           "dependent" : [{
             "name" : "MapOP",
-            "variable" : ["procedure", "op", "src"]
+            "variable" : ["procedure", "op"]
           }]
         }]
       }]
@@ -273,7 +273,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
           }],
           "dependent" : [{
             "name" : "MapSYST",
-            "variable" : ["procedure", "syst", "src"]
+            "variable" : ["procedure", "syst"]
           }]
         }]
       }]
@@ -306,7 +306,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
           }],
           "dependent" : [{
             "name" : "MapST",
-            "variable" : ["procedure", "st", "src"]
+            "variable" : ["procedure", "st"]
           }]
         }]
       }]
@@ -372,7 +372,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
           }],
           "dependent" : [{
             "name" : "MapTod",
-            "variable" : ["patient", "tod", "src"]
+            "variable" : ["patient", "tod"]
           }]
         }]
       }]

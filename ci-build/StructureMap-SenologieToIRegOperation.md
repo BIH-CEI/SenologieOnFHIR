@@ -26,7 +26,7 @@ title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation s
   "version" : "0.1.0",
   "name" : "SenologieToIRegOperation",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -50,16 +50,11 @@ title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation s
     "url" : "http://hl7.org/fhir/StructureDefinition/Device",
     "mode" : "source",
     "alias" : "Device"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung",
-    "mode" : "target",
-    "alias" : "IRegMeldung"
   }],
   "group" : [{
     "name" : "MapOperation",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the IRegG Brustimplantat LM.\r\n============================================================================\r\nOperation: Procedure -> OPE_* + OBI_*\r\nBildet eine Senologie_Operation (Procedure) auf die IRegG-Operationsstruktur\r\nab. Umfasst Basisdaten (Datum, Seitenlokalisation, ASA, Implantattyp) sowie\r\nbrustimplantat-spezifische Angaben (Art des Eingriffs, Grund, Lage, Zugang).\r\nDie Artikelidentifikation (Device -> ARI_* + ARB_* + ABI_*) wird ueber\r\nProcedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToIRegMeldung) provides the correct BackboneElement context\r\n(fall.operation / operation.artikelidentifikation / operation.zubehoer).\r\nOmitting the root-level target type avoids SM_TARGET_PATH false positives\r\nwhere the validator would resolve property names against ireg-brustimplantat-meldung root.\r\n============================================================================\r\nOperation: Procedure -> OPE_* + OBI_*\r\nBildet eine Senologie_Operation (Procedure) auf die IRegG-Operationsstruktur\r\nab. Umfasst Basisdaten (Datum, Seitenlokalisation, ASA, Implantattyp) sowie\r\nbrustimplantat-spezifische Angaben (Art des Eingriffs, Grund, Lage, Zugang).\r\nDie Artikelidentifikation (Device -> ARI_* + ARB_* + ABI_*) wird ueber\r\nProcedure.focalDevice.manipulated oder Device-Referenzen im Bundle aufgeloest.\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Procedure",

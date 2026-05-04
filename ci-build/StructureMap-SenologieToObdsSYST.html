@@ -365,7 +365,13 @@ status: draft</p>
 <b>group </b>SenologieToObdsSYST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Systemtherapie-Procedure extrahieren</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.syst<b> as </b><span style="color: maroon">syst</span><b> then </b>MapSYST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">syst</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapSYST&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.syst<b> as </b><span style="color: maroon">syst</span><b> then </b>MapSYST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">syst</span><span style="color: navy">)</span> <i>&quot;CallMapSYST&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Substanzen: MedicationStatements (moved from MapSYST)</span>
+    src.entry<b> as </b><span style="color: maroon">medEntry</span><b> where </b>resource.is(MedicationStatement)<b> then</b><span style="color: navy"> {
+</span>      medEntry.resource<b> as </b><span style="color: maroon">medStmt</span><span style="color: navy"><b> -&gt; </b></span>syst.substanzen<b> as </b><span style="color: maroon">subst</span><b> then </b>MapSubstanz<span style="color: navy">(</span><span style="color: maroon">medStmt</span><span style="color: navy">, </span><span style="color: maroon">subst</span><span style="color: navy">)</span> <i>&quot;CallMapSubstanz&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntrySubstanzen&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Nebenwirkungen (moved from MapSYST)</span>
+    proc<span style="color: navy"><b> -&gt; </b></span>syst.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenSYST<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntrySYST&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
@@ -373,7 +379,7 @@ status: draft</p>
 <span style="color: navy">// </span><span style="color: green">MapSYST: Procedure → oBDS SYST Basisdaten</span>
 <span style="color: navy">// </span><span style="color: green">Mapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapSYST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapSYST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">SYST_ID: Procedure.id</span>
   src.id<b> as </b><span style="color: maroon">id</span><span style="color: navy"><b> -&gt; </b></span>tgt.systID = <span style="color: maroon">id</span> <i>&quot;SetSystID&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Meldeanlass: abgeleitet aus Procedure.status</span>
@@ -415,13 +421,7 @@ status: draft</p>
   src.outcome<b> as </b><span style="color: maroon">oc</span><b> then</b><span style="color: navy"> {
 </span>    oc.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.endeGrund = <span style="color: navy">(</span>c.code<span style="color: navy">)</span> <i>&quot;SetEndeGrundCode&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapEndeGrund&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Substanzen: MedicationStatements aus dem Bundle extrahieren, die per partOf</span>
-  <span style="color: navy">// </span><span style="color: green">auf diese Procedure verweisen</span>
-  bundle.entry<b> as </b><span style="color: maroon">medEntry</span><b> where </b>resource.is(MedicationStatement)<b> then</b><span style="color: navy"> {
-</span>    medEntry.resource<b> as </b><span style="color: maroon">medStmt</span><span style="color: navy"><b> -&gt; </b></span>tgt.substanzen<b> as </b><span style="color: maroon">subst</span><b> then </b>MapSubstanz<span style="color: navy">(</span><span style="color: maroon">medStmt</span><span style="color: navy">, </span><span style="color: maroon">subst</span><span style="color: navy">)</span> <i>&quot;CallMapSubstanz&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntrySubstanzen&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (SYST-Variante)</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenSYST<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">Substanzen and Nebenwirkungen bundle lookups moved to calling group.</span>
 <span style="color: navy">}
 
 </span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
@@ -467,7 +467,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 11:25+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

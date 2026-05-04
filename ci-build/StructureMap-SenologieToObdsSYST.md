@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Systemische Therapie (SYST) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsSYST",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -85,7 +85,50 @@ title: Senologie FHIR to oBDS Systemische Therapie (SYST) status: draft
         }],
         "dependent" : [{
           "name" : "MapSYST",
-          "variable" : ["proc", "syst", "src"]
+          "variable" : ["proc", "syst"]
+        }]
+      },
+      {
+        "name" : "EntrySubstanzen",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "medEntry",
+          "condition" : "resource.is(MedicationStatement)"
+        }],
+        "rule" : [{
+          "name" : "CallMapSubstanz",
+          "source" : [{
+            "context" : "medEntry",
+            "element" : "resource",
+            "variable" : "medStmt"
+          }],
+          "target" : [{
+            "context" : "syst",
+            "contextType" : "variable",
+            "element" : "substanzen",
+            "variable" : "subst"
+          }],
+          "dependent" : [{
+            "name" : "MapSubstanz",
+            "variable" : ["medStmt", "subst"]
+          }]
+        }]
+      },
+      {
+        "name" : "CallMapNebenwirkungen",
+        "source" : [{
+          "context" : "proc"
+        }],
+        "target" : [{
+          "context" : "syst",
+          "contextType" : "variable",
+          "element" : "nebenwirkungen",
+          "variable" : "nw"
+        }],
+        "dependent" : [{
+          "name" : "MapNebenwirkungenSYST",
+          "variable" : ["src", "nw"]
         }]
       }]
     }]
@@ -103,11 +146,6 @@ title: Senologie FHIR to oBDS Systemische Therapie (SYST) status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetSystID",
@@ -360,49 +398,6 @@ title: Senologie FHIR to oBDS Systemische Therapie (SYST) status: draft
             "valueString" : "c.code"
           }]
         }]
-      }]
-    },
-    {
-      "name" : "EntrySubstanzen",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "medEntry",
-        "condition" : "resource.is(MedicationStatement)"
-      }],
-      "rule" : [{
-        "name" : "CallMapSubstanz",
-        "source" : [{
-          "context" : "medEntry",
-          "element" : "resource",
-          "variable" : "medStmt"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "substanzen",
-          "variable" : "subst"
-        }],
-        "dependent" : [{
-          "name" : "MapSubstanz",
-          "variable" : ["medStmt", "subst"]
-        }]
-      }]
-    },
-    {
-      "name" : "CallMapNebenwirkungen",
-      "source" : [{
-        "context" : "src"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable",
-        "element" : "nebenwirkungen",
-        "variable" : "nw"
-      }],
-      "dependent" : [{
-        "name" : "MapNebenwirkungenSYST",
-        "variable" : ["bundle", "nw"]
       }]
     }]
   },

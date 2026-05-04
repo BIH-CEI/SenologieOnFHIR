@@ -26,7 +26,7 @@ title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis status: d
   "version" : "0.1.0",
   "name" : "SenologieToIqtigBasis",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -55,16 +55,11 @@ title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis status: d
     "url" : "http://hl7.org/fhir/StructureDefinition/Organization",
     "mode" : "source",
     "alias" : "Organization"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181",
-    "mode" : "target",
-    "alias" : "IQTIG181"
   }],
   "group" : [{
     "name" : "MapBasis",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the IQTIG 18.1 Logical Model.\r\n============================================================================\r\nTeildatensatz Basis (B): Patient + Encounter + Organization -> B:*\r\nEnthaelt die administrativen und demografischen Pflichtfelder fuer die\r\nIQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,\r\nGeschlecht, Aufnahme/Entlassung).\r\nDie Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle\r\nuebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement\r\ncontext (teildatensatzBasis). Omitting the root-level target type avoids\r\nSM_TARGET_PATH false positives where the validator would resolve property\r\nnames against iqtig-mammachirurgie-181 root.\r\n============================================================================\r\nTeildatensatz Basis (B): Patient + Encounter + Organization -> B:*\r\nEnthaelt die administrativen und demografischen Pflichtfelder fuer die\r\nIQTIG-QS-Meldung (Institutionskennzeichen, Pseudonym-ID, Geburtsdatum,\r\nGeschlecht, Aufnahme/Entlassung).\r\nDie Pseudonymisierung der Versicherten-ID wird von der Vertrauensstelle\r\nuebernommen; hier wird lediglich die bereits pseudonymisierte ID uebertragen.\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Bundle",

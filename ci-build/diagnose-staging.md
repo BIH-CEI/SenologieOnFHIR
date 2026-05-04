@@ -67,3 +67,18 @@ Zwei gleichzeitige Primärtumoren in beiden Brüsten werden als separate Conditi
 
 Ein Übergang von der kurativen in die palliative Situation wird über ein Status-Update der bestehenden Condition dokumentiert, begleitet von einer Verlaufs-Observation (MII Onko Verlauf).
 
+## Zugehörige Ressourcen
+
+| | |
+| :--- | :--- |
+| Profil | [Senologie_Diagnose_Maligne](StructureDefinition-senologie-diagnose-maligne.md) |
+| Profil | [Senologie_Diagnose_Benigne](StructureDefinition-senologie-diagnose-benigne.md) |
+| Profil | [Senologie_Genexpressions_Score](StructureDefinition-senologie-genexpressions-score.md) |
+| Profil | [Senologie_Genexpressionstest](StructureDefinition-senologie-genexpressionstest.md) |
+| Profil | [Senologie_Ki67_Proliferationsindex](StructureDefinition-senologie-ki67-proliferationsindex.md) |
+| Profil | [Senologie_PD-L1_Status](StructureDefinition-senologie-pdl1-status.md) |
+| Profil | [Senologie_Somatische_Mutation](StructureDefinition-senologie-somatische-mutation.md) |
+| Questionnaire | [Diagnose](Questionnaire-senologie-diagnose.md) |
+| Beispiel | [Fall 1 — Diagnose Mammakarzinom](Condition-Fall1-Diagnose-Mammakarzinom.md) |
+| Beispiel | [Fall 1 — Genexpressionstest](RiskAssessment-Fall1-Genexpressionstest.md) |
+

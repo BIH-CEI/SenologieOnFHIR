@@ -393,7 +393,7 @@ status: draft</p>
 </span>      <span style="color: navy">// </span><span style="color: green">Tumorzuordnung</span>
       condition<span style="color: navy"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style="color: maroon">tz</span><b> then </b>MapTumorzuordnung<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">tz</span><span style="color: navy">)</span> <i>&quot;DiagnoseTZ&quot;</i><span style="color: navy">;</span>
       <span style="color: navy">// </span><span style="color: green">Diagnose: delegiert an SenologieToObdsDiagnose.MapDiagnose</span>
-      condition<span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;DiagnoseDX&quot;</i><span style="color: navy">;</span>
+      condition<span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">)</span> <i>&quot;DiagnoseDX&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;DiagnoseConditionContext&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryDiagnose&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Verlauf: Condition mit clinicalStatus = recurrence (Rezidiv) ---</span>
@@ -402,28 +402,28 @@ status: draft</p>
 </span>      <span style="color: navy">// </span><span style="color: green">Tumorzuordnung</span>
       condition<span style="color: navy"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style="color: maroon">tz</span><b> then </b>MapTumorzuordnung<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">tz</span><span style="color: navy">)</span> <i>&quot;VerlaufTZ&quot;</i><span style="color: navy">;</span>
       <span style="color: navy">// </span><span style="color: green">Verlauf: delegiert an SenologieToObdsVerlauf.MapVerlauf</span>
-      condition<span style="color: navy"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style="color: maroon">verl</span><b> then </b>MapVerlauf<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">verl</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;VerlaufMap&quot;</i><span style="color: navy">;</span>
+      condition<span style="color: navy"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style="color: maroon">verl</span><b> then </b>MapVerlauf<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">verl</span><span style="color: navy">)</span> <i>&quot;VerlaufMap&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;VerlaufConditionContext&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryVerlauf&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- OP: Procedure mit Senologie-Operation-Profil ---</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style="color: navy"> {
 </span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
 </span>      <span style="color: navy">// </span><span style="color: green">OP: delegiert an SenologieToObdsOP.MapOP</span>
-      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.op<b> as </b><span style="color: maroon">op</span><b> then </b>MapOP<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;OPMap&quot;</i><span style="color: navy">;</span>
+      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.op<b> as </b><span style="color: maroon">op</span><b> then </b>MapOP<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;OPMap&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;OPProcedureContext&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryOP&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Systemische Therapie: Procedure mit Systemtherapie-Profil ---</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
 </span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
 </span>      <span style="color: navy">// </span><span style="color: green">SYST: delegiert an SenologieToObdsSYST.MapSYST</span>
-      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.syst<b> as </b><span style="color: maroon">syst</span><b> then </b>MapSYST<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">syst</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;SYSTMap&quot;</i><span style="color: navy">;</span>
+      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.syst<b> as </b><span style="color: maroon">syst</span><b> then </b>MapSYST<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">syst</span><span style="color: navy">)</span> <i>&quot;SYSTMap&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;SYSTProcedureContext&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntrySYST&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Strahlentherapie: Procedure mit Strahlentherapie-Profil ---</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))<b> then</b><span style="color: navy"> {
 </span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
 </span>      <span style="color: navy">// </span><span style="color: green">ST: delegiert an SenologieToObdsST.MapST</span>
-      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;STMap&quot;</i><span style="color: navy">;</span>
+      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">)</span> <i>&quot;STMap&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;STProcedureContext&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryST&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Tumorkonferenz: CarePlan mit Tumorboard-Empfehlung-Profil ---</span>
@@ -437,7 +437,7 @@ status: draft</p>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Patient) and resource.deceased.exists()<b> then</b><span style="color: navy"> {
 </span>    entry.resource<b> as </b><span style="color: maroon">patient</span><b> then</b><span style="color: navy"> {
 </span>      <span style="color: navy">// </span><span style="color: green">Tod: delegiert an SenologieToObdsTod.MapTod</span>
-      patient<span style="color: navy"><b> -&gt; </b></span>tgt.tod<b> as </b><span style="color: maroon">tod</span><b> then </b>MapTod<span style="color: navy">(</span><span style="color: maroon">patient</span><span style="color: navy">, </span><span style="color: maroon">tod</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;TodMap&quot;</i><span style="color: navy">;</span>
+      patient<span style="color: navy"><b> -&gt; </b></span>tgt.tod<b> as </b><span style="color: maroon">tod</span><b> then </b>MapTod<span style="color: navy">(</span><span style="color: maroon">patient</span><span style="color: navy">, </span><span style="color: maroon">tod</span><span style="color: navy">)</span> <i>&quot;TodMap&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;TodPatientContext&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryTod&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
@@ -489,7 +489,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 09:51+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 11:25+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

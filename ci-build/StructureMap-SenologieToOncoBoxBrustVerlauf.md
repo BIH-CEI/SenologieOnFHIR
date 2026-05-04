@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustVerlauf",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -55,16 +55,11 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
     "url" : "http://hl7.org/fhir/StructureDefinition/Procedure",
     "mode" : "source",
     "alias" : "Procedure"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
-    "mode" : "target",
-    "alias" : "OncoBoxBrust"
   }],
   "group" : [{
     "name" : "MapVerlaufFromBundle",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nMapVerlaufFromBundle: Bundle -> OncoBox Primaerfall.verlauf (repeating)\r\nExtrahiert Verlaufsereignisse aus dem Bundle und mappt auf den OncoBox-\r\nVerlauf-Block. Drei Quellen fuer Verlaufseintraege:\r\n1. Senologie_FollowUp Observations (SCT 396432002) -> M01-M10 + Gesamtbeurteilung\r\nBildet die vollstaendige Verlaufsmeldung ab inkl. Nachsorge-Art, Vitalstatus,\r\nTumorstatus lokal/LK/FM und Zweittumor. Gesamtbeurteilung (D27) wird auf\r\nverlauf.ereignis gemappt: P->6 (Progress), Y->1 (Lokalrezidiv Default).\r\n2. Condition mit clinicalStatus=recurrence -> Rezidiv / Fernmetastase\r\n3. Observation LOINC 21907-1 (Distant metastases.clinical) -> Fernmetastase\r\nFuer Fernmetastasen-Ereignisse (ereignis=3) werden zusaetzlich die\r\nOncoBox 2.0 Felder J03-J05 befuellt:\r\nJ03: FM_OP_Datum       -> aus Procedure (Operation) mit FM-reasonReference\r\nJ04: FM_Therapien      -> Existenz-Check fuer OP/Syst/ST/Endo im Bundle\r\nJ05: FM_Residualstatus -> aus Procedure.outcome (Operation)\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement\r\ncontext (primaerfall for MapVerlaufFromBundle, primaerfall.verlauf for sub-groups).\r\nOmitting the root-level target type avoids SM_TARGET_PATH false positives\r\nwhere the validator would resolve property names against oncobox-brust-meldung root.\r\n============================================================================\r\nMapVerlaufFromBundle: Bundle -> OncoBox Primaerfall.verlauf (repeating)\r\nExtrahiert Verlaufsereignisse aus dem Bundle und mappt auf den OncoBox-\r\nVerlauf-Block. Drei Quellen fuer Verlaufseintraege:\r\n1. Senologie_FollowUp Observations (SCT 396432002) -> M01-M10 + Gesamtbeurteilung\r\nBildet die vollstaendige Verlaufsmeldung ab inkl. Nachsorge-Art, Vitalstatus,\r\nTumorstatus lokal/LK/FM und Zweittumor. Gesamtbeurteilung (D27) wird auf\r\nverlauf.ereignis gemappt: P->6 (Progress), Y->1 (Lokalrezidiv Default).\r\n2. Condition mit clinicalStatus=recurrence -> Rezidiv / Fernmetastase\r\n3. Observation LOINC 21907-1 (Distant metastases.clinical) -> Fernmetastase\r\nFuer Fernmetastasen-Ereignisse (ereignis=3) werden zusaetzlich die\r\nOncoBox 2.0 Felder J03-J05 befuellt:\r\nJ03: FM_OP_Datum       -> aus Procedure (Operation) mit FM-reasonReference\r\nJ04: FM_Therapien      -> Existenz-Check fuer OP/Syst/ST/Endo im Bundle\r\nJ05: FM_Residualstatus -> aus Procedure.outcome (Operation)\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Bundle",

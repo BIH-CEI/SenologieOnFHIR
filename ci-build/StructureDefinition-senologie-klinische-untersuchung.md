@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-klinische-
   "name" : "Senologie_Klinische_Untersuchung",
   "title" : "BIH Senologie Klinische Untersuchung",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

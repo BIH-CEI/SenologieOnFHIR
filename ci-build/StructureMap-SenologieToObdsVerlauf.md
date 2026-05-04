@@ -26,7 +26,7 @@ title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsVerlauf",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -132,7 +132,418 @@ title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung status: draft
         }],
         "dependent" : [{
           "name" : "MapVerlauf",
-          "variable" : ["condition", "verl", "src"]
+          "variable" : ["condition", "verl"]
+        }]
+      },
+      {
+        "name" : "CallMapFernmetastasen",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "cond2"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl2"
+        }],
+        "dependent" : [{
+          "name" : "MapFernmetastasenFromBundle",
+          "variable" : ["src", "verl2"]
+        }]
+      },
+      {
+        "name" : "EntryHistologie",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "histEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+        }],
+        "rule" : [{
+          "name" : "CallMapHistologie",
+          "source" : [{
+            "context" : "histEntry",
+            "element" : "resource",
+            "variable" : "histObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "verlauf",
+            "variable" : "verl3"
+          },
+          {
+            "context" : "verl3",
+            "contextType" : "variable",
+            "element" : "histologie",
+            "variable" : "histo"
+          }],
+          "dependent" : [{
+            "name" : "MapHistologie",
+            "variable" : ["histObs", "histo"]
+          }]
+        },
+        {
+          "name" : "EntrySpecimen",
+          "source" : [{
+            "context" : "src",
+            "element" : "entry",
+            "variable" : "specEntry",
+            "condition" : "resource.is(Specimen)"
+          }],
+          "rule" : [{
+            "name" : "SpecimenContext",
+            "source" : [{
+              "context" : "specEntry",
+              "element" : "resource",
+              "variable" : "specimen"
+            }],
+            "rule" : [{
+              "name" : "MapAccessionId",
+              "source" : [{
+                "context" : "specimen",
+                "element" : "accessionIdentifier",
+                "variable" : "accId"
+              }],
+              "rule" : [{
+                "name" : "SetEinsendeNrFromSpecimen",
+                "source" : [{
+                  "context" : "accId",
+                  "element" : "value",
+                  "variable" : "v"
+                }],
+                "target" : [{
+                  "context" : "histo",
+                  "contextType" : "variable",
+                  "element" : "histologieEinsendeNr",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "v"
+                  }]
+                }]
+              }]
+            },
+            {
+              "name" : "MapSpecimenCollection",
+              "source" : [{
+                "context" : "specimen",
+                "element" : "collection",
+                "variable" : "coll"
+              }],
+              "rule" : [{
+                "name" : "SetHistologiedatumFromSpecimen",
+                "source" : [{
+                  "context" : "coll",
+                  "element" : "collected",
+                  "variable" : "collDt",
+                  "condition" : "$this.is(dateTime)"
+                }],
+                "target" : [{
+                  "context" : "histo",
+                  "contextType" : "variable",
+                  "element" : "tumorHistologiedatum",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "collDt"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "EntryGrading",
+          "source" : [{
+            "context" : "src",
+            "element" : "entry",
+            "variable" : "gradEntry",
+            "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59542-1')"
+          }],
+          "rule" : [{
+            "name" : "MapGradingSepObs",
+            "source" : [{
+              "context" : "gradEntry",
+              "element" : "resource",
+              "variable" : "gradObs"
+            }],
+            "rule" : [{
+              "name" : "MapGradingSepValue",
+              "source" : [{
+                "context" : "gradObs",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "rule" : [{
+                "name" : "TranslateGradingSeparate",
+                "source" : [{
+                  "context" : "val",
+                  "element" : "coding",
+                  "variable" : "c"
+                }],
+                "target" : [{
+                  "context" : "histo",
+                  "contextType" : "variable",
+                  "element" : "grading",
+                  "transform" : "translate",
+                  "parameter" : [{
+                    "valueId" : "c"
+                  },
+                  {
+                    "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"
+                  },
+                  {
+                    "valueString" : "code"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "EntryLKUntersucht",
+          "source" : [{
+            "context" : "src",
+            "element" : "entry",
+            "variable" : "lkEntry",
+            "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"
+          }],
+          "rule" : [{
+            "name" : "MapLKUntersuchtSep",
+            "source" : [{
+              "context" : "lkEntry",
+              "element" : "resource",
+              "variable" : "lkObs"
+            }],
+            "rule" : [{
+              "name" : "SetLKUntersuchtSeparate",
+              "source" : [{
+                "context" : "lkObs",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "target" : [{
+                "context" : "histo",
+                "contextType" : "variable",
+                "element" : "lkUntersucht",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "val"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "EntryLKBefallen",
+          "source" : [{
+            "context" : "src",
+            "element" : "entry",
+            "variable" : "lkbEntry",
+            "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"
+          }],
+          "rule" : [{
+            "name" : "MapLKBefallenSep",
+            "source" : [{
+              "context" : "lkbEntry",
+              "element" : "resource",
+              "variable" : "lkbObs"
+            }],
+            "rule" : [{
+              "name" : "SetLKBefallenSeparate",
+              "source" : [{
+                "context" : "lkbObs",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "target" : [{
+                "context" : "histo",
+                "contextType" : "variable",
+                "element" : "lkBefallen",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "val"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "EntrySentinelLKUntersucht",
+          "source" : [{
+            "context" : "src",
+            "element" : "entry",
+            "variable" : "slkEntry",
+            "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"
+          }],
+          "rule" : [{
+            "name" : "MapSentinelLKUntersuchtSep",
+            "source" : [{
+              "context" : "slkEntry",
+              "element" : "resource",
+              "variable" : "slkObs"
+            }],
+            "rule" : [{
+              "name" : "SetSentinelLKUntersuchtSeparate",
+              "source" : [{
+                "context" : "slkObs",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "target" : [{
+                "context" : "histo",
+                "contextType" : "variable",
+                "element" : "sentinelLKUntersucht",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "val"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "EntrySentinelLKBefallen",
+          "source" : [{
+            "context" : "src",
+            "element" : "entry",
+            "variable" : "slkbEntry",
+            "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92831-7')"
+          }],
+          "rule" : [{
+            "name" : "MapSentinelLKBefallenSep",
+            "source" : [{
+              "context" : "slkbEntry",
+              "element" : "resource",
+              "variable" : "slkbObs"
+            }],
+            "rule" : [{
+              "name" : "SetSentinelLKBefallenSeparate",
+              "source" : [{
+                "context" : "slkbObs",
+                "element" : "value",
+                "variable" : "val"
+              }],
+              "target" : [{
+                "context" : "histo",
+                "contextType" : "variable",
+                "element" : "sentinelLKBefallen",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "val"
+                }]
+              }]
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "EntryTNMClinical",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "tnmEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
+        }],
+        "rule" : [{
+          "name" : "CallMapTNMClinical",
+          "source" : [{
+            "context" : "tnmEntry",
+            "element" : "resource",
+            "variable" : "tnmObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "verlauf",
+            "variable" : "verl4"
+          },
+          {
+            "context" : "verl4",
+            "contextType" : "variable",
+            "element" : "tnm",
+            "variable" : "tnm"
+          }],
+          "dependent" : [{
+            "name" : "MapTNM",
+            "variable" : ["tnmObs", "tnm"]
+          }]
+        }]
+      },
+      {
+        "name" : "EntryTNMPathological",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "tnmEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
+        }],
+        "rule" : [{
+          "name" : "CallMapTNMPathological",
+          "source" : [{
+            "context" : "tnmEntry",
+            "element" : "resource",
+            "variable" : "tnmObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "verlauf",
+            "variable" : "verl5"
+          },
+          {
+            "context" : "verl5",
+            "contextType" : "variable",
+            "element" : "tnm",
+            "variable" : "tnm"
+          }],
+          "dependent" : [{
+            "name" : "MapTNM",
+            "variable" : ["tnmObs", "tnm"]
+          }]
+        }]
+      },
+      {
+        "name" : "CallMapLeistungszustand",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "cond3"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl6"
+        }],
+        "dependent" : [{
+          "name" : "MapLeistungszustandFromBundle",
+          "variable" : ["src", "verl6"]
+        }]
+      },
+      {
+        "name" : "CallMapModulMamma",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "cond4"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl7"
+        },
+        {
+          "context" : "verl7",
+          "contextType" : "variable",
+          "element" : "modulMamma",
+          "variable" : "mamma"
+        }],
+        "dependent" : [{
+          "name" : "MapModulMamma",
+          "variable" : ["src", "mamma"]
         }]
       }]
     }]
@@ -150,11 +561,6 @@ title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "MapVerlaufID",
@@ -422,383 +828,6 @@ title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung status: draft
             }]
           }]
         }]
-      }]
-    },
-    {
-      "name" : "CallMapFernmetastasen",
-      "source" : [{
-        "context" : "src"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable"
-      }],
-      "dependent" : [{
-        "name" : "MapFernmetastasenFromBundle",
-        "variable" : ["bundle", "tgt"]
-      }]
-    },
-    {
-      "name" : "EntryHistologie",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "histEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
-      }],
-      "rule" : [{
-        "name" : "CallMapHistologie",
-        "source" : [{
-          "context" : "histEntry",
-          "element" : "resource",
-          "variable" : "histObs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "histologie",
-          "variable" : "histo"
-        }],
-        "dependent" : [{
-          "name" : "MapHistologie",
-          "variable" : ["histObs", "histo"]
-        }]
-      },
-      {
-        "name" : "EntrySpecimen",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "specEntry",
-          "condition" : "resource.is(Specimen)"
-        }],
-        "rule" : [{
-          "name" : "SpecimenContext",
-          "source" : [{
-            "context" : "specEntry",
-            "element" : "resource",
-            "variable" : "specimen"
-          }],
-          "rule" : [{
-            "name" : "MapAccessionId",
-            "source" : [{
-              "context" : "specimen",
-              "element" : "accessionIdentifier",
-              "variable" : "accId"
-            }],
-            "rule" : [{
-              "name" : "SetEinsendeNrFromSpecimen",
-              "source" : [{
-                "context" : "accId",
-                "element" : "value",
-                "variable" : "v"
-              }],
-              "target" : [{
-                "context" : "histo",
-                "contextType" : "variable",
-                "element" : "histologieEinsendeNr",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "v"
-                }]
-              }]
-            }]
-          },
-          {
-            "name" : "MapSpecimenCollection",
-            "source" : [{
-              "context" : "specimen",
-              "element" : "collection",
-              "variable" : "coll"
-            }],
-            "rule" : [{
-              "name" : "SetHistologiedatumFromSpecimen",
-              "source" : [{
-                "context" : "coll",
-                "element" : "collected",
-                "variable" : "collDt",
-                "condition" : "$this.is(dateTime)"
-              }],
-              "target" : [{
-                "context" : "histo",
-                "contextType" : "variable",
-                "element" : "tumorHistologiedatum",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "collDt"
-                }]
-              }]
-            }]
-          }]
-        }]
-      },
-      {
-        "name" : "EntryGrading",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "gradEntry",
-          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59542-1')"
-        }],
-        "rule" : [{
-          "name" : "MapGradingSepObs",
-          "source" : [{
-            "context" : "gradEntry",
-            "element" : "resource",
-            "variable" : "gradObs"
-          }],
-          "rule" : [{
-            "name" : "MapGradingSepValue",
-            "source" : [{
-              "context" : "gradObs",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "TranslateGradingSeparate",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c"
-              }],
-              "target" : [{
-                "context" : "histo",
-                "contextType" : "variable",
-                "element" : "grading",
-                "transform" : "translate",
-                "parameter" : [{
-                  "valueId" : "c"
-                },
-                {
-                  "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"
-                },
-                {
-                  "valueString" : "code"
-                }]
-              }]
-            }]
-          }]
-        }]
-      },
-      {
-        "name" : "EntryLKUntersucht",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "lkEntry",
-          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"
-        }],
-        "rule" : [{
-          "name" : "MapLKUntersuchtSep",
-          "source" : [{
-            "context" : "lkEntry",
-            "element" : "resource",
-            "variable" : "lkObs"
-          }],
-          "rule" : [{
-            "name" : "SetLKUntersuchtSeparate",
-            "source" : [{
-              "context" : "lkObs",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "target" : [{
-              "context" : "histo",
-              "contextType" : "variable",
-              "element" : "lkUntersucht",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueId" : "val"
-              }]
-            }]
-          }]
-        }]
-      },
-      {
-        "name" : "EntryLKBefallen",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "lkbEntry",
-          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"
-        }],
-        "rule" : [{
-          "name" : "MapLKBefallenSep",
-          "source" : [{
-            "context" : "lkbEntry",
-            "element" : "resource",
-            "variable" : "lkbObs"
-          }],
-          "rule" : [{
-            "name" : "SetLKBefallenSeparate",
-            "source" : [{
-              "context" : "lkbObs",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "target" : [{
-              "context" : "histo",
-              "contextType" : "variable",
-              "element" : "lkBefallen",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueId" : "val"
-              }]
-            }]
-          }]
-        }]
-      },
-      {
-        "name" : "EntrySentinelLKUntersucht",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "slkEntry",
-          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"
-        }],
-        "rule" : [{
-          "name" : "MapSentinelLKUntersuchtSep",
-          "source" : [{
-            "context" : "slkEntry",
-            "element" : "resource",
-            "variable" : "slkObs"
-          }],
-          "rule" : [{
-            "name" : "SetSentinelLKUntersuchtSeparate",
-            "source" : [{
-              "context" : "slkObs",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "target" : [{
-              "context" : "histo",
-              "contextType" : "variable",
-              "element" : "sentinelLKUntersucht",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueId" : "val"
-              }]
-            }]
-          }]
-        }]
-      },
-      {
-        "name" : "EntrySentinelLKBefallen",
-        "source" : [{
-          "context" : "bundle",
-          "element" : "entry",
-          "variable" : "slkbEntry",
-          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92831-7')"
-        }],
-        "rule" : [{
-          "name" : "MapSentinelLKBefallenSep",
-          "source" : [{
-            "context" : "slkbEntry",
-            "element" : "resource",
-            "variable" : "slkbObs"
-          }],
-          "rule" : [{
-            "name" : "SetSentinelLKBefallenSeparate",
-            "source" : [{
-              "context" : "slkbObs",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "target" : [{
-              "context" : "histo",
-              "contextType" : "variable",
-              "element" : "sentinelLKBefallen",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueId" : "val"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryTNMClinical",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "tnmEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
-      }],
-      "rule" : [{
-        "name" : "CallMapTNMClinical",
-        "source" : [{
-          "context" : "tnmEntry",
-          "element" : "resource",
-          "variable" : "tnmObs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "tnm",
-          "variable" : "tnm"
-        }],
-        "dependent" : [{
-          "name" : "MapTNM",
-          "variable" : ["tnmObs", "tnm", "bundle"]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryTNMPathological",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "tnmEntry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
-      }],
-      "rule" : [{
-        "name" : "CallMapTNMPathological",
-        "source" : [{
-          "context" : "tnmEntry",
-          "element" : "resource",
-          "variable" : "tnmObs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "tnm",
-          "variable" : "tnm"
-        }],
-        "dependent" : [{
-          "name" : "MapTNM",
-          "variable" : ["tnmObs", "tnm", "bundle"]
-        }]
-      }]
-    },
-    {
-      "name" : "CallMapLeistungszustand",
-      "source" : [{
-        "context" : "src"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable"
-      }],
-      "dependent" : [{
-        "name" : "MapLeistungszustandFromBundle",
-        "variable" : ["bundle", "tgt"]
-      }]
-    },
-    {
-      "name" : "CallMapModulMamma",
-      "source" : [{
-        "context" : "src"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable",
-        "element" : "modulMamma",
-        "variable" : "mamma"
-      }],
-      "dependent" : [{
-        "name" : "MapModulMamma",
-        "variable" : ["bundle", "mamma"]
       }]
     }]
   }]

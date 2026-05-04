@@ -26,7 +26,7 @@ title: Senologie Organization to OncoBox Brust Zentrum status: draft
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustZentrum",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -45,16 +45,11 @@ title: Senologie Organization to OncoBox Brust Zentrum status: draft
     "url" : "http://hl7.org/fhir/StructureDefinition/Organization",
     "mode" : "source",
     "alias" : "Organization"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
-    "mode" : "target",
-    "alias" : "OncoBoxBrust"
   }],
   "group" : [{
     "name" : "MapZentrum",
     "typeMode" : "none",
-    "documentation" : "Known limitation: MapZentrum uses `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices. The IG Publisher produces SM_TARGET_PATH / SM_SOURCE_PATH errors\r\n(~12). Element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nZentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -> Zentrum\r\nDie Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als\r\nKonfigurationswert oder ueber Organization.identifier gepflegt. Der\r\nBerichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-\r\nspezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis\r\ntypischerweise ueber Parameter gesetzt.\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToOncoBoxBrust) provides the correct BackboneElement context\r\n(zentrum). Omitting the root-level target type avoids SM_TARGET_PATH false\r\npositives where the validator would resolve property names against\r\noncobox-brust-meldung root.\r\n============================================================================\r\nZentrum / Meldungs-Metadaten: Organization + Bundle.timestamp -> Zentrum\r\nDie Zentrums-ID (OnkoZert-Kennung) ist zentrumsspezifisch und wird als\r\nKonfigurationswert oder ueber Organization.identifier gepflegt. Der\r\nBerichtszeitraum (01.07.Vorjahr - 30.06.aktuellesJahr) ist meldungs-\r\nspezifisch und wird hier aus Bundle.timestamp abgeleitet; in der Praxis\r\ntypischerweise ueber Parameter gesetzt.\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Bundle",

@@ -80,3 +80,18 @@ Der typische Ablauf von der Bildgebung bis zur Therapieentscheidung:
 
 Jeder Schritt erzeugt FHIR-Ressourcen die aufeinander referenzieren: DiagnosticReport verweist auf Specimen und Observations, diese auf die Condition (Diagnose).
 
+## Zugehörige Ressourcen
+
+| | |
+| :--- | :--- |
+| Profil | [Senologie_Bildgebung_Befund](StructureDefinition-senologie-bildgebung-befund.md) |
+| Profil | [Senologie_Bildgebung_Observation](StructureDefinition-senologie-bildgebung-observation.md) |
+| Profil | [Senologie_Tumorlokalisation](StructureDefinition-senologie-tumorlokalisation.md) |
+| Profil | [Senologie_Pathologie_Befund](StructureDefinition-senologie-pathologie-befund.md) |
+| Profil | [Senologie_Pathologie_Praeparat](StructureDefinition-senologie-pathologie-praeparat.md) |
+| Questionnaire | [Bildgebung](Questionnaire-senologie-bildgebung.md) |
+| Questionnaire | [Pathologie](Questionnaire-senologie-pathologie.md) |
+| Beispiel | [Fall 1 — Mammographie](DiagnosticReport-Fall1-Bildgebung-Mammographie.md) |
+| Beispiel | [Fall 1 — Pathologie](DiagnosticReport-Fall1-Pathologie-Befund.md) |
+| Beispiel | [Fall 1 — BI-RADS](Observation-Fall1-BiRADS-Links.md) |
+

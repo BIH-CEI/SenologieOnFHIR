@@ -37,7 +37,60 @@
   <span style="color: navy">}</span> <i>&quot;EntryConditionTZ&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Diagnose: aus der Condition-Ressource + Observations aus dem Bundle</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapDiagnose&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">)</span> <i>&quot;CallMapDiagnose&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Histologie from bundle (moved from MapDiagnose)</span>
+    src.entry<b> as </b><span style="color: maroon">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style="color: navy"> {
+</span>      histEntry.resource<b> as </b><span style="color: maroon">histObs</span><span style="color: navy"><b> -&gt; </b></span>dx.histologie<b> as </b><span style="color: maroon">histo</span><b> then </b>MapHistologie<span style="color: navy">(</span><span style="color: maroon">histObs</span><span style="color: navy">, </span><span style="color: maroon">histo</span><span style="color: navy">)</span> <i>&quot;CallMapHistologie&quot;</i><span style="color: navy">;</span>
+      src.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen)<b> then</b><span style="color: navy"> {
+</span>        specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
+</span>          specimen.accessionIdentifier<b> as </b><span style="color: maroon">accId</span><b> then</b><span style="color: navy"> {
+</span>            accId.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>histo.histologieEinsendeNr = <span style="color: maroon">v</span> <i>&quot;SetEinsendeNrFromSpecimen&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapAccessionId&quot;</i><span style="color: navy">;</span>
+          specimen.collection<b> as </b><span style="color: maroon">coll</span><b> then</b><span style="color: navy"> {
+</span>            coll.collected<b> as </b><span style="color: maroon">collDt</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>histo.tumorHistologiedatum = <span style="color: maroon">collDt</span> <i>&quot;SetHistologiedatumFromSpecimen&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapSpecimenCollection&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;SpecimenContext&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;EntrySpecimen&quot;</i><span style="color: navy">;</span>
+      src.entry<b> as </b><span style="color: maroon">gradEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59542-1')<b> then</b><span style="color: navy"> {
+</span>        gradEntry.resource<b> as </b><span style="color: maroon">gradObs</span><b> then</b><span style="color: navy"> {
+</span>          gradObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>            val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>histo.grading = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateGradingSeparate&quot;</i><span style="color: navy">;</span>
+          <span style="color: navy">}</span> <i>&quot;MapGradingSepValue&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapGradingSepObs&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;EntryGrading&quot;</i><span style="color: navy">;</span>
+      src.entry<b> as </b><span style="color: maroon">lkEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21894-1')<b> then</b><span style="color: navy"> {
+</span>        lkEntry.resource<b> as </b><span style="color: maroon">lkObs</span><b> then</b><span style="color: navy"> {
+</span>          lkObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.lkUntersucht = <span style="color: maroon">val</span> <i>&quot;SetLKUntersuchtSeparate&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapLKUntersuchtSep&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;EntryLKUntersucht&quot;</i><span style="color: navy">;</span>
+      src.entry<b> as </b><span style="color: maroon">lkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21893-3')<b> then</b><span style="color: navy"> {
+</span>        lkbEntry.resource<b> as </b><span style="color: maroon">lkbObs</span><b> then</b><span style="color: navy"> {
+</span>          lkbObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.lkBefallen = <span style="color: maroon">val</span> <i>&quot;SetLKBefallenSeparate&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapLKBefallenSep&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;EntryLKBefallen&quot;</i><span style="color: navy">;</span>
+      src.entry<b> as </b><span style="color: maroon">slkEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92832-5')<b> then</b><span style="color: navy"> {
+</span>        slkEntry.resource<b> as </b><span style="color: maroon">slkObs</span><b> then</b><span style="color: navy"> {
+</span>          slkObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.sentinelLKUntersucht = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKUntersuchtSeparate&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapSentinelLKUntersuchtSep&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;EntrySentinelLKUntersucht&quot;</i><span style="color: navy">;</span>
+      src.entry<b> as </b><span style="color: maroon">slkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92831-7')<b> then</b><span style="color: navy"> {
+</span>        slkbEntry.resource<b> as </b><span style="color: maroon">slkbObs</span><b> then</b><span style="color: navy"> {
+</span>          slkbObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.sentinelLKBefallen = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKBefallenSeparate&quot;</i><span style="color: navy">;</span>
+        <span style="color: navy">}</span> <i>&quot;MapSentinelLKBefallenSep&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;EntrySentinelLKBefallen&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryHistologie&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">cTNM from bundle (moved from MapDiagnose)</span>
+    src.entry<b> as </b><span style="color: maroon">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21908-9')<b> then</b><span style="color: navy"> {
+</span>      tnmEntry.resource<b> as </b><span style="color: maroon">tnmObs</span><span style="color: navy"><b> -&gt; </b></span>dx.cTNM<b> as </b><span style="color: maroon">ctnm</span><b> then </b>MapTNM<span style="color: navy">(</span><span style="color: maroon">tnmObs</span><span style="color: navy">, </span><span style="color: maroon">ctnm</span><span style="color: navy">)</span> <i>&quot;CallMapCTNM&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryCTNM&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Leistungszustand from bundle (moved from MapDiagnose)</span>
+    entry.resource<b> as </b><span style="color: maroon">cond2</span><span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx2</span><b> then </b>MapLeistungszustandFromBundle<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">dx2</span><span style="color: navy">)</span> <i>&quot;CallMapLeistungszustand&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Modul_Mamma from bundle (moved from MapDiagnose)</span>
+    entry.resource<b> as </b><span style="color: maroon">cond3</span><span style="color: navy"><b> -&gt; </b></span> tgt.diagnose<b> as </b><span style="color: maroon">dx3</span><span style="color: navy">, </span> dx3.modulMamma<b> as </b><span style="color: maroon">mamma</span><b> then </b>MapModulMamma<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">mamma</span><span style="color: navy">)</span> <i>&quot;CallMapModulMamma&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Weitere Klassifikationen from bundle (moved from MapDiagnose)</span>
+    src.entry<b> as </b><span style="color: maroon">raEntry</span><b> where </b>resource.is(RiskAssessment)<b> then</b><span style="color: navy"> {
+</span>      raEntry.resource<b> as </b><span style="color: maroon">ra</span><span style="color: navy"><b> -&gt; </b></span> tgt.diagnose<b> as </b><span style="color: maroon">dx4</span><span style="color: navy">, </span> dx4.weitereKlassifikationen<b> as </b><span style="color: maroon">wk</span><b> then </b>MapWeitereKlassifikation<span style="color: navy">(</span><span style="color: maroon">ra</span><span style="color: navy">, </span><span style="color: maroon">wk</span><span style="color: navy">)</span> <i>&quot;CallMapWeitereKlassifikation&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;EntryWeitereKlassifikation&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryConditionDX&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
@@ -45,7 +98,7 @@
 <span style="color: navy">// </span><span style="color: green">Diagnose: Condition -&gt; OBDSMeldung.diagnose</span>
 <span style="color: navy">// </span><span style="color: green">Freitextdiagnose, ICD-O Topographie, Diagnosesicherung, fruehere Erkrankungen</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapDiagnose<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Condition, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapDiagnose<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Condition, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Primaertumor_Diagnosetext: aus Condition.code.text</span>
   src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
 </span>    code.text<b> as </b><span style="color: maroon">t</span><span style="color: navy"><b> -&gt; </b></span>tgt.primaertumorDiagnosetext = <span style="color: maroon">t</span> <i>&quot;SetDiagnosetext&quot;</i><span style="color: navy">;</span>
@@ -73,67 +126,8 @@
 </span>      ref.display<b> as </b><span style="color: maroon">d</span><span style="color: navy"><b> -&gt; </b></span>fe.freitext = <span style="color: maroon">d</span> <i>&quot;SetFrueherFreitext&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;MapFruehereErkrankung&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapFruehereErkrankungen&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Histologie: aus Observations im Bundle (DiagnosticReport-referenzierte Pathologie)</span>
-  bundle.entry<b> as </b><span style="color: maroon">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style="color: navy"> {
-</span>    histEntry.resource<b> as </b><span style="color: maroon">histObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.histologie<b> as </b><span style="color: maroon">histo</span><b> then </b>MapHistologie<span style="color: navy">(</span><span style="color: maroon">histObs</span><span style="color: navy">, </span><span style="color: maroon">histo</span><span style="color: navy">)</span> <i>&quot;CallMapHistologie&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">// </span><span style="color: green">Specimen: Einsende-Nummer und Histologiedatum (Fallback)</span>
-    bundle.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen)<b> then</b><span style="color: navy"> {
-</span>      specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
-</span>        specimen.accessionIdentifier<b> as </b><span style="color: maroon">accId</span><b> then</b><span style="color: navy"> {
-</span>          accId.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>histo.histologieEinsendeNr = <span style="color: maroon">v</span> <i>&quot;SetEinsendeNrFromSpecimen&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapAccessionId&quot;</i><span style="color: navy">;</span>
-        specimen.collection<b> as </b><span style="color: maroon">coll</span><b> then</b><span style="color: navy"> {
-</span>          coll.collected<b> as </b><span style="color: maroon">collDt</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>histo.tumorHistologiedatum = <span style="color: maroon">collDt</span> <i>&quot;SetHistologiedatumFromSpecimen&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapSpecimenCollection&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;SpecimenContext&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntrySpecimen&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">// </span><span style="color: green">Grading: aus separater Observation im Bundle (Fallback)</span>
-    bundle.entry<b> as </b><span style="color: maroon">gradEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59542-1')<b> then</b><span style="color: navy"> {
-</span>      gradEntry.resource<b> as </b><span style="color: maroon">gradObs</span><b> then</b><span style="color: navy"> {
-</span>        gradObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>          val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>histo.grading = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateGradingSeparate&quot;</i><span style="color: navy">;</span>
-        <span style="color: navy">}</span> <i>&quot;MapGradingSepValue&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapGradingSepObs&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntryGrading&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">// </span><span style="color: green">LK_untersucht: aus separater Observation (Fallback)</span>
-    bundle.entry<b> as </b><span style="color: maroon">lkEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21894-1')<b> then</b><span style="color: navy"> {
-</span>      lkEntry.resource<b> as </b><span style="color: maroon">lkObs</span><b> then</b><span style="color: navy"> {
-</span>        lkObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.lkUntersucht = <span style="color: maroon">val</span> <i>&quot;SetLKUntersuchtSeparate&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapLKUntersuchtSep&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntryLKUntersucht&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">// </span><span style="color: green">LK_befallen: aus separater Observation (Fallback)</span>
-    bundle.entry<b> as </b><span style="color: maroon">lkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21893-3')<b> then</b><span style="color: navy"> {
-</span>      lkbEntry.resource<b> as </b><span style="color: maroon">lkbObs</span><b> then</b><span style="color: navy"> {
-</span>        lkbObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.lkBefallen = <span style="color: maroon">val</span> <i>&quot;SetLKBefallenSeparate&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapLKBefallenSep&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntryLKBefallen&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">// </span><span style="color: green">Sentinel_LK_untersucht: aus separater Observation (Fallback)</span>
-    bundle.entry<b> as </b><span style="color: maroon">slkEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92832-5')<b> then</b><span style="color: navy"> {
-</span>      slkEntry.resource<b> as </b><span style="color: maroon">slkObs</span><b> then</b><span style="color: navy"> {
-</span>        slkObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.sentinelLKUntersucht = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKUntersuchtSeparate&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapSentinelLKUntersuchtSep&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntrySentinelLKUntersucht&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">// </span><span style="color: green">Sentinel_LK_befallen: aus separater Observation (Fallback)</span>
-    bundle.entry<b> as </b><span style="color: maroon">slkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92831-7')<b> then</b><span style="color: navy"> {
-</span>      slkbEntry.resource<b> as </b><span style="color: maroon">slkbObs</span><b> then</b><span style="color: navy"> {
-</span>        slkbObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>histo.sentinelLKBefallen = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKBefallenSeparate&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">}</span> <i>&quot;MapSentinelLKBefallenSep&quot;</i><span style="color: navy">;</span>
-    <span style="color: navy">}</span> <i>&quot;EntrySentinelLKBefallen&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryHistologie&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">cTNM: aus TNM-Observation im Bundle (klinisches Staging)</span>
-  bundle.entry<b> as </b><span style="color: maroon">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21908-9')<b> then</b><span style="color: navy"> {
-</span>    tnmEntry.resource<b> as </b><span style="color: maroon">tnmObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.cTNM<b> as </b><span style="color: maroon">ctnm</span><b> then </b>MapTNM<span style="color: navy">(</span><span style="color: maroon">tnmObs</span><span style="color: navy">, </span><span style="color: maroon">ctnm</span><span style="color: navy">)</span> <i>&quot;CallMapCTNM&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryCTNM&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Allgemeiner Leistungszustand (ECOG): aus Observation im Bundle</span>
-  <span style="color: navy">// </span><span style="color: green">Delegiert an die gemeinsame Leistungszustand-Map</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt<b> then </b>MapLeistungszustandFromBundle<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">tgt</span><span style="color: navy">)</span> <i>&quot;CallMapLeistungszustand&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt.modulMamma<b> as </b><span style="color: maroon">mamma</span><b> then </b>MapModulMamma<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">mamma</span><span style="color: navy">)</span> <i>&quot;CallMapModulMamma&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Weitere Klassifikationen: Genexpressionstests (Oncotype DX, MammaPrint, ...)</span>
-  <span style="color: navy">// </span><span style="color: green">aus RiskAssessment-Ressourcen (Senologie_Genexpressionstest) im Bundle</span>
-  bundle.entry<b> as </b><span style="color: maroon">raEntry</span><b> where </b>resource.is(RiskAssessment)<b> then</b><span style="color: navy"> {
-</span>    raEntry.resource<b> as </b><span style="color: maroon">ra</span><span style="color: navy"><b> -&gt; </b></span>tgt.weitereKlassifikationen<b> as </b><span style="color: maroon">wk</span><b> then </b>MapWeitereKlassifikation<span style="color: navy">(</span><span style="color: maroon">ra</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">wk</span><span style="color: navy">)</span> <i>&quot;CallMapWeitereKlassifikation&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">}</span> <i>&quot;EntryWeitereKlassifikation&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">Histologie, cTNM, Leistungszustand, ModulMamma, WeitereKlassifikationen</span>
+<span style="color: navy">// </span><span style="color: green">bundle lookups moved to calling group.</span>
 <span style="color: navy">}
 
 </span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
@@ -141,7 +135,7 @@
 <span style="color: navy">// </span><span style="color: green">Mappt Genexpressionstests wie Oncotype DX, MammaPrint auf das oBDS-Element</span>
 <span style="color: navy">// </span><span style="color: green">&quot;Weitere_Klassifikation&quot; (Datum, Name, Stadium/Ergebnis).</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapWeitereKlassifikation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>RiskAssessment, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapWeitereKlassifikation<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>RiskAssessment, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Datum: aus RiskAssessment.occurrenceDateTime</span>
   src.occurrence<b> as </b><span style="color: maroon">occ</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.datum = <span style="color: maroon">occ</span> <i>&quot;SetWKDatum&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Name: aus RiskAssessment.method.coding.display oder method.text</span>
@@ -169,7 +163,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToObdsDiagnose"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:51:52+00:00"/>
+  <date value="2026-05-04T11:25:12+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -282,8 +276,393 @@
           <name value="MapDiagnose"/>
           <variable value="condition"/>
           <variable value="dx"/>
-          <variable value="src"/>
         </dependent>
+      </rule>
+      <rule>
+        <name value="EntryHistologie"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="histEntry"/>
+          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"/>
+        </source>
+        <rule>
+          <name value="CallMapHistologie"/>
+          <source>
+            <context value="histEntry"/>
+            <element value="resource"/>
+            <variable value="histObs"/>
+          </source>
+          <target>
+            <context value="dx"/>
+            <contextType value="variable"/>
+            <element value="histologie"/>
+            <variable value="histo"/>
+          </target>
+          <dependent>
+            <name value="MapHistologie"/>
+            <variable value="histObs"/>
+            <variable value="histo"/>
+          </dependent>
+        </rule>
+        <rule>
+          <name value="EntrySpecimen"/>
+          <source>
+            <context value="src"/>
+            <element value="entry"/>
+            <variable value="specEntry"/>
+            <condition value="resource.is(Specimen)"/>
+          </source>
+          <rule>
+            <name value="SpecimenContext"/>
+            <source>
+              <context value="specEntry"/>
+              <element value="resource"/>
+              <variable value="specimen"/>
+            </source>
+            <rule>
+              <name value="MapAccessionId"/>
+              <source>
+                <context value="specimen"/>
+                <element value="accessionIdentifier"/>
+                <variable value="accId"/>
+              </source>
+              <rule>
+                <name value="SetEinsendeNrFromSpecimen"/>
+                <source>
+                  <context value="accId"/>
+                  <element value="value"/>
+                  <variable value="v"/>
+                </source>
+                <target>
+                  <context value="histo"/>
+                  <contextType value="variable"/>
+                  <element value="histologieEinsendeNr"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueId value="v"/>
+                  </parameter>
+                </target>
+              </rule>
+            </rule>
+            <rule>
+              <name value="MapSpecimenCollection"/>
+              <source>
+                <context value="specimen"/>
+                <element value="collection"/>
+                <variable value="coll"/>
+              </source>
+              <rule>
+                <name value="SetHistologiedatumFromSpecimen"/>
+                <source>
+                  <context value="coll"/>
+                  <element value="collected"/>
+                  <variable value="collDt"/>
+                  <condition value="$this.is(dateTime)"/>
+                </source>
+                <target>
+                  <context value="histo"/>
+                  <contextType value="variable"/>
+                  <element value="tumorHistologiedatum"/>
+                  <transform value="copy"/>
+                  <parameter>
+                    <valueId value="collDt"/>
+                  </parameter>
+                </target>
+              </rule>
+            </rule>
+          </rule>
+        </rule>
+        <rule>
+          <name value="EntryGrading"/>
+          <source>
+            <context value="src"/>
+            <element value="entry"/>
+            <variable value="gradEntry"/>
+            <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59542-1')"/>
+          </source>
+          <rule>
+            <name value="MapGradingSepObs"/>
+            <source>
+              <context value="gradEntry"/>
+              <element value="resource"/>
+              <variable value="gradObs"/>
+            </source>
+            <rule>
+              <name value="MapGradingSepValue"/>
+              <source>
+                <context value="gradObs"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <rule>
+                <name value="TranslateGradingSeparate"/>
+                <source>
+                  <context value="val"/>
+                  <element value="coding"/>
+                  <variable value="c"/>
+                </source>
+                <target>
+                  <context value="histo"/>
+                  <contextType value="variable"/>
+                  <element value="grading"/>
+                  <transform value="translate"/>
+                  <parameter>
+                    <valueId value="c"/>
+                  </parameter>
+                  <parameter>
+                    <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"/>
+                  </parameter>
+                  <parameter>
+                    <valueString value="code"/>
+                  </parameter>
+                </target>
+              </rule>
+            </rule>
+          </rule>
+        </rule>
+        <rule>
+          <name value="EntryLKUntersucht"/>
+          <source>
+            <context value="src"/>
+            <element value="entry"/>
+            <variable value="lkEntry"/>
+            <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"/>
+          </source>
+          <rule>
+            <name value="MapLKUntersuchtSep"/>
+            <source>
+              <context value="lkEntry"/>
+              <element value="resource"/>
+              <variable value="lkObs"/>
+            </source>
+            <rule>
+              <name value="SetLKUntersuchtSeparate"/>
+              <source>
+                <context value="lkObs"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="histo"/>
+                <contextType value="variable"/>
+                <element value="lkUntersucht"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+        <rule>
+          <name value="EntryLKBefallen"/>
+          <source>
+            <context value="src"/>
+            <element value="entry"/>
+            <variable value="lkbEntry"/>
+            <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"/>
+          </source>
+          <rule>
+            <name value="MapLKBefallenSep"/>
+            <source>
+              <context value="lkbEntry"/>
+              <element value="resource"/>
+              <variable value="lkbObs"/>
+            </source>
+            <rule>
+              <name value="SetLKBefallenSeparate"/>
+              <source>
+                <context value="lkbObs"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="histo"/>
+                <contextType value="variable"/>
+                <element value="lkBefallen"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+        <rule>
+          <name value="EntrySentinelLKUntersucht"/>
+          <source>
+            <context value="src"/>
+            <element value="entry"/>
+            <variable value="slkEntry"/>
+            <condition value="resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"/>
+          </source>
+          <rule>
+            <name value="MapSentinelLKUntersuchtSep"/>
+            <source>
+              <context value="slkEntry"/>
+              <element value="resource"/>
+              <variable value="slkObs"/>
+            </source>
+            <rule>
+              <name value="SetSentinelLKUntersuchtSeparate"/>
+              <source>
+                <context value="slkObs"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="histo"/>
+                <contextType value="variable"/>
+                <element value="sentinelLKUntersucht"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+        <rule>
+          <name value="EntrySentinelLKBefallen"/>
+          <source>
+            <context value="src"/>
+            <element value="entry"/>
+            <variable value="slkbEntry"/>
+            <condition value="resource.is(Observation) and resource.code.coding.exists(code = '92831-7')"/>
+          </source>
+          <rule>
+            <name value="MapSentinelLKBefallenSep"/>
+            <source>
+              <context value="slkbEntry"/>
+              <element value="resource"/>
+              <variable value="slkbObs"/>
+            </source>
+            <rule>
+              <name value="SetSentinelLKBefallenSeparate"/>
+              <source>
+                <context value="slkbObs"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="histo"/>
+                <contextType value="variable"/>
+                <element value="sentinelLKBefallen"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="EntryCTNM"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="tnmEntry"/>
+          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"/>
+        </source>
+        <rule>
+          <name value="CallMapCTNM"/>
+          <source>
+            <context value="tnmEntry"/>
+            <element value="resource"/>
+            <variable value="tnmObs"/>
+          </source>
+          <target>
+            <context value="dx"/>
+            <contextType value="variable"/>
+            <element value="cTNM"/>
+            <variable value="ctnm"/>
+          </target>
+          <dependent>
+            <name value="MapTNM"/>
+            <variable value="tnmObs"/>
+            <variable value="ctnm"/>
+          </dependent>
+        </rule>
+      </rule>
+      <rule>
+        <name value="CallMapLeistungszustand"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="cond2"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="diagnose"/>
+          <variable value="dx2"/>
+        </target>
+        <dependent>
+          <name value="MapLeistungszustandFromBundle"/>
+          <variable value="src"/>
+          <variable value="dx2"/>
+        </dependent>
+      </rule>
+      <rule>
+        <name value="CallMapModulMamma"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="cond3"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="diagnose"/>
+          <variable value="dx3"/>
+        </target>
+        <target>
+          <context value="dx3"/>
+          <contextType value="variable"/>
+          <element value="modulMamma"/>
+          <variable value="mamma"/>
+        </target>
+        <dependent>
+          <name value="MapModulMamma"/>
+          <variable value="src"/>
+          <variable value="mamma"/>
+        </dependent>
+      </rule>
+      <rule>
+        <name value="EntryWeitereKlassifikation"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="raEntry"/>
+          <condition value="resource.is(RiskAssessment)"/>
+        </source>
+        <rule>
+          <name value="CallMapWeitereKlassifikation"/>
+          <source>
+            <context value="raEntry"/>
+            <element value="resource"/>
+            <variable value="ra"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="diagnose"/>
+            <variable value="dx4"/>
+          </target>
+          <target>
+            <context value="dx4"/>
+            <contextType value="variable"/>
+            <element value="weitereKlassifikationen"/>
+            <variable value="wk"/>
+          </target>
+          <dependent>
+            <name value="MapWeitereKlassifikation"/>
+            <variable value="ra"/>
+            <variable value="wk"/>
+          </dependent>
+        </rule>
       </rule>
     </rule>
   </group>
@@ -300,11 +679,6 @@
       <name value="tgt"/>
       <type value="BackboneElement"/>
       <mode value="target"/>
-    </input>
-    <input>
-      <name value="bundle"/>
-      <type value="Bundle"/>
-      <mode value="source"/>
     </input>
     <rule>
       <name value="MapDiagnosetext"/>
@@ -487,375 +861,6 @@
         </rule>
       </rule>
     </rule>
-    <rule>
-      <name value="EntryHistologie"/>
-      <source>
-        <context value="bundle"/>
-        <element value="entry"/>
-        <variable value="histEntry"/>
-        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"/>
-      </source>
-      <rule>
-        <name value="CallMapHistologie"/>
-        <source>
-          <context value="histEntry"/>
-          <element value="resource"/>
-          <variable value="histObs"/>
-        </source>
-        <target>
-          <context value="tgt"/>
-          <contextType value="variable"/>
-          <element value="histologie"/>
-          <variable value="histo"/>
-        </target>
-        <dependent>
-          <name value="MapHistologie"/>
-          <variable value="histObs"/>
-          <variable value="histo"/>
-        </dependent>
-      </rule>
-      <rule>
-        <name value="EntrySpecimen"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="specEntry"/>
-          <condition value="resource.is(Specimen)"/>
-        </source>
-        <rule>
-          <name value="SpecimenContext"/>
-          <source>
-            <context value="specEntry"/>
-            <element value="resource"/>
-            <variable value="specimen"/>
-          </source>
-          <rule>
-            <name value="MapAccessionId"/>
-            <source>
-              <context value="specimen"/>
-              <element value="accessionIdentifier"/>
-              <variable value="accId"/>
-            </source>
-            <rule>
-              <name value="SetEinsendeNrFromSpecimen"/>
-              <source>
-                <context value="accId"/>
-                <element value="value"/>
-                <variable value="v"/>
-              </source>
-              <target>
-                <context value="histo"/>
-                <contextType value="variable"/>
-                <element value="histologieEinsendeNr"/>
-                <transform value="copy"/>
-                <parameter>
-                  <valueId value="v"/>
-                </parameter>
-              </target>
-            </rule>
-          </rule>
-          <rule>
-            <name value="MapSpecimenCollection"/>
-            <source>
-              <context value="specimen"/>
-              <element value="collection"/>
-              <variable value="coll"/>
-            </source>
-            <rule>
-              <name value="SetHistologiedatumFromSpecimen"/>
-              <source>
-                <context value="coll"/>
-                <element value="collected"/>
-                <variable value="collDt"/>
-                <condition value="$this.is(dateTime)"/>
-              </source>
-              <target>
-                <context value="histo"/>
-                <contextType value="variable"/>
-                <element value="tumorHistologiedatum"/>
-                <transform value="copy"/>
-                <parameter>
-                  <valueId value="collDt"/>
-                </parameter>
-              </target>
-            </rule>
-          </rule>
-        </rule>
-      </rule>
-      <rule>
-        <name value="EntryGrading"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="gradEntry"/>
-          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59542-1')"/>
-        </source>
-        <rule>
-          <name value="MapGradingSepObs"/>
-          <source>
-            <context value="gradEntry"/>
-            <element value="resource"/>
-            <variable value="gradObs"/>
-          </source>
-          <rule>
-            <name value="MapGradingSepValue"/>
-            <source>
-              <context value="gradObs"/>
-              <element value="value"/>
-              <variable value="val"/>
-            </source>
-            <rule>
-              <name value="TranslateGradingSeparate"/>
-              <source>
-                <context value="val"/>
-                <element value="coding"/>
-                <variable value="c"/>
-              </source>
-              <target>
-                <context value="histo"/>
-                <contextType value="variable"/>
-                <element value="grading"/>
-                <transform value="translate"/>
-                <parameter>
-                  <valueId value="c"/>
-                </parameter>
-                <parameter>
-                  <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"/>
-                </parameter>
-                <parameter>
-                  <valueString value="code"/>
-                </parameter>
-              </target>
-            </rule>
-          </rule>
-        </rule>
-      </rule>
-      <rule>
-        <name value="EntryLKUntersucht"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="lkEntry"/>
-          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"/>
-        </source>
-        <rule>
-          <name value="MapLKUntersuchtSep"/>
-          <source>
-            <context value="lkEntry"/>
-            <element value="resource"/>
-            <variable value="lkObs"/>
-          </source>
-          <rule>
-            <name value="SetLKUntersuchtSeparate"/>
-            <source>
-              <context value="lkObs"/>
-              <element value="value"/>
-              <variable value="val"/>
-            </source>
-            <target>
-              <context value="histo"/>
-              <contextType value="variable"/>
-              <element value="lkUntersucht"/>
-              <transform value="copy"/>
-              <parameter>
-                <valueId value="val"/>
-              </parameter>
-            </target>
-          </rule>
-        </rule>
-      </rule>
-      <rule>
-        <name value="EntryLKBefallen"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="lkbEntry"/>
-          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"/>
-        </source>
-        <rule>
-          <name value="MapLKBefallenSep"/>
-          <source>
-            <context value="lkbEntry"/>
-            <element value="resource"/>
-            <variable value="lkbObs"/>
-          </source>
-          <rule>
-            <name value="SetLKBefallenSeparate"/>
-            <source>
-              <context value="lkbObs"/>
-              <element value="value"/>
-              <variable value="val"/>
-            </source>
-            <target>
-              <context value="histo"/>
-              <contextType value="variable"/>
-              <element value="lkBefallen"/>
-              <transform value="copy"/>
-              <parameter>
-                <valueId value="val"/>
-              </parameter>
-            </target>
-          </rule>
-        </rule>
-      </rule>
-      <rule>
-        <name value="EntrySentinelLKUntersucht"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="slkEntry"/>
-          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"/>
-        </source>
-        <rule>
-          <name value="MapSentinelLKUntersuchtSep"/>
-          <source>
-            <context value="slkEntry"/>
-            <element value="resource"/>
-            <variable value="slkObs"/>
-          </source>
-          <rule>
-            <name value="SetSentinelLKUntersuchtSeparate"/>
-            <source>
-              <context value="slkObs"/>
-              <element value="value"/>
-              <variable value="val"/>
-            </source>
-            <target>
-              <context value="histo"/>
-              <contextType value="variable"/>
-              <element value="sentinelLKUntersucht"/>
-              <transform value="copy"/>
-              <parameter>
-                <valueId value="val"/>
-              </parameter>
-            </target>
-          </rule>
-        </rule>
-      </rule>
-      <rule>
-        <name value="EntrySentinelLKBefallen"/>
-        <source>
-          <context value="bundle"/>
-          <element value="entry"/>
-          <variable value="slkbEntry"/>
-          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '92831-7')"/>
-        </source>
-        <rule>
-          <name value="MapSentinelLKBefallenSep"/>
-          <source>
-            <context value="slkbEntry"/>
-            <element value="resource"/>
-            <variable value="slkbObs"/>
-          </source>
-          <rule>
-            <name value="SetSentinelLKBefallenSeparate"/>
-            <source>
-              <context value="slkbObs"/>
-              <element value="value"/>
-              <variable value="val"/>
-            </source>
-            <target>
-              <context value="histo"/>
-              <contextType value="variable"/>
-              <element value="sentinelLKBefallen"/>
-              <transform value="copy"/>
-              <parameter>
-                <valueId value="val"/>
-              </parameter>
-            </target>
-          </rule>
-        </rule>
-      </rule>
-    </rule>
-    <rule>
-      <name value="EntryCTNM"/>
-      <source>
-        <context value="bundle"/>
-        <element value="entry"/>
-        <variable value="tnmEntry"/>
-        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"/>
-      </source>
-      <rule>
-        <name value="CallMapCTNM"/>
-        <source>
-          <context value="tnmEntry"/>
-          <element value="resource"/>
-          <variable value="tnmObs"/>
-        </source>
-        <target>
-          <context value="tgt"/>
-          <contextType value="variable"/>
-          <element value="cTNM"/>
-          <variable value="ctnm"/>
-        </target>
-        <dependent>
-          <name value="MapTNM"/>
-          <variable value="tnmObs"/>
-          <variable value="ctnm"/>
-        </dependent>
-      </rule>
-    </rule>
-    <rule>
-      <name value="CallMapLeistungszustand"/>
-      <source>
-        <context value="src"/>
-      </source>
-      <target>
-        <context value="tgt"/>
-        <contextType value="variable"/>
-      </target>
-      <dependent>
-        <name value="MapLeistungszustandFromBundle"/>
-        <variable value="bundle"/>
-        <variable value="tgt"/>
-      </dependent>
-    </rule>
-    <rule>
-      <name value="CallMapModulMamma"/>
-      <source>
-        <context value="src"/>
-      </source>
-      <target>
-        <context value="tgt"/>
-        <contextType value="variable"/>
-        <element value="modulMamma"/>
-        <variable value="mamma"/>
-      </target>
-      <dependent>
-        <name value="MapModulMamma"/>
-        <variable value="bundle"/>
-        <variable value="mamma"/>
-      </dependent>
-    </rule>
-    <rule>
-      <name value="EntryWeitereKlassifikation"/>
-      <source>
-        <context value="bundle"/>
-        <element value="entry"/>
-        <variable value="raEntry"/>
-        <condition value="resource.is(RiskAssessment)"/>
-      </source>
-      <rule>
-        <name value="CallMapWeitereKlassifikation"/>
-        <source>
-          <context value="raEntry"/>
-          <element value="resource"/>
-          <variable value="ra"/>
-        </source>
-        <target>
-          <context value="tgt"/>
-          <contextType value="variable"/>
-          <element value="weitereKlassifikationen"/>
-          <variable value="wk"/>
-        </target>
-        <dependent>
-          <name value="MapWeitereKlassifikation"/>
-          <variable value="ra"/>
-          <variable value="bundle"/>
-          <variable value="wk"/>
-        </dependent>
-      </rule>
-    </rule>
   </group>
   <group>
     <name value="MapWeitereKlassifikation"/>
@@ -864,11 +869,6 @@
     <input>
       <name value="src"/>
       <type value="RiskAssessment"/>
-      <mode value="source"/>
-    </input>
-    <input>
-      <name value="bundle"/>
-      <type value="Bundle"/>
       <mode value="source"/>
     </input>
     <input>

@@ -50,3 +50,14 @@ Einige Datenpunkte der Verlaufsmeldung — etwa die Art der Nachsorge (aktiv: Pa
 
 Die genaue Abgrenzung, welche Verlaufsinformationen klinisch dokumentiert und welche erst bei der Meldungserstellung ergänzt werden, ist Gegenstand der weiteren Ausgestaltung dieses Moduls.
 
+## Zugehörige Ressourcen
+
+| | |
+| :--- | :--- |
+| Profil | [Senologie_FollowUp](StructureDefinition-senologie-follow-up.md) |
+| Profil | [Senologie_Psychoonkologie](StructureDefinition-senologie-psychoonkologie.md) |
+| Profil | [Senologie_Sozialdienst](StructureDefinition-senologie-sozialdienst.md) |
+| Questionnaire | [Verlauf](Questionnaire-senologie-verlauf.md) |
+| Beispiel | [Fall 1 — Verlauf 6 Monate](Observation-Fall1-Verlauf-6Monate.md) |
+| Beispiel | [Fall 1 — ECOG](Observation-Fall1-ECOG-6Monate.md) |
+

@@ -12,13 +12,13 @@
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/procedure.html" title="Procedure">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style="color: navy">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>
 <b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
-<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-oncobox-brust-meldung.html" title="OncoBox Brust N1.1.1 Meldung (Logical Model)">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>
 
-<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups (MapSystemtherapie, MapStrahlentherapie) use</span>
-<span style="color: navy">// </span><span style="color: green">`target tgt : BackboneElement` because FML has no syntax to declare the</span>
-<span style="color: navy">// </span><span style="color: green">Logical Model sub-path for BackboneElement slices. The IG Publisher produces</span>
-<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH errors (~19). Element names are correct per the OncoBox Brust</span>
-<span style="color: navy">// </span><span style="color: green">Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">context (primaerfall.systemtherapie / primaerfall.strahlentherapie /</span>
+<span style="color: navy">// </span><span style="color: green">primaerfall.endokrineTherapie). Omitting the root-level target type avoids</span>
+<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH false positives where the validator would resolve property</span>
+<span style="color: navy">// </span><span style="color: green">names against oncobox-brust-meldung root.</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
 <span style="color: navy">// </span><span style="color: green">Systemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -&gt; Syst-Block</span>
 <span style="color: navy">// </span><span style="color: green">Relevante Felder fuer OncoBox / Kennzahlen:</span>
@@ -152,7 +152,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToOncoBoxBrustTherapie"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:51:52+00:00"/>
+  <date value="2026-05-04T11:25:12+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -177,15 +177,10 @@
     <mode value="source"/>
     <alias value="Observation"/>
   </structure>
-  <structure>
-    <url value="https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"/>
-    <mode value="target"/>
-    <alias value="OncoBoxBrust"/>
-  </structure>
   <group>
     <name value="MapSystemtherapie"/>
     <typeMode value="none"/>
-    <documentation value="Known limitation: Sub-groups (MapSystemtherapie, MapStrahlentherapie) use&#xD;&#xA;`target tgt : BackboneElement` because FML has no syntax to declare the&#xD;&#xA;Logical Model sub-path for BackboneElement slices. The IG Publisher produces&#xD;&#xA;SM_TARGET_PATH errors (~19). Element names are correct per the OncoBox Brust&#xD;&#xA;Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Systemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -&gt; Syst-Block&#xD;&#xA;Relevante Felder fuer OncoBox / Kennzahlen:&#xD;&#xA;- KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)&#xD;&#xA;- KB-7: Trastuzumab bei HER2-positiven Patientinnen&#xD;&#xA;- KB-8: First-Line-Therapie bei Metastasierung&#xD;&#xA;============================================================================"/>
+    <documentation value="Import-only map: no target `uses` declaration — the calling map&#xD;&#xA;(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement&#xD;&#xA;context (primaerfall.systemtherapie / primaerfall.strahlentherapie /&#xD;&#xA;primaerfall.endokrineTherapie). Omitting the root-level target type avoids&#xD;&#xA;SM_TARGET_PATH false positives where the validator would resolve property&#xD;&#xA;names against oncobox-brust-meldung root.&#xD;&#xA;============================================================================&#xD;&#xA;Systemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -&gt; Syst-Block&#xD;&#xA;Relevante Felder fuer OncoBox / Kennzahlen:&#xD;&#xA;- KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)&#xD;&#xA;- KB-7: Trastuzumab bei HER2-positiven Patientinnen&#xD;&#xA;- KB-8: First-Line-Therapie bei Metastasierung&#xD;&#xA;============================================================================"/>
     <input>
       <name value="src"/>
       <type value="Procedure"/>

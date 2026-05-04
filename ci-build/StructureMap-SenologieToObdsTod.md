@@ -26,7 +26,7 @@ title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsTod",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -127,7 +127,83 @@ title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft
         }],
         "dependent" : [{
           "name" : "MapTod",
-          "variable" : ["patient", "tod", "src"]
+          "variable" : ["patient", "tod"]
+        }]
+      },
+      {
+        "name" : "EntryCheckTumorbedingt",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "codEntry",
+          "condition" : "resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')"
+        }],
+        "rule" : [{
+          "name" : "AnalyseCodCondition",
+          "source" : [{
+            "context" : "codEntry",
+            "element" : "resource",
+            "variable" : "codCondition"
+          }],
+          "rule" : [{
+            "name" : "CheckCodCode",
+            "source" : [{
+              "context" : "codCondition",
+              "element" : "code",
+              "variable" : "code"
+            }],
+            "rule" : [{
+              "name" : "CheckIsCancer",
+              "source" : [{
+                "context" : "code",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C')"
+              }],
+              "rule" : [{
+                "name" : "SetTodTumorbedingtJa",
+                "source" : [{
+                  "context" : "c"
+                }],
+                "target" : [{
+                  "context" : "tod",
+                  "contextType" : "variable",
+                  "element" : "todTumorbedingt",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "J"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "EntryTodesursachen",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "codEntry2",
+          "condition" : "resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')"
+        }],
+        "rule" : [{
+          "name" : "CallMapTodesursache",
+          "source" : [{
+            "context" : "codEntry2",
+            "element" : "resource",
+            "variable" : "codCondition"
+          }],
+          "target" : [{
+            "context" : "tod",
+            "contextType" : "variable",
+            "element" : "todesursachen",
+            "variable" : "tu"
+          }],
+          "dependent" : [{
+            "name" : "MapTodesursache",
+            "variable" : ["codCondition", "tu"]
+          }]
         }]
       }]
     }]
@@ -145,11 +221,6 @@ title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetAbschlussID",
@@ -202,55 +273,6 @@ title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft
       }]
     },
     {
-      "name" : "EntryCheckTumorbedingt",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "codEntry",
-        "condition" : "resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')"
-      }],
-      "rule" : [{
-        "name" : "AnalyseCodCondition",
-        "source" : [{
-          "context" : "codEntry",
-          "element" : "resource",
-          "variable" : "codCondition"
-        }],
-        "rule" : [{
-          "name" : "CheckCodCode",
-          "source" : [{
-            "context" : "codCondition",
-            "element" : "code",
-            "variable" : "code"
-          }],
-          "rule" : [{
-            "name" : "CheckIsCancer",
-            "source" : [{
-              "context" : "code",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and code.startsWith('C')"
-            }],
-            "rule" : [{
-              "name" : "SetTodTumorbedingtJa",
-              "source" : [{
-                "context" : "c"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "todTumorbedingt",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueString" : "J"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
       "name" : "MapTodTumorbedingtExtension",
       "source" : [{
         "context" : "src",
@@ -289,33 +311,6 @@ title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft
               }]
             }]
           }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryTodesursachen",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "codEntry",
-        "condition" : "resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death')"
-      }],
-      "rule" : [{
-        "name" : "CallMapTodesursache",
-        "source" : [{
-          "context" : "codEntry",
-          "element" : "resource",
-          "variable" : "codCondition"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "todesursachen",
-          "variable" : "tu"
-        }],
-        "dependent" : [{
-          "name" : "MapTodesursache",
-          "variable" : ["codCondition", "tu"]
         }]
       }]
     }]

@@ -28,7 +28,9 @@
 <b>group </b>SenologieToObdsST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">Strahlentherapie-Procedure extrahieren</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))<b> then</b><span style="color: navy"> {
-</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapST&quot;</i><span style="color: navy">;</span>
+</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">)</span> <i>&quot;CallMapST&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Nebenwirkungen (moved from MapST)</span>
+    entry.resource<b> as </b><span style="color: maroon">proc2</span><span style="color: navy"><b> -&gt; </b></span> tgt.st<b> as </b><span style="color: maroon">st2</span><span style="color: navy">, </span> st2.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenST<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryST&quot;</i><span style="color: navy">;</span>
 <span style="color: navy">}
 
@@ -36,7 +38,7 @@
 <span style="color: navy">// </span><span style="color: green">MapST: Procedure → oBDS ST Basisdaten</span>
 <span style="color: navy">// </span><span style="color: green">Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege</span>
 <span style="color: navy">// </span><span style="color: green">============================================================================</span>
-<b>group </b>MapST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+<b>group </b>MapST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
 </span>  <span style="color: navy">// </span><span style="color: green">ST_ID: Procedure.id</span>
   src.id<b> as </b><span style="color: maroon">id</span><span style="color: navy"><b> -&gt; </b></span>tgt.stID = <span style="color: maroon">id</span> <i>&quot;SetStID&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Meldeanlass: abgeleitet aus vorhandenem Enddatum</span>
@@ -60,8 +62,7 @@
   src.outcome<b> as </b><span style="color: maroon">oc</span><b> then</b><span style="color: navy"> {
 </span>    oc.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.endeGrund = <span style="color: navy">(</span>c.code<span style="color: navy">)</span> <i>&quot;SetEndeGrundCode&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapEndeGrund&quot;</i><span style="color: navy">;</span>
-  <span style="color: navy">// </span><span style="color: green">Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (ST-Variante)</span>
-  src<span style="color: navy"><b> -&gt; </b></span>tgt.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenST<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">Nebenwirkungen bundle lookup moved to calling group.</span>
 <span style="color: navy">}
 
 </span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
@@ -130,7 +131,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToObdsST"/>
   <status value="draft"/>
-  <date value="2026-05-04T09:51:52+00:00"/>
+  <date value="2026-05-04T11:25:12+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -191,7 +192,31 @@
           <name value="MapST"/>
           <variable value="proc"/>
           <variable value="st"/>
+        </dependent>
+      </rule>
+      <rule>
+        <name value="CallMapNebenwirkungen"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="proc2"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="st"/>
+          <variable value="st2"/>
+        </target>
+        <target>
+          <context value="st2"/>
+          <contextType value="variable"/>
+          <element value="nebenwirkungen"/>
+          <variable value="nw"/>
+        </target>
+        <dependent>
+          <name value="MapNebenwirkungenST"/>
           <variable value="src"/>
+          <variable value="nw"/>
         </dependent>
       </rule>
     </rule>
@@ -209,11 +234,6 @@
       <name value="tgt"/>
       <type value="BackboneElement"/>
       <mode value="target"/>
-    </input>
-    <input>
-      <name value="bundle"/>
-      <type value="Bundle"/>
-      <mode value="source"/>
     </input>
     <rule>
       <name value="SetStID"/>
@@ -377,23 +397,6 @@
           </parameter>
         </target>
       </rule>
-    </rule>
-    <rule>
-      <name value="CallMapNebenwirkungen"/>
-      <source>
-        <context value="src"/>
-      </source>
-      <target>
-        <context value="tgt"/>
-        <contextType value="variable"/>
-        <element value="nebenwirkungen"/>
-        <variable value="nw"/>
-      </target>
-      <dependent>
-        <name value="MapNebenwirkungenST"/>
-        <variable value="bundle"/>
-        <variable value="nw"/>
-      </dependent>
     </rule>
   </group>
   <group>

@@ -26,7 +26,7 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustTherapie",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -50,16 +50,11 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
     "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
     "mode" : "source",
     "alias" : "Observation"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
-    "mode" : "target",
-    "alias" : "OncoBoxBrust"
   }],
   "group" : [{
     "name" : "MapSystemtherapie",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups (MapSystemtherapie, MapStrahlentherapie) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nLogical Model sub-path for BackboneElement slices. The IG Publisher produces\r\nSM_TARGET_PATH errors (~19). Element names are correct per the OncoBox Brust\r\nLogical Model.\r\n============================================================================\r\nSystemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -> Syst-Block\r\nRelevante Felder fuer OncoBox / Kennzahlen:\r\n- KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)\r\n- KB-7: Trastuzumab bei HER2-positiven Patientinnen\r\n- KB-8: First-Line-Therapie bei Metastasierung\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToOncoBoxBrustPrimaerfall) provides the correct BackboneElement\r\ncontext (primaerfall.systemtherapie / primaerfall.strahlentherapie /\r\nprimaerfall.endokrineTherapie). Omitting the root-level target type avoids\r\nSM_TARGET_PATH false positives where the validator would resolve property\r\nnames against oncobox-brust-meldung root.\r\n============================================================================\r\nSystemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -> Syst-Block\r\nRelevante Felder fuer OncoBox / Kennzahlen:\r\n- KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)\r\n- KB-7: Trastuzumab bei HER2-positiven Patientinnen\r\n- KB-8: First-Line-Therapie bei Metastasierung\r\n============================================================================",
     "input" : [{
       "name" : "src",
       "type" : "Procedure",

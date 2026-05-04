@@ -50,3 +50,17 @@ Operative Komplikationen werden nach der Clavien-Dindo-Klassifikation (Grad I–
 
 Bei Brustrekonstruktion mit Implantat werden zusätzlich Implantat-Daten erfasst (Hersteller, Typ, Volumen, UDI). Diese sind für die gesetzliche Meldung an das Implantatregister (IRegG) erforderlich.
 
+## Zugehörige Ressourcen
+
+| | |
+| :--- | :--- |
+| Profil | [Senologie_Operation](StructureDefinition-senologie-operation.md) |
+| Profil | [Senologie_OP_Planung](StructureDefinition-senologie-op-planung.md) |
+| Profil | [Senologie_Operative_Komplikation](StructureDefinition-senologie-operative-komplikation.md) |
+| Profil | [Senologie_Implantat](StructureDefinition-senologie-implantat.md) |
+| Questionnaire | [OP-Planung](Questionnaire-senologie-op-planung.md) |
+| Questionnaire | [Postoperativ](Questionnaire-senologie-postop.md) |
+| Beispiel | [Fall 1 — BET](Procedure-Fall1-Operation-BET.md) |
+| Beispiel | [Fall 1 — SLNB](Procedure-Fall1-Operation-SLNB.md) |
+| Beispiel | [Fall 1 — OP-Planung](ServiceRequest-Fall1-OP-Planung.md) |
+

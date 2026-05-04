@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to OncoBox Brust N1.1.1 (Orchestrator) status: draf
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrust",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -129,30 +129,19 @@ title: Senologie FHIR Bundle to OncoBox Brust N1.1.1 (Orchestrator) status: draf
       }]
     },
     {
-      "name" : "EntryPrimaerfall",
+      "name" : "CallMapPrimaerfall",
       "source" : [{
-        "context" : "src",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Condition) and resource.code.coding.exists((system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and (code.startsWith('C50') or code.startsWith('D05') or code.startsWith('D24') or code.startsWith('Z40') or code.startsWith('Z42')))"
+        "context" : "src"
       }],
-      "rule" : [{
-        "name" : "CallMapPrimaerfall",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "condition"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "primaerfall",
-          "variable" : "pf"
-        }],
-        "dependent" : [{
-          "name" : "MapPrimaerfall",
-          "variable" : ["condition", "pf", "src"]
-        }]
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "primaerfall",
+        "variable" : "pf"
+      }],
+      "dependent" : [{
+        "name" : "MapPrimaerfall",
+        "variable" : ["src", "pf"]
       }]
     },
     {

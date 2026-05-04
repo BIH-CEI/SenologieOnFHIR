@@ -26,7 +26,7 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustPrimaerfall",
   "status" : "draft",
-  "date" : "2026-05-04T09:51:52+00:00",
+  "date" : "2026-05-04T11:25:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -75,11 +75,6 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
     "url" : "http://hl7.org/fhir/StructureDefinition/ResearchSubject",
     "mode" : "source",
     "alias" : "ResearchSubject"
-  },
-  {
-    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
-    "mode" : "target",
-    "alias" : "OncoBoxBrust"
   }],
   "import" : ["https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation",
   "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie",
@@ -87,142 +82,170 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
   "group" : [{
     "name" : "MapPrimaerfall",
     "typeMode" : "none",
-    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nPrimaerfall: Condition (Brust-Diagnose) + Patient + Encounter -> Primaerfall\r\nPro Primaerfall (Condition mit ICD-10 aus dem Mamma-Spektrum) werden\r\nPatientendaten, Fall-Daten, Diagnose-Block und Therapie-Subblocks befuellt.\r\n============================================================================",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToOncoBoxBrust) provides the correct BackboneElement context\r\n(primaerfall). Omitting the root-level target type avoids SM_TARGET_PATH\r\nfalse positives where the validator would resolve property names against\r\noncobox-brust-meldung root.\r\n============================================================================\r\nPrimaerfall: Condition (Brust-Diagnose) + Patient + Encounter -> Primaerfall\r\nPro Primaerfall (Condition mit ICD-10 aus dem Mamma-Spektrum) werden\r\nPatientendaten, Fall-Daten, Diagnose-Block und Therapie-Subblocks befuellt.\r\n============================================================================",
     "input" : [{
-      "name" : "src",
-      "type" : "Condition",
+      "name" : "bundle",
+      "type" : "Bundle",
       "mode" : "source"
     },
     {
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
-      "name" : "SetFallId",
+      "name" : "EntryCondition",
       "source" : [{
-        "context" : "src",
-        "element" : "id",
-        "variable" : "cid"
-      }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable",
-        "element" : "fallId",
-        "transform" : "copy",
-        "parameter" : [{
-          "valueId" : "cid"
-        }]
-      }]
-    },
-    {
-      "name" : "MapPrimaerfallart",
-      "source" : [{
-        "context" : "src",
-        "element" : "code",
-        "variable" : "code"
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "condEntry",
+        "condition" : "resource.is(Condition) and resource.code.coding.exists((system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm') and (code.startsWith('C50') or code.startsWith('D05') or code.startsWith('D24') or code.startsWith('Z40') or code.startsWith('Z42')))"
       }],
       "rule" : [{
-        "name" : "MapPrimaerfallartICD",
+        "name" : "ConditionCtx",
         "source" : [{
-          "context" : "code",
-          "element" : "coding",
-          "variable" : "c",
-          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+          "context" : "condEntry",
+          "element" : "resource",
+          "variable" : "src"
         }],
         "rule" : [{
-          "name" : "SetPfArtInvasiv",
+          "name" : "SetFallId",
           "source" : [{
-            "context" : "c",
-            "element" : "code",
-            "variable" : "cd",
-            "condition" : "$this.startsWith('C50')"
+            "context" : "src",
+            "element" : "id",
+            "variable" : "cid"
           }],
           "target" : [{
             "context" : "tgt",
             "contextType" : "variable",
-            "element" : "primaerfallart",
+            "element" : "fallId",
             "transform" : "copy",
             "parameter" : [{
-              "valueString" : "1"
+              "valueId" : "cid"
             }]
           }]
         },
         {
-          "name" : "SetPfArtDCIS",
+          "name" : "MapPrimaerfallart",
           "source" : [{
-            "context" : "c",
+            "context" : "src",
             "element" : "code",
-            "variable" : "cd",
-            "condition" : "$this.startsWith('D05')"
+            "variable" : "code"
           }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "primaerfallart",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueString" : "2"
+          "rule" : [{
+            "name" : "MapPrimaerfallartICD",
+            "source" : [{
+              "context" : "code",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+            }],
+            "rule" : [{
+              "name" : "SetPfArtInvasiv",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this.startsWith('C50')"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "primaerfallart",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            },
+            {
+              "name" : "SetPfArtDCIS",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this.startsWith('D05')"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "primaerfallart",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "2"
+                }]
+              }]
+            },
+            {
+              "name" : "SetPfArtRisiko",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this.startsWith('Z40')"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "primaerfallart",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "7"
+                }]
+              }]
+            },
+            {
+              "name" : "SetPfArtRekon",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this.startsWith('Z42')"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "primaerfallart",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "8"
+                }]
+              }]
+            },
+            {
+              "name" : "SetPfArtBenigne",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this.startsWith('D24')"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "primaerfallart",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "9"
+                }]
+              }]
             }]
           }]
         },
         {
-          "name" : "SetPfArtRisiko",
+          "name" : "CallMapDiagnose",
           "source" : [{
-            "context" : "c",
-            "element" : "code",
-            "variable" : "cd",
-            "condition" : "$this.startsWith('Z40')"
+            "context" : "src"
           }],
           "target" : [{
             "context" : "tgt",
             "contextType" : "variable",
-            "element" : "primaerfallart",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueString" : "7"
-            }]
-          }]
-        },
-        {
-          "name" : "SetPfArtRekon",
-          "source" : [{
-            "context" : "c",
-            "element" : "code",
-            "variable" : "cd",
-            "condition" : "$this.startsWith('Z42')"
+            "element" : "diagnose",
+            "variable" : "diag"
           }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "primaerfallart",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueString" : "8"
-            }]
-          }]
-        },
-        {
-          "name" : "SetPfArtBenigne",
-          "source" : [{
-            "context" : "c",
-            "element" : "code",
-            "variable" : "cd",
-            "condition" : "$this.startsWith('D24')"
-          }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "primaerfallart",
-            "transform" : "copy",
-            "parameter" : [{
-              "valueString" : "9"
-            }]
+          "dependent" : [{
+            "name" : "MapDiagnose",
+            "variable" : ["src", "diag"]
           }]
         }]
       }]
@@ -250,7 +273,7 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
         }],
         "dependent" : [{
           "name" : "MapPatient",
-          "variable" : ["patient", "pat", "bundle"]
+          "variable" : ["patient", "pat"]
         }]
       },
       {
@@ -274,6 +297,93 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
             "transform" : "copy",
             "parameter" : [{
               "valueId" : "pid"
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "EntryMeno",
+        "source" : [{
+          "context" : "bundle",
+          "element" : "entry",
+          "variable" : "menoEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '86805-9')"
+        }],
+        "rule" : [{
+          "name" : "MapMenoObs",
+          "source" : [{
+            "context" : "menoEntry",
+            "element" : "resource",
+            "variable" : "obs"
+          }],
+          "rule" : [{
+            "name" : "MapMenoVal",
+            "source" : [{
+              "context" : "obs",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "MapMenoCoding",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c"
+              }],
+              "rule" : [{
+                "name" : "SetMenoPrae",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = '289903006'"
+                }],
+                "target" : [{
+                  "context" : "pat",
+                  "contextType" : "variable",
+                  "element" : "menopausenstatus",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "1"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetMenoPeri",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = '289904000'"
+                }],
+                "target" : [{
+                  "context" : "pat",
+                  "contextType" : "variable",
+                  "element" : "menopausenstatus",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "2"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetMenoPost",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = '76977008'"
+                }],
+                "target" : [{
+                  "context" : "pat",
+                  "contextType" : "variable",
+                  "element" : "menopausenstatus",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "3"
+                  }]
+                }]
+              }]
             }]
           }]
         }]
@@ -307,19 +417,1650 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
       }]
     },
     {
-      "name" : "CallMapDiagnose",
+      "name" : "EntryHistPraeop",
       "source" : [{
-        "context" : "src"
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "specEntry",
+        "condition" : "resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))"
       }],
-      "target" : [{
-        "context" : "tgt",
-        "contextType" : "variable",
-        "element" : "diagnose",
-        "variable" : "diag"
+      "rule" : [{
+        "name" : "MapHistPraeopSpec",
+        "source" : [{
+          "context" : "specEntry",
+          "element" : "resource",
+          "variable" : "specimen"
+        }],
+        "rule" : [{
+          "name" : "MapHistPraeopType",
+          "source" : [{
+            "context" : "specimen",
+            "element" : "type",
+            "variable" : "t"
+          }],
+          "rule" : [{
+            "name" : "WrapHistPraeopStanz",
+            "source" : [{
+              "context" : "t",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '122737001'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "diagnose",
+              "variable" : "diag"
+            }],
+            "rule" : [{
+              "name" : "SetHistPraeopStanz",
+              "source" : [{
+                "context" : "c"
+              }],
+              "target" : [{
+                "context" : "diag",
+                "contextType" : "variable",
+                "element" : "histologischeSicherungPraeop",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            }]
+          },
+          {
+            "name" : "WrapHistPraeopVakuum",
+            "source" : [{
+              "context" : "t",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '399014008'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "diagnose",
+              "variable" : "diag"
+            }],
+            "rule" : [{
+              "name" : "SetHistPraeopVakuum",
+              "source" : [{
+                "context" : "c"
+              }],
+              "target" : [{
+                "context" : "diag",
+                "contextType" : "variable",
+                "element" : "histologischeSicherungPraeop",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "2"
+                }]
+              }]
+            }]
+          },
+          {
+            "name" : "WrapHistPraeopFNA",
+            "source" : [{
+              "context" : "t",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '119342007'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "diagnose",
+              "variable" : "diag"
+            }],
+            "rule" : [{
+              "name" : "SetHistPraeopFNA",
+              "source" : [{
+                "context" : "c"
+              }],
+              "target" : [{
+                "context" : "diag",
+                "contextType" : "variable",
+                "element" : "histologischeSicherungPraeop",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "3"
+                }]
+              }]
+            }]
+          },
+          {
+            "name" : "WrapHistPraeopOffen",
+            "source" : [{
+              "context" : "t",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '119380005'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "diagnose",
+              "variable" : "diag"
+            }],
+            "rule" : [{
+              "name" : "SetHistPraeopOffen",
+              "source" : [{
+                "context" : "c"
+              }],
+              "target" : [{
+                "context" : "diag",
+                "contextType" : "variable",
+                "element" : "histologischeSicherungPraeop",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "4"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryBg",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "bgEntry",
+        "condition" : "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung'))"
       }],
-      "dependent" : [{
-        "name" : "MapDiagnose",
-        "variable" : ["src", "diag", "bundle"]
+      "rule" : [{
+        "name" : "WrapBgDiag",
+        "source" : [{
+          "context" : "bgEntry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        }],
+        "rule" : [{
+          "name" : "CallMapBgInner",
+          "source" : [{
+            "context" : "obs"
+          }],
+          "target" : [{
+            "context" : "diag",
+            "contextType" : "variable",
+            "element" : "bildgebung",
+            "variable" : "bg"
+          }],
+          "dependent" : [{
+            "name" : "MapBildgebung",
+            "variable" : ["obs", "bg"]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCT",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21905-5')"
+      }],
+      "rule" : [{
+        "name" : "MapCT",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "cTNM",
+          "variable" : "ctnm"
+        }],
+        "rule" : [{
+          "name" : "MapCTVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapCTCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCT",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ctnm",
+                "contextType" : "variable",
+                "element" : "cT",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCN",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21906-3')"
+      }],
+      "rule" : [{
+        "name" : "MapCN",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "cTNM",
+          "variable" : "ctnm"
+        }],
+        "rule" : [{
+          "name" : "MapCNVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapCNCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCN",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ctnm",
+                "contextType" : "variable",
+                "element" : "cN",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCM",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21907-1')"
+      }],
+      "rule" : [{
+        "name" : "MapCM",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "cTNM",
+          "variable" : "ctnm"
+        }],
+        "rule" : [{
+          "name" : "MapCMVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapCMCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCM",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ctnm",
+                "contextType" : "variable",
+                "element" : "cM",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTGKlin",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('senologie-bildgebung') or $this.contains('senologie-tumorgroesse')).not()"
+      }],
+      "rule" : [{
+        "name" : "MapTGKlin",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "cTNM",
+          "variable" : "ctnm"
+        }],
+        "rule" : [{
+          "name" : "MapTGKlinVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetTGKlin",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "ctnm",
+              "contextType" : "variable",
+              "element" : "tumorgroesseKlinisch",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPT",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21899-0')"
+      }],
+      "rule" : [{
+        "name" : "MapPT",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "pTNM",
+          "variable" : "ptnm"
+        }],
+        "rule" : [{
+          "name" : "MapPTVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapPTCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPT",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ptnm",
+                "contextType" : "variable",
+                "element" : "pT",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPN",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21900-6')"
+      }],
+      "rule" : [{
+        "name" : "MapPN",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "pTNM",
+          "variable" : "ptnm"
+        }],
+        "rule" : [{
+          "name" : "MapPNVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapPNCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPN",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ptnm",
+                "contextType" : "variable",
+                "element" : "pN",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPM",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21901-4')"
+      }],
+      "rule" : [{
+        "name" : "MapPM",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "pTNM",
+          "variable" : "ptnm"
+        }],
+        "rule" : [{
+          "name" : "MapPMVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapPMCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPM",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ptnm",
+                "contextType" : "variable",
+                "element" : "pM",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTGInv",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '33728-7')"
+      }],
+      "rule" : [{
+        "name" : "MapTGInv",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "pTNM",
+          "variable" : "ptnm"
+        }],
+        "rule" : [{
+          "name" : "MapTGInvVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetTGInv",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "ptnm",
+              "contextType" : "variable",
+              "element" : "tumorgroesseInvasiv",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCTNMDetail",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
+      }],
+      "rule" : [{
+        "name" : "MapCTNMDetail",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "cTNM",
+          "variable" : "ctnm"
+        }],
+        "rule" : [{
+          "name" : "MapCTNMVersion",
+          "source" : [{
+            "context" : "obs",
+            "element" : "method",
+            "variable" : "method"
+          }],
+          "rule" : [{
+            "name" : "ExtractCTNMVersionCode",
+            "source" : [{
+              "context" : "method",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCTNMVersion",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ctnm",
+                "contextType" : "variable",
+                "element" : "tnmVersion",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "MapCUICC",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "ExtractCUICC",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCUICC",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ctnm",
+                "contextType" : "variable",
+                "element" : "uiccStadium",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPTNMDetail",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
+      }],
+      "rule" : [{
+        "name" : "MapPTNMDetail",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "pTNM",
+          "variable" : "ptnm"
+        }],
+        "rule" : [{
+          "name" : "MapPTNMVersion",
+          "source" : [{
+            "context" : "obs",
+            "element" : "method",
+            "variable" : "method"
+          }],
+          "rule" : [{
+            "name" : "ExtractPTNMVersionCode",
+            "source" : [{
+              "context" : "method",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPTNMVersion",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ptnm",
+                "contextType" : "variable",
+                "element" : "tnmVersion",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "MapPUICC",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "ExtractPUICC",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPUICC",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ptnm",
+                "contextType" : "variable",
+                "element" : "uiccStadium",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "MapYSymbol",
+          "source" : [{
+            "context" : "obs",
+            "element" : "component",
+            "variable" : "comp",
+            "condition" : "code.coding.exists(code = '59479-6')"
+          }],
+          "rule" : [{
+            "name" : "MapYValue",
+            "source" : [{
+              "context" : "comp",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "ExtractYCode",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c"
+              }],
+              "rule" : [{
+                "name" : "SetYSymbol",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd"
+                }],
+                "target" : [{
+                  "context" : "ptnm",
+                  "contextType" : "variable",
+                  "element" : "ySymbol",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "cd"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "MapLKat",
+          "source" : [{
+            "context" : "obs",
+            "element" : "component",
+            "variable" : "comp",
+            "condition" : "code.coding.exists(code = '33739-4')"
+          }],
+          "rule" : [{
+            "name" : "MapLValue",
+            "source" : [{
+              "context" : "comp",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "ExtractLCode",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c"
+              }],
+              "rule" : [{
+                "name" : "SetLKat",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd"
+                }],
+                "target" : [{
+                  "context" : "ptnm",
+                  "contextType" : "variable",
+                  "element" : "l",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "cd"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "MapVKat",
+          "source" : [{
+            "context" : "obs",
+            "element" : "component",
+            "variable" : "comp",
+            "condition" : "code.coding.exists(code = '33740-2')"
+          }],
+          "rule" : [{
+            "name" : "MapVValue",
+            "source" : [{
+              "context" : "comp",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "ExtractVCode",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c"
+              }],
+              "rule" : [{
+                "name" : "SetVKat",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd"
+                }],
+                "target" : [{
+                  "context" : "ptnm",
+                  "contextType" : "variable",
+                  "element" : "v",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "cd"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "MapPnKat",
+          "source" : [{
+            "context" : "obs",
+            "element" : "component",
+            "variable" : "comp",
+            "condition" : "code.coding.exists(code = '92837-4')"
+          }],
+          "rule" : [{
+            "name" : "MapPnValue",
+            "source" : [{
+              "context" : "comp",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "ExtractPnCode",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c"
+              }],
+              "rule" : [{
+                "name" : "SetPnKat",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd"
+                }],
+                "target" : [{
+                  "context" : "ptnm",
+                  "contextType" : "variable",
+                  "element" : "pn",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "cd"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryHistologie",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+      }],
+      "rule" : [{
+        "name" : "MapHistObs",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        }],
+        "rule" : [{
+          "name" : "MapHistValue",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapHistICDO",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'urn:oid:2.16.840.1.113883.6.43.1'"
+            }],
+            "target" : [{
+              "context" : "diag",
+              "contextType" : "variable",
+              "element" : "diagnoseICDO",
+              "variable" : "icdo"
+            }],
+            "rule" : [{
+              "name" : "SetHistCode",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "icdo",
+                "contextType" : "variable",
+                "element" : "code",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            },
+            {
+              "name" : "SetHistVersion",
+              "source" : [{
+                "context" : "c",
+                "element" : "version",
+                "variable" : "v"
+              }],
+              "target" : [{
+                "context" : "icdo",
+                "contextType" : "variable",
+                "element" : "version",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "v"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryGrading",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '33732-9')"
+      }],
+      "rule" : [{
+        "name" : "MapGradingObs",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        }],
+        "rule" : [{
+          "name" : "MapGradingVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapGrading",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetGrading",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "diag",
+                "contextType" : "variable",
+                "element" : "grading",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryLKUnt",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"
+      }],
+      "rule" : [{
+        "name" : "MapLKUnt",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "lymphknoten",
+          "variable" : "lk"
+        }],
+        "rule" : [{
+          "name" : "MapLKUntVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetLKUnt",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "lk",
+              "contextType" : "variable",
+              "element" : "untersucht",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryLKBef",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"
+      }],
+      "rule" : [{
+        "name" : "MapLKBef",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "lymphknoten",
+          "variable" : "lk"
+        }],
+        "rule" : [{
+          "name" : "MapLKBefVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetLKBef",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "lk",
+              "contextType" : "variable",
+              "element" : "befallen",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntrySLKUnt",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"
+      }],
+      "rule" : [{
+        "name" : "MapSLKUnt",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "lymphknoten",
+          "variable" : "lk"
+        }],
+        "rule" : [{
+          "name" : "MapSLKUntVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetSLKUnt",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "lk",
+              "contextType" : "variable",
+              "element" : "sentinelUntersucht",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntrySLKBef",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92833-3')"
+      }],
+      "rule" : [{
+        "name" : "MapSLKBef",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "lymphknoten",
+          "variable" : "lk"
+        }],
+        "rule" : [{
+          "name" : "MapSLKBefVal",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetSLKBef",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "lk",
+              "contextType" : "variable",
+              "element" : "sentinelBefallen",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryER",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85337-4')"
+      }],
+      "rule" : [{
+        "name" : "MapERObs",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "rezeptorstatus",
+          "variable" : "rez"
+        }],
+        "rule" : [{
+          "name" : "MapER",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetERPositiv",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '10828004'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "erStatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "P"
+              }]
+            }]
+          },
+          {
+            "name" : "SetERNegativ",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '260385009'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "erStatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "N"
+              }]
+            }]
+          },
+          {
+            "name" : "SetERUnbekannt",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '261665006'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "erStatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "U"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPR",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85339-0')"
+      }],
+      "rule" : [{
+        "name" : "MapPRObs",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "rezeptorstatus",
+          "variable" : "rez"
+        }],
+        "rule" : [{
+          "name" : "MapPR",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetPRPositiv",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '10828004'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "prStatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "P"
+              }]
+            }]
+          },
+          {
+            "name" : "SetPRNegativ",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '260385009'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "prStatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "N"
+              }]
+            }]
+          },
+          {
+            "name" : "SetPRUnbekannt",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '261665006'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "prStatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "U"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryHER2",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85319-2')"
+      }],
+      "rule" : [{
+        "name" : "MapHER2Obs",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "diag"
+        },
+        {
+          "context" : "diag",
+          "contextType" : "variable",
+          "element" : "rezeptorstatus",
+          "variable" : "rez"
+        }],
+        "rule" : [{
+          "name" : "MapHER2",
+          "source" : [{
+            "context" : "obs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetHER2Positiv",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '10828004'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "her2Status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "P"
+              }]
+            }]
+          },
+          {
+            "name" : "SetHER2Negativ",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '260385009'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "her2Status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "N"
+              }]
+            }]
+          },
+          {
+            "name" : "SetHER2Unbekannt",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '261665006'"
+            }],
+            "target" : [{
+              "context" : "rez",
+              "contextType" : "variable",
+              "element" : "her2Status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "U"
+              }]
+            }]
+          }]
+        }]
       }]
     },
     {
@@ -706,7 +2447,7 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
           }],
           "dependent" : [{
             "name" : "MapEndokrineTherapie",
-            "variable" : ["procedure", "endo", "bundle"]
+            "variable" : ["procedure", "endo"]
           }]
         }]
       }]
@@ -734,7 +2475,7 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
         }],
         "dependent" : [{
           "name" : "MapStrahlentherapie",
-          "variable" : ["procedure", "rt", "bundle"]
+          "variable" : ["procedure", "rt"]
         }]
       }]
     },
@@ -822,7 +2563,7 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
     {
       "name" : "CallMapVerlauf",
       "source" : [{
-        "context" : "src"
+        "context" : "bundle"
       }],
       "target" : [{
         "context" : "tgt",
@@ -847,11 +2588,6 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetPatGebdat",
@@ -963,93 +2699,6 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
           "transform" : "copy",
           "parameter" : [{
             "valueId" : "plz"
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryMeno",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '86805-9')"
-      }],
-      "rule" : [{
-        "name" : "MapMenoObs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "rule" : [{
-          "name" : "MapMenoVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapMenoCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetMenoPrae",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd",
-                "condition" : "$this = '289903006'"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "menopausenstatus",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueString" : "1"
-                }]
-              }]
-            },
-            {
-              "name" : "SetMenoPeri",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd",
-                "condition" : "$this = '289904000'"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "menopausenstatus",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueString" : "2"
-                }]
-              }]
-            },
-            {
-              "name" : "SetMenoPost",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd",
-                "condition" : "$this = '76977008'"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "menopausenstatus",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueString" : "3"
-                }]
-              }]
-            }]
           }]
         }]
       }]
@@ -1187,11 +2836,6 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
       "name" : "tgt",
       "type" : "BackboneElement",
       "mode" : "target"
-    },
-    {
-      "name" : "bundle",
-      "type" : "Bundle",
-      "mode" : "source"
     }],
     "rule" : [{
       "name" : "SetDiagDatum",
@@ -1422,1650 +3066,6 @@ title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall st
         "transform" : "copy",
         "parameter" : [{
           "valueString" : "0"
-        }]
-      }]
-    },
-    {
-      "name" : "EntryHistPraeop",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))"
-      }],
-      "rule" : [{
-        "name" : "MapHistPraeopSpec",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "specimen"
-        }],
-        "rule" : [{
-          "name" : "MapHistPraeopType",
-          "source" : [{
-            "context" : "specimen",
-            "element" : "type",
-            "variable" : "t"
-          }],
-          "rule" : [{
-            "name" : "SetHistPraeopStanz",
-            "source" : [{
-              "context" : "t",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '122737001'"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "histologischeSicherungPraeop",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "1"
-              }]
-            }]
-          },
-          {
-            "name" : "SetHistPraeopVakuum",
-            "source" : [{
-              "context" : "t",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '399014008'"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "histologischeSicherungPraeop",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "2"
-              }]
-            }]
-          },
-          {
-            "name" : "SetHistPraeopFNA",
-            "source" : [{
-              "context" : "t",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '119342007'"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "histologischeSicherungPraeop",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "3"
-              }]
-            }]
-          },
-          {
-            "name" : "SetHistPraeopOffen",
-            "source" : [{
-              "context" : "t",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '119380005'"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "histologischeSicherungPraeop",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "4"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryBg",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung'))"
-      }],
-      "rule" : [{
-        "name" : "CallMapBg",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "bildgebung",
-          "variable" : "bg"
-        }],
-        "dependent" : [{
-          "name" : "MapBildgebung",
-          "variable" : ["obs", "bg"]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryCT",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21905-5')"
-      }],
-      "rule" : [{
-        "name" : "MapCT",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "cTNM",
-          "variable" : "ctnm"
-        }],
-        "rule" : [{
-          "name" : "MapCTVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapCTCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetCT",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ctnm",
-                "contextType" : "variable",
-                "element" : "cT",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryCN",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21906-3')"
-      }],
-      "rule" : [{
-        "name" : "MapCN",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "cTNM",
-          "variable" : "ctnm"
-        }],
-        "rule" : [{
-          "name" : "MapCNVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapCNCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetCN",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ctnm",
-                "contextType" : "variable",
-                "element" : "cN",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryCM",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21907-1')"
-      }],
-      "rule" : [{
-        "name" : "MapCM",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "cTNM",
-          "variable" : "ctnm"
-        }],
-        "rule" : [{
-          "name" : "MapCMVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapCMCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetCM",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ctnm",
-                "contextType" : "variable",
-                "element" : "cM",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryTGKlin",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44648-0')"
-      }],
-      "rule" : [{
-        "name" : "MapTGKlin",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "cTNM",
-          "variable" : "ctnm"
-        }],
-        "rule" : [{
-          "name" : "MapTGKlinVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetTGKlin",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "ctnm",
-              "contextType" : "variable",
-              "element" : "tumorgroesseKlinisch",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryPT",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21899-0')"
-      }],
-      "rule" : [{
-        "name" : "MapPT",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "pTNM",
-          "variable" : "ptnm"
-        }],
-        "rule" : [{
-          "name" : "MapPTVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapPTCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetPT",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ptnm",
-                "contextType" : "variable",
-                "element" : "pT",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryPN",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21900-6')"
-      }],
-      "rule" : [{
-        "name" : "MapPN",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "pTNM",
-          "variable" : "ptnm"
-        }],
-        "rule" : [{
-          "name" : "MapPNVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapPNCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetPN",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ptnm",
-                "contextType" : "variable",
-                "element" : "pN",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryPM",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21901-4')"
-      }],
-      "rule" : [{
-        "name" : "MapPM",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "pTNM",
-          "variable" : "ptnm"
-        }],
-        "rule" : [{
-          "name" : "MapPMVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapPMCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetPM",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ptnm",
-                "contextType" : "variable",
-                "element" : "pM",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryTGInv",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '33728-7')"
-      }],
-      "rule" : [{
-        "name" : "MapTGInv",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "pTNM",
-          "variable" : "ptnm"
-        }],
-        "rule" : [{
-          "name" : "MapTGInvVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetTGInv",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "ptnm",
-              "contextType" : "variable",
-              "element" : "tumorgroesseInvasiv",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryCTNMDetail",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
-      }],
-      "rule" : [{
-        "name" : "MapCTNMDetail",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "cTNM",
-          "variable" : "ctnm"
-        }],
-        "rule" : [{
-          "name" : "MapCTNMVersion",
-          "source" : [{
-            "context" : "obs",
-            "element" : "method",
-            "variable" : "method"
-          }],
-          "rule" : [{
-            "name" : "ExtractCTNMVersionCode",
-            "source" : [{
-              "context" : "method",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetCTNMVersion",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ctnm",
-                "contextType" : "variable",
-                "element" : "tnmVersion",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapCUICC",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "ExtractCUICC",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetCUICC",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ctnm",
-                "contextType" : "variable",
-                "element" : "uiccStadium",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryPTNMDetail",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
-      }],
-      "rule" : [{
-        "name" : "MapPTNMDetail",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "pTNM",
-          "variable" : "ptnm"
-        }],
-        "rule" : [{
-          "name" : "MapPTNMVersion",
-          "source" : [{
-            "context" : "obs",
-            "element" : "method",
-            "variable" : "method"
-          }],
-          "rule" : [{
-            "name" : "ExtractPTNMVersionCode",
-            "source" : [{
-              "context" : "method",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetPTNMVersion",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ptnm",
-                "contextType" : "variable",
-                "element" : "tnmVersion",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapPUICC",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "ExtractPUICC",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetPUICC",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "ptnm",
-                "contextType" : "variable",
-                "element" : "uiccStadium",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapYSymbol",
-          "source" : [{
-            "context" : "obs",
-            "element" : "component",
-            "variable" : "comp",
-            "condition" : "code.coding.exists(code = '59479-6')"
-          }],
-          "rule" : [{
-            "name" : "MapYValue",
-            "source" : [{
-              "context" : "comp",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "ExtractYCode",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c"
-              }],
-              "rule" : [{
-                "name" : "SetYSymbol",
-                "source" : [{
-                  "context" : "c",
-                  "element" : "code",
-                  "variable" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "ySymbol",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueId" : "cd"
-                  }]
-                }]
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapLKat",
-          "source" : [{
-            "context" : "obs",
-            "element" : "component",
-            "variable" : "comp",
-            "condition" : "code.coding.exists(code = '33739-4')"
-          }],
-          "rule" : [{
-            "name" : "MapLValue",
-            "source" : [{
-              "context" : "comp",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "ExtractLCode",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c"
-              }],
-              "rule" : [{
-                "name" : "SetLKat",
-                "source" : [{
-                  "context" : "c",
-                  "element" : "code",
-                  "variable" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "l",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueId" : "cd"
-                  }]
-                }]
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapVKat",
-          "source" : [{
-            "context" : "obs",
-            "element" : "component",
-            "variable" : "comp",
-            "condition" : "code.coding.exists(code = '33740-2')"
-          }],
-          "rule" : [{
-            "name" : "MapVValue",
-            "source" : [{
-              "context" : "comp",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "ExtractVCode",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c"
-              }],
-              "rule" : [{
-                "name" : "SetVKat",
-                "source" : [{
-                  "context" : "c",
-                  "element" : "code",
-                  "variable" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "v",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueId" : "cd"
-                  }]
-                }]
-              }]
-            }]
-          }]
-        },
-        {
-          "name" : "MapPnKat",
-          "source" : [{
-            "context" : "obs",
-            "element" : "component",
-            "variable" : "comp",
-            "condition" : "code.coding.exists(code = '92837-4')"
-          }],
-          "rule" : [{
-            "name" : "MapPnValue",
-            "source" : [{
-              "context" : "comp",
-              "element" : "value",
-              "variable" : "val"
-            }],
-            "rule" : [{
-              "name" : "ExtractPnCode",
-              "source" : [{
-                "context" : "val",
-                "element" : "coding",
-                "variable" : "c"
-              }],
-              "rule" : [{
-                "name" : "SetPnKat",
-                "source" : [{
-                  "context" : "c",
-                  "element" : "code",
-                  "variable" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "pn",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueId" : "cd"
-                  }]
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryTGDCIS",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('pathologie'))"
-      }],
-      "rule" : [{
-        "name" : "MapTGDCIS",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "pTNM",
-          "variable" : "ptnm"
-        }],
-        "rule" : [{
-          "name" : "MapTGDCISVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetTGDCIS",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "ptnm",
-              "contextType" : "variable",
-              "element" : "tumorgroesseDCIS",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryMultifokal",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44638-1')"
-      }],
-      "rule" : [{
-        "name" : "MapMFObs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "rule" : [{
-          "name" : "MapMFValue",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapMFCoding",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "WrapMFNein",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd",
-                "condition" : "$this = '56061002'"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "pTNM",
-                "variable" : "ptnm"
-              }],
-              "rule" : [{
-                "name" : "SetMFNein",
-                "source" : [{
-                  "context" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "multifokalitaet",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueString" : "0"
-                  }]
-                }]
-              }]
-            },
-            {
-              "name" : "WrapMFMultifokal",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd",
-                "condition" : "$this = '399566009'"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "pTNM",
-                "variable" : "ptnm"
-              }],
-              "rule" : [{
-                "name" : "SetMFMultifokal",
-                "source" : [{
-                  "context" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "multifokalitaet",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueString" : "1"
-                  }]
-                }]
-              }]
-            },
-            {
-              "name" : "WrapMFMultizentrisch",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd",
-                "condition" : "$this = '367651003'"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "pTNM",
-                "variable" : "ptnm"
-              }],
-              "rule" : [{
-                "name" : "SetMFMultizentrisch",
-                "source" : [{
-                  "context" : "cd"
-                }],
-                "target" : [{
-                  "context" : "ptnm",
-                  "contextType" : "variable",
-                  "element" : "multifokalitaet",
-                  "transform" : "copy",
-                  "parameter" : [{
-                    "valueString" : "2"
-                  }]
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryHistologie",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
-      }],
-      "rule" : [{
-        "name" : "MapHistObs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "rule" : [{
-          "name" : "MapHistValue",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapHistICDO",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "system = 'urn:oid:2.16.840.1.113883.6.43.1'"
-            }],
-            "target" : [{
-              "context" : "tgt",
-              "contextType" : "variable",
-              "element" : "diagnoseICDO",
-              "variable" : "icdo"
-            }],
-            "rule" : [{
-              "name" : "SetHistCode",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "icdo",
-                "contextType" : "variable",
-                "element" : "code",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            },
-            {
-              "name" : "SetHistVersion",
-              "source" : [{
-                "context" : "c",
-                "element" : "version",
-                "variable" : "v"
-              }],
-              "target" : [{
-                "context" : "icdo",
-                "contextType" : "variable",
-                "element" : "version",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "v"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryGrading",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '33732-9')"
-      }],
-      "rule" : [{
-        "name" : "MapGradingObs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "rule" : [{
-          "name" : "MapGradingVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "MapGrading",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c"
-            }],
-            "rule" : [{
-              "name" : "SetGrading",
-              "source" : [{
-                "context" : "c",
-                "element" : "code",
-                "variable" : "cd"
-              }],
-              "target" : [{
-                "context" : "tgt",
-                "contextType" : "variable",
-                "element" : "grading",
-                "transform" : "copy",
-                "parameter" : [{
-                  "valueId" : "cd"
-                }]
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryLKUnt",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"
-      }],
-      "rule" : [{
-        "name" : "MapLKUnt",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "lymphknoten",
-          "variable" : "lk"
-        }],
-        "rule" : [{
-          "name" : "MapLKUntVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetLKUnt",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "lk",
-              "contextType" : "variable",
-              "element" : "untersucht",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryLKBef",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"
-      }],
-      "rule" : [{
-        "name" : "MapLKBef",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "lymphknoten",
-          "variable" : "lk"
-        }],
-        "rule" : [{
-          "name" : "MapLKBefVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetLKBef",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "lk",
-              "contextType" : "variable",
-              "element" : "befallen",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntrySLKUnt",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"
-      }],
-      "rule" : [{
-        "name" : "MapSLKUnt",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "lymphknoten",
-          "variable" : "lk"
-        }],
-        "rule" : [{
-          "name" : "MapSLKUntVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetSLKUnt",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "lk",
-              "contextType" : "variable",
-              "element" : "sentinelUntersucht",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntrySLKBef",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92833-3')"
-      }],
-      "rule" : [{
-        "name" : "MapSLKBef",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "lymphknoten",
-          "variable" : "lk"
-        }],
-        "rule" : [{
-          "name" : "MapSLKBefVal",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetSLKBef",
-            "source" : [{
-              "context" : "val",
-              "element" : "value",
-              "variable" : "v"
-            }],
-            "target" : [{
-              "context" : "lk",
-              "contextType" : "variable",
-              "element" : "sentinelBefallen",
-              "transform" : "truncate",
-              "parameter" : [{
-                "valueId" : "v"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryER",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85337-4')"
-      }],
-      "rule" : [{
-        "name" : "MapERObs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "rezeptorstatus",
-          "variable" : "rez"
-        }],
-        "rule" : [{
-          "name" : "MapER",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetERPositiv",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '10828004'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "erStatus",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "P"
-              }]
-            }]
-          },
-          {
-            "name" : "SetERNegativ",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '260385009'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "erStatus",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "N"
-              }]
-            }]
-          },
-          {
-            "name" : "SetERUnbekannt",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '261665006'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "erStatus",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "U"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryPR",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85339-0')"
-      }],
-      "rule" : [{
-        "name" : "MapPRObs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "rezeptorstatus",
-          "variable" : "rez"
-        }],
-        "rule" : [{
-          "name" : "MapPR",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetPRPositiv",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '10828004'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "prStatus",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "P"
-              }]
-            }]
-          },
-          {
-            "name" : "SetPRNegativ",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '260385009'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "prStatus",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "N"
-              }]
-            }]
-          },
-          {
-            "name" : "SetPRUnbekannt",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '261665006'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "prStatus",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "U"
-              }]
-            }]
-          }]
-        }]
-      }]
-    },
-    {
-      "name" : "EntryHER2",
-      "source" : [{
-        "context" : "bundle",
-        "element" : "entry",
-        "variable" : "entry",
-        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85319-2')"
-      }],
-      "rule" : [{
-        "name" : "MapHER2Obs",
-        "source" : [{
-          "context" : "entry",
-          "element" : "resource",
-          "variable" : "obs"
-        }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "rezeptorstatus",
-          "variable" : "rez"
-        }],
-        "rule" : [{
-          "name" : "MapHER2",
-          "source" : [{
-            "context" : "obs",
-            "element" : "value",
-            "variable" : "val"
-          }],
-          "rule" : [{
-            "name" : "SetHER2Positiv",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '10828004'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "her2Status",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "P"
-              }]
-            }]
-          },
-          {
-            "name" : "SetHER2Negativ",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '260385009'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "her2Status",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "N"
-              }]
-            }]
-          },
-          {
-            "name" : "SetHER2Unbekannt",
-            "source" : [{
-              "context" : "val",
-              "element" : "coding",
-              "variable" : "c",
-              "condition" : "code = '261665006'"
-            }],
-            "target" : [{
-              "context" : "rez",
-              "contextType" : "variable",
-              "element" : "her2Status",
-              "transform" : "copy",
-              "parameter" : [{
-                "valueString" : "U"
-              }]
-            }]
-          }]
         }]
       }]
     }]
