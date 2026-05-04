@@ -64,7 +64,7 @@ Exzisionspräparat: Atypische duktale Hyperplasie (ADH), R0 reseziert. Kein DCIS
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

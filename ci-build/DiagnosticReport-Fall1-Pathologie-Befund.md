@@ -64,7 +64,7 @@ Invasives Karzinom NST, G2, ER+ IRS 12, PR+ IRS 8, HER2- Score 1+, Ki-67 15%
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

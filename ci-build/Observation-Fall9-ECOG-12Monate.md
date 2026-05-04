@@ -10,7 +10,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
 
 **status**: Final
 
-**code**: ECOG Performance Status
+**code**: ECOG Performance Status score
 
 **subject**: [Andrea Wolf Female, DoB: 1974-05-29 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-009)](Patient-Fall9-Patient-Andrea-Wolf.md)
 
@@ -34,7 +34,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "89247-1",
-      "display" : "ECOG Performance Status"
+      "display" : "ECOG Performance Status score"
     }]
   },
   "subject" : {

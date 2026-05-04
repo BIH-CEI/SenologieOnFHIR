@@ -47,7 +47,7 @@ BI-RADS 5 rechts retromamillär, unscharf begrenzter Herdbefund 28 mm
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie"
   },

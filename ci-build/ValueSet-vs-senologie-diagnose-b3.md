@@ -50,7 +50,7 @@ This value set is not used here; it may be used elsewhere (e.g. specifications a
   "name" : "VS_Senologie_Diagnose_B3",
   "title" : "VS Senologie B3 Läsionen",
   "status" : "draft",
-  "date" : "2026-05-04T06:23:23+00:00",
+  "date" : "2026-05-04T06:44:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

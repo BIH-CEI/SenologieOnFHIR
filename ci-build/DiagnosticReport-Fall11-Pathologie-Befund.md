@@ -64,7 +64,7 @@ Fibroadenom (perikanalikular), keine Atypie, B2-Kategorie. Kein Hinweis auf Mali
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

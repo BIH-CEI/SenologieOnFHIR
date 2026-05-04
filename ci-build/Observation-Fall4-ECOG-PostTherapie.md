@@ -10,7 +10,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
 
 **status**: Final
 
-**code**: ECOG Performance Status
+**code**: ECOG Performance Status score
 
 **subject**: [Julia Fischer Female, DoB: 1987-11-22 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-004)](Patient-Fall4-Patient-Julia-Fischer.md)
 
@@ -34,7 +34,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "89247-1",
-      "display" : "ECOG Performance Status"
+      "display" : "ECOG Performance Status score"
     }]
   },
   "subject" : {

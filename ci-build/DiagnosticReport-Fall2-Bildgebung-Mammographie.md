@@ -47,7 +47,7 @@ BI-RADS 5 rechts zentral, große Raumforderung 5,5 cm mit Hautinfiltration. BI-R
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie bilateral"
   },

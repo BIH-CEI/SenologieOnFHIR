@@ -42,7 +42,7 @@ Kontrastmittelanreichernde Raumforderung rechts zentral, 58 mm, Hautkontakt übe
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "30794-2",
-      "display" : "MRI of breast"
+      "display" : "MR Breast"
     }],
     "text" : "MRT Mamma"
   },

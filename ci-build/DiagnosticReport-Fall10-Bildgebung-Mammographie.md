@@ -47,7 +47,7 @@ BI-RADS 4c rechts OAQ, unscharf begrenzter Herdbefund 18 mm. BI-RADS 1 links.
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie bilateral"
   },

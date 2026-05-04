@@ -64,7 +64,7 @@ Invasiv-duktales Mammakarzinom, G3, ER negativ (IRS 0), PR negativ (IRS 0), HER2
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

@@ -48,7 +48,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-studien
   "name" : "EX_Senologie_StudiennameCode",
   "title" : "Studienname (kodiert)",
   "status" : "draft",
-  "date" : "2026-05-04T06:23:23+00:00",
+  "date" : "2026-05-04T06:44:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

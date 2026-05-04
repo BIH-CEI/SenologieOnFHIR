@@ -42,7 +42,7 @@ Glatt begrenzter, ovaler, echoarmer Knoten links oben außen, 14x9 mm, horizonta
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24601-7",
-      "display" : "Ultrasound of bilateral breasts"
+      "display" : "US Breast"
     }],
     "text" : "Sonographie links"
   },

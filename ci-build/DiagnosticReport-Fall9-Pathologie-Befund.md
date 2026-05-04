@@ -64,7 +64,7 @@ Invasives lobuläres Karzinom, G2, ER+ IRS 12, PR+ IRS 10, HER2- Score 0, Ki-67 
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

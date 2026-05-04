@@ -13,6 +13,8 @@ Zertifizierte Brustzentren dokumentieren die Versorgung ihrer Patientinnen für 
 
 ## Zielsetzung
 
+![](senologie-meldewege-uebersicht.png)
+
 Dieser Implementation Guide definiert ein gemeinsames Datenmodell für die strukturierte Dokumentation der Brustkrebsversorgung. Ziel ist es, klinische Informationen einmalig zu erfassen und daraus die verschiedenen Meldungen und Berichte abzuleiten. Anstatt für jeden Meldeweg ein eigenes System zu pflegen, wird ein geteiltes Modell geschaffen, das die Anforderungen aller Beteiligten abdeckt.
 
 ## Analyse der Meldewege

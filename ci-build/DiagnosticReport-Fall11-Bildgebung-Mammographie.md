@@ -47,7 +47,7 @@ BI-RADS 3 links oben außen: ovaler, glatt begrenzter Herdbefund 15 mm, wahrsche
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie bilateral"
   },

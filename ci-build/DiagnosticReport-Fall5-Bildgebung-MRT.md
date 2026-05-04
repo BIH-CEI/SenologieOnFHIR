@@ -42,7 +42,7 @@ KM-anreichernde Raumforderung rechts, 52 mm, unifokal. Kein Nachweis kontralater
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "30794-2",
-      "display" : "MRI of breast"
+      "display" : "MR Breast"
     }],
     "text" : "MRT Mamma"
   },

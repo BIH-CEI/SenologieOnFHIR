@@ -47,7 +47,7 @@ BI-RADS 5 links OAQ, architekturgestörter Herdbefund 30 mm, BI-RADS 1 rechts
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie bilateral"
   },

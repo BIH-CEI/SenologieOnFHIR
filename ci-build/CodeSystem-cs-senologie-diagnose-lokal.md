@@ -32,7 +32,7 @@ Lokale Codes für Mamma-Diagnosen ohne SNOMED CT Mapping (basierend auf Dotbase)
   "name" : "CS_Senologie_Diagnose_Lokal",
   "title" : "CS Senologie Diagnose Lokal",
   "status" : "draft",
-  "date" : "2026-05-04T06:23:23+00:00",
+  "date" : "2026-05-04T06:44:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

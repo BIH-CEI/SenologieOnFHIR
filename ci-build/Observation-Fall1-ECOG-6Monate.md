@@ -10,7 +10,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
 
 **status**: Final
 
-**code**: ECOG Performance Status
+**code**: ECOG Performance Status score
 
 **subject**: [Erika Neumann Female, DoB: 1966-03-12 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-001)](Patient-Fall1-Patient-Erika-Neumann.md)
 
@@ -34,7 +34,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "89247-1",
-      "display" : "ECOG Performance Status"
+      "display" : "ECOG Performance Status score"
     }]
   },
   "subject" : {

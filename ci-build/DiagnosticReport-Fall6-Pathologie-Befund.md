@@ -64,7 +64,7 @@ DCIS, G2, kribriformer Typ, ER+ IRS 8, kein invasiver Anteil nachweisbar
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

@@ -51,7 +51,7 @@ Links: suspekter Herdbefund im oberen äußeren Quadranten, BI-RADS 5. Rechts: u
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie bilateral"
   },

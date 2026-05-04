@@ -42,7 +42,7 @@ Hypoechogener Herdbefund rechts zentral, 52 mm, unscharf begrenzt, dorsale Schal
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24601-7",
-      "display" : "Ultrasound of bilateral breasts"
+      "display" : "US Breast"
     }],
     "text" : "Sonographie bilateral"
   },

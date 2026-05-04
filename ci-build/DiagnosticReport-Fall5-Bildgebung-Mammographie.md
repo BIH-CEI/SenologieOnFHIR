@@ -47,7 +47,7 @@ BI-RADS 5 rechts, großer Herdbefund 48 mm, irregulär. BI-RADS 1 links.
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Mammographie bilateral"
   },

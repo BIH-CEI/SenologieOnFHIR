@@ -42,7 +42,7 @@ Hypoechogener Herdbefund links, 30 mm, unscharf begrenzt. Suspekter axillärer L
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24601-7",
-      "display" : "Ultrasound of bilateral breasts"
+      "display" : "US Breast"
     }],
     "text" : "Sonographie bilateral"
   },

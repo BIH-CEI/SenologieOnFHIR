@@ -26,7 +26,7 @@ Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, HO, IM, ZS, SO,
   "version" : "0.1.0",
   "title" : "SNOMED CT to oBDS Therapieart",
   "status" : "draft",
-  "date" : "2026-05-04T06:23:23+00:00",
+  "date" : "2026-05-04T06:44:52+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

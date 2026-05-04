@@ -12,7 +12,7 @@ Profile: [MII PR Person Vitalstatus](https://simplifier.net/resolve?scope=de.med
 
 **category**: Survey
 
-**code**: A]patient A code status
+**code**: Patient Disposition
 
 **subject**: [Erika Neumann Female, DoB: 1966-03-12 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-001)](Patient-Fall1-Patient-Erika-Neumann.md)
 
@@ -42,7 +42,7 @@ Profile: [MII PR Person Vitalstatus](https://simplifier.net/resolve?scope=de.med
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "67162-8",
-      "display" : "A]patient A code status"
+      "display" : "Patient Disposition"
     }]
   },
   "subject" : {

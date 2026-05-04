@@ -64,7 +64,7 @@ Mastektomie: Invasives Karzinom NST, pT2, pN1a (2/12 LK), G2, R0. ER+ IRS 10, PR
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

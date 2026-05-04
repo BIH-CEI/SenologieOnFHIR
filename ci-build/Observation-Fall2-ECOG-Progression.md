@@ -10,7 +10,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
 
 **status**: Final
 
-**code**: ECOG Performance Status
+**code**: ECOG Performance Status score
 
 **subject**: [Lena Hoffmann Female, DoB: 1980-09-28 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-002)](Patient-Fall2-Patient-Lena-Hoffmann.md)
 
@@ -34,7 +34,7 @@ Profile: [MII PR Onkologie Allgemeiner Leistungszustand ECOG](https://simplifier
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "89247-1",
-      "display" : "ECOG Performance Status"
+      "display" : "ECOG Performance Status score"
     }]
   },
   "subject" : {

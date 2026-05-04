@@ -47,7 +47,7 @@ BI-RADS 4a links: gruppierte Mikrokalzifikationen im oberen inneren Quadranten, 
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24606-6",
-      "display" : "Mammography of bilateral breasts"
+      "display" : "MG Breast Screening"
     }],
     "text" : "Screening-Mammographie bilateral"
   },

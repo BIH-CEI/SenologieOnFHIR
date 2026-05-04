@@ -64,7 +64,7 @@ Invasiv-duktales Mammakarzinom links, OAQ. Grading: G2. ER positiv (IRS 12), PR 
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "60568-3",
-      "display" : "Pathology Synoptic report"
+      "display" : "Pathology synoptic report"
     }],
     "text" : "Pathologischer Befund"
   },

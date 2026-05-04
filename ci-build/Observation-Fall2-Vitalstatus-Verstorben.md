@@ -12,7 +12,7 @@ Profile: [MII PR Person Vitalstatus](https://simplifier.net/resolve?scope=de.med
 
 **category**: Survey
 
-**code**: A]patient A code status
+**code**: Patient Disposition
 
 **subject**: [Lena Hoffmann Female, DoB: 1980-09-28 ( http://fhir.bih-charite.de/sid/patient-id#SENO-2025-002)](Patient-Fall2-Patient-Lena-Hoffmann-Verstorben.md)
 
@@ -42,7 +42,7 @@ Profile: [MII PR Person Vitalstatus](https://simplifier.net/resolve?scope=de.med
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "67162-8",
-      "display" : "A]patient A code status"
+      "display" : "Patient Disposition"
     }]
   },
   "subject" : {

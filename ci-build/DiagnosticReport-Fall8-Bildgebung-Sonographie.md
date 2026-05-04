@@ -42,7 +42,7 @@ Hypoechogener Herdbefund rechts retromamill√§r, 26 mm, unscharf begrenzt. Axill√
     "coding" : [{
       "system" : "http://loinc.org",
       "code" : "24601-7",
-      "display" : "Ultrasound of bilateral breasts"
+      "display" : "US Breast"
     }],
     "text" : "Sonographie rechts"
   },
