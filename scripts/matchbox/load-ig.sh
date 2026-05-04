@@ -7,7 +7,7 @@
 set -euo pipefail
 
 MATCHBOX_URL="${MATCHBOX_URL:-http://localhost:8080}"
-FHIR_URL="$MATCHBOX_URL/fhir"
+FHIR_URL="$MATCHBOX_URL/matchboxv3/fhir"
 OUTPUT_DIR="output"
 
 # ── Wait for Matchbox ─────────────────────────────────────────

@@ -10,74 +10,19 @@ Jedes Formular enthält ein oder mehrere **Blueprints** — contained FHIR-Resso
 
 Die Erfassung folgt dem klinischen Versorgungspfad. Die Diagnose bildet den Ankerpunkt, an den alle weiteren Befundungen und Therapien geknüpft werden:
 
-```
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                        1. Diagnose anlegen                         │
-  │              Erstanamnese → Diagnose-Formular → Condition          │
-  └──────────────────────┬─────────────────────────────────────────────┘
-                         │
-                         │ Bezugsdiagnose
-                         ▼
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                     2. Befundungen hinzufügen                      │
-  │                                                                    │
-  │   ┌─────────────────┐  ┌──────────────┐  ┌─────────────────────┐   │
-  │   │ Klinische       │  │ Bildgebung   │  │ Pathologie          │   │
-  │   │ Untersuchung    │  │              │  │                     │   │
-  │   │ → Observation   │  │ → Diagnostic │  │ → DiagnosticReport  │   │
-  │   │                 │  │   Report     │  │ → Observation       │   │
-  │   │                 │  │ → Observation│  │ → Specimen          │   │
-  │   └─────────────────┘  └──────────────┘  └─────────────────────┘   │
-  └──────────────────────┬─────────────────────────────────────────────┘
-                         │
-                         │ Bezugsdiagnose / -operation
-                         ▼
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                    3. Therapie dokumentieren                        │
-  │                                                                    │
-  │   ┌──────────────┐  ┌────────────────┐  ┌───────────────────────┐  │
-  │   │ OP-Planung   │  │ Postoperativ   │  │ Tumorboard            │  │
-  │   │ → Service    │  │ → Procedure    │  │ → CarePlan            │  │
-  │   │   Request    │  │ → Device       │  │                       │  │
-  │   │              │  │ → Observation   │  │                       │  │
-  │   └──────────────┘  └────────────────┘  └───────────────────────┘  │
-  │                                                                    │
-  │   ┌──────────────────────┐  ┌───────────────────────────────────┐  │
-  │   │ Systemtherapie       │  │ Strahlentherapie                  │  │
-  │   │ → Procedure          │  │ → Procedure                       │  │
-  │   │ → MedicationStatement│  │                                   │  │
-  │   └──────────────────────┘  └───────────────────────────────────┘  │
-  └──────────────────────┬─────────────────────────────────────────────┘
-                         │
-                         ▼
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                       4. Verlauf / Nachsorge                       │
-  │                   Tumorstatus, Follow-Up → Observation             │
-  └──────────────────────────────────────────────────────────────────────┘
-```
+<div>
+<img src="erfassung-workflow.svg" alt="Klinischer Erfassungsworkflow" style="width:100%"/>
+<p><em>Klinischer Erfassungsworkflow — von der Diagnose über Befundungen und Therapie bis zur Nachsorge</em></p>
+</div>
 
 ### Wie ein Formular funktioniert
 
 Jedes Formular durchläuft beim Öffnen und Ausfüllen vier Phasen:
 
-```
-  ┌─────────────┐     ┌───────────────┐     ┌───────────────┐     ┌──────────────────┐
-  │ 1. Kontext  │     │ 2. Vor-       │     │ 3. Formular   │     │ 4. Template-     │
-  │    wählen   │────►│    befüllung   │────►│    ausfüllen   │────►│    based         │
-  │             │     │               │     │               │     │    Extraction    │
-  └─────────────┘     └───────────────┘     └───────────────┘     └──────────────────┘
-        │                    │                     │                       │
-  Bezugsdiagnose       initialExpression      enableWhen            Blueprints
-  Bezugsoperation      aus bestehenden        answerValueSet        (contained
-  Patient/Encounter    FHIR-Ressourcen        Validierung           Templates)
-                                                                         │
-                                                                         ▼
-                                                                  ┌──────────────┐
-                                                                  │ FHIR-        │
-                                                                  │ Ressourcen   │
-                                                                  │ (1..n)       │
-                                                                  └──────────────┘
-```
+<div>
+<img src="erfassung-formular-phasen.svg" alt="Vom Formular zu FHIR-Ressourcen: 4 Phasen" style="width:100%"/>
+<p><em>Vom Formular zu FHIR-Ressourcen — Kontextauswahl, Vorbefüllung, Dokumentation und Template-based Extraction</em></p>
+</div>
 
 **Phase 1 — Kontextauswahl:** Beim Öffnen eines Formulars wird der Patient- und Encounter-Kontext übergeben (`launchContext`). Für Befundungen und Therapien wählt der Anwender die **Bezugsdiagnose** (und ggf. die Bezugsoperation) aus — damit ist jede Dokumentation eindeutig einer Diagnose zugeordnet.
 
