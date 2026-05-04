@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-follow-up.
   "name" : "Senologie_FollowUp",
   "title" : "BIH Senologie Follow-Up (Verlaufsmeldung)",
   "status" : "draft",
-  "date" : "2026-05-04T14:55:41+00:00",
+  "date" : "2026-05-04T15:18:17+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
