@@ -10,6 +10,8 @@ Profile: [BIH LM Senologie Brustwand-Operation](StructureDefinition-senologie-op
 
 **MII EX Onko Operation Intention**: kurativ
 
+**basedOn**: [ServiceRequest Lumpectomy of breast](ServiceRequest-Fall1-OP-Planung.md)
+
 **status**: Completed
 
 **category**: Excision of mass
@@ -48,6 +50,9 @@ Profile: [BIH LM Senologie Brustwand-Operation](StructureDefinition-senologie-op
         "display" : "kurativ"
       }]
     }
+  }],
+  "basedOn" : [{
+    "reference" : "ServiceRequest/Fall1-OP-Planung"
   }],
   "status" : "completed",
   "category" : {

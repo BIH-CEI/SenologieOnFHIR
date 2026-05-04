@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-genexpress
   "name" : "Senologie_Genexpressions_Score",
   "title" : "BIH PR Seno Genexpressions-Score",
   "status" : "draft",
-  "date" : "2026-05-04T11:47:21+00:00",
+  "date" : "2026-05-04T12:11:06+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsMeldung",
   "status" : "draft",
-  "date" : "2026-05-04T11:47:21+00:00",
+  "date" : "2026-05-04T12:11:06+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -161,6 +161,147 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
             "variable" : ["condition", "dx"]
           }]
         }]
+      },
+      {
+        "name" : "DiagEntryHisto",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "histEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+        }],
+        "rule" : [{
+          "name" : "DiagCallHisto",
+          "source" : [{
+            "context" : "histEntry",
+            "element" : "resource",
+            "variable" : "histObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "diagnose",
+            "variable" : "dx"
+          },
+          {
+            "context" : "dx",
+            "contextType" : "variable",
+            "element" : "histologie",
+            "variable" : "histo"
+          }],
+          "dependent" : [{
+            "name" : "MapHistologie",
+            "variable" : ["histObs", "histo"]
+          }]
+        }]
+      },
+      {
+        "name" : "DiagEntryCTNM",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "tnmEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"
+        }],
+        "rule" : [{
+          "name" : "DiagCallCTNM",
+          "source" : [{
+            "context" : "tnmEntry",
+            "element" : "resource",
+            "variable" : "tnmObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "diagnose",
+            "variable" : "dx"
+          },
+          {
+            "context" : "dx",
+            "contextType" : "variable",
+            "element" : "cTNM",
+            "variable" : "ctnm"
+          }],
+          "dependent" : [{
+            "name" : "MapTNM",
+            "variable" : ["tnmObs", "ctnm"]
+          }]
+        }]
+      },
+      {
+        "name" : "DiagCallECOG",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "cond2"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "dx"
+        }],
+        "dependent" : [{
+          "name" : "MapLeistungszustandFromBundle",
+          "variable" : ["src", "dx"]
+        }]
+      },
+      {
+        "name" : "DiagCallModulMamma",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "cond3"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnose",
+          "variable" : "dx"
+        },
+        {
+          "context" : "dx",
+          "contextType" : "variable",
+          "element" : "modulMamma",
+          "variable" : "mamma"
+        }],
+        "dependent" : [{
+          "name" : "MapModulMamma",
+          "variable" : ["src", "mamma"]
+        }]
+      },
+      {
+        "name" : "DiagEntryWK",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "raEntry",
+          "condition" : "resource.is(RiskAssessment)"
+        }],
+        "rule" : [{
+          "name" : "DiagCallWK",
+          "source" : [{
+            "context" : "raEntry",
+            "element" : "resource",
+            "variable" : "ra"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "diagnose",
+            "variable" : "dx"
+          },
+          {
+            "context" : "dx",
+            "contextType" : "variable",
+            "element" : "weitereKlassifikationen",
+            "variable" : "wk"
+          }],
+          "dependent" : [{
+            "name" : "MapWeitereKlassifikation",
+            "variable" : ["ra", "wk"]
+          }]
+        }]
       }]
     },
     {
@@ -242,6 +383,96 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
             "name" : "MapOP",
             "variable" : ["procedure", "op"]
           }]
+        }]
+      },
+      {
+        "name" : "OPEntryHisto",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "histEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+        }],
+        "rule" : [{
+          "name" : "OPCallHisto",
+          "source" : [{
+            "context" : "histEntry",
+            "element" : "resource",
+            "variable" : "histObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "op",
+            "variable" : "op"
+          },
+          {
+            "context" : "op",
+            "contextType" : "variable",
+            "element" : "histologie",
+            "variable" : "histo"
+          }],
+          "dependent" : [{
+            "name" : "MapHistologie",
+            "variable" : ["histObs", "histo"]
+          }]
+        }]
+      },
+      {
+        "name" : "OPEntryPTNM",
+        "source" : [{
+          "context" : "src",
+          "element" : "entry",
+          "variable" : "tnmEntry",
+          "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
+        }],
+        "rule" : [{
+          "name" : "OPCallPTNM",
+          "source" : [{
+            "context" : "tnmEntry",
+            "element" : "resource",
+            "variable" : "tnmObs"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "op",
+            "variable" : "op"
+          },
+          {
+            "context" : "op",
+            "contextType" : "variable",
+            "element" : "tnm",
+            "variable" : "ptnm"
+          }],
+          "dependent" : [{
+            "name" : "MapTNM",
+            "variable" : ["tnmObs", "ptnm"]
+          }]
+        }]
+      },
+      {
+        "name" : "OPCallModulMamma",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "proc2"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "op",
+          "variable" : "op"
+        },
+        {
+          "context" : "op",
+          "contextType" : "variable",
+          "element" : "modulMamma",
+          "variable" : "mamma"
+        }],
+        "dependent" : [{
+          "name" : "MapModulMamma",
+          "variable" : ["src", "mamma"]
         }]
       }]
     },

@@ -14,6 +14,8 @@ Profile: [BIH Senologie OP Planung](StructureDefinition-senologie-op-planung.md)
 
 **Präoperative Markierung**: Drahtmarkierung
 
+**basedOn**: [CarePlan Tumorboard-Empfehlung Erika Neumann](CarePlan-Fall1-Tumorboard.md)
+
 **status**: Draft
 
 **intent**: Plan
@@ -74,6 +76,9 @@ BET links OAQ, SLNB links. Präoperative Drahtmarkierung geplant.
       }],
       "text" : "Drahtmarkierung"
     }
+  }],
+  "basedOn" : [{
+    "reference" : "CarePlan/Fall1-Tumorboard"
   }],
   "status" : "draft",
   "intent" : "plan",

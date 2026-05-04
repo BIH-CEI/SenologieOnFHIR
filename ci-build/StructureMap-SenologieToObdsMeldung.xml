@@ -55,9 +55,21 @@
 </span>    entry.resource<b> as </b><span style="color: maroon">condition</span><b> then</b><span style="color: navy"> {
 </span>      <span style="color: navy">// </span><span style="color: green">Tumorzuordnung</span>
       condition<span style="color: navy"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style="color: maroon">tz</span><b> then </b>MapTumorzuordnung<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">tz</span><span style="color: navy">)</span> <i>&quot;DiagnoseTZ&quot;</i><span style="color: navy">;</span>
-      <span style="color: navy">// </span><span style="color: green">Diagnose: delegiert an SenologieToObdsDiagnose.MapDiagnose</span>
+      <span style="color: navy">// </span><span style="color: green">Diagnose-Basisfelder</span>
       condition<span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">)</span> <i>&quot;DiagnoseDX&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;DiagnoseConditionContext&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Bundle-Lookups fuer Diagnose (Histologie, TNM, ECOG, ModulMamma, Klassifikationen)</span>
+    src.entry<b> as </b><span style="color: maroon">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style="color: navy"> {
+</span>      histEntry.resource<b> as </b><span style="color: maroon">histObs</span><span style="color: navy"><b> -&gt; </b></span> tgt.diagnose<b> as </b><span style="color: maroon">dx</span><span style="color: navy">, </span> dx.histologie<b> as </b><span style="color: maroon">histo</span><b> then </b>MapHistologie<span style="color: navy">(</span><span style="color: maroon">histObs</span><span style="color: navy">, </span><span style="color: maroon">histo</span><span style="color: navy">)</span> <i>&quot;DiagCallHisto&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;DiagEntryHisto&quot;</i><span style="color: navy">;</span>
+    src.entry<b> as </b><span style="color: maroon">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21908-9')<b> then</b><span style="color: navy"> {
+</span>      tnmEntry.resource<b> as </b><span style="color: maroon">tnmObs</span><span style="color: navy"><b> -&gt; </b></span> tgt.diagnose<b> as </b><span style="color: maroon">dx</span><span style="color: navy">, </span> dx.cTNM<b> as </b><span style="color: maroon">ctnm</span><b> then </b>MapTNM<span style="color: navy">(</span><span style="color: maroon">tnmObs</span><span style="color: navy">, </span><span style="color: maroon">ctnm</span><span style="color: navy">)</span> <i>&quot;DiagCallCTNM&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;DiagEntryCTNM&quot;</i><span style="color: navy">;</span>
+    entry.resource<b> as </b><span style="color: maroon">cond2</span><span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapLeistungszustandFromBundle<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">)</span> <i>&quot;DiagCallECOG&quot;</i><span style="color: navy">;</span>
+    entry.resource<b> as </b><span style="color: maroon">cond3</span><span style="color: navy"><b> -&gt; </b></span> tgt.diagnose<b> as </b><span style="color: maroon">dx</span><span style="color: navy">, </span> dx.modulMamma<b> as </b><span style="color: maroon">mamma</span><b> then </b>MapModulMamma<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">mamma</span><span style="color: navy">)</span> <i>&quot;DiagCallModulMamma&quot;</i><span style="color: navy">;</span>
+    src.entry<b> as </b><span style="color: maroon">raEntry</span><b> where </b>resource.is(RiskAssessment)<b> then</b><span style="color: navy"> {
+</span>      raEntry.resource<b> as </b><span style="color: maroon">ra</span><span style="color: navy"><b> -&gt; </b></span> tgt.diagnose<b> as </b><span style="color: maroon">dx</span><span style="color: navy">, </span> dx.weitereKlassifikationen<b> as </b><span style="color: maroon">wk</span><b> then </b>MapWeitereKlassifikation<span style="color: navy">(</span><span style="color: maroon">ra</span><span style="color: navy">, </span><span style="color: maroon">wk</span><span style="color: navy">)</span> <i>&quot;DiagCallWK&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;DiagEntryWK&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryDiagnose&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Verlauf: Condition mit clinicalStatus = recurrence (Rezidiv) ---</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')<b> then</b><span style="color: navy"> {
@@ -71,9 +83,16 @@
   <span style="color: navy">// </span><span style="color: green">--- OP: Procedure mit Senologie-Operation-Profil ---</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style="color: navy"> {
 </span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
-</span>      <span style="color: navy">// </span><span style="color: green">OP: delegiert an SenologieToObdsOP.MapOP</span>
-      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.op<b> as </b><span style="color: maroon">op</span><b> then </b>MapOP<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;OPMap&quot;</i><span style="color: navy">;</span>
+</span>      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.op<b> as </b><span style="color: maroon">op</span><b> then </b>MapOP<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;OPMap&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;OPProcedureContext&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">// </span><span style="color: green">Bundle-Lookups fuer OP (Histologie, pTNM, ModulMamma)</span>
+    src.entry<b> as </b><span style="color: maroon">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style="color: navy"> {
+</span>      histEntry.resource<b> as </b><span style="color: maroon">histObs</span><span style="color: navy"><b> -&gt; </b></span> tgt.op<b> as </b><span style="color: maroon">op</span><span style="color: navy">, </span> op.histologie<b> as </b><span style="color: maroon">histo</span><b> then </b>MapHistologie<span style="color: navy">(</span><span style="color: maroon">histObs</span><span style="color: navy">, </span><span style="color: maroon">histo</span><span style="color: navy">)</span> <i>&quot;OPCallHisto&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;OPEntryHisto&quot;</i><span style="color: navy">;</span>
+    src.entry<b> as </b><span style="color: maroon">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style="color: navy"> {
+</span>      tnmEntry.resource<b> as </b><span style="color: maroon">tnmObs</span><span style="color: navy"><b> -&gt; </b></span> tgt.op<b> as </b><span style="color: maroon">op</span><span style="color: navy">, </span> op.tnm<b> as </b><span style="color: maroon">ptnm</span><b> then </b>MapTNM<span style="color: navy">(</span><span style="color: maroon">tnmObs</span><span style="color: navy">, </span><span style="color: maroon">ptnm</span><span style="color: navy">)</span> <i>&quot;OPCallPTNM&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;OPEntryPTNM&quot;</i><span style="color: navy">;</span>
+    entry.resource<b> as </b><span style="color: maroon">proc2</span><span style="color: navy"><b> -&gt; </b></span> tgt.op<b> as </b><span style="color: maroon">op</span><span style="color: navy">, </span> op.modulMamma<b> as </b><span style="color: maroon">mamma</span><b> then </b>MapModulMamma<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">mamma</span><span style="color: navy">)</span> <i>&quot;OPCallModulMamma&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryOP&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Systemische Therapie: Procedure mit Systemtherapie-Profil ---</span>
   src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
@@ -133,7 +152,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToObdsMeldung"/>
   <status value="draft"/>
-  <date value="2026-05-04T11:47:21+00:00"/>
+  <date value="2026-05-04T12:11:06+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -272,6 +291,152 @@
           </dependent>
         </rule>
       </rule>
+      <rule>
+        <name value="DiagEntryHisto"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="histEntry"/>
+          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"/>
+        </source>
+        <rule>
+          <name value="DiagCallHisto"/>
+          <source>
+            <context value="histEntry"/>
+            <element value="resource"/>
+            <variable value="histObs"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="diagnose"/>
+            <variable value="dx"/>
+          </target>
+          <target>
+            <context value="dx"/>
+            <contextType value="variable"/>
+            <element value="histologie"/>
+            <variable value="histo"/>
+          </target>
+          <dependent>
+            <name value="MapHistologie"/>
+            <variable value="histObs"/>
+            <variable value="histo"/>
+          </dependent>
+        </rule>
+      </rule>
+      <rule>
+        <name value="DiagEntryCTNM"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="tnmEntry"/>
+          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21908-9')"/>
+        </source>
+        <rule>
+          <name value="DiagCallCTNM"/>
+          <source>
+            <context value="tnmEntry"/>
+            <element value="resource"/>
+            <variable value="tnmObs"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="diagnose"/>
+            <variable value="dx"/>
+          </target>
+          <target>
+            <context value="dx"/>
+            <contextType value="variable"/>
+            <element value="cTNM"/>
+            <variable value="ctnm"/>
+          </target>
+          <dependent>
+            <name value="MapTNM"/>
+            <variable value="tnmObs"/>
+            <variable value="ctnm"/>
+          </dependent>
+        </rule>
+      </rule>
+      <rule>
+        <name value="DiagCallECOG"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="cond2"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="diagnose"/>
+          <variable value="dx"/>
+        </target>
+        <dependent>
+          <name value="MapLeistungszustandFromBundle"/>
+          <variable value="src"/>
+          <variable value="dx"/>
+        </dependent>
+      </rule>
+      <rule>
+        <name value="DiagCallModulMamma"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="cond3"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="diagnose"/>
+          <variable value="dx"/>
+        </target>
+        <target>
+          <context value="dx"/>
+          <contextType value="variable"/>
+          <element value="modulMamma"/>
+          <variable value="mamma"/>
+        </target>
+        <dependent>
+          <name value="MapModulMamma"/>
+          <variable value="src"/>
+          <variable value="mamma"/>
+        </dependent>
+      </rule>
+      <rule>
+        <name value="DiagEntryWK"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="raEntry"/>
+          <condition value="resource.is(RiskAssessment)"/>
+        </source>
+        <rule>
+          <name value="DiagCallWK"/>
+          <source>
+            <context value="raEntry"/>
+            <element value="resource"/>
+            <variable value="ra"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="diagnose"/>
+            <variable value="dx"/>
+          </target>
+          <target>
+            <context value="dx"/>
+            <contextType value="variable"/>
+            <element value="weitereKlassifikationen"/>
+            <variable value="wk"/>
+          </target>
+          <dependent>
+            <name value="MapWeitereKlassifikation"/>
+            <variable value="ra"/>
+            <variable value="wk"/>
+          </dependent>
+        </rule>
+      </rule>
     </rule>
     <rule>
       <name value="EntryVerlauf"/>
@@ -356,6 +521,99 @@
             <variable value="op"/>
           </dependent>
         </rule>
+      </rule>
+      <rule>
+        <name value="OPEntryHisto"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="histEntry"/>
+          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"/>
+        </source>
+        <rule>
+          <name value="OPCallHisto"/>
+          <source>
+            <context value="histEntry"/>
+            <element value="resource"/>
+            <variable value="histObs"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="op"/>
+            <variable value="op"/>
+          </target>
+          <target>
+            <context value="op"/>
+            <contextType value="variable"/>
+            <element value="histologie"/>
+            <variable value="histo"/>
+          </target>
+          <dependent>
+            <name value="MapHistologie"/>
+            <variable value="histObs"/>
+            <variable value="histo"/>
+          </dependent>
+        </rule>
+      </rule>
+      <rule>
+        <name value="OPEntryPTNM"/>
+        <source>
+          <context value="src"/>
+          <element value="entry"/>
+          <variable value="tnmEntry"/>
+          <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"/>
+        </source>
+        <rule>
+          <name value="OPCallPTNM"/>
+          <source>
+            <context value="tnmEntry"/>
+            <element value="resource"/>
+            <variable value="tnmObs"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="op"/>
+            <variable value="op"/>
+          </target>
+          <target>
+            <context value="op"/>
+            <contextType value="variable"/>
+            <element value="tnm"/>
+            <variable value="ptnm"/>
+          </target>
+          <dependent>
+            <name value="MapTNM"/>
+            <variable value="tnmObs"/>
+            <variable value="ptnm"/>
+          </dependent>
+        </rule>
+      </rule>
+      <rule>
+        <name value="OPCallModulMamma"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="proc2"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="op"/>
+          <variable value="op"/>
+        </target>
+        <target>
+          <context value="op"/>
+          <contextType value="variable"/>
+          <element value="modulMamma"/>
+          <variable value="mamma"/>
+        </target>
+        <dependent>
+          <name value="MapModulMamma"/>
+          <variable value="src"/>
+          <variable value="mamma"/>
+        </dependent>
       </rule>
     </rule>
     <rule>
