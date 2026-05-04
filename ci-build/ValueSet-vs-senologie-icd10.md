@@ -50,7 +50,7 @@ ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotb
   "name" : "VSSenologieICD10",
   "title" : "ValueSet Senologie ICD-10-GM",
   "status" : "draft",
-  "date" : "2026-05-04T14:15:24+00:00",
+  "date" : "2026-05-04T14:55:41+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
