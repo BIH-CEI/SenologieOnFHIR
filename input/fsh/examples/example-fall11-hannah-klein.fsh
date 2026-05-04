@@ -64,7 +64,7 @@ Usage: #example
 
 * code.coding[mammography].system = "http://loinc.org"
 * code.coding[mammography].code = #24606-6
-* code.coding[mammography].display = "Mammography of bilateral breasts"
+* code.coding[mammography].display = "MG Breast Screening"
 * code.text = "Mammographie bilateral"
 
 * subject = Reference(Patient/Fall11-Patient-Hannah-Klein)
@@ -111,7 +111,7 @@ Usage: #example
 
 * code.coding[ultrasound].system = "http://loinc.org"
 * code.coding[ultrasound].code = #24601-7
-* code.coding[ultrasound].display = "Ultrasound of bilateral breasts"
+* code.coding[ultrasound].display = "US Breast"
 * code.text = "Sonographie links"
 
 * subject = Reference(Patient/Fall11-Patient-Hannah-Klein)

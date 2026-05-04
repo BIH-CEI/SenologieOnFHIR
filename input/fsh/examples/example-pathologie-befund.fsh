@@ -12,7 +12,7 @@ Usage: #example
 * identifier[Set-ID].value = "PATH-2024-001234"
 
 // Code (required by MII Patho parent)
-* code.coding[pathology-report] = $LOINC#60568-3 "Pathology Synoptic report"
+* code.coding[pathology-report] = $LOINC#60568-3 "Pathology synoptic report"
 * code.text = "Pathologischer Befund"
 
 // Kategorie

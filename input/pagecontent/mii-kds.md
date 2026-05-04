@@ -12,6 +12,7 @@ Die Profile dieses IG erben wo immer möglich direkt von den Profilen des MII Ke
 | Molekulares Tumorboard | 2026.0.1 | PD-L1 Immunhistochemie, molekularpathologische Marker |
 | Pathologie | 2026.0.2 | DiagnosticReport, Specimen |
 | Bildgebung | 2026.0.0 | BodyStructure (Tumorlokalisation) |
+| MolGen | — | Genetische Varianten (BRCA1/2, PALB2), genetische Testungen |
 | Person | — | Vitalstatus, Todesursache |
 
 ## Profil-Vererbung

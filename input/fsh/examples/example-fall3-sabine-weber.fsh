@@ -67,7 +67,7 @@ Usage: #example
 
 * code.coding[mammography].system = "http://loinc.org"
 * code.coding[mammography].code = #24606-6
-* code.coding[mammography].display = "Mammography of bilateral breasts"
+* code.coding[mammography].display = "MG Breast Screening"
 * code.text = "Mammographie bilateral"
 
 * subject = Reference(Patient/Fall3-Patient-Sabine-Weber)
