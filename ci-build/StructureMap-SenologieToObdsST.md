@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsST",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -193,25 +193,27 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
           "variable" : "val"
         }],
         "rule" : [{
-          "name" : "TranslateIntention",
+          "name" : "ExtractIntentionCode",
           "source" : [{
             "context" : "val",
             "element" : "coding",
             "variable" : "c"
           }],
-          "target" : [{
-            "context" : "tgt",
-            "contextType" : "variable",
-            "element" : "intention",
-            "transform" : "translate",
-            "parameter" : [{
-              "valueId" : "c"
-            },
-            {
-              "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention"
-            },
-            {
-              "valueString" : "code"
+          "rule" : [{
+            "name" : "SetIntention",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "intention",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
             }]
           }]
         }]
@@ -225,26 +227,28 @@ title: Senologie FHIR to oBDS Strahlentherapie (ST) status: draft
         "variable" : "cat"
       }],
       "rule" : [{
-        "name" : "TranslateStellungOP",
+        "name" : "ExtractStellungCode",
         "source" : [{
           "context" : "cat",
           "element" : "coding",
           "variable" : "c",
           "condition" : "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'"
         }],
-        "target" : [{
-          "context" : "tgt",
-          "contextType" : "variable",
-          "element" : "stellungOP",
-          "transform" : "translate",
-          "parameter" : [{
-            "valueId" : "c"
-          },
-          {
-            "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung"
-          },
-          {
-            "valueString" : "code"
+        "rule" : [{
+          "name" : "SetStellungOP",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "stellungOP",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
           }]
         }]
       }]

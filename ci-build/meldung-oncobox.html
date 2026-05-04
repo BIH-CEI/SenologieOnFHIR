@@ -272,6 +272,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <li><a href="#oncobox-spezifikation" id="markdown-toc-oncobox-spezifikation">OncoBox-Spezifikation</a></li>
       <li><a href="#abgrenzung-zu-obds-iregg-und-iqtig" id="markdown-toc-abgrenzung-zu-obds-iregg-und-iqtig">Abgrenzung zu oBDS, IRegG und IQTIG</a></li>
       <li><a href="#ausführung" id="markdown-toc-ausführung">Ausführung</a></li>
+      <li><a href="#validierung-der-transformationsergebnisse" id="markdown-toc-validierung-der-transformationsergebnisse">Validierung der Transformationsergebnisse</a></li>
     </ul>
   </li>
 </ul>
@@ -1434,6 +1435,72 @@ Content-Type: application/fhir+json
 
 <p>Das Ergebnis ist eine Instanz des OncoBox Logical Models. Ein nachgelagerter XML-Serialisierer erzeugt daraus die OncoBox-Brust-XML-Datei im Format N1.1.1, die an OnkoZert übermittelt werden kann.</p>
 
+<h3 id="validierung-der-transformationsergebnisse">Validierung der Transformationsergebnisse</h3>
+
+<p class="stu-note">Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fehlendes Pflichtfeld</th>
+      <th>Ursache</th>
+      <th>Ergänzung durch</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zentrum.zentrumId</code></td>
+      <td>Zentrums-ID für OnkoZert</td>
+      <td>KIS / Zentrumsadministration</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zentrum.berichtszeitraumBeginn/Ende</code></td>
+      <td>Berichtszeitraum der Jahresmeldung</td>
+      <td>ETL-Konfiguration</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zentrum.meldungsdatum</code></td>
+      <td>Zeitpunkt der Meldungsgenerierung</td>
+      <td>ETL-Strecke (automatisch)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">primaerfall.fall</code></td>
+      <td>Fall-Referenz (Encounter)</td>
+      <td>KIS / Fallmanagement</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">primaerfall.diagnose.seitenlokalisation</code></td>
+      <td>Seite der Diagnose</td>
+      <td>Map-Erweiterung nötig (bodySite → Seite)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">primaerfall.diagnose.bildgebung.methode</code></td>
+      <td>Bildgebende Methode (Mammographie, Sono, MRT)</td>
+      <td>Map-Erweiterung nötig (DiagnosticReport.code)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">primaerfall.operation.seitenlokalisation</code></td>
+      <td>Seite der OP</td>
+      <td>Map-Erweiterung nötig (Procedure.bodySite)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">primaerfall.tumorkonferenz.typ</code></td>
+      <td>Typ der TK (prä-/postoperativ)</td>
+      <td>Profil-Erweiterung nötig</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">primaerfall.verlauf.vitalstatus</code></td>
+      <td>Lebend/Verstorben zum Meldezeitpunkt</td>
+      <td>Map-Erweiterung nötig (Patient.deceased)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">kennzahl.kennzahlId</code></td>
+      <td>20x Kennzahl-IDs (KB-1 bis KB-20)</td>
+      <td>Map verwendet <code class="language-plaintext highlighter-rouge">id</code> statt <code class="language-plaintext highlighter-rouge">kennzahlId</code> — Feldname-Korrektur nötig</td>
+    </tr>
+  </tbody>
+</table>
+
 
 
 
@@ -1453,7 +1520,7 @@ Content-Type: application/fhir+json
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

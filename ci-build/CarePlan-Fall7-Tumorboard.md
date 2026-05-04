@@ -12,6 +12,8 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
 
 **intent**: Plan
 
+**category**: prätherapeutisch
+
 **title**: Tumorboard-Empfehlung Kathrin Mueller
 
 **description**: Empfehlung: Neoadjuvante Chemotherapie Carboplatin/Paclitaxel wöchentlich x12, dann EC q3w x4. Dann BET rechts + SLNB. Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy. Keine endokrine Therapie (triple-negativ).
@@ -75,6 +77,13 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
   },
   "status" : "active",
   "intent" : "plan",
+  "category" : [{
+    "coding" : [{
+      "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
+      "code" : "praeth",
+      "display" : "prätherapeutisch"
+    }]
+  }],
   "title" : "Tumorboard-Empfehlung Kathrin Mueller",
   "description" : "Empfehlung: Neoadjuvante Chemotherapie Carboplatin/Paclitaxel wöchentlich x12, dann EC q3w x4. Dann BET rechts + SLNB. Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy. Keine endokrine Therapie (triple-negativ).",
   "subject" : {

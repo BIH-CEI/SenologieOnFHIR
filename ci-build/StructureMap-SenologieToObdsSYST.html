@@ -41,8 +41,8 @@
 	  <script src="assets/js/prism.js"></script>
     <script type="text/javascript" src="assets/js/mermaid.js"></script>
     <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
-    <style type="text/css">h2{--heading-prefix:"11.115"}
-    h3,h4,h5,h6{--heading-prefix:"11.115"}</style>
+    <style type="text/css">h2{--heading-prefix:"11.112"}
+    h3,h4,h5,h6{--heading-prefix:"11.112"}</style>
     <div id="segment-header" class="segment">  <!-- segment-header -->
       <div class="container">  <!-- container -->
 
@@ -388,16 +388,20 @@ status: draft</p>
   src<b> where </b>performedPeriod.end.exists()<span style="color: navy"><b> -&gt; </b></span>tgt.meldeanlass = <span style="color: blue">'behandlungsende'</span> <i>&quot;MeldeanlassEnde&quot;</i><span style="color: navy">;</span>
   src<b> where </b>performedPeriod.end.exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.meldeanlass = <span style="color: blue">'behandlungsbeginn'</span> <i>&quot;MeldeanlassBeginn&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Intention: aus MII Onko Extension mii-ex-onko-systemische-therapie-intention</span>
-  <span style="color: navy">// </span><span style="color: green">valueCodeableConcept mit MII Onko Intentions-CodeSystem -&gt; translate zu oBDS (K, P, S, X)</span>
+  <span style="color: navy">// </span><span style="color: green">MII Onko CodeSystem nutzt bereits oBDS-Codes (K, P, D, R, S, X)</span>
   src.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention'<b> then</b><span style="color: navy"> {
 </span>    ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
-</span>      val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.intention = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateIntention&quot;</i><span style="color: navy">;</span>
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.intention = <span style="color: maroon">cd</span> <i>&quot;SetIntention&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractIntentionCode&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;ExtractIntentionCoding&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapIntention&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)</span>
-  <span style="color: navy">// </span><span style="color: green">category.coding mit System mii-cs-onko-therapie-stellungzurop -&gt; translate zu oBDS (O, A, N, I, S)</span>
+  <span style="color: navy">// </span><span style="color: green">MII Onko CodeSystem nutzt bereits oBDS-Codes (O, A, N, I, S)</span>
   src.category<b> as </b><span style="color: maroon">cat</span><b> then</b><span style="color: navy"> {
-</span>    cat.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'<span style="color: navy"><b> -&gt; </b></span>tgt.stellungOP = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateStellungOP&quot;</i><span style="color: navy">;</span>
+</span>    cat.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.stellungOP = <span style="color: maroon">cd</span> <i>&quot;SetStellungOP&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;ExtractStellungCode&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;MapStellungOP&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">Therapieart: aus Procedure.category (MII Onko Therapietyp-CodeSystem)</span>
   <span style="color: navy">// </span><span style="color: green">Mappt CH, HO, IM, ZS etc.</span>
@@ -467,7 +471,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

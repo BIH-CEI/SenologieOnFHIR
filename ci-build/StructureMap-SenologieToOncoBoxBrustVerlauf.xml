@@ -74,6 +74,13 @@
       <span style="color: navy">}</span> <i>&quot;MapFMResidualProc&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;EntryFMResidual&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryVerlaufFM&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Vitalstatus aus Patient.deceased (Fallback fuer Verlauf ohne FollowUp) ---</span>
+  src.entry<b> as </b><span style="color: maroon">patEntry</span><b> where </b>resource.is(Patient)<b> then</b><span style="color: navy"> {
+</span>    patEntry.resource<b> as </b><span style="color: maroon">patient</span><b> then</b><span style="color: navy"> {
+</span>      patient<b> where </b>deceased.exists()<span style="color: navy"><b> -&gt; </b></span> tgt.verlauf<b> as </b><span style="color: maroon">verl</span><span style="color: navy">, </span> verl.vitalstatus = <span style="color: blue">'verstorben'</span> <i>&quot;SetVSVerstorben&quot;</i><span style="color: navy">;</span>
+      patient<b> where </b>deceased.exists().not()<span style="color: navy"><b> -&gt; </b></span> tgt.verlauf<b> as </b><span style="color: maroon">verl</span><span style="color: navy">, </span> verl.vitalstatus = <span style="color: blue">'lebend'</span> <i>&quot;SetVSLebend&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;PatientCtx&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryPatVS&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Conditions mit recurrence -&gt; Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---</span>
   src.entry<b> as </b><span style="color: maroon">recEntry</span><b> where </b>resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')<b> then</b><span style="color: navy"> {
 </span>    recEntry.resource<b> as </b><span style="color: maroon">recCond</span><span style="color: navy"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style="color: maroon">verl</span><b> then </b>MapVerlaufRezidiv<span style="color: navy">(</span><span style="color: maroon">recCond</span><span style="color: navy">, </span><span style="color: maroon">verl</span><span style="color: navy">)</span> <i>&quot;CallMapVerlaufRez&quot;</i><span style="color: navy">;</span>
@@ -284,7 +291,7 @@
   <version value="0.1.0"/>
   <name value="SenologieToOncoBoxBrustVerlauf"/>
   <status value="draft"/>
-  <date value="2026-05-04T12:11:06+00:00"/>
+  <date value="2026-05-04T13:22:07+00:00"/>
   <publisher value="Berlin Institute of Health at Charité (BIH)"/>
   <contact>
     <name value="Berlin Institute of Health at Charité (BIH)"/>
@@ -542,6 +549,67 @@
               </rule>
             </rule>
           </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryPatVS"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="patEntry"/>
+        <condition value="resource.is(Patient)"/>
+      </source>
+      <rule>
+        <name value="PatientCtx"/>
+        <source>
+          <context value="patEntry"/>
+          <element value="resource"/>
+          <variable value="patient"/>
+        </source>
+        <rule>
+          <name value="SetVSVerstorben"/>
+          <source>
+            <context value="patient"/>
+            <condition value="deceased.exists()"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="verlauf"/>
+            <variable value="verl"/>
+          </target>
+          <target>
+            <context value="verl"/>
+            <contextType value="variable"/>
+            <element value="vitalstatus"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="verstorben"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetVSLebend"/>
+          <source>
+            <context value="patient"/>
+            <condition value="deceased.exists().not()"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="verlauf"/>
+            <variable value="verl"/>
+          </target>
+          <target>
+            <context value="verl"/>
+            <contextType value="variable"/>
+            <element value="vitalstatus"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="lebend"/>
+            </parameter>
+          </target>
         </rule>
       </rule>
     </rule>

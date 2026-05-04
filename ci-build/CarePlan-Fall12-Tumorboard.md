@@ -12,6 +12,8 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
 
 **intent**: Plan
 
+**category**: prätherapeutisch
+
 **title**: Tumorboard-Empfehlung Renate Vogel — ADH B3
 
 **description**: B3-Läsion (ADH) in Vakuumbiopsie. Nachresektion (offene Biopsie) empfohlen zum Ausschluss eines DCIS oder invasiven Karzinoms. Bei reiner ADH nach Nachresektion: keine weitere Therapie, engmaschige Nachsorge.
@@ -55,6 +57,13 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
   },
   "status" : "active",
   "intent" : "plan",
+  "category" : [{
+    "coding" : [{
+      "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
+      "code" : "praeth",
+      "display" : "prätherapeutisch"
+    }]
+  }],
   "title" : "Tumorboard-Empfehlung Renate Vogel — ADH B3",
   "description" : "B3-Läsion (ADH) in Vakuumbiopsie. Nachresektion (offene Biopsie) empfohlen zum Ausschluss eines DCIS oder invasiven Karzinoms. Bei reiner ADH nach Nachresektion: keine weitere Therapie, engmaschige Nachsorge.",
   "subject" : {

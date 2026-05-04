@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustKennzahlen",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -79,7 +79,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-1"
@@ -151,7 +151,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-2"
@@ -223,7 +223,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-3"
@@ -295,7 +295,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-4"
@@ -367,7 +367,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-5"
@@ -439,7 +439,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-6"
@@ -511,7 +511,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-7"
@@ -583,7 +583,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-8"
@@ -655,7 +655,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-9"
@@ -727,7 +727,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-10"
@@ -799,7 +799,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-11"
@@ -871,7 +871,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-12"
@@ -943,7 +943,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-13"
@@ -1015,7 +1015,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-14"
@@ -1087,7 +1087,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-15"
@@ -1159,7 +1159,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-16"
@@ -1231,7 +1231,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-17"
@@ -1303,7 +1303,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-18"
@@ -1375,7 +1375,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-19"
@@ -1447,7 +1447,7 @@ title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20) status:
         "target" : [{
           "context" : "kz",
           "contextType" : "variable",
-          "element" : "id",
+          "element" : "kennzahlId",
           "transform" : "copy",
           "parameter" : [{
             "valueString" : "KB-20"

@@ -12,6 +12,8 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
 
 **intent**: Plan
 
+**category**: prätherapeutisch
+
 **title**: Tumorboard-Empfehlung Monika Braun — Erstvorstellung
 
 **description**: Empfehlung: Neoadjuvante Chemotherapie EC x4, dann Docetaxel + Trastuzumab x4. Anschließend BET rechts + SLNB. Adjuvant: Trastuzumab Erhaltung 1 Jahr, Ganzbrustbestrahlung, Letrozol.
@@ -85,6 +87,13 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
   },
   "status" : "active",
   "intent" : "plan",
+  "category" : [{
+    "coding" : [{
+      "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
+      "code" : "praeth",
+      "display" : "prätherapeutisch"
+    }]
+  }],
   "title" : "Tumorboard-Empfehlung Monika Braun — Erstvorstellung",
   "description" : "Empfehlung: Neoadjuvante Chemotherapie EC x4, dann Docetaxel + Trastuzumab x4. Anschließend BET rechts + SLNB. Adjuvant: Trastuzumab Erhaltung 1 Jahr, Ganzbrustbestrahlung, Letrozol.",
   "subject" : {

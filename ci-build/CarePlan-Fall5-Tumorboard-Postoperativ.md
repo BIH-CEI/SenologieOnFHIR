@@ -12,6 +12,8 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
 
 **intent**: Plan
 
+**category**: postoperativ
+
 **title**: Tumorboard-Empfehlung Monika Braun — Postoperativ
 
 **description**: Postoperativ ypT1a ypN0(sn)(0/3) R0, gutes Ansprechen. Bestätigung: Trastuzumab Erhaltung fortsetzen, adjuvante RT, Letrozol starten.
@@ -65,6 +67,13 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
   },
   "status" : "active",
   "intent" : "plan",
+  "category" : [{
+    "coding" : [{
+      "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
+      "code" : "postop",
+      "display" : "postoperativ"
+    }]
+  }],
   "title" : "Tumorboard-Empfehlung Monika Braun — Postoperativ",
   "description" : "Postoperativ ypT1a ypN0(sn)(0/3) R0, gutes Ansprechen. Bestätigung: Trastuzumab Erhaltung fortsetzen, adjuvante RT, Letrozol starten.",
   "subject" : {

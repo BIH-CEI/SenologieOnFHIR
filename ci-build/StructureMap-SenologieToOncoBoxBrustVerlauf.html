@@ -41,8 +41,8 @@
 	  <script src="assets/js/prism.js"></script>
     <script type="text/javascript" src="assets/js/mermaid.js"></script>
     <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
-    <style type="text/css">h2{--heading-prefix:"11.126"}
-    h3,h4,h5,h6{--heading-prefix:"11.126"}</style>
+    <style type="text/css">h2{--heading-prefix:"11.123"}
+    h3,h4,h5,h6{--heading-prefix:"11.123"}</style>
     <div id="segment-header" class="segment">  <!-- segment-header -->
       <div class="container">  <!-- container -->
 
@@ -411,6 +411,13 @@ status: draft</p>
       <span style="color: navy">}</span> <i>&quot;MapFMResidualProc&quot;</i><span style="color: navy">;</span>
     <span style="color: navy">}</span> <i>&quot;EntryFMResidual&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">}</span> <i>&quot;EntryVerlaufFM&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Vitalstatus aus Patient.deceased (Fallback fuer Verlauf ohne FollowUp) ---</span>
+  src.entry<b> as </b><span style="color: maroon">patEntry</span><b> where </b>resource.is(Patient)<b> then</b><span style="color: navy"> {
+</span>    patEntry.resource<b> as </b><span style="color: maroon">patient</span><b> then</b><span style="color: navy"> {
+</span>      patient<b> where </b>deceased.exists()<span style="color: navy"><b> -&gt; </b></span> tgt.verlauf<b> as </b><span style="color: maroon">verl</span><span style="color: navy">, </span> verl.vitalstatus = <span style="color: blue">'verstorben'</span> <i>&quot;SetVSVerstorben&quot;</i><span style="color: navy">;</span>
+      patient<b> where </b>deceased.exists().not()<span style="color: navy"><b> -&gt; </b></span> tgt.verlauf<b> as </b><span style="color: maroon">verl</span><span style="color: navy">, </span> verl.vitalstatus = <span style="color: blue">'lebend'</span> <i>&quot;SetVSLebend&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;PatientCtx&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryPatVS&quot;</i><span style="color: navy">;</span>
   <span style="color: navy">// </span><span style="color: green">--- Conditions mit recurrence -&gt; Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---</span>
   src.entry<b> as </b><span style="color: maroon">recEntry</span><b> where </b>resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')<b> then</b><span style="color: navy"> {
 </span>    recEntry.resource<b> as </b><span style="color: maroon">recCond</span><span style="color: navy"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style="color: maroon">verl</span><b> then </b>MapVerlaufRezidiv<span style="color: navy">(</span><span style="color: maroon">recCond</span><span style="color: navy">, </span><span style="color: maroon">verl</span><span style="color: navy">)</span> <i>&quot;CallMapVerlaufRez&quot;</i><span style="color: navy">;</span>
@@ -640,7 +647,7 @@ status: draft</p>
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

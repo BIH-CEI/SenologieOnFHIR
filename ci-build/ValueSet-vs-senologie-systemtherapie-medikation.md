@@ -52,7 +52,7 @@ Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Termin
   "title" : "VS Senologie Systemtherapie Medikation",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

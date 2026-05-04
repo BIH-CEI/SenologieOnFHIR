@@ -43,8 +43,8 @@
 	  <script src="assets/js/prism.js"></script>
     <script type="text/javascript" src="assets/js/mermaid.js"></script>
     <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
-    <style type="text/css">h2{--heading-prefix:"11.126"}
-    h3,h4,h5,h6{--heading-prefix:"11.126"}</style>
+    <style type="text/css">h2{--heading-prefix:"11.123"}
+    h3,h4,h5,h6{--heading-prefix:"11.123"}</style>
     <div id="segment-header" class="segment">  <!-- segment-header -->
       <div class="container">  <!-- container -->
 
@@ -384,6 +384,13 @@
       &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;MapFMResidualProc&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
     &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;EntryFMResidual&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;EntryVerlaufFM&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+  &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;--- Vitalstatus aus Patient.deceased (Fallback fuer Verlauf ohne FollowUp) ---&lt;/span&gt;
+  src.entry&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;patEntry&lt;/span&gt;&lt;b&gt; where &lt;/b&gt;resource.is(Patient)&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
+&lt;/span&gt;    patEntry.resource&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;patient&lt;/span&gt;&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
+&lt;/span&gt;      patient&lt;b&gt; where &lt;/b&gt;deceased.exists()&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt; tgt.verlauf&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;verl&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt; verl.vitalstatus = &lt;span style=&quot;color: blue&quot;&gt;'verstorben'&lt;/span&gt; &lt;i&gt;&amp;quot;SetVSVerstorben&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+      patient&lt;b&gt; where &lt;/b&gt;deceased.exists().not()&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt; tgt.verlauf&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;verl&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt; verl.vitalstatus = &lt;span style=&quot;color: blue&quot;&gt;'lebend'&lt;/span&gt; &lt;i&gt;&amp;quot;SetVSLebend&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+    &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;PatientCtx&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+  &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;EntryPatVS&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;--- Conditions mit recurrence -&amp;gt; Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---&lt;/span&gt;
   src.entry&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;recEntry&lt;/span&gt;&lt;b&gt; where &lt;/b&gt;resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
 &lt;/span&gt;    recEntry.resource&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;recCond&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.verlauf&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;verl&lt;/span&gt;&lt;b&gt; then &lt;/b&gt;MapVerlaufRezidiv&lt;span style=&quot;color: navy&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: maroon&quot;&gt;recCond&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;color: maroon&quot;&gt;verl&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;)&lt;/span&gt; &lt;i&gt;&amp;quot;CallMapVerlaufRez&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
@@ -595,7 +602,7 @@
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.version">version</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;0.1.0&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;SenologieToOncoBoxBrustVerlauf&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.status">status</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;draft&quot;/&gt;
-  &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.date">date</a> <a href="http://hl7.org/fhir/R4/datatypes.html#dateTime">value</a>=&quot;2026-05-04T12:11:06+00:00&quot;/&gt;
+  &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.date">date</a> <a href="http://hl7.org/fhir/R4/datatypes.html#dateTime">value</a>=&quot;2026-05-04T13:22:07+00:00&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.publisher">publisher</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;Berlin Institute of Health at Charité (BIH)&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.contact">contact</a>&gt;
     &lt;<a href="http://hl7.org/fhir/R4/metadatatypes.html#ContactDetail#ContactDetail.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;Berlin Institute of Health at Charité (BIH)&quot;/&gt;
@@ -880,6 +887,67 @@ J05: FM_Residualstatus -&amp;gt; aus Procedure.outcome (Operation)
               &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
             &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
           &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+        &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+      &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+    &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule">rule</a>&gt;
+    &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule">rule</a>&gt;
+      &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;EntryPatVS&quot;/&gt;
+      &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;src&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;entry&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;patEntry&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.condition">condition</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;resource.is(Patient)&quot;/&gt;
+      &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+      &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;PatientCtx&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;patEntry&quot;/&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;resource&quot;/&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;patient&quot;/&gt;
+        &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;SetVSVerstorben&quot;/&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;patient&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.condition">condition</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;deceased.exists()&quot;/&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;tgt&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;verlauf&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;verl&quot;/&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;verl&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;vitalstatus&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.transform">transform</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;copy&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueString</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;verstorben&quot;/&gt;
+            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+        &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;SetVSLebend&quot;/&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;patient&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.condition">condition</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;deceased.exists().not()&quot;/&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;tgt&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;verlauf&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;verl&quot;/&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;verl&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;vitalstatus&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.transform">transform</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;copy&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueString</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;lebend&quot;/&gt;
+            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
         &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
       &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
     &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule">rule</a>&gt;
@@ -1927,7 +1995,7 @@ FM-spezifische Felder J03-J05 werden hier NICHT befuellt.
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

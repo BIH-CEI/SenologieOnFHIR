@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) status: draft
   "version" : "0.1.0",
   "name" : "SenologieToObdsMeldung",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

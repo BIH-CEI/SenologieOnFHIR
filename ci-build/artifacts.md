@@ -117,7 +117,6 @@ These define constraints on FHIR data types for systems conforming to this imple
 | [Screeningstatus](StructureDefinition-ex-senologie-screeningstatus.md) | Screeningstatus der Studienteilnahme — kein natives FHIR-Äquivalent in ResearchSubject |
 | [Simultane Radiochemotherapie](StructureDefinition-ex-senologie-simultane-radiochemotherapie.md) | Flag ob die Strahlentherapie simultan mit Chemotherapie durchgeführt wurde (OncoBox 2.0 H03) |
 | [Standort der Untersuchung](StructureDefinition-ex-senologie-examination-location.md) | Standort/Einrichtung der bildgebenden Untersuchung — DiagnosticReport hat kein location-Element |
-| [Studienname (kodiert)](StructureDefinition-ex-senologie-studienname-code.md) | OncoBox 2.0 K02: Kodierter Studienname aus Auswahlliste. Ergänzt die study-Referenz um einen strukturierten Code für die OncoBox-Meldung. |
 | [Tag im Zyklus](StructureDefinition-ex-senologie-day-in-cycle.md) | Tag innerhalb eines Therapie-Zyklus — MII Onko hat kein day-in-cycle |
 | [Therapie-Zyklus](StructureDefinition-ex-senologie-therapy-cycle.md) | Nummer des Therapie-Zyklus (1, 2, 3, etc.) — MII Onko hat kein cycle tracking |
 | [Therapielinie](StructureDefinition-ex-senologie-therapy-line.md) | Therapielinie (1. Linie, 2. Linie, etc.) — kein natives FHIR-Äquivalent |
@@ -141,7 +140,6 @@ These define sets of codes used by systems conforming to this implementation gui
 | [VS Senologie Risikoklasse](ValueSet-vs-senologie-risikoklasse.md) | Risikokategorien für Genexpressionstests (low, intermediate, high) |
 | [VS Senologie Screeningstatus](ValueSet-vs-senologie-screeningstatus.md) | Screeningstatus einer klinischen Studienteilnahme |
 | [VS Senologie Seite](ValueSet-vs-senologie-seite.md) | Lateralität der Mamma-Erkrankung |
-| [VS Senologie Studienname](ValueSet-vs-senologie-studienname.md) | Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02). Enthält häufige Mammakarzinom-Studien. Die Liste ist erweiterbar (extensible Binding). |
 | [VS Senologie Systemtherapie Medikation](ValueSet-vs-senologie-systemtherapie-medikation.md) | Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01) |
 | [VS Senologie Tumormanifestation](ValueSet-vs-senologie-tumormanifestation.md) | Tumormanifestation bei Diagnosestellung (Mehrfachauswahl möglich) |
 | [VS Senologie Zweittumor](ValueSet-vs-senologie-zweittumor.md) | Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08 |
@@ -159,7 +157,6 @@ These define new code systems used by systems conforming to this implementation 
 | [CS Senologie Follow-Up](CodeSystem-cs-senologie-follow-up.md) | Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes. |
 | [CS Senologie Genexpressionstest](CodeSystem-cs-senologie-genexpressionstest.md) | Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom |
 | [CS Senologie Metastasierung](CodeSystem-cs-senologie-metastasierung.md) | Metastasierungsstatus für Senologie |
-| [CS Senologie Studienname](CodeSystem-cs-senologie-studienname.md) | Auswahlliste klinischer Studien am Brustzentrum für die OncoBox 2.0 Meldung (K02). Enthält häufige interventionelle und nicht-interventionelle Mammakarzinom-Studien. |
 | [CS Senologie Tumormanifestation](CodeSystem-cs-senologie-tumormanifestation.md) | Klassifikation der Tumormanifestation bei Diagnosestellung |
 | [CodeSystem Diagnosesicherung](CodeSystem-cs-senologie-diagnosesicherung.md) | Diagnosesicherung gemäß oBDS (Onkologischer Basisdatensatz) |
 

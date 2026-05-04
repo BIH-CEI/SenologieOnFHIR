@@ -52,7 +52,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-diagnose-m
   "name" : "Senologie_Diagnose_Maligne",
   "title" : "BIH PR Seno Diagnose Maligne",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

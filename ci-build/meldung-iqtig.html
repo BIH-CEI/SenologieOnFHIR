@@ -270,6 +270,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <li><a href="#iqtig-spezifikation" id="markdown-toc-iqtig-spezifikation">IQTIG-Spezifikation</a></li>
       <li><a href="#abgrenzung-zu-obds-und-iregg" id="markdown-toc-abgrenzung-zu-obds-und-iregg">Abgrenzung zu oBDS und IRegG</a></li>
       <li><a href="#ausführung" id="markdown-toc-ausführung">Ausführung</a></li>
+      <li><a href="#validierung-der-transformationsergebnisse" id="markdown-toc-validierung-der-transformationsergebnisse">Validierung der Transformationsergebnisse</a></li>
     </ul>
   </li>
 </ul>
@@ -950,6 +951,62 @@ Content-Type: application/fhir+json
 
 <p>Das Ergebnis ist eine Instanz des IQTIG Logical Models, die über das IQTIG-Datenprüfprogramm (DPP) in das offizielle QS-Format (CSV/XML) exportiert und an die Bundesauswertungsstelle (IQTIG) übermittelt werden kann.</p>
 
+<h3 id="validierung-der-transformationsergebnisse">Validierung der Transformationsergebnisse</h3>
+
+<p class="stu-note">Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fehlendes Pflichtfeld</th>
+      <th>Ursache</th>
+      <th>Ergänzung durch</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzBasis.institutionskennzeichen</code></td>
+      <td>IKNR der Einrichtung</td>
+      <td>KIS / Einrichtungsstammdaten</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzBasis.pseudonymId</code></td>
+      <td>Pseudonymisierte Patienten-ID</td>
+      <td>Pseudonymisierungsdienst</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzBasis.fallId</code></td>
+      <td>Fall-Identifikator</td>
+      <td>KIS / Fallmanagement</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzBasis.aufnahmedatum</code></td>
+      <td>Aufnahmedatum des Falls</td>
+      <td>KIS (Encounter.period.start)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzBasis.entlassungsdatum</code></td>
+      <td>Entlassungsdatum</td>
+      <td>KIS (Encounter.period.end)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzBrust.seitenlokalisation</code></td>
+      <td>Seite der Erkrankung</td>
+      <td>Map-Erweiterung nötig (Condition.bodySite)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzOperation.seitenlokalisation</code></td>
+      <td>Seite der OP</td>
+      <td>Map-Erweiterung nötig (Procedure.bodySite)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">teildatensatzOperation.operationsart</code></td>
+      <td>Klassifikation der OP-Art</td>
+      <td>Map-Erweiterung nötig (Procedure.category)</td>
+    </tr>
+  </tbody>
+</table>
+
 
 
 
@@ -969,7 +1026,7 @@ Content-Type: application/fhir+json
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

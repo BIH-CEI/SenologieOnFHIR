@@ -338,3 +338,20 @@ Content-Type: application/fhir+json
 
 Das Ergebnis ist eine Instanz des OncoBox Logical Models. Ein nachgelagerter XML-Serialisierer erzeugt daraus die OncoBox-Brust-XML-Datei im Format N1.1.1, die an OnkoZert übermittelt werden kann.
 
+### Validierung der Transformationsergebnisse
+
+Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.
+
+| | | |
+| :--- | :--- | :--- |
+| `zentrum.zentrumId` | Zentrums-ID für OnkoZert | KIS / Zentrumsadministration |
+| `zentrum.berichtszeitraumBeginn/Ende` | Berichtszeitraum der Jahresmeldung | ETL-Konfiguration |
+| `zentrum.meldungsdatum` | Zeitpunkt der Meldungsgenerierung | ETL-Strecke (automatisch) |
+| `primaerfall.fall` | Fall-Referenz (Encounter) | KIS / Fallmanagement |
+| `primaerfall.diagnose.seitenlokalisation` | Seite der Diagnose | Map-Erweiterung nötig (bodySite → Seite) |
+| `primaerfall.diagnose.bildgebung.methode` | Bildgebende Methode (Mammographie, Sono, MRT) | Map-Erweiterung nötig (DiagnosticReport.code) |
+| `primaerfall.operation.seitenlokalisation` | Seite der OP | Map-Erweiterung nötig (Procedure.bodySite) |
+| `primaerfall.tumorkonferenz.typ` | Typ der TK (prä-/postoperativ) | Profil-Erweiterung nötig |
+| `primaerfall.verlauf.vitalstatus` | Lebend/Verstorben zum Meldezeitpunkt | Map-Erweiterung nötig (Patient.deceased) |
+| `kennzahl.kennzahlId` | 20x Kennzahl-IDs (KB-1 bis KB-20) | Map verwendet`id`statt`kennzahlId`— Feldname-Korrektur nötig |
+

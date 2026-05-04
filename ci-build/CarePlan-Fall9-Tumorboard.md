@@ -12,6 +12,8 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
 
 **intent**: Plan
 
+**category**: prätherapeutisch
+
 **title**: Tumorboard-Empfehlung Andrea Wolf
 
 **description**: Empfehlung: Adjuvante Chemotherapie (EC x4 → Paclitaxel wöchentlich x12) aufgrund N3a-Befall, BET links + Axilladissektion Level I-III, adjuvante Strahlentherapie inkl. Lymphabfluss, endokrine Therapie Tamoxifen (prämenopausal).
@@ -75,6 +77,13 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
   },
   "status" : "active",
   "intent" : "plan",
+  "category" : [{
+    "coding" : [{
+      "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
+      "code" : "praeth",
+      "display" : "prätherapeutisch"
+    }]
+  }],
   "title" : "Tumorboard-Empfehlung Andrea Wolf",
   "description" : "Empfehlung: Adjuvante Chemotherapie (EC x4 → Paclitaxel wöchentlich x12) aufgrund N3a-Befall, BET links + Axilladissektion Level I-III, adjuvante Strahlentherapie inkl. Lymphabfluss, endokrine Therapie Tamoxifen (prämenopausal).",
   "subject" : {

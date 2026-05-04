@@ -269,6 +269,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <li><a href="#datenverfügbarkeit-und-offene-lücken" id="markdown-toc-datenverfügbarkeit-und-offene-lücken">Datenverfügbarkeit und offene Lücken</a></li>
       <li><a href="#testdaten-referenz" id="markdown-toc-testdaten-referenz">Testdaten-Referenz</a></li>
       <li><a href="#ausführung" id="markdown-toc-ausführung">Ausführung</a></li>
+      <li><a href="#validierung-der-transformationsergebnisse" id="markdown-toc-validierung-der-transformationsergebnisse">Validierung der Transformationsergebnisse</a></li>
     </ul>
   </li>
 </ul>
@@ -706,6 +707,63 @@ Content-Type: application/fhir+json
 
 <p><strong>Perspektive</strong>: Langfristig ist eine Umstellung der Krebsregister auf FHIR-basierte Meldungen wahrscheinlich. Die StructureMap-basierte Architektur ermöglicht einen fließenden Übergang: Sobald Krebsregister FHIR-Bundles akzeptieren, entfällt der XML-Serialisierungsschritt, und die Transformation reduziert sich auf ein Profil-Mapping.</p>
 
+<h3 id="validierung-der-transformationsergebnisse">Validierung der Transformationsergebnisse</h3>
+
+<p>Die Transformation wurde mit Matchbox <code class="language-plaintext highlighter-rouge">$transform</code> gegen das Fall-1-Bundle (Erika Neumann) getestet. Anschließend wurde der Output gegen das oBDS Logical Model validiert.</p>
+
+<p class="stu-note">Die folgenden Pflichtfelder des oBDS Logical Models werden durch die StructureMaps <strong>nicht</strong> befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden. Dies betrifft insbesondere administrative Daten und Felder, die im Brustzentrum derzeit nicht strukturiert dokumentiert werden.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fehlendes Pflichtfeld</th>
+      <th>Ursache</th>
+      <th>Ergänzung durch</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">melderID</code></td>
+      <td>Administrative Melder-Identifikation (IKNR, BSNR)</td>
+      <td>KIS / ETL-Strecke</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tumorzuordnung.tumorID</code></td>
+      <td>Eindeutige Tumor-ID innerhalb des Melderegisters</td>
+      <td>KIS / Krebsregister-Software</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">st.intention</code></td>
+      <td>Intention der Strahlentherapie (kurativ/palliativ)</td>
+      <td>Derzeit nicht strukturiert dokumentiert im Brustzentrum</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">st.stellungOP</code></td>
+      <td>Stellung der ST zur Operation (neoadjuvant/adjuvant)</td>
+      <td>Derzeit nicht strukturiert dokumentiert im Brustzentrum</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">st.nebenwirkungen</code></td>
+      <td>CTCAE-Nebenwirkungen der Strahlentherapie</td>
+      <td>Derzeit nicht strukturiert dokumentiert im Brustzentrum</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tumorkonferenz.typ</code></td>
+      <td>Typ der Tumorkonferenz (prä-/postoperativ)</td>
+      <td>Map-Erweiterung nötig — Feld ist in MII Onko Tumorkonferenz (CarePlan.category) vorhanden, muss in der StructureMap ausgelesen werden</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Erfolgreich befüllte Felder</strong> (Auswahl):</p>
+<ul>
+  <li>Tumorzuordnung: ICD-10-GM C50.4, Diagnosedatum</li>
+  <li>Diagnose: Freitext, Diagnosesicherung, ECOG-Leistungszustand (0), Genexpressionstest (Oncotype DX)</li>
+  <li>OP: Intention (K), Datum, OPS-Codes (5-870.a1, 5-401.11), Residualstatus R0</li>
+  <li>Strahlentherapie: Beginn/Ende, Applikationsart, Zielgebiet</li>
+  <li>Tumorkonferenz: Datum, Therapieempfehlungen (SNOMED-Codes)</li>
+</ul>
+
 
 
 
@@ -725,7 +783,7 @@ Content-Type: application/fhir+json
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

@@ -93,7 +93,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
   "name" : "SenologieKDS",
   "title" : "Kerndatensatz Senologie",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -1531,18 +1531,6 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
       },
       "name" : "CS Senologie Metastasierung",
       "description" : "Metastasierungsstatus für Senologie",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "CodeSystem"
-      }],
-      "reference" : {
-        "reference" : "CodeSystem/cs-senologie-studienname"
-      },
-      "name" : "CS Senologie Studienname",
-      "description" : "Auswahlliste klinischer Studien am Brustzentrum für die OncoBox 2.0 Meldung (K02). Enthält häufige interventionelle und nicht-interventionelle Mammakarzinom-Studien.",
       "exampleBoolean" : false
     },
     {
@@ -4910,18 +4898,6 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
         "valueString" : "StructureDefinition:extension"
       }],
       "reference" : {
-        "reference" : "StructureDefinition/ex-senologie-studienname-code"
-      },
-      "name" : "Studienname (kodiert)",
-      "description" : "OncoBox 2.0 K02: Kodierter Studienname aus Auswahlliste. Ergänzt die study-Referenz um einen strukturierten Code für die OncoBox-Meldung.",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "StructureDefinition:extension"
-      }],
-      "reference" : {
         "reference" : "StructureDefinition/ex-senologie-day-in-cycle"
       },
       "name" : "Tag im Zyklus",
@@ -5106,18 +5082,6 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
       },
       "name" : "VS Senologie Seite",
       "description" : "Lateralität der Mamma-Erkrankung",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "ValueSet"
-      }],
-      "reference" : {
-        "reference" : "ValueSet/vs-senologie-studienname"
-      },
-      "name" : "VS Senologie Studienname",
-      "description" : "Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02). Enthält häufige Mammakarzinom-Studien. Die Liste ist erweiterbar (extensible Binding).",
       "exampleBoolean" : false
     },
     {

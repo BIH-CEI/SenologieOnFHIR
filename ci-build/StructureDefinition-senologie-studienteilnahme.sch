@@ -14,7 +14,6 @@
     <sch:rule context="f:ResearchSubject">
       <sch:assert test="count(f:extension[@url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-screeningstatus']) &lt;= 1">extension with URL = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-screeningstatus': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienscreening']) &lt;= 1">extension with URL = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienscreening': maximum cardinality of 'extension' is 1</sch:assert>
-      <sch:assert test="count(f:extension[@url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code']) &lt;= 1">extension with URL = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienkontakt']) &lt;= 1">extension with URL = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienkontakt': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-aufklaerungsdatum']) &lt;= 1">extension with URL = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-aufklaerungsdatum': maximum cardinality of 'extension' is 1</sch:assert>
     </sch:rule>

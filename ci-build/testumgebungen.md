@@ -7,7 +7,63 @@
 
 # Datenbereitstellung und Testumgebungen
 
-Der Kerndatensatz Senologie stellt neben den Profilen und Terminologien auch eine vollständige Testinfrastruktur bereit, um die Implementierung in realen Systemen zu erleichtern.
+Der Kerndatensatz Senologie stellt neben den Profilen und Terminologien eine vollständige Testinfrastruktur bereit.
+
+### Bereitgestellte Komponenten
+
+| | | |
+| :--- | :--- | :--- |
+| **Implementation Guide**(GitHub Pages) | Profile, Questionnaires, Beispiele, Dokumentation | Alle |
+| **FHIR Package** | Installierbare Profile für Validierung und Implementierung | Implementierer |
+| **Matchbox Docker** | SDC`$extract`(Questionnaire-Extraction) + StructureMap`$transform`(Meldungs-Transformation) | Tester, Entwickler |
+| **HAPI FHIR Docker** | Standard FHIR-Server + CQL`$cql`+`$evaluate-measure` | Tester, Auswertung |
+| **Pathling Docker** | SQL-on-FHIR ViewDefinitions, analytische FHIRPath-Abfragen | Forschung, BI |
+| **Aidbox Docker** | FHIR-Server mit Schema-Validierung, SQL on FHIR`$run` | Tester |
+| **Jupyter Notebooks** | CQL-Auswertung, ViewDefinitions, Kohortenanalysen | Datenwissenschaftler |
+| **Bundles (JSON)** | 12 Testpatientinnen als Transaction Bundles,[Download](Bundle-Fall1-Erika-Neumann.json) | Alle |
+
+Alle Docker-Compose-Dateien, Import-Skripte und Testdaten sind im [GitHub-Repository](https://github.com/BIH-CEI/SenologieOnFHIR) frei verfügbar.
+
+### Quickstart
+
+```
+# 1. Repository klonen
+git clone https://github.com/BIH-CEI/SenologieOnFHIR.git
+cd SenologieOnFHIR
+
+# 2. Umgebung konfigurieren
+cp .env.example .env
+# → Aidbox-Lizenz in .env eintragen (https://aidbox.app/)
+
+# 3. Server starten
+docker compose up -d                                    # Aidbox (Port 8888)
+docker compose -f docker-compose.matchbox.yaml up -d    # Matchbox (Port 8080)
+docker compose -f docker-compose.pathling.yaml up -d    # Pathling (Port 8091)
+
+# 4. Testdaten laden
+bash scripts/import-to-aidbox.sh                        # → Aidbox
+python3 scripts/load-to-pathling.py                     # → Pathling
+
+# 5. Testen
+# Questionnaire rendern:   http://localhost:8888/fhir/Questionnaire/senologie-diagnose
+# SDC $extract:            POST http://localhost:8080/fhir/QuestionnaireResponse/$extract
+# StructureMap $transform: POST http://localhost:8080/fhir/StructureMap/$transform
+# SQL-on-FHIR:            POST http://localhost:8091/fhir/ViewDefinition/$run
+# CQL-Auswertung:         POST http://localhost:8888/fhir/$cql
+# Jupyter Notebook:        jupyter notebook notebooks/senologie-analyse.ipynb
+
+```
+
+### Standardports
+
+| | | |
+| :--- | :--- | :--- |
+| Aidbox | 8888 | [http://localhost:8888](http://localhost:8888)(admin/admin) |
+| Matchbox | 8080 | [http://localhost:8080](http://localhost:8080) |
+| Pathling | 8091 | [http://localhost:8091](http://localhost:8091) |
+| Postgres (Aidbox) | 5437 | — |
+
+Die Ports können über die `.env`-Datei oder die jeweiligen Docker-Compose-Dateien angepasst werden.
 
 ### Synthetische Testdaten
 

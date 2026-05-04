@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-studientei
   "name" : "Senologie_Studienteilnahme",
   "title" : "BIH Senologie Studienteilnahme",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -118,19 +118,6 @@ Other representations of profile: [CSV](StructureDefinition-senologie-studientei
       "type" : [{
         "code" : "Extension",
         "profile" : ["https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienscreening"]
-      }]
-    },
-    {
-      "id" : "ResearchSubject.extension:StudiennameCode",
-      "path" : "ResearchSubject.extension",
-      "sliceName" : "StudiennameCode",
-      "short" : "Studienname aus Auswahlliste (K02)",
-      "comment" : "OncoBox 2.0 K02: Kodierter Studienname aus Auswahlliste. Ergänzt study.display um einen strukturierten Code.",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "Extension",
-        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/ex-senologie-studienname-code"]
       }]
     },
     {

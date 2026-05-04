@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
   "version" : "0.1.0",
   "name" : "SenologieToOncoBoxBrustVerlauf",
   "status" : "draft",
-  "date" : "2026-05-04T12:11:06+00:00",
+  "date" : "2026-05-04T13:22:07+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -279,6 +279,67 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
                   }]
                 }]
               }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPatVS",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "patEntry",
+        "condition" : "resource.is(Patient)"
+      }],
+      "rule" : [{
+        "name" : "PatientCtx",
+        "source" : [{
+          "context" : "patEntry",
+          "element" : "resource",
+          "variable" : "patient"
+        }],
+        "rule" : [{
+          "name" : "SetVSVerstorben",
+          "source" : [{
+            "context" : "patient",
+            "condition" : "deceased.exists()"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "verlauf",
+            "variable" : "verl"
+          },
+          {
+            "context" : "verl",
+            "contextType" : "variable",
+            "element" : "vitalstatus",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "verstorben"
+            }]
+          }]
+        },
+        {
+          "name" : "SetVSLebend",
+          "source" : [{
+            "context" : "patient",
+            "condition" : "deceased.exists().not()"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "verlauf",
+            "variable" : "verl"
+          },
+          {
+            "context" : "verl",
+            "contextType" : "variable",
+            "element" : "vitalstatus",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "lebend"
             }]
           }]
         }]

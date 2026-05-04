@@ -12,6 +12,8 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
 
 **intent**: Plan
 
+**category**: prätherapeutisch
+
 **title**: Tumorboard-Empfehlung Erika Neumann
 
 **description**: Empfehlung: Brusterhaltende Therapie mit Sentinel-LK-Biopsie, adjuvante Strahlentherapie, endokrine Therapie (Aromatasehemmer). Keine Chemotherapie aufgrund Oncotype DX RS 18.
@@ -75,6 +77,13 @@ Profile: [BIH Senologie Tumorboard Empfehlung](StructureDefinition-senologie-tum
   },
   "status" : "active",
   "intent" : "plan",
+  "category" : [{
+    "coding" : [{
+      "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
+      "code" : "praeth",
+      "display" : "prätherapeutisch"
+    }]
+  }],
   "title" : "Tumorboard-Empfehlung Erika Neumann",
   "description" : "Empfehlung: Brusterhaltende Therapie mit Sentinel-LK-Biopsie, adjuvante Strahlentherapie, endokrine Therapie (Aromatasehemmer). Keine Chemotherapie aufgrund Oncotype DX RS 18.",
   "subject" : {

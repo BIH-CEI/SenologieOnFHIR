@@ -218,3 +218,12 @@ Content-Type: application/fhir+json
 
 Das Ergebnis ist eine Instanz des IRegG Logical Models, die als XML serialisiert und an das DIMDI übermittelt werden kann.
 
+### Validierung der Transformationsergebnisse
+
+Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.
+
+| | | |
+| :--- | :--- | :--- |
+| `fall` | Fall-Referenz (Encounter mit Aufnahme/Entlassung) | KIS / Fallmanagement — Test-Bundle enthält keinen Encounter mit IReG-relevantem Implantat-Eingriff |
+| `meldung.idEinrichtung` | Einrichtungskennung (IKNR) | KIS / Einrichtungsstammdaten |
+

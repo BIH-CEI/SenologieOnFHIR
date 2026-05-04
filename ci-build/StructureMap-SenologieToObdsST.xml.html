@@ -43,8 +43,8 @@
 	  <script src="assets/js/prism.js"></script>
     <script type="text/javascript" src="assets/js/mermaid.js"></script>
     <script type="text/javascript" src="assets/js/mermaid-init.js"></script>
-    <style type="text/css">h2{--heading-prefix:"11.114"}
-    h3,h4,h5,h6{--heading-prefix:"11.114"}</style>
+    <style type="text/css">h2{--heading-prefix:"11.111"}
+    h3,h4,h5,h6{--heading-prefix:"11.111"}</style>
     <div id="segment-header" class="segment">  <!-- segment-header -->
       <div class="container">  <!-- container -->
 
@@ -355,15 +355,20 @@
   src&lt;b&gt; where &lt;/b&gt;performedPeriod.end.exists()&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.meldeanlass = &lt;span style=&quot;color: blue&quot;&gt;'behandlungsende'&lt;/span&gt; &lt;i&gt;&amp;quot;MeldeanlassEnde&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   src&lt;b&gt; where &lt;/b&gt;performedPeriod.end.exists().not()&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.meldeanlass = &lt;span style=&quot;color: blue&quot;&gt;'behandlungsbeginn'&lt;/span&gt; &lt;i&gt;&amp;quot;MeldeanlassBeginn&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;Intention: aus MII Onko Strahlentherapie-Intention Extension&lt;/span&gt;
-  &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;valueCodeableConcept -&amp;gt; translate zu oBDS (K, P, O, S, X)&lt;/span&gt;
+  &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;MII Onko CodeSystem nutzt bereits oBDS-Codes (K, P, D, R, S, X)&lt;/span&gt;
   src.extension&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;ext&lt;/span&gt;&lt;b&gt; where &lt;/b&gt;url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention'&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
 &lt;/span&gt;    ext.value&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;val&lt;/span&gt;&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
-&lt;/span&gt;      val.coding&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;c&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.intention = &lt;b&gt;translate&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: maroon&quot;&gt;c&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;color: blue&quot;&gt;'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention'&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;color: blue&quot;&gt;'code'&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;)&lt;/span&gt; &lt;i&gt;&amp;quot;TranslateIntention&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+&lt;/span&gt;      val.coding&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;c&lt;/span&gt;&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
+&lt;/span&gt;        c.code&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;cd&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.intention = &lt;span style=&quot;color: maroon&quot;&gt;cd&lt;/span&gt; &lt;i&gt;&amp;quot;SetIntention&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+      &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;ExtractIntentionCode&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
     &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;ExtractIntentionCoding&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;MapIntention&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)&lt;/span&gt;
+  &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;MII Onko CodeSystem nutzt bereits oBDS-Codes (O, A, N, I, S)&lt;/span&gt;
   src.category&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;cat&lt;/span&gt;&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
-&lt;/span&gt;    cat.coding&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;c&lt;/span&gt;&lt;b&gt; where &lt;/b&gt;system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.stellungOP = &lt;b&gt;translate&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: maroon&quot;&gt;c&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;color: blue&quot;&gt;'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung'&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;, &lt;/span&gt;&lt;span style=&quot;color: blue&quot;&gt;'code'&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;)&lt;/span&gt; &lt;i&gt;&amp;quot;TranslateStellungOP&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+&lt;/span&gt;    cat.coding&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;c&lt;/span&gt;&lt;b&gt; where &lt;/b&gt;system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'&lt;b&gt; then&lt;/b&gt;&lt;span style=&quot;color: navy&quot;&gt; {
+&lt;/span&gt;      c.code&lt;b&gt; as &lt;/b&gt;&lt;span style=&quot;color: maroon&quot;&gt;cd&lt;/span&gt;&lt;span style=&quot;color: navy&quot;&gt;&lt;b&gt; -&amp;gt; &lt;/b&gt;&lt;/span&gt;tgt.stellungOP = &lt;span style=&quot;color: maroon&quot;&gt;cd&lt;/span&gt; &lt;i&gt;&amp;quot;SetStellungOP&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
+    &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;ExtractStellungCode&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;}&lt;/span&gt; &lt;i&gt;&amp;quot;MapStellungOP&amp;quot;&lt;/i&gt;&lt;span style=&quot;color: navy&quot;&gt;;&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;Bestrahlung: jede Procedure bildet eine einzelne Bestrahlungsserie ab&lt;/span&gt;
   &lt;span style=&quot;color: navy&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: green&quot;&gt;Im Senologie-Profil ist jede Procedure eine Bestrahlung&lt;/span&gt;
@@ -441,7 +446,7 @@
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.version">version</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;0.1.0&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;SenologieToObdsST&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.status">status</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;draft&quot;/&gt;
-  &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.date">date</a> <a href="http://hl7.org/fhir/R4/datatypes.html#dateTime">value</a>=&quot;2026-05-04T12:11:06+00:00&quot;/&gt;
+  &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.date">date</a> <a href="http://hl7.org/fhir/R4/datatypes.html#dateTime">value</a>=&quot;2026-05-04T13:22:07+00:00&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.publisher">publisher</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;Berlin Institute of Health at Charité (BIH)&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.contact">contact</a>&gt;
     &lt;<a href="http://hl7.org/fhir/R4/metadatatypes.html#ContactDetail#ContactDetail.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;Berlin Institute of Health at Charité (BIH)&quot;/&gt;
@@ -631,28 +636,29 @@ Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege
           &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;val&quot;/&gt;
         &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
         &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;TranslateIntention&quot;/&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;ExtractIntentionCode&quot;/&gt;
           &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
             &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;val&quot;/&gt;
             &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;coding&quot;/&gt;
             &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;c&quot;/&gt;
           &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;tgt&quot;/&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;intention&quot;/&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.transform">transform</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;translate&quot;/&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueId</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;c&quot;/&gt;
-            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueString</a>
-                           <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention&quot;/&gt;
-            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueString</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;code&quot;/&gt;
-            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;SetIntention&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;c&quot;/&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;code&quot;/&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;cd&quot;/&gt;
+            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;tgt&quot;/&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;intention&quot;/&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.transform">transform</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;copy&quot;/&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+                &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueId</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;cd&quot;/&gt;
+              &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
         &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
       &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
     &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule">rule</a>&gt;
@@ -664,7 +670,7 @@ Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege
         &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;cat&quot;/&gt;
       &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
       &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
-        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;TranslateStellungOP&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;ExtractStellungCode&quot;/&gt;
         &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
           &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;cat&quot;/&gt;
           &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;coding&quot;/&gt;
@@ -672,22 +678,23 @@ Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege
           &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.condition">condition</a>
                      <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'&quot;/&gt;
         &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
-        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;tgt&quot;/&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;stellungOP&quot;/&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.transform">transform</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;translate&quot;/&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueId</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;c&quot;/&gt;
-          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueString</a>
-                         <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung&quot;/&gt;
-          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueString</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;code&quot;/&gt;
-          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
-        &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.name">name</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;SetStellungOP&quot;/&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;c&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;code&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source.variable">variable</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;cd&quot;/&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.source">source</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.context">context</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;tgt&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.contextType">contextType</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;variable&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.element">element</a> <a href="http://hl7.org/fhir/R4/datatypes.html#string">value</a>=&quot;stellungOP&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.transform">transform</a> <a href="http://hl7.org/fhir/R4/datatypes.html#code">value</a>=&quot;copy&quot;/&gt;
+            &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+              &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter.value_x_">valueId</a> <a href="http://hl7.org/fhir/R4/datatypes.html#id">value</a>=&quot;cd&quot;/&gt;
+            &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target.parameter">parameter</a>&gt;
+          &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.target">target</a>&gt;
+        &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
       &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule.rule">rule</a>&gt;
     &lt;/<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule">rule</a>&gt;
     &lt;<a href="http://hl7.org/fhir/R4/structuremap.html#StructureMap.group.rule">rule</a>&gt;
@@ -1093,7 +1100,7 @@ Dosis und Boost aus den MII Onko Extensions
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 12:11+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 13:22+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
