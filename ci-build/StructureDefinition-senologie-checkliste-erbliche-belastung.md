@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-checkliste
   "name" : "Senologie_Checkliste_Erbliche_Belastung",
   "title" : "BIH Senologie Checkliste Erbliche Belastung",
   "status" : "draft",
-  "date" : "2026-05-04T07:50:36+00:00",
+  "date" : "2026-05-04T08:11:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

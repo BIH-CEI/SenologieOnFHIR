@@ -90,7 +90,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
   "name" : "SenologieKDS",
   "title" : "Kerndatensatz Senologie",
   "status" : "draft",
-  "date" : "2026-05-04T07:50:36+00:00",
+  "date" : "2026-05-04T08:11:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -4502,7 +4502,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
         "reference" : "Questionnaire/senologie-erstanamnese"
       },
       "name" : "Fragebogen: Erstanamnese",
-      "description" : "Fragebogen zur Erstanamnese (Allgemeine Anamnese, Gynäkologische Anamnese, Familienanamnese). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Observation, FamilyMemberHistory).",
+      "description" : "Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese, Raucherstatus und Familienanamnese. Nutzt SDC Template-based Extraction.",
       "exampleBoolean" : false
     },
     {
@@ -4562,7 +4562,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
         "reference" : "Questionnaire/senologie-strahlentherapie-quest"
       },
       "name" : "Fragebogen: Strahlentherapie",
-      "description" : "Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel.",
+      "description" : "Fragebogen zur strukturierten Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit contained Procedure-Template.",
       "exampleBoolean" : false
     },
     {

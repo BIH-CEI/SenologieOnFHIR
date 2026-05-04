@@ -12,7 +12,7 @@
 | Draft as of 2026-05-04 | *Computable Name*:QuestStrahlentherapie |
 
  
-Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel. 
+Fragebogen zur strukturierten Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit contained Procedure-Template. 
 
 
 
@@ -22,6 +22,40 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
 {
   "resourceType" : "Questionnaire",
   "id" : "senologie-strahlentherapie-quest",
+  "contained" : [{
+    "resourceType" : "Procedure",
+    "id" : "strahlentherapie-procedure-template",
+    "status" : "completed",
+    "category" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "1287742003",
+        "display" : "Radiotherapy"
+      }]
+    },
+    "code" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "108290001",
+        "display" : "Radiation oncology AND/OR radiotherapy"
+      }],
+      "text" : "Strahlentherapie"
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    },
+    "reasonReference" : [{
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+        }]
+      }
+    }]
+  }],
   "extension" : [{
     "extension" : [{
       "url" : "name",
@@ -43,7 +77,7 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T07:50:36+00:00",
+  "date" : "2026-05-04T08:11:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -52,14 +86,29 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel.",
+  "description" : "Fragebogen zur strukturierten Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit contained Procedure-Template.",
   "item" : [{
     "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
       "valueExpression" : {
         "language" : "application/x-fhir-query",
-        "expression" : "Procedure"
+        "expression" : "Condition?patient={{%patient.id}}&clinical-status=active"
       }
+    }],
+    "linkId" : "bezugsdiagnose",
+    "text" : "Bezugsdiagnose",
+    "type" : "reference",
+    "required" : true
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#strahlentherapie-procedure-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }],
     "linkId" : "therapie-rahmen",
     "text" : "Therapie-Rahmen",
@@ -74,21 +123,21 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "373846009",
-          "display" : "Adjuvant - intent"
+          "display" : "Adjuvant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "373847000",
-          "display" : "Neoadjuvant intent"
+          "display" : "Neoadjuvant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "363676003",
-          "display" : "Palliative intent"
+          "display" : "Palliativ"
         }
       }]
     },
@@ -105,9 +154,36 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
       "required" : false
     },
     {
-      "linkId" : "rt-bezogene-op",
-      "text" : "Bezogene Operation (Referenz auf vorherige OP)",
-      "type" : "string",
+      "linkId" : "rt-seite",
+      "text" : "Bestrahlte Seite",
+      "type" : "choice",
+      "required" : true,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "80248007",
+          "display" : "Links"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "73056007",
+          "display" : "Rechts"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "63762007",
+          "display" : "Beidseits"
+        }
+      }]
+    },
+    {
+      "linkId" : "rt-simultane-rct",
+      "text" : "Simultane Radiochemotherapie",
+      "type" : "boolean",
       "required" : false
     }]
   },
@@ -126,42 +202,35 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "76752008",
-          "display" : "Breast structure"
+          "display" : "Ganze Brust"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "78904004",
-          "display" : "Chest wall structure"
+          "display" : "Brustwand"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "68171009",
-          "display" : "Axillary lymph node structure"
-        }
-      },
-      {
-        "valueCoding" : {
-          "system" : "http://snomed.info/sct",
-          "code" : "16051009",
-          "display" : "Structure of apical axillary lymph node"
+          "display" : "Axilläre Lymphknoten"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "76838003",
-          "display" : "Structure of supraclavicular lymph node"
+          "display" : "Supraklavikuläre Lymphknoten"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "245282001",
-          "display" : "Internal mammary lymph node group"
+          "display" : "Parasternale Lymphknoten"
         }
       }]
     },
@@ -174,21 +243,21 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "1163834000",
-          "display" : "3D conformal radiation therapy"
+          "display" : "3D-konformale Bestrahlung"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "1163833006",
-          "display" : "Intensity modulated radiation therapy"
+          "display" : "IMRT (intensitätsmoduliert)"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "152198000",
-          "display" : "Brachytherapy"
+          "display" : "Brachytherapie"
         }
       }]
     },
@@ -267,26 +336,6 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
         "answerBoolean" : true
       }],
       "required" : false
-    },
-    {
-      "linkId" : "rt-boost-technik",
-      "text" : "Boost-Technik",
-      "type" : "choice",
-      "enableWhen" : [{
-        "question" : "rt-boost",
-        "operator" : "=",
-        "answerBoolean" : true
-      }],
-      "required" : false,
-      "answerOption" : [{
-        "valueString" : "Elektronen"
-      },
-      {
-        "valueString" : "Photonen"
-      },
-      {
-        "valueString" : "Brachytherapie"
-      }]
     }]
   },
   {
@@ -296,7 +345,7 @@ Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologi
     "required" : false,
     "item" : [{
       "linkId" : "rt-nebenwirkungen",
-      "text" : "Akute Nebenwirkungen (Radiodermatitis, Fatigue, etc.)",
+      "text" : "Akute Nebenwirkungen",
       "type" : "text",
       "required" : false
     },

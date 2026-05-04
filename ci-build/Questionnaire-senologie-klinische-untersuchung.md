@@ -177,7 +177,7 @@ Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nu
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T07:50:36+00:00",
+  "date" : "2026-05-04T08:11:13+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -247,21 +247,21 @@ Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nu
       "valueCoding" : {
         "system" : "http://snomed.info/sct",
         "code" : "80248007",
-        "display" : "Left breast structure"
+        "display" : "Links"
       }
     },
     {
       "valueCoding" : {
         "system" : "http://snomed.info/sct",
         "code" : "73056007",
-        "display" : "Right breast structure"
+        "display" : "Rechts"
       }
     },
     {
       "valueCoding" : {
         "system" : "http://snomed.info/sct",
         "code" : "63762007",
-        "display" : "Both breasts"
+        "display" : "Beidseits"
       }
     }]
   },
