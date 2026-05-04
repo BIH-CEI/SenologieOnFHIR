@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-diagnose-b
   "name" : "Senologie_Diagnose_Benigne",
   "title" : "BIH PR Seno Diagnose Benigne",
   "status" : "draft",
-  "date" : "2026-05-04T13:22:07+00:00",
+  "date" : "2026-05-04T13:47:49+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
