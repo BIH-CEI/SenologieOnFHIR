@@ -2,7 +2,7 @@
 
 ## Grundprinzip
 
-Die ISiK-Spezifikation (Informationstechnische Systeme im Krankenhaus) der gematik definiert Basisprofile für den stationären Versorgungskontext in Deutschland. ISiK wird derzeit in Stufe 6 kommentiert. Der Senologie-IG nutzt ISiK-kompatible Profile wo diese den fachlichen Anforderungen entsprechen.
+Die ISiK-Spezifikation (Informationstechnische Systeme im Krankenhaus) der gematik definiert Basisprofile für den stationären Versorgungskontext in Deutschland. ISiK wird derzeit in Stufe 6 kommentiert. Der Senologie-IG nutzt ISiK-kompatible Profile wo diese den fachlichen Anforderungen entsprechen. Dies umfasst sowohl den Austausch von Patientenstammdaten und Fallzuordnung als auch das ISiK-Formularmodul für patienten- und personalbefüllte Fragebögen.
 
 ## ISiK-kompatible Elemente
 
