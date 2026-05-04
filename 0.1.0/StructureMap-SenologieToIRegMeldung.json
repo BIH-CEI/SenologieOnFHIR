@@ -1,0 +1,584 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToIRegMeldung",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIRegMeldung</b></p><a name=\"SenologieToIRegMeldung\"> </a><a name=\"hcSenologieToIRegMeldung\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIRegMeldung<span style=\"color: navy\">&quot; = &quot;</span>SenologieToIRegMeldung<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/patient.html\" title=\"Patient\">http://hl7.org/fhir/StructureDefinition/Patient</a><span style=\"color: navy\">&quot; </span><b>alias </b>Patient <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/encounter.html\" title=\"Encounter\">http://hl7.org/fhir/StructureDefinition/Encounter</a><span style=\"color: navy\">&quot; </span><b>alias </b>Encounter <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/procedure.html\" title=\"Procedure\">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style=\"color: navy\">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/device.html\" title=\"Device\">http://hl7.org/fhir/StructureDefinition/Device</a><span style=\"color: navy\">&quot; </span><b>alias </b>Device <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/organization.html\" title=\"Organization\">http://hl7.org/fhir/StructureDefinition/Organization</a><span style=\"color: navy\">&quot; </span><b>alias </b>Organization <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-ireg-brustimplantat-meldung.html\" title=\"IRegG Brustimplantat Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>IRegMeldung <b>as </b><b>target</b>\r\n\r\n<b>imports</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIRegPatient<span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToIRegOperation.html\" title=\"SenologieToIRegOperation\">https://www.senologie.org/fhir/StructureMap/SenologieToIRegOperation</a><span style=\"color: navy\">&quot;\r\n</span><b>imports</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureMap-SenologieToIRegEntlassung.html\" title=\"SenologieToIRegEntlassung\">https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung</a><span style=\"color: navy\">&quot;\r\n</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapMeldungskopf, MapFall) use</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement` because FML has no syntax to declare the</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">specific Logical Model sub-path when a parent group passes a BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slice. The IG Publisher resolves target paths against BackboneElement,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">producing ~20 SM_TARGET_PATH / SM_SOURCE_PATH errors. The element names are</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">correct and match the IRegG Brustimplantat Logical Model. These errors are</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">cosmetic.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Master Orchestrator: Bundle -&gt; IRegG Brustimplantat-Meldung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Empfaengt ein FHIR Bundle mit Senologie-Ressourcen (Patient, Procedure,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Device, Encounter, Condition, Observations) und erzeugt eine vollstaendige</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">IRegG-Meldung fuer Brustimplantate.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Im Gegensatz zur oBDS-Transformation (mehrere Meldungen pro Bundle)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">erzeugt die IRegG-Meldung eine einzelne GEMeldung pro Behandlungsfall.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>SenologieToIRegMeldung<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>IRegMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Meldungskopf (MEL_*) ---</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldung<b> as </b><span style=\"color: maroon\">mel</span><b> then </b>MapMeldungskopf<span style=\"color: navy\">(</span><span style=\"color: maroon\">src</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">mel</span><span style=\"color: navy\">)</span> <i>&quot;CallMapMeldungskopf&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Fall (FAL_*) ---</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Encounter)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">encounter</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.fall<b> as </b><span style=\"color: maroon\">fall</span><b> then </b>MapFall<span style=\"color: navy\">(</span><span style=\"color: maroon\">encounter</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">fall</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>&quot;CallMapFall&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryEncounter&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Meldungskopf: Bundle -&gt; meldung (MEL_*)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Einrichtungskennung, Softwareinfo aus Organization und Bundle-Metadaten</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapMeldungskopf<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">MEL_IrdIdGesundheitseinrichtung: aus Organization im Bundle</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Organization)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">org</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'http://fhir.de/sid/ird/ge-kennung'<b> then</b><span style=\"color: navy\"> {\r\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.idEinrichtung = <span style=\"color: maroon\">v</span> <i>&quot;SetIdEinrichtung&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;FilterIrdId&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">MEL_Bsnr: Betriebsstaettennummer</span>\r\n      org.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'https://fhir.de/sid/arge-ik/iknr'<b> then</b><span style=\"color: navy\"> {\r\n</span>        id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.bsnr = <span style=\"color: maroon\">v</span> <i>&quot;SetBsnr&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;FilterBsnr&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;OrgContext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryOrganization&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">MEL_IrdSpezVersion: feste Version der IRegD-Spezifikation</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.irdSpezVersion = <span style=\"color: blue\">'4.1.1'</span> <i>&quot;SetSpezVersion&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">MEL_SwName, MEL_SwHersteller, MEL_SwVersion: aus Bundle.meta.tag oder fest</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.swName = <span style=\"color: blue\">'Senologie-KDS FHIR IG'</span> <i>&quot;SetSwName&quot;</i><span style=\"color: navy\">;</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.swHersteller = <span style=\"color: blue\">'BIH at Charite'</span> <i>&quot;SetSwHersteller&quot;</i><span style=\"color: navy\">;</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.swVersion = <span style=\"color: blue\">'0.1.0'</span> <i>&quot;SetSwVersion&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Fall: Encounter -&gt; fall (FAL_*)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Aufnahmedatum, Art des Aufenthalts, Transfernummer</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapFall<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Encounter, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">FAL_Aufnahmedatum: aus Encounter.period.start</span>\r\n  src.period<b> as </b><span style=\"color: maroon\">period</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    period.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.aufnahmedatum = <span style=\"color: maroon\">s</span> <i>&quot;SetAufnahmedatum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapAufnahmedatum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">FAL_ArtAufenthaltSchluessel: aus Encounter.class</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">vollstationaer = 1, teilstationaer = 2, ambulant = 3</span>\r\n  src.class<b> as </b><span style=\"color: maroon\">cls</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    cls.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'IMP'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.artAufenthaltSchluessel = <span style=\"color: blue\">'1'</span> <i>&quot;SetAufenthaltStationaer&quot;</i><span style=\"color: navy\">;</span>\r\n    cls.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'SS'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.artAufenthaltSchluessel = <span style=\"color: blue\">'2'</span> <i>&quot;SetAufenthaltTeilstationaer&quot;</i><span style=\"color: navy\">;</span>\r\n    cls.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'AMB'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.artAufenthaltSchluessel = <span style=\"color: blue\">'3'</span> <i>&quot;SetAufenthaltAmbulant&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapArtAufenthalt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">FAL_Transfernummer: aus Encounter.identifier mit Pseudonymisierungssystem</span>\r\n  src.identifier<b> as </b><span style=\"color: maroon\">id</span><b> where </b>system = 'http://fhir.de/sid/ird/transfernummer'<b> then</b><span style=\"color: navy\"> {\r\n</span>    id.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.transfernummer = <span style=\"color: maroon\">v</span> <i>&quot;SetTransfernummer&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapTransfernummer&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">FAL_DatumZeitSatzErstellung: aktuelle Zeit</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.datumZeitSatzErstellung = evaluate<span style=\"color: navy\">(</span>src<span style=\"color: navy\">, </span>now()<span style=\"color: navy\">)</span> <i>&quot;SetSatzErstellung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">FAL_Versionsnummer</span>\r\n  src.meta<b> as </b><span style=\"color: maroon\">meta</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    meta.versionId<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.versionsnummer = <span style=\"color: maroon\">v</span> <i>&quot;SetVersionsnummer&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapVersionsnummer&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Ausloeser: OPS-Kodes die den Meldeanlass bilden ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Aus Procedure-Ressourcen im Bundle mit OPS-Kodierung</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">procedure</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      procedure.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ausloeser<b> as </b><span style=\"color: maroon\">ausl</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>ausl.prozedurenSchluessel = <span style=\"color: maroon\">cd</span> <i>&quot;SetAusloeserOPS&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapAusloeserCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapAusloeserCode&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;AusloeserProcContext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryAusloeser&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Patientenaufnahme: Patient + Observations ---</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Patient)<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">patient</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.patientenaufnahme<b> as </b><span style=\"color: maroon\">pat</span><b> then </b>MapPatientenaufnahme<span style=\"color: navy\">(</span><span style=\"color: maroon\">patient</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">pat</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapPatientenaufnahme&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryPatient&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Operationen: Procedure (Senologie_Operation) mit Device ---</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">procedure</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.operation<b> as </b><span style=\"color: maroon\">op</span><b> then </b>MapOperation<span style=\"color: navy\">(</span><span style=\"color: maroon\">procedure</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">op</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapOperation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryOperation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Entlassung: Encounter + Conditions ---</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.entlassung<b> as </b><span style=\"color: maroon\">entl</span><b> then </b>MapEntlassung<span style=\"color: navy\">(</span><span style=\"color: maroon\">src</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">entl</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">)</span> <i>&quot;CallMapEntlassung&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToIRegMeldung",
+  "version" : "0.1.0",
+  "name" : "SenologieToIRegMeldung",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator)\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Patient",
+    "mode" : "source",
+    "alias" : "Patient"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Encounter",
+    "mode" : "source",
+    "alias" : "Encounter"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Procedure",
+    "mode" : "source",
+    "alias" : "Procedure"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Device",
+    "mode" : "source",
+    "alias" : "Device"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Organization",
+    "mode" : "source",
+    "alias" : "Organization"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung",
+    "mode" : "target",
+    "alias" : "IRegMeldung"
+  }],
+  "import" : ["https://www.senologie.org/fhir/StructureMap/SenologieToIRegPatient",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToIRegOperation",
+  "https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung"],
+  "group" : [{
+    "name" : "SenologieToIRegMeldung",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups (MapMeldungskopf, MapFall) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nspecific Logical Model sub-path when a parent group passes a BackboneElement\r\nslice. The IG Publisher resolves target paths against BackboneElement,\r\nproducing ~20 SM_TARGET_PATH / SM_SOURCE_PATH errors. The element names are\r\ncorrect and match the IRegG Brustimplantat Logical Model. These errors are\r\ncosmetic.\r\n============================================================================\r\nMaster Orchestrator: Bundle -> IRegG Brustimplantat-Meldung\r\nEmpfaengt ein FHIR Bundle mit Senologie-Ressourcen (Patient, Procedure,\r\nDevice, Encounter, Condition, Observations) und erzeugt eine vollstaendige\r\nIRegG-Meldung fuer Brustimplantate.\r\nIm Gegensatz zur oBDS-Transformation (mehrere Meldungen pro Bundle)\r\nerzeugt die IRegG-Meldung eine einzelne GEMeldung pro Behandlungsfall.\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "IRegMeldung",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "CallMapMeldungskopf",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meldung",
+        "variable" : "mel"
+      }],
+      "dependent" : [{
+        "name" : "MapMeldungskopf",
+        "variable" : ["src",
+        "mel"]
+      }]
+    },
+    {
+      "name" : "EntryEncounter",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Encounter)"
+      }],
+      "rule" : [{
+        "name" : "CallMapFall",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "encounter"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "fall",
+          "variable" : "fall"
+        }],
+        "dependent" : [{
+          "name" : "MapFall",
+          "variable" : ["encounter",
+          "fall",
+          "src"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapMeldungskopf",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMeldungskopf: Bundle -> meldung (MEL_*)\r\nEinrichtungskennung, Softwareinfo aus Organization und Bundle-Metadaten\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "EntryOrganization",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Organization)"
+      }],
+      "rule" : [{
+        "name" : "OrgContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "org"
+        }],
+        "rule" : [{
+          "name" : "FilterIrdId",
+          "source" : [{
+            "context" : "org",
+            "element" : "identifier",
+            "variable" : "id",
+            "condition" : "system = 'http://fhir.de/sid/ird/ge-kennung'"
+          }],
+          "rule" : [{
+            "name" : "SetIdEinrichtung",
+            "source" : [{
+              "context" : "id",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "idEinrichtung",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "FilterBsnr",
+          "source" : [{
+            "context" : "org",
+            "element" : "identifier",
+            "variable" : "id",
+            "condition" : "system = 'https://fhir.de/sid/arge-ik/iknr'"
+          }],
+          "rule" : [{
+            "name" : "SetBsnr",
+            "source" : [{
+              "context" : "id",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "bsnr",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetSpezVersion",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "irdSpezVersion",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "4.1.1"
+        }]
+      }]
+    },
+    {
+      "name" : "SetSwName",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "swName",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "Senologie-KDS FHIR IG"
+        }]
+      }]
+    },
+    {
+      "name" : "SetSwHersteller",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "swHersteller",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "BIH at Charite"
+        }]
+      }]
+    },
+    {
+      "name" : "SetSwVersion",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "swVersion",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "0.1.0"
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapFall",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nFall: Encounter -> fall (FAL_*)\r\nAufnahmedatum, Art des Aufenthalts, Transfernummer\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Encounter",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    }],
+    "rule" : [{
+      "name" : "MapAufnahmedatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "period",
+        "variable" : "period"
+      }],
+      "rule" : [{
+        "name" : "SetAufnahmedatum",
+        "source" : [{
+          "context" : "period",
+          "element" : "start",
+          "variable" : "s"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "aufnahmedatum",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "s"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapArtAufenthalt",
+      "source" : [{
+        "context" : "src",
+        "element" : "class",
+        "variable" : "cls"
+      }],
+      "rule" : [{
+        "name" : "SetAufenthaltStationaer",
+        "source" : [{
+          "context" : "cls",
+          "element" : "code",
+          "variable" : "cd",
+          "condition" : "$this = 'IMP'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "artAufenthaltSchluessel",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "1"
+          }]
+        }]
+      },
+      {
+        "name" : "SetAufenthaltTeilstationaer",
+        "source" : [{
+          "context" : "cls",
+          "element" : "code",
+          "variable" : "cd",
+          "condition" : "$this = 'SS'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "artAufenthaltSchluessel",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "2"
+          }]
+        }]
+      },
+      {
+        "name" : "SetAufenthaltAmbulant",
+        "source" : [{
+          "context" : "cls",
+          "element" : "code",
+          "variable" : "cd",
+          "condition" : "$this = 'AMB'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "artAufenthaltSchluessel",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "3"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapTransfernummer",
+      "source" : [{
+        "context" : "src",
+        "element" : "identifier",
+        "variable" : "id",
+        "condition" : "system = 'http://fhir.de/sid/ird/transfernummer'"
+      }],
+      "rule" : [{
+        "name" : "SetTransfernummer",
+        "source" : [{
+          "context" : "id",
+          "element" : "value",
+          "variable" : "v"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "transfernummer",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "v"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetSatzErstellung",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "datumZeitSatzErstellung",
+        "transform" : "evaluate",
+        "parameter" : [{
+          "valueId" : "src"
+        },
+        {
+          "valueString" : "now()"
+        }]
+      }]
+    },
+    {
+      "name" : "MapVersionsnummer",
+      "source" : [{
+        "context" : "src",
+        "element" : "meta",
+        "variable" : "meta"
+      }],
+      "rule" : [{
+        "name" : "SetVersionsnummer",
+        "source" : [{
+          "context" : "meta",
+          "element" : "versionId",
+          "variable" : "v"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "versionsnummer",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "v"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryAusloeser",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Procedure)"
+      }],
+      "rule" : [{
+        "name" : "AusloeserProcContext",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "procedure"
+        }],
+        "rule" : [{
+          "name" : "MapAusloeserCode",
+          "source" : [{
+            "context" : "procedure",
+            "element" : "code",
+            "variable" : "code"
+          }],
+          "rule" : [{
+            "name" : "MapAusloeserCoding",
+            "source" : [{
+              "context" : "code",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "ausloeser",
+              "variable" : "ausl"
+            }],
+            "rule" : [{
+              "name" : "SetAusloeserOPS",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "ausl",
+                "contextType" : "variable",
+                "element" : "prozedurenSchluessel",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPatient",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Patient)"
+      }],
+      "rule" : [{
+        "name" : "CallMapPatientenaufnahme",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "patient"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "patientenaufnahme",
+          "variable" : "pat"
+        }],
+        "dependent" : [{
+          "name" : "MapPatientenaufnahme",
+          "variable" : ["patient",
+          "pat",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryOperation",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
+      }],
+      "rule" : [{
+        "name" : "CallMapOperation",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "procedure"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "operation",
+          "variable" : "op"
+        }],
+        "dependent" : [{
+          "name" : "MapOperation",
+          "variable" : ["procedure",
+          "op",
+          "bundle"]
+        }]
+      }]
+    },
+    {
+      "name" : "CallMapEntlassung",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "entlassung",
+        "variable" : "entl"
+      }],
+      "dependent" : [{
+        "name" : "MapEntlassung",
+        "variable" : ["src",
+        "entl",
+        "bundle"]
+      }]
+    }]
+  }]
+}

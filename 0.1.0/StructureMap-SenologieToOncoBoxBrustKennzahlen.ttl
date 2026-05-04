@@ -1,0 +1,1665 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToOncoBoxBrustKennzahlen"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustKennzahlen</b></p><a name=\"SenologieToOncoBoxBrustKennzahlen\"> </a><a name=\"hcSenologieToOncoBoxBrustKennzahlen\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen<span style=\"color: navy\">\" = \"</span>SenologieToOncoBoxBrustKennzahlen<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-oncobox-brust-meldung.html\" title=\"OncoBox Brust N1.1.1 Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Kennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Aggregation erfolgt typischerweise ueber alle Primaerfaelle des</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Berichtszeitraums. In dieser Transformation werden pro Bundle alle</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">20 Kennzahlen als \"Shell\"-Eintraege angelegt (Zaehler=0, Nenner=0),</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">die dann von einer nachgelagerten Auswerteschicht (CQL) mit den</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">tatsaechlichen Aggregatwerten befuellt werden.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Aggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">eine CQL-basierte Auswertung erfordert.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Kurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-1  Postop. Fallbesprechung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-2  Praetherapeutische Fallbesprechung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-3  Fallbesprechung Rezidiv/Metastasen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-4  Adjuvante Chemotherapie (invasiv)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-5  Adjuvante Chemotherapie (DCIS)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-6  Endokrine Therapie</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-7  Trastuzumab bei HER2+</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-8  First-Line-Therapie bei Metastasierung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-9  Psychoonkologische Mitbetreuung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-10 Sozialdienst-Mitbetreuung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-11 Studienteilnahme</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-12 Praeoperative histologische Sicherung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-14 Anzahl Eingriffe bis R0</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-15 BET-Rate bei pT1</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-16 Mastektomien</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-18 Drahtmarkierung bei nicht-tastbaren Befunden</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-19 Revisionsoperationen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-20 Checkliste (organisatorisch)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapKennzahlen<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OncoBoxBrust<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-1 Postop. Fallbesprechung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-1'</span> <i>\"SetKB1Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Postop. Fallbesprechung'</span> <i>\"SetKB1Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB1Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB1N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB1\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-2 Praetherapeutische Fallbesprechung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-2'</span> <i>\"SetKB2Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Praetherapeutische Fallbesprechung'</span> <i>\"SetKB2Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB2Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB2N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB2\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-3 Fallbesprechung Rezidiv/Metastasen</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-3'</span> <i>\"SetKB3Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Fallbesprechung Rezidiv/Metastasen'</span> <i>\"SetKB3Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB3Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB3N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB3\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-4 Adjuvante Chemotherapie (invasiv)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-4'</span> <i>\"SetKB4Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Adjuvante Chemotherapie (invasiv)'</span> <i>\"SetKB4Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB4Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB4N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB4\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-5 Adjuvante Chemotherapie (DCIS)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-5'</span> <i>\"SetKB5Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Adjuvante Chemotherapie (DCIS)'</span> <i>\"SetKB5Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB5Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB5N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB5\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-6 Endokrine Therapie</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-6'</span> <i>\"SetKB6Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Endokrine Therapie'</span> <i>\"SetKB6Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB6Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB6N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB6\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-7 Trastuzumab bei HER2+</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-7'</span> <i>\"SetKB7Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Trastuzumab bei HER2+'</span> <i>\"SetKB7Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB7Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB7N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB7\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-8 First-Line-Therapie bei Metastasierung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-8'</span> <i>\"SetKB8Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'First-Line-Therapie bei Metastasierung'</span> <i>\"SetKB8Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB8Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB8N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB8\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-9 Psychoonkologische Mitbetreuung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-9'</span> <i>\"SetKB9Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Psychoonkologische Mitbetreuung'</span> <i>\"SetKB9Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB9Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB9N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB9\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-10 Sozialdienst-Mitbetreuung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-10'</span> <i>\"SetKB10Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Sozialdienst-Mitbetreuung'</span> <i>\"SetKB10Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB10Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB10N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB10\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-11 Studienteilnahme</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-11'</span> <i>\"SetKB11Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Studienteilnahme'</span> <i>\"SetKB11Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB11Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB11N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB11\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-12 Praeoperative histologische Sicherung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-12'</span> <i>\"SetKB12Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Praeoperative histologische Sicherung'</span> <i>\"SetKB12Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB12Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB12N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB12\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-13 Primaerfaelle / Rezidive / Metastasen</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-13'</span> <i>\"SetKB13Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Primaerfaelle / Rezidive / Metastasen'</span> <i>\"SetKB13Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB13Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB13N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB13\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-14 Anzahl Eingriffe bis R0</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-14'</span> <i>\"SetKB14Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Anzahl Eingriffe bis R0'</span> <i>\"SetKB14Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB14Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB14N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB14\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-15 BET-Rate bei pT1</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-15'</span> <i>\"SetKB15Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'BET-Rate bei pT1'</span> <i>\"SetKB15Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB15Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB15N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB15\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-16 Mastektomien</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-16'</span> <i>\"SetKB16Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Mastektomien'</span> <i>\"SetKB16Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB16Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB16N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB16\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-17 Lymphknoten-Entfernung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-17'</span> <i>\"SetKB17Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Lymphknoten-Entfernung (LK-Entf.)'</span> <i>\"SetKB17Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB17Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB17N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB17\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-18 Drahtmarkierung</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-18'</span> <i>\"SetKB18Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Drahtmarkierung'</span> <i>\"SetKB18Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB18Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB18N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB18\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-19 Revisionsoperationen</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-19'</span> <i>\"SetKB19Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Revisionsoperationen'</span> <i>\"SetKB19Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB19Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB19N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB19\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-20 Checkliste</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-20'</span> <i>\"SetKB20Id\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Checkliste'</span> <i>\"SetKB20Name\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>\"SetKB20Z\"</i><span style=\"color: navy\">;</span>#xD;\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>\"SetKB20N\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"InitKB20\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToOncoBoxBrustKennzahlen"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-04T06:10:53+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OncoBoxBrust" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapKennzahlen" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nKennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)\r\nDie OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die\r\nAggregation erfolgt typischerweise ueber alle Primaerfaelle des\r\nBerichtszeitraums. In dieser Transformation werden pro Bundle alle\r\n20 Kennzahlen als \"Shell\"-Eintraege angelegt (Zaehler=0, Nenner=0),\r\ndie dann von einer nachgelagerten Auswerteschicht (CQL) mit den\r\ntatsaechlichen Aggregatwerten befuellt werden.\r\nDie tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein\r\nAggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern\r\neine CQL-basierte Auswertung erfordert.\r\nKurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):\r\nKB-1  Postop. Fallbesprechung\r\nKB-2  Praetherapeutische Fallbesprechung\r\nKB-3  Fallbesprechung Rezidiv/Metastasen\r\nKB-4  Adjuvante Chemotherapie (invasiv)\r\nKB-5  Adjuvante Chemotherapie (DCIS)\r\nKB-6  Endokrine Therapie\r\nKB-7  Trastuzumab bei HER2+\r\nKB-8  First-Line-Therapie bei Metastasierung\r\nKB-9  Psychoonkologische Mitbetreuung\r\nKB-10 Sozialdienst-Mitbetreuung\r\nKB-11 Studienteilnahme\r\nKB-12 Praeoperative histologische Sicherung\r\nKB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)\r\nKB-14 Anzahl Eingriffe bis R0\r\nKB-15 BET-Rate bei pT1\r\nKB-16 Mastektomien\r\nKB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)\r\nKB-18 Drahtmarkierung bei nicht-tastbaren Befunden\r\nKB-19 Revisionsoperationen\r\nKB-20 Checkliste (organisatorisch)\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "OncoBoxBrust" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "InitKB1" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB1Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-1"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB1Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Postop. Fallbesprechung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB1Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB1N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB2" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB2Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-2"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB2Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Praetherapeutische Fallbesprechung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB2Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB2N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB3" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB3Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-3"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB3Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Fallbesprechung Rezidiv/Metastasen"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB3Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB3N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB4" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB4Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-4"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB4Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Adjuvante Chemotherapie (invasiv)"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB4Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB4N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB5" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB5Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-5"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB5Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Adjuvante Chemotherapie (DCIS)"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB5Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB5N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB6" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB6Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-6"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB6Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Endokrine Therapie"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB6Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB6N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB7" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB7Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-7"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB7Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Trastuzumab bei HER2+"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB7Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB7N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB8" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB8Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-8"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB8Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "First-Line-Therapie bei Metastasierung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB8Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB8N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB9" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB9Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-9"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB9Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Psychoonkologische Mitbetreuung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB9Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB9N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB10" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB10Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-10"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB10Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Sozialdienst-Mitbetreuung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB10Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB10N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB11" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB11Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-11"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB11Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Studienteilnahme"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB11Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB11N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB12" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB12Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-12"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB12Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Praeoperative histologische Sicherung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB12Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB12N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB13" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB13Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-13"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB13Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Primaerfaelle / Rezidive / Metastasen"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB13Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB13N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB14" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB14Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-14"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB14Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Anzahl Eingriffe bis R0"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB14Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB14N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB15" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB15Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-15"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB15Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "BET-Rate bei pT1"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB15Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB15N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB16" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB16Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-16"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB16Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Mastektomien"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB16Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB16N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB17" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB17Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-17"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB17Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Lymphknoten-Entfernung (LK-Entf.)"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB17Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB17N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB18" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB18Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-18"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB18Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Drahtmarkierung"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB18Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB18N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB19" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB19Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-19"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB19Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Revisionsoperationen"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB19Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB19N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "InitKB20" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "kennzahl" ] ;
+         fhir:variable [ fhir:v "kz" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetKB20Id" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "id" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "KB-20"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB20Name" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "Checkliste"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB20Z" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "zaehler" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetKB20N" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "kz" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nenner" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Integer ;
+               fhir:v 0
+             ]
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

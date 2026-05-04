@@ -1,0 +1,943 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToIqtigBrust",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIqtigBrust</b></p><a name=\"SenologieToIqtigBrust\"> </a><a name=\"hcSenologieToIqtigBrust\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust<span style=\"color: navy\">&quot; = &quot;</span>SenologieToIqtigBrust<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/servicerequest.html\" title=\"ServiceRequest\">http://hl7.org/fhir/StructureDefinition/ServiceRequest</a><span style=\"color: navy\">&quot; </span><b>alias </b>ServiceRequest <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-iqtig-mammachirurgie-181.html\" title=\"IQTIG QS 18.1 Mammachirurgie (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style=\"color: navy\">&quot; </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors. The element names are correct per the IQTIG 18.1 Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Teildatensatz Brust (BRUST): Condition + Observations -&gt; BRUST:*</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Pro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Zuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Quellen:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Condition (Senologie_Diagnose_Maligne / _Benigne) -&gt; Indikation, ICD,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Seitenlokalisation, Diagnosedatum</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (BI-RADS, bildgebende Methode, Praeopbefund) -&gt; Befund</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- ServiceRequest (Senologie_OP_Planung) -&gt; Drahtmarkierung, Neoadjuvanz</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (cTNM, Tumorgroesse klinisch) -&gt; Staging-Felder</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapBrust<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:LNRBRUST - Standardwert 1 (kann durch Slicing ueberschrieben werden)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.laufendeNummer = <span style=\"color: blue\">1</span> <i>&quot;SetLnrBrust&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:SEITE - Seitenlokalisation aus Condition.bodySite (SNOMED CT)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">24028007=right, 7771000=left, 51440002=bilateral</span>\r\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '24028007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'R'</span> <i>&quot;SetSeiteR&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '7771000'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'L'</span> <i>&quot;SetSeiteL&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '51440002'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'B'</span> <i>&quot;SetSeiteB&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapSeiteSCT&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapSeitenlokalisation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:INDIKATION - Indikation aus ICD-10-GM-Code</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">C50.* = maligne (1), D05.* = DCIS (2), D24 = benigne (3), Z40.* = Risikoreduktion (4)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('C50')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'1'</span> <i>&quot;SetIndikMaligne&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('D05')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'2'</span> <i>&quot;SetIndikDCIS&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('D24')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'3'</span> <i>&quot;SetIndikBenigne&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('Z40')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'4'</span> <i>&quot;SetIndikRisiko&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('Z42')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.indikation = <span style=\"color: blue\">'5'</span> <i>&quot;SetIndikRekon&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapIndikationICD&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapIndikation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:DIAGICD - ICD-10-GM-Kodierung der Diagnose</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnoseICD<b> as </b><span style=\"color: maroon\">icd</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>icd.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetICDCode&quot;</i><span style=\"color: navy\">;</span>\r\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>icd.version = <span style=\"color: maroon\">v</span> <i>&quot;SetICDVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapICDCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapDiagnoseICD&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:DIAGDATUM - Diagnosedatum aus Condition.onsetDateTime</span>\r\n  src.onset<b> as </b><span style=\"color: maroon\">onset</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.diagnosedatum = <span style=\"color: maroon\">onset</span> <i>&quot;SetDiagnosedatum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:CT / BRUST:CN / BRUST:CM - klinische TNM aus Observation (LOINC 21908-9 Stage group)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Hier ueber TNM-Komponenten: T=21905-5, N=21906-3, M=21907-1</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21905-5')<b> then</b><span style=\"color: navy\"> {\r\n</span>    tEntry.resource<b> as </b><span style=\"color: maroon\">tObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      tObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cT = <span style=\"color: maroon\">cd</span> <i>&quot;SetCT&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapCTCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapCTValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapCTObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryCT&quot;</i><span style=\"color: navy\">;</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">nEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21906-3')<b> then</b><span style=\"color: navy\"> {\r\n</span>    nEntry.resource<b> as </b><span style=\"color: maroon\">nObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      nObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cN = <span style=\"color: maroon\">cd</span> <i>&quot;SetCN&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapCNCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapCNValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapCNObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryCN&quot;</i><span style=\"color: navy\">;</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">mEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21907-1')<b> then</b><span style=\"color: navy\"> {\r\n</span>    mEntry.resource<b> as </b><span style=\"color: maroon\">mObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      mObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.cM = <span style=\"color: maroon\">cd</span> <i>&quot;SetCM&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapCMCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapCMValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapCMObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryCM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:UICCKLIN - klinisches UICC-Stadium (LOINC 21902-2 Stage group.clinical)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">uiccEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style=\"color: navy\"> {\r\n</span>    uiccEntry.resource<b> as </b><span style=\"color: maroon\">uiccObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      uiccObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.uiccStadiumKlinisch = <span style=\"color: maroon\">cd</span> <i>&quot;SetUICCKlin&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapUICCKlinCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapUICCKlinValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapUICCKlinObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryUICCKlin&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:TGROESSEKLIN - praetherapeutische Tumorgroesse aus Bildgebung</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 44648-0 (Breast tumor size, imaging) oder Senologie_Bildgebung_Observation</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tgEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '44648-0')<b> then</b><span style=\"color: navy\"> {\r\n</span>    tgEntry.resource<b> as </b><span style=\"color: maroon\">tgObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      tgObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorgroesseKlinisch = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetTGroesseKlin&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapTGroesseKlinValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapTGroesseKlinObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryTGroesseKlin&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:BILDGMETHODE - Eingesetzte bildgebende Methode aus Senologie_Bildgebung_Befund</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 24604-1 (Breast imaging report) oder Senologie-spezifisch</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">bildEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    bildEntry.resource<b> as </b><span style=\"color: maroon\">bildObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      bildObs.method<b> as </b><span style=\"color: maroon\">m</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        m.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>          <span style=\"color: navy\">// </span><span style=\"color: green\">71651007=Mammografie, 16310003=Sonografie, 113091000=MRT, 710324008=Tomosynthese</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '71651007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'1'</span> <i>&quot;SetMethMammo&quot;</i><span style=\"color: navy\">;</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '16310003'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'2'</span> <i>&quot;SetMethSono&quot;</i><span style=\"color: navy\">;</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '113091000'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'3'</span> <i>&quot;SetMethMRT&quot;</i><span style=\"color: navy\">;</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '710324008'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bildgebendeMethode = <span style=\"color: blue\">'4'</span> <i>&quot;SetMethTomo&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapBildMethodCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapBildMethod&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapBildObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryBildgebung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:BIRADS - BI-RADS-Klassifikation aus Observation</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 72133-2 (Breast imaging BI-RADS)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">biradsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '72133-2')<b> then</b><span style=\"color: navy\"> {\r\n</span>    biradsEntry.resource<b> as </b><span style=\"color: maroon\">biradsObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      biradsObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.birads = <span style=\"color: maroon\">cd</span> <i>&quot;SetBIRADS&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapBIRADSCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapBIRADSValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapBIRADSObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryBIRADS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:BEFUND - Praeoperativer Befund (B-Klassifikation) aus Pathologie-Befund</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">befEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    befEntry.resource<b> as </b><span style=\"color: maroon\">befObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      befObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b'<b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.befundcode = <span style=\"color: maroon\">cd</span> <i>&quot;SetBefundB&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapBefundBCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapBefundValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapBefundObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryBefund&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:HISTPRAEOP - Praeoperative histologische Sicherung aus Procedure (Biopsie-OPS)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Abgeleitet aus Verification-Status / Procedure-Kontext; Default = 0 (nein)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.histologischeSicherungPraeop = <span style=\"color: blue\">'0'</span> <i>&quot;SetHistPraeopDefault&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:DRAHT - Praeoperative Drahtmarkierung aus ServiceRequest-Extension</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">srEntry</span><b> where </b>resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    srEntry.resource<b> as </b><span style=\"color: maroon\">sr</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      sr.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung'<b> then</b><span style=\"color: navy\"> {\r\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>            <span style=\"color: navy\">// </span><span style=\"color: green\">M=Mammo -&gt; 1, S=Sono -&gt; 2, T=MRT -&gt; 3, N=keine -&gt; 0</span>\r\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'M'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'1'</span> <i>&quot;SetDrahtMammo&quot;</i><span style=\"color: navy\">;</span>\r\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'S'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'2'</span> <i>&quot;SetDrahtSono&quot;</i><span style=\"color: navy\">;</span>\r\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'T'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'3'</span> <i>&quot;SetDrahtMRT&quot;</i><span style=\"color: navy\">;</span>\r\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'N'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.drahtmarkierung = <span style=\"color: blue\">'0'</span> <i>&quot;SetDrahtKeine&quot;</i><span style=\"color: navy\">;</span>\r\n          <span style=\"color: navy\">}</span> <i>&quot;MapDrahtCoding&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapDrahtValue&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapDrahtExt&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;SRContext&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryDraht&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:NEOADJ - Neoadjuvante Therapie erhalten (Default = 0, konkrete Ableitung aus</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">bestehender Systemtherapie-Procedure mit stellungOP=N noetig)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.neoadjuvanteTherapie = <span style=\"color: blue\">'0'</span> <i>&quot;SetNeoadjDefault&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BRUST:TKPRAEOP - Praetherapeutische Tumorkonferenz-Empfehlung</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Aus Senologie_Tumorboard_Empfehlung (CarePlan) mit Typ &quot;praetherapeutisch&quot;</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorkonferenzPraeop = <span style=\"color: blue\">'9'</span> <i>&quot;SetTKPraeopDefault&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust",
+  "version" : "0.1.0",
+  "name" : "SenologieToIqtigBrust",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/ServiceRequest",
+    "mode" : "source",
+    "alias" : "ServiceRequest"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181",
+    "mode" : "target",
+    "alias" : "IQTIG181"
+  }],
+  "group" : [{
+    "name" : "MapBrust",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the IQTIG 18.1 Logical Model.\r\n============================================================================\r\nTeildatensatz Brust (BRUST): Condition + Observations -> BRUST:*\r\nPro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die\r\nZuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).\r\nQuellen:\r\n- Condition (Senologie_Diagnose_Maligne / _Benigne) -> Indikation, ICD,\r\nSeitenlokalisation, Diagnosedatum\r\n- Observation (BI-RADS, bildgebende Methode, Praeopbefund) -> Befund\r\n- ServiceRequest (Senologie_OP_Planung) -> Drahtmarkierung, Neoadjuvanz\r\n- Observation (cTNM, Tumorgroesse klinisch) -> Staging-Felder\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Condition",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    }],
+    "rule" : [{
+      "name" : "SetLnrBrust",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "laufendeNummer",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueInteger" : 1
+        }]
+      }]
+    },
+    {
+      "name" : "MapSeitenlokalisation",
+      "source" : [{
+        "context" : "src",
+        "element" : "bodySite",
+        "variable" : "bs"
+      }],
+      "rule" : [{
+        "name" : "MapSeiteSCT",
+        "source" : [{
+          "context" : "bs",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "SetSeiteR",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '24028007'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R"
+            }]
+          }]
+        },
+        {
+          "name" : "SetSeiteL",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '7771000'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "L"
+            }]
+          }]
+        },
+        {
+          "name" : "SetSeiteB",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '51440002'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "B"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapIndikation",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapIndikationICD",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+        }],
+        "rule" : [{
+          "name" : "SetIndikMaligne",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('C50')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "indikation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetIndikDCIS",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('D05')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "indikation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetIndikBenigne",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('D24')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "indikation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "3"
+            }]
+          }]
+        },
+        {
+          "name" : "SetIndikRisiko",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('Z40')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "indikation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "4"
+            }]
+          }]
+        },
+        {
+          "name" : "SetIndikRekon",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('Z42')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "indikation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "5"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapDiagnoseICD",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapICDCoding",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "diagnoseICD",
+          "variable" : "icd"
+        }],
+        "rule" : [{
+          "name" : "SetICDCode",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "icd",
+            "contextType" : "variable",
+            "element" : "code",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetICDVersion",
+          "source" : [{
+            "context" : "c",
+            "element" : "version",
+            "variable" : "v"
+          }],
+          "target" : [{
+            "context" : "icd",
+            "contextType" : "variable",
+            "element" : "version",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "v"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetDiagnosedatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "onset",
+        "variable" : "onset",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "diagnosedatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "onset"
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCT",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21905-5')"
+      }],
+      "rule" : [{
+        "name" : "MapCTObs",
+        "source" : [{
+          "context" : "tEntry",
+          "element" : "resource",
+          "variable" : "tObs"
+        }],
+        "rule" : [{
+          "name" : "MapCTValue",
+          "source" : [{
+            "context" : "tObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapCTCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCT",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "cT",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCN",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "nEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21906-3')"
+      }],
+      "rule" : [{
+        "name" : "MapCNObs",
+        "source" : [{
+          "context" : "nEntry",
+          "element" : "resource",
+          "variable" : "nObs"
+        }],
+        "rule" : [{
+          "name" : "MapCNValue",
+          "source" : [{
+            "context" : "nObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapCNCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCN",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "cN",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryCM",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "mEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21907-1')"
+      }],
+      "rule" : [{
+        "name" : "MapCMObs",
+        "source" : [{
+          "context" : "mEntry",
+          "element" : "resource",
+          "variable" : "mObs"
+        }],
+        "rule" : [{
+          "name" : "MapCMValue",
+          "source" : [{
+            "context" : "mObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapCMCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetCM",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "cM",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryUICCKlin",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "uiccEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
+      }],
+      "rule" : [{
+        "name" : "MapUICCKlinObs",
+        "source" : [{
+          "context" : "uiccEntry",
+          "element" : "resource",
+          "variable" : "uiccObs"
+        }],
+        "rule" : [{
+          "name" : "MapUICCKlinValue",
+          "source" : [{
+            "context" : "uiccObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapUICCKlinCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetUICCKlin",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "uiccStadiumKlinisch",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTGroesseKlin",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tgEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44648-0')"
+      }],
+      "rule" : [{
+        "name" : "MapTGroesseKlinObs",
+        "source" : [{
+          "context" : "tgEntry",
+          "element" : "resource",
+          "variable" : "tgObs"
+        }],
+        "rule" : [{
+          "name" : "MapTGroesseKlinValue",
+          "source" : [{
+            "context" : "tgObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetTGroesseKlin",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "tumorgroesseKlinisch",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryBildgebung",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "bildEntry",
+        "condition" : "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-bildgebung'))"
+      }],
+      "rule" : [{
+        "name" : "MapBildObs",
+        "source" : [{
+          "context" : "bildEntry",
+          "element" : "resource",
+          "variable" : "bildObs"
+        }],
+        "rule" : [{
+          "name" : "MapBildMethod",
+          "source" : [{
+            "context" : "bildObs",
+            "element" : "method",
+            "variable" : "m"
+          }],
+          "rule" : [{
+            "name" : "MapBildMethodCoding",
+            "source" : [{
+              "context" : "m",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'http://snomed.info/sct'"
+            }],
+            "rule" : [{
+              "name" : "SetMethMammo",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '71651007'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "bildgebendeMethode",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            },
+            {
+              "name" : "SetMethSono",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '16310003'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "bildgebendeMethode",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "2"
+                }]
+              }]
+            },
+            {
+              "name" : "SetMethMRT",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '113091000'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "bildgebendeMethode",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "3"
+                }]
+              }]
+            },
+            {
+              "name" : "SetMethTomo",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '710324008'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "bildgebendeMethode",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "4"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryBIRADS",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "biradsEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '72133-2')"
+      }],
+      "rule" : [{
+        "name" : "MapBIRADSObs",
+        "source" : [{
+          "context" : "biradsEntry",
+          "element" : "resource",
+          "variable" : "biradsObs"
+        }],
+        "rule" : [{
+          "name" : "MapBIRADSValue",
+          "source" : [{
+            "context" : "biradsObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapBIRADSCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetBIRADS",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "birads",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryBefund",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "befEntry",
+        "condition" : "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pathologie-befund'))"
+      }],
+      "rule" : [{
+        "name" : "MapBefundObs",
+        "source" : [{
+          "context" : "befEntry",
+          "element" : "resource",
+          "variable" : "befObs"
+        }],
+        "rule" : [{
+          "name" : "MapBefundValue",
+          "source" : [{
+            "context" : "befObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapBefundBCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-befundcode-b'"
+            }],
+            "rule" : [{
+              "name" : "SetBefundB",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "befundcode",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetHistPraeopDefault",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "histologischeSicherungPraeop",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "0"
+        }]
+      }]
+    },
+    {
+      "name" : "EntryDraht",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "srEntry",
+        "condition" : "resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung'))"
+      }],
+      "rule" : [{
+        "name" : "SRContext",
+        "source" : [{
+          "context" : "srEntry",
+          "element" : "resource",
+          "variable" : "sr"
+        }],
+        "rule" : [{
+          "name" : "MapDrahtExt",
+          "source" : [{
+            "context" : "sr",
+            "element" : "extension",
+            "variable" : "ext",
+            "condition" : "url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung'"
+          }],
+          "rule" : [{
+            "name" : "MapDrahtValue",
+            "source" : [{
+              "context" : "ext",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "MapDrahtCoding",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c"
+              }],
+              "rule" : [{
+                "name" : "SetDrahtMammo",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = 'M'"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "1"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetDrahtSono",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = 'S'"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "2"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetDrahtMRT",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = 'T'"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "3"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetDrahtKeine",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = 'N'"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "drahtmarkierung",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "0"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetNeoadjDefault",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "neoadjuvanteTherapie",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "0"
+        }]
+      }]
+    },
+    {
+      "name" : "SetTKPraeopDefault",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "tumorkonferenzPraeop",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "9"
+        }]
+      }]
+    }]
+  }]
+}

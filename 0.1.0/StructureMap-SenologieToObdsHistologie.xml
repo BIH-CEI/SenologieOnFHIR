@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsHistologie"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsHistologie</b></p><a name="SenologieToObdsHistologie"> </a><a name="hcSenologieToObdsHistologie"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie<span style="color: navy">&quot; = &quot;</span>SenologieToObdsHistologie<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Histologie Observations to oBDS Histologie BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups use `target tgt : BackboneElement`. See</span>
+<span style="color: navy">// </span><span style="color: green">SenologieToObdsTNM.map for details on SM_TARGET_PATH errors.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Gemeinsame Histologie-Map: Extrahiert Histologiebefunde aus MII Onko</span>
+<span style="color: navy">// </span><span style="color: green">Observations und mappt auf das oBDS Histologie-BackboneElement.</span>
+<span style="color: navy">// </span><span style="color: green">Wird von Diagnose, OP und Verlauf importiert.</span>
+<span style="color: navy">// </span><span style="color: green">MII Onko Histologie-Profile:</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-histologie-icdo3 (LOINC 59847-4): Morphologie + Freitext</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-grading (LOINC 59542-1): Histopathologisches Grading</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-anzahl-untersuchte-lymphknoten (LOINC 21894-1)</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-anzahl-befallene-lymphknoten (LOINC 21893-3)</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-anzahl-untersuchte-sentinel-lymphknoten (LOINC 92832-5)</span>
+<span style="color: navy">// </span><span style="color: green">- mii-pr-onko-anzahl-befallene-sentinel-lymphknoten (LOINC 92831-7)</span>
+<span style="color: navy">// </span><span style="color: green">Die Histologie-Observation (59847-4) ist die Haupt-Ressource.</span>
+<span style="color: navy">// </span><span style="color: green">Grading und Lymphknoten koennen als components in der Haupt-Observation</span>
+<span style="color: navy">// </span><span style="color: green">oder als separate Observations vorliegen.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapHistologie: Observation (Histologie ICD-O-3) -&gt; oBDS Histologie</span>
+<span style="color: navy">// </span><span style="color: green">Verarbeitet die Haupt-Histologie-Observation und extrahiert Morphologie,</span>
+<span style="color: navy">// </span><span style="color: green">Grading und Lymphknoten-Daten aus deren components.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapHistologie<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Observation, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Histologie_ID: aus Observation.identifier</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.histologieID = <span style="color: maroon">v</span> <i>&quot;SetHistologieID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapHistologieID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Tumor_Histologiedatum: aus Observation.effectiveDateTime</span>
+  src.effective<b> as </b><span style="color: maroon">eff</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.tumorHistologiedatum = <span style="color: maroon">eff</span> <i>&quot;SetHistologiedatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Histologie_EinsendeNr: aus Observation.identifier (Pathologie-Einsende-Nr)</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> where </b>system = 'http://pathologie.charite.de/fhir/sid/einsende-nr'<b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.histologieEinsendeNr = <span style="color: maroon">v</span> <i>&quot;SetEinsendeNr&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapEinsendeNr&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Histologiedatum aus Specimen.collection.collectedDateTime (falls vorhanden)</span>
+  <span style="color: navy">// </span><span style="color: green">Das Specimen wird ueber Observation.specimen referenziert</span>
+  bundle.entry<b> as </b><span style="color: maroon">specEntry</span><b> where </b>resource.is(Specimen)<b> then</b><span style="color: navy"> {
+</span>    specEntry.resource<b> as </b><span style="color: maroon">specimen</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">Einsende-Nummer aus Specimen.accessionIdentifier</span>
+      specimen.accessionIdentifier<b> as </b><span style="color: maroon">accId</span><b> then</b><span style="color: navy"> {
+</span>        accId.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.histologieEinsendeNr = <span style="color: maroon">v</span> <i>&quot;SetEinsendeNrFromSpecimen&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapAccessionId&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">Histologiedatum aus Specimen.collection.collectedDateTime</span>
+      specimen.collection<b> as </b><span style="color: maroon">coll</span><b> then</b><span style="color: navy"> {
+</span>        coll.collected<b> as </b><span style="color: maroon">collDt</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.tumorHistologiedatum = <span style="color: maroon">collDt</span> <i>&quot;SetHistologiedatumFromSpecimen&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapSpecimenCollection&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;SpecimenContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntrySpecimen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Morphologie_ICD_O: aus Observation.value (ICD-O Morphologie)</span>
+  src.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>    val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'urn:oid:2.16.840.1.113883.6.43.1'<span style="color: navy"><b> -&gt; </b></span>tgt.morphologieICDO<b> as </b><span style="color: maroon">morph</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>morph.code = <span style="color: maroon">cd</span> <i>&quot;SetMorphCode&quot;</i><span style="color: navy">;</span>
+      c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>morph.version = <span style="color: maroon">v</span> <i>&quot;SetMorphVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapMorphCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMorphologie&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Morphologie_Freitext: aus Observation.value.text</span>
+  src.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>    val.text<b> as </b><span style="color: maroon">t</span><span style="color: navy"><b> -&gt; </b></span>tgt.morphologieFreitext = <span style="color: maroon">t</span> <i>&quot;SetMorphFreitext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMorphFreitext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Grading: aus component (LOINC 59542-1) mit Uebersetzung SNOMED -&gt; oBDS</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '59542-1')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.grading = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateGrading&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapGradingValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapGrading&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Grading: aus separater Observation im Bundle (Fallback)</span>
+  bundle.entry<b> as </b><span style="color: maroon">gradEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59542-1')<b> then</b><span style="color: navy"> {
+</span>    gradEntry.resource<b> as </b><span style="color: maroon">gradObs</span><b> then</b><span style="color: navy"> {
+</span>      gradObs.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>        val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.grading = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateGradingSeparate&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapGradingSepValue&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapGradingSepObs&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryGrading&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">LK_untersucht: Anzahl untersuchter Lymphknoten (LOINC 21894-1)</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21894-1')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.lkUntersucht = <span style="color: maroon">val</span> <i>&quot;SetLKUntersucht&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapLKUntersucht&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">LK_untersucht: aus separater Observation im Bundle (Fallback)</span>
+  bundle.entry<b> as </b><span style="color: maroon">lkEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21894-1')<b> then</b><span style="color: navy"> {
+</span>    lkEntry.resource<b> as </b><span style="color: maroon">lkObs</span><b> then</b><span style="color: navy"> {
+</span>      lkObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.lkUntersucht = <span style="color: maroon">val</span> <i>&quot;SetLKUntersuchtSeparate&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapLKUntersuchtSep&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryLKUntersucht&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">LK_befallen: Anzahl befallener Lymphknoten (LOINC 21893-3)</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '21893-3')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.lkBefallen = <span style="color: maroon">val</span> <i>&quot;SetLKBefallen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapLKBefallen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">LK_befallen: aus separater Observation im Bundle (Fallback)</span>
+  bundle.entry<b> as </b><span style="color: maroon">lkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21893-3')<b> then</b><span style="color: navy"> {
+</span>    lkbEntry.resource<b> as </b><span style="color: maroon">lkbObs</span><b> then</b><span style="color: navy"> {
+</span>      lkbObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.lkBefallen = <span style="color: maroon">val</span> <i>&quot;SetLKBefallenSeparate&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapLKBefallenSep&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryLKBefallen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Sentinel_LK_untersucht (LOINC 92832-5)</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '92832-5')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.sentinelLKUntersucht = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKUntersucht&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapSentinelLKUntersucht&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Sentinel_LK_untersucht: aus separater Observation im Bundle (Fallback)</span>
+  bundle.entry<b> as </b><span style="color: maroon">slkEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92832-5')<b> then</b><span style="color: navy"> {
+</span>    slkEntry.resource<b> as </b><span style="color: maroon">slkObs</span><b> then</b><span style="color: navy"> {
+</span>      slkObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.sentinelLKUntersucht = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKUntersuchtSeparate&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapSentinelLKUntersuchtSep&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntrySentinelLKUntersucht&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Sentinel_LK_befallen (LOINC 92831-7)</span>
+  src.component<b> as </b><span style="color: maroon">comp</span><b> where </b>code.coding.exists(code = '92831-7')<b> then</b><span style="color: navy"> {
+</span>    comp.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.sentinelLKBefallen = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKBefallen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapSentinelLKBefallen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Sentinel_LK_befallen: aus separater Observation im Bundle (Fallback)</span>
+  bundle.entry<b> as </b><span style="color: maroon">slkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92831-7')<b> then</b><span style="color: navy"> {
+</span>    slkbEntry.resource<b> as </b><span style="color: maroon">slkbObs</span><b> then</b><span style="color: navy"> {
+</span>      slkbObs.value<b> as </b><span style="color: maroon">val</span><span style="color: navy"><b> -&gt; </b></span>tgt.sentinelLKBefallen = <span style="color: maroon">val</span> <i>&quot;SetSentinelLKBefallenSeparate&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapSentinelLKBefallenSep&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntrySentinelLKBefallen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsHistologie"/>
+  <status value="draft"/>
+  <date value="2026-05-04T06:10:53+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Histologie Observations to oBDS Histologie BackboneElement&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+    <mode value="source"/>
+    <alias value="Specimen"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <group>
+    <name value="MapHistologie"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups use `target tgt : BackboneElement`. See&#xD;&#xA;SenologieToObdsTNM.map for details on SM_TARGET_PATH errors.&#xD;&#xA;============================================================================&#xD;&#xA;Gemeinsame Histologie-Map: Extrahiert Histologiebefunde aus MII Onko&#xD;&#xA;Observations und mappt auf das oBDS Histologie-BackboneElement.&#xD;&#xA;Wird von Diagnose, OP und Verlauf importiert.&#xD;&#xA;MII Onko Histologie-Profile:&#xD;&#xA;- mii-pr-onko-histologie-icdo3 (LOINC 59847-4): Morphologie + Freitext&#xD;&#xA;- mii-pr-onko-grading (LOINC 59542-1): Histopathologisches Grading&#xD;&#xA;- mii-pr-onko-anzahl-untersuchte-lymphknoten (LOINC 21894-1)&#xD;&#xA;- mii-pr-onko-anzahl-befallene-lymphknoten (LOINC 21893-3)&#xD;&#xA;- mii-pr-onko-anzahl-untersuchte-sentinel-lymphknoten (LOINC 92832-5)&#xD;&#xA;- mii-pr-onko-anzahl-befallene-sentinel-lymphknoten (LOINC 92831-7)&#xD;&#xA;Die Histologie-Observation (59847-4) ist die Haupt-Ressource.&#xD;&#xA;Grading und Lymphknoten koennen als components in der Haupt-Observation&#xD;&#xA;oder als separate Observations vorliegen.&#xD;&#xA;============================================================================&#xD;&#xA;============================================================================&#xD;&#xA;MapHistologie: Observation (Histologie ICD-O-3) -&gt; oBDS Histologie&#xD;&#xA;Verarbeitet die Haupt-Histologie-Observation und extrahiert Morphologie,&#xD;&#xA;Grading und Lymphknoten-Daten aus deren components.&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Observation"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <input>
+      <name value="bundle"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <rule>
+      <name value="MapHistologieID"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+      </source>
+      <rule>
+        <name value="SetHistologieID"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="histologieID"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetHistologiedatum"/>
+      <source>
+        <context value="src"/>
+        <element value="effective"/>
+        <variable value="eff"/>
+        <condition value="$this.is(dateTime)"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="tumorHistologiedatum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="eff"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapEinsendeNr"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+        <condition value="system = 'http://pathologie.charite.de/fhir/sid/einsende-nr'"/>
+      </source>
+      <rule>
+        <name value="SetEinsendeNr"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="histologieEinsendeNr"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntrySpecimen"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="specEntry"/>
+        <condition value="resource.is(Specimen)"/>
+      </source>
+      <rule>
+        <name value="SpecimenContext"/>
+        <source>
+          <context value="specEntry"/>
+          <element value="resource"/>
+          <variable value="specimen"/>
+        </source>
+        <rule>
+          <name value="MapAccessionId"/>
+          <source>
+            <context value="specimen"/>
+            <element value="accessionIdentifier"/>
+            <variable value="accId"/>
+          </source>
+          <rule>
+            <name value="SetEinsendeNrFromSpecimen"/>
+            <source>
+              <context value="accId"/>
+              <element value="value"/>
+              <variable value="v"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="histologieEinsendeNr"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="v"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+        <rule>
+          <name value="MapSpecimenCollection"/>
+          <source>
+            <context value="specimen"/>
+            <element value="collection"/>
+            <variable value="coll"/>
+          </source>
+          <rule>
+            <name value="SetHistologiedatumFromSpecimen"/>
+            <source>
+              <context value="coll"/>
+              <element value="collected"/>
+              <variable value="collDt"/>
+              <condition value="$this.is(dateTime)"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="tumorHistologiedatum"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="collDt"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapMorphologie"/>
+      <source>
+        <context value="src"/>
+        <element value="value"/>
+        <variable value="val"/>
+      </source>
+      <rule>
+        <name value="MapMorphCoding"/>
+        <source>
+          <context value="val"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'urn:oid:2.16.840.1.113883.6.43.1'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="morphologieICDO"/>
+          <variable value="morph"/>
+        </target>
+        <rule>
+          <name value="SetMorphCode"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="morph"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetMorphVersion"/>
+          <source>
+            <context value="c"/>
+            <element value="version"/>
+            <variable value="v"/>
+          </source>
+          <target>
+            <context value="morph"/>
+            <contextType value="variable"/>
+            <element value="version"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="v"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapMorphFreitext"/>
+      <source>
+        <context value="src"/>
+        <element value="value"/>
+        <variable value="val"/>
+      </source>
+      <rule>
+        <name value="SetMorphFreitext"/>
+        <source>
+          <context value="val"/>
+          <element value="text"/>
+          <variable value="t"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="morphologieFreitext"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="t"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapGrading"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '59542-1')"/>
+      </source>
+      <rule>
+        <name value="MapGradingValue"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="TranslateGrading"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="grading"/>
+            <transform value="translate"/>
+            <parameter>
+              <valueId value="c"/>
+            </parameter>
+            <parameter>
+              <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"/>
+            </parameter>
+            <parameter>
+              <valueString value="code"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryGrading"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="gradEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59542-1')"/>
+      </source>
+      <rule>
+        <name value="MapGradingSepObs"/>
+        <source>
+          <context value="gradEntry"/>
+          <element value="resource"/>
+          <variable value="gradObs"/>
+        </source>
+        <rule>
+          <name value="MapGradingSepValue"/>
+          <source>
+            <context value="gradObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="TranslateGradingSeparate"/>
+            <source>
+              <context value="val"/>
+              <element value="coding"/>
+              <variable value="c"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="grading"/>
+              <transform value="translate"/>
+              <parameter>
+                <valueId value="c"/>
+              </parameter>
+              <parameter>
+                <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading"/>
+              </parameter>
+              <parameter>
+                <valueString value="code"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapLKUntersucht"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21894-1')"/>
+      </source>
+      <rule>
+        <name value="SetLKUntersucht"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="lkUntersucht"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="val"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryLKUntersucht"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="lkEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"/>
+      </source>
+      <rule>
+        <name value="MapLKUntersuchtSep"/>
+        <source>
+          <context value="lkEntry"/>
+          <element value="resource"/>
+          <variable value="lkObs"/>
+        </source>
+        <rule>
+          <name value="SetLKUntersuchtSeparate"/>
+          <source>
+            <context value="lkObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="lkUntersucht"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapLKBefallen"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '21893-3')"/>
+      </source>
+      <rule>
+        <name value="SetLKBefallen"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="lkBefallen"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="val"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryLKBefallen"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="lkbEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"/>
+      </source>
+      <rule>
+        <name value="MapLKBefallenSep"/>
+        <source>
+          <context value="lkbEntry"/>
+          <element value="resource"/>
+          <variable value="lkbObs"/>
+        </source>
+        <rule>
+          <name value="SetLKBefallenSeparate"/>
+          <source>
+            <context value="lkbObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="lkBefallen"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapSentinelLKUntersucht"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '92832-5')"/>
+      </source>
+      <rule>
+        <name value="SetSentinelLKUntersucht"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="sentinelLKUntersucht"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="val"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntrySentinelLKUntersucht"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="slkEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"/>
+      </source>
+      <rule>
+        <name value="MapSentinelLKUntersuchtSep"/>
+        <source>
+          <context value="slkEntry"/>
+          <element value="resource"/>
+          <variable value="slkObs"/>
+        </source>
+        <rule>
+          <name value="SetSentinelLKUntersuchtSeparate"/>
+          <source>
+            <context value="slkObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="sentinelLKUntersucht"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapSentinelLKBefallen"/>
+      <source>
+        <context value="src"/>
+        <element value="component"/>
+        <variable value="comp"/>
+        <condition value="code.coding.exists(code = '92831-7')"/>
+      </source>
+      <rule>
+        <name value="SetSentinelLKBefallen"/>
+        <source>
+          <context value="comp"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="sentinelLKBefallen"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="val"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntrySentinelLKBefallen"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="slkbEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '92831-7')"/>
+      </source>
+      <rule>
+        <name value="MapSentinelLKBefallenSep"/>
+        <source>
+          <context value="slkbEntry"/>
+          <element value="resource"/>
+          <variable value="slkbObs"/>
+        </source>
+        <rule>
+          <name value="SetSentinelLKBefallenSeparate"/>
+          <source>
+            <context value="slkbObs"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="sentinelLKBefallen"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

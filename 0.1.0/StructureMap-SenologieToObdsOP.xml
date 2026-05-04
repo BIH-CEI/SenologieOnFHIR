@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsOP"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsOP</b></p><a name="SenologieToObdsOP"> </a><a name="hcSenologieToObdsOP"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP<span style="color: navy">&quot; = &quot;</span>SenologieToObdsOP<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Operation Bundle to oBDS OP-Meldung</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/procedure.html" title="Procedure">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style="color: navy">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/condition.html" title="Condition">http://hl7.org/fhir/StructureDefinition/Condition</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/specimen.html" title="Specimen">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style="color: navy">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTumorzuordnung.html" title="SenologieToObdsTumorzuordnung">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTNM.html" title="SenologieToObdsTNM">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsHistologie.html" title="SenologieToObdsHistologie">https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsModulMamma.html" title="SenologieToObdsModulMamma">https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsResidualstatus.html" title="SenologieToObdsResidualstatus">https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsNebenwirkung.html" title="SenologieToObdsNebenwirkung">https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung</a><span style="color: navy">&quot;
+</span>
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups (MapOP, MapKomplikationen, MapOperateur) use</span>
+<span style="color: navy">// </span><span style="color: green">`target tgt : BackboneElement`. See SenologieToObdsTNM.map for details.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Hauptgruppe: Bundle -&gt; oBDS OP-Meldung</span>
+<span style="color: navy">// </span><span style="color: green">Das Bundle enthaelt eine Procedure (OP), die zugehoerige Condition (Diagnose),</span>
+<span style="color: navy">// </span><span style="color: green">sowie Observations (pTNM, Histologie) und ggf. Specimen.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>SenologieToObdsOP<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Tumorzuordnung: aus der Condition-Ressource im Bundle</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition)<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><b> then</b><span style="color: navy"> {
+</span>      condition<span style="color: navy"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style="color: maroon">tz</span><b> then </b>MapTumorzuordnung<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">tz</span><span style="color: navy">)</span> <i>&quot;CallMapTumorzuordnung&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;ConditionContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryConditionTZ&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">OP: aus der Procedure-Ressource im Bundle</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure)<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><span style="color: navy"><b> -&gt; </b></span>tgt.op<b> as </b><span style="color: maroon">op</span><b> then </b>MapOP<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapOP&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryProcedure&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">OP: Procedure -&gt; OBDSMeldung.op</span>
+<span style="color: navy">// </span><span style="color: green">Intention, Datum, OPS-Codes</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapOP<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">OP_ID: aus Procedure.identifier</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.opID = <span style="color: maroon">v</span> <i>&quot;SetOPID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOPID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Intention: aus Procedure.extension[Intention] mit Uebersetzung SNOMED -&gt; oBDS</span>
+  src.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention'<b> then</b><span style="color: navy"> {
+</span>    ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention'<b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>tgt.intention = <span style="color: maroon">cd</span> <i>&quot;SetIntentionDirect&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;ExtractIntentionCode&quot;</i><span style="color: navy">;</span>
+      val.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<span style="color: navy"><b> -&gt; </b></span>tgt.intention = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateIntention&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapIntentionValue&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapIntention&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Datum: aus Procedure.performedDateTime</span>
+  src.performed<b> as </b><span style="color: maroon">perf</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.datum = <span style="color: maroon">perf</span> <i>&quot;SetOPDatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">OPS-Codes: aus Procedure.code.coding (OPS-System, 1..*)</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<span style="color: navy"><b> -&gt; </b></span>tgt.opsKodes<b> as </b><span style="color: maroon">ops</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>ops.code = <span style="color: maroon">cd</span> <i>&quot;SetOPSCode&quot;</i><span style="color: navy">;</span>
+      c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>ops.version = <span style="color: maroon">v</span> <i>&quot;SetOPSVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapOPSCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOPSKodes&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Histologie: aus Observation im Bundle (postoperativ)</span>
+  <span style="color: navy">// </span><span style="color: green">Delegiert an die gemeinsame Histologie-Map</span>
+  bundle.entry<b> as </b><span style="color: maroon">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style="color: navy"> {
+</span>    histEntry.resource<b> as </b><span style="color: maroon">histObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.histologie<b> as </b><span style="color: maroon">histo</span><b> then </b>MapHistologie<span style="color: navy">(</span><span style="color: maroon">histObs</span><span style="color: navy">, </span><span style="color: maroon">histo</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapHistologie&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryHistologie&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">pTNM: aus TNM-Observation im Bundle (pathologisches Staging)</span>
+  <span style="color: navy">// </span><span style="color: green">LOINC 21902-2 = &quot;Stage group.pathology Cancer&quot;</span>
+  <span style="color: navy">// </span><span style="color: green">Delegiert an die gemeinsame TNM-Map</span>
+  bundle.entry<b> as </b><span style="color: maroon">tnmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style="color: navy"> {
+</span>    tnmEntry.resource<b> as </b><span style="color: maroon">tnmObs</span><span style="color: navy"><b> -&gt; </b></span>tgt.tnm<b> as </b><span style="color: maroon">ptnm</span><b> then </b>MapTNM<span style="color: navy">(</span><span style="color: maroon">tnmObs</span><span style="color: navy">, </span><span style="color: maroon">ptnm</span><span style="color: navy">, </span><span style="color: maroon">bundle</span><span style="color: navy">)</span> <i>&quot;CallMapPTNM&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryPTNM&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Residualstatus: aus Procedure.outcome</span>
+  <span style="color: navy">// </span><span style="color: green">Delegiert an die gemeinsame Residualstatus-Map (Outcome-Variante)</span>
+  src.outcome<b> as </b><span style="color: maroon">outcome</span><span style="color: navy"><b> -&gt; </b></span>tgt.residualstatus<b> as </b><span style="color: maroon">rs</span><b> then </b>MapResidualstatusFromOutcome<span style="color: navy">(</span><span style="color: maroon">outcome</span><span style="color: navy">, </span><span style="color: maroon">rs</span><span style="color: navy">)</span> <i>&quot;CallMapResidualstatus&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Komplikationen: aus Procedure.complication</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style="color: maroon">komp</span><b> then </b>MapKomplikationen<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">komp</span><span style="color: navy">)</span> <i>&quot;CallMapKomplikationen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Operateure: aus Procedure.performer</span>
+  src.performer<b> as </b><span style="color: maroon">perf</span><span style="color: navy"><b> -&gt; </b></span>tgt.operateure<b> as </b><span style="color: maroon">op</span><b> then </b>MapOperateur<span style="color: navy">(</span><span style="color: maroon">perf</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">)</span> <i>&quot;CallMapOperateur&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle</span>
+  <span style="color: navy">// </span><span style="color: green">Delegiert an die gemeinsame ModulMamma-Map</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.modulMamma<b> as </b><span style="color: maroon">mamma</span><b> then </b>MapModulMamma<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">mamma</span><span style="color: navy">)</span> <i>&quot;CallMapModulMamma&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Komplikationen: Procedure -&gt; OBDSMeldung.op.komplikationen</span>
+<span style="color: navy">// </span><span style="color: green">Komplikationskuerzel (oBDS) und ICD-10-kodierte Komplikationen</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapKomplikationen<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Keine Komplikation: wenn complication leer ist</span>
+  src<b> where </b>complication.exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.komplikationNeinOderUnbekannt = <span style="color: blue">'N'</span> <i>&quot;SetKeineKomplikation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Komplikationen vorhanden: oBDS-Kuerzel aus complication[compl_obds]</span>
+  src.complication<b> as </b><span style="color: maroon">comp</span><b> then</b><span style="color: navy"> {
+</span>    comp.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-operation-komplikation'<span style="color: navy"><b> -&gt; </b></span>tgt.komplikation<b> as </b><span style="color: maroon">k</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>k.kuerzel = <span style="color: maroon">cd</span> <i>&quot;SetKomplikationKuerzel&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapKomplikationObds&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapKomplikationenObds&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Komplikationen mit ICD-10-Kodierung aus complication[compl_icd10]</span>
+  src.complication<b> as </b><span style="color: maroon">comp</span><b> then</b><span style="color: navy"> {
+</span>    comp.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style="color: navy"><b> -&gt; </b></span>tgt.komplikation<b> as </b><span style="color: maroon">k</span><b> then</b><span style="color: navy"> {
+</span>      c<span style="color: navy"><b> -&gt; </b></span>k.icd<b> as </b><span style="color: maroon">icd</span><b> then</b><span style="color: navy"> {
+</span>        c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>icd.code = <span style="color: maroon">cd</span> <i>&quot;SetKompIcdCode&quot;</i><span style="color: navy">;</span>
+        c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>icd.version = <span style="color: maroon">v</span> <i>&quot;SetKompIcdVersion&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">}</span> <i>&quot;MapKompIcd&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapKomplikationIcd&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapKomplikationenIcd&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Operateur: Procedure.performer -&gt; OBDSMeldung.op.operateure</span>
+<span style="color: navy">// </span><span style="color: green">Nachname, Vornamen, Hauptoperateur-Kennzeichen</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapOperateur<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>BackboneElement, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Operateur-Daten aus Procedure.performer.actor (Reference -&gt; Practitioner)</span>
+  <span style="color: navy">// </span><span style="color: green">Nachname + Vornamen aus actor.display (Format: &quot;Nachname, Vornamen&quot;)</span>
+  src.actor<b> as </b><span style="color: maroon">actor</span><b> then</b><span style="color: navy"> {
+</span>    actor.display<b> as </b><span style="color: maroon">d</span><span style="color: navy"><b> -&gt; </b></span>tgt.nachname = <span style="color: maroon">d</span> <i>&quot;SetOperateurName&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapOperateurName&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Hauptoperateur: aus Procedure.performer.function</span>
+  src.function<b> as </b><span style="color: maroon">func</span><b> then</b><span style="color: navy"> {
+</span>    func.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'primary'<span style="color: navy"><b> -&gt; </b></span>tgt.hauptoperateur = <span style="color: blue">'J'</span> <i>&quot;SetHauptoperateurJa&quot;</i><span style="color: navy">;</span>
+    func.coding<b> as </b><span style="color: maroon">c</span><b> where </b>code = 'secondary'<span style="color: navy"><b> -&gt; </b></span>tgt.hauptoperateur = <span style="color: blue">'N'</span> <i>&quot;SetHauptoperateurNein&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapHauptoperateur&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Fallback: wenn keine function angegeben, erster Performer = Hauptoperateur</span>
+  src<b> where </b>function.exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.hauptoperateur = <span style="color: blue">'J'</span> <i>&quot;SetHauptoperateurDefault&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsOP"/>
+  <status value="draft"/>
+  <date value="2026-05-04T06:10:53+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Operation Bundle to oBDS OP-Meldung&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+    <mode value="source"/>
+    <alias value="Procedure"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+    <mode value="source"/>
+    <alias value="Condition"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+    <mode value="source"/>
+    <alias value="Specimen"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"/>
+  <group>
+    <name value="SenologieToObdsOP"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups (MapOP, MapKomplikationen, MapOperateur) use&#xD;&#xA;`target tgt : BackboneElement`. See SenologieToObdsTNM.map for details.&#xD;&#xA;============================================================================&#xD;&#xA;Hauptgruppe: Bundle -&gt; oBDS OP-Meldung&#xD;&#xA;Das Bundle enthaelt eine Procedure (OP), die zugehoerige Condition (Diagnose),&#xD;&#xA;sowie Observations (pTNM, Histologie) und ggf. Specimen.&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="OBDSMeldung"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="EntryConditionTZ"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Condition)"/>
+      </source>
+      <rule>
+        <name value="ConditionContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="condition"/>
+        </source>
+        <rule>
+          <name value="CallMapTumorzuordnung"/>
+          <source>
+            <context value="condition"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="tumorzuordnung"/>
+            <variable value="tz"/>
+          </target>
+          <dependent>
+            <name value="MapTumorzuordnung"/>
+            <variable value="condition"/>
+            <variable value="tz"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryProcedure"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Procedure)"/>
+      </source>
+      <rule>
+        <name value="CallMapOP"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="procedure"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="op"/>
+          <variable value="op"/>
+        </target>
+        <dependent>
+          <name value="MapOP"/>
+          <variable value="procedure"/>
+          <variable value="op"/>
+          <variable value="src"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapOP"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;OP: Procedure -&gt; OBDSMeldung.op&#xD;&#xA;Intention, Datum, OPS-Codes&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Procedure"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <input>
+      <name value="bundle"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <rule>
+      <name value="MapOPID"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+      </source>
+      <rule>
+        <name value="SetOPID"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="opID"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapIntention"/>
+      <source>
+        <context value="src"/>
+        <element value="extension"/>
+        <variable value="ext"/>
+        <condition value="url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention'"/>
+      </source>
+      <rule>
+        <name value="MapIntentionValue"/>
+        <source>
+          <context value="ext"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="ExtractIntentionCode"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+            <condition value="system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention'"/>
+          </source>
+          <rule>
+            <name value="SetIntentionDirect"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="intention"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+        <rule>
+          <name value="TranslateIntention"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+            <condition value="system = 'http://snomed.info/sct'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="intention"/>
+            <transform value="translate"/>
+            <parameter>
+              <valueId value="c"/>
+            </parameter>
+            <parameter>
+              <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention"/>
+            </parameter>
+            <parameter>
+              <valueString value="code"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetOPDatum"/>
+      <source>
+        <context value="src"/>
+        <element value="performed"/>
+        <variable value="perf"/>
+        <condition value="$this.is(dateTime)"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="datum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="perf"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapOPSKodes"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapOPSCoding"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/ops'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="opsKodes"/>
+          <variable value="ops"/>
+        </target>
+        <rule>
+          <name value="SetOPSCode"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="ops"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetOPSVersion"/>
+          <source>
+            <context value="c"/>
+            <element value="version"/>
+            <variable value="v"/>
+          </source>
+          <target>
+            <context value="ops"/>
+            <contextType value="variable"/>
+            <element value="version"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="v"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryHistologie"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="histEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"/>
+      </source>
+      <rule>
+        <name value="CallMapHistologie"/>
+        <source>
+          <context value="histEntry"/>
+          <element value="resource"/>
+          <variable value="histObs"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="histologie"/>
+          <variable value="histo"/>
+        </target>
+        <dependent>
+          <name value="MapHistologie"/>
+          <variable value="histObs"/>
+          <variable value="histo"/>
+          <variable value="bundle"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryPTNM"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="tnmEntry"/>
+        <condition value="resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"/>
+      </source>
+      <rule>
+        <name value="CallMapPTNM"/>
+        <source>
+          <context value="tnmEntry"/>
+          <element value="resource"/>
+          <variable value="tnmObs"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="tnm"/>
+          <variable value="ptnm"/>
+        </target>
+        <dependent>
+          <name value="MapTNM"/>
+          <variable value="tnmObs"/>
+          <variable value="ptnm"/>
+          <variable value="bundle"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="CallMapResidualstatus"/>
+      <source>
+        <context value="src"/>
+        <element value="outcome"/>
+        <variable value="outcome"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="residualstatus"/>
+        <variable value="rs"/>
+      </target>
+      <dependent>
+        <name value="MapResidualstatusFromOutcome"/>
+        <variable value="outcome"/>
+        <variable value="rs"/>
+      </dependent>
+    </rule>
+    <rule>
+      <name value="CallMapKomplikationen"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="komplikationen"/>
+        <variable value="komp"/>
+      </target>
+      <dependent>
+        <name value="MapKomplikationen"/>
+        <variable value="src"/>
+        <variable value="komp"/>
+      </dependent>
+    </rule>
+    <rule>
+      <name value="CallMapOperateur"/>
+      <source>
+        <context value="src"/>
+        <element value="performer"/>
+        <variable value="perf"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="operateure"/>
+        <variable value="op"/>
+      </target>
+      <dependent>
+        <name value="MapOperateur"/>
+        <variable value="perf"/>
+        <variable value="op"/>
+      </dependent>
+    </rule>
+    <rule>
+      <name value="CallMapModulMamma"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="modulMamma"/>
+        <variable value="mamma"/>
+      </target>
+      <dependent>
+        <name value="MapModulMamma"/>
+        <variable value="bundle"/>
+        <variable value="mamma"/>
+      </dependent>
+    </rule>
+  </group>
+  <group>
+    <name value="MapKomplikationen"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Komplikationen: Procedure -&gt; OBDSMeldung.op.komplikationen&#xD;&#xA;Komplikationskuerzel (oBDS) und ICD-10-kodierte Komplikationen&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Procedure"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="SetKeineKomplikation"/>
+      <source>
+        <context value="src"/>
+        <condition value="complication.exists().not()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="komplikationNeinOderUnbekannt"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="N"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapKomplikationenObds"/>
+      <source>
+        <context value="src"/>
+        <element value="complication"/>
+        <variable value="comp"/>
+      </source>
+      <rule>
+        <name value="MapKomplikationObds"/>
+        <source>
+          <context value="comp"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-operation-komplikation'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="komplikation"/>
+          <variable value="k"/>
+        </target>
+        <rule>
+          <name value="SetKomplikationKuerzel"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="k"/>
+            <contextType value="variable"/>
+            <element value="kuerzel"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapKomplikationenIcd"/>
+      <source>
+        <context value="src"/>
+        <element value="complication"/>
+        <variable value="comp"/>
+      </source>
+      <rule>
+        <name value="MapKomplikationIcd"/>
+        <source>
+          <context value="comp"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="komplikation"/>
+          <variable value="k"/>
+        </target>
+        <rule>
+          <name value="MapKompIcd"/>
+          <source>
+            <context value="c"/>
+          </source>
+          <target>
+            <context value="k"/>
+            <contextType value="variable"/>
+            <element value="icd"/>
+            <variable value="icd"/>
+          </target>
+          <rule>
+            <name value="SetKompIcdCode"/>
+            <source>
+              <context value="c"/>
+              <element value="code"/>
+              <variable value="cd"/>
+            </source>
+            <target>
+              <context value="icd"/>
+              <contextType value="variable"/>
+              <element value="code"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="cd"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="SetKompIcdVersion"/>
+            <source>
+              <context value="c"/>
+              <element value="version"/>
+              <variable value="v"/>
+            </source>
+            <target>
+              <context value="icd"/>
+              <contextType value="variable"/>
+              <element value="version"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="v"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapOperateur"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Operateur: Procedure.performer -&gt; OBDSMeldung.op.operateure&#xD;&#xA;Nachname, Vornamen, Hauptoperateur-Kennzeichen&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="BackboneElement"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="MapOperateurName"/>
+      <source>
+        <context value="src"/>
+        <element value="actor"/>
+        <variable value="actor"/>
+      </source>
+      <rule>
+        <name value="SetOperateurName"/>
+        <source>
+          <context value="actor"/>
+          <element value="display"/>
+          <variable value="d"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="nachname"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="d"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapHauptoperateur"/>
+      <source>
+        <context value="src"/>
+        <element value="function"/>
+        <variable value="func"/>
+      </source>
+      <rule>
+        <name value="SetHauptoperateurJa"/>
+        <source>
+          <context value="func"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="code = 'primary'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="hauptoperateur"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="J"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="SetHauptoperateurNein"/>
+        <source>
+          <context value="func"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="code = 'secondary'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="hauptoperateur"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="N"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetHauptoperateurDefault"/>
+      <source>
+        <context value="src"/>
+        <condition value="function.exists().not()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="hauptoperateur"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="J"/>
+        </parameter>
+      </target>
+    </rule>
+  </group>
+</StructureMap>

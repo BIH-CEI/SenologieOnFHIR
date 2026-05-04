@@ -1,0 +1,1487 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToOncoBoxBrustKennzahlen",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustKennzahlen</b></p><a name=\"SenologieToOncoBoxBrustKennzahlen\"> </a><a name=\"hcSenologieToOncoBoxBrustKennzahlen\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen<span style=\"color: navy\">&quot; = &quot;</span>SenologieToOncoBoxBrustKennzahlen<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-oncobox-brust-meldung.html\" title=\"OncoBox Brust N1.1.1 Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Kennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Aggregation erfolgt typischerweise ueber alle Primaerfaelle des</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Berichtszeitraums. In dieser Transformation werden pro Bundle alle</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">20 Kennzahlen als &quot;Shell&quot;-Eintraege angelegt (Zaehler=0, Nenner=0),</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">die dann von einer nachgelagerten Auswerteschicht (CQL) mit den</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">tatsaechlichen Aggregatwerten befuellt werden.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Aggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">eine CQL-basierte Auswertung erfordert.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Kurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-1  Postop. Fallbesprechung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-2  Praetherapeutische Fallbesprechung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-3  Fallbesprechung Rezidiv/Metastasen</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-4  Adjuvante Chemotherapie (invasiv)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-5  Adjuvante Chemotherapie (DCIS)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-6  Endokrine Therapie</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-7  Trastuzumab bei HER2+</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-8  First-Line-Therapie bei Metastasierung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-9  Psychoonkologische Mitbetreuung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-10 Sozialdienst-Mitbetreuung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-11 Studienteilnahme</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-12 Praeoperative histologische Sicherung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-14 Anzahl Eingriffe bis R0</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-15 BET-Rate bei pT1</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-16 Mastektomien</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-18 Drahtmarkierung bei nicht-tastbaren Befunden</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-19 Revisionsoperationen</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">KB-20 Checkliste (organisatorisch)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapKennzahlen<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OncoBoxBrust<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-1 Postop. Fallbesprechung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-1'</span> <i>&quot;SetKB1Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Postop. Fallbesprechung'</span> <i>&quot;SetKB1Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB1Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB1N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB1&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-2 Praetherapeutische Fallbesprechung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-2'</span> <i>&quot;SetKB2Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Praetherapeutische Fallbesprechung'</span> <i>&quot;SetKB2Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB2Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB2N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB2&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-3 Fallbesprechung Rezidiv/Metastasen</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-3'</span> <i>&quot;SetKB3Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Fallbesprechung Rezidiv/Metastasen'</span> <i>&quot;SetKB3Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB3Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB3N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB3&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-4 Adjuvante Chemotherapie (invasiv)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-4'</span> <i>&quot;SetKB4Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Adjuvante Chemotherapie (invasiv)'</span> <i>&quot;SetKB4Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB4Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB4N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB4&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-5 Adjuvante Chemotherapie (DCIS)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-5'</span> <i>&quot;SetKB5Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Adjuvante Chemotherapie (DCIS)'</span> <i>&quot;SetKB5Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB5Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB5N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB5&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-6 Endokrine Therapie</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-6'</span> <i>&quot;SetKB6Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Endokrine Therapie'</span> <i>&quot;SetKB6Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB6Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB6N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB6&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-7 Trastuzumab bei HER2+</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-7'</span> <i>&quot;SetKB7Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Trastuzumab bei HER2+'</span> <i>&quot;SetKB7Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB7Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB7N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB7&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-8 First-Line-Therapie bei Metastasierung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-8'</span> <i>&quot;SetKB8Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'First-Line-Therapie bei Metastasierung'</span> <i>&quot;SetKB8Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB8Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB8N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB8&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-9 Psychoonkologische Mitbetreuung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-9'</span> <i>&quot;SetKB9Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Psychoonkologische Mitbetreuung'</span> <i>&quot;SetKB9Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB9Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB9N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB9&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-10 Sozialdienst-Mitbetreuung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-10'</span> <i>&quot;SetKB10Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Sozialdienst-Mitbetreuung'</span> <i>&quot;SetKB10Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB10Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB10N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB10&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-11 Studienteilnahme</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-11'</span> <i>&quot;SetKB11Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Studienteilnahme'</span> <i>&quot;SetKB11Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB11Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB11N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB11&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-12 Praeoperative histologische Sicherung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-12'</span> <i>&quot;SetKB12Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Praeoperative histologische Sicherung'</span> <i>&quot;SetKB12Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB12Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB12N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB12&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-13 Primaerfaelle / Rezidive / Metastasen</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-13'</span> <i>&quot;SetKB13Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Primaerfaelle / Rezidive / Metastasen'</span> <i>&quot;SetKB13Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB13Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB13N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB13&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-14 Anzahl Eingriffe bis R0</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-14'</span> <i>&quot;SetKB14Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Anzahl Eingriffe bis R0'</span> <i>&quot;SetKB14Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB14Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB14N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB14&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-15 BET-Rate bei pT1</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-15'</span> <i>&quot;SetKB15Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'BET-Rate bei pT1'</span> <i>&quot;SetKB15Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB15Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB15N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB15&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-16 Mastektomien</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-16'</span> <i>&quot;SetKB16Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Mastektomien'</span> <i>&quot;SetKB16Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB16Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB16N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB16&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-17 Lymphknoten-Entfernung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-17'</span> <i>&quot;SetKB17Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Lymphknoten-Entfernung (LK-Entf.)'</span> <i>&quot;SetKB17Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB17Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB17N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB17&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-18 Drahtmarkierung</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-18'</span> <i>&quot;SetKB18Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Drahtmarkierung'</span> <i>&quot;SetKB18Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB18Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB18N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB18&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-19 Revisionsoperationen</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-19'</span> <i>&quot;SetKB19Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Revisionsoperationen'</span> <i>&quot;SetKB19Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB19Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB19N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB19&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">KB-20 Checkliste</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.kennzahl<b> as </b><span style=\"color: maroon\">kz</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.id = <span style=\"color: blue\">'KB-20'</span> <i>&quot;SetKB20Id&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.bezeichnung = <span style=\"color: blue\">'Checkliste'</span> <i>&quot;SetKB20Name&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.zaehler = <span style=\"color: blue\">0</span> <i>&quot;SetKB20Z&quot;</i><span style=\"color: navy\">;</span>\r\n    src<span style=\"color: navy\"><b> -&gt; </b></span>kz.nenner = <span style=\"color: blue\">0</span> <i>&quot;SetKB20N&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;InitKB20&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen",
+  "version" : "0.1.0",
+  "name" : "SenologieToOncoBoxBrustKennzahlen",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
+    "mode" : "target",
+    "alias" : "OncoBoxBrust"
+  }],
+  "group" : [{
+    "name" : "MapKennzahlen",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nKennzahlen KB-1 bis KB-20 (DKG-Brustzentrum-Qualitaetsindikatoren)\r\nDie OncoBox erwartet pro Kennzahl einen Zaehler/Nenner-Block. Die\r\nAggregation erfolgt typischerweise ueber alle Primaerfaelle des\r\nBerichtszeitraums. In dieser Transformation werden pro Bundle alle\r\n20 Kennzahlen als \"Shell\"-Eintraege angelegt (Zaehler=0, Nenner=0),\r\ndie dann von einer nachgelagerten Auswerteschicht (CQL) mit den\r\ntatsaechlichen Aggregatwerten befuellt werden.\r\nDie tatsaechliche Berechnung der Kennzahlen aus FHIR-Daten ist ein\r\nAggregationsschritt, der nicht als 1:1-Mapping umsetzbar ist, sondern\r\neine CQL-basierte Auswertung erfordert.\r\nKurzreferenz (aus DKG-Erhebungsbogen / OncoBox Brust N1.1.1):\r\nKB-1  Postop. Fallbesprechung\r\nKB-2  Praetherapeutische Fallbesprechung\r\nKB-3  Fallbesprechung Rezidiv/Metastasen\r\nKB-4  Adjuvante Chemotherapie (invasiv)\r\nKB-5  Adjuvante Chemotherapie (DCIS)\r\nKB-6  Endokrine Therapie\r\nKB-7  Trastuzumab bei HER2+\r\nKB-8  First-Line-Therapie bei Metastasierung\r\nKB-9  Psychoonkologische Mitbetreuung\r\nKB-10 Sozialdienst-Mitbetreuung\r\nKB-11 Studienteilnahme\r\nKB-12 Praeoperative histologische Sicherung\r\nKB-13 Primaerfaelle / Rezidive / Metastasen (Fallzahl)\r\nKB-14 Anzahl Eingriffe bis R0\r\nKB-15 BET-Rate bei pT1\r\nKB-16 Mastektomien\r\nKB-17 Lymphknoten-Entfernung (Mind. 10 LK bei invasivem CA)\r\nKB-18 Drahtmarkierung bei nicht-tastbaren Befunden\r\nKB-19 Revisionsoperationen\r\nKB-20 Checkliste (organisatorisch)\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "OncoBoxBrust",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "InitKB1",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB1Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-1"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB1Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Postop. Fallbesprechung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB1Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB1N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB2",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB2Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-2"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB2Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Praetherapeutische Fallbesprechung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB2Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB2N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB3",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB3Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-3"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB3Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Fallbesprechung Rezidiv/Metastasen"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB3Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB3N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB4",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB4Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-4"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB4Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Adjuvante Chemotherapie (invasiv)"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB4Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB4N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB5",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB5Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-5"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB5Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Adjuvante Chemotherapie (DCIS)"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB5Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB5N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB6",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB6Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-6"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB6Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Endokrine Therapie"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB6Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB6N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB7",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB7Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-7"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB7Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Trastuzumab bei HER2+"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB7Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB7N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB8",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB8Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-8"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB8Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "First-Line-Therapie bei Metastasierung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB8Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB8N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB9",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB9Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-9"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB9Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Psychoonkologische Mitbetreuung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB9Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB9N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB10",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB10Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-10"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB10Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Sozialdienst-Mitbetreuung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB10Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB10N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB11",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB11Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-11"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB11Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Studienteilnahme"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB11Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB11N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB12",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB12Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-12"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB12Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Praeoperative histologische Sicherung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB12Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB12N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB13",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB13Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-13"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB13Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Primaerfaelle / Rezidive / Metastasen"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB13Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB13N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB14",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB14Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-14"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB14Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Anzahl Eingriffe bis R0"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB14Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB14N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB15",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB15Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-15"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB15Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "BET-Rate bei pT1"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB15Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB15N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB16",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB16Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-16"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB16Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Mastektomien"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB16Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB16N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB17",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB17Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-17"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB17Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Lymphknoten-Entfernung (LK-Entf.)"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB17Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB17N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB18",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB18Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-18"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB18Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Drahtmarkierung"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB18Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB18N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB19",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB19Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-19"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB19Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Revisionsoperationen"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB19Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB19N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "InitKB20",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "kennzahl",
+        "variable" : "kz"
+      }],
+      "rule" : [{
+        "name" : "SetKB20Id",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "id",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "KB-20"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB20Name",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "bezeichnung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueString" : "Checkliste"
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB20Z",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "zaehler",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      },
+      {
+        "name" : "SetKB20N",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "kz",
+          "contextType" : "variable",
+          "element" : "nenner",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueInteger" : 0
+          }]
+        }]
+      }]
+    }]
+  }]
+}

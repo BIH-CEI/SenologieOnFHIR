@@ -1,0 +1,327 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToObdsNebenwirkung"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsNebenwirkung</b></p><a name=\"SenologieToObdsNebenwirkung\"> </a><a name=\"hcSenologieToObdsNebenwirkung\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung<span style=\"color: navy\">\" = \"</span>SenologieToObdsNebenwirkung<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">\" </span><b>alias </b>Observation <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">are correct per the oBDS Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Gemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">aus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Wird von SYST und ST importiert.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die Nebenwirkung wird als Observation modelliert mit:</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- code: CTCAE-Term (NCI Thesaurus Code + Text)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- value: CTCAE-Grad als CodeableConcept</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- method: CTCAE-Version</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">oBDS-Struktur:</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">nebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Grad &lt;=2 oder unbekannt sind, wird hier \"2\" oder \"U\" gesetzt.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">nebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad &gt;=3</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">mit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapNebenwirkungenSYST: Bundle -&gt; oBDS Nebenwirkungen (fuer Systemtherapie)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Bei SYST: Observations mit CTCAE-Codierung extrahieren,</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Grad &gt;=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapNebenwirkungenSYST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Default: Wenn keine Nebenwirkungen vorhanden -&gt; U (unbekannt)</span>#xD;\n  src<b> where </b>entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gradMaximal2OderUnbekannt = <span style=\"color: blue\">'U'</span> <i>\"SetGradUnbekannt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Nebenwirkungen mit CTCAE-Codierung: jede Observation einzeln verarbeiten</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">obsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    obsEntry.resource<b> as </b><span style=\"color: maroon\">obs</span><b> then </b>MapNebenwirkungEinzeln<span style=\"color: navy\">(</span><span style=\"color: maroon\">obs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>\"CallMapNebenwirkungEinzeln\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryNebenwirkungen\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapNebenwirkungenST: Bundle -&gt; oBDS Nebenwirkungen (fuer Strahlentherapie)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Gleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapNebenwirkungenST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Default: Wenn keine Nebenwirkungen vorhanden -&gt; U (unbekannt)</span>#xD;\n  src<b> where </b>entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gradMaximal2OderUnbekannt = <span style=\"color: blue\">'U'</span> <i>\"SetGradUnbekannt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Nebenwirkungen mit CTCAE-Codierung</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">obsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    obsEntry.resource<b> as </b><span style=\"color: maroon\">obs</span><b> then </b>MapNebenwirkungEinzeln<span style=\"color: navy\">(</span><span style=\"color: maroon\">obs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>\"CallMapNebenwirkungEinzeln\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntryNebenwirkungen\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapNebenwirkungEinzeln: Observation -&gt; oBDS Nebenwirkung (einzeln)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Erzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapNebenwirkungEinzeln<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Observation, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Einzelne Nebenwirkung</span>#xD;\n  src.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    val.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.nebenwirkung<b> as </b><span style=\"color: maroon\">nw</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">Art/Bezeichnung der Nebenwirkung (aus Observation.code)</span>#xD;\n      src.code<b> as </b><span style=\"color: maroon\">obsCode</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        obsCode.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>nw.artBezeichnung = <span style=\"color: maroon\">t</span> <i>\"SetNwBezeichnung\"</i><span style=\"color: navy\">;</span>#xD;\n        obsCode.coding<b> as </b><span style=\"color: maroon\">coding</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          coding.display<b> as </b><span style=\"color: maroon\">d</span><b> where </b>%obsCode.text.exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>nw.artBezeichnung = <span style=\"color: maroon\">d</span> <i>\"SetNwBezeichnungDisplay\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"FallbackNwBezeichnung\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractNwBezeichnung\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">CTCAE-Grad (1-5)</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">g</span><span style=\"color: navy\"><b> -&gt; </b></span>nw.grad = <span style=\"color: maroon\">g</span> <i>\"SetNwGrad\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">CTCAE-Version (z.B. \"4.03\", \"5.0\")</span>#xD;\n      src.method<b> as </b><span style=\"color: maroon\">method</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        method.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>nw.version = <span style=\"color: maroon\">t</span> <i>\"SetNwVersion\"</i><span style=\"color: navy\">;</span>#xD;\n        method.coding<b> as </b><span style=\"color: maroon\">mc</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>          mc.code<b> as </b><span style=\"color: maroon\">v</span><b> where </b>%method.text.exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>nw.version = <span style=\"color: maroon\">v</span> <i>\"SetNwVersionFromCoding\"</i><span style=\"color: navy\">;</span>#xD;\n        <span style=\"color: navy\">}</span> <i>\"FallbackNwVersion\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractNwVersion\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"CreateNebenwirkung\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapNebenwirkungGrad\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToObdsNebenwirkung"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-04T06:10:53+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Observation"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Observation>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Observation" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/obds-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OBDSMeldung" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapNebenwirkungenSYST" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names\r\nare correct per the oBDS Logical Model.\r\n============================================================================\r\nGemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)\r\naus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.\r\nWird von SYST und ST importiert.\r\nMII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event\r\nDie Nebenwirkung wird als Observation modelliert mit:\r\n- code: CTCAE-Term (NCI Thesaurus Code + Text)\r\n- value: CTCAE-Grad als CodeableConcept\r\n- method: CTCAE-Version\r\noBDS-Struktur:\r\nnebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen\r\nGrad <=2 oder unbekannt sind, wird hier \"2\" oder \"U\" gesetzt.\r\nnebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad >=3\r\nmit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.\r\n============================================================================\r\n============================================================================\r\nMapNebenwirkungenSYST: Bundle -> oBDS Nebenwirkungen (fuer Systemtherapie)\r\nBei SYST: Observations mit CTCAE-Codierung extrahieren,\r\nGrad >=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetGradUnbekannt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "gradMaximal2OderUnbekannt" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "U"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryNebenwirkungen" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "obsEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapNebenwirkungEinzeln" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "obsEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "obs" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapNebenwirkungEinzeln" ] ;
+           fhir:variable ( [ fhir:v "obs" ] [ fhir:v "tgt" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapNebenwirkungenST" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapNebenwirkungenST: Bundle -> oBDS Nebenwirkungen (fuer Strahlentherapie)\r\nGleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetGradUnbekannt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "gradMaximal2OderUnbekannt" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "U"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntryNebenwirkungen" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "obsEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapNebenwirkungEinzeln" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "obsEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "obs" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapNebenwirkungEinzeln" ] ;
+           fhir:variable ( [ fhir:v "obs" ] [ fhir:v "tgt" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapNebenwirkungEinzeln" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapNebenwirkungEinzeln: Observation -> oBDS Nebenwirkung (einzeln)\r\nErzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Observation" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapNebenwirkungGrad" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "value" ] ;
+         fhir:variable [ fhir:v "val" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CreateNebenwirkung" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "val" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "nebenwirkung" ] ;
+           fhir:variable [ fhir:v "nw" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "ExtractNwBezeichnung" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "src" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "obsCode" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetNwBezeichnung" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "obsCode" ] ;
+               fhir:element [ fhir:v "text" ] ;
+               fhir:variable [ fhir:v "t" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "nw" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "artBezeichnung" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "t"
+                 ]
+               ] )
+             ] )
+           ] [
+             fhir:name [ fhir:v "FallbackNwBezeichnung" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "obsCode" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "coding" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetNwBezeichnungDisplay" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "coding" ] ;
+                 fhir:element [ fhir:v "display" ] ;
+                 fhir:variable [ fhir:v "d" ] ;
+                 fhir:condition [ fhir:v "%obsCode.text.exists().not()" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "nw" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "artBezeichnung" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "d"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetNwGrad" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "g" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "nw" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "grad" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "g"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "ExtractNwVersion" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "src" ] ;
+             fhir:element [ fhir:v "method" ] ;
+             fhir:variable [ fhir:v "method" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetNwVersion" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "method" ] ;
+               fhir:element [ fhir:v "text" ] ;
+               fhir:variable [ fhir:v "t" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "nw" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "version" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "t"
+                 ]
+               ] )
+             ] )
+           ] [
+             fhir:name [ fhir:v "FallbackNwVersion" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "method" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "mc" ]
+             ] ) ;
+             fhir:rule ( [
+               fhir:name [ fhir:v "SetNwVersionFromCoding" ] ;
+               fhir:source ( [
+                 fhir:context [ fhir:v "mc" ] ;
+                 fhir:element [ fhir:v "code" ] ;
+                 fhir:variable [ fhir:v "v" ] ;
+                 fhir:condition [ fhir:v "%method.text.exists().not()" ]
+               ] ) ;
+               fhir:target ( [
+                 fhir:context [ fhir:v "nw" ] ;
+                 fhir:contextType [ fhir:v "variable" ] ;
+                 fhir:element [ fhir:v "version" ] ;
+                 fhir:transform [ fhir:v "copy" ] ;
+                 fhir:parameter ( [
+                   fhir:value [
+                     a fhir:Id ;
+                     fhir:v "v"
+                   ]
+                 ] )
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

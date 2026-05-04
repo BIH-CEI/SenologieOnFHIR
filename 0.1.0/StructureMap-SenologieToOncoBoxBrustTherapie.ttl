@@ -1,0 +1,986 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToOncoBoxBrustTherapie"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustTherapie</b></p><a name=\"SenologieToOncoBoxBrustTherapie\"> </a><a name=\"hcSenologieToOncoBoxBrustTherapie\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie<span style=\"color: navy\">\" = \"</span>SenologieToOncoBoxBrustTherapie<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/procedure.html\" title=\"Procedure\">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style=\"color: navy\">\" </span><b>alias </b>Procedure <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">\" </span><b>alias </b>Observation <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-oncobox-brust-meldung.html\" title=\"OncoBox Brust N1.1.1 Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapSystemtherapie, MapStrahlentherapie) use</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement` because FML has no syntax to declare the</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Logical Model sub-path for BackboneElement slices. The IG Publisher produces</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">SM_TARGET_PATH errors (~19). Element names are correct per the OncoBox Brust</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Systemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -&gt; Syst-Block</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Relevante Felder fuer OncoBox / Kennzahlen:</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- KB-7: Trastuzumab bei HER2-positiven Patientinnen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">- KB-8: First-Line-Therapie bei Metastasierung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapSystemtherapie<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.lnr = <span style=\"color: blue\">1</span> <i>\"SetSystLnr\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Syst_Art (Chemo=1, Immun=2, zielgerichtet=3)</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '367336001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.therapieart = <span style=\"color: blue\">'1'</span> <i>\"SetSystChemo\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '76334006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.therapieart = <span style=\"color: blue\">'2'</span> <i>\"SetSystImmun\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '169413002'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.therapieart = <span style=\"color: blue\">'3'</span> <i>\"SetSystZiel\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapSystArtCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapSystArt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Syst_Stellung (neoadjuvant/adjuvant/palliativ) aus Extension (CodeableConcept)</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapiestellung'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'neoadjuvant'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'N'</span> <i>\"SetStellNeo\"</i><span style=\"color: navy\">;</span>#xD;\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'adjuvant'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'A'</span> <i>\"SetStellAdj\"</i><span style=\"color: navy\">;</span>#xD;\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'palliativ'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'P'</span> <i>\"SetStellPal\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapStellVal\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapStellExt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Syst_Beginn / Syst_Ende aus performedPeriod</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(Period)<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.beginn = <span style=\"color: maroon\">s</span> <i>\"SetSystBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n    perf.end<b> as </b><span style=\"color: maroon\">e</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.ende = <span style=\"color: maroon\">e</span> <i>\"SetSystEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapSystPeriod\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Syst_Trastuzumab - Flag wenn Substanz Trastuzumab enthaelt (ATC L01FD01)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Einfachste Ableitung: Procedure.code.coding mit Trastuzumab-Code (z.B. SNOMED 387208009)</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '387208009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.enthaeltTrastuzumab = <span style=\"color: blue\">'1'</span> <i>\"SetTrastuJa\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapTrastuCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapTrastu\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Syst_FirstLine (KB-8): First-Line bei Metastasierung aus EX_Senologie_FirstLineTherapy</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-first-line-therapy'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> where </b>$this = true<span style=\"color: navy\"><b> -&gt; </b></span>tgt.firstLine = <span style=\"color: blue\">'1'</span> <i>\"SetFirstLineJa\"</i><span style=\"color: navy\">;</span>#xD;\n    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> where </b>$this = false<span style=\"color: navy\"><b> -&gt; </b></span>tgt.firstLine = <span style=\"color: blue\">'0'</span> <i>\"SetFirstLineNein\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapFirstLine\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Syst_Protokoll aus usedCode.text</span>#xD;\n  src.usedCode<b> as </b><span style=\"color: maroon\">uc</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    uc.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.protokoll = <span style=\"color: maroon\">t</span> <i>\"SetSystProtokollText\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapSystProtokoll\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Strahlentherapie: Procedure (Senologie_Strahlentherapie) -&gt; RT-Block</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapStrahlentherapie<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.lnr = <span style=\"color: blue\">1</span> <i>\"SetRTLnr\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">RT_Beginn / RT_Ende aus performedPeriod</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(Period)<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.beginn = <span style=\"color: maroon\">s</span> <i>\"SetRTBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n    perf.end<b> as </b><span style=\"color: maroon\">e</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.ende = <span style=\"color: maroon\">e</span> <i>\"SetRTEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapRTPeriod\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">RT_Stellung aus Extension therapiestellung (CodeableConcept)</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapiestellung'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'neoadjuvant'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'N'</span> <i>\"SetRTNeo\"</i><span style=\"color: navy\">;</span>#xD;\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'adjuvant'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'A'</span> <i>\"SetRTAdj\"</i><span style=\"color: navy\">;</span>#xD;\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'palliativ'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'P'</span> <i>\"SetRTPal\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapRTStellVal\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapRTStellExt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">RT_Dosis_Gy aus MII Onko Gesamtdosis-Extension</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-gesamtdosis'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtdosisGy = <span style=\"color: maroon\">v</span> <i>\"SetRTGesamtdosis\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractRTGesamtdosisValue\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapRTGesamtdosis\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">RT_Einzeldosis_Gy aus Senologie Einzeldosis-Extension</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-einzeldosis'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.einzeldosisGy = <span style=\"color: maroon\">v</span> <i>\"SetRTEinzeldosis\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractRTEinzeldosisValue\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapRTEinzeldosis\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">RT_Zielgebiet aus Procedure.bodySite (SNOMED)</span>#xD;\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '76752008'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.zielgebiet = <span style=\"color: blue\">'1'</span> <i>\"SetRTBrust\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '59441001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.zielgebiet = <span style=\"color: blue\">'2'</span> <i>\"SetRTLAW\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapRTZielCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapRTZiel\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Endokrine Therapie: Procedure (therapieart=HO) -&gt; EndokrineTherapie-Block</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Endokrine Therapien (Tamoxifen, Aromatasehemmer, GnRH, Fulvestrant,</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">CDK4/6-Inhibitoren) werden als Systemtherapie-Procedures mit therapieart=HO</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">modelliert. Die Substanzklasse wird ueber ATC-Codes abgeleitet:</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">1=Tamoxifen (L02BA01), 2=Aromatasehemmer (L02BG*),</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">3=GnRH-Analogon (L02AE*), 4=Fulvestrant (L02BA03),</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">5=CDK4/6-Inhibitor (L01EF*), 9=sonstige</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapEndokrineTherapie<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.lnr = <span style=\"color: blue\">1</span> <i>\"SetEndoLnr\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Endo_Beginn / Endo_Ende aus performedPeriod</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(Period)<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.beginn = <span style=\"color: maroon\">s</span> <i>\"SetEndoBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n    perf.end<b> as </b><span style=\"color: maroon\">e</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.ende = <span style=\"color: maroon\">e</span> <i>\"SetEndoEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEndoPeriod\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Endo_Stellung aus MII Onko Intention-Extension</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('mii-ex-onko-systemische-therapie-intention')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'K'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'A'</span> <i>\"SetEndoAdj\"</i><span style=\"color: navy\">;</span>#xD;\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'P'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'P'</span> <i>\"SetEndoPal\"</i><span style=\"color: navy\">;</span>#xD;\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'N'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungZurOP = <span style=\"color: blue\">'N'</span> <i>\"SetEndoNeo\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapEndoStellCoding\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapEndoStellVal\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEndoStellExt\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Endo_Substanz aus ATC-Code (Procedure.code oder usedCode)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Tamoxifen = L02BA01, Aromatasehemmer = L02BG*, GnRH = L02AE*,</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fulvestrant = L02BA03, CDK4/6i = L01EF*</span>#xD;\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/atc'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'L02BA01'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.substanz = <span style=\"color: blue\">'1'</span> <i>\"SetEndoTamox\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'L02BA03'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.substanz = <span style=\"color: blue\">'4'</span> <i>\"SetEndoFulv\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('L02BG')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.substanz = <span style=\"color: blue\">'2'</span> <i>\"SetEndoAI\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('L02AE')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.substanz = <span style=\"color: blue\">'3'</span> <i>\"SetEndoGnRH\"</i><span style=\"color: navy\">;</span>#xD;\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('L01EF')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.substanz = <span style=\"color: blue\">'5'</span> <i>\"SetEndoCDK\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapEndoSubstanzATCCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEndoSubstanzATC\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToOncoBoxBrustTherapie"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-04T06:10:53+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Procedure"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Procedure>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Procedure" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Observation"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Observation>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Observation" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OncoBoxBrust" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapSystemtherapie" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups (MapSystemtherapie, MapStrahlentherapie) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nLogical Model sub-path for BackboneElement slices. The IG Publisher produces\r\nSM_TARGET_PATH errors (~19). Element names are correct per the OncoBox Brust\r\nLogical Model.\r\n============================================================================\r\nSystemtherapie: Procedure (Senologie_Systemtherapie_Procedure) -> Syst-Block\r\nRelevante Felder fuer OncoBox / Kennzahlen:\r\n- KB-4 / KB-5: adjuvante Chemo (invasiv / DCIS)\r\n- KB-7: Trastuzumab bei HER2-positiven Patientinnen\r\n- KB-8: First-Line-Therapie bei Metastasierung\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Procedure" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetSystLnr" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "lnr" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Integer ;
+             fhir:v 1
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapSystArt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapSystArtCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://snomed.info/sct'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetSystChemo" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '367336001'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "therapieart" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "1"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetSystImmun" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '76334006'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "therapieart" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "2"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetSystZiel" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '169413002'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "therapieart" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "3"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapStellExt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapiestellung'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapStellVal" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetStellNeo" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "code = 'neoadjuvant'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "stellungZurOP" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "N"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetStellAdj" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "code = 'adjuvant'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "stellungZurOP" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "A"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetStellPal" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "code = 'palliativ'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "stellungZurOP" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "P"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapSystPeriod" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ] ;
+         fhir:condition [ fhir:v "$this.is(Period)" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetSystBeginn" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "start" ] ;
+           fhir:variable [ fhir:v "s" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "beginn" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "s"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetSystEnde" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "end" ] ;
+           fhir:variable [ fhir:v "e" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "ende" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "e"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapTrastu" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapTrastuCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://snomed.info/sct'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetTrastuJa" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '387208009'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "enthaeltTrastuzumab" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "1"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapFirstLine" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-first-line-therapy'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetFirstLineJa" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ] ;
+           fhir:condition [ fhir:v "$this = true" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "firstLine" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "1"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetFirstLineNein" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ] ;
+           fhir:condition [ fhir:v "$this = false" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "firstLine" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "0"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapSystProtokoll" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "usedCode" ] ;
+         fhir:variable [ fhir:v "uc" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetSystProtokollText" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "uc" ] ;
+           fhir:element [ fhir:v "text" ] ;
+           fhir:variable [ fhir:v "t" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "protokoll" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "t"
+             ]
+           ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapStrahlentherapie" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nStrahlentherapie: Procedure (Senologie_Strahlentherapie) -> RT-Block\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Procedure" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetRTLnr" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "lnr" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Integer ;
+             fhir:v 1
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapRTPeriod" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ] ;
+         fhir:condition [ fhir:v "$this.is(Period)" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetRTBeginn" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "start" ] ;
+           fhir:variable [ fhir:v "s" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "beginn" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "s"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetRTEnde" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "end" ] ;
+           fhir:variable [ fhir:v "e" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "ende" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "e"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapRTStellExt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapiestellung'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapRTStellVal" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetRTNeo" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "code = 'neoadjuvant'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "stellungZurOP" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "N"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetRTAdj" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "code = 'adjuvant'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "stellungZurOP" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "A"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetRTPal" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "code = 'palliativ'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "stellungZurOP" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "P"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapRTGesamtdosis" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-bestrahlung-gesamtdosis'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractRTGesamtdosisValue" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetRTGesamtdosis" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "gesamtdosisGy" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapRTEinzeldosis" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.senologie.org/fhir/StructureDefinition/ex-senologie-einzeldosis'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractRTEinzeldosisValue" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetRTEinzeldosis" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "einzeldosisGy" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapRTZiel" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "bodySite" ] ;
+         fhir:variable [ fhir:v "bs" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapRTZielCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "bs" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://snomed.info/sct'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetRTBrust" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '76752008'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "zielgebiet" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "1"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetRTLAW" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = '59441001'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "zielgebiet" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "2"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapEndokrineTherapie" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nEndokrine Therapie: Procedure (therapieart=HO) -> EndokrineTherapie-Block\r\nEndokrine Therapien (Tamoxifen, Aromatasehemmer, GnRH, Fulvestrant,\r\nCDK4/6-Inhibitoren) werden als Systemtherapie-Procedures mit therapieart=HO\r\nmodelliert. Die Substanzklasse wird ueber ATC-Codes abgeleitet:\r\n1=Tamoxifen (L02BA01), 2=Aromatasehemmer (L02BG*),\r\n3=GnRH-Analogon (L02AE*), 4=Fulvestrant (L02BA03),\r\n5=CDK4/6-Inhibitor (L01EF*), 9=sonstige\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Procedure" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetEndoLnr" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "lnr" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Integer ;
+             fhir:v 1
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEndoPeriod" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ] ;
+         fhir:condition [ fhir:v "$this.is(Period)" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetEndoBeginn" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "start" ] ;
+           fhir:variable [ fhir:v "s" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "beginn" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "s"
+             ]
+           ] )
+         ] )
+       ] [
+         fhir:name [ fhir:v "SetEndoEnde" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "end" ] ;
+           fhir:variable [ fhir:v "e" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "ende" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "e"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEndoStellExt" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url.contains('mii-ex-onko-systemische-therapie-intention')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapEndoStellVal" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapEndoStellCoding" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetEndoAdj" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "c" ] ;
+               fhir:element [ fhir:v "code" ] ;
+               fhir:variable [ fhir:v "cd" ] ;
+               fhir:condition [ fhir:v "$this = 'K'" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "stellungZurOP" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "A"
+                 ]
+               ] )
+             ] )
+           ] [
+             fhir:name [ fhir:v "SetEndoPal" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "c" ] ;
+               fhir:element [ fhir:v "code" ] ;
+               fhir:variable [ fhir:v "cd" ] ;
+               fhir:condition [ fhir:v "$this = 'P'" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "stellungZurOP" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "P"
+                 ]
+               ] )
+             ] )
+           ] [
+             fhir:name [ fhir:v "SetEndoNeo" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "c" ] ;
+               fhir:element [ fhir:v "code" ] ;
+               fhir:variable [ fhir:v "cd" ] ;
+               fhir:condition [ fhir:v "$this = 'N'" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "stellungZurOP" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "N"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEndoSubstanzATC" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "code" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapEndoSubstanzATCCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "code" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://fhir.de/CodeSystem/bfarm/atc'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetEndoTamox" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = 'L02BA01'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "substanz" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "1"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetEndoFulv" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this = 'L02BA03'" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "substanz" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "4"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetEndoAI" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('L02BG')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "substanz" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "2"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetEndoGnRH" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('L02AE')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "substanz" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "3"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetEndoCDK" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "cd" ] ;
+             fhir:condition [ fhir:v "$this.startsWith('L01EF')" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "substanz" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "5"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

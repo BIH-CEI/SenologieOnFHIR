@@ -1,0 +1,299 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToObdsNebenwirkung",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsNebenwirkung</b></p><a name=\"SenologieToObdsNebenwirkung\"> </a><a name=\"hcSenologieToObdsNebenwirkung\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung<span style=\"color: navy\">&quot; = &quot;</span>SenologieToObdsNebenwirkung<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">are correct per the oBDS Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Gemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">aus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Wird von SYST und ST importiert.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die Nebenwirkung wird als Observation modelliert mit:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- code: CTCAE-Term (NCI Thesaurus Code + Text)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- value: CTCAE-Grad als CodeableConcept</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- method: CTCAE-Version</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">oBDS-Struktur:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">nebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Grad &lt;=2 oder unbekannt sind, wird hier &quot;2&quot; oder &quot;U&quot; gesetzt.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">nebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad &gt;=3</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">mit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapNebenwirkungenSYST: Bundle -&gt; oBDS Nebenwirkungen (fuer Systemtherapie)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Bei SYST: Observations mit CTCAE-Codierung extrahieren,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Grad &gt;=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapNebenwirkungenSYST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Default: Wenn keine Nebenwirkungen vorhanden -&gt; U (unbekannt)</span>\r\n  src<b> where </b>entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gradMaximal2OderUnbekannt = <span style=\"color: blue\">'U'</span> <i>&quot;SetGradUnbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Nebenwirkungen mit CTCAE-Codierung: jede Observation einzeln verarbeiten</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">obsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')<b> then</b><span style=\"color: navy\"> {\r\n</span>    obsEntry.resource<b> as </b><span style=\"color: maroon\">obs</span><b> then </b>MapNebenwirkungEinzeln<span style=\"color: navy\">(</span><span style=\"color: maroon\">obs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>&quot;CallMapNebenwirkungEinzeln&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryNebenwirkungen&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapNebenwirkungenST: Bundle -&gt; oBDS Nebenwirkungen (fuer Strahlentherapie)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Gleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapNebenwirkungenST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Default: Wenn keine Nebenwirkungen vorhanden -&gt; U (unbekannt)</span>\r\n  src<b> where </b>entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gradMaximal2OderUnbekannt = <span style=\"color: blue\">'U'</span> <i>&quot;SetGradUnbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Nebenwirkungen mit CTCAE-Codierung</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">obsEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')<b> then</b><span style=\"color: navy\"> {\r\n</span>    obsEntry.resource<b> as </b><span style=\"color: maroon\">obs</span><b> then </b>MapNebenwirkungEinzeln<span style=\"color: navy\">(</span><span style=\"color: maroon\">obs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tgt</span><span style=\"color: navy\">)</span> <i>&quot;CallMapNebenwirkungEinzeln&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryNebenwirkungen&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapNebenwirkungEinzeln: Observation -&gt; oBDS Nebenwirkung (einzeln)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Erzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapNebenwirkungEinzeln<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Observation, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Einzelne Nebenwirkung</span>\r\n  src.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    val.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.nebenwirkung<b> as </b><span style=\"color: maroon\">nw</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">Art/Bezeichnung der Nebenwirkung (aus Observation.code)</span>\r\n      src.code<b> as </b><span style=\"color: maroon\">obsCode</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        obsCode.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>nw.artBezeichnung = <span style=\"color: maroon\">t</span> <i>&quot;SetNwBezeichnung&quot;</i><span style=\"color: navy\">;</span>\r\n        obsCode.coding<b> as </b><span style=\"color: maroon\">coding</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          coding.display<b> as </b><span style=\"color: maroon\">d</span><b> where </b>%obsCode.text.exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>nw.artBezeichnung = <span style=\"color: maroon\">d</span> <i>&quot;SetNwBezeichnungDisplay&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;FallbackNwBezeichnung&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractNwBezeichnung&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">CTCAE-Grad (1-5)</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">g</span><span style=\"color: navy\"><b> -&gt; </b></span>nw.grad = <span style=\"color: maroon\">g</span> <i>&quot;SetNwGrad&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">CTCAE-Version (z.B. &quot;4.03&quot;, &quot;5.0&quot;)</span>\r\n      src.method<b> as </b><span style=\"color: maroon\">method</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        method.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>nw.version = <span style=\"color: maroon\">t</span> <i>&quot;SetNwVersion&quot;</i><span style=\"color: navy\">;</span>\r\n        method.coding<b> as </b><span style=\"color: maroon\">mc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          mc.code<b> as </b><span style=\"color: maroon\">v</span><b> where </b>%method.text.exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>nw.version = <span style=\"color: maroon\">v</span> <i>&quot;SetNwVersionFromCoding&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;FallbackNwVersion&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractNwVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;CreateNebenwirkung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapNebenwirkungGrad&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung",
+  "version" : "0.1.0",
+  "name" : "SenologieToObdsNebenwirkung",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
+    "mode" : "target",
+    "alias" : "OBDSMeldung"
+  }],
+  "group" : [{
+    "name" : "MapNebenwirkungenSYST",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices. The IG Publisher produces SM_TARGET_PATH errors (~3). Element names\r\nare correct per the oBDS Logical Model.\r\n============================================================================\r\nGemeinsame Nebenwirkungen-Map: Extrahiert Nebenwirkungen (Adverse Events)\r\naus dem Bundle und mappt auf das oBDS Nebenwirkungen-BackboneElement.\r\nWird von SYST und ST importiert.\r\nMII Onko Profil: mii-pr-onko-nebenwirkung-adverse-event\r\nDie Nebenwirkung wird als Observation modelliert mit:\r\n- code: CTCAE-Term (NCI Thesaurus Code + Text)\r\n- value: CTCAE-Grad als CodeableConcept\r\n- method: CTCAE-Version\r\noBDS-Struktur:\r\nnebenwirkungen.gradMaximal2OderUnbekannt: Wenn alle Nebenwirkungen\r\nGrad <=2 oder unbekannt sind, wird hier \"2\" oder \"U\" gesetzt.\r\nnebenwirkungen.nebenwirkung[]: Einzelne Nebenwirkungen Grad >=3\r\nmit art/bezeichnung, grad (3, 4, 5) und CTCAE-Version.\r\n============================================================================\r\n============================================================================\r\nMapNebenwirkungenSYST: Bundle -> oBDS Nebenwirkungen (fuer Systemtherapie)\r\nBei SYST: Observations mit CTCAE-Codierung extrahieren,\r\nGrad >=3 als einzelne Eintraege, sonst gradMaximal2OderUnbekannt\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetGradUnbekannt",
+      "source" : [{
+        "context" : "src",
+        "condition" : "entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "gradMaximal2OderUnbekannt",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "U"
+        }]
+      }]
+    },
+    {
+      "name" : "EntryNebenwirkungen",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "obsEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')"
+      }],
+      "rule" : [{
+        "name" : "CallMapNebenwirkungEinzeln",
+        "source" : [{
+          "context" : "obsEntry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "dependent" : [{
+          "name" : "MapNebenwirkungEinzeln",
+          "variable" : ["obs",
+          "tgt"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapNebenwirkungenST",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapNebenwirkungenST: Bundle -> oBDS Nebenwirkungen (fuer Strahlentherapie)\r\nGleiche Logik wie SYST, aber separat um verschiedene Kontexte zu ermoeglichen\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetGradUnbekannt",
+      "source" : [{
+        "context" : "src",
+        "condition" : "entry.where(resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')).exists().not()"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "gradMaximal2OderUnbekannt",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "U"
+        }]
+      }]
+    },
+    {
+      "name" : "EntryNebenwirkungen",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "obsEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(system = 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl')"
+      }],
+      "rule" : [{
+        "name" : "CallMapNebenwirkungEinzeln",
+        "source" : [{
+          "context" : "obsEntry",
+          "element" : "resource",
+          "variable" : "obs"
+        }],
+        "dependent" : [{
+          "name" : "MapNebenwirkungEinzeln",
+          "variable" : ["obs",
+          "tgt"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapNebenwirkungEinzeln",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapNebenwirkungEinzeln: Observation -> oBDS Nebenwirkung (einzeln)\r\nErzeugt einen Nebenwirkung-Eintrag mit Art/Bezeichnung, Grad und Version\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Observation",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "MapNebenwirkungGrad",
+      "source" : [{
+        "context" : "src",
+        "element" : "value",
+        "variable" : "val"
+      }],
+      "rule" : [{
+        "name" : "CreateNebenwirkung",
+        "source" : [{
+          "context" : "val",
+          "element" : "coding",
+          "variable" : "c"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "nebenwirkung",
+          "variable" : "nw"
+        }],
+        "rule" : [{
+          "name" : "ExtractNwBezeichnung",
+          "source" : [{
+            "context" : "src",
+            "element" : "code",
+            "variable" : "obsCode"
+          }],
+          "rule" : [{
+            "name" : "SetNwBezeichnung",
+            "source" : [{
+              "context" : "obsCode",
+              "element" : "text",
+              "variable" : "t"
+            }],
+            "target" : [{
+              "context" : "nw",
+              "contextType" : "variable",
+              "element" : "artBezeichnung",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "t"
+              }]
+            }]
+          },
+          {
+            "name" : "FallbackNwBezeichnung",
+            "source" : [{
+              "context" : "obsCode",
+              "element" : "coding",
+              "variable" : "coding"
+            }],
+            "rule" : [{
+              "name" : "SetNwBezeichnungDisplay",
+              "source" : [{
+                "context" : "coding",
+                "element" : "display",
+                "variable" : "d",
+                "condition" : "%obsCode.text.exists().not()"
+              }],
+              "target" : [{
+                "context" : "nw",
+                "contextType" : "variable",
+                "element" : "artBezeichnung",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "d"
+                }]
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "SetNwGrad",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "g"
+          }],
+          "target" : [{
+            "context" : "nw",
+            "contextType" : "variable",
+            "element" : "grad",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "g"
+            }]
+          }]
+        },
+        {
+          "name" : "ExtractNwVersion",
+          "source" : [{
+            "context" : "src",
+            "element" : "method",
+            "variable" : "method"
+          }],
+          "rule" : [{
+            "name" : "SetNwVersion",
+            "source" : [{
+              "context" : "method",
+              "element" : "text",
+              "variable" : "t"
+            }],
+            "target" : [{
+              "context" : "nw",
+              "contextType" : "variable",
+              "element" : "version",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "t"
+              }]
+            }]
+          },
+          {
+            "name" : "FallbackNwVersion",
+            "source" : [{
+              "context" : "method",
+              "element" : "coding",
+              "variable" : "mc"
+            }],
+            "rule" : [{
+              "name" : "SetNwVersionFromCoding",
+              "source" : [{
+                "context" : "mc",
+                "element" : "code",
+                "variable" : "v",
+                "condition" : "%method.text.exists().not()"
+              }],
+              "target" : [{
+                "context" : "nw",
+                "contextType" : "variable",
+                "element" : "version",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "v"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}

@@ -1,0 +1,511 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorkonferenz> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToObdsTumorkonferenz"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsTumorkonferenz</b></p><a name=\"SenologieToObdsTumorkonferenz\"> </a><a name=\"hcSenologieToObdsTumorkonferenz\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorkonferenz<span style=\"color: navy\">\" = \"</span>SenologieToObdsTumorkonferenz<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie FHIR to oBDS Tumorkonferenz</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/careplan.html\" title=\"CarePlan\">http://hl7.org/fhir/StructureDefinition/CarePlan</a><span style=\"color: navy\">\" </span><b>alias </b>CarePlan <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<b>imports</b><span style=\"color: navy\"> \"</span><a href=\"StructureMap-SenologieToObdsTumorzuordnung.html\" title=\"SenologieToObdsTumorzuordnung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style=\"color: navy\">\"#xD;\n</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapTumorkonferenz, MapTherapieempfehlung) use</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement` because FML has no syntax to declare the</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Logical Model sub-path for BackboneElement slices. The IG Publisher produces</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">SM_TARGET_PATH errors (~12). Element names are correct per the oBDS LM.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hauptgruppe: CarePlan → oBDS Tumorkonferenz</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Ein CarePlan (senologie-tumorboard-empfehlung) bildet eine Tumorkonferenz</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">mit Therapieempfehlungen ab. Die activity-Eintraege enthalten die</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">empfohlenen Therapiearten (OP, CH, ST, HO, IM, ZS, etc.)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>SenologieToObdsTumorkonferenz<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>CarePlan, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OBDSMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorkonferenz<b> as </b><span style=\"color: maroon\">tk</span><b> then </b>MapTumorkonferenz<span style=\"color: navy\">(</span><span style=\"color: maroon\">src</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">tk</span><span style=\"color: navy\">)</span> <i>\"CallMapTumorkonferenz\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapTumorkonferenz: CarePlan → oBDS Tumorkonferenz Basisdaten</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Mapped ID, Meldeanlass, Datum und Typ der Konferenz</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapTumorkonferenz<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>CarePlan, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Tumorkonferenz_ID: CarePlan.id</span>#xD;\n  src.id<b> as </b><span style=\"color: maroon\">id</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorkonferenzID = <span style=\"color: maroon\">id</span> <i>\"SetTumorkonferenzID\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Meldeanlass: abgeleitet aus CarePlan.status und Kontext</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">active = laufende Planung -&gt; diagnose oder behandlungsbeginn</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">completed = abgeschlossen -&gt; behandlungsende</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Bei Tumorkonferenzen typischerweise: diagnose, behandlungsbeginn,</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">behandlungsende oder statusaenderung</span>#xD;\n  src.status<b> as </b><span style=\"color: maroon\">s</span><b> where </b>$this = 'active'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'behandlungsbeginn'</span> <i>\"MeldeanlassBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  src.status<b> as </b><span style=\"color: maroon\">s</span><b> where </b>$this = 'completed'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'behandlungsende'</span> <i>\"MeldeanlassEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Datum: aus CarePlan.period.start (Datum des Tumorboards)</span>#xD;\n  src.period<b> as </b><span style=\"color: maroon\">p</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    p.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.datum = <span style=\"color: maroon\">s</span> <i>\"SetDatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapDatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Typ der Tumorkonferenz: praetherapeutisch, postoperativ, posttherapeutisch</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Abgeleitet aus CarePlan.category oder einer Extension</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">category.coding mit Tumorkonferenz-Typ</span>#xD;\n  src.category<b> as </b><span style=\"color: maroon\">cat</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    cat.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">code</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.typ = <span style=\"color: maroon\">code</span> <i>\"SetTyp\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractTypCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapTyp\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: Typ aus CarePlan.title ableiten</span>#xD;\n  src.title<b> as </b><span style=\"color: maroon\">t</span><b> where </b>$this.lower().contains('praeth') or $this.lower().contains('präth')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.typ = <span style=\"color: blue\">'praeth'</span> <i>\"TypPraeth\"</i><span style=\"color: navy\">;</span>#xD;\n  src.title<b> as </b><span style=\"color: maroon\">t</span><b> where </b>$this.lower().contains('postop')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.typ = <span style=\"color: blue\">'postop'</span> <i>\"TypPostop\"</i><span style=\"color: navy\">;</span>#xD;\n  src.title<b> as </b><span style=\"color: maroon\">t</span><b> where </b>$this.lower().contains('postth')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.typ = <span style=\"color: blue\">'postth'</span> <i>\"TypPostth\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Therapieempfehlung: aus CarePlan.activity Eintraegen</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Jede activity repraesentiert eine empfohlene Therapieart</span>#xD;\n  src<b> where </b>activity.exists()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.therapieempfehlung<b> as </b><span style=\"color: maroon\">te</span><b> then </b>MapTherapieempfehlung<span style=\"color: navy\">(</span><span style=\"color: maroon\">src</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">te</span><span style=\"color: navy\">)</span> <i>\"CallMapTherapieempfehlung\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapTherapieempfehlung: CarePlan.activity → oBDS Therapieempfehlung</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Iteriert ueber alle activity-Eintraege und extrahiert Therapietypen.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die activity-Slices im Senologie-Profil bilden die verschiedenen</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Therapiearten ab (operativeTherapy, chemotherapy, radiotherapy, etc.)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapTherapieempfehlung<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>CarePlan, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Operative Therapie -&gt; OP</span>#xD;\n  src.activity<b> as </b><span style=\"color: maroon\">act</span><b> where </b>(detail.kind = 'ServiceRequest') and detail.code.exists()<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    act.detail<b> as </b><span style=\"color: maroon\">det</span><b> where </b>kind = 'ServiceRequest'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      det.code<b> as </b><span style=\"color: maroon\">code</span><b> where </b>coding.exists()<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.typTherapieempfehlung = <span style=\"color: navy\">(</span>c.code<span style=\"color: navy\">)</span> <i>\"SetTypOpServiceRequest\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractOpCode\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractServiceRequestDetail\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapServiceRequestActivities\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Medikamentoese Therapien: Chemotherapie, Hormontherapie, Immuntherapie, etc.</span>#xD;\n  src.activity<b> as </b><span style=\"color: maroon\">act</span><b> where </b>(detail.kind = 'MedicationRequest') and detail.code.exists()<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    act.detail<b> as </b><span style=\"color: maroon\">det</span><b> where </b>kind = 'MedicationRequest'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      det.code<b> as </b><span style=\"color: maroon\">code</span><b> where </b>coding.exists()<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.typTherapieempfehlung = <span style=\"color: navy\">(</span>c.code<span style=\"color: navy\">)</span> <i>\"SetTypMedicationRequest\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractMedCode\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractMedicationRequestDetail\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapMedicationRequestActivities\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: Therapietypen direkt aus activity.detail.code.coding.code extrahieren</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">wenn die Codierung direkt oBDS-Therapietypen enthaelt (CH, ST, HO, IM, ZS, etc.)</span>#xD;\n  src.activity<b> as </b><span style=\"color: maroon\">act</span><b> where </b>detail.exists()<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    act.detail<b> as </b><span style=\"color: maroon\">det</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      det.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.typTherapieempfehlung = <span style=\"color: navy\">(</span>c.code<span style=\"color: navy\">)</span> <i>\"SetTypFromOnkoCS\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"ExtractOnkoTypCoding\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractOnkoDetail\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapOnkoTypActivities\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Abweichung vom Patientenwunsch: aus CarePlan.note oder Extension</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">In der Senologie-Dokumentation als Notiz oder spezifische Extension erfasst</span>#xD;\n  src.note<b> as </b><span style=\"color: maroon\">n</span><b> where </b>text.lower().contains('patientenwunsch') and text.lower().contains('abweichung')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    n<span style=\"color: navy\"><b> -&gt; </b></span>tgt.abweichungPatientenwunsch = <span style=\"color: blue\">'J'</span> <i>\"SetAbweichungJa\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapAbweichungPatientenwunsch\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Abweichung: aus Extension falls vorhanden</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('abweichung-patientenwunsch')<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val<span style=\"color: navy\"><b> -&gt; </b></span>tgt.abweichungPatientenwunsch = <b>cast</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">val</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'string'</span><span style=\"color: navy\">)</span> <i>\"SetAbweichungFromExt\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractAbweichungValue\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapAbweichungExtension\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorkonferenz"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorkonferenz>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToObdsTumorkonferenz"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-04T06:10:53+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie FHIR to oBDS Tumorkonferenz\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/CarePlan"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/CarePlan>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "CarePlan" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/obds-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OBDSMeldung" ]
+  ] ) ; # 
+  fhir:import ( [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung>
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "SenologieToObdsTumorkonferenz" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups (MapTumorkonferenz, MapTherapieempfehlung) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nLogical Model sub-path for BackboneElement slices. The IG Publisher produces\r\nSM_TARGET_PATH errors (~12). Element names are correct per the oBDS LM.\r\n============================================================================\r\nHauptgruppe: CarePlan → oBDS Tumorkonferenz\r\nEin CarePlan (senologie-tumorboard-empfehlung) bildet eine Tumorkonferenz\r\nmit Therapieempfehlungen ab. Die activity-Eintraege enthalten die\r\nempfohlenen Therapiearten (OP, CH, ST, HO, IM, ZS, etc.)\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "CarePlan" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "OBDSMeldung" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "CallMapTumorkonferenz" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "tumorkonferenz" ] ;
+         fhir:variable [ fhir:v "tk" ]
+       ] ) ;
+       fhir:dependent ( [
+         fhir:name [ fhir:v "MapTumorkonferenz" ] ;
+         fhir:variable ( [ fhir:v "src" ] [ fhir:v "tk" ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapTumorkonferenz" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapTumorkonferenz: CarePlan → oBDS Tumorkonferenz Basisdaten\r\nMapped ID, Meldeanlass, Datum und Typ der Konferenz\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "CarePlan" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetTumorkonferenzID" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:variable [ fhir:v "id" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "tumorkonferenzID" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "id"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MeldeanlassBeginn" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "status" ] ;
+         fhir:variable [ fhir:v "s" ] ;
+         fhir:condition [ fhir:v "$this = 'active'" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldeanlass" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "behandlungsbeginn"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MeldeanlassEnde" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "status" ] ;
+         fhir:variable [ fhir:v "s" ] ;
+         fhir:condition [ fhir:v "$this = 'completed'" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldeanlass" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "behandlungsende"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapDatum" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "period" ] ;
+         fhir:variable [ fhir:v "p" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetDatum" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "p" ] ;
+           fhir:element [ fhir:v "start" ] ;
+           fhir:variable [ fhir:v "s" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "datum" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "s"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapTyp" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "category" ] ;
+         fhir:variable [ fhir:v "cat" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractTypCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "cat" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetTyp" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "code" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "typ" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "code"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "TypPraeth" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "title" ] ;
+         fhir:variable [ fhir:v "t" ] ;
+         fhir:condition [ fhir:v "$this.lower().contains('praeth') or $this.lower().contains('präth')" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "typ" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "praeth"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "TypPostop" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "title" ] ;
+         fhir:variable [ fhir:v "t" ] ;
+         fhir:condition [ fhir:v "$this.lower().contains('postop')" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "typ" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "postop"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "TypPostth" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "title" ] ;
+         fhir:variable [ fhir:v "t" ] ;
+         fhir:condition [ fhir:v "$this.lower().contains('postth')" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "typ" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "postth"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "CallMapTherapieempfehlung" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "activity.exists()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "therapieempfehlung" ] ;
+         fhir:variable [ fhir:v "te" ]
+       ] ) ;
+       fhir:dependent ( [
+         fhir:name [ fhir:v "MapTherapieempfehlung" ] ;
+         fhir:variable ( [ fhir:v "src" ] [ fhir:v "te" ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapTherapieempfehlung" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapTherapieempfehlung: CarePlan.activity → oBDS Therapieempfehlung\r\nIteriert ueber alle activity-Eintraege und extrahiert Therapietypen.\r\nDie activity-Slices im Senologie-Profil bilden die verschiedenen\r\nTherapiearten ab (operativeTherapy, chemotherapy, radiotherapy, etc.)\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "CarePlan" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapServiceRequestActivities" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "activity" ] ;
+         fhir:variable [ fhir:v "act" ] ;
+         fhir:condition [ fhir:v "(detail.kind = 'ServiceRequest') and detail.code.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractServiceRequestDetail" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "act" ] ;
+           fhir:element [ fhir:v "detail" ] ;
+           fhir:variable [ fhir:v "det" ] ;
+           fhir:condition [ fhir:v "kind = 'ServiceRequest'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "ExtractOpCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "det" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "code" ] ;
+             fhir:condition [ fhir:v "coding.exists()" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetTypOpServiceRequest" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "code" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "typTherapieempfehlung" ] ;
+               fhir:transform [ fhir:v "evaluate" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "c.code"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapMedicationRequestActivities" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "activity" ] ;
+         fhir:variable [ fhir:v "act" ] ;
+         fhir:condition [ fhir:v "(detail.kind = 'MedicationRequest') and detail.code.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractMedicationRequestDetail" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "act" ] ;
+           fhir:element [ fhir:v "detail" ] ;
+           fhir:variable [ fhir:v "det" ] ;
+           fhir:condition [ fhir:v "kind = 'MedicationRequest'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "ExtractMedCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "det" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "code" ] ;
+             fhir:condition [ fhir:v "coding.exists()" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetTypMedicationRequest" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "code" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "typTherapieempfehlung" ] ;
+               fhir:transform [ fhir:v "evaluate" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "c.code"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapOnkoTypActivities" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "activity" ] ;
+         fhir:variable [ fhir:v "act" ] ;
+         fhir:condition [ fhir:v "detail.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractOnkoDetail" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "act" ] ;
+           fhir:element [ fhir:v "detail" ] ;
+           fhir:variable [ fhir:v "det" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "ExtractOnkoTypCoding" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "det" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "code" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetTypFromOnkoCS" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "code" ] ;
+               fhir:element [ fhir:v "coding" ] ;
+               fhir:variable [ fhir:v "c" ] ;
+               fhir:condition [ fhir:v "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "typTherapieempfehlung" ] ;
+               fhir:transform [ fhir:v "evaluate" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "c.code"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapAbweichungPatientenwunsch" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "note" ] ;
+         fhir:variable [ fhir:v "n" ] ;
+         fhir:condition [ fhir:v "text.lower().contains('patientenwunsch') and text.lower().contains('abweichung')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetAbweichungJa" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "n" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "abweichungPatientenwunsch" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "J"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapAbweichungExtension" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url.contains('abweichung-patientenwunsch')" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractAbweichungValue" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetAbweichungFromExt" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "abweichungPatientenwunsch" ] ;
+             fhir:transform [ fhir:v "cast" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "val"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "string"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

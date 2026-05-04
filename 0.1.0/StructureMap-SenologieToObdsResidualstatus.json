@@ -1,0 +1,398 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToObdsResidualstatus",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsResidualstatus</b></p><a name=\"SenologieToObdsResidualstatus\"> </a><a name=\"hcSenologieToObdsResidualstatus\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus<span style=\"color: navy\">&quot; = &quot;</span>SenologieToObdsResidualstatus<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Residualstatus Observation to oBDS Residualstatus BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/datatypes.html#CodeableConcept\" title=\"CodeableConcept\">http://hl7.org/fhir/StructureDefinition/CodeableConcept</a><span style=\"color: navy\">&quot; </span><b>alias </b>CodeableConcept <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher produces SM_TARGET_PATH</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors (~12). The element names are correct per the oBDS Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Gemeinsame Residualstatus-Map: Extrahiert den Residualtumorstatus</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">(R-Klassifikation) und mappt auf das oBDS Residualstatus-BackboneElement.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Wird von OP importiert.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MII Onko Profil: mii-pr-onko-residualstatus</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Die Observation hat zwei relevante components:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Lokale Beurteilung des Residualstatus</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Gesamtbeurteilung des Residualstatus</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Alternativ kann der Residualstatus direkt aus Procedure.outcome kommen</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">(aelteres Mapping-Pattern, bleibt als Fallback erhalten).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">oBDS Residualstatus-Codes: R0, R1, R1(is), R1(cy+), R2, RX, U</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapResidualstatusFromObservation: Observation -&gt; oBDS Residualstatus</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Extrahiert lokale und Gesamtbeurteilung aus Observation.components</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapResidualstatusFromObservation<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Observation, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Lokale Beurteilung: component mit LOINC-Code fuer lokalen Residualstatus</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">MII Onko verwendet Observation.component fuer lokale vs. Gesamt-R-Klassifikation</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = '84892-9')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">Direkte oBDS-Codes aus MII Onko CodeSystem</span>\r\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'<b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.lokaleBeurteilung = <span style=\"color: maroon\">cd</span> <i>&quot;SetLokaleBeurteilungDirect&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractLokaleBeurteilungDirect&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">SNOMED -&gt; oBDS Uebersetzung</span>\r\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.lokaleBeurteilung = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateLokaleBeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapLokaleBeurteilungValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapLokaleBeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Gesamtbeurteilung: component mit LOINC-Code fuer Gesamt-Residualstatus</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = '21976-6')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">Direkte oBDS-Codes</span>\r\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'<b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilung = <span style=\"color: maroon\">cd</span> <i>&quot;SetGesamtbeurteilungDirect&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;ExtractGesamtbeurteilungDirect&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">SNOMED -&gt; oBDS Uebersetzung</span>\r\n      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilung = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateGesamtbeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapGesamtbeurteilungValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapGesamtbeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: wenn nur ein einzelner value (kein component), verwende fuer beide</span>\r\n  src.value<b> as </b><span style=\"color: maroon\">val</span><b> where </b>%src.component.exists().not()<b> then</b><span style=\"color: navy\"> {\r\n</span>    val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.lokaleBeurteilung = <span style=\"color: maroon\">cd</span> <i>&quot;SetLokaleBeurteilungFallback&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilung = <span style=\"color: maroon\">cd</span> <i>&quot;SetGesamtbeurteilungFallback&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;FallbackDirectCodes&quot;</i><span style=\"color: navy\">;</span>\r\n    val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c<span style=\"color: navy\"><b> -&gt; </b></span>tgt.lokaleBeurteilung = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateLokaleBeurteilungFallback&quot;</i><span style=\"color: navy\">;</span>\r\n      c<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilung = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateGesamtbeurteilungFallback&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;FallbackSnomedCodes&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapResidualstatusFallback&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapResidualstatusFromOutcome: Procedure.outcome -&gt; oBDS Residualstatus</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Aelteres Pattern: Residualstatus direkt aus Procedure.outcome (CodeableConcept)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Bleibt als Kompatibilitaets-Gruppe erhalten</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapResidualstatusFromOutcome<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>CodeableConcept, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Direkte oBDS-Codes aus Procedure.outcome</span>\r\n  src.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'<b> then</b><span style=\"color: navy\"> {\r\n</span>    c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.lokaleBeurteilung = <span style=\"color: maroon\">cd</span> <i>&quot;SetLokaleBeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n    c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilung = <span style=\"color: maroon\">cd</span> <i>&quot;SetGesamtbeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapResidualDirect&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">SNOMED -&gt; oBDS Uebersetzung</span>\r\n  src.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>    c<span style=\"color: navy\"><b> -&gt; </b></span>tgt.lokaleBeurteilung = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateLokaleBeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n    c<span style=\"color: navy\"><b> -&gt; </b></span>tgt.gesamtbeurteilung = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>&quot;TranslateGesamtbeurteilung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapResidualSNOMED&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus",
+  "version" : "0.1.0",
+  "name" : "SenologieToObdsResidualstatus",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Residualstatus Observation to oBDS Residualstatus BackboneElement\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
+    "mode" : "source",
+    "alias" : "CodeableConcept"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/obds-meldung",
+    "mode" : "target",
+    "alias" : "OBDSMeldung"
+  }],
+  "group" : [{
+    "name" : "MapResidualstatusFromObservation",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher produces SM_TARGET_PATH\r\nerrors (~12). The element names are correct per the oBDS Logical Model.\r\n============================================================================\r\nGemeinsame Residualstatus-Map: Extrahiert den Residualtumorstatus\r\n(R-Klassifikation) und mappt auf das oBDS Residualstatus-BackboneElement.\r\nWird von OP importiert.\r\nMII Onko Profil: mii-pr-onko-residualstatus\r\nDie Observation hat zwei relevante components:\r\n- Lokale Beurteilung des Residualstatus\r\n- Gesamtbeurteilung des Residualstatus\r\nAlternativ kann der Residualstatus direkt aus Procedure.outcome kommen\r\n(aelteres Mapping-Pattern, bleibt als Fallback erhalten).\r\noBDS Residualstatus-Codes: R0, R1, R1(is), R1(cy+), R2, RX, U\r\n============================================================================\r\n============================================================================\r\nMapResidualstatusFromObservation: Observation -> oBDS Residualstatus\r\nExtrahiert lokale und Gesamtbeurteilung aus Observation.components\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Observation",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "MapLokaleBeurteilung",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = '84892-9')"
+      }],
+      "rule" : [{
+        "name" : "MapLokaleBeurteilungValue",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "ExtractLokaleBeurteilungDirect",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'"
+          }],
+          "rule" : [{
+            "name" : "SetLokaleBeurteilungDirect",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "lokaleBeurteilung",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "TranslateLokaleBeurteilung",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system = 'http://snomed.info/sct'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "lokaleBeurteilung",
+            "transform" : "translate",
+            "parameter" : [{
+              "valueId" : "c"
+            },
+            {
+              "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
+            },
+            {
+              "valueString" : "code"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapGesamtbeurteilung",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = '21976-6')"
+      }],
+      "rule" : [{
+        "name" : "MapGesamtbeurteilungValue",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "ExtractGesamtbeurteilungDirect",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'"
+          }],
+          "rule" : [{
+            "name" : "SetGesamtbeurteilungDirect",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "gesamtbeurteilung",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        },
+        {
+          "name" : "TranslateGesamtbeurteilung",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system = 'http://snomed.info/sct'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "gesamtbeurteilung",
+            "transform" : "translate",
+            "parameter" : [{
+              "valueId" : "c"
+            },
+            {
+              "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
+            },
+            {
+              "valueString" : "code"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapResidualstatusFallback",
+      "source" : [{
+        "context" : "src",
+        "element" : "value",
+        "variable" : "val",
+        "condition" : "%src.component.exists().not()"
+      }],
+      "rule" : [{
+        "name" : "FallbackDirectCodes",
+        "source" : [{
+          "context" : "val",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'"
+        }],
+        "rule" : [{
+          "name" : "SetLokaleBeurteilungFallback",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "lokaleBeurteilung",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetGesamtbeurteilungFallback",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "gesamtbeurteilung",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        }]
+      },
+      {
+        "name" : "FallbackSnomedCodes",
+        "source" : [{
+          "context" : "val",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "TranslateLokaleBeurteilungFallback",
+          "source" : [{
+            "context" : "c"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "lokaleBeurteilung",
+            "transform" : "translate",
+            "parameter" : [{
+              "valueId" : "c"
+            },
+            {
+              "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
+            },
+            {
+              "valueString" : "code"
+            }]
+          }]
+        },
+        {
+          "name" : "TranslateGesamtbeurteilungFallback",
+          "source" : [{
+            "context" : "c"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "gesamtbeurteilung",
+            "transform" : "translate",
+            "parameter" : [{
+              "valueId" : "c"
+            },
+            {
+              "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
+            },
+            {
+              "valueString" : "code"
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapResidualstatusFromOutcome",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapResidualstatusFromOutcome: Procedure.outcome -> oBDS Residualstatus\r\nAelteres Pattern: Residualstatus direkt aus Procedure.outcome (CodeableConcept)\r\nBleibt als Kompatibilitaets-Gruppe erhalten\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "CodeableConcept",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "MapResidualDirect",
+      "source" : [{
+        "context" : "src",
+        "element" : "coding",
+        "variable" : "c",
+        "condition" : "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus'"
+      }],
+      "rule" : [{
+        "name" : "SetLokaleBeurteilung",
+        "source" : [{
+          "context" : "c",
+          "element" : "code",
+          "variable" : "cd"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "lokaleBeurteilung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "cd"
+          }]
+        }]
+      },
+      {
+        "name" : "SetGesamtbeurteilung",
+        "source" : [{
+          "context" : "c",
+          "element" : "code",
+          "variable" : "cd"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "gesamtbeurteilung",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "cd"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapResidualSNOMED",
+      "source" : [{
+        "context" : "src",
+        "element" : "coding",
+        "variable" : "c",
+        "condition" : "system = 'http://snomed.info/sct'"
+      }],
+      "rule" : [{
+        "name" : "TranslateLokaleBeurteilung",
+        "source" : [{
+          "context" : "c"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "lokaleBeurteilung",
+          "transform" : "translate",
+          "parameter" : [{
+            "valueId" : "c"
+          },
+          {
+            "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
+          },
+          {
+            "valueString" : "code"
+          }]
+        }]
+      },
+      {
+        "name" : "TranslateGesamtbeurteilung",
+        "source" : [{
+          "context" : "c"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "gesamtbeurteilung",
+          "transform" : "translate",
+          "parameter" : [{
+            "valueId" : "c"
+          },
+          {
+            "valueString" : "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-residualstatus"
+          },
+          {
+            "valueString" : "code"
+          }]
+        }]
+      }]
+    }]
+  }]
+}

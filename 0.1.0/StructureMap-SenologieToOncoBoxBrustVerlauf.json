@@ -1,0 +1,1246 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToOncoBoxBrustVerlauf",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToOncoBoxBrustVerlauf</b></p><a name=\"SenologieToOncoBoxBrustVerlauf\"> </a><a name=\"hcSenologieToOncoBoxBrustVerlauf\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf<span style=\"color: navy\">&quot; = &quot;</span>SenologieToOncoBoxBrustVerlauf<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J03-J05)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/procedure.html\" title=\"Procedure\">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style=\"color: navy\">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-oncobox-brust-meldung.html\" title=\"OncoBox Brust N1.1.1 Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>OncoBoxBrust <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors. The element names are correct per the OncoBox Brust Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapVerlaufFromBundle: Bundle -&gt; OncoBox Primaerfall.verlauf (repeating)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Extrahiert Verlaufsereignisse aus dem Bundle und mappt auf den OncoBox-</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf-Block. Drei Quellen fuer Verlaufseintraege:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">1. Senologie_FollowUp Observations (SCT 396432002) -&gt; M01-M10 + Gesamtbeurteilung</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Bildet die vollstaendige Verlaufsmeldung ab inkl. Nachsorge-Art, Vitalstatus,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Tumorstatus lokal/LK/FM und Zweittumor. Gesamtbeurteilung (D27) wird auf</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">verlauf.ereignis gemappt: P-&gt;6 (Progress), Y-&gt;1 (Lokalrezidiv Default).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">2. Condition mit clinicalStatus=recurrence -&gt; Rezidiv / Fernmetastase</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">3. Observation LOINC 21907-1 (Distant metastases.clinical) -&gt; Fernmetastase</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Fuer Fernmetastasen-Ereignisse (ereignis=3) werden zusaetzlich die</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">OncoBox 2.0 Felder J03-J05 befuellt:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">J03: FM_OP_Datum       -&gt; aus Procedure (Operation) mit FM-reasonReference</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">J04: FM_Therapien      -&gt; Existenz-Check fuer OP/Syst/ST/Endo im Bundle</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">J05: FM_Residualstatus -&gt; aus Procedure.outcome (Operation)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapVerlaufFromBundle<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Senologie_FollowUp Observations -&gt; Verlauf M01-M10 + Gesamtbeurteilung ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">SCT 396432002 = &quot;Status of regression of tumor&quot;</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">fuEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '396432002')<b> then</b><span style=\"color: navy\"> {\r\n</span>    fuEntry.resource<b> as </b><span style=\"color: maroon\">fuObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style=\"color: maroon\">verl</span><b> then </b>MapVerlaufFollowUp<span style=\"color: navy\">(</span><span style=\"color: maroon\">fuObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">verl</span><span style=\"color: navy\">)</span> <i>&quot;CallMapVerlaufFU&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryVerlaufFU&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Fernmetastasen-Observations -&gt; Verlauf mit ereignis=3 ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">LOINC 21907-1 = &quot;Distant metastases.clinical Cancer&quot;</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">fmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21907-1')<b> then</b><span style=\"color: navy\"> {\r\n</span>    fmEntry.resource<b> as </b><span style=\"color: maroon\">fmObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style=\"color: maroon\">verl</span><b> then </b>MapVerlaufFernmetastase<span style=\"color: navy\">(</span><span style=\"color: maroon\">fmObs</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">verl</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>&quot;CallMapVerlaufFM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryVerlaufFM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Conditions mit recurrence -&gt; Verlauf (Lokalrezidiv, Regionaerrezidiv, etc.) ---</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">recEntry</span><b> where </b>resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')<b> then</b><span style=\"color: navy\"> {\r\n</span>    recEntry.resource<b> as </b><span style=\"color: maroon\">recCond</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style=\"color: maroon\">verl</span><b> then </b>MapVerlaufRezidiv<span style=\"color: navy\">(</span><span style=\"color: maroon\">recCond</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">verl</span><span style=\"color: navy\">)</span> <i>&quot;CallMapVerlaufRez&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryVerlaufRez&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapVerlaufFollowUp: Observation (Senologie_FollowUp) -&gt; Verlauf M01-M10</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Bildet eine Senologie_FollowUp Observation (SCT 396432002) auf den</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">vollstaendigen OncoBox-Verlauf-Block ab:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M01: Meldedatum       &lt;- effectiveDateTime</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M02: Melder           &lt;- performer.display</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M03: Nachsorge-Art    &lt;- component[nachsorge-art]</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M04: Vitalstatus      &lt;- component[vitalstatus]</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M05: Tumorstatus lok. &lt;- component[Tumor_Verlauf] (SCT 445200009)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M06: Tumorstatus LK   &lt;- component[Lymphknoten_Verlauf] (SCT 399656008)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M07: Tumorstatus FM   &lt;- component[Fernmetastasen_Verlauf] (SCT 399608002)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M08: Zweittumor       &lt;- component[zweittumor]</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M09: Zweittumor ICD   &lt;- component[zweittumor-icd]</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">M10: Zweittumor Datum &lt;- component[zweittumor-datum]</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Ereignis              &lt;- Gesamtbeurteilung (valueCodeableConcept):</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">P-&gt;6 (Progress), Y-&gt;1 (Lokalrezidiv Default)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapVerlaufFollowUp<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Observation, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">M01: Meldedatum</span>\r\n  src.effective<b> as </b><span style=\"color: maroon\">eff</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldedatum = <span style=\"color: maroon\">eff</span> <i>&quot;SetM01Datum&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M02: Melder (Performer-Name als String)</span>\r\n  src.performer<b> as </b><span style=\"color: maroon\">perf</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    perf.display<b> as </b><span style=\"color: maroon\">d</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.melder = <span style=\"color: maroon\">d</span> <i>&quot;SetM02Melder&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM02Perf&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M03: Art der Nachsorge (aus Component mit Code nachsorge-art)</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = 'nachsorge-art')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'aktiv'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.nachsorgeArt = <span style=\"color: blue\">'aktiv'</span> <i>&quot;SetM03Aktiv&quot;</i><span style=\"color: navy\">;</span>\r\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'passiv'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.nachsorgeArt = <span style=\"color: blue\">'passiv'</span> <i>&quot;SetM03Passiv&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM03Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM03Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM03&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M04: Vitalstatus (SCT 438949009=lebend, 419099009=verstorben, 261665006=unbekannt)</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = 'vitalstatus')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '438949009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.vitalstatus = <span style=\"color: blue\">'lebend'</span> <i>&quot;SetM04Lebend&quot;</i><span style=\"color: navy\">;</span>\r\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '419099009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.vitalstatus = <span style=\"color: blue\">'verstorben'</span> <i>&quot;SetM04Verstorben&quot;</i><span style=\"color: navy\">;</span>\r\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '261665006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.vitalstatus = <span style=\"color: blue\">'unbekannt'</span> <i>&quot;SetM04Unbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM04Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM04Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM04&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M05: Lokaler Tumorstatus (SCT 445200009 = Status of residual neoplasm)</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = '445200009')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system.contains('verlauf-primaertumor')<b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorstatusLokal = <span style=\"color: maroon\">cd</span> <i>&quot;SetM05&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM05Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM05Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM05&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M06: Lymphknoten-Tumorstatus (SCT 399656008)</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = '399656008')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system.contains('verlauf-lymphknoten')<b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorstatusLK = <span style=\"color: maroon\">cd</span> <i>&quot;SetM06&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM06Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM06Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM06&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M07: Fernmetastasen-Tumorstatus (SCT 399608002)</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = '399608002')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system.contains('verlauf-fernmetastasen')<b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorstatusFM = <span style=\"color: maroon\">cd</span> <i>&quot;SetM07&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM07Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM07Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM07&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M08: Zweittumor (SCT 373066001=ja, 373067005=nein, 261665006=unbekannt)</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = 'zweittumor')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '373066001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.zweittumor = <span style=\"color: blue\">'ja'</span> <i>&quot;SetM08Ja&quot;</i><span style=\"color: navy\">;</span>\r\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '373067005'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.zweittumor = <span style=\"color: blue\">'nein'</span> <i>&quot;SetM08Nein&quot;</i><span style=\"color: navy\">;</span>\r\n        c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '261665006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.zweittumor = <span style=\"color: blue\">'unbekannt'</span> <i>&quot;SetM08Unbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM08Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM08Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM08&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M09: Zweittumor ICD-10-GM</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = 'zweittumor-icd')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.zweitttumorIcd = <span style=\"color: maroon\">cd</span> <i>&quot;SetM09&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapM09Coding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapM09Val&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM09&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">M10: Zweittumor Diagnosedatum</span>\r\n  src.component<b> as </b><span style=\"color: maroon\">comp</span><b> where </b>code.coding.exists(code = 'zweittumor-datum')<b> then</b><span style=\"color: navy\"> {\r\n</span>    comp.value<b> as </b><span style=\"color: maroon\">val</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.zweitttumorDatum = <span style=\"color: maroon\">val</span> <i>&quot;SetM10&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapM10&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Gesamtbeurteilung -&gt; Verlauf_Ereignis</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">ConceptMap: V/T/K/B/R -&gt; kein Ereignis (stabil); P -&gt; 6; Y -&gt; 1</span>\r\n  src.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system.contains('verlauf-gesamtbeurteilung')<b> then</b><span style=\"color: navy\"> {\r\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">P = Progression -&gt; 6 (Progress)</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'P'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ereignis = <span style=\"color: blue\">'6'</span> <i>&quot;SetEreignisProgress&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Y = Rezidiv -&gt; 1 (Lokalrezidiv als Default)</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = 'Y'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ereignis = <span style=\"color: blue\">'1'</span> <i>&quot;SetEreignisRezidiv&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapGesamtCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapGesamt&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapVerlaufFernmetastase: Observation (FM) -&gt; Verlauf + OncoBox 2.0 J03-J05</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Bildet eine Fernmetastasen-Observation auf den OncoBox-Verlauf-Block ab.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Zusaetzlich werden FM-spezifische Therapie-Procedures aus dem Bundle</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">extrahiert fuer die OncoBox 2.0 Felder.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">FM-spezifische Procedures werden identifiziert ueber:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- meta.profile enthält das jeweilige Senologie-Profil</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- extension:Intention mit code 'P' (palliativ) als FM-Kontextindikator</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapVerlaufFernmetastase<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Observation, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Datum: aus Observation.effectiveDateTime</span>\r\n  src.effective<b> as </b><span style=\"color: maroon\">eff</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.datum = <span style=\"color: maroon\">eff</span> <i>&quot;SetVerlaufDatumFM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Ereignis: 3 = Fernmetastase</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ereignis = <span style=\"color: blue\">'3'</span> <i>&quot;SetEreignisFM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">=== OncoBox 2.0: J03 — FM_OP_Datum ===</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Operationsdatum bei Fernmetastasen: aus Procedure (Operation) mit</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">palliativer Intention im selben Bundle</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">opEntry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    opEntry.resource<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      proc.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style=\"color: navy\"> {\r\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'P'<b> then</b><span style=\"color: navy\"> {\r\n</span>            proc.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.fmOpDatum = <span style=\"color: maroon\">perf</span> <i>&quot;SetFMOpDatum&quot;</i><span style=\"color: navy\">;</span>\r\n          <span style=\"color: navy\">}</span> <i>&quot;CheckIntentionPalliativ&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapIntentionValue&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapIntentionExt&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMOpProc&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryFMOp&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">=== OncoBox 2.0: J04 — FM_Therapien ===</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.fmTherapien<b> as </b><span style=\"color: maroon\">fmTh</span><b> then </b>MapFMTherapien<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">fmTh</span><span style=\"color: navy\">)</span> <i>&quot;CallMapFMTherapien&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">=== OncoBox 2.0: J05 — FM_Residualstatus ===</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Aus Procedure.outcome der FM-Operation (palliativer Kontext)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">opEntry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    opEntry.resource<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      proc.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style=\"color: navy\"> {\r\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'P'<b> then</b><span style=\"color: navy\"> {\r\n</span>            proc.outcome<b> as </b><span style=\"color: maroon\">oc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>              oc.coding<b> as </b><span style=\"color: maroon\">rc</span><b> where </b>system.contains('residualstatus')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.fmResidualstatus = <span style=\"color: maroon\">rc</span> <i>&quot;SetFMResidualCode&quot;</i><span style=\"color: navy\">;</span>\r\n            <span style=\"color: navy\">}</span> <i>&quot;MapFMResidualCoding&quot;</i><span style=\"color: navy\">;</span>\r\n          <span style=\"color: navy\">}</span> <i>&quot;CheckIntentionPalliativR&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapIntentionValueR&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapIntentionExtR&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMResidualProc&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryFMResidual&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapFMTherapien: Bundle -&gt; FM_Therapien (J04)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Prueft fuer jede Therapieart ob eine Procedure mit palliativer Intention</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">im Bundle vorhanden ist und setzt entsprechend 0/1.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapFMTherapien<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Operation bei FM</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      proc.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style=\"color: navy\"> {\r\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'P'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operation = <span style=\"color: blue\">'1'</span> <i>&quot;SetFMThOP&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;CheckIntentionPalliativOP&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapIntentionExtOP&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMThOPProc&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryFMThOP&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Systemtherapie bei FM</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      proc.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style=\"color: navy\"> {\r\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'P'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.systemtherapie = <span style=\"color: blue\">'1'</span> <i>&quot;SetFMThSyst&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;CheckIntentionPalliativSyst&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapIntentionExtSyst&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMThSystProc&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryFMThSyst&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Strahlentherapie bei FM</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      proc.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style=\"color: navy\"> {\r\n</span>        ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = 'P'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.strahlentherapie = <span style=\"color: blue\">'1'</span> <i>&quot;SetFMThST&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;CheckIntentionPalliativST&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapIntentionExtST&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMThSTProc&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryFMThST&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Endokrine Therapie bei FM (Senologie Systemtherapie mit endocrine type)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Endokrine Therapie wird als Systemtherapie mit spezifischem Code erfasst</span>\r\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      proc.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '169413002'<b> then</b><span style=\"color: navy\"> {\r\n</span>          proc.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url.contains('Intention')<b> then</b><span style=\"color: navy\"> {\r\n</span>            ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>              val.coding<b> as </b><span style=\"color: maroon\">ic</span><b> where </b>code = 'P'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.endokrineTherapie = <span style=\"color: blue\">'1'</span> <i>&quot;SetFMThEndo&quot;</i><span style=\"color: navy\">;</span>\r\n            <span style=\"color: navy\">}</span> <i>&quot;CheckIntentionPalliativEndo&quot;</i><span style=\"color: navy\">;</span>\r\n          <span style=\"color: navy\">}</span> <i>&quot;MapIntentionExtEndo&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;CheckEndocrineCode&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapEndocrineCodeCtx&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapFMThEndoProc&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryFMThEndo&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapVerlaufRezidiv: Condition (Rezidiv) -&gt; Verlauf (Nicht-FM-Ereignis)</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Mappt Rezidiv-Conditions auf den OncoBox-Verlauf-Block fuer Lokalrezidive,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Regionaerrezidive und andere Verlaufsereignisse.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">FM-spezifische Felder J03-J05 werden hier NICHT befuellt.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapVerlaufRezidiv<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Condition, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Datum: aus Condition.recordedDate oder extension Feststellungsdatum</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum'<b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.datum = <span style=\"color: maroon\">val</span> <i>&quot;SetVerlaufDatumExt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapVerlaufDatumExt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: recordedDate</span>\r\n  src.recordedDate<b> as </b><span style=\"color: maroon\">rd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.datum = <span style=\"color: maroon\">rd</span> <i>&quot;SetVerlaufDatumFallback&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Verlauf_Ereignis: aus Condition.code oder stage</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Mapping: Lokalrezidiv=1, Regionaerrezidiv=2, kontralateral=4, Zweitmalignom=5, Progress=6</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">(Fernmetastase=3 wird ueber MapVerlaufFernmetastase abgedeckt)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      <span style=\"color: navy\">// </span><span style=\"color: green\">255226008 = Local recurrence of tumor</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '255226008'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ereignis = <span style=\"color: blue\">'1'</span> <i>&quot;SetEreignisLokal&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">315266007 = Regional recurrence</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '315266007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ereignis = <span style=\"color: blue\">'2'</span> <i>&quot;SetEreignisRegional&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">// </span><span style=\"color: green\">94222008 = Contralateral breast cancer (Secondary malignant neoplasm of contralateral breast)</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '94222008'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.ereignis = <span style=\"color: blue\">'4'</span> <i>&quot;SetEreignisKontralateral&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapEreignisSCT&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapEreignis&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf",
+  "version" : "0.1.0",
+  "name" : "SenologieToOncoBoxBrustVerlauf",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J03-J05)\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Procedure",
+    "mode" : "source",
+    "alias" : "Procedure"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
+    "mode" : "target",
+    "alias" : "OncoBoxBrust"
+  }],
+  "group" : [{
+    "name" : "MapVerlaufFromBundle",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the OncoBox Brust Logical Model.\r\n============================================================================\r\nMapVerlaufFromBundle: Bundle -> OncoBox Primaerfall.verlauf (repeating)\r\nExtrahiert Verlaufsereignisse aus dem Bundle und mappt auf den OncoBox-\r\nVerlauf-Block. Drei Quellen fuer Verlaufseintraege:\r\n1. Senologie_FollowUp Observations (SCT 396432002) -> M01-M10 + Gesamtbeurteilung\r\nBildet die vollstaendige Verlaufsmeldung ab inkl. Nachsorge-Art, Vitalstatus,\r\nTumorstatus lokal/LK/FM und Zweittumor. Gesamtbeurteilung (D27) wird auf\r\nverlauf.ereignis gemappt: P->6 (Progress), Y->1 (Lokalrezidiv Default).\r\n2. Condition mit clinicalStatus=recurrence -> Rezidiv / Fernmetastase\r\n3. Observation LOINC 21907-1 (Distant metastases.clinical) -> Fernmetastase\r\nFuer Fernmetastasen-Ereignisse (ereignis=3) werden zusaetzlich die\r\nOncoBox 2.0 Felder J03-J05 befuellt:\r\nJ03: FM_OP_Datum       -> aus Procedure (Operation) mit FM-reasonReference\r\nJ04: FM_Therapien      -> Existenz-Check fuer OP/Syst/ST/Endo im Bundle\r\nJ05: FM_Residualstatus -> aus Procedure.outcome (Operation)\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "EntryVerlaufFU",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "fuEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '396432002')"
+      }],
+      "rule" : [{
+        "name" : "CallMapVerlaufFU",
+        "source" : [{
+          "context" : "fuEntry",
+          "element" : "resource",
+          "variable" : "fuObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl"
+        }],
+        "dependent" : [{
+          "name" : "MapVerlaufFollowUp",
+          "variable" : ["fuObs",
+          "verl"]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryVerlaufFM",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "fmEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21907-1')"
+      }],
+      "rule" : [{
+        "name" : "CallMapVerlaufFM",
+        "source" : [{
+          "context" : "fmEntry",
+          "element" : "resource",
+          "variable" : "fmObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl"
+        }],
+        "dependent" : [{
+          "name" : "MapVerlaufFernmetastase",
+          "variable" : ["fmObs",
+          "verl",
+          "src"]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryVerlaufRez",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "recEntry",
+        "condition" : "resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')"
+      }],
+      "rule" : [{
+        "name" : "CallMapVerlaufRez",
+        "source" : [{
+          "context" : "recEntry",
+          "element" : "resource",
+          "variable" : "recCond"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "verlauf",
+          "variable" : "verl"
+        }],
+        "dependent" : [{
+          "name" : "MapVerlaufRezidiv",
+          "variable" : ["recCond",
+          "verl"]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapVerlaufFollowUp",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapVerlaufFollowUp: Observation (Senologie_FollowUp) -> Verlauf M01-M10\r\nBildet eine Senologie_FollowUp Observation (SCT 396432002) auf den\r\nvollstaendigen OncoBox-Verlauf-Block ab:\r\nM01: Meldedatum       <- effectiveDateTime\r\nM02: Melder           <- performer.display\r\nM03: Nachsorge-Art    <- component[nachsorge-art]\r\nM04: Vitalstatus      <- component[vitalstatus]\r\nM05: Tumorstatus lok. <- component[Tumor_Verlauf] (SCT 445200009)\r\nM06: Tumorstatus LK   <- component[Lymphknoten_Verlauf] (SCT 399656008)\r\nM07: Tumorstatus FM   <- component[Fernmetastasen_Verlauf] (SCT 399608002)\r\nM08: Zweittumor       <- component[zweittumor]\r\nM09: Zweittumor ICD   <- component[zweittumor-icd]\r\nM10: Zweittumor Datum <- component[zweittumor-datum]\r\nEreignis              <- Gesamtbeurteilung (valueCodeableConcept):\r\nP->6 (Progress), Y->1 (Lokalrezidiv Default)\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Observation",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetM01Datum",
+      "source" : [{
+        "context" : "src",
+        "element" : "effective",
+        "variable" : "eff",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meldedatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "eff"
+        }]
+      }]
+    },
+    {
+      "name" : "MapM02Perf",
+      "source" : [{
+        "context" : "src",
+        "element" : "performer",
+        "variable" : "perf"
+      }],
+      "rule" : [{
+        "name" : "SetM02Melder",
+        "source" : [{
+          "context" : "perf",
+          "element" : "display",
+          "variable" : "d"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "melder",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "d"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM03",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = 'nachsorge-art')"
+      }],
+      "rule" : [{
+        "name" : "MapM03Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM03Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetM03Aktiv",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = 'aktiv'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "nachsorgeArt",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "aktiv"
+              }]
+            }]
+          },
+          {
+            "name" : "SetM03Passiv",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = 'passiv'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "nachsorgeArt",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "passiv"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM04",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = 'vitalstatus')"
+      }],
+      "rule" : [{
+        "name" : "MapM04Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM04Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetM04Lebend",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = '438949009'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "vitalstatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "lebend"
+              }]
+            }]
+          },
+          {
+            "name" : "SetM04Verstorben",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = '419099009'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "vitalstatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "verstorben"
+              }]
+            }]
+          },
+          {
+            "name" : "SetM04Unbekannt",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = '261665006'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "vitalstatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "unbekannt"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM05",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = '445200009')"
+      }],
+      "rule" : [{
+        "name" : "MapM05Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM05Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system.contains('verlauf-primaertumor')"
+          }],
+          "rule" : [{
+            "name" : "SetM05",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "tumorstatusLokal",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM06",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = '399656008')"
+      }],
+      "rule" : [{
+        "name" : "MapM06Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM06Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system.contains('verlauf-lymphknoten')"
+          }],
+          "rule" : [{
+            "name" : "SetM06",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "tumorstatusLK",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM07",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = '399608002')"
+      }],
+      "rule" : [{
+        "name" : "MapM07Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM07Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system.contains('verlauf-fernmetastasen')"
+          }],
+          "rule" : [{
+            "name" : "SetM07",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "tumorstatusFM",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM08",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = 'zweittumor')"
+      }],
+      "rule" : [{
+        "name" : "MapM08Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM08Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetM08Ja",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = '373066001'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "zweittumor",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "ja"
+              }]
+            }]
+          },
+          {
+            "name" : "SetM08Nein",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = '373067005'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "zweittumor",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "nein"
+              }]
+            }]
+          },
+          {
+            "name" : "SetM08Unbekannt",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd",
+              "condition" : "$this = '261665006'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "zweittumor",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "unbekannt"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM09",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = 'zweittumor-icd')"
+      }],
+      "rule" : [{
+        "name" : "MapM09Val",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapM09Coding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c",
+            "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+          }],
+          "rule" : [{
+            "name" : "SetM09",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "zweitttumorIcd",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapM10",
+      "source" : [{
+        "context" : "src",
+        "element" : "component",
+        "variable" : "comp",
+        "condition" : "code.coding.exists(code = 'zweittumor-datum')"
+      }],
+      "rule" : [{
+        "name" : "SetM10",
+        "source" : [{
+          "context" : "comp",
+          "element" : "value",
+          "variable" : "val",
+          "condition" : "$this.is(dateTime)"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "zweitttumorDatum",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "val"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapGesamt",
+      "source" : [{
+        "context" : "src",
+        "element" : "value",
+        "variable" : "val"
+      }],
+      "rule" : [{
+        "name" : "MapGesamtCoding",
+        "source" : [{
+          "context" : "val",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system.contains('verlauf-gesamtbeurteilung')"
+        }],
+        "rule" : [{
+          "name" : "SetEreignisProgress",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = 'P'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "ereignis",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "6"
+            }]
+          }]
+        },
+        {
+          "name" : "SetEreignisRezidiv",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = 'Y'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "ereignis",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapVerlaufFernmetastase",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapVerlaufFernmetastase: Observation (FM) -> Verlauf + OncoBox 2.0 J03-J05\r\nBildet eine Fernmetastasen-Observation auf den OncoBox-Verlauf-Block ab.\r\nZusaetzlich werden FM-spezifische Therapie-Procedures aus dem Bundle\r\nextrahiert fuer die OncoBox 2.0 Felder.\r\nFM-spezifische Procedures werden identifiziert ueber:\r\n- meta.profile enthält das jeweilige Senologie-Profil\r\n- extension:Intention mit code 'P' (palliativ) als FM-Kontextindikator\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Observation",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    }],
+    "rule" : [{
+      "name" : "SetVerlaufDatumFM",
+      "source" : [{
+        "context" : "src",
+        "element" : "effective",
+        "variable" : "eff",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "datum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "eff"
+        }]
+      }]
+    },
+    {
+      "name" : "SetEreignisFM",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "ereignis",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "3"
+        }]
+      }]
+    },
+    {
+      "name" : "EntryFMOp",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "opEntry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
+      }],
+      "rule" : [{
+        "name" : "MapFMOpProc",
+        "source" : [{
+          "context" : "opEntry",
+          "element" : "resource",
+          "variable" : "proc"
+        }],
+        "rule" : [{
+          "name" : "MapIntentionExt",
+          "source" : [{
+            "context" : "proc",
+            "element" : "extension",
+            "variable" : "ext",
+            "condition" : "url.contains('Intention')"
+          }],
+          "rule" : [{
+            "name" : "MapIntentionValue",
+            "source" : [{
+              "context" : "ext",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "CheckIntentionPalliativ",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "code = 'P'"
+              }],
+              "rule" : [{
+                "name" : "SetFMOpDatum",
+                "source" : [{
+                  "context" : "proc",
+                  "element" : "performed",
+                  "variable" : "perf",
+                  "condition" : "$this.is(dateTime)"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "fmOpDatum",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueId" : "perf"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "CallMapFMTherapien",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "fmTherapien",
+        "variable" : "fmTh"
+      }],
+      "dependent" : [{
+        "name" : "MapFMTherapien",
+        "variable" : ["bundle",
+        "fmTh"]
+      }]
+    },
+    {
+      "name" : "EntryFMResidual",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "opEntry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
+      }],
+      "rule" : [{
+        "name" : "MapFMResidualProc",
+        "source" : [{
+          "context" : "opEntry",
+          "element" : "resource",
+          "variable" : "proc"
+        }],
+        "rule" : [{
+          "name" : "MapIntentionExtR",
+          "source" : [{
+            "context" : "proc",
+            "element" : "extension",
+            "variable" : "ext",
+            "condition" : "url.contains('Intention')"
+          }],
+          "rule" : [{
+            "name" : "MapIntentionValueR",
+            "source" : [{
+              "context" : "ext",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "CheckIntentionPalliativR",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "code = 'P'"
+              }],
+              "rule" : [{
+                "name" : "MapFMResidualCoding",
+                "source" : [{
+                  "context" : "proc",
+                  "element" : "outcome",
+                  "variable" : "oc"
+                }],
+                "rule" : [{
+                  "name" : "SetFMResidualCode",
+                  "source" : [{
+                    "context" : "oc",
+                    "element" : "coding",
+                    "variable" : "rc",
+                    "condition" : "system.contains('residualstatus')"
+                  }],
+                  "target" : [{
+                    "context" : "tgt",
+                    "contextType" : "variable",
+                    "element" : "fmResidualstatus",
+                    "transform" : "copy",
+                    "parameter" : [{
+                      "valueId" : "rc"
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapFMTherapien",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapFMTherapien: Bundle -> FM_Therapien (J04)\r\nPrueft fuer jede Therapieart ob eine Procedure mit palliativer Intention\r\nim Bundle vorhanden ist und setzt entsprechend 0/1.\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Bundle",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "EntryFMThOP",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"
+      }],
+      "rule" : [{
+        "name" : "MapFMThOPProc",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "proc"
+        }],
+        "rule" : [{
+          "name" : "MapIntentionExtOP",
+          "source" : [{
+            "context" : "proc",
+            "element" : "extension",
+            "variable" : "ext",
+            "condition" : "url.contains('Intention')"
+          }],
+          "rule" : [{
+            "name" : "CheckIntentionPalliativOP",
+            "source" : [{
+              "context" : "ext",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "SetFMThOP",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "code = 'P'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "operation",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryFMThSyst",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie'))"
+      }],
+      "rule" : [{
+        "name" : "MapFMThSystProc",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "proc"
+        }],
+        "rule" : [{
+          "name" : "MapIntentionExtSyst",
+          "source" : [{
+            "context" : "proc",
+            "element" : "extension",
+            "variable" : "ext",
+            "condition" : "url.contains('Intention')"
+          }],
+          "rule" : [{
+            "name" : "CheckIntentionPalliativSyst",
+            "source" : [{
+              "context" : "ext",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "SetFMThSyst",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "code = 'P'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "systemtherapie",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryFMThST",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))"
+      }],
+      "rule" : [{
+        "name" : "MapFMThSTProc",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "proc"
+        }],
+        "rule" : [{
+          "name" : "MapIntentionExtST",
+          "source" : [{
+            "context" : "proc",
+            "element" : "extension",
+            "variable" : "ext",
+            "condition" : "url.contains('Intention')"
+          }],
+          "rule" : [{
+            "name" : "CheckIntentionPalliativST",
+            "source" : [{
+              "context" : "ext",
+              "element" : "value",
+              "variable" : "val"
+            }],
+            "rule" : [{
+              "name" : "SetFMThST",
+              "source" : [{
+                "context" : "val",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "code = 'P'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "strahlentherapie",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryFMThEndo",
+      "source" : [{
+        "context" : "src",
+        "element" : "entry",
+        "variable" : "entry",
+        "condition" : "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie'))"
+      }],
+      "rule" : [{
+        "name" : "MapFMThEndoProc",
+        "source" : [{
+          "context" : "entry",
+          "element" : "resource",
+          "variable" : "proc"
+        }],
+        "rule" : [{
+          "name" : "MapEndocrineCodeCtx",
+          "source" : [{
+            "context" : "proc",
+            "element" : "code",
+            "variable" : "code"
+          }],
+          "rule" : [{
+            "name" : "CheckEndocrineCode",
+            "source" : [{
+              "context" : "code",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '169413002'"
+            }],
+            "rule" : [{
+              "name" : "MapIntentionExtEndo",
+              "source" : [{
+                "context" : "proc",
+                "element" : "extension",
+                "variable" : "ext",
+                "condition" : "url.contains('Intention')"
+              }],
+              "rule" : [{
+                "name" : "CheckIntentionPalliativEndo",
+                "source" : [{
+                  "context" : "ext",
+                  "element" : "value",
+                  "variable" : "val"
+                }],
+                "rule" : [{
+                  "name" : "SetFMThEndo",
+                  "source" : [{
+                    "context" : "val",
+                    "element" : "coding",
+                    "variable" : "ic",
+                    "condition" : "code = 'P'"
+                  }],
+                  "target" : [{
+                    "context" : "tgt",
+                    "contextType" : "variable",
+                    "element" : "endokrineTherapie",
+                    "transform" : "copy",
+                    "parameter" : [{
+                      "valueString" : "1"
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "MapVerlaufRezidiv",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nMapVerlaufRezidiv: Condition (Rezidiv) -> Verlauf (Nicht-FM-Ereignis)\r\nMappt Rezidiv-Conditions auf den OncoBox-Verlauf-Block fuer Lokalrezidive,\r\nRegionaerrezidive und andere Verlaufsereignisse.\r\nFM-spezifische Felder J03-J05 werden hier NICHT befuellt.\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Condition",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "MapVerlaufDatumExt",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum'"
+      }],
+      "rule" : [{
+        "name" : "SetVerlaufDatumExt",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val",
+          "condition" : "$this.is(dateTime)"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "datum",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "val"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "SetVerlaufDatumFallback",
+      "source" : [{
+        "context" : "src",
+        "element" : "recordedDate",
+        "variable" : "rd"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "datum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "rd"
+        }]
+      }]
+    },
+    {
+      "name" : "MapEreignis",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapEreignisSCT",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "SetEreignisLokal",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '255226008'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "ereignis",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetEreignisRegional",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '315266007'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "ereignis",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetEreignisKontralateral",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '94222008'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "ereignis",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "4"
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}

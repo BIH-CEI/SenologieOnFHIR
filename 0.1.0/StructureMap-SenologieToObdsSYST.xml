@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsSYST"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsSYST</b></p><a name="SenologieToObdsSYST"> </a><a name="hcSenologieToObdsSYST"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST<span style="color: navy">&quot; = &quot;</span>SenologieToObdsSYST<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie FHIR to oBDS Systemische Therapie (SYST)</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTumorzuordnung.html" title="SenologieToObdsTumorzuordnung">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsNebenwirkung.html" title="SenologieToObdsNebenwirkung">https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung</a><span style="color: navy">&quot;
+</span>
+<span style="color: navy">// </span><span style="color: green">Known limitation: Sub-groups (MapSYST, MapSubstanz) use</span>
+<span style="color: navy">// </span><span style="color: green">`target tgt : BackboneElement` because FML has no syntax to declare the</span>
+<span style="color: navy">// </span><span style="color: green">Logical Model sub-path for BackboneElement slices passed from parent groups.</span>
+<span style="color: navy">// </span><span style="color: green">The IG Publisher produces SM_TARGET_PATH errors (~16). The element names are</span>
+<span style="color: navy">// </span><span style="color: green">correct per the oBDS Logical Model.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Hauptgruppe: Bundle → oBDS SYST</span>
+<span style="color: navy">// </span><span style="color: green">Ein Bundle enthaelt eine Systemtherapie-Procedure (uebergeordnet)</span>
+<span style="color: navy">// </span><span style="color: green">und zugehoerige MedicationStatements (einzelne Substanzgaben).</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>SenologieToObdsSYST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Systemtherapie-Procedure extrahieren</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">proc</span><span style="color: navy"><b> -&gt; </b></span>tgt.syst<b> as </b><span style="color: maroon">syst</span><b> then </b>MapSYST<span style="color: navy">(</span><span style="color: maroon">proc</span><span style="color: navy">, </span><span style="color: maroon">syst</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;CallMapSYST&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntrySYST&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapSYST: Procedure → oBDS SYST Basisdaten</span>
+<span style="color: navy">// </span><span style="color: green">Mapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapSYST<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Procedure, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement, <b>source</b> <span style="color: maroon">bundle</span><span style="color: navy"> : </span>Bundle<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">SYST_ID: Procedure.id</span>
+  src.id<b> as </b><span style="color: maroon">id</span><span style="color: navy"><b> -&gt; </b></span>tgt.systID = <span style="color: maroon">id</span> <i>&quot;SetSystID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Meldeanlass: abgeleitet aus Procedure.status</span>
+  <span style="color: navy">// </span><span style="color: green">completed + performedPeriod.end vorhanden -&gt; behandlungsende</span>
+  <span style="color: navy">// </span><span style="color: green">completed + nur performedPeriod.start -&gt; behandlungsbeginn</span>
+  src<b> where </b>performedPeriod.end.exists()<span style="color: navy"><b> -&gt; </b></span>tgt.meldeanlass = <span style="color: blue">'behandlungsende'</span> <i>&quot;MeldeanlassEnde&quot;</i><span style="color: navy">;</span>
+  src<b> where </b>performedPeriod.end.exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.meldeanlass = <span style="color: blue">'behandlungsbeginn'</span> <i>&quot;MeldeanlassBeginn&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Intention: aus MII Onko Extension mii-ex-onko-systemische-therapie-intention</span>
+  <span style="color: navy">// </span><span style="color: green">valueCodeableConcept mit MII Onko Intentions-CodeSystem -&gt; translate zu oBDS (K, P, S, X)</span>
+  src.extension<b> as </b><span style="color: maroon">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention'<b> then</b><span style="color: navy"> {
+</span>    ext.value<b> as </b><span style="color: maroon">val</span><b> then</b><span style="color: navy"> {
+</span>      val.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.intention = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateIntention&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;ExtractIntentionCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapIntention&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)</span>
+  <span style="color: navy">// </span><span style="color: green">category.coding mit System mii-cs-onko-therapie-stellungzurop -&gt; translate zu oBDS (O, A, N, I, S)</span>
+  src.category<b> as </b><span style="color: maroon">cat</span><b> then</b><span style="color: navy"> {
+</span>    cat.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'<span style="color: navy"><b> -&gt; </b></span>tgt.stellungOP = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateStellungOP&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapStellungOP&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Therapieart: aus Procedure.category (MII Onko Therapietyp-CodeSystem)</span>
+  <span style="color: navy">// </span><span style="color: green">Mappt CH, HO, IM, ZS etc.</span>
+  src.category<b> as </b><span style="color: maroon">cat</span><b> then</b><span style="color: navy"> {
+</span>    cat.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'<span style="color: navy"><b> -&gt; </b></span>tgt.therapieart = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">c</span><span style="color: navy">, </span><span style="color: blue">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapieart'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span> <i>&quot;TranslateTherapieart&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapTherapieart&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Protokoll: aus Procedure.usedCode.text (Protokollbezeichnung, z.B. &quot;EC-T&quot;)</span>
+  src.usedCode<b> as </b><span style="color: maroon">uc</span><b> then</b><span style="color: navy"> {
+</span>    uc.text<b> as </b><span style="color: maroon">t</span><span style="color: navy"><b> -&gt; </b></span>tgt.protokoll = <span style="color: maroon">t</span> <i>&quot;SetProtokoll&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapProtokoll&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Beginn: aus Procedure.performedPeriod.start</span>
+  src.performed<b> as </b><span style="color: maroon">perf</span><b> then</b><span style="color: navy"> {
+</span>    perf.start<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.beginn = <span style="color: maroon">s</span> <i>&quot;SetBeginn&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapBeginn&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Ende: aus Procedure.performedPeriod.end</span>
+  src.performed<b> as </b><span style="color: maroon">perf</span><b> then</b><span style="color: navy"> {
+</span>    perf.end<b> as </b><span style="color: maroon">e</span><span style="color: navy"><b> -&gt; </b></span>tgt.ende = <span style="color: maroon">e</span> <i>&quot;SetEnde&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapEnde&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Ende-Grund: aus Procedure.outcome.coding (MII Onko Ende-Grund CodeSystem)</span>
+  <span style="color: navy">// </span><span style="color: green">Falls keine strukturierte Codierung vorhanden, Freitext als Fallback</span>
+  src.outcome<b> as </b><span style="color: maroon">oc</span><b> then</b><span style="color: navy"> {
+</span>    oc.coding<b> as </b><span style="color: maroon">c</span><span style="color: navy"><b> -&gt; </b></span>tgt.endeGrund = <span style="color: navy">(</span>c.code<span style="color: navy">)</span> <i>&quot;SetEndeGrundCode&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapEndeGrund&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Substanzen: MedicationStatements aus dem Bundle extrahieren, die per partOf</span>
+  <span style="color: navy">// </span><span style="color: green">auf diese Procedure verweisen</span>
+  bundle.entry<b> as </b><span style="color: maroon">medEntry</span><b> where </b>resource.is(MedicationStatement)<b> then</b><span style="color: navy"> {
+</span>    medEntry.resource<b> as </b><span style="color: maroon">medStmt</span><span style="color: navy"><b> -&gt; </b></span>tgt.substanzen<b> as </b><span style="color: maroon">subst</span><b> then </b>MapSubstanz<span style="color: navy">(</span><span style="color: maroon">medStmt</span><span style="color: navy">, </span><span style="color: maroon">subst</span><span style="color: navy">)</span> <i>&quot;CallMapSubstanz&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntrySubstanzen&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (SYST-Variante)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.nebenwirkungen<b> as </b><span style="color: maroon">nw</span><b> then </b>MapNebenwirkungenSYST<span style="color: navy">(</span><span style="color: maroon">bundle</span><span style="color: navy">, </span><span style="color: maroon">nw</span><span style="color: navy">)</span> <i>&quot;CallMapNebenwirkungen&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">MapSubstanz: MedicationStatement → oBDS Substanz</span>
+<span style="color: navy">// </span><span style="color: green">Extrahiert Substanzbezeichnung und ATC-Code aus der Medikation</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapSubstanz<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>MedicationStatement, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Bezeichnung: aus medicationCodeableConcept.text oder coding.display</span>
+  src.medication<b> as </b><span style="color: maroon">med</span><b> then</b><span style="color: navy"> {
+</span>    med.text<b> as </b><span style="color: maroon">t</span><span style="color: navy"><b> -&gt; </b></span>tgt.bezeichnung = <span style="color: maroon">t</span> <i>&quot;SetSubstanzBezeichnung&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapSubstanzBezeichnung&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">ATC-Code: aus medicationCodeableConcept.coding mit ATC-System</span>
+  src.medication<b> as </b><span style="color: maroon">med</span><b> then</b><span style="color: navy"> {
+</span>    med.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/atc'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">code</span><span style="color: navy"><b> -&gt; </b></span>tgt.atcCode = <span style="color: maroon">code</span> <i>&quot;SetAtcCode&quot;</i><span style="color: navy">;</span>
+      c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.atcVersion = <span style="color: maroon">v</span> <i>&quot;SetAtcVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;ExtractAtcCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapAtcCode&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsSYST"/>
+  <status value="draft"/>
+  <date value="2026-05-04T06:10:53+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie FHIR to oBDS Systemische Therapie (SYST)&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"/>
+  <group>
+    <name value="SenologieToObdsSYST"/>
+    <typeMode value="none"/>
+    <documentation value="Known limitation: Sub-groups (MapSYST, MapSubstanz) use&#xD;&#xA;`target tgt : BackboneElement` because FML has no syntax to declare the&#xD;&#xA;Logical Model sub-path for BackboneElement slices passed from parent groups.&#xD;&#xA;The IG Publisher produces SM_TARGET_PATH errors (~16). The element names are&#xD;&#xA;correct per the oBDS Logical Model.&#xD;&#xA;============================================================================&#xD;&#xA;Hauptgruppe: Bundle → oBDS SYST&#xD;&#xA;Ein Bundle enthaelt eine Systemtherapie-Procedure (uebergeordnet)&#xD;&#xA;und zugehoerige MedicationStatements (einzelne Substanzgaben).&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="OBDSMeldung"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="EntrySYST"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))"/>
+      </source>
+      <rule>
+        <name value="CallMapSYST"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="proc"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="syst"/>
+          <variable value="syst"/>
+        </target>
+        <dependent>
+          <name value="MapSYST"/>
+          <variable value="proc"/>
+          <variable value="syst"/>
+          <variable value="src"/>
+        </dependent>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapSYST"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;MapSYST: Procedure → oBDS SYST Basisdaten&#xD;&#xA;Mapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Procedure"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <input>
+      <name value="bundle"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <rule>
+      <name value="SetSystID"/>
+      <source>
+        <context value="src"/>
+        <element value="id"/>
+        <variable value="id"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="systID"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="id"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MeldeanlassEnde"/>
+      <source>
+        <context value="src"/>
+        <condition value="performedPeriod.end.exists()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="meldeanlass"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="behandlungsende"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MeldeanlassBeginn"/>
+      <source>
+        <context value="src"/>
+        <condition value="performedPeriod.end.exists().not()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="meldeanlass"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="behandlungsbeginn"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapIntention"/>
+      <source>
+        <context value="src"/>
+        <element value="extension"/>
+        <variable value="ext"/>
+        <condition value="url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention'"/>
+      </source>
+      <rule>
+        <name value="ExtractIntentionCoding"/>
+        <source>
+          <context value="ext"/>
+          <element value="value"/>
+          <variable value="val"/>
+        </source>
+        <rule>
+          <name value="TranslateIntention"/>
+          <source>
+            <context value="val"/>
+            <element value="coding"/>
+            <variable value="c"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="intention"/>
+            <transform value="translate"/>
+            <parameter>
+              <valueId value="c"/>
+            </parameter>
+            <parameter>
+              <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention"/>
+            </parameter>
+            <parameter>
+              <valueString value="code"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapStellungOP"/>
+      <source>
+        <context value="src"/>
+        <element value="category"/>
+        <variable value="cat"/>
+      </source>
+      <rule>
+        <name value="TranslateStellungOP"/>
+        <source>
+          <context value="cat"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="stellungOP"/>
+          <transform value="translate"/>
+          <parameter>
+            <valueId value="c"/>
+          </parameter>
+          <parameter>
+            <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung"/>
+          </parameter>
+          <parameter>
+            <valueString value="code"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapTherapieart"/>
+      <source>
+        <context value="src"/>
+        <element value="category"/>
+        <variable value="cat"/>
+      </source>
+      <rule>
+        <name value="TranslateTherapieart"/>
+        <source>
+          <context value="cat"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="therapieart"/>
+          <transform value="translate"/>
+          <parameter>
+            <valueId value="c"/>
+          </parameter>
+          <parameter>
+            <valueString value="https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapieart"/>
+          </parameter>
+          <parameter>
+            <valueString value="code"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapProtokoll"/>
+      <source>
+        <context value="src"/>
+        <element value="usedCode"/>
+        <variable value="uc"/>
+      </source>
+      <rule>
+        <name value="SetProtokoll"/>
+        <source>
+          <context value="uc"/>
+          <element value="text"/>
+          <variable value="t"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="protokoll"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="t"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapBeginn"/>
+      <source>
+        <context value="src"/>
+        <element value="performed"/>
+        <variable value="perf"/>
+      </source>
+      <rule>
+        <name value="SetBeginn"/>
+        <source>
+          <context value="perf"/>
+          <element value="start"/>
+          <variable value="s"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="beginn"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="s"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapEnde"/>
+      <source>
+        <context value="src"/>
+        <element value="performed"/>
+        <variable value="perf"/>
+      </source>
+      <rule>
+        <name value="SetEnde"/>
+        <source>
+          <context value="perf"/>
+          <element value="end"/>
+          <variable value="e"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="ende"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="e"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapEndeGrund"/>
+      <source>
+        <context value="src"/>
+        <element value="outcome"/>
+        <variable value="oc"/>
+      </source>
+      <rule>
+        <name value="SetEndeGrundCode"/>
+        <source>
+          <context value="oc"/>
+          <element value="coding"/>
+          <variable value="c"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="endeGrund"/>
+          <transform value="evaluate"/>
+          <parameter>
+            <valueString value="c.code"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntrySubstanzen"/>
+      <source>
+        <context value="bundle"/>
+        <element value="entry"/>
+        <variable value="medEntry"/>
+        <condition value="resource.is(MedicationStatement)"/>
+      </source>
+      <rule>
+        <name value="CallMapSubstanz"/>
+        <source>
+          <context value="medEntry"/>
+          <element value="resource"/>
+          <variable value="medStmt"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="substanzen"/>
+          <variable value="subst"/>
+        </target>
+        <dependent>
+          <name value="MapSubstanz"/>
+          <variable value="medStmt"/>
+          <variable value="subst"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="CallMapNebenwirkungen"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="nebenwirkungen"/>
+        <variable value="nw"/>
+      </target>
+      <dependent>
+        <name value="MapNebenwirkungenSYST"/>
+        <variable value="bundle"/>
+        <variable value="nw"/>
+      </dependent>
+    </rule>
+  </group>
+  <group>
+    <name value="MapSubstanz"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;MapSubstanz: MedicationStatement → oBDS Substanz&#xD;&#xA;Extrahiert Substanzbezeichnung und ATC-Code aus der Medikation&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="MedicationStatement"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="MapSubstanzBezeichnung"/>
+      <source>
+        <context value="src"/>
+        <element value="medication"/>
+        <variable value="med"/>
+      </source>
+      <rule>
+        <name value="SetSubstanzBezeichnung"/>
+        <source>
+          <context value="med"/>
+          <element value="text"/>
+          <variable value="t"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="bezeichnung"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="t"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapAtcCode"/>
+      <source>
+        <context value="src"/>
+        <element value="medication"/>
+        <variable value="med"/>
+      </source>
+      <rule>
+        <name value="ExtractAtcCoding"/>
+        <source>
+          <context value="med"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/atc'"/>
+        </source>
+        <rule>
+          <name value="SetAtcCode"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="code"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="atcCode"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="code"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetAtcVersion"/>
+          <source>
+            <context value="c"/>
+            <element value="version"/>
+            <variable value="v"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="atcVersion"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="v"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

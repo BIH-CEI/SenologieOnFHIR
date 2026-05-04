@@ -1,0 +1,538 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToObdsSYST"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToObdsSYST</b></p><a name=\"SenologieToObdsSYST\"> </a><a name=\"hcSenologieToObdsSYST\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST<span style=\"color: navy\">\" = \"</span>SenologieToObdsSYST<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie FHIR to oBDS Systemische Therapie (SYST)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-obds-meldung.html\" title=\"oBDS Meldung\">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<b>imports</b><span style=\"color: navy\"> \"</span><a href=\"StructureMap-SenologieToObdsTumorzuordnung.html\" title=\"SenologieToObdsTumorzuordnung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style=\"color: navy\">\"#xD;\n</span><b>imports</b><span style=\"color: navy\"> \"</span><a href=\"StructureMap-SenologieToObdsNebenwirkung.html\" title=\"SenologieToObdsNebenwirkung\">https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung</a><span style=\"color: navy\">\"#xD;\n</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups (MapSYST, MapSubstanz) use</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">`target tgt : BackboneElement` because FML has no syntax to declare the</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Logical Model sub-path for BackboneElement slices passed from parent groups.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">The IG Publisher produces SM_TARGET_PATH errors (~16). The element names are</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">correct per the oBDS Logical Model.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Hauptgruppe: Bundle → oBDS SYST</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Ein Bundle enthaelt eine Systemtherapie-Procedure (uebergeordnet)</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">und zugehoerige MedicationStatements (einzelne Substanzgaben).</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>SenologieToObdsSYST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Bundle, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>OBDSMeldung<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Systemtherapie-Procedure extrahieren</span>#xD;\n  src.entry<b> as </b><span style=\"color: maroon\">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    entry.resource<b> as </b><span style=\"color: maroon\">proc</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.syst<b> as </b><span style=\"color: maroon\">syst</span><b> then </b>MapSYST<span style=\"color: navy\">(</span><span style=\"color: maroon\">proc</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">syst</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">src</span><span style=\"color: navy\">)</span> <i>\"CallMapSYST\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntrySYST\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapSYST: Procedure → oBDS SYST Basisdaten</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Mapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapSYST<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">SYST_ID: Procedure.id</span>#xD;\n  src.id<b> as </b><span style=\"color: maroon\">id</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.systID = <span style=\"color: maroon\">id</span> <i>\"SetSystID\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Meldeanlass: abgeleitet aus Procedure.status</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">completed + performedPeriod.end vorhanden -&gt; behandlungsende</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">completed + nur performedPeriod.start -&gt; behandlungsbeginn</span>#xD;\n  src<b> where </b>performedPeriod.end.exists()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'behandlungsende'</span> <i>\"MeldeanlassEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  src<b> where </b>performedPeriod.end.exists().not()<span style=\"color: navy\"><b> -&gt; </b></span>tgt.meldeanlass = <span style=\"color: blue\">'behandlungsbeginn'</span> <i>\"MeldeanlassBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Intention: aus MII Onko Extension mii-ex-onko-systemische-therapie-intention</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">valueCodeableConcept mit MII Onko Intentions-CodeSystem -&gt; translate zu oBDS (K, P, S, X)</span>#xD;\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b>url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.intention = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>\"TranslateIntention\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractIntentionCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapIntention\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Stellung zur OP: aus Procedure.category (MII Onko StellungZurOp)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">category.coding mit System mii-cs-onko-therapie-stellungzurop -&gt; translate zu oBDS (O, A, N, I, S)</span>#xD;\n  src.category<b> as </b><span style=\"color: maroon\">cat</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    cat.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.stellungOP = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>\"TranslateStellungOP\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapStellungOP\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Therapieart: aus Procedure.category (MII Onko Therapietyp-CodeSystem)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Mappt CH, HO, IM, ZS etc.</span>#xD;\n  src.category<b> as </b><span style=\"color: maroon\">cat</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    cat.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.therapieart = <b>translate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">c</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapieart'</span><span style=\"color: navy\">, </span><span style=\"color: blue\">'code'</span><span style=\"color: navy\">)</span> <i>\"TranslateTherapieart\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapTherapieart\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Protokoll: aus Procedure.usedCode.text (Protokollbezeichnung, z.B. \"EC-T\")</span>#xD;\n  src.usedCode<b> as </b><span style=\"color: maroon\">uc</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    uc.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.protokoll = <span style=\"color: maroon\">t</span> <i>\"SetProtokoll\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapProtokoll\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Beginn: aus Procedure.performedPeriod.start</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.beginn = <span style=\"color: maroon\">s</span> <i>\"SetBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapBeginn\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Ende: aus Procedure.performedPeriod.end</span>#xD;\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    perf.end<b> as </b><span style=\"color: maroon\">e</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.ende = <span style=\"color: maroon\">e</span> <i>\"SetEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEnde\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Ende-Grund: aus Procedure.outcome.coding (MII Onko Ende-Grund CodeSystem)</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Falls keine strukturierte Codierung vorhanden, Freitext als Fallback</span>#xD;\n  src.outcome<b> as </b><span style=\"color: maroon\">oc</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    oc.coding<b> as </b><span style=\"color: maroon\">c</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.endeGrund = <span style=\"color: navy\">(</span>c.code<span style=\"color: navy\">)</span> <i>\"SetEndeGrundCode\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEndeGrund\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Substanzen: MedicationStatements aus dem Bundle extrahieren, die per partOf</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">auf diese Procedure verweisen</span>#xD;\n  bundle.entry<b> as </b><span style=\"color: maroon\">medEntry</span><b> where </b>resource.is(MedicationStatement)<b> then</b><span style=\"color: navy\"> {#xD;\n</span>    medEntry.resource<b> as </b><span style=\"color: maroon\">medStmt</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.substanzen<b> as </b><span style=\"color: maroon\">subst</span><b> then </b>MapSubstanz<span style=\"color: navy\">(</span><span style=\"color: maroon\">medStmt</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">subst</span><span style=\"color: navy\">)</span> <i>\"CallMapSubstanz\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"EntrySubstanzen\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (SYST-Variante)</span>#xD;\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.nebenwirkungen<b> as </b><span style=\"color: maroon\">nw</span><b> then </b>MapNebenwirkungenSYST<span style=\"color: navy\">(</span><span style=\"color: maroon\">bundle</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">nw</span><span style=\"color: navy\">)</span> <i>\"CallMapNebenwirkungen\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">MapSubstanz: MedicationStatement → oBDS Substanz</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Extrahiert Substanzbezeichnung und ATC-Code aus der Medikation</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapSubstanz<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>MedicationStatement, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">Bezeichnung: aus medicationCodeableConcept.text oder coding.display</span>#xD;\n  src.medication<b> as </b><span style=\"color: maroon\">med</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    med.text<b> as </b><span style=\"color: maroon\">t</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.bezeichnung = <span style=\"color: maroon\">t</span> <i>\"SetSubstanzBezeichnung\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapSubstanzBezeichnung\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">ATC-Code: aus medicationCodeableConcept.coding mit ATC-System</span>#xD;\n  src.medication<b> as </b><span style=\"color: maroon\">med</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    med.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/atc'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>      c.code<b> as </b><span style=\"color: maroon\">code</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.atcCode = <span style=\"color: maroon\">code</span> <i>\"SetAtcCode\"</i><span style=\"color: navy\">;</span>#xD;\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.atcVersion = <span style=\"color: maroon\">v</span> <i>\"SetAtcVersion\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"ExtractAtcCoding\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapAtcCode\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "SenologieToObdsSYST"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-04T06:10:53+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie FHIR to oBDS Systemische Therapie (SYST)\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/obds-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/obds-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "OBDSMeldung" ]
+  ] ) ; # 
+  fhir:import ( [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung>
+  ] [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung>
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "SenologieToObdsSYST" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups (MapSYST, MapSubstanz) use\r\n`target tgt : BackboneElement` because FML has no syntax to declare the\r\nLogical Model sub-path for BackboneElement slices passed from parent groups.\r\nThe IG Publisher produces SM_TARGET_PATH errors (~16). The element names are\r\ncorrect per the oBDS Logical Model.\r\n============================================================================\r\nHauptgruppe: Bundle → oBDS SYST\r\nEin Bundle enthaelt eine Systemtherapie-Procedure (uebergeordnet)\r\nund zugehoerige MedicationStatements (einzelne Substanzgaben).\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "OBDSMeldung" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "EntrySYST" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "entry" ] ;
+         fhir:condition [ fhir:v "resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapSYST" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "entry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "proc" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "syst" ] ;
+           fhir:variable [ fhir:v "syst" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapSYST" ] ;
+           fhir:variable ( [ fhir:v "proc" ] [ fhir:v "syst" ] [ fhir:v "src" ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapSYST" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapSYST: Procedure → oBDS SYST Basisdaten\r\nMapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Procedure" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "SetSystID" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:variable [ fhir:v "id" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "systID" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "id"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MeldeanlassEnde" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "performedPeriod.end.exists()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldeanlass" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "behandlungsende"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MeldeanlassBeginn" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:condition [ fhir:v "performedPeriod.end.exists().not()" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meldeanlass" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "behandlungsbeginn"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapIntention" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "extension" ] ;
+         fhir:variable [ fhir:v "ext" ] ;
+         fhir:condition [ fhir:v "url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractIntentionCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "ext" ] ;
+           fhir:element [ fhir:v "value" ] ;
+           fhir:variable [ fhir:v "val" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "TranslateIntention" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "val" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "intention" ] ;
+             fhir:transform [ fhir:v "translate" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "c"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-intention"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "code"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapStellungOP" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "category" ] ;
+         fhir:variable [ fhir:v "cat" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "TranslateStellungOP" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "cat" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-stellungzurop'" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "stellungOP" ] ;
+           fhir:transform [ fhir:v "translate" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "c"
+             ]
+           ] [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapiestellung"
+             ]
+           ] [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "code"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapTherapieart" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "category" ] ;
+         fhir:variable [ fhir:v "cat" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "TranslateTherapieart" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "cat" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ'" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "therapieart" ] ;
+           fhir:transform [ fhir:v "translate" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "c"
+             ]
+           ] [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-therapieart"
+             ]
+           ] [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "code"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapProtokoll" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "usedCode" ] ;
+         fhir:variable [ fhir:v "uc" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetProtokoll" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "uc" ] ;
+           fhir:element [ fhir:v "text" ] ;
+           fhir:variable [ fhir:v "t" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "protokoll" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "t"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapBeginn" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetBeginn" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "start" ] ;
+           fhir:variable [ fhir:v "s" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "beginn" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "s"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEnde" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "performed" ] ;
+         fhir:variable [ fhir:v "perf" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetEnde" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "perf" ] ;
+           fhir:element [ fhir:v "end" ] ;
+           fhir:variable [ fhir:v "e" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "ende" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "e"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapEndeGrund" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "outcome" ] ;
+         fhir:variable [ fhir:v "oc" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetEndeGrundCode" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "oc" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "endeGrund" ] ;
+           fhir:transform [ fhir:v "evaluate" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:String ;
+               fhir:v "c.code"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "EntrySubstanzen" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:element [ fhir:v "entry" ] ;
+         fhir:variable [ fhir:v "medEntry" ] ;
+         fhir:condition [ fhir:v "resource.is(MedicationStatement)" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "CallMapSubstanz" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "medEntry" ] ;
+           fhir:element [ fhir:v "resource" ] ;
+           fhir:variable [ fhir:v "medStmt" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "substanzen" ] ;
+           fhir:variable [ fhir:v "subst" ]
+         ] ) ;
+         fhir:dependent ( [
+           fhir:name [ fhir:v "MapSubstanz" ] ;
+           fhir:variable ( [ fhir:v "medStmt" ] [ fhir:v "subst" ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "CallMapNebenwirkungen" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "nebenwirkungen" ] ;
+         fhir:variable [ fhir:v "nw" ]
+       ] ) ;
+       fhir:dependent ( [
+         fhir:name [ fhir:v "MapNebenwirkungenSYST" ] ;
+         fhir:variable ( [ fhir:v "bundle" ] [ fhir:v "nw" ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "MapSubstanz" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "============================================================================\r\nMapSubstanz: MedicationStatement → oBDS Substanz\r\nExtrahiert Substanzbezeichnung und ATC-Code aus der Medikation\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "MedicationStatement" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapSubstanzBezeichnung" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "medication" ] ;
+         fhir:variable [ fhir:v "med" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetSubstanzBezeichnung" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "med" ] ;
+           fhir:element [ fhir:v "text" ] ;
+           fhir:variable [ fhir:v "t" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "bezeichnung" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "t"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapAtcCode" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "medication" ] ;
+         fhir:variable [ fhir:v "med" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "ExtractAtcCoding" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "med" ] ;
+           fhir:element [ fhir:v "coding" ] ;
+           fhir:variable [ fhir:v "c" ] ;
+           fhir:condition [ fhir:v "system = 'http://fhir.de/CodeSystem/bfarm/atc'" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "SetAtcCode" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "code" ] ;
+             fhir:variable [ fhir:v "code" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "atcCode" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "code"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "SetAtcVersion" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "c" ] ;
+             fhir:element [ fhir:v "version" ] ;
+             fhir:variable [ fhir:v "v" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "atcVersion" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "v"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToObdsMeldung"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToObdsMeldung</b></p><a name="SenologieToObdsMeldung"> </a><a name="hcSenologieToObdsMeldung"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToObdsMeldung<span style="color: navy">&quot; = &quot;</span>SenologieToObdsMeldung<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator)</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/condition.html" title="Condition">http://hl7.org/fhir/StructureDefinition/Condition</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/procedure.html" title="Procedure">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style="color: navy">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/careplan.html" title="CarePlan">http://hl7.org/fhir/StructureDefinition/CarePlan</a><span style="color: navy">&quot; </span><b>alias </b>CarePlan <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/patient.html" title="Patient">http://hl7.org/fhir/StructureDefinition/Patient</a><span style="color: navy">&quot; </span><b>alias </b>Patient <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="StructureDefinition-obds-meldung.html" title="oBDS Meldung">https://www.senologie.org/fhir/StructureDefinition/obds-meldung</a><span style="color: navy">&quot; </span><b>alias </b>OBDSMeldung <b>as </b><b>target</b>
+
+<b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTumorzuordnung.html" title="SenologieToObdsTumorzuordnung">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsDiagnose.html" title="SenologieToObdsDiagnose">https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsOP.html" title="SenologieToObdsOP">https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsSYST.html" title="SenologieToObdsSYST">https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsST.html" title="SenologieToObdsST">https://www.senologie.org/fhir/StructureMap/SenologieToObdsST</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTumorkonferenz.html" title="SenologieToObdsTumorkonferenz">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorkonferenz</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsVerlauf.html" title="SenologieToObdsVerlauf">https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTod.html" title="SenologieToObdsTod">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsTNM.html" title="SenologieToObdsTNM">https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsHistologie.html" title="SenologieToObdsHistologie">https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsModulMamma.html" title="SenologieToObdsModulMamma">https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsFernmetastasen.html" title="SenologieToObdsFernmetastasen">https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsResidualstatus.html" title="SenologieToObdsResidualstatus">https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsNebenwirkung.html" title="SenologieToObdsNebenwirkung">https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung</a><span style="color: navy">&quot;
+</span><b>imports</b><span style="color: navy"> &quot;</span><a href="StructureMap-SenologieToObdsLeistungszustand.html" title="SenologieToObdsLeistungszustand">https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand</a><span style="color: navy">&quot;
+</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Master Orchestrator: Bundle -&gt; oBDS Meldung</span>
+<span style="color: navy">// </span><span style="color: green">Empfaengt ein FHIR Bundle mit allen Ressourcen eines Patienten und</span>
+<span style="color: navy">// </span><span style="color: green">dispatcht an die jeweiligen Teil-Maps basierend auf Ressourcentyp und Profil.</span>
+<span style="color: navy">// </span><span style="color: green">Jede Ressource erzeugt eine separate oBDS-Meldung:</span>
+<span style="color: navy">// </span><span style="color: green">- Condition (Erstdiagnose)         -&gt; Diagnosemeldung</span>
+<span style="color: navy">// </span><span style="color: green">- Condition (Rezidiv)              -&gt; Verlaufsmeldung</span>
+<span style="color: navy">// </span><span style="color: green">- Procedure (Operation)            -&gt; OP-Meldung</span>
+<span style="color: navy">// </span><span style="color: green">- Procedure (Systemtherapie)       -&gt; SYST-Meldung</span>
+<span style="color: navy">// </span><span style="color: green">- Procedure (Strahlentherapie)     -&gt; ST-Meldung</span>
+<span style="color: navy">// </span><span style="color: green">- CarePlan (Tumorboard)            -&gt; Tumorkonferenzmeldung</span>
+<span style="color: navy">// </span><span style="color: green">- Patient (verstorben)             -&gt; Todesmeldung</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>SenologieToObdsMeldung<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">--- Meldungs-Metadaten ---</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt<b> then </b>SetMeldungMetadata<span style="color: navy">(</span><span style="color: maroon">src</span><span style="color: navy">, </span><span style="color: maroon">tgt</span><span style="color: navy">)</span> <i>&quot;CallSetMeldungMetadata&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Diagnose: Condition mit Senologie-Diagnose-Profil, NICHT Rezidiv ---</span>
+  <span style="color: navy">// </span><span style="color: green">clinicalStatus != recurrence und Profil senologie-diagnose</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition) and resource.meta.profile.exists($this.contains('senologie-diagnose')) and resource.clinicalStatus.coding.exists(code = 'recurrence').not()<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">Tumorzuordnung</span>
+      condition<span style="color: navy"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style="color: maroon">tz</span><b> then </b>MapTumorzuordnung<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">tz</span><span style="color: navy">)</span> <i>&quot;DiagnoseTZ&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">Diagnose: delegiert an SenologieToObdsDiagnose.MapDiagnose</span>
+      condition<span style="color: navy"><b> -&gt; </b></span>tgt.diagnose<b> as </b><span style="color: maroon">dx</span><b> then </b>MapDiagnose<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">dx</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;DiagnoseDX&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;DiagnoseConditionContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryDiagnose&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Verlauf: Condition mit clinicalStatus = recurrence (Rezidiv) ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">condition</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">Tumorzuordnung</span>
+      condition<span style="color: navy"><b> -&gt; </b></span>tgt.tumorzuordnung<b> as </b><span style="color: maroon">tz</span><b> then </b>MapTumorzuordnung<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">tz</span><span style="color: navy">)</span> <i>&quot;VerlaufTZ&quot;</i><span style="color: navy">;</span>
+      <span style="color: navy">// </span><span style="color: green">Verlauf: delegiert an SenologieToObdsVerlauf.MapVerlauf</span>
+      condition<span style="color: navy"><b> -&gt; </b></span>tgt.verlauf<b> as </b><span style="color: maroon">verl</span><b> then </b>MapVerlauf<span style="color: navy">(</span><span style="color: maroon">condition</span><span style="color: navy">, </span><span style="color: maroon">verl</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;VerlaufMap&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;VerlaufConditionContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryVerlauf&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- OP: Procedure mit Senologie-Operation-Profil ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">OP: delegiert an SenologieToObdsOP.MapOP</span>
+      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.op<b> as </b><span style="color: maroon">op</span><b> then </b>MapOP<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">op</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;OPMap&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;OPProcedureContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryOP&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Systemische Therapie: Procedure mit Systemtherapie-Profil ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">SYST: delegiert an SenologieToObdsSYST.MapSYST</span>
+      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.syst<b> as </b><span style="color: maroon">syst</span><b> then </b>MapSYST<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">syst</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;SYSTMap&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;SYSTProcedureContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntrySYST&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Strahlentherapie: Procedure mit Strahlentherapie-Profil ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">procedure</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">ST: delegiert an SenologieToObdsST.MapST</span>
+      procedure<span style="color: navy"><b> -&gt; </b></span>tgt.st<b> as </b><span style="color: maroon">st</span><b> then </b>MapST<span style="color: navy">(</span><span style="color: maroon">procedure</span><span style="color: navy">, </span><span style="color: maroon">st</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;STMap&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;STProcedureContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryST&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Tumorkonferenz: CarePlan mit Tumorboard-Empfehlung-Profil ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(CarePlan) and resource.meta.profile.exists($this.contains('senologie-tumorboard-empfehlung'))<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">careplan</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">Tumorkonferenz: delegiert an SenologieToObdsTumorkonferenz.MapTumorkonferenz</span>
+      careplan<span style="color: navy"><b> -&gt; </b></span>tgt.tumorkonferenz<b> as </b><span style="color: maroon">tk</span><b> then </b>MapTumorkonferenz<span style="color: navy">(</span><span style="color: maroon">careplan</span><span style="color: navy">, </span><span style="color: maroon">tk</span><span style="color: navy">)</span> <i>&quot;TumorkonferenzMap&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;TumorkonferenzCarePlanContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryTumorkonferenz&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">--- Tod: Patient mit deceasedDateTime ---</span>
+  src.entry<b> as </b><span style="color: maroon">entry</span><b> where </b>resource.is(Patient) and resource.deceased.exists()<b> then</b><span style="color: navy"> {
+</span>    entry.resource<b> as </b><span style="color: maroon">patient</span><b> then</b><span style="color: navy"> {
+</span>      <span style="color: navy">// </span><span style="color: green">Tod: delegiert an SenologieToObdsTod.MapTod</span>
+      patient<span style="color: navy"><b> -&gt; </b></span>tgt.tod<b> as </b><span style="color: maroon">tod</span><b> then </b>MapTod<span style="color: navy">(</span><span style="color: maroon">patient</span><span style="color: navy">, </span><span style="color: maroon">tod</span><span style="color: navy">, </span><span style="color: maroon">src</span><span style="color: navy">)</span> <i>&quot;TodMap&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;TodPatientContext&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;EntryTod&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">SetMeldungMetadata: Meldungs-Metadaten erzeugen</span>
+<span style="color: navy">// </span><span style="color: green">meldungID, melderID, meldebegruendung, eigeneLeistung</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>SetMeldungMetadata<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Bundle, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>OBDSMeldung<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Meldung_ID: aus Bundle.identifier oder generierte UUID</span>
+  src.identifier<b> as </b><span style="color: maroon">id</span><b> then</b><span style="color: navy"> {
+</span>    id.value<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.meldungID = <span style="color: maroon">v</span> <i>&quot;SetMeldungIDFromIdentifier&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMeldungID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Fallback: generierte UUID als Meldung_ID</span>
+  src<b> where </b>identifier.exists().not()<span style="color: navy"><b> -&gt; </b></span>tgt.meldungID = <b>uuid</b><span style="color: navy">(</span><span style="color: navy">)</span> <i>&quot;SetMeldungIDGenerated&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Melder_ID: aus Bundle.meta.source oder fest konfigurierter Wert</span>
+  src.meta<b> as </b><span style="color: maroon">meta</span><b> then</b><span style="color: navy"> {
+</span>    meta.source<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.melderID = <span style="color: maroon">s</span> <i>&quot;SetMelderIDFromSource&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapMelderID&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Meldebegruendung: I (eigene Leistung) als Standard</span>
+  <span style="color: navy">// </span><span style="color: green">Wird ggf. durch die Teil-Maps ueberschrieben basierend auf Meldungstyp</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.meldebegruendung = <span style="color: blue">'I'</span> <i>&quot;SetMeldebegruendung&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">Eigene Leistung: J als Standard (Behandlungseinrichtung meldet eigene Daten)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.eigeneLeistung = <span style="color: blue">'J'</span> <i>&quot;SetEigeneLeistung&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsMeldung"/>
+  <version value="0.1.0"/>
+  <name value="SenologieToObdsMeldung"/>
+  <status value="draft"/>
+  <date value="2026-05-04T06:10:53+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator)&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+    <mode value="source"/>
+    <alias value="Condition"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+    <mode value="source"/>
+    <alias value="Procedure"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
+    <mode value="source"/>
+    <alias value="CarePlan"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+    <mode value="source"/>
+    <alias value="Patient"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="https://www.senologie.org/fhir/StructureDefinition/obds-meldung"/>
+    <mode value="target"/>
+    <alias value="OBDSMeldung"/>
+  </structure>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorzuordnung"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsOP"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsSYST"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsST"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTumorkonferenz"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsVerlauf"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsHistologie"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung"/>
+  <import value="https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand"/>
+  <group>
+    <name value="SenologieToObdsMeldung"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;Master Orchestrator: Bundle -&gt; oBDS Meldung&#xD;&#xA;Empfaengt ein FHIR Bundle mit allen Ressourcen eines Patienten und&#xD;&#xA;dispatcht an die jeweiligen Teil-Maps basierend auf Ressourcentyp und Profil.&#xD;&#xA;Jede Ressource erzeugt eine separate oBDS-Meldung:&#xD;&#xA;- Condition (Erstdiagnose)         -&gt; Diagnosemeldung&#xD;&#xA;- Condition (Rezidiv)              -&gt; Verlaufsmeldung&#xD;&#xA;- Procedure (Operation)            -&gt; OP-Meldung&#xD;&#xA;- Procedure (Systemtherapie)       -&gt; SYST-Meldung&#xD;&#xA;- Procedure (Strahlentherapie)     -&gt; ST-Meldung&#xD;&#xA;- CarePlan (Tumorboard)            -&gt; Tumorkonferenzmeldung&#xD;&#xA;- Patient (verstorben)             -&gt; Todesmeldung&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="OBDSMeldung"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="CallSetMeldungMetadata"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+      </target>
+      <dependent>
+        <name value="SetMeldungMetadata"/>
+        <variable value="src"/>
+        <variable value="tgt"/>
+      </dependent>
+    </rule>
+    <rule>
+      <name value="EntryDiagnose"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Condition) and resource.meta.profile.exists($this.contains('senologie-diagnose')) and resource.clinicalStatus.coding.exists(code = 'recurrence').not()"/>
+      </source>
+      <rule>
+        <name value="DiagnoseConditionContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="condition"/>
+        </source>
+        <rule>
+          <name value="DiagnoseTZ"/>
+          <source>
+            <context value="condition"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="tumorzuordnung"/>
+            <variable value="tz"/>
+          </target>
+          <dependent>
+            <name value="MapTumorzuordnung"/>
+            <variable value="condition"/>
+            <variable value="tz"/>
+          </dependent>
+        </rule>
+        <rule>
+          <name value="DiagnoseDX"/>
+          <source>
+            <context value="condition"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="diagnose"/>
+            <variable value="dx"/>
+          </target>
+          <dependent>
+            <name value="MapDiagnose"/>
+            <variable value="condition"/>
+            <variable value="dx"/>
+            <variable value="src"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryVerlauf"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Condition) and resource.clinicalStatus.coding.exists(code = 'recurrence')"/>
+      </source>
+      <rule>
+        <name value="VerlaufConditionContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="condition"/>
+        </source>
+        <rule>
+          <name value="VerlaufTZ"/>
+          <source>
+            <context value="condition"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="tumorzuordnung"/>
+            <variable value="tz"/>
+          </target>
+          <dependent>
+            <name value="MapTumorzuordnung"/>
+            <variable value="condition"/>
+            <variable value="tz"/>
+          </dependent>
+        </rule>
+        <rule>
+          <name value="VerlaufMap"/>
+          <source>
+            <context value="condition"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="verlauf"/>
+            <variable value="verl"/>
+          </target>
+          <dependent>
+            <name value="MapVerlauf"/>
+            <variable value="condition"/>
+            <variable value="verl"/>
+            <variable value="src"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryOP"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop'))"/>
+      </source>
+      <rule>
+        <name value="OPProcedureContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="procedure"/>
+        </source>
+        <rule>
+          <name value="OPMap"/>
+          <source>
+            <context value="procedure"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="op"/>
+            <variable value="op"/>
+          </target>
+          <dependent>
+            <name value="MapOP"/>
+            <variable value="procedure"/>
+            <variable value="op"/>
+            <variable value="src"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntrySYST"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure'))"/>
+      </source>
+      <rule>
+        <name value="SYSTProcedureContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="procedure"/>
+        </source>
+        <rule>
+          <name value="SYSTMap"/>
+          <source>
+            <context value="procedure"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="syst"/>
+            <variable value="syst"/>
+          </target>
+          <dependent>
+            <name value="MapSYST"/>
+            <variable value="procedure"/>
+            <variable value="syst"/>
+            <variable value="src"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryST"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie'))"/>
+      </source>
+      <rule>
+        <name value="STProcedureContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="procedure"/>
+        </source>
+        <rule>
+          <name value="STMap"/>
+          <source>
+            <context value="procedure"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="st"/>
+            <variable value="st"/>
+          </target>
+          <dependent>
+            <name value="MapST"/>
+            <variable value="procedure"/>
+            <variable value="st"/>
+            <variable value="src"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryTumorkonferenz"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(CarePlan) and resource.meta.profile.exists($this.contains('senologie-tumorboard-empfehlung'))"/>
+      </source>
+      <rule>
+        <name value="TumorkonferenzCarePlanContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="careplan"/>
+        </source>
+        <rule>
+          <name value="TumorkonferenzMap"/>
+          <source>
+            <context value="careplan"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="tumorkonferenz"/>
+            <variable value="tk"/>
+          </target>
+          <dependent>
+            <name value="MapTumorkonferenz"/>
+            <variable value="careplan"/>
+            <variable value="tk"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="EntryTod"/>
+      <source>
+        <context value="src"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+        <condition value="resource.is(Patient) and resource.deceased.exists()"/>
+      </source>
+      <rule>
+        <name value="TodPatientContext"/>
+        <source>
+          <context value="entry"/>
+          <element value="resource"/>
+          <variable value="patient"/>
+        </source>
+        <rule>
+          <name value="TodMap"/>
+          <source>
+            <context value="patient"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="tod"/>
+            <variable value="tod"/>
+          </target>
+          <dependent>
+            <name value="MapTod"/>
+            <variable value="patient"/>
+            <variable value="tod"/>
+            <variable value="src"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="SetMeldungMetadata"/>
+    <typeMode value="none"/>
+    <documentation value="============================================================================&#xD;&#xA;SetMeldungMetadata: Meldungs-Metadaten erzeugen&#xD;&#xA;meldungID, melderID, meldebegruendung, eigeneLeistung&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Bundle"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="OBDSMeldung"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="MapMeldungID"/>
+      <source>
+        <context value="src"/>
+        <element value="identifier"/>
+        <variable value="id"/>
+      </source>
+      <rule>
+        <name value="SetMeldungIDFromIdentifier"/>
+        <source>
+          <context value="id"/>
+          <element value="value"/>
+          <variable value="v"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="meldungID"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="v"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetMeldungIDGenerated"/>
+      <source>
+        <context value="src"/>
+        <condition value="identifier.exists().not()"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="meldungID"/>
+        <transform value="uuid"/>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapMelderID"/>
+      <source>
+        <context value="src"/>
+        <element value="meta"/>
+        <variable value="meta"/>
+      </source>
+      <rule>
+        <name value="SetMelderIDFromSource"/>
+        <source>
+          <context value="meta"/>
+          <element value="source"/>
+          <variable value="s"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="melderID"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="s"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetMeldebegruendung"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="meldebegruendung"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="I"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetEigeneLeistung"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="eigeneLeistung"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="J"/>
+        </parameter>
+      </target>
+    </rule>
+  </group>
+</StructureMap>

@@ -1,0 +1,1841 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToIqtigOperation",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIqtigOperation</b></p><a name=\"SenologieToIqtigOperation\"> </a><a name=\"hcSenologieToIqtigOperation\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation<span style=\"color: navy\">&quot; = &quot;</span>SenologieToIqtigOperation<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/procedure.html\" title=\"Procedure\">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style=\"color: navy\">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/specimen.html\" title=\"Specimen\">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style=\"color: navy\">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-iqtig-mammachirurgie-181.html\" title=\"IQTIG QS 18.1 Mammachirurgie (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181</a><span style=\"color: navy\">&quot; </span><b>alias </b>IQTIG181 <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors. The element names are correct per the IQTIG 18.1 Logical Model.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Teildatensatz Operation (O): Procedure + Specimen + Observations -&gt; O:*</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Pro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Procedure (Senologie_BrustOP / Senologie_Operation) -&gt; OP-Datum, OPS,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Seitenlokalisation, Operationsart</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Specimen (Senologie_Pathologie_Praeparat) -&gt; Schnellschnitt,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Praeparatkontrolle, Praeparat-spezifische Daten</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (Pathologie-Befund) -&gt; Histologie, Grading, pTNM, R-Status</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (Rezeptorstatus: ER/PR/HER2) -&gt; QI-relevante Felder</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapOperation<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement, <b>source</b> <span style=\"color: maroon\">bundle</span><span style=\"color: navy\"> : </span>Bundle<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">O:LNROP - Laufende Nummer der Operation (Default 1; ueber Slicing iterierbar)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.laufendeNummer = <span style=\"color: blue\">1</span> <i>&quot;SetLnrOp&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:LNRBRUST - Zuordnung zum Brust-Teildatensatz (Default 1)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bezugLnrBrust = <span style=\"color: blue\">1</span> <i>&quot;SetLnrBrustRef&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:OPDATUM - aus Procedure.performedDateTime</span>\r\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsdatum = <span style=\"color: maroon\">perf</span> <i>&quot;SetOpDatum&quot;</i><span style=\"color: navy\">;</span>\r\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(Period)<b> then</b><span style=\"color: navy\"> {\r\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsdatum = <span style=\"color: maroon\">s</span> <i>&quot;SetOpDatumPeriod&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpDatumPeriod&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:SEITE - Seitenlokalisation aus Procedure.bodySite (SNOMED CT)</span>\r\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '24028007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'R'</span> <i>&quot;SetOpSeiteR&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '7771000'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'L'</span> <i>&quot;SetOpSeiteL&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '51440002'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'B'</span> <i>&quot;SetOpSeiteB&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpSeiteSCT&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpSeitenlokalisation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:OPSCHLUESSEL - OPS-Kodes aus Procedure.code</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.prozeduren<b> as </b><span style=\"color: maroon\">opsItem</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>opsItem.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetOpsCode&quot;</i><span style=\"color: navy\">;</span>\r\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>opsItem.version = <span style=\"color: maroon\">v</span> <i>&quot;SetOpsVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpsCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapProzeduren&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:OPART - Operationsart aus Procedure.category oder Senologie-Operation-Art VS</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BET (5-870) -&gt; 1, Mastektomie einfach (5-871) -&gt; 2, Mastektomie SSM (5-872) -&gt; 3,</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Mastektomie NSM (5-883) -&gt; 4, Revision -&gt; 5, Wiederaufbau (5-885) -&gt; 6</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-870')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'1'</span> <i>&quot;SetOpArtBET&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-871')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'2'</span> <i>&quot;SetOpArtMastEinfach&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-872')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'3'</span> <i>&quot;SetOpArtMastSSM&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-883')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'4'</span> <i>&quot;SetOpArtMastNSM&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-885')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'6'</span> <i>&quot;SetOpArtRekon&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpArtOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpArtFromOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Direkter Map aus Senologie-Operation-Art CodeSystem (falls vorhanden)</span>\r\n  src.category<b> as </b><span style=\"color: maroon\">cat</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    cat.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: maroon\">cd</span> <i>&quot;SetOpArtDirect&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpArtCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpArtCategory&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:DIGNITAET - Intraoperative Dignitaet aus Pathologie-Schnellschnitt (Observation)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">digEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '22748-9')<b> then</b><span style=\"color: navy\"> {\r\n</span>    digEntry.resource<b> as </b><span style=\"color: maroon\">digObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      digObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          <span style=\"color: navy\">// </span><span style=\"color: green\">1222584008=maligne -&gt; 1, 36103009=benigne -&gt; 2</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '1222584008'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.dignitaetIntraop = <span style=\"color: blue\">'1'</span> <i>&quot;SetDigMaligne&quot;</i><span style=\"color: navy\">;</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '36103009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.dignitaetIntraop = <span style=\"color: blue\">'2'</span> <i>&quot;SetDigBenigne&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapDigCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapDigValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapDigObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryDignitaet&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:SCHNELLSCHNITT - Intraoperativer Schnellschnitt durchgefuehrt</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">aus Specimen.processing.procedure (Schnellschnitt-Kodierung)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">specEntry</span><b> where </b>resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    specEntry.resource<b> as </b><span style=\"color: maroon\">specimen</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      specimen.processing<b> as </b><span style=\"color: maroon\">proc</span><b> where </b>procedure.coding.exists(code = '123038009')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.intraopSchnellschnitt = <span style=\"color: blue\">'1'</span> <i>&quot;SetSchnellschnittJa&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;SpecContextSS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntrySchnellschnitt&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:PRAEPKONTROLLE - QI-3 Intraoperative Praeparatkontrolle aus Specimen.processing</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Mammografisch=1, Sonografisch=2</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">specEntry</span><b> where </b>resource.is(Specimen)<b> then</b><span style=\"color: navy\"> {\r\n</span>    specEntry.resource<b> as </b><span style=\"color: maroon\">specimen</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      specimen.processing<b> as </b><span style=\"color: maroon\">proc</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        proc.procedure<b> as </b><span style=\"color: maroon\">p</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          p.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '71651007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style=\"color: blue\">'1'</span> <i>&quot;SetPraepkMammo&quot;</i><span style=\"color: navy\">;</span>\r\n            c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '16310003'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.intraopPraeparatkontrolle = <span style=\"color: blue\">'2'</span> <i>&quot;SetPraepkSono&quot;</i><span style=\"color: navy\">;</span>\r\n          <span style=\"color: navy\">}</span> <i>&quot;MapPraepkCoding&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapPraepkProcedure&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapPraepkProcessing&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;SpecContextPK&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryPraeparatkontrolle&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Histologie / Pathologie aus Pathologie-Befund Observations ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:HISTMORPH - ICD-O-3 Morphologie aus Observation (LOINC 59847-4)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">histEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '59847-4')<b> then</b><span style=\"color: navy\"> {\r\n</span>    histEntry.resource<b> as </b><span style=\"color: maroon\">histObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      histObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'urn:oid:2.16.840.1.113883.6.43.1'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.histologieICDO<b> as </b><span style=\"color: maroon\">histo</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>histo.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetHistCode&quot;</i><span style=\"color: navy\">;</span>\r\n          c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>histo.version = <span style=\"color: maroon\">v</span> <i>&quot;SetHistVersion&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapHistICDO&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapHistValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapHistObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryHistologie&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:GRADING - Histopathologisches Grading aus Observation (LOINC 33732-9)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">gradEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '33732-9')<b> then</b><span style=\"color: navy\"> {\r\n</span>    gradEntry.resource<b> as </b><span style=\"color: maroon\">gradObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      gradObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.grading = <span style=\"color: maroon\">cd</span> <i>&quot;SetGrading&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapGradingCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapGradingValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapGradingObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryGrading&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:TGROESSEINV - Tumorgroesse invasiv (LOINC 33728-7)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tgInvEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '33728-7')<b> then</b><span style=\"color: navy\"> {\r\n</span>    tgInvEntry.resource<b> as </b><span style=\"color: maroon\">tgInvObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      tgInvObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorgroesseInvasiv = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetTGroesseInv&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapTGroesseInvValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapTGroesseInvObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryTGroesseInv&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:TGROESSEDCIS - Tumorgroesse DCIS</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">tgDcisEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('pathologie'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    tgDcisEntry.resource<b> as </b><span style=\"color: maroon\">tgDcisObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      tgDcisObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.tumorgroesseDCIS = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetTGroesseDCIS&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapTGroesseDCISValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapTGroesseDCISObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryTGroesseDCIS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:MULTIFOK - Multifokalitaet aus Observation (SNOMED 399566009 fuer multifokal)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">mfEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '44638-1')<b> then</b><span style=\"color: navy\"> {\r\n</span>    mfEntry.resource<b> as </b><span style=\"color: maroon\">mfObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      mfObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '56061002'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.multifokalitaet = <span style=\"color: blue\">'0'</span> <i>&quot;SetMFNein&quot;</i><span style=\"color: navy\">;</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '399566009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.multifokalitaet = <span style=\"color: blue\">'1'</span> <i>&quot;SetMFJa&quot;</i><span style=\"color: navy\">;</span>\r\n          c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '367651003'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.multifokalitaet = <span style=\"color: blue\">'2'</span> <i>&quot;SetMFMZ&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapMFCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapMFValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapMFObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryMultifokal&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- pTNM aus TNM-Observation (LOINC 21902-2 mit c/p-Praefix) ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:PT - pT aus Observation (LOINC 21899-0 Primary tumor.pathology)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">ptEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21899-0')<b> then</b><span style=\"color: navy\"> {\r\n</span>    ptEntry.resource<b> as </b><span style=\"color: maroon\">ptObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      ptObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.pT = <span style=\"color: maroon\">cd</span> <i>&quot;SetPT&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapPTCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapPTValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapPTObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryPT&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:PN - pN aus Observation (LOINC 21900-6 Regional lymph nodes.pathology)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">pnEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21900-6')<b> then</b><span style=\"color: navy\"> {\r\n</span>    pnEntry.resource<b> as </b><span style=\"color: maroon\">pnObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      pnObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.pN = <span style=\"color: maroon\">cd</span> <i>&quot;SetPN&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapPNCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapPNValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapPNObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryPN&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:PM - pM aus Observation (LOINC 21901-4 Distant metastases.pathology)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">pmEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21901-4')<b> then</b><span style=\"color: navy\"> {\r\n</span>    pmEntry.resource<b> as </b><span style=\"color: maroon\">pmObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      pmObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.pM = <span style=\"color: maroon\">cd</span> <i>&quot;SetPM&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapPMCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapPMValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapPMObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryPM&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:UICCPATHO - pathologisches UICC-Stadium (LOINC 21902-2)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">uiccEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21902-2')<b> then</b><span style=\"color: navy\"> {\r\n</span>    uiccEntry.resource<b> as </b><span style=\"color: maroon\">uiccObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      uiccObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.uiccStadiumPatho = <span style=\"color: maroon\">cd</span> <i>&quot;SetUICCPatho&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapUICCPathoCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapUICCPathoValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapUICCPathoObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryUICCPatho&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Residualstatus R0/R1/R2 aus Procedure.outcome ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:RSTATUSLOK / O:RSTATUSGES - aus Procedure.outcome (SNOMED CT)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">122538001=R0, 122539009=R1, 122540006=R2, 122541005=RX</span>\r\n  src.outcome<b> as </b><span style=\"color: maroon\">out</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    out.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122538001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'R0'</span> <i>&quot;SetRStatusLokR0&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122538001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'R0'</span> <i>&quot;SetRStatusGesR0&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122539009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'R1'</span> <i>&quot;SetRStatusLokR1&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122539009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'R1'</span> <i>&quot;SetRStatusGesR1&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122540006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'R2'</span> <i>&quot;SetRStatusLokR2&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122540006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'R2'</span> <i>&quot;SetRStatusGesR2&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122541005'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'RX'</span> <i>&quot;SetRStatusLokRX&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122541005'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'RX'</span> <i>&quot;SetRStatusGesRX&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOutcomeCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapResidualstatus&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Lymphknoten aus Pathologie-Observations ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:SENTINEL - Sentinel-Biopsie durchgefuehrt (OPS 5-401.1*)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-401.1')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.sentinelDurchgefuehrt = <span style=\"color: blue\">'1'</span> <i>&quot;SetSentinelJa&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapSentinelOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapSentinel&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:AXDISSEKTION - Axilladissektion (OPS 5-402)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-402')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.axillaDissektion = <span style=\"color: blue\">'1'</span> <i>&quot;SetAxDissJa&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapAxDissOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapAxillaDissektion&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:LKUNTERSUCHT - Anzahl untersuchter LK (LOINC 21894-1)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">lkuEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21894-1')<b> then</b><span style=\"color: navy\"> {\r\n</span>    lkuEntry.resource<b> as </b><span style=\"color: maroon\">lkuObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      lkuObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.lkUntersucht = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetLKUntersucht&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapLKUntersuchtValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapLKUntersuchtObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryLKUntersucht&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:LKBEFALLEN - Anzahl befallener LK (LOINC 21893-3)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">lkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '21893-3')<b> then</b><span style=\"color: navy\"> {\r\n</span>    lkbEntry.resource<b> as </b><span style=\"color: maroon\">lkbObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      lkbObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.lkBefallen = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetLKBefallen&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapLKBefallenValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapLKBefallenObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryLKBefallen&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:SLKUNTERSUCHT / O:SLKBEFALLEN - Sentinel-LK (LOINC 92832-5 / 92833-3)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">slkuEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92832-5')<b> then</b><span style=\"color: navy\"> {\r\n</span>    slkuEntry.resource<b> as </b><span style=\"color: maroon\">slkuObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      slkuObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.sentinelLkUntersucht = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetSLKUntersucht&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapSLKUntersuchtValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapSLKUntersuchtObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntrySLKUntersucht&quot;</i><span style=\"color: navy\">;</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">slkbEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '92833-3')<b> then</b><span style=\"color: navy\"> {\r\n</span>    slkbEntry.resource<b> as </b><span style=\"color: maroon\">slkbObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      slkbObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.value<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.sentinelLkBefallen = <b>truncate</b><span style=\"color: navy\">(</span><span style=\"color: maroon\">v</span><span style=\"color: navy\">)</span> <i>&quot;SetSLKBefallen&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapSLKBefallenValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapSLKBefallenObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntrySLKBefallen&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Rezeptorstatus (identisches Muster wie in SenologieToObdsModulMamma) ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:ERSTATUS - Oestrogenrezeptor (LOINC 85337-4)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">erEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85337-4')<b> then</b><span style=\"color: navy\"> {\r\n</span>    erEntry.resource<b> as </b><span style=\"color: maroon\">erObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      erObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '10828004'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.hormonrezeptorStatusER = <span style=\"color: blue\">'P'</span> <i>&quot;SetERPositiv&quot;</i><span style=\"color: navy\">;</span>\r\n        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '260385009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.hormonrezeptorStatusER = <span style=\"color: blue\">'N'</span> <i>&quot;SetERNegativ&quot;</i><span style=\"color: navy\">;</span>\r\n        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '261665006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.hormonrezeptorStatusER = <span style=\"color: blue\">'U'</span> <i>&quot;SetERUnbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapERValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapERObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryER&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:PRSTATUS - Progesteronrezeptor (LOINC 85339-0)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">prEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85339-0')<b> then</b><span style=\"color: navy\"> {\r\n</span>    prEntry.resource<b> as </b><span style=\"color: maroon\">prObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      prObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '10828004'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.hormonrezeptorStatusPR = <span style=\"color: blue\">'P'</span> <i>&quot;SetPRPositiv&quot;</i><span style=\"color: navy\">;</span>\r\n        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '260385009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.hormonrezeptorStatusPR = <span style=\"color: blue\">'N'</span> <i>&quot;SetPRNegativ&quot;</i><span style=\"color: navy\">;</span>\r\n        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '261665006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.hormonrezeptorStatusPR = <span style=\"color: blue\">'U'</span> <i>&quot;SetPRUnbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapPRValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapPRObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryPR&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:HER2STATUS - HER2-Status (LOINC 85319-2)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">herEntry</span><b> where </b>resource.is(Observation) and resource.code.coding.exists(code = '85319-2')<b> then</b><span style=\"color: navy\"> {\r\n</span>    herEntry.resource<b> as </b><span style=\"color: maroon\">herObs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      herObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '10828004'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.her2Status = <span style=\"color: blue\">'P'</span> <i>&quot;SetHER2Positiv&quot;</i><span style=\"color: navy\">;</span>\r\n        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '260385009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.her2Status = <span style=\"color: blue\">'N'</span> <i>&quot;SetHER2Negativ&quot;</i><span style=\"color: navy\">;</span>\r\n        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>code = '261665006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.her2Status = <span style=\"color: blue\">'U'</span> <i>&quot;SetHER2Unbekannt&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapHER2Value&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapHER2Obs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryHER2&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Komplikationen ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:KOMPL - Aus Senologie_Operative_Komplikation (Observation oder Condition)</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">kompEntry</span><b> where </b>resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))<b> then</b><span style=\"color: navy\"> {\r\n</span>    kompEntry.resource<b> as </b><span style=\"color: maroon\">kompObs</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style=\"color: maroon\">kompItem</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      kompObs.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>kompItem.kuerzel = <span style=\"color: maroon\">cd</span> <i>&quot;SetKomplKuerzel&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapKomplKuerzelCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapKomplValue&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapKomplObs&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryKomplikationen&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Auch aus Condition-basierten Komplikationen</span>\r\n  bundle.entry<b> as </b><span style=\"color: maroon\">kcEntry</span><b> where </b>resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item')<b> then</b><span style=\"color: navy\"> {\r\n</span>    kcEntry.resource<b> as </b><span style=\"color: maroon\">kcCond</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.komplikationen<b> as </b><span style=\"color: maroon\">kompItem</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      kcCond.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style=\"color: navy\"> {\r\n</span>          c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>kompItem.icdCode = <span style=\"color: maroon\">cd</span> <i>&quot;SetKomplICD&quot;</i><span style=\"color: navy\">;</span>\r\n        <span style=\"color: navy\">}</span> <i>&quot;MapKomplICDCoding&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapKomplCondCode&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapKomplCondItem&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;EntryKomplikationenCond&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation",
+  "version" : "0.1.0",
+  "name" : "SenologieToIqtigOperation",
+  "status" : "draft",
+  "date" : "2026-05-04T06:10:53+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Procedure",
+    "mode" : "source",
+    "alias" : "Procedure"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Specimen",
+    "mode" : "source",
+    "alias" : "Specimen"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181",
+    "mode" : "target",
+    "alias" : "IQTIG181"
+  }],
+  "group" : [{
+    "name" : "MapOperation",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the IQTIG 18.1 Logical Model.\r\n============================================================================\r\nTeildatensatz Operation (O): Procedure + Specimen + Observations -> O:*\r\nPro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:\r\n- Procedure (Senologie_BrustOP / Senologie_Operation) -> OP-Datum, OPS,\r\nSeitenlokalisation, Operationsart\r\n- Specimen (Senologie_Pathologie_Praeparat) -> Schnellschnitt,\r\nPraeparatkontrolle, Praeparat-spezifische Daten\r\n- Observation (Pathologie-Befund) -> Histologie, Grading, pTNM, R-Status\r\n- Observation (Rezeptorstatus: ER/PR/HER2) -> QI-relevante Felder\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Procedure",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "source"
+    }],
+    "rule" : [{
+      "name" : "SetLnrOp",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "laufendeNummer",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueInteger" : 1
+        }]
+      }]
+    },
+    {
+      "name" : "SetLnrBrustRef",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "bezugLnrBrust",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueInteger" : 1
+        }]
+      }]
+    },
+    {
+      "name" : "SetOpDatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "performed",
+        "variable" : "perf",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "operationsdatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "perf"
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpDatumPeriod",
+      "source" : [{
+        "context" : "src",
+        "element" : "performed",
+        "variable" : "perf",
+        "condition" : "$this.is(Period)"
+      }],
+      "rule" : [{
+        "name" : "SetOpDatumPeriod",
+        "source" : [{
+          "context" : "perf",
+          "element" : "start",
+          "variable" : "s"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "operationsdatum",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "s"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpSeitenlokalisation",
+      "source" : [{
+        "context" : "src",
+        "element" : "bodySite",
+        "variable" : "bs"
+      }],
+      "rule" : [{
+        "name" : "MapOpSeiteSCT",
+        "source" : [{
+          "context" : "bs",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "SetOpSeiteR",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '24028007'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpSeiteL",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '7771000'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "L"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpSeiteB",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '51440002'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "B"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapProzeduren",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapOpsCoding",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "prozeduren",
+          "variable" : "opsItem"
+        }],
+        "rule" : [{
+          "name" : "SetOpsCode",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "opsItem",
+            "contextType" : "variable",
+            "element" : "code",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpsVersion",
+          "source" : [{
+            "context" : "c",
+            "element" : "version",
+            "variable" : "v"
+          }],
+          "target" : [{
+            "context" : "opsItem",
+            "contextType" : "variable",
+            "element" : "version",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "v"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpArtFromOPS",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapOpArtOPS",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "rule" : [{
+          "name" : "SetOpArtBET",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-870')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtMastEinfach",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-871')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtMastSSM",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-872')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "3"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtMastNSM",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-883')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "4"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtRekon",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-885')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "6"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpArtCategory",
+      "source" : [{
+        "context" : "src",
+        "element" : "category",
+        "variable" : "cat"
+      }],
+      "rule" : [{
+        "name" : "MapOpArtCoding",
+        "source" : [{
+          "context" : "cat",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art'"
+        }],
+        "rule" : [{
+          "name" : "SetOpArtDirect",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryDignitaet",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "digEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '22748-9')"
+      }],
+      "rule" : [{
+        "name" : "MapDigObs",
+        "source" : [{
+          "context" : "digEntry",
+          "element" : "resource",
+          "variable" : "digObs"
+        }],
+        "rule" : [{
+          "name" : "MapDigValue",
+          "source" : [{
+            "context" : "digObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapDigCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetDigMaligne",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '1222584008'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "dignitaetIntraop",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            },
+            {
+              "name" : "SetDigBenigne",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '36103009'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "dignitaetIntraop",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "2"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntrySchnellschnitt",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "specEntry",
+        "condition" : "resource.is(Specimen) and resource.meta.profile.exists($this.contains('senologie-pathologie-praeparat'))"
+      }],
+      "rule" : [{
+        "name" : "SpecContextSS",
+        "source" : [{
+          "context" : "specEntry",
+          "element" : "resource",
+          "variable" : "specimen"
+        }],
+        "rule" : [{
+          "name" : "SetSchnellschnittJa",
+          "source" : [{
+            "context" : "specimen",
+            "element" : "processing",
+            "variable" : "proc",
+            "condition" : "procedure.coding.exists(code = '123038009')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "intraopSchnellschnitt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPraeparatkontrolle",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "specEntry",
+        "condition" : "resource.is(Specimen)"
+      }],
+      "rule" : [{
+        "name" : "SpecContextPK",
+        "source" : [{
+          "context" : "specEntry",
+          "element" : "resource",
+          "variable" : "specimen"
+        }],
+        "rule" : [{
+          "name" : "MapPraepkProcessing",
+          "source" : [{
+            "context" : "specimen",
+            "element" : "processing",
+            "variable" : "proc"
+          }],
+          "rule" : [{
+            "name" : "MapPraepkProcedure",
+            "source" : [{
+              "context" : "proc",
+              "element" : "procedure",
+              "variable" : "p"
+            }],
+            "rule" : [{
+              "name" : "MapPraepkCoding",
+              "source" : [{
+                "context" : "p",
+                "element" : "coding",
+                "variable" : "c",
+                "condition" : "system = 'http://snomed.info/sct'"
+              }],
+              "rule" : [{
+                "name" : "SetPraepkMammo",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = '71651007'"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "intraopPraeparatkontrolle",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "1"
+                  }]
+                }]
+              },
+              {
+                "name" : "SetPraepkSono",
+                "source" : [{
+                  "context" : "c",
+                  "element" : "code",
+                  "variable" : "cd",
+                  "condition" : "$this = '16310003'"
+                }],
+                "target" : [{
+                  "context" : "tgt",
+                  "contextType" : "variable",
+                  "element" : "intraopPraeparatkontrolle",
+                  "transform" : "copy",
+                  "parameter" : [{
+                    "valueString" : "2"
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryHistologie",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "histEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '59847-4')"
+      }],
+      "rule" : [{
+        "name" : "MapHistObs",
+        "source" : [{
+          "context" : "histEntry",
+          "element" : "resource",
+          "variable" : "histObs"
+        }],
+        "rule" : [{
+          "name" : "MapHistValue",
+          "source" : [{
+            "context" : "histObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapHistICDO",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'urn:oid:2.16.840.1.113883.6.43.1'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "histologieICDO",
+              "variable" : "histo"
+            }],
+            "rule" : [{
+              "name" : "SetHistCode",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "histo",
+                "contextType" : "variable",
+                "element" : "code",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            },
+            {
+              "name" : "SetHistVersion",
+              "source" : [{
+                "context" : "c",
+                "element" : "version",
+                "variable" : "v"
+              }],
+              "target" : [{
+                "context" : "histo",
+                "contextType" : "variable",
+                "element" : "version",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "v"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryGrading",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "gradEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '33732-9')"
+      }],
+      "rule" : [{
+        "name" : "MapGradingObs",
+        "source" : [{
+          "context" : "gradEntry",
+          "element" : "resource",
+          "variable" : "gradObs"
+        }],
+        "rule" : [{
+          "name" : "MapGradingValue",
+          "source" : [{
+            "context" : "gradObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapGradingCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetGrading",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "grading",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTGroesseInv",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tgInvEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '33728-7')"
+      }],
+      "rule" : [{
+        "name" : "MapTGroesseInvObs",
+        "source" : [{
+          "context" : "tgInvEntry",
+          "element" : "resource",
+          "variable" : "tgInvObs"
+        }],
+        "rule" : [{
+          "name" : "MapTGroesseInvValue",
+          "source" : [{
+            "context" : "tgInvObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetTGroesseInv",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "tumorgroesseInvasiv",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryTGroesseDCIS",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "tgDcisEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('pathologie'))"
+      }],
+      "rule" : [{
+        "name" : "MapTGroesseDCISObs",
+        "source" : [{
+          "context" : "tgDcisEntry",
+          "element" : "resource",
+          "variable" : "tgDcisObs"
+        }],
+        "rule" : [{
+          "name" : "MapTGroesseDCISValue",
+          "source" : [{
+            "context" : "tgDcisObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetTGroesseDCIS",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "tumorgroesseDCIS",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryMultifokal",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "mfEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '44638-1')"
+      }],
+      "rule" : [{
+        "name" : "MapMFObs",
+        "source" : [{
+          "context" : "mfEntry",
+          "element" : "resource",
+          "variable" : "mfObs"
+        }],
+        "rule" : [{
+          "name" : "MapMFValue",
+          "source" : [{
+            "context" : "mfObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapMFCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetMFNein",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '56061002'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "multifokalitaet",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "0"
+                }]
+              }]
+            },
+            {
+              "name" : "SetMFJa",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '399566009'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "multifokalitaet",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "1"
+                }]
+              }]
+            },
+            {
+              "name" : "SetMFMZ",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd",
+                "condition" : "$this = '367651003'"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "multifokalitaet",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueString" : "2"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPT",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "ptEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21899-0')"
+      }],
+      "rule" : [{
+        "name" : "MapPTObs",
+        "source" : [{
+          "context" : "ptEntry",
+          "element" : "resource",
+          "variable" : "ptObs"
+        }],
+        "rule" : [{
+          "name" : "MapPTValue",
+          "source" : [{
+            "context" : "ptObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapPTCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPT",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "pT",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPN",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "pnEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21900-6')"
+      }],
+      "rule" : [{
+        "name" : "MapPNObs",
+        "source" : [{
+          "context" : "pnEntry",
+          "element" : "resource",
+          "variable" : "pnObs"
+        }],
+        "rule" : [{
+          "name" : "MapPNValue",
+          "source" : [{
+            "context" : "pnObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapPNCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPN",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "pN",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPM",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "pmEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21901-4')"
+      }],
+      "rule" : [{
+        "name" : "MapPMObs",
+        "source" : [{
+          "context" : "pmEntry",
+          "element" : "resource",
+          "variable" : "pmObs"
+        }],
+        "rule" : [{
+          "name" : "MapPMValue",
+          "source" : [{
+            "context" : "pmObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapPMCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetPM",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "pM",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryUICCPatho",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "uiccEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21902-2')"
+      }],
+      "rule" : [{
+        "name" : "MapUICCPathoObs",
+        "source" : [{
+          "context" : "uiccEntry",
+          "element" : "resource",
+          "variable" : "uiccObs"
+        }],
+        "rule" : [{
+          "name" : "MapUICCPathoValue",
+          "source" : [{
+            "context" : "uiccObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapUICCPathoCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetUICCPatho",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "tgt",
+                "contextType" : "variable",
+                "element" : "uiccStadiumPatho",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapResidualstatus",
+      "source" : [{
+        "context" : "src",
+        "element" : "outcome",
+        "variable" : "out"
+      }],
+      "rule" : [{
+        "name" : "MapOutcomeCoding",
+        "source" : [{
+          "context" : "out",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "SetRStatusLokR0",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122538001'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R0"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesR0",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122538001'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R0"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusLokR1",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122539009'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesR1",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122539009'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusLokR2",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122540006'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesR2",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122540006'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusLokRX",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122541005'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "RX"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesRX",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122541005'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "RX"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapSentinel",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapSentinelOPS",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "rule" : [{
+          "name" : "SetSentinelJa",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-401.1')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "sentinelDurchgefuehrt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapAxillaDissektion",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapAxDissOPS",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "rule" : [{
+          "name" : "SetAxDissJa",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-402')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "axillaDissektion",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryLKUntersucht",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "lkuEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21894-1')"
+      }],
+      "rule" : [{
+        "name" : "MapLKUntersuchtObs",
+        "source" : [{
+          "context" : "lkuEntry",
+          "element" : "resource",
+          "variable" : "lkuObs"
+        }],
+        "rule" : [{
+          "name" : "MapLKUntersuchtValue",
+          "source" : [{
+            "context" : "lkuObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetLKUntersucht",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "lkUntersucht",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryLKBefallen",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "lkbEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '21893-3')"
+      }],
+      "rule" : [{
+        "name" : "MapLKBefallenObs",
+        "source" : [{
+          "context" : "lkbEntry",
+          "element" : "resource",
+          "variable" : "lkbObs"
+        }],
+        "rule" : [{
+          "name" : "MapLKBefallenValue",
+          "source" : [{
+            "context" : "lkbObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetLKBefallen",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "lkBefallen",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntrySLKUntersucht",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "slkuEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92832-5')"
+      }],
+      "rule" : [{
+        "name" : "MapSLKUntersuchtObs",
+        "source" : [{
+          "context" : "slkuEntry",
+          "element" : "resource",
+          "variable" : "slkuObs"
+        }],
+        "rule" : [{
+          "name" : "MapSLKUntersuchtValue",
+          "source" : [{
+            "context" : "slkuObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetSLKUntersucht",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "sentinelLkUntersucht",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntrySLKBefallen",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "slkbEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '92833-3')"
+      }],
+      "rule" : [{
+        "name" : "MapSLKBefallenObs",
+        "source" : [{
+          "context" : "slkbEntry",
+          "element" : "resource",
+          "variable" : "slkbObs"
+        }],
+        "rule" : [{
+          "name" : "MapSLKBefallenValue",
+          "source" : [{
+            "context" : "slkbObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetSLKBefallen",
+            "source" : [{
+              "context" : "val",
+              "element" : "value",
+              "variable" : "v"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "sentinelLkBefallen",
+              "transform" : "truncate",
+              "parameter" : [{
+                "valueId" : "v"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryER",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "erEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85337-4')"
+      }],
+      "rule" : [{
+        "name" : "MapERObs",
+        "source" : [{
+          "context" : "erEntry",
+          "element" : "resource",
+          "variable" : "erObs"
+        }],
+        "rule" : [{
+          "name" : "MapERValue",
+          "source" : [{
+            "context" : "erObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetERPositiv",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '10828004'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "hormonrezeptorStatusER",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "P"
+              }]
+            }]
+          },
+          {
+            "name" : "SetERNegativ",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '260385009'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "hormonrezeptorStatusER",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "N"
+              }]
+            }]
+          },
+          {
+            "name" : "SetERUnbekannt",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '261665006'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "hormonrezeptorStatusER",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "U"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryPR",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "prEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85339-0')"
+      }],
+      "rule" : [{
+        "name" : "MapPRObs",
+        "source" : [{
+          "context" : "prEntry",
+          "element" : "resource",
+          "variable" : "prObs"
+        }],
+        "rule" : [{
+          "name" : "MapPRValue",
+          "source" : [{
+            "context" : "prObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetPRPositiv",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '10828004'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "hormonrezeptorStatusPR",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "P"
+              }]
+            }]
+          },
+          {
+            "name" : "SetPRNegativ",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '260385009'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "hormonrezeptorStatusPR",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "N"
+              }]
+            }]
+          },
+          {
+            "name" : "SetPRUnbekannt",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '261665006'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "hormonrezeptorStatusPR",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "U"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryHER2",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "herEntry",
+        "condition" : "resource.is(Observation) and resource.code.coding.exists(code = '85319-2')"
+      }],
+      "rule" : [{
+        "name" : "MapHER2Obs",
+        "source" : [{
+          "context" : "herEntry",
+          "element" : "resource",
+          "variable" : "herObs"
+        }],
+        "rule" : [{
+          "name" : "MapHER2Value",
+          "source" : [{
+            "context" : "herObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "SetHER2Positiv",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '10828004'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "her2Status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "P"
+              }]
+            }]
+          },
+          {
+            "name" : "SetHER2Negativ",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '260385009'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "her2Status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "N"
+              }]
+            }]
+          },
+          {
+            "name" : "SetHER2Unbekannt",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "code = '261665006'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "her2Status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "U"
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryKomplikationen",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "kompEntry",
+        "condition" : "resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation'))"
+      }],
+      "rule" : [{
+        "name" : "MapKomplObs",
+        "source" : [{
+          "context" : "kompEntry",
+          "element" : "resource",
+          "variable" : "kompObs"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "komplikationen",
+          "variable" : "kompItem"
+        }],
+        "rule" : [{
+          "name" : "MapKomplValue",
+          "source" : [{
+            "context" : "kompObs",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "MapKomplKuerzelCoding",
+            "source" : [{
+              "context" : "val",
+              "element" : "coding",
+              "variable" : "c"
+            }],
+            "rule" : [{
+              "name" : "SetKomplKuerzel",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "kompItem",
+                "contextType" : "variable",
+                "element" : "kuerzel",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "EntryKomplikationenCond",
+      "source" : [{
+        "context" : "bundle",
+        "element" : "entry",
+        "variable" : "kcEntry",
+        "condition" : "resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item')"
+      }],
+      "rule" : [{
+        "name" : "MapKomplCondItem",
+        "source" : [{
+          "context" : "kcEntry",
+          "element" : "resource",
+          "variable" : "kcCond"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "komplikationen",
+          "variable" : "kompItem"
+        }],
+        "rule" : [{
+          "name" : "MapKomplCondCode",
+          "source" : [{
+            "context" : "kcCond",
+            "element" : "code",
+            "variable" : "code"
+          }],
+          "rule" : [{
+            "name" : "MapKomplICDCoding",
+            "source" : [{
+              "context" : "code",
+              "element" : "coding",
+              "variable" : "c",
+              "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+            }],
+            "rule" : [{
+              "name" : "SetKomplICD",
+              "source" : [{
+                "context" : "c",
+                "element" : "code",
+                "variable" : "cd"
+              }],
+              "target" : [{
+                "context" : "kompItem",
+                "contextType" : "variable",
+                "element" : "icdCode",
+                "transform" : "copy",
+                "parameter" : [{
+                  "valueId" : "cd"
+                }]
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}
