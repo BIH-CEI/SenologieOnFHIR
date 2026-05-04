@@ -1,6 +1,21 @@
 # Datenbereitstellung und Testumgebungen
 
-Der Kerndatensatz Senologie stellt neben den Profilen und Terminologien auch eine vollständige Testinfrastruktur bereit, um die Implementierung in realen Systemen zu erleichtern.
+Der Kerndatensatz Senologie stellt neben den Profilen und Terminologien eine vollständige Testinfrastruktur bereit.
+
+### Bereitgestellte Komponenten
+
+| Komponente | Beschreibung | Zielgruppe |
+|-----------|-------------|------------|
+| **Implementation Guide** (GitHub Pages) | Profile, Questionnaires, Beispiele, Dokumentation | Alle |
+| **FHIR Package** | Installierbare Profile für Validierung und Implementierung | Implementierer |
+| **Matchbox Docker** | SDC `$extract` (Questionnaire-Extraction) + StructureMap `$transform` (Meldungs-Transformation) | Tester, Entwickler |
+| **HAPI FHIR Docker** | Standard FHIR-Server + CQL `$cql` + `$evaluate-measure` | Tester, Auswertung |
+| **Pathling Docker** | SQL-on-FHIR ViewDefinitions, analytische FHIRPath-Abfragen | Forschung, BI |
+| **Aidbox Docker** | FHIR-Server mit Schema-Validierung, SQL on FHIR `$run` | Tester |
+| **Jupyter Notebooks** | CQL-Auswertung, ViewDefinitions, Kohortenanalysen | Datenwissenschaftler |
+| **Bundles (JSON)** | 12 Testpatientinnen als Transaction Bundles, [Download](Bundle-Fall1-Erika-Neumann.json) | Alle |
+
+Alle Docker-Compose-Dateien, Import-Skripte und Testdaten sind im [GitHub-Repository](https://github.com/BIH-CEI/SenologieOnFHIR) frei verfügbar.
 
 ### Synthetische Testdaten
 
