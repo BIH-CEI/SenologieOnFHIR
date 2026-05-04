@@ -48,18 +48,10 @@ Die Profile sind so gestaltet, dass sie mit folgenden Standards kompatibel sind:
 
 ### Datenfluss
 
-```
-dotbase          KIS              DIZ            MII-Portal
-  │                │                │                │
-  ├─ FHIR ────────►│                │                │
-  │  Ressourcen     ├─ ETL ────────►│                │
-  │                 │               ├─ Föderiert ───►│
-  │                 ├─ oBDS ───────►│                │
-  │                 │  Meldung      │   Krebsregister│
-  │                 ├─ DIMDI ──────►│                │
-  │                 │  Implantat    │   Implantate-  │
-  │                 │               │   register     │
-```
+<div>
+<img src="austausch-datenfluss.svg" alt="Datenaustausch im Kerndatensatz Senologie" style="width:100%"/>
+<p><em>Datenaustausch — vom Dokumentationssystem über KIS und DIZ zu Meldewegen und MII</em></p>
+</div>
 
 ### Terminologie-Mapping
 

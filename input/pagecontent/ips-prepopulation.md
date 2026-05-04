@@ -17,7 +17,7 @@ Die Vorbelegung ist **nicht deterministisch** — sie liefert Vorschläge, die k
 
 - IPS-Daten können veraltet oder unterschiedlich granular sein
 - Die klinische Fragestellung ist oft spezifischer als die IPS-Dokumentation (z.B. "Bluthochdruck" vs. "welche Herz-Kreislauf-Erkrankung genau?")
-- Kodierungssysteme können abweichen (IPS: ICD-10-WHO/SNOMED CT, dotbase: teils lokale Codes)
+- Kodierungssysteme können abweichen (IPS: ICD-10-WHO/SNOMED CT, Dokumentationssystem: teils lokale Codes)
 
 Technisch kann die Vorbelegung über `sdc-questionnaire-initialExpression` (FHIRPath) im SDC-Questionnaire erfolgen.
 

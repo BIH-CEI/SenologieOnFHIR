@@ -189,7 +189,7 @@ Das Senologie-Modul setzt auf SDC-Questionnaires als primäres Erfassungsinstrum
 - **Doppelte Modellierung** — Questionnaire und Profile müssen synchron gehalten werden; Änderungen an Profilen erfordern Anpassungen der Formulare und umgekehrt
 - **Extraction-Komplexität** — Definition-based Extraction hat Grenzen bei komplexen Ressourcenstrukturen (z.B. verschachtelte Referenzen, Subprozeduren mit partOf-Beziehungen)
 - **Tooling-Abhängigkeit** — nicht alle FHIR-Server und Clients unterstützen SDC-Extraction vollständig; der Ansatz setzt einen SDC-fähigen FormManager/FormFiller voraus
-- **Vendor Lock-in** — aktuell werden die Formulare in dotbase gepflegt; die SDC-Questionnaires sind der interoperable Vertrag, aber die Rendering-Qualität variiert zwischen Clients
+- **Tooling-Vielfalt** — die SDC-Questionnaires sind der interoperable Vertrag, aber die Rendering-Qualität variiert zwischen Clients
 - **Datenimport** — strukturierte Daten aus Fremdsystemen (z.B. Pathologiebefunde aus dem LIS, Bildgebung aus dem PACS/RIS) umgehen das Formular und müssen direkt als FHIR-Ressourcen integriert werden
 - **Retrospektive Daten** — historische Daten können nicht nachträglich über Formulare erfasst werden, sondern müssen als ETL-Prozess direkt in die Zielprofile transformiert werden
 
@@ -249,7 +249,7 @@ Wie verhält sich die patientenberichtete Nebenwirkungserfassung (PRO-CTCAE) zur
 Das Brustzentrum erhebt Nebenwirkungen auf zwei Wegen:
 
 - **CTCAE (ärztlich)**: Grad 0–5 pro Nebenwirkung, dokumentiert in der Systemtherapie-Dokumentation. Meldepflichtig an das Krebsregister (oBDS: bei Grad ≥3 einzeln, sonst nur Maximalgrad).
-- **PRO-CTCAE (Patient-reported)**: Schwere/Häufigkeit/Beeinträchtigung (jeweils 0–4) pro Symptom, erhoben per Fragebogen (z.B. bei fortgeschrittener Erkrankung in dotbase).
+- **PRO-CTCAE (Patient-reported)**: Schwere/Häufigkeit/Beeinträchtigung (jeweils 0–4) pro Symptom, erhoben per Fragebogen (z.B. bei fortgeschrittener Erkrankung im Dokumentationssystem).
 
 Es gibt **kein offizielles Mapping** PRO-CTCAE → CTCAE Grad. Die NCI definiert PRO-CTCAE als Ergänzung, nicht als Ersatz der ärztlichen Dokumentation. Die Frage, ob und wie PRO-CTCAE-Daten in die CTCAE-basierte Meldung einfließen können, ist eine offene Forschungsfrage.
 

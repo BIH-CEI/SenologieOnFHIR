@@ -3,25 +3,34 @@
   "id": "senologie-systemtherapie",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie",
   "title": "Fragebogen: Systemische Therapie",
-  "description": "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, MedicationStatement, Observation).",
+  "description": "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement.",
   "subjectType": [
     "Patient"
   ],
   "contained": [
     {
       "resourceType": "Procedure",
-      "id": "postop-procedure-template",
-      "meta": {
-        "profile": [
-          "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
-        ]
+      "id": "syst-procedure-template",
+      "code": {
+        "coding": [
+          {
+            "code": "367336001",
+            "system": "http://snomed.info/sct",
+            "display": "Chemotherapy"
+          }
+        ],
+        "text": "Systemtherapie"
       },
       "subject": {
-        "reference": "placeholder"
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%patient"
+          }
+        ]
       },
       "reasonReference": [
         {
-          "reference": "placeholder",
           "_reference": {
             "extension": [
               {
@@ -33,6 +42,22 @@
         }
       ],
       "status": "completed"
+    },
+    {
+      "resourceType": "MedicationStatement",
+      "id": "syst-medikation-template",
+      "medicationCodeableConcept": {
+        "text": "Substanz"
+      },
+      "subject": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%patient"
+          }
+        ]
+      },
+      "status": "active"
     }
   ],
   "extension": [
@@ -51,17 +76,6 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-    },
-    {
-      "extension": [
-        {
-          "url": "template",
-          "valueReference": {
-            "reference": "#postop-procedure-template"
-          }
-        }
-      ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }
   ],
   "item": [
@@ -70,26 +84,9 @@
         {
           "valueExpression": {
             "language": "application/x-fhir-query",
-            "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+            "expression": "Condition?patient={{%patient.id}}&clinical-status=active"
           },
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
-        },
-        {
-          "extension": [
-            {
-              "url": "path",
-              "valueString": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
-            },
-            {
-              "url": "label",
-              "valueString": "ICD-10"
-            },
-            {
-              "url": "forDisplay",
-              "valueBoolean": false
-            }
-          ],
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
         },
         {
           "extension": [
@@ -109,6 +106,25 @@
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
         }
       ],
+      "linkId": "bezugsdiagnose",
+      "text": "Bezugsdiagnose",
+      "type": "reference",
+      "required": true
+    },
+    {
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "template",
+              "valueReference": {
+                "reference": "#syst-procedure-template"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+        }
+      ],
       "item": [
         {
           "answerOption": [
@@ -116,28 +132,28 @@
               "valueCoding": {
                 "code": "385786002",
                 "system": "http://snomed.info/sct",
-                "display": "Chemotherapy care"
+                "display": "Chemotherapie"
               }
             },
             {
               "valueCoding": {
                 "code": "169413002",
                 "system": "http://snomed.info/sct",
-                "display": "Endocrine therapy"
+                "display": "Endokrine Therapie"
               }
             },
             {
               "valueCoding": {
                 "code": "432105003",
                 "system": "http://snomed.info/sct",
-                "display": "Targeted therapy"
+                "display": "Zielgerichtete Therapie"
               }
             },
             {
               "valueCoding": {
                 "code": "76334006",
                 "system": "http://snomed.info/sct",
-                "display": "Immunotherapy"
+                "display": "Immuntherapie"
               }
             }
           ],
@@ -152,21 +168,21 @@
               "valueCoding": {
                 "code": "373847000",
                 "system": "http://snomed.info/sct",
-                "display": "Neoadjuvant intent"
+                "display": "Neoadjuvant"
               }
             },
             {
               "valueCoding": {
                 "code": "373846009",
                 "system": "http://snomed.info/sct",
-                "display": "Adjuvant - intent"
+                "display": "Adjuvant"
               }
             },
             {
               "valueCoding": {
                 "code": "363676003",
                 "system": "http://snomed.info/sct",
-                "display": "Palliative intent"
+                "display": "Palliativ"
               }
             }
           ],
@@ -176,8 +192,24 @@
           "required": true
         },
         {
+          "enableWhen": [
+            {
+              "question": "intention",
+              "operator": "=",
+              "answerCoding": {
+                "code": "363676003",
+                "system": "http://snomed.info/sct"
+              }
+            }
+          ],
+          "linkId": "first-line",
+          "text": "First-Line-Therapie bei Metastasierung",
+          "type": "boolean",
+          "required": false
+        },
+        {
           "linkId": "protokoll",
-          "text": "Protokoll/Schema (z.B. \"EC → Paclitaxel\", \"TCbHP\")",
+          "text": "Protokoll/Schema (z.B. EC-Pac, TCbHP)",
           "type": "string",
           "required": false
         },
@@ -206,25 +238,53 @@
           "required": false
         },
         {
+          "answerOption": [
+            {
+              "valueString": "Abgeschlossen"
+            },
+            {
+              "valueString": "Abgebrochen"
+            },
+            {
+              "valueString": "Laufend"
+            }
+          ],
+          "linkId": "therapiestatus",
+          "text": "Therapiestatus",
+          "type": "choice",
+          "required": false
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "therapiestatus",
+              "operator": "=",
+              "answerString": "Abgebrochen"
+            }
+          ],
           "linkId": "abbruchgrund",
           "text": "Abbruchgrund",
           "type": "text",
           "required": false
         }
       ],
-      "linkId": "bezugsdiagnose",
-      "text": "Bezugsdiagnose (Seite)",
-      "type": "reference",
+      "linkId": "therapie-rahmen",
+      "text": "Therapie-Rahmen",
+      "type": "group",
       "required": true
     },
     {
       "extension": [
         {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "MedicationStatement"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
+          "extension": [
+            {
+              "url": "template",
+              "valueReference": {
+                "reference": "#syst-medikation-template"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
         }
       ],
       "item": [
@@ -232,7 +292,7 @@
           "linkId": "substanz",
           "text": "Substanz",
           "type": "choice",
-          "required": false,
+          "required": true,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation"
         },
         {
@@ -260,7 +320,7 @@
         },
         {
           "linkId": "zyklus-nummer",
-          "text": "Zyklus-Nummer",
+          "text": "Zyklus",
           "type": "integer",
           "required": false
         },
@@ -301,48 +361,10 @@
       "repeats": true
     },
     {
-      "extension": [
-        {
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation"
-          },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext"
-        }
-      ],
-      "item": [
-        {
-          "answerOption": [
-            {
-              "valueString": "Complete Response"
-            },
-            {
-              "valueString": "Partial Response"
-            },
-            {
-              "valueString": "Stable Disease"
-            },
-            {
-              "valueString": "Progressive Disease"
-            }
-          ],
-          "linkId": "ansprechen",
-          "text": "Ansprechen",
-          "type": "choice",
-          "required": false
-        }
-      ],
-      "linkId": "therapieergebnis",
-      "text": "Therapieergebnis",
-      "type": "group",
-      "required": false
-    },
-    {
       "linkId": "syst-anmerkungen",
       "text": "Anmerkungen",
       "type": "text",
-      "required": false,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Procedure#Procedure.note.text"
+      "required": false
     }
   ],
   "name": "QuestSystemtherapie",
