@@ -44,6 +44,7 @@ These define forms used by systems conforming to this implementation guide to ca
 | | |
 | :--- | :--- |
 | [Fragebogen: Bildgebung Mamma](Questionnaire-senologie-bildgebung.md) | Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele. |
+| [Fragebogen: Diagnose Mamma](Questionnaire-senologie-diagnose.md) | Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Spektrum von invasivem Karzinom über DCIS und B3-Läsionen bis hin zu benignen Befunden. Nutzt SDC Template-based Extraction zur Erzeugung einer Condition-Ressource. |
 | [Fragebogen: Erstanamnese](Questionnaire-senologie-erstanamnese.md) | Fragebogen zur Erstanamnese (Allgemeine Anamnese, Gynäkologische Anamnese, Familienanamnese). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Observation, FamilyMemberHistory). |
 | [Fragebogen: Klinische Untersuchung Mamma](Questionnaire-senologie-klinische-untersuchung.md) | Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Template-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel. Das Extraction-Template liegt unter input/resources/Questionnaire-senologie-klinische-untersuchung-template.json. |
 | [Fragebogen: OP Planung](Questionnaire-senologie-op-planung.md) | Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel. |
@@ -53,7 +54,7 @@ These define forms used by systems conforming to this implementation guide to ca
 | [Fragebogen: Strahlentherapie](Questionnaire-senologie-strahlentherapie-quest.md) | Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel. |
 | [Fragebogen: Systemische Therapie](Questionnaire-senologie-systemtherapie.md) | Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Procedure, MedicationStatement, Observation). |
 | [Fragebogen: Tumorboard Empfehlung](Questionnaire-senologie-tumorboard.md) | Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Template-based Extraction mit contained CarePlan und templateExtractValue-Annotationen. |
-| [Fragebogen: Verlaufsdokumentation / Nachsorge](Questionnaire-senologie-verlauf.md) | Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp). |
+| [Fragebogen: Verlaufsdokumentation / Nachsorge](Questionnaire-senologie-verlauf.md) | Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus. |
 
 ### Structures: Resource Profiles 
 

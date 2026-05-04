@@ -12,7 +12,7 @@
 | Draft as of 2026-05-04 | *Computable Name*:QuestVerlauf |
 
  
-Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp). 
+Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus. 
 
 
 
@@ -22,6 +22,44 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
 {
   "resourceType" : "Questionnaire",
   "id" : "senologie-verlauf",
+  "contained" : [{
+    "resourceType" : "Observation",
+    "id" : "verlauf-klinisch-template",
+    "status" : "final",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "11323-3",
+        "display" : "Health status"
+      }],
+      "text" : "Klinischer Status Verlauf"
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  },
+  {
+    "resourceType" : "Observation",
+    "id" : "verlauf-tumorstatus-template",
+    "status" : "final",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "88040-1",
+        "display" : "Response to cancer treatment"
+      }],
+      "text" : "Tumorstatus Verlauf"
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  }],
   "extension" : [{
     "extension" : [{
       "url" : "name",
@@ -43,7 +81,7 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T07:06:34+00:00",
+  "date" : "2026-05-04T07:30:32+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -52,7 +90,7 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Definition-based Extraction mit Observation als Ziel fuer klinischen Status und Tumorstatus (Senologie_FollowUp).",
+  "description" : "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus.",
   "item" : [{
     "linkId" : "kontrolltermin",
     "text" : "Kontrolltermin",
@@ -76,10 +114,22 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
         "valueString" : "12-Monats-Kontrolle"
       },
       {
-        "valueString" : "Ausserplanmaessig"
+        "valueString" : "Außerplanmäßig"
       },
       {
         "valueString" : "Abschlusskontrolle"
+      }]
+    },
+    {
+      "linkId" : "kontrolltermin-art-nachsorge",
+      "text" : "Art der Nachsorge",
+      "type" : "choice",
+      "required" : true,
+      "answerOption" : [{
+        "valueString" : "Aktiv (persönlich untersucht)"
+      },
+      {
+        "valueString" : "Passiv (aus Akten/Registern)"
       }]
     },
     {
@@ -91,11 +141,13 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
   },
   {
     "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-      "valueExpression" : {
-        "language" : "application/x-fhir-query",
-        "expression" : "Observation"
-      }
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#verlauf-klinisch-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }],
     "linkId" : "klinischer-status",
     "text" : "Klinischer Status",
@@ -103,7 +155,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     "required" : false,
     "item" : [{
       "linkId" : "klinisch-allgemeinzustand",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "365275006",
@@ -116,7 +167,7 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
         "valueString" : "Gut"
       },
       {
-        "valueString" : "Eingeschraenkt"
+        "valueString" : "Eingeschränkt"
       },
       {
         "valueString" : "Schlecht"
@@ -124,7 +175,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     },
     {
       "linkId" : "klinisch-lokalbefund",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "116339002",
@@ -134,33 +184,31 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
       "type" : "choice",
       "required" : false,
       "answerOption" : [{
-        "valueString" : "Unauffaellig"
+        "valueString" : "Unauffällig"
       },
       {
-        "valueString" : "Auffaellig"
+        "valueString" : "Auffällig"
       }]
     },
     {
       "linkId" : "klinisch-lokalbefund-beschreibung",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.note.text",
       "text" : "Lokalbefund Beschreibung",
       "type" : "text",
       "enableWhen" : [{
         "question" : "klinisch-lokalbefund",
         "operator" : "=",
-        "answerString" : "Auffaellig"
+        "answerString" : "Auffällig"
       }],
       "required" : false
     },
     {
       "linkId" : "klinisch-lymphoedem",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "449620005",
         "display" : "Lymphedema of upper limb"
       }],
-      "text" : "Lymphoedem",
+      "text" : "Lymphödem",
       "type" : "choice",
       "required" : false,
       "answerOption" : [{
@@ -178,7 +226,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     },
     {
       "linkId" : "klinisch-armumfangsdifferenz",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "301712009",
@@ -190,7 +237,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     },
     {
       "linkId" : "klinisch-schmerzen",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "22253000",
@@ -203,11 +249,13 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
   },
   {
     "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-      "valueExpression" : {
-        "language" : "application/x-fhir-query",
-        "expression" : "Observation?_profile=https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
-      }
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#verlauf-tumorstatus-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }],
     "linkId" : "tumorstatus",
     "text" : "Tumorstatus",
@@ -215,7 +263,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     "required" : false,
     "item" : [{
       "linkId" : "tumorstatus-gesamtbeurteilung",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]",
       "text" : "Gesamtbeurteilung Verlauf",
       "type" : "choice",
       "required" : false,
@@ -248,12 +295,11 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
         }
       },
       {
-        "valueString" : "Kein Anhalt fuer Tumor"
+        "valueString" : "Kein Anhalt für Tumor"
       }]
     },
     {
       "linkId" : "tumorstatus-lokalrezidiv",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "363346000",
@@ -265,7 +311,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     },
     {
       "linkId" : "tumorstatus-rezidiv-datum",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "432213005",
@@ -282,7 +327,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     },
     {
       "linkId" : "tumorstatus-fernmetastasen",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "399409002",
@@ -294,7 +338,6 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     },
     {
       "linkId" : "tumorstatus-metastasen-lokalisation",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "385421009",
@@ -333,7 +376,7 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
     "required" : false,
     "item" : [{
       "linkId" : "vorgehen-naechster-termin",
-      "text" : "Naechster Kontrolltermin",
+      "text" : "Nächster Kontrolltermin",
       "type" : "date",
       "required" : false
     },

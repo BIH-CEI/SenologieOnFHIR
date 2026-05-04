@@ -262,10 +262,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <ul id="markdown-toc">
   <li><a href="#anwendungsfall-erfassung" id="markdown-toc-anwendungsfall-erfassung">Anwendungsfall: Erfassung</a>    <ul>
       <li><a href="#überblick" id="markdown-toc-überblick">Überblick</a></li>
-      <li><a href="#workflow" id="markdown-toc-workflow">Workflow</a></li>
+      <li><a href="#klinischer-workflow" id="markdown-toc-klinischer-workflow">Klinischer Workflow</a></li>
+      <li><a href="#wie-ein-formular-funktioniert" id="markdown-toc-wie-ein-formular-funktioniert">Wie ein Formular funktioniert</a></li>
+      <li><a href="#blueprints-vom-formular-zu-fhir-ressourcen" id="markdown-toc-blueprints-vom-formular-zu-fhir-ressourcen">Blueprints: Vom Formular zu FHIR-Ressourcen</a></li>
       <li><a href="#formulare" id="markdown-toc-formulare">Formulare</a></li>
       <li><a href="#formular-first-warum" id="markdown-toc-formular-first-warum">Formular-First: Warum?</a></li>
-      <li><a href="#operationsdokumentation-als-beispiel" id="markdown-toc-operationsdokumentation-als-beispiel">Operationsdokumentation als Beispiel</a></li>
       <li><a href="#technische-umsetzung" id="markdown-toc-technische-umsetzung">Technische Umsetzung</a></li>
       <li><a href="#quellsystem" id="markdown-toc-quellsystem">Quellsystem</a></li>
     </ul>
@@ -277,31 +278,127 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h3 id="überblick">Überblick</h3>
 
-<p>Die Datenerfassung im Senologie-Modul folgt dem <strong>Formular-First-Prinzip</strong>: Klinische Dokumentation erfolgt über strukturierte SDC-Questionnaires, die den gewohnten klinischen Workflow abbilden. Im Hintergrund werden die Formulardaten über <strong>Definition-based Extraction</strong> automatisch in domänenbasierte FHIR-Ressourcen überführt.</p>
+<p>Die Datenerfassung im Kerndatensatz Senologie folgt dem <strong>Formular-First-Prinzip</strong>: Klinische Dokumentation erfolgt über strukturierte SDC-Questionnaires, die den gewohnten klinischen Workflow abbilden. Im Hintergrund werden die Formulardaten über <strong>Template-based Extraction</strong> automatisch in domänenbasierte FHIR-Ressourcen überführt.</p>
 
-<h3 id="workflow">Workflow</h3>
+<p>Jedes Formular enthält ein oder mehrere <strong>Blueprints</strong> — contained FHIR-Ressourcen, die als Vorlage für die Extraktion dienen. Ein einzelnes Formular kann so mehrere Ziel-Ressourcen gleichzeitig erzeugen (z.B. eine Procedure und eine Observation aus einer OP-Dokumentation).</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Kliniker                   SDC-Questionnaire              FHIR-Ressourcen
-   │                            │                              │
-   ├── füllt Formular aus ─────►│                              │
-   │                            ├── Definition-based ─────────►│
-   │                            │   Extraction                 │
-   │                            │                              ├── Procedure
-   │                            │                              ├── Observation
-   │                            │                              ├── Device
-   │                            │                              └── ...
+<h3 id="klinischer-workflow">Klinischer Workflow</h3>
+
+<p>Die Erfassung folgt dem klinischen Versorgungspfad. Die Diagnose bildet den Ankerpunkt, an den alle weiteren Befundungen und Therapien geknüpft werden:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ┌──────────────────────────────────────────────────────────────────────┐
+  │                        1. Diagnose anlegen                         │
+  │              Erstanamnese → Diagnose-Formular → Condition          │
+  └──────────────────────┬─────────────────────────────────────────────┘
+                         │
+                         │ Bezugsdiagnose
+                         ▼
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │                     2. Befundungen hinzufügen                      │
+  │                                                                    │
+  │   ┌─────────────────┐  ┌──────────────┐  ┌─────────────────────┐   │
+  │   │ Klinische       │  │ Bildgebung   │  │ Pathologie          │   │
+  │   │ Untersuchung    │  │              │  │                     │   │
+  │   │ → Observation   │  │ → Diagnostic │  │ → DiagnosticReport  │   │
+  │   │                 │  │   Report     │  │ → Observation       │   │
+  │   │                 │  │ → Observation│  │ → Specimen          │   │
+  │   └─────────────────┘  └──────────────┘  └─────────────────────┘   │
+  └──────────────────────┬─────────────────────────────────────────────┘
+                         │
+                         │ Bezugsdiagnose / -operation
+                         ▼
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │                    3. Therapie dokumentieren                        │
+  │                                                                    │
+  │   ┌──────────────┐  ┌────────────────┐  ┌───────────────────────┐  │
+  │   │ OP-Planung   │  │ Postoperativ   │  │ Tumorboard            │  │
+  │   │ → Service    │  │ → Procedure    │  │ → CarePlan            │  │
+  │   │   Request    │  │ → Device       │  │                       │  │
+  │   │              │  │ → Observation   │  │                       │  │
+  │   └──────────────┘  └────────────────┘  └───────────────────────┘  │
+  │                                                                    │
+  │   ┌──────────────────────┐  ┌───────────────────────────────────┐  │
+  │   │ Systemtherapie       │  │ Strahlentherapie                  │  │
+  │   │ → Procedure          │  │ → Procedure                       │  │
+  │   │ → MedicationStatement│  │                                   │  │
+  │   └──────────────────────┘  └───────────────────────────────────┘  │
+  └──────────────────────┬─────────────────────────────────────────────┘
+                         │
+                         ▼
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │                       4. Verlauf / Nachsorge                       │
+  │                   Tumorstatus, Follow-Up → Observation             │
+  └──────────────────────────────────────────────────────────────────────┘
 </code></pre></div></div>
 
-<h3 id="formulare">Formulare</h3>
+<h3 id="wie-ein-formular-funktioniert">Wie ein Formular funktioniert</h3>
 
-<p>Das Modul definiert SDC-Questionnaires für die zentralen Dokumentationsschritte:</p>
+<p>Jedes Formular durchläuft beim Öffnen und Ausfüllen vier Phasen:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ┌─────────────┐     ┌───────────────┐     ┌───────────────┐     ┌──────────────────┐
+  │ 1. Kontext  │     │ 2. Vor-       │     │ 3. Formular   │     │ 4. Template-     │
+  │    wählen   │────►│    befüllung   │────►│    ausfüllen   │────►│    based         │
+  │             │     │               │     │               │     │    Extraction    │
+  └─────────────┘     └───────────────┘     └───────────────┘     └──────────────────┘
+        │                    │                     │                       │
+  Bezugsdiagnose       initialExpression      enableWhen            Blueprints
+  Bezugsoperation      aus bestehenden        answerValueSet        (contained
+  Patient/Encounter    FHIR-Ressourcen        Validierung           Templates)
+                                                                         │
+                                                                         ▼
+                                                                  ┌──────────────┐
+                                                                  │ FHIR-        │
+                                                                  │ Ressourcen   │
+                                                                  │ (1..n)       │
+                                                                  └──────────────┘
+</code></pre></div></div>
+
+<p><strong>Phase 1 — Kontextauswahl:</strong> Beim Öffnen eines Formulars wird der Patient- und Encounter-Kontext übergeben (<code class="language-plaintext highlighter-rouge">launchContext</code>). Für Befundungen und Therapien wählt der Anwender die <strong>Bezugsdiagnose</strong> (und ggf. die Bezugsoperation) aus — damit ist jede Dokumentation eindeutig einer Diagnose zugeordnet.</p>
+
+<p><strong>Phase 2 — Vorbefüllung:</strong> Bestehende Patientendaten werden über <code class="language-plaintext highlighter-rouge">initialExpression</code> (FHIRPath) automatisch in das Formular geladen — z.B. Name, Geburtsdatum, bereits erfasste Diagnosen. Das vermeidet Doppeleingaben und sichert Konsistenz.</p>
+
+<p><strong>Phase 3 — Ausfüllen:</strong> Der Kliniker dokumentiert im Formular. Kontextabhängige Felder erscheinen dynamisch (<code class="language-plaintext highlighter-rouge">enableWhen</code>) — z.B. B3-Detailtyp nur bei B3-Läsion, Implantatabfrage nur bei Rekonstruktion. Terminologie-gebundene Auswahllisten (<code class="language-plaintext highlighter-rouge">answerValueSet</code>) sichern die korrekte Kodierung.</p>
+
+<p><strong>Phase 4 — Template-based Extraction:</strong> Beim Absenden werden die Formulardaten über <strong>Blueprints</strong> in FHIR-Ressourcen überführt. Ein Blueprint ist eine contained FHIR-Ressource im Questionnaire, die als Vorlage dient — mit Platzhaltern, die durch die Formularantworten ersetzt werden. Ein Formular kann mehrere Blueprints enthalten und so mehrere Ressourcen gleichzeitig erzeugen.</p>
+
+<h3 id="blueprints-vom-formular-zu-fhir-ressourcen">Blueprints: Vom Formular zu FHIR-Ressourcen</h3>
+
+<p>Ein Blueprint ist ein <strong>contained Template</strong> innerhalb des Questionnaires. Er definiert die Struktur der Ziel-Ressource und verwendet <code class="language-plaintext highlighter-rouge">templateExtractValue</code>-Ausdrücke, um Formularantworten in die richtigen Felder zu übernehmen.</p>
+
+<p>Beispiel: Der Fragebogen <em>Postoperative Dokumentation</em> enthält zwei Blueprints:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Blueprint</th>
+      <th>Ziel-Ressource</th>
+      <th>Profil</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">postop-procedure-template</code></td>
+      <td>Procedure</td>
+      <td><a href="StructureDefinition-senologie-operation.html">Senologie_Operation</a></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">postop-komplikation-template</code></td>
+      <td>Observation</td>
+      <td><a href="StructureDefinition-senologie-operative-komplikation.html">Senologie_Operative_Komplikation</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Die Bezugsdiagnose wird aus der Kontextauswahl übernommen und automatisch als <code class="language-plaintext highlighter-rouge">Procedure.reasonReference</code> in die erzeugte Ressource geschrieben.</p>
+
+<h3 id="formulare">Formulare</h3>
 
 <table>
   <thead>
     <tr>
       <th>Formular</th>
       <th>Klinischer Kontext</th>
-      <th>Extrahierte Ressourcen</th>
+      <th>Blueprints → Ressourcen</th>
     </tr>
   </thead>
   <tbody>
@@ -309,6 +406,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <td><a href="Questionnaire-senologie-erstanamnese.html">Erstanamnese</a></td>
       <td>Aufnahme, Vorgeschichte, gynäkologische Anamnese</td>
       <td>Patient, Observation, FamilyMemberHistory</td>
+    </tr>
+    <tr>
+      <td><a href="Questionnaire-senologie-diagnose.html">Diagnose</a></td>
+      <td>Primärdiagnose, Staging, Lokalisation</td>
+      <td>Condition</td>
     </tr>
     <tr>
       <td><a href="Questionnaire-senologie-klinische-untersuchung.html">Klinische Untersuchung</a></td>
@@ -364,24 +466,11 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <ul>
   <li><strong>Kliniker denken in Formularen</strong>, nicht in FHIR-Ressourcen. Ein OP-Bericht ist ein zusammenhängendes Dokument, keine Sammlung von Procedures und Observations.</li>
-  <li><strong>Formulare sichern Datenqualität</strong> durch Validierung, Pflichtfelder und kontextabhängige Anzeigelogik (enableWhen).</li>
-  <li><strong>Extraktion ist deterministisch</strong> — die Definition-based Extraction bildet jedes Formularfeld eindeutig auf ein FHIR-Element ab.</li>
-  <li><strong>Rückkanal</strong>: Über <code class="language-plaintext highlighter-rouge">sdc-questionnaire-initialExpression</code> werden bestehende Patientendaten (z.B. Diagnose) beim Öffnen des Formulars vorbelegt.</li>
+  <li><strong>Formulare sichern Datenqualität</strong> durch Validierung, Pflichtfelder und kontextabhängige Anzeigelogik.</li>
+  <li><strong>Blueprints machen die Extraktion transparent</strong> — die Zielstruktur ist als contained Ressource im Questionnaire sichtbar, nicht in externem Code versteckt.</li>
+  <li><strong>Mehrere Ressourcen aus einem Formular</strong> — ein einziger Dokumentationsschritt kann beliebig viele FHIR-Ressourcen erzeugen, ohne dass der Kliniker davon etwas mitbekommt.</li>
+  <li><strong>Bezugsdiagnose als roter Faden</strong> — alle Befundungen und Therapien referenzieren die Diagnose, die der Kliniker beim Öffnen des Formulars auswählt.</li>
 </ul>
-
-<h3 id="operationsdokumentation-als-beispiel">Operationsdokumentation als Beispiel</h3>
-
-<p>Eine OP-Dokumentation erzeugt mehrere FHIR-Ressourcen:</p>
-
-<ul>
-  <li><strong>Hauptprozedur</strong> (Procedure) — übergeordneter Eingriff</li>
-  <li><strong>Subprozeduren</strong> (Procedure) — z.B. Resektion links, Axilladissektion, Rekonstruktion</li>
-  <li><strong>Implantat</strong> (Device) — falls Implantat eingesetzt</li>
-  <li><strong>Komplikation</strong> (Observation) — mit Clavien-Dindo-Grad</li>
-  <li><strong>Drainage, Verband</strong> — als Nachsorge-Informationen</li>
-</ul>
-
-<p>Die Subprozeduren referenzieren die Hauptprozedur über <code class="language-plaintext highlighter-rouge">Procedure.partOf</code>. Seitengetrennte Eingriffe werden als separate Prozeduren abgebildet.</p>
 
 <h3 id="technische-umsetzung">Technische Umsetzung</h3>
 
@@ -404,12 +493,12 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
       <td>Vorbelegung mit bestehenden Daten (FHIRPath)</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">sdc-questionnaire-itemExtractionContext</code></td>
-      <td>Ziel-Ressource für Extraction</td>
+      <td><code class="language-plaintext highlighter-rouge">sdc-questionnaire-templateExtract</code></td>
+      <td>Verweis auf contained Blueprint(s)</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">definition</code></td>
-      <td>Mapping Formularfeld → FHIR-Element</td>
+      <td><code class="language-plaintext highlighter-rouge">sdc-questionnaire-templateExtractValue</code></td>
+      <td>Mapping Formularantwort → Feld im Blueprint</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">enableWhen</code> / <code class="language-plaintext highlighter-rouge">enableBehavior</code></td>
@@ -424,7 +513,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <h3 id="quellsystem">Quellsystem</h3>
 
-<p>Die Formulare werden als SDC-Questionnaires definiert und können in beliebigen FHIR-fähigen Dokumentationssystemen eingesetzt werden. Das Senologie-Modul definiert die FHIR-Zielstruktur, in die die Formulardaten extrahiert werden.</p>
+<p>Die Formulare werden als SDC-Questionnaires definiert und können in beliebigen FHIR-fähigen Dokumentationssystemen eingesetzt werden. Der Kerndatensatz definiert die FHIR-Zielstruktur (Profile), die Blueprints (contained Templates) und die Terminologie (ValueSets) — das Zusammenspiel dieser drei Komponenten macht die Extraktion vollständig reproduzierbar.</p>
 
 
 
@@ -445,7 +534,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 07:06+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 07:30+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |
