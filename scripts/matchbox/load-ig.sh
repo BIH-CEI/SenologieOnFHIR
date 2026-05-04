@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 # ============================================================
-# Load Senologie IG into Matchbox and test StructureMap transform
+# Load Senologie IG resources into Matchbox for $transform
 # Usage: ./scripts/matchbox/load-ig.sh
-# Prerequisites: Matchbox running on localhost:8080
+# Prerequisites: Matchbox running, IG built (output/ populated)
 # ============================================================
 set -euo pipefail
 
 MATCHBOX_URL="${MATCHBOX_URL:-http://localhost:8080}"
 FHIR_URL="$MATCHBOX_URL/fhir"
 OUTPUT_DIR="output"
-RESULTS_DIR="output/transform-results"
 
 # ── Wait for Matchbox ─────────────────────────────────────────
 echo "Waiting for Matchbox at $MATCHBOX_URL ..."
@@ -19,68 +18,57 @@ until curl -sf "$FHIR_URL/metadata" > /dev/null 2>&1; do
 done
 echo " ready."
 
-# ── Check available StructureMaps ─────────────────────────────
-echo ""
-echo "=== Available StructureMaps ==="
-SM_COUNT=$(curl -sf "$FHIR_URL/StructureMap?_summary=count" | python3 -c "import sys,json; print(json.load(sys.stdin).get('total',0))" 2>/dev/null || echo "?")
-echo "StructureMaps loaded: $SM_COUNT"
+# ── Load resources ────────────────────────────────────────────
+load_resources() {
+  local pattern="$1"
+  local type="$2"
+  local count=0
 
-if [ "$SM_COUNT" = "0" ] || [ "$SM_COUNT" = "?" ]; then
-  echo ""
-  echo "No StructureMaps found. Loading from output/package.tgz ..."
-
-  # POST each StructureMap JSON individually
-  for f in "$OUTPUT_DIR"/StructureMap-*.json; do
+  for f in $pattern; do
     [ -f "$f" ] || continue
-    name=$(basename "$f" .json)
-    echo "  Loading $name ..."
-    curl -sf -X PUT "$FHIR_URL/StructureMap/$name" \
+    # Extract resource id from JSON
+    id=$(python3 -c "import sys,json; print(json.load(open('$f')).get('id',''))" 2>/dev/null)
+    if [ -z "$id" ]; then
+      echo "  SKIP $(basename "$f") (no id)"
+      continue
+    fi
+    status=$(curl -sf -o /dev/null -w "%{http_code}" -X PUT "$FHIR_URL/$type/$id" \
       -H "Content-Type: application/fhir+json" \
-      -d @"$f" > /dev/null
+      -d @"$f" 2>/dev/null || echo "ERR")
+    if [ "$status" = "200" ] || [ "$status" = "201" ]; then
+      count=$((count + 1))
+    else
+      echo "  WARN $type/$id -> HTTP $status"
+    fi
   done
-
-  # Also load Logical Models (StructureDefinitions for targets)
-  for f in "$OUTPUT_DIR"/StructureDefinition-obds-*.json \
-           "$OUTPUT_DIR"/StructureDefinition-oncobox-*.json \
-           "$OUTPUT_DIR"/StructureDefinition-ireg-*.json \
-           "$OUTPUT_DIR"/StructureDefinition-iqtig-*.json; do
-    [ -f "$f" ] || continue
-    name=$(basename "$f" .json)
-    echo "  Loading $name ..."
-    curl -sf -X PUT "$FHIR_URL/StructureDefinition/$name" \
-      -H "Content-Type: application/fhir+json" \
-      -d @"$f" > /dev/null
-  done
-
-  # Load ConceptMaps
-  for f in "$OUTPUT_DIR"/ConceptMap-*.json; do
-    [ -f "$f" ] || continue
-    name=$(basename "$f" .json)
-    echo "  Loading $name ..."
-    curl -sf -X PUT "$FHIR_URL/ConceptMap/$name" \
-      -H "Content-Type: application/fhir+json" \
-      -d @"$f" > /dev/null
-  done
-
-  SM_COUNT=$(curl -sf "$FHIR_URL/StructureMap?_summary=count" | python3 -c "import sys,json; print(json.load(sys.stdin).get('total',0))" 2>/dev/null || echo "?")
-  echo "StructureMaps after loading: $SM_COUNT"
-fi
-
-# ── List all maps ─────────────────────────────────────────────
-echo ""
-echo "=== StructureMap Index ==="
-curl -sf "$FHIR_URL/StructureMap?_elements=name,url&_count=100" \
-  | python3 -c "
-import sys, json
-bundle = json.load(sys.stdin)
-for e in bundle.get('entry', []):
-    r = e.get('resource', {})
-    print(f\"  {r.get('name','?'):45s} {r.get('url','')}\")
-" 2>/dev/null || echo "(could not list)"
+  echo "  $type: $count loaded"
+}
 
 echo ""
-echo "=== Ready for \$transform ==="
-echo "Example:"
-echo "  curl -X POST '$FHIR_URL/StructureMap/\$transform?source=https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose' \\"
-echo "    -H 'Content-Type: application/fhir+json' \\"
-echo "    -d @bundle-fall1.json"
+echo "=== Loading Logical Models (StructureDefinitions) ==="
+load_resources "$OUTPUT_DIR/StructureDefinition-obds-*.json" "StructureDefinition"
+load_resources "$OUTPUT_DIR/StructureDefinition-oncobox-*.json" "StructureDefinition"
+load_resources "$OUTPUT_DIR/StructureDefinition-ireg-*.json" "StructureDefinition"
+load_resources "$OUTPUT_DIR/StructureDefinition-iqtig-*.json" "StructureDefinition"
+
+echo ""
+echo "=== Loading ConceptMaps ==="
+load_resources "$OUTPUT_DIR/ConceptMap-*.json" "ConceptMap"
+
+echo ""
+echo "=== Loading StructureMaps ==="
+load_resources "$OUTPUT_DIR/StructureMap-*.json" "StructureMap"
+
+# ── Verify ────────────────────────────────────────────────────
+echo ""
+echo "=== Summary ==="
+for type in StructureMap StructureDefinition ConceptMap; do
+  total=$(curl -sf "$FHIR_URL/$type?_summary=count" \
+    | python3 -c "import sys,json; print(json.load(sys.stdin).get('total',0))" 2>/dev/null || echo "?")
+  echo "  $type: $total"
+done
+
+echo ""
+echo "Done. Test with:"
+echo "  curl -X POST '$FHIR_URL/StructureMap/\$transform?source=<map-url>' \\"
+echo "    -H 'Content-Type: application/fhir+json' -d @bundle.json"
