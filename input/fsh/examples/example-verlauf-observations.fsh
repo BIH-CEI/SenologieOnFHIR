@@ -83,7 +83,7 @@ Usage: #example
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
-* code.coding[=].display = "ECOG Performance Status"
+* code.coding[=].display = "ECOG Performance Status score"
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2025-08-15"
 * valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
@@ -161,7 +161,7 @@ Usage: #example
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
-* code.coding[=].display = "ECOG Performance Status"
+* code.coding[=].display = "ECOG Performance Status score"
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
 * effectiveDateTime = "2026-03-15"
 * valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
@@ -239,7 +239,7 @@ Usage: #example
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
-* code.coding[=].display = "ECOG Performance Status"
+* code.coding[=].display = "ECOG Performance Status score"
 * subject = Reference(Patient/Fall9-Patient-Andrea-Wolf)
 * effectiveDateTime = "2026-03-20"
 * valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
@@ -317,7 +317,7 @@ Usage: #example
 * status = #final
 * code.coding[+].system = "http://loinc.org"
 * code.coding[=].code = #89247-1
-* code.coding[=].display = "ECOG Performance Status"
+* code.coding[=].display = "ECOG Performance Status score"
 * subject = Reference(Patient/Fall4-Patient-Julia-Fischer)
 * effectiveDateTime = "2025-06-10"
 * valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG

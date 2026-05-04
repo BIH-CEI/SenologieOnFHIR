@@ -20,7 +20,7 @@ Usage: #example
 * meta.profile = $MII_PR_Person_Vitalstatus
 * status = #final
 * category.coding = http://terminology.hl7.org/CodeSystem/observation-category#survey
-* code.coding = $LOINC#67162-8 "A]patient A code status"
+* code.coding = $LOINC#67162-8 "Patient Disposition"
 * subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2025-08-15"
 * valueCodeableConcept.coding = $MII_CS_Person_Vitalstatus#L "Patient lebt"
@@ -42,7 +42,7 @@ Usage: #example
 * meta.profile = $MII_PR_Person_Vitalstatus
 * status = #final
 * category.coding = http://terminology.hl7.org/CodeSystem/observation-category#survey
-* code.coding = $LOINC#67162-8 "A]patient A code status"
+* code.coding = $LOINC#67162-8 "Patient Disposition"
 * subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann-Verstorben)
 * effectiveDateTime = "2026-09-20"
 * valueCodeableConcept.coding = $MII_CS_Person_Vitalstatus#T "Patient verstorben"

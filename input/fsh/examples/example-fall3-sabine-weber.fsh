@@ -115,7 +115,7 @@ Usage: #example
 * identifier[Set-ID].system = "http://pathologie.charite.de/fhir/sid/report-id"
 * identifier[Set-ID].value = "PATH-2025-000789"
 
-* code.coding[pathology-report] = $LOINC#60568-3 "Pathology Synoptic report"
+* code.coding[pathology-report] = $LOINC#60568-3 "Pathology synoptic report"
 * code.text = "Pathologischer Befund"
 
 * category = http://terminology.hl7.org/CodeSystem/v2-0074#SP "Surgical Pathology"
@@ -186,7 +186,7 @@ Usage: #example
 * identifier[Set-ID].system = "http://pathologie.charite.de/fhir/sid/report-id"
 * identifier[Set-ID].value = "PATH-2025-000790"
 
-* code.coding[pathology-report] = $LOINC#60568-3 "Pathology Synoptic report"
+* code.coding[pathology-report] = $LOINC#60568-3 "Pathology synoptic report"
 * code.text = "Pathologischer Befund"
 
 * category = http://terminology.hl7.org/CodeSystem/v2-0074#SP "Surgical Pathology"
