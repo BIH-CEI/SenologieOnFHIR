@@ -36,7 +36,9 @@ Die operative Versorgung folgt einem definierten Pfad: Die interdisziplinäre Tu
 
 ## Axilläre Chirurgie
 
-Die Sentinel-Lymphknoten-Biopsie ist der Standard zur Beurteilung des axillären Lymphknotenstatus. Sie wird als Teil der Hauptoperation durchgeführt. Das Ergebnis — Anzahl entnommener und befallener Sentinel-Lymphknoten — fließt in das pathologische N-Staging ein und bestimmt, ob eine weitergehende Axilla-Dissektion erforderlich ist.
+Axilläre chirurgische Maßnahmen erfüllen diagnostische, prognostische und therapeutische Funktionen. Entsprechend variiert das operative Vorgehen in Abhängigkeit vom klinischen Befund und der systemischen Therapiestrategie. Die Sentinel-Lymphknoten-Biopsie stellt bei klinisch unauffälliger Axilla ein etabliertes Verfahren dar, wird jedoch im Zuge aktueller Deeskalationskonzepte zunehmend kritisch hinterfragt. Bei suspekten Lymphknoten kommt weiterhin selektiv eine axilläre Dissektion, zunehmend auch eine Target Axillary Dissection zum Einsatz.
+
+Das Ergebnis — Anzahl entnommener und befallener Lymphknoten — fließt in das pathologische N-Staging ein.
 
 ## Nachresektion
 

@@ -46,7 +46,7 @@ Die Lokalisation wird über eine `BodyStructure`-Ressource abgebildet, die Seite
 | | | | |
 | :--- | :--- | :--- | :--- |
 | Stanzbiopsie | Core-Needle | 122737001 | Präoperativ, Diagnosesicherung |
-| Vakuumbiopsie | Vakuum-assistiert | 450614001 | B3-Läsionen, Mikrokalk |
+| Vakuumbiopsie | Vakuum-assistiert | 450614001 | Mikrokalk, kleine Läsionen, stereotaktisch |
 | OP-Präparat | Exzidat / Mastektomie | 122548005 | Postoperativ, definitive Histologie |
 | Nachresektion | Nachresektat | 122548005 | Bei R1-Situation |
 

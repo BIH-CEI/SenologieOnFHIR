@@ -73,7 +73,7 @@ Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T13:47:49+00:00",
+  "date" : "2026-05-04T14:15:24+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
