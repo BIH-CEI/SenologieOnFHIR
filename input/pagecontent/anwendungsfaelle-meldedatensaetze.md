@@ -71,7 +71,7 @@ FHIR-Ressourcen          Transformator           Meldung
       ├── Procedure ─────────►│  oBDS-XML ─────────►│ Krebsregister
       ├── DiagnosticReport ──►│                     │
       │                       │                     │
-      ├── Device ────────────►│  IRegG-Format ─────►│ DIMDI
+      ├── Device ────────────►│  IRegG-Format ─────►│ BfArM
       ├── Procedure ─────────►│                     │
       │                       │                     │
       ├── alle Profile ──────►│  Kennzahlen ───────►│ DKG
@@ -95,7 +95,7 @@ Fehlende Daten werden durch die FHIR-Validierung erkannt und können vor der Mel
 
 ### Technische Umsetzung: XML-Meldungen und Zukunftsperspektive
 
-Sowohl das Krebsregister (oBDS) als auch das Implantateregister (DIMDI) empfangen Meldungen derzeit noch im **XML-Format**. Die FHIR-Ressourcen aus diesem IG müssen daher in die jeweiligen XML-Schemata transformiert werden.
+Sowohl das Krebsregister (oBDS) als auch das Implantateregister (BfArM) empfangen Meldungen derzeit noch im **XML-Format**. Die FHIR-Ressourcen aus diesem IG müssen daher in die jeweiligen XML-Schemata transformiert werden.
 
 Für den Übergang gibt es zwei Ansätze:
 
