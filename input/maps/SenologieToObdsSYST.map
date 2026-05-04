@@ -25,7 +25,15 @@ group SenologieToObdsSYST(source src : Bundle, target tgt : OBDSMeldung) {
 
   // Systemtherapie-Procedure extrahieren
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
-    entry.resource as proc -> tgt.syst as syst then MapSYST(proc, syst, src) "CallMapSYST";
+    entry.resource as proc -> tgt.syst as syst then MapSYST(proc, syst) "CallMapSYST";
+
+    // Substanzen: MedicationStatements (moved from MapSYST)
+    src.entry as medEntry where resource.is(MedicationStatement) then {
+      medEntry.resource as medStmt -> syst.substanzen as subst then MapSubstanz(medStmt, subst) "CallMapSubstanz";
+    } "EntrySubstanzen";
+
+    // Nebenwirkungen (moved from MapSYST)
+    proc -> syst.nebenwirkungen as nw then MapNebenwirkungenSYST(src, nw) "CallMapNebenwirkungen";
   } "EntrySYST";
 }
 
@@ -34,7 +42,7 @@ group SenologieToObdsSYST(source src : Bundle, target tgt : OBDSMeldung) {
 // Mapped Intention, Stellung zur OP, Therapieart, Protokoll, Zeitraum
 // ============================================================================
 
-group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+group MapSYST(source src : Procedure, target tgt : BackboneElement) {
 
   // SYST_ID: Procedure.id
   src.id as id -> tgt.systID = id "SetSystID";
@@ -88,14 +96,7 @@ group MapSYST(source src : Procedure, target tgt : BackboneElement, source bundl
     oc.coding as c -> tgt.endeGrund = (c.code) "SetEndeGrundCode";
   } "MapEndeGrund";
 
-  // Substanzen: MedicationStatements aus dem Bundle extrahieren, die per partOf
-  // auf diese Procedure verweisen
-  bundle.entry as medEntry where resource.is(MedicationStatement) then {
-    medEntry.resource as medStmt -> tgt.substanzen as subst then MapSubstanz(medStmt, subst) "CallMapSubstanz";
-  } "EntrySubstanzen";
-
-  // Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (SYST-Variante)
-  src -> tgt.nebenwirkungen as nw then MapNebenwirkungenSYST(bundle, nw) "CallMapNebenwirkungen";
+  // Substanzen and Nebenwirkungen bundle lookups moved to calling group.
 }
 
 // ============================================================================

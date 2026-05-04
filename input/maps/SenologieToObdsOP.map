@@ -37,7 +37,39 @@ group SenologieToObdsOP(source src : Bundle, target tgt : OBDSMeldung) {
 
   // OP: aus der Procedure-Ressource im Bundle
   src.entry as entry where resource.is(Procedure) then {
-    entry.resource as procedure -> tgt.op as op then MapOP(procedure, op, src) "CallMapOP";
+    entry.resource as procedure -> tgt.op as op then MapOP(procedure, op) "CallMapOP";
+
+    // Bundle lookups moved from MapOP
+    src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+      histEntry.resource as histObs -> op.histologie as histo then MapHistologie(histObs, histo) "CallMapHistologie";
+      src.entry as specEntry where resource.is(Specimen) then {
+        specEntry.resource as specimen then {
+          specimen.accessionIdentifier as accId then { accId.value as v -> histo.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen"; } "MapAccessionId";
+          specimen.collection as coll then { coll.collected as collDt where $this.is(dateTime) -> histo.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen"; } "MapSpecimenCollection";
+        } "SpecimenContext";
+      } "EntrySpecimen";
+      src.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
+        gradEntry.resource as gradObs then { gradObs.value as val then { val.coding as c -> histo.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate"; } "MapGradingSepValue"; } "MapGradingSepObs";
+      } "EntryGrading";
+      src.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+        lkEntry.resource as lkObs then { lkObs.value as val -> histo.lkUntersucht = val "SetLKUntersuchtSeparate"; } "MapLKUntersuchtSep";
+      } "EntryLKUntersucht";
+      src.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+        lkbEntry.resource as lkbObs then { lkbObs.value as val -> histo.lkBefallen = val "SetLKBefallenSeparate"; } "MapLKBefallenSep";
+      } "EntryLKBefallen";
+      src.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+        slkEntry.resource as slkObs then { slkObs.value as val -> histo.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate"; } "MapSentinelLKUntersuchtSep";
+      } "EntrySentinelLKUntersucht";
+      src.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
+        slkbEntry.resource as slkbObs then { slkbObs.value as val -> histo.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate"; } "MapSentinelLKBefallenSep";
+      } "EntrySentinelLKBefallen";
+    } "EntryHistologie";
+
+    src.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+      tnmEntry.resource as tnmObs -> op.tnm as ptnm then MapTNM(tnmObs, ptnm) "CallMapPTNM";
+    } "EntryPTNM";
+
+    entry.resource as proc2 -> tgt.op as op2, op2.modulMamma as mamma then MapModulMamma(src, mamma) "CallMapModulMamma";
   } "EntryProcedure";
 }
 
@@ -46,7 +78,7 @@ group SenologieToObdsOP(source src : Bundle, target tgt : OBDSMeldung) {
 // Intention, Datum, OPS-Codes
 // ============================================================================
 
-group MapOP(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+group MapOP(source src : Procedure, target tgt : BackboneElement) {
 
   // OP_ID: aus Procedure.identifier
   src.identifier as id then {
@@ -75,70 +107,9 @@ group MapOP(source src : Procedure, target tgt : BackboneElement, source bundle 
     } "MapOPSCoding";
   } "MapOPSKodes";
 
-  // Histologie: aus Observation im Bundle (postoperativ)
-  // Delegiert an die gemeinsame Histologie-Map
-  bundle.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
-    histEntry.resource as histObs -> tgt.histologie as histo then MapHistologie(histObs, histo) "CallMapHistologie";
-
-    // Specimen: Einsende-Nummer und Histologiedatum (Fallback)
-    bundle.entry as specEntry where resource.is(Specimen) then {
-      specEntry.resource as specimen then {
-        specimen.accessionIdentifier as accId then {
-          accId.value as v -> histo.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen";
-        } "MapAccessionId";
-        specimen.collection as coll then {
-          coll.collected as collDt where $this.is(dateTime) -> histo.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen";
-        } "MapSpecimenCollection";
-      } "SpecimenContext";
-    } "EntrySpecimen";
-
-    // Grading: aus separater Observation im Bundle (Fallback)
-    bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
-      gradEntry.resource as gradObs then {
-        gradObs.value as val then {
-          val.coding as c -> histo.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
-        } "MapGradingSepValue";
-      } "MapGradingSepObs";
-    } "EntryGrading";
-
-    // LK_untersucht: aus separater Observation (Fallback)
-    bundle.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
-      lkEntry.resource as lkObs then {
-        lkObs.value as val -> histo.lkUntersucht = val "SetLKUntersuchtSeparate";
-      } "MapLKUntersuchtSep";
-    } "EntryLKUntersucht";
-
-    // LK_befallen: aus separater Observation (Fallback)
-    bundle.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
-      lkbEntry.resource as lkbObs then {
-        lkbObs.value as val -> histo.lkBefallen = val "SetLKBefallenSeparate";
-      } "MapLKBefallenSep";
-    } "EntryLKBefallen";
-
-    // Sentinel_LK_untersucht: aus separater Observation (Fallback)
-    bundle.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
-      slkEntry.resource as slkObs then {
-        slkObs.value as val -> histo.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate";
-      } "MapSentinelLKUntersuchtSep";
-    } "EntrySentinelLKUntersucht";
-
-    // Sentinel_LK_befallen: aus separater Observation (Fallback)
-    bundle.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
-      slkbEntry.resource as slkbObs then {
-        slkbObs.value as val -> histo.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate";
-      } "MapSentinelLKBefallenSep";
-    } "EntrySentinelLKBefallen";
-  } "EntryHistologie";
-
-  // pTNM: aus TNM-Observation im Bundle (pathologisches Staging)
-  // LOINC 21902-2 = "Stage group.pathology Cancer"
-  // Delegiert an die gemeinsame TNM-Map
-  bundle.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
-    tnmEntry.resource as tnmObs -> tgt.tnm as ptnm then MapTNM(tnmObs, ptnm, bundle) "CallMapPTNM";
-  } "EntryPTNM";
+  // Histologie, pTNM, ModulMamma bundle lookups moved to calling group.
 
   // Residualstatus: aus Procedure.outcome
-  // Delegiert an die gemeinsame Residualstatus-Map (Outcome-Variante)
   src.outcome as outcome -> tgt.residualstatus as rs then MapResidualstatusFromOutcome(outcome, rs) "CallMapResidualstatus";
 
   // Komplikationen: aus Procedure.complication
@@ -146,10 +117,6 @@ group MapOP(source src : Procedure, target tgt : BackboneElement, source bundle 
 
   // Operateure: aus Procedure.performer
   src.performer as perf -> tgt.operateure as op then MapOperateur(perf, op) "CallMapOperateur";
-
-  // Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle
-  // Delegiert an die gemeinsame ModulMamma-Map
-  src -> tgt.modulMamma as mamma then MapModulMamma(bundle, mamma) "CallMapModulMamma";
 }
 
 // ============================================================================

@@ -7,12 +7,12 @@ uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
 uses "http://hl7.org/fhir/StructureDefinition/Encounter" alias Encounter as source
 uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as source
-uses "https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181" alias IQTIG181 as target
 
-// Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
-// has no syntax to declare the Logical Model sub-path for BackboneElement
-// slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH
-// errors. The element names are correct per the IQTIG 18.1 Logical Model.
+// Import-only map: no target `uses` declaration — the calling map
+// (SenologieToIqtigMammachirurgie181) provides the correct BackboneElement
+// context (teildatensatzBasis). Omitting the root-level target type avoids
+// SM_TARGET_PATH false positives where the validator would resolve property
+// names against iqtig-mammachirurgie-181 root.
 
 // ============================================================================
 // Teildatensatz Basis (B): Patient + Encounter + Organization -> B:*

@@ -6,12 +6,12 @@ map "https://www.senologie.org/fhir/StructureMap/SenologieToIRegOperation" = "Se
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as source
 uses "http://hl7.org/fhir/StructureDefinition/Device" alias Device as source
-uses "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung" alias IRegMeldung as target
 
-// Known limitation: Sub-groups use `target tgt : BackboneElement` because FML
-// has no syntax to declare the Logical Model sub-path for BackboneElement
-// slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH
-// errors. The element names are correct per the IRegG Brustimplantat LM.
+// Import-only map: no target `uses` declaration — the calling map
+// (SenologieToIRegMeldung) provides the correct BackboneElement context
+// (fall.operation / operation.artikelidentifikation / operation.zubehoer).
+// Omitting the root-level target type avoids SM_TARGET_PATH false positives
+// where the validator would resolve property names against ireg-brustimplantat-meldung root.
 
 // ============================================================================
 // Operation: Procedure -> OPE_* + OBI_*

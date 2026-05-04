@@ -55,3 +55,15 @@ Bei metastasierter Erkrankung ist die Therapielinie (1., 2., 3. Linie) klinisch 
 ## Nebenwirkungen
 
 Unerwünschte Wirkungen der Systemtherapie werden nach NCI CTCAE (Common Terminology Criteria for Adverse Events) in Grad 1–5 klassifiziert und als separate Ressourcen dokumentiert. Sie sind sowohl für die klinische Versorgung als auch für die Meldung an das Krebsregister (oBDS) relevant.
+
+## Zugehörige Ressourcen
+
+| Typ | Ressource |
+|-----|-----------|
+| Profil | [Senologie_Systemtherapie_Procedure](StructureDefinition-senologie-systemtherapie-procedure.html) |
+| Profil | [Senologie_Systemtherapie_Medikation](StructureDefinition-senologie-systemtherapie-medikation.html) |
+| Profil | [Senologie_Geplante_Systemtherapie](StructureDefinition-senologie-geplante-systemtherapie.html) |
+| Profil | [Senologie_Begleitmedikation](StructureDefinition-senologie-begleitmedikation.html) |
+| Profil | [Senologie_Nebenwirkung](StructureDefinition-senologie-nebenwirkung.html) |
+| Questionnaire | [Systemtherapie](Questionnaire-senologie-systemtherapie.html) |
+| Terminologie | [VS Systemtherapie Medikation](ValueSet-vs-senologie-systemtherapie-medikation.html) |

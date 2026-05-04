@@ -22,7 +22,7 @@ uses "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-mel
 // PAB_* Brustimplantat-spezifische Daten kommen aus Extensions am Patient.
 // ============================================================================
 
-group MapPatientenaufnahme(source src : Patient, target tgt : BackboneElement, source bundle : Bundle) {
+group MapPatientenaufnahme(source src : Patient, target tgt : BackboneElement) {
 
   // --- PAT_* Basisdaten ---
 
@@ -37,23 +37,7 @@ group MapPatientenaufnahme(source src : Patient, target tgt : BackboneElement, s
   // FML truncate() berechnet Differenz in Jahren
   src.birthDate as bd -> tgt.alter = truncate(evaluate(src, today().toString().substring(0, 4).toInteger() - birthDate.toString().substring(0, 4).toInteger())) "SetAlter";
 
-  // PAT_Groesse: aus Observation mit LOINC 8302-2 (Body height)
-  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '8302-2') then {
-    entry.resource as obs then {
-      obs.value as val then {
-        val.value as v -> tgt.groesse = truncate(v) "SetGroesse";
-      } "MapGroesseValue";
-    } "GroesseObsContext";
-  } "EntryGroesse";
-
-  // PAT_Gewicht: aus Observation mit LOINC 29463-7 (Body weight)
-  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '29463-7') then {
-    entry.resource as obs then {
-      obs.value as val then {
-        val.value as v -> tgt.gewicht = truncate(v) "SetGewicht";
-      } "MapGewichtValue";
-    } "GewichtObsContext";
-  } "EntryGewicht";
+  // PAT_Groesse and PAT_Gewicht bundle lookups moved to calling group.
 
   // --- PAB_* Brustimplantat-spezifische Patientendaten ---
   src -> tgt.brustimplantat as pab then MapPatientBrustimplantat(src, pab) "CallMapPAB";

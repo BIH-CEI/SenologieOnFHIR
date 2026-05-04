@@ -57,7 +57,7 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
       // Tumorzuordnung
       condition -> tgt.tumorzuordnung as tz then MapTumorzuordnung(condition, tz) "DiagnoseTZ";
       // Diagnose: delegiert an SenologieToObdsDiagnose.MapDiagnose
-      condition -> tgt.diagnose as dx then MapDiagnose(condition, dx, src) "DiagnoseDX";
+      condition -> tgt.diagnose as dx then MapDiagnose(condition, dx) "DiagnoseDX";
     } "DiagnoseConditionContext";
   } "EntryDiagnose";
 
@@ -67,7 +67,7 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
       // Tumorzuordnung
       condition -> tgt.tumorzuordnung as tz then MapTumorzuordnung(condition, tz) "VerlaufTZ";
       // Verlauf: delegiert an SenologieToObdsVerlauf.MapVerlauf
-      condition -> tgt.verlauf as verl then MapVerlauf(condition, verl, src) "VerlaufMap";
+      condition -> tgt.verlauf as verl then MapVerlauf(condition, verl) "VerlaufMap";
     } "VerlaufConditionContext";
   } "EntryVerlauf";
 
@@ -75,7 +75,7 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
     entry.resource as procedure then {
       // OP: delegiert an SenologieToObdsOP.MapOP
-      procedure -> tgt.op as op then MapOP(procedure, op, src) "OPMap";
+      procedure -> tgt.op as op then MapOP(procedure, op) "OPMap";
     } "OPProcedureContext";
   } "EntryOP";
 
@@ -83,7 +83,7 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie-procedure')) then {
     entry.resource as procedure then {
       // SYST: delegiert an SenologieToObdsSYST.MapSYST
-      procedure -> tgt.syst as syst then MapSYST(procedure, syst, src) "SYSTMap";
+      procedure -> tgt.syst as syst then MapSYST(procedure, syst) "SYSTMap";
     } "SYSTProcedureContext";
   } "EntrySYST";
 
@@ -91,7 +91,7 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
     entry.resource as procedure then {
       // ST: delegiert an SenologieToObdsST.MapST
-      procedure -> tgt.st as st then MapST(procedure, st, src) "STMap";
+      procedure -> tgt.st as st then MapST(procedure, st) "STMap";
     } "STProcedureContext";
   } "EntryST";
 
@@ -107,7 +107,7 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
   src.entry as entry where resource.is(Patient) and resource.deceased.exists() then {
     entry.resource as patient then {
       // Tod: delegiert an SenologieToObdsTod.MapTod
-      patient -> tgt.tod as tod then MapTod(patient, tod, src) "TodMap";
+      patient -> tgt.tod as tod then MapTod(patient, tod) "TodMap";
     } "TodPatientContext";
   } "EntryTod";
 }

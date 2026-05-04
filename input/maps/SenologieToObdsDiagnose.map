@@ -35,7 +35,49 @@ group SenologieToObdsDiagnose(source src : Bundle, target tgt : OBDSMeldung) {
 
   // Diagnose: aus der Condition-Ressource + Observations aus dem Bundle
   src.entry as entry where resource.is(Condition) then {
-    entry.resource as condition -> tgt.diagnose as dx then MapDiagnose(condition, dx, src) "CallMapDiagnose";
+    entry.resource as condition -> tgt.diagnose as dx then MapDiagnose(condition, dx) "CallMapDiagnose";
+
+    // Histologie from bundle (moved from MapDiagnose)
+    src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+      histEntry.resource as histObs -> dx.histologie as histo then MapHistologie(histObs, histo) "CallMapHistologie";
+      src.entry as specEntry where resource.is(Specimen) then {
+        specEntry.resource as specimen then {
+          specimen.accessionIdentifier as accId then { accId.value as v -> histo.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen"; } "MapAccessionId";
+          specimen.collection as coll then { coll.collected as collDt where $this.is(dateTime) -> histo.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen"; } "MapSpecimenCollection";
+        } "SpecimenContext";
+      } "EntrySpecimen";
+      src.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
+        gradEntry.resource as gradObs then { gradObs.value as val then { val.coding as c -> histo.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate"; } "MapGradingSepValue"; } "MapGradingSepObs";
+      } "EntryGrading";
+      src.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+        lkEntry.resource as lkObs then { lkObs.value as val -> histo.lkUntersucht = val "SetLKUntersuchtSeparate"; } "MapLKUntersuchtSep";
+      } "EntryLKUntersucht";
+      src.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+        lkbEntry.resource as lkbObs then { lkbObs.value as val -> histo.lkBefallen = val "SetLKBefallenSeparate"; } "MapLKBefallenSep";
+      } "EntryLKBefallen";
+      src.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+        slkEntry.resource as slkObs then { slkObs.value as val -> histo.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate"; } "MapSentinelLKUntersuchtSep";
+      } "EntrySentinelLKUntersucht";
+      src.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
+        slkbEntry.resource as slkbObs then { slkbObs.value as val -> histo.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate"; } "MapSentinelLKBefallenSep";
+      } "EntrySentinelLKBefallen";
+    } "EntryHistologie";
+
+    // cTNM from bundle (moved from MapDiagnose)
+    src.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
+      tnmEntry.resource as tnmObs -> dx.cTNM as ctnm then MapTNM(tnmObs, ctnm) "CallMapCTNM";
+    } "EntryCTNM";
+
+    // Leistungszustand from bundle (moved from MapDiagnose)
+    entry.resource as cond2 -> tgt.diagnose as dx2 then MapLeistungszustandFromBundle(src, dx2) "CallMapLeistungszustand";
+
+    // Modul_Mamma from bundle (moved from MapDiagnose)
+    entry.resource as cond3 -> tgt.diagnose as dx3, dx3.modulMamma as mamma then MapModulMamma(src, mamma) "CallMapModulMamma";
+
+    // Weitere Klassifikationen from bundle (moved from MapDiagnose)
+    src.entry as raEntry where resource.is(RiskAssessment) then {
+      raEntry.resource as ra -> tgt.diagnose as dx4, dx4.weitereKlassifikationen as wk then MapWeitereKlassifikation(ra, wk) "CallMapWeitereKlassifikation";
+    } "EntryWeitereKlassifikation";
   } "EntryConditionDX";
 }
 
@@ -44,7 +86,7 @@ group SenologieToObdsDiagnose(source src : Bundle, target tgt : OBDSMeldung) {
 // Freitextdiagnose, ICD-O Topographie, Diagnosesicherung, fruehere Erkrankungen
 // ============================================================================
 
-group MapDiagnose(source src : Condition, target tgt : BackboneElement, source bundle : Bundle) {
+group MapDiagnose(source src : Condition, target tgt : BackboneElement) {
 
   // Primaertumor_Diagnosetext: aus Condition.code.text
   src.code as code then {
@@ -78,77 +120,8 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
     } "MapFruehereErkrankung";
   } "MapFruehereErkrankungen";
 
-  // Histologie: aus Observations im Bundle (DiagnosticReport-referenzierte Pathologie)
-  bundle.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
-    histEntry.resource as histObs -> tgt.histologie as histo then MapHistologie(histObs, histo) "CallMapHistologie";
-
-    // Specimen: Einsende-Nummer und Histologiedatum (Fallback)
-    bundle.entry as specEntry where resource.is(Specimen) then {
-      specEntry.resource as specimen then {
-        specimen.accessionIdentifier as accId then {
-          accId.value as v -> histo.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen";
-        } "MapAccessionId";
-        specimen.collection as coll then {
-          coll.collected as collDt where $this.is(dateTime) -> histo.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen";
-        } "MapSpecimenCollection";
-      } "SpecimenContext";
-    } "EntrySpecimen";
-
-    // Grading: aus separater Observation im Bundle (Fallback)
-    bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
-      gradEntry.resource as gradObs then {
-        gradObs.value as val then {
-          val.coding as c -> histo.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
-        } "MapGradingSepValue";
-      } "MapGradingSepObs";
-    } "EntryGrading";
-
-    // LK_untersucht: aus separater Observation (Fallback)
-    bundle.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
-      lkEntry.resource as lkObs then {
-        lkObs.value as val -> histo.lkUntersucht = val "SetLKUntersuchtSeparate";
-      } "MapLKUntersuchtSep";
-    } "EntryLKUntersucht";
-
-    // LK_befallen: aus separater Observation (Fallback)
-    bundle.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
-      lkbEntry.resource as lkbObs then {
-        lkbObs.value as val -> histo.lkBefallen = val "SetLKBefallenSeparate";
-      } "MapLKBefallenSep";
-    } "EntryLKBefallen";
-
-    // Sentinel_LK_untersucht: aus separater Observation (Fallback)
-    bundle.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
-      slkEntry.resource as slkObs then {
-        slkObs.value as val -> histo.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate";
-      } "MapSentinelLKUntersuchtSep";
-    } "EntrySentinelLKUntersucht";
-
-    // Sentinel_LK_befallen: aus separater Observation (Fallback)
-    bundle.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
-      slkbEntry.resource as slkbObs then {
-        slkbObs.value as val -> histo.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate";
-      } "MapSentinelLKBefallenSep";
-    } "EntrySentinelLKBefallen";
-  } "EntryHistologie";
-
-  // cTNM: aus TNM-Observation im Bundle (klinisches Staging)
-  bundle.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
-    tnmEntry.resource as tnmObs -> tgt.cTNM as ctnm then MapTNM(tnmObs, ctnm) "CallMapCTNM";
-  } "EntryCTNM";
-
-  // Allgemeiner Leistungszustand (ECOG): aus Observation im Bundle
-  // Delegiert an die gemeinsame Leistungszustand-Map
-  src -> tgt then MapLeistungszustandFromBundle(bundle, tgt) "CallMapLeistungszustand";
-
-  // Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle
-  src -> tgt.modulMamma as mamma then MapModulMamma(bundle, mamma) "CallMapModulMamma";
-
-  // Weitere Klassifikationen: Genexpressionstests (Oncotype DX, MammaPrint, ...)
-  // aus RiskAssessment-Ressourcen (Senologie_Genexpressionstest) im Bundle
-  bundle.entry as raEntry where resource.is(RiskAssessment) then {
-    raEntry.resource as ra -> tgt.weitereKlassifikationen as wk then MapWeitereKlassifikation(ra, bundle, wk) "CallMapWeitereKlassifikation";
-  } "EntryWeitereKlassifikation";
+  // Histologie, cTNM, Leistungszustand, ModulMamma, WeitereKlassifikationen
+  // bundle lookups moved to calling group.
 }
 
 // ============================================================================
@@ -157,7 +130,7 @@ group MapDiagnose(source src : Condition, target tgt : BackboneElement, source b
 // "Weitere_Klassifikation" (Datum, Name, Stadium/Ergebnis).
 // ============================================================================
 
-group MapWeitereKlassifikation(source src : RiskAssessment, source bundle : Bundle, target tgt : BackboneElement) {
+group MapWeitereKlassifikation(source src : RiskAssessment, target tgt : BackboneElement) {
   // Datum: aus RiskAssessment.occurrenceDateTime
   src.occurrence as occ where $this.is(dateTime) -> tgt.datum = occ "SetWKDatum";
 

@@ -25,7 +25,10 @@ group SenologieToObdsST(source src : Bundle, target tgt : OBDSMeldung) {
 
   // Strahlentherapie-Procedure extrahieren
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie')) then {
-    entry.resource as proc -> tgt.st as st then MapST(proc, st, src) "CallMapST";
+    entry.resource as proc -> tgt.st as st then MapST(proc, st) "CallMapST";
+
+    // Nebenwirkungen (moved from MapST)
+    entry.resource as proc2 -> tgt.st as st2, st2.nebenwirkungen as nw then MapNebenwirkungenST(src, nw) "CallMapNebenwirkungen";
   } "EntryST";
 }
 
@@ -34,7 +37,7 @@ group SenologieToObdsST(source src : Bundle, target tgt : OBDSMeldung) {
 // Mapped Intention, Stellung zur OP und erzeugt Bestrahlungs-Eintraege
 // ============================================================================
 
-group MapST(source src : Procedure, target tgt : BackboneElement, source bundle : Bundle) {
+group MapST(source src : Procedure, target tgt : BackboneElement) {
 
   // ST_ID: Procedure.id
   src.id as id -> tgt.stID = id "SetStID";
@@ -66,8 +69,7 @@ group MapST(source src : Procedure, target tgt : BackboneElement, source bundle 
     oc.coding as c -> tgt.endeGrund = (c.code) "SetEndeGrundCode";
   } "MapEndeGrund";
 
-  // Nebenwirkungen: Delegiert an die gemeinsame Nebenwirkungen-Map (ST-Variante)
-  src -> tgt.nebenwirkungen as nw then MapNebenwirkungenST(bundle, nw) "CallMapNebenwirkungen";
+  // Nebenwirkungen bundle lookup moved to calling group.
 }
 
 // ============================================================================

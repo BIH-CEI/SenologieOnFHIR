@@ -44,9 +44,8 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
   // Ein Bundle sollte typischerweise einen Primaerfall enthalten (eine Patientin,
   // eine Erstdiagnose). Bei Bundles mit mehreren Faellen (z.B. Rezidiven) wird
   // pro Condition (C50.* / D05.* / Z40.* / Z42.*) ein Block erzeugt.
-  src.entry as entry where resource.is(Condition) and resource.code.coding.exists(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and (code.startsWith('C50') or code.startsWith('D05') or code.startsWith('D24') or code.startsWith('Z40') or code.startsWith('Z42'))) then {
-    entry.resource as condition -> tgt.primaerfall as pf then MapPrimaerfall(condition, pf, src) "CallMapPrimaerfall";
-  } "EntryPrimaerfall";
+  // Primaerfall: MapPrimaerfall now takes Bundle as single source
+  src -> tgt.primaerfall as pf then MapPrimaerfall(src, pf) "CallMapPrimaerfall";
 
   // --- Kennzahlen KB-1 bis KB-20 aggregieren ---
   src -> tgt then MapKennzahlen(src, tgt) "CallMapKennzahlen";

@@ -36,7 +36,45 @@ group SenologieToObdsVerlauf(source src : Bundle, target tgt : OBDSMeldung) {
 
   // Verlauf: aus der Condition (Rezidiv) + Observations aus dem Bundle
   src.entry as entry where resource.is(Condition) then {
-    entry.resource as condition -> tgt.verlauf as verl then MapVerlauf(condition, verl, src) "CallMapVerlauf";
+    entry.resource as condition -> tgt.verlauf as verl then MapVerlauf(condition, verl) "CallMapVerlauf";
+
+    // Bundle lookups moved from MapVerlauf
+    entry.resource as cond2 -> tgt.verlauf as verl2 then MapFernmetastasenFromBundle(src, verl2) "CallMapFernmetastasen";
+
+    src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+      histEntry.resource as histObs -> tgt.verlauf as verl3, verl3.histologie as histo then MapHistologie(histObs, histo) "CallMapHistologie";
+      src.entry as specEntry where resource.is(Specimen) then {
+        specEntry.resource as specimen then {
+          specimen.accessionIdentifier as accId then { accId.value as v -> histo.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen"; } "MapAccessionId";
+          specimen.collection as coll then { coll.collected as collDt where $this.is(dateTime) -> histo.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen"; } "MapSpecimenCollection";
+        } "SpecimenContext";
+      } "EntrySpecimen";
+      src.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
+        gradEntry.resource as gradObs then { gradObs.value as val then { val.coding as c -> histo.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate"; } "MapGradingSepValue"; } "MapGradingSepObs";
+      } "EntryGrading";
+      src.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+        lkEntry.resource as lkObs then { lkObs.value as val -> histo.lkUntersucht = val "SetLKUntersuchtSeparate"; } "MapLKUntersuchtSep";
+      } "EntryLKUntersucht";
+      src.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+        lkbEntry.resource as lkbObs then { lkbObs.value as val -> histo.lkBefallen = val "SetLKBefallenSeparate"; } "MapLKBefallenSep";
+      } "EntryLKBefallen";
+      src.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+        slkEntry.resource as slkObs then { slkObs.value as val -> histo.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate"; } "MapSentinelLKUntersuchtSep";
+      } "EntrySentinelLKUntersucht";
+      src.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
+        slkbEntry.resource as slkbObs then { slkbObs.value as val -> histo.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate"; } "MapSentinelLKBefallenSep";
+      } "EntrySentinelLKBefallen";
+    } "EntryHistologie";
+
+    src.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
+      tnmEntry.resource as tnmObs -> tgt.verlauf as verl4, verl4.tnm as tnm then MapTNM(tnmObs, tnm) "CallMapTNMClinical";
+    } "EntryTNMClinical";
+    src.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+      tnmEntry.resource as tnmObs -> tgt.verlauf as verl5, verl5.tnm as tnm then MapTNM(tnmObs, tnm) "CallMapTNMPathological";
+    } "EntryTNMPathological";
+
+    entry.resource as cond3 -> tgt.verlauf as verl6 then MapLeistungszustandFromBundle(src, verl6) "CallMapLeistungszustand";
+    entry.resource as cond4 -> tgt.verlauf as verl7, verl7.modulMamma as mamma then MapModulMamma(src, mamma) "CallMapModulMamma";
   } "EntryConditionVerlauf";
 }
 
@@ -46,7 +84,7 @@ group SenologieToObdsVerlauf(source src : Bundle, target tgt : OBDSMeldung) {
 // lokaler Tumorstatus, LK-Status, FM-Status
 // ============================================================================
 
-group MapVerlauf(source src : Condition, target tgt : BackboneElement, source bundle : Bundle) {
+group MapVerlauf(source src : Condition, target tgt : BackboneElement) {
 
   // Verlauf_ID: aus Condition.identifier
   src.identifier as id then {
@@ -104,80 +142,6 @@ group MapVerlauf(source src : Condition, target tgt : BackboneElement, source bu
     } "MapFMStatusValue";
   } "MapTumorstatusFernmetastasen";
 
-  // Fernmetastasen: Delegiert an die gemeinsame Fernmetastasen-Map
-  src -> tgt then MapFernmetastasenFromBundle(bundle, tgt) "CallMapFernmetastasen";
-
-  // Histologie: aus Observation im Bundle (Re-Biopsie im Verlauf)
-  // LOINC 59847-4 = "Histology and Behavior ICD-O-3 Cancer"
-  // Delegiert an die gemeinsame Histologie-Map
-  bundle.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
-    histEntry.resource as histObs -> tgt.histologie as histo then MapHistologie(histObs, histo) "CallMapHistologie";
-
-    // Specimen: Einsende-Nummer und Histologiedatum (Fallback)
-    bundle.entry as specEntry where resource.is(Specimen) then {
-      specEntry.resource as specimen then {
-        specimen.accessionIdentifier as accId then {
-          accId.value as v -> histo.histologieEinsendeNr = v "SetEinsendeNrFromSpecimen";
-        } "MapAccessionId";
-        specimen.collection as coll then {
-          coll.collected as collDt where $this.is(dateTime) -> histo.tumorHistologiedatum = collDt "SetHistologiedatumFromSpecimen";
-        } "MapSpecimenCollection";
-      } "SpecimenContext";
-    } "EntrySpecimen";
-
-    // Grading: aus separater Observation im Bundle (Fallback)
-    bundle.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '59542-1') then {
-      gradEntry.resource as gradObs then {
-        gradObs.value as val then {
-          val.coding as c -> histo.grading = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading', 'code') "TranslateGradingSeparate";
-        } "MapGradingSepValue";
-      } "MapGradingSepObs";
-    } "EntryGrading";
-
-    // LK_untersucht: aus separater Observation (Fallback)
-    bundle.entry as lkEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
-      lkEntry.resource as lkObs then {
-        lkObs.value as val -> histo.lkUntersucht = val "SetLKUntersuchtSeparate";
-      } "MapLKUntersuchtSep";
-    } "EntryLKUntersucht";
-
-    // LK_befallen: aus separater Observation (Fallback)
-    bundle.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
-      lkbEntry.resource as lkbObs then {
-        lkbObs.value as val -> histo.lkBefallen = val "SetLKBefallenSeparate";
-      } "MapLKBefallenSep";
-    } "EntryLKBefallen";
-
-    // Sentinel_LK_untersucht: aus separater Observation (Fallback)
-    bundle.entry as slkEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
-      slkEntry.resource as slkObs then {
-        slkObs.value as val -> histo.sentinelLKUntersucht = val "SetSentinelLKUntersuchtSeparate";
-      } "MapSentinelLKUntersuchtSep";
-    } "EntrySentinelLKUntersucht";
-
-    // Sentinel_LK_befallen: aus separater Observation (Fallback)
-    bundle.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92831-7') then {
-      slkbEntry.resource as slkbObs then {
-        slkbObs.value as val -> histo.sentinelLKBefallen = val "SetSentinelLKBefallenSeparate";
-      } "MapSentinelLKBefallenSep";
-    } "EntrySentinelLKBefallen";
-  } "EntryHistologie";
-
-  // TNM: aus TNM-Observation im Bundle (Rezidiv-Staging)
-  // Kann klinisch (21908-9) oder pathologisch (21902-2) sein
-  // Delegiert an die gemeinsame TNM-Map
-  bundle.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
-    tnmEntry.resource as tnmObs -> tgt.tnm as tnm then MapTNM(tnmObs, tnm, bundle) "CallMapTNMClinical";
-  } "EntryTNMClinical";
-
-  bundle.entry as tnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
-    tnmEntry.resource as tnmObs -> tgt.tnm as tnm then MapTNM(tnmObs, tnm, bundle) "CallMapTNMPathological";
-  } "EntryTNMPathological";
-
-  // Allgemeiner Leistungszustand (ECOG): Delegiert an die gemeinsame Leistungszustand-Map
-  src -> tgt then MapLeistungszustandFromBundle(bundle, tgt) "CallMapLeistungszustand";
-
-  // Modul_Mamma: Hormonrezeptoren + HER2 aus Observations im Bundle (Rezidiv-Testung)
-  // Delegiert an die gemeinsame ModulMamma-Map
-  src -> tgt.modulMamma as mamma then MapModulMamma(bundle, mamma) "CallMapModulMamma";
+  // Fernmetastasen, Histologie, TNM, Leistungszustand, ModulMamma
+  // bundle lookups moved to calling group.
 }

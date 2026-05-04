@@ -41,3 +41,14 @@ Diese Beurteilung wird durch den behandelnden Arzt auf Basis der verfügbaren kl
 Einige Datenpunkte der Verlaufsmeldung — etwa die Art der Nachsorge (aktiv: Patientin persönlich untersucht vs. passiv: Information aus Akten oder Registern) — liegen zwischen klinischer Dokumentation und Meldewesen. Sie werden im Verlauf-Questionnaire als Feld erfasst, da die Unterscheidung zum Zeitpunkt der Dokumentation bekannt ist.
 
 Die genaue Abgrenzung, welche Verlaufsinformationen klinisch dokumentiert und welche erst bei der Meldungserstellung ergänzt werden, ist Gegenstand der weiteren Ausgestaltung dieses Moduls.
+
+## Zugehörige Ressourcen
+
+| Typ | Ressource |
+|-----|-----------|
+| Profil | [Senologie_FollowUp](StructureDefinition-senologie-follow-up.html) |
+| Profil | [Senologie_Psychoonkologie](StructureDefinition-senologie-psychoonkologie.html) |
+| Profil | [Senologie_Sozialdienst](StructureDefinition-senologie-sozialdienst.html) |
+| Questionnaire | [Verlauf](Questionnaire-senologie-verlauf.html) |
+| Beispiel | [Fall 1 — Verlauf 6 Monate](Observation-Fall1-Verlauf-6Monate.html) |
+| Beispiel | [Fall 1 — ECOG](Observation-Fall1-ECOG-6Monate.html) |

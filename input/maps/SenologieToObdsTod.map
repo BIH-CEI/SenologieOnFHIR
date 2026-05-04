@@ -33,7 +33,22 @@ group SenologieToObdsTod(source src : Bundle, target tgt : OBDSMeldung) {
 
   // Tod: aus Patient + Todesursachen-Conditions
   src.entry as patEntry where resource.is(Patient) then {
-    patEntry.resource as patient -> tgt.tod as tod then MapTod(patient, tod, src) "CallMapTod";
+    patEntry.resource as patient -> tgt.tod as tod then MapTod(patient, tod) "CallMapTod";
+
+    // Bundle lookups moved from MapTod
+    src.entry as codEntry where resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death') then {
+      codEntry.resource as codCondition then {
+        codCondition.code as code then {
+          code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and code.startsWith('C') then {
+            c -> tod.todTumorbedingt = 'J' "SetTodTumorbedingtJa";
+          } "CheckIsCancer";
+        } "CheckCodCode";
+      } "AnalyseCodCondition";
+    } "EntryCheckTumorbedingt";
+
+    src.entry as codEntry2 where resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death') then {
+      codEntry2.resource as codCondition -> tod.todesursachen as tu then MapTodesursache(codCondition, tu) "CallMapTodesursache";
+    } "EntryTodesursachen";
   } "EntryPatient";
 }
 
@@ -42,7 +57,7 @@ group SenologieToObdsTod(source src : Bundle, target tgt : OBDSMeldung) {
 // Sterbedatum, Tod tumorbedingt, Todesursachen
 // ============================================================================
 
-group MapTod(source src : Patient, target tgt : BackboneElement, source bundle : Bundle) {
+group MapTod(source src : Patient, target tgt : BackboneElement) {
 
   // Abschluss_ID: aus Patient.identifier oder generiert
   src.id as id -> tgt.abschlussID = id "SetAbschlussID";
@@ -50,21 +65,8 @@ group MapTod(source src : Patient, target tgt : BackboneElement, source bundle :
   // Sterbedatum: aus Patient.deceasedDateTime
   src.deceased as d where $this.is(dateTime) -> tgt.sterbedatum = d "SetSterbedatum";
 
-  // Tod_tumorbedingt: wird ueber die Todesursachen-Conditions ermittelt
-  // Wenn eine cause-of-death Condition einen ICD-Code C00-C97 (Krebs) hat -> J
-  // Standardmaessig U (unbekannt), ueberschrieben durch Todesursachen-Analyse
+  // Tod_tumorbedingt: Default U; bundle lookups moved to calling group.
   src -> tgt.todTumorbedingt = 'U' "SetTodTumorbedingtDefault";
-
-  // Tod tumorbedingt: Ja, wenn eine Todesursache einen C-Code (Malignom) enthaelt
-  bundle.entry as codEntry where resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death') then {
-    codEntry.resource as codCondition then {
-      codCondition.code as code then {
-        code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and code.startsWith('C') then {
-          c -> tgt.todTumorbedingt = 'J' "SetTodTumorbedingtJa";
-        } "CheckIsCancer";
-      } "CheckCodCode";
-    } "AnalyseCodCondition";
-  } "EntryCheckTumorbedingt";
 
   // Tod tumorbedingt: aus Extension (falls explizit angegeben)
   src.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-tod-tumorbedingt' then {
@@ -74,11 +76,6 @@ group MapTod(source src : Patient, target tgt : BackboneElement, source bundle :
       } "ExtractTodTumorbedingtCode";
     } "MapTodTumorbedingtValue";
   } "MapTodTumorbedingtExtension";
-
-  // Todesursachen: aus cause-of-death Conditions im Bundle
-  bundle.entry as codEntry where resource.is(Condition) and resource.category.coding.exists(code = 'cause-of-death') then {
-    codEntry.resource as codCondition -> tgt.todesursachen as tu then MapTodesursache(codCondition, tu) "CallMapTodesursache";
-  } "EntryTodesursachen";
 }
 
 // ============================================================================

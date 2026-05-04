@@ -42,3 +42,11 @@ Neben den inhaltlichen Empfehlungen werden folgende Kontextdaten erfasst:
 - Beteiligte Disziplinen
 - Vorstellungsgrund (Erstdiagnose, postoperativ, Rezidiv)
 - Bezug zur Condition (bei bilateralen Tumoren: welche Diagnose?)
+
+## Zugehörige Ressourcen
+
+| Typ | Ressource |
+|-----|-----------|
+| Profil | [Senologie_Tumorboard_Empfehlung](StructureDefinition-senologie-tumorboard-empfehlung.html) |
+| Questionnaire | [Tumorboard](Questionnaire-senologie-tumorboard.html) |
+| Beispiel | [Fall 1 — Tumorboard](CarePlan-Fall1-Tumorboard.html) |

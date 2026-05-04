@@ -22,3 +22,11 @@ Die Strahlentherapie-Daten werden am Brustzentrum selbst nicht primär erfasst, 
 ## Profil-Grundlage
 
 Das Strahlentherapie-Profil erbt vom MII Onko Modul und ergänzt senologie-spezifische Felder wie Einzeldosis pro Fraktion und das Flag für simultane Radiochemotherapie. Die Stellung zur Operation und die Therapieintention werden über MII Onko Extensions abgebildet.
+
+## Zugehörige Ressourcen
+
+| Typ | Ressource |
+|-----|-----------|
+| Profil | [Senologie_Strahlentherapie](StructureDefinition-senologie-strahlentherapie.html) |
+| Questionnaire | [Strahlentherapie](Questionnaire-senologie-strahlentherapie-quest.html) |
+| Beispiel | [Fall 1 — Strahlentherapie](Procedure-Fall1-Strahlentherapie.html) |
