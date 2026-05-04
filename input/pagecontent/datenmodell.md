@@ -1,5 +1,7 @@
 # Datenmodell
 
+<img src="senologie-ressourcenmodell.png" alt="FHIR Ressourcenmodell Senologie" style="max-width:100%"/>
+
 Das Senologie-Modul basiert auf einem logischen Modell, das die klinischen Datenpunkte der Brustkrebsversorgung strukturiert. Dieses Modell wird auf FHIR-Ressourcen abgebildet, die als Profile in diesem IG spezifiziert sind.
 
 ### Profilvererbung
