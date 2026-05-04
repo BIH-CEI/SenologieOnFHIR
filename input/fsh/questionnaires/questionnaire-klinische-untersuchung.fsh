@@ -81,9 +81,9 @@ Usage: #definition
 * item[=].type = #choice
 * item[=].required = true
 * item[=].definition = "http://hl7.org/fhir/StructureDefinition/Observation#Observation.bodySite"
-* item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
-* item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
-* item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
+* item[=].answerOption[+].valueCoding = $SCT#80248007 "Links"
+* item[=].answerOption[+].valueCoding = $SCT#73056007 "Rechts"
+* item[=].answerOption[+].valueCoding = $SCT#63762007 "Beidseits"
 
 // Palpationsbefund
 * item[+].linkId = "palpationsbefund"
