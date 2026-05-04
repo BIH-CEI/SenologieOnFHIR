@@ -90,7 +90,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
   "name" : "SenologieKDS",
   "title" : "Kerndatensatz Senologie",
   "status" : "draft",
-  "date" : "2026-05-04T07:30:32+00:00",
+  "date" : "2026-05-04T07:50:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -4478,7 +4478,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
         "reference" : "Questionnaire/senologie-bildgebung"
       },
       "name" : "Fragebogen: Bildgebung Mamma",
-      "description" : "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele.",
+      "description" : "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure.",
       "exampleBoolean" : false
     },
     {
@@ -4538,6 +4538,7 @@ Die folgenden Themen sind für zukünftige Versionen vorgesehen:
         "reference" : "Questionnaire/senologie-pathologie"
       },
       "name" : "Fragebogen: Pathologie Befund",
+      "description" : "Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation.",
       "exampleBoolean" : false
     },
     {

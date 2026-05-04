@@ -286,72 +286,19 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
 <p>Die Erfassung folgt dem klinischen Versorgungspfad. Die Diagnose bildet den Ankerpunkt, an den alle weiteren Befundungen und Therapien geknüpft werden:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ┌──────────────────────────────────────────────────────────────────────┐
-  │                        1. Diagnose anlegen                         │
-  │              Erstanamnese → Diagnose-Formular → Condition          │
-  └──────────────────────┬─────────────────────────────────────────────┘
-                         │
-                         │ Bezugsdiagnose
-                         ▼
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                     2. Befundungen hinzufügen                      │
-  │                                                                    │
-  │   ┌─────────────────┐  ┌──────────────┐  ┌─────────────────────┐   │
-  │   │ Klinische       │  │ Bildgebung   │  │ Pathologie          │   │
-  │   │ Untersuchung    │  │              │  │                     │   │
-  │   │ → Observation   │  │ → Diagnostic │  │ → DiagnosticReport  │   │
-  │   │                 │  │   Report     │  │ → Observation       │   │
-  │   │                 │  │ → Observation│  │ → Specimen          │   │
-  │   └─────────────────┘  └──────────────┘  └─────────────────────┘   │
-  └──────────────────────┬─────────────────────────────────────────────┘
-                         │
-                         │ Bezugsdiagnose / -operation
-                         ▼
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                    3. Therapie dokumentieren                        │
-  │                                                                    │
-  │   ┌──────────────┐  ┌────────────────┐  ┌───────────────────────┐  │
-  │   │ OP-Planung   │  │ Postoperativ   │  │ Tumorboard            │  │
-  │   │ → Service    │  │ → Procedure    │  │ → CarePlan            │  │
-  │   │   Request    │  │ → Device       │  │                       │  │
-  │   │              │  │ → Observation   │  │                       │  │
-  │   └──────────────┘  └────────────────┘  └───────────────────────┘  │
-  │                                                                    │
-  │   ┌──────────────────────┐  ┌───────────────────────────────────┐  │
-  │   │ Systemtherapie       │  │ Strahlentherapie                  │  │
-  │   │ → Procedure          │  │ → Procedure                       │  │
-  │   │ → MedicationStatement│  │                                   │  │
-  │   └──────────────────────┘  └───────────────────────────────────┘  │
-  └──────────────────────┬─────────────────────────────────────────────┘
-                         │
-                         ▼
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                       4. Verlauf / Nachsorge                       │
-  │                   Tumorstatus, Follow-Up → Observation             │
-  └──────────────────────────────────────────────────────────────────────┘
-</code></pre></div></div>
+<div>
+<img src="erfassung-workflow.svg" alt="Klinischer Erfassungsworkflow" style="width:100%" />
+<p><em>Klinischer Erfassungsworkflow — von der Diagnose über Befundungen und Therapie bis zur Nachsorge</em></p>
+</div>
 
 <h3 id="wie-ein-formular-funktioniert">Wie ein Formular funktioniert</h3>
 
 <p>Jedes Formular durchläuft beim Öffnen und Ausfüllen vier Phasen:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ┌─────────────┐     ┌───────────────┐     ┌───────────────┐     ┌──────────────────┐
-  │ 1. Kontext  │     │ 2. Vor-       │     │ 3. Formular   │     │ 4. Template-     │
-  │    wählen   │────►│    befüllung   │────►│    ausfüllen   │────►│    based         │
-  │             │     │               │     │               │     │    Extraction    │
-  └─────────────┘     └───────────────┘     └───────────────┘     └──────────────────┘
-        │                    │                     │                       │
-  Bezugsdiagnose       initialExpression      enableWhen            Blueprints
-  Bezugsoperation      aus bestehenden        answerValueSet        (contained
-  Patient/Encounter    FHIR-Ressourcen        Validierung           Templates)
-                                                                         │
-                                                                         ▼
-                                                                  ┌──────────────┐
-                                                                  │ FHIR-        │
-                                                                  │ Ressourcen   │
-                                                                  │ (1..n)       │
-                                                                  └──────────────┘
-</code></pre></div></div>
+<div>
+<img src="erfassung-formular-phasen.svg" alt="Vom Formular zu FHIR-Ressourcen: 4 Phasen" style="width:100%" />
+<p><em>Vom Formular zu FHIR-Ressourcen — Kontextauswahl, Vorbefüllung, Dokumentation und Template-based Extraction</em></p>
+</div>
 
 <p><strong>Phase 1 — Kontextauswahl:</strong> Beim Öffnen eines Formulars wird der Patient- und Encounter-Kontext übergeben (<code class="language-plaintext highlighter-rouge">launchContext</code>). Für Befundungen und Therapien wählt der Anwender die <strong>Bezugsdiagnose</strong> (und ggf. die Bezugsoperation) aus — damit ist jede Dokumentation eindeutig einer Diagnose zugeordnet.</p>
 
@@ -534,7 +481,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 07:30+0000">2026-05-04</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.1.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 4, 2026 07:50+0000">2026-05-04</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

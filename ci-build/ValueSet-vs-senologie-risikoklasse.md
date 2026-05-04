@@ -51,7 +51,7 @@ Risikokategorien für Genexpressionstests (low, intermediate, high)
   "title" : "VS Senologie Risikoklasse",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-04T07:30:32+00:00",
+  "date" : "2026-05-04T07:50:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

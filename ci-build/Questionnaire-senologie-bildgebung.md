@@ -12,7 +12,7 @@
 | Draft as of 2026-05-04 | *Computable Name*:QuestBildgebung |
 
  
-Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele. 
+Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure. 
 
 
 
@@ -22,6 +22,60 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
 {
   "resourceType" : "Questionnaire",
   "id" : "senologie-bildgebung",
+  "contained" : [{
+    "resourceType" : "DiagnosticReport",
+    "id" : "bildgebung-report-template",
+    "status" : "final",
+    "category" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0074",
+        "code" : "RAD",
+        "display" : "Radiology"
+      }]
+    }],
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "24606-6",
+        "display" : "Breast Screening"
+      }]
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  },
+  {
+    "resourceType" : "Observation",
+    "id" : "bildgebung-befund-template",
+    "status" : "final",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "72018-2",
+        "display" : "Breast Imaging-Reporting and Data System"
+      }]
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  },
+  {
+    "resourceType" : "BodyStructure",
+    "id" : "bildgebung-bodystructure-template",
+    "active" : true,
+    "patient" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  }],
   "extension" : [{
     "extension" : [{
       "url" : "name",
@@ -43,7 +97,7 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T07:30:32+00:00",
+  "date" : "2026-05-04T07:50:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -52,14 +106,16 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele.",
+  "description" : "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure.",
   "item" : [{
     "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-      "valueExpression" : {
-        "language" : "application/x-fhir-query",
-        "expression" : "DiagnosticReport"
-      }
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#bildgebung-report-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }],
     "linkId" : "untersuchung",
     "text" : "Untersuchung",
@@ -80,52 +136,25 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
         "valueCoding" : {
           "system" : "http://loinc.org",
           "code" : "24606-6",
-          "display" : "MG Breast Screening"
+          "display" : "Mammographie"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://loinc.org",
-          "code" : "24601-7",
-          "display" : "US Breast"
+          "code" : "24590-2",
+          "display" : "Sonographie"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://loinc.org",
-          "code" : "30794-2",
-          "display" : "MR Breast"
+          "code" : "24589-4",
+          "display" : "MRT Mamma"
         }
       },
       {
         "valueString" : "Tomosynthese"
-      }]
-    },
-    {
-      "linkId" : "seite",
-      "text" : "Seite",
-      "type" : "choice",
-      "required" : false,
-      "answerOption" : [{
-        "valueCoding" : {
-          "system" : "http://snomed.info/sct",
-          "code" : "80248007",
-          "display" : "Left breast structure"
-        }
-      },
-      {
-        "valueCoding" : {
-          "system" : "http://snomed.info/sct",
-          "code" : "73056007",
-          "display" : "Right breast structure"
-        }
-      },
-      {
-        "valueCoding" : {
-          "system" : "http://snomed.info/sct",
-          "code" : "63762007",
-          "display" : "Both breasts"
-        }
       }]
     },
     {
@@ -137,11 +166,151 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
   },
   {
     "extension" : [{
-      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-      "valueExpression" : {
-        "language" : "application/x-fhir-query",
-        "expression" : "Observation"
-      }
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#bildgebung-bodystructure-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
+    "linkId" : "lokalisation",
+    "text" : "Tumorlokalisation",
+    "type" : "group",
+    "required" : false,
+    "item" : [{
+      "linkId" : "lokalisation-seite",
+      "text" : "Seite",
+      "type" : "choice",
+      "required" : true,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "80248007",
+          "display" : "Links"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "73056007",
+          "display" : "Rechts"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "63762007",
+          "display" : "Beidseits"
+        }
+      }]
+    },
+    {
+      "linkId" : "lokalisation-quadrant",
+      "text" : "Quadrant",
+      "type" : "choice",
+      "required" : false,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "76365002",
+          "display" : "Oberer äußerer Quadrant"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "77831004",
+          "display" : "Oberer innerer Quadrant"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "33564002",
+          "display" : "Unterer äußerer Quadrant"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "19100000",
+          "display" : "Unterer innerer Quadrant"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "24142002",
+          "display" : "Mamille"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "70925003",
+          "display" : "Zentral"
+        }
+      }]
+    },
+    {
+      "linkId" : "lokalisation-uhrzeit",
+      "text" : "Uhrzeitposition",
+      "type" : "choice",
+      "required" : false,
+      "answerOption" : [{
+        "valueString" : "12 Uhr"
+      },
+      {
+        "valueString" : "1 Uhr"
+      },
+      {
+        "valueString" : "2 Uhr"
+      },
+      {
+        "valueString" : "3 Uhr"
+      },
+      {
+        "valueString" : "4 Uhr"
+      },
+      {
+        "valueString" : "5 Uhr"
+      },
+      {
+        "valueString" : "6 Uhr"
+      },
+      {
+        "valueString" : "7 Uhr"
+      },
+      {
+        "valueString" : "8 Uhr"
+      },
+      {
+        "valueString" : "9 Uhr"
+      },
+      {
+        "valueString" : "10 Uhr"
+      },
+      {
+        "valueString" : "11 Uhr"
+      }]
+    },
+    {
+      "linkId" : "lokalisation-mamillenabstand",
+      "text" : "Abstand von Mamille (mm)",
+      "type" : "integer",
+      "required" : false
+    }]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#bildgebung-befund-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }],
     "linkId" : "befund",
     "text" : "Befund",
@@ -150,9 +319,9 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
     "item" : [{
       "linkId" : "birads-kategorie",
       "code" : [{
-        "system" : "http://snomed.info/sct",
-        "code" : "241736003",
-        "display" : "Breast imaging-reporting and data system"
+        "system" : "http://loinc.org",
+        "code" : "72018-2",
+        "display" : "BI-RADS"
       }],
       "text" : "BI-RADS Kategorie",
       "type" : "choice",
@@ -161,69 +330,80 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "397138000",
-          "display" : "Mammography assessment (Category 0) - Need additional imaging evaluation"
+          "display" : "BI-RADS 0 — Zusätzliche Bildgebung erforderlich"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "397140005",
-          "display" : "Mammography assessment (Category 1) - Negative"
+          "display" : "BI-RADS 1 — Unauffällig"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "397141009",
-          "display" : "Mammography assessment (Category 2) - Benign finding"
+          "display" : "BI-RADS 2 — Gutartiger Befund"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "397143007",
-          "display" : "Mammography assessment (Category 3) - Probably benign finding, short interval follow-up"
+          "display" : "BI-RADS 3 — Wahrscheinlich gutartig"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "397144001",
-          "display" : "Mammography assessment (Category 4) - Suspicious abnormality, biopsy should be considered"
+          "display" : "BI-RADS 4 — Suspekt"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "397145000",
-          "display" : "Mammography assessment (Category 5) - Highly suggestive of malignancy"
+          "display" : "BI-RADS 5 — Hochverdächtig auf Malignität"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "6111000179101",
-          "display" : "Mammography assessment (Category 6) - known biopsy, proven malignancy"
+          "display" : "BI-RADS 6 — Histologisch gesichert maligne"
         }
       }]
     },
     {
       "linkId" : "acr-brustdichte",
+      "code" : [{
+        "system" : "http://loinc.org",
+        "code" : "89180-4",
+        "display" : "Breast density"
+      }],
       "text" : "ACR Brustdichte",
       "type" : "choice",
       "required" : false,
       "answerOption" : [{
-        "valueString" : "A – fast vollständig fetthaltig"
+        "valueString" : "A — Fast vollständig fetthaltig"
       },
       {
-        "valueString" : "B – verstreute fibroglanduläre Verdichtungen"
+        "valueString" : "B — Verstreute fibroglanduläre Verdichtungen"
       },
       {
-        "valueString" : "C – heterogen dicht"
+        "valueString" : "C — Heterogen dicht"
       },
       {
-        "valueString" : "D – extrem dicht"
+        "valueString" : "D — Extrem dicht"
       }]
+    },
+    {
+      "linkId" : "herdbefund-groesse",
+      "text" : "Herdbefund Größe (mm)",
+      "type" : "integer",
+      "required" : false
     },
     {
       "linkId" : "herdbefund-beschreibung",
@@ -233,7 +413,7 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
     },
     {
       "linkId" : "mikrokalk",
-      "text" : "Mikrokalkifikationen vorhanden",
+      "text" : "Mikrokalkifikationen",
       "type" : "boolean",
       "required" : false
     },
@@ -250,7 +430,7 @@ Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, 
     },
     {
       "linkId" : "lymphknoten-auffaellig",
-      "text" : "Lymphknoten auffällig",
+      "text" : "Axilläre Lymphknoten auffällig",
       "type" : "boolean",
       "required" : false
     }]

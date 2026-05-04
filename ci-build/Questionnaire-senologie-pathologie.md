@@ -11,6 +11,9 @@
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-pathologie | *Version*:0.1.0 |
 | Draft as of 2026-05-04 | *Computable Name*:QuestPathologieBefund |
 
+ 
+Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation. 
+
 
 
 ## Resource Content
@@ -19,43 +22,80 @@
 {
   "resourceType" : "Questionnaire",
   "id" : "senologie-pathologie",
+  "contained" : [{
+    "resourceType" : "DiagnosticReport",
+    "id" : "patho-report-template",
+    "status" : "final",
+    "category" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0074",
+        "code" : "SP",
+        "display" : "Surgical Pathology"
+      }]
+    }],
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "60568-3",
+        "display" : "Pathology synoptic report"
+      }]
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  },
+  {
+    "resourceType" : "Specimen",
+    "id" : "patho-specimen-template",
+    "status" : "available",
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  },
+  {
+    "resourceType" : "Observation",
+    "id" : "patho-histo-template",
+    "status" : "final",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "33731-1",
+        "display" : "Histology type in Cancer specimen"
+      }]
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  },
+  {
+    "resourceType" : "Observation",
+    "id" : "patho-ihc-template",
+    "status" : "final",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "85337-4",
+        "display" : "Estrogen receptor Ag [Presence] in Breast cancer specimen by Immune stain"
+      }],
+      "text" : "Immunhistochemie / Rezeptorstatus"
+    },
+    "subject" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%patient"
+      }]
+    }
+  }],
   "extension" : [{
-    "extension" : [{
-      "url" : "template",
-      "valueReference" : {
-        "reference" : "TODO-patho-report-template"
-      }
-    }],
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-  },
-  {
-    "extension" : [{
-      "url" : "template",
-      "valueReference" : {
-        "reference" : "TODO-patho-specimen-template"
-      }
-    }],
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-  },
-  {
-    "extension" : [{
-      "url" : "template",
-      "valueReference" : {
-        "reference" : "TODO-patho-histo-template"
-      }
-    }],
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-  },
-  {
-    "extension" : [{
-      "url" : "template",
-      "valueReference" : {
-        "reference" : "TODO-patho-ihc-template"
-      }
-    }],
-    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
-  },
-  {
     "extension" : [{
       "url" : "name",
       "valueCoding" : {
@@ -76,7 +116,7 @@
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-04T07:30:32+00:00",
+  "date" : "2026-05-04T07:50:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -85,50 +125,59 @@
       "value" : "https://www.bihealth.org"
     }]
   }],
+  "description" : "Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation.",
   "item" : [{
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#patho-specimen-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
     "linkId" : "praeparat",
-    "text" : "Praeparat",
+    "text" : "Präparat",
     "type" : "group",
     "required" : true,
     "item" : [{
       "linkId" : "praeparat-art",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.type",
-      "text" : "Art des Praeparats",
+      "text" : "Art des Präparats",
       "type" : "choice",
       "required" : true,
       "answerOption" : [{
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "86273004",
-          "display" : "Biopsy"
+          "display" : "Biopsie"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "129300006",
-          "display" : "Puncture - action"
+          "display" : "Punktion"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "65801008",
-          "display" : "Excision"
+          "display" : "Exzision"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "392021009",
-          "display" : "Lumpectomy of breast"
+          "display" : "Brusterhaltende Exzision"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "172043006",
-          "display" : "Simple mastectomy"
+          "display" : "Mastektomie-Präparat"
         }
       },
       {
@@ -137,14 +186,12 @@
     },
     {
       "linkId" : "praeparat-entnahmedatum",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.collection.collected[x]",
       "text" : "Entnahmedatum",
       "type" : "date",
       "required" : true
     },
     {
       "linkId" : "praeparat-seite",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Specimen#Specimen.collection.bodySite",
       "text" : "Seite",
       "type" : "choice",
       "required" : true,
@@ -152,24 +199,19 @@
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "80248007",
-          "display" : "Left breast structure"
+          "display" : "Links"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "73056007",
-          "display" : "Right breast structure"
+          "display" : "Rechts"
         }
       }]
     },
     {
       "linkId" : "praeparat-quadrant",
-      "code" : [{
-        "system" : "http://snomed.info/sct",
-        "code" : "246264006",
-        "display" : "Site of lesion"
-      }],
       "text" : "Lokalisation / Quadrant",
       "type" : "choice",
       "required" : false,
@@ -177,54 +219,62 @@
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "76365002",
-          "display" : "Structure of upper outer quadrant of breast"
+          "display" : "Oberer äußerer Quadrant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "77831004",
-          "display" : "Structure of upper inner quadrant of breast"
+          "display" : "Oberer innerer Quadrant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "33564002",
-          "display" : "Lower outer quadrant of breast"
+          "display" : "Unterer äußerer Quadrant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "19100000",
-          "display" : "Lower inner quadrant of breast"
+          "display" : "Unterer innerer Quadrant"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "24142002",
-          "display" : "Nipple structure"
+          "display" : "Mamille"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "70925003",
-          "display" : "Central portion of breast"
+          "display" : "Zentral"
         }
       }]
     }]
   },
   {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#patho-histo-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
     "linkId" : "histologie",
     "text" : "Histologie",
     "type" : "group",
     "required" : false,
     "item" : [{
       "linkId" : "histo-typ",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x]",
       "text" : "Histologischer Typ",
       "type" : "choice",
       "required" : false,
@@ -232,21 +282,21 @@
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "82711006",
-          "display" : "Infiltrating duct carcinoma"
+          "display" : "Invasives Karzinom NST"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "443451005",
-          "display" : "Invasive lobular carcinoma of breast"
+          "display" : "Invasives lobuläres Karzinom"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "109889007",
-          "display" : "Ductal carcinoma in situ of breast"
+          "display" : "DCIS"
         }
       },
       {
@@ -255,76 +305,66 @@
     },
     {
       "linkId" : "histo-grading",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "371469007",
         "display" : "Histologic grade"
       }],
-      "text" : "Grading (Bloom-Richardson)",
+      "text" : "Grading (Elston-Ellis)",
       "type" : "choice",
       "required" : false,
       "answerOption" : [{
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "54102005",
-          "display" : "G1 grade"
+          "display" : "G1"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "1663004",
-          "display" : "G2 grade"
+          "display" : "G2"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "61026006",
-          "display" : "G3 grade"
+          "display" : "G3"
         }
       }]
     },
     {
       "linkId" : "histo-tumorgroesse",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "21889-1",
         "display" : "Size Tumor"
       }],
-      "text" : "Tumorgroesse in mm",
+      "text" : "Tumorgröße (mm)",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "histo-invasive-groesse",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "33728-7",
         "display" : "Size.maximum dimension in Tumor"
       }],
-      "text" : "Invasive Tumorgroesse in mm",
+      "text" : "Invasive Tumorgröße (mm)",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "histo-dcis-anteil",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
-      "code" : [{
-        "system" : "http://snomed.info/sct",
-        "code" : "109889007",
-        "display" : "Ductal carcinoma in situ of breast"
-      }],
       "text" : "DCIS-Anteil",
       "type" : "string",
       "required" : false
     },
     {
       "linkId" : "histo-resektionsrand",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://snomed.info/sct",
         "code" : "395536008",
@@ -337,43 +377,41 @@
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "258254000",
-          "display" : "Residual tumor stage R0"
+          "display" : "R0"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "278271003",
-          "display" : "Residual tumor stage R1"
+          "display" : "R1"
         }
       },
       {
         "valueCoding" : {
           "system" : "http://snomed.info/sct",
           "code" : "258253006",
-          "display" : "Residual tumor stage RX"
+          "display" : "RX"
         }
       }]
     },
     {
       "linkId" : "histo-sentinel-anzahl",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "85347-3",
-        "display" : "Sentinel lymph nodes examined [#] in Cancer specimen by Light microscopy"
+        "display" : "Sentinel lymph nodes examined [#]"
       }],
-      "text" : "Sentinel-LK Anzahl",
+      "text" : "Sentinel-LK untersucht",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "histo-sentinel-befallen",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "92832-5",
-        "display" : "Sentinel lymph nodes with metastasis [#] in Cancer specimen"
+        "display" : "Sentinel lymph nodes with metastasis [#]"
       }],
       "text" : "Sentinel-LK befallen",
       "type" : "integer",
@@ -381,65 +419,59 @@
     }]
   },
   {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#patho-ihc-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
     "linkId" : "ihc",
     "text" : "Immunhistochemie / Rezeptorstatus",
     "type" : "group",
     "required" : false,
     "item" : [{
       "linkId" : "ihc-er-prozent",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "85337-4",
-        "display" : "Estrogen receptor Ag [Presence] in Breast cancer specimen by Immune stain"
+        "display" : "Estrogen receptor"
       }],
-      "text" : "ER Prozent positiv",
+      "text" : "ER Prozent positiv (%)",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "ihc-er-irs",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
-      "code" : [{
-        "system" : "http://loinc.org",
-        "code" : "85310-1",
-        "display" : "Estrogen receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
-      }],
-      "text" : "ER IRS Score (0-12)",
+      "text" : "ER IRS Score (0–12)",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "ihc-pr-prozent",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "85339-0",
-        "display" : "Progesterone receptor Ag [Presence] in Breast cancer specimen by Immune stain"
+        "display" : "Progesterone receptor"
       }],
-      "text" : "PR Prozent positiv",
+      "text" : "PR Prozent positiv (%)",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "ihc-pr-irs",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
-      "code" : [{
-        "system" : "http://loinc.org",
-        "code" : "85331-7",
-        "display" : "Progesterone receptor fluorescence intensity [Type] in Breast cancer specimen by Immune stain"
-      }],
-      "text" : "PR IRS Score (0-12)",
+      "text" : "PR IRS Score (0–12)",
       "type" : "integer",
       "required" : false
     },
     {
       "linkId" : "ihc-her2-score",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "85319-2",
-        "display" : "HER2 [Presence] in Breast cancer specimen by Immune stain"
+        "display" : "HER2 [Presence] in Breast cancer specimen"
       }],
       "text" : "HER2 IHC Score",
       "type" : "choice",
@@ -459,11 +491,10 @@
     },
     {
       "linkId" : "ihc-her2-fish",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
         "code" : "85318-4",
-        "display" : "ERBB2 gene duplication [Presence] in Breast cancer specimen by FISH"
+        "display" : "ERBB2 gene duplication"
       }],
       "text" : "HER2 ISH/FISH",
       "type" : "choice",
@@ -480,16 +511,15 @@
         "valueString" : "negativ"
       },
       {
-        "valueString" : "nicht durchgefuehrt"
+        "valueString" : "nicht durchgeführt"
       }]
     },
     {
       "linkId" : "ihc-ki67",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.value[x]",
       "code" : [{
         "system" : "http://loinc.org",
-        "code" : "85330-9",
-        "display" : "Cells.Ki-67 nuclear Ag/cells in Breast cancer specimen by Immune stain"
+        "code" : "29593-1",
+        "display" : "Ki-67 [Percentile] in Tissue"
       }],
       "text" : "Ki-67 Index (%)",
       "type" : "integer",
@@ -497,20 +527,27 @@
     }]
   },
   {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#patho-report-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
     "linkId" : "beurteilung",
     "text" : "Gesamtbeurteilung",
     "type" : "group",
     "required" : false,
     "item" : [{
       "linkId" : "beurteilung-ptnm",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.conclusion",
-      "text" : "pTNM Staging",
+      "text" : "pTNM",
       "type" : "string",
       "required" : false
     },
     {
       "linkId" : "beurteilung-freitext",
-      "definition" : "http://hl7.org/fhir/StructureDefinition/DiagnosticReport#DiagnosticReport.presentedForm.data",
       "text" : "Gesamtbeurteilung (Freitext)",
       "type" : "text",
       "required" : false

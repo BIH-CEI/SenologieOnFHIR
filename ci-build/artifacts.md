@@ -43,12 +43,12 @@ These define forms used by systems conforming to this implementation guide to ca
 
 | | |
 | :--- | :--- |
-| [Fragebogen: Bildgebung Mamma](Questionnaire-senologie-bildgebung.md) | Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Definition-based Extraction mit DiagnosticReport und Observation als Ziele. |
+| [Fragebogen: Bildgebung Mamma](Questionnaire-senologie-bildgebung.md) | Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure. |
 | [Fragebogen: Diagnose Mamma](Questionnaire-senologie-diagnose.md) | Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Spektrum von invasivem Karzinom über DCIS und B3-Läsionen bis hin zu benignen Befunden. Nutzt SDC Template-based Extraction zur Erzeugung einer Condition-Ressource. |
 | [Fragebogen: Erstanamnese](Questionnaire-senologie-erstanamnese.md) | Fragebogen zur Erstanamnese (Allgemeine Anamnese, Gynäkologische Anamnese, Familienanamnese). Nutzt SDC Definition-based Extraction mit mehreren Gruppen (Observation, FamilyMemberHistory). |
 | [Fragebogen: Klinische Untersuchung Mamma](Questionnaire-senologie-klinische-untersuchung.md) | Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Template-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel. Das Extraction-Template liegt unter input/resources/Questionnaire-senologie-klinische-untersuchung-template.json. |
 | [Fragebogen: OP Planung](Questionnaire-senologie-op-planung.md) | Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel. |
-| [Fragebogen: Pathologie Befund](Questionnaire-senologie-pathologie.md) |  |
+| [Fragebogen: Pathologie Befund](Questionnaire-senologie-pathologie.md) | Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation. |
 | [Fragebogen: Postoperative Dokumentation](Questionnaire-senologie-postop.md) | Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation). |
 | [Fragebogen: Senologie Diagnose](Questionnaire-senologie-diagnose-maligne.md) |  |
 | [Fragebogen: Strahlentherapie](Questionnaire-senologie-strahlentherapie-quest.md) | Fragebogen zur strukturierten Dokumentation der Strahlentherapie in der Senologie. Nutzt SDC Definition-based Extraction mit Procedure als Ziel. |
