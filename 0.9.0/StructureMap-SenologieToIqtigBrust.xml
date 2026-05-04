@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="SenologieToIqtigBrust"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: StructureMap SenologieToIqtigBrust</b></p><a name="SenologieToIqtigBrust"> </a><a name="hcSenologieToIqtigBrust"> </a><pre class="fml">
+<b>map</b><span style="color: navy"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust<span style="color: navy">&quot; = &quot;</span>SenologieToIqtigBrust<span style="color: navy">&quot;
+
+</span><span style="color: navy">// </span><span style="color: green">title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust</span>
+<span style="color: navy">// </span><span style="color: green">status: draft</span>
+
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/bundle.html" title="Bundle">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style="color: navy">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/condition.html" title="Condition">http://hl7.org/fhir/StructureDefinition/Condition</a><span style="color: navy">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/observation.html" title="Observation">http://hl7.org/fhir/StructureDefinition/Observation</a><span style="color: navy">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span><a href="http://hl7.org/fhir/R4/servicerequest.html" title="ServiceRequest">http://hl7.org/fhir/StructureDefinition/ServiceRequest</a><span style="color: navy">&quot; </span><b>alias </b>ServiceRequest <b>as </b><b>source</b>
+
+<span style="color: navy">// </span><span style="color: green">Import-only map: no target `uses` declaration — the calling map</span>
+<span style="color: navy">// </span><span style="color: green">(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement</span>
+<span style="color: navy">// </span><span style="color: green">context (teildatensatzBrust). Omitting the root-level target type avoids</span>
+<span style="color: navy">// </span><span style="color: green">SM_TARGET_PATH false positives where the validator would resolve property</span>
+<span style="color: navy">// </span><span style="color: green">names against iqtig-mammachirurgie-181 root.</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<span style="color: navy">// </span><span style="color: green">Teildatensatz Brust (BRUST): Condition + Observations -&gt; BRUST:*</span>
+<span style="color: navy">// </span><span style="color: green">Pro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die</span>
+<span style="color: navy">// </span><span style="color: green">Zuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).</span>
+<span style="color: navy">// </span><span style="color: green">Quellen:</span>
+<span style="color: navy">// </span><span style="color: green">- Condition (Senologie_Diagnose_Maligne / _Benigne) -&gt; Indikation, ICD,</span>
+<span style="color: navy">// </span><span style="color: green">Seitenlokalisation, Diagnosedatum</span>
+<span style="color: navy">// </span><span style="color: green">- Observation (BI-RADS, bildgebende Methode, Praeopbefund) -&gt; Befund</span>
+<span style="color: navy">// </span><span style="color: green">- ServiceRequest (Senologie_OP_Planung) -&gt; Drahtmarkierung, Neoadjuvanz</span>
+<span style="color: navy">// </span><span style="color: green">- Observation (cTNM, Tumorgroesse klinisch) -&gt; Staging-Felder</span>
+<span style="color: navy">// </span><span style="color: green">============================================================================</span>
+<b>group </b>MapBrust<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>Condition, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>BackboneElement<span style="color: navy">)</span><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">BRUST:LNRBRUST - Standardwert 1 (kann durch Slicing ueberschrieben werden)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.laufendeNummer = <span style="color: blue">1</span> <i>&quot;SetLnrBrust&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:SEITE - Seitenlokalisation aus Condition.bodySite (SNOMED CT)</span>
+  <span style="color: navy">// </span><span style="color: green">24028007=right, 7771000=left, 51440002=bilateral</span>
+  src.bodySite<b> as </b><span style="color: maroon">bs</span><b> then</b><span style="color: navy"> {
+</span>    bs.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '24028007'<span style="color: navy"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style="color: blue">'R'</span> <i>&quot;SetSeiteR&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '7771000'<span style="color: navy"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style="color: blue">'L'</span> <i>&quot;SetSeiteL&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this = '51440002'<span style="color: navy"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style="color: blue">'B'</span> <i>&quot;SetSeiteB&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapSeiteSCT&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapSeitenlokalisation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:INDIKATION - Indikation aus ICD-10-GM-Code</span>
+  <span style="color: navy">// </span><span style="color: green">C50.* = maligne (1), D05.* = DCIS (2), D24 = benigne (3), Z40.* = Risikoreduktion (4)</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('C50')<span style="color: navy"><b> -&gt; </b></span>tgt.indikation = <span style="color: blue">'1'</span> <i>&quot;SetIndikMaligne&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('D05')<span style="color: navy"><b> -&gt; </b></span>tgt.indikation = <span style="color: blue">'2'</span> <i>&quot;SetIndikDCIS&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('D24')<span style="color: navy"><b> -&gt; </b></span>tgt.indikation = <span style="color: blue">'3'</span> <i>&quot;SetIndikBenigne&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('Z40')<span style="color: navy"><b> -&gt; </b></span>tgt.indikation = <span style="color: blue">'4'</span> <i>&quot;SetIndikRisiko&quot;</i><span style="color: navy">;</span>
+      c.code<b> as </b><span style="color: maroon">cd</span><b> where </b>$this.startsWith('Z42')<span style="color: navy"><b> -&gt; </b></span>tgt.indikation = <span style="color: blue">'5'</span> <i>&quot;SetIndikRekon&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapIndikationICD&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapIndikation&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:DIAGICD - ICD-10-GM-Kodierung der Diagnose</span>
+  src.code<b> as </b><span style="color: maroon">code</span><b> then</b><span style="color: navy"> {
+</span>    code.coding<b> as </b><span style="color: maroon">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'<span style="color: navy"><b> -&gt; </b></span>tgt.diagnoseICD<b> as </b><span style="color: maroon">icd</span><b> then</b><span style="color: navy"> {
+</span>      c.code<b> as </b><span style="color: maroon">cd</span><span style="color: navy"><b> -&gt; </b></span>icd.code = <span style="color: maroon">cd</span> <i>&quot;SetICDCode&quot;</i><span style="color: navy">;</span>
+      c.version<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>icd.version = <span style="color: maroon">v</span> <i>&quot;SetICDVersion&quot;</i><span style="color: navy">;</span>
+    <span style="color: navy">}</span> <i>&quot;MapICDCoding&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">}</span> <i>&quot;MapDiagnoseICD&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:DIAGDATUM - Diagnosedatum aus Condition.onsetDateTime</span>
+  src.onset<b> as </b><span style="color: maroon">onset</span><b> where </b>$this.is(dateTime)<span style="color: navy"><b> -&gt; </b></span>tgt.diagnosedatum = <span style="color: maroon">onset</span> <i>&quot;SetDiagnosedatum&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:HISTPRAEOP - Default (nein)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.histologischeSicherungPraeop = <span style="color: blue">'0'</span> <i>&quot;SetHistPraeopDefault&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:NEOADJ - Default (nein)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.neoadjuvanteTherapie = <span style="color: blue">'0'</span> <i>&quot;SetNeoadjDefault&quot;</i><span style="color: navy">;</span>
+  <span style="color: navy">// </span><span style="color: green">BRUST:TKPRAEOP - Default (unbekannt)</span>
+  src<span style="color: navy"><b> -&gt; </b></span>tgt.tumorkonferenzPraeop = <span style="color: blue">'9'</span> <i>&quot;SetTKPraeopDefault&quot;</i><span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+  </text>
+  <url value="https://www.senologie.org/fhir/StructureMap/SenologieToIqtigBrust"/>
+  <version value="0.9.0"/>
+  <name value="SenologieToIqtigBrust"/>
+  <status value="draft"/>
+  <date value="2026-05-04T16:55:55+00:00"/>
+  <publisher value="Berlin Institute of Health at Charité (BIH)"/>
+  <contact>
+    <name value="Berlin Institute of Health at Charité (BIH)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.bihealth.org"/>
+    </telecom>
+  </contact>
+  <description value="title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust&#xD;&#xA;status: draft"/>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="source"/>
+    <alias value="Bundle"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+    <mode value="source"/>
+    <alias value="Condition"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+    <mode value="source"/>
+    <alias value="Observation"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/ServiceRequest"/>
+    <mode value="source"/>
+    <alias value="ServiceRequest"/>
+  </structure>
+  <group>
+    <name value="MapBrust"/>
+    <typeMode value="none"/>
+    <documentation value="Import-only map: no target `uses` declaration — the calling map&#xD;&#xA;(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement&#xD;&#xA;context (teildatensatzBrust). Omitting the root-level target type avoids&#xD;&#xA;SM_TARGET_PATH false positives where the validator would resolve property&#xD;&#xA;names against iqtig-mammachirurgie-181 root.&#xD;&#xA;============================================================================&#xD;&#xA;Teildatensatz Brust (BRUST): Condition + Observations -&gt; BRUST:*&#xD;&#xA;Pro betroffener Brustseite wird ein Brust-Teildatensatz erzeugt. Die&#xD;&#xA;Zuordnung zur Operation erfolgt ueber die laufende Nummer (LNRBRUST).&#xD;&#xA;Quellen:&#xD;&#xA;- Condition (Senologie_Diagnose_Maligne / _Benigne) -&gt; Indikation, ICD,&#xD;&#xA;Seitenlokalisation, Diagnosedatum&#xD;&#xA;- Observation (BI-RADS, bildgebende Methode, Praeopbefund) -&gt; Befund&#xD;&#xA;- ServiceRequest (Senologie_OP_Planung) -&gt; Drahtmarkierung, Neoadjuvanz&#xD;&#xA;- Observation (cTNM, Tumorgroesse klinisch) -&gt; Staging-Felder&#xD;&#xA;============================================================================"/>
+    <input>
+      <name value="src"/>
+      <type value="Condition"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="BackboneElement"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="SetLnrBrust"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="laufendeNummer"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueInteger value="1"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="MapSeitenlokalisation"/>
+      <source>
+        <context value="src"/>
+        <element value="bodySite"/>
+        <variable value="bs"/>
+      </source>
+      <rule>
+        <name value="MapSeiteSCT"/>
+        <source>
+          <context value="bs"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://snomed.info/sct'"/>
+        </source>
+        <rule>
+          <name value="SetSeiteR"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '24028007'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="seitenlokalisation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="R"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetSeiteL"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '7771000'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="seitenlokalisation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="L"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetSeiteB"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this = '51440002'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="seitenlokalisation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="B"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapIndikation"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapIndikationICD"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"/>
+        </source>
+        <rule>
+          <name value="SetIndikMaligne"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('C50')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="indikation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="1"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetIndikDCIS"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('D05')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="indikation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="2"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetIndikBenigne"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('D24')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="indikation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="3"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetIndikRisiko"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('Z40')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="indikation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="4"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetIndikRekon"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+            <condition value="$this.startsWith('Z42')"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="indikation"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="5"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="MapDiagnoseICD"/>
+      <source>
+        <context value="src"/>
+        <element value="code"/>
+        <variable value="code"/>
+      </source>
+      <rule>
+        <name value="MapICDCoding"/>
+        <source>
+          <context value="code"/>
+          <element value="coding"/>
+          <variable value="c"/>
+          <condition value="system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="diagnoseICD"/>
+          <variable value="icd"/>
+        </target>
+        <rule>
+          <name value="SetICDCode"/>
+          <source>
+            <context value="c"/>
+            <element value="code"/>
+            <variable value="cd"/>
+          </source>
+          <target>
+            <context value="icd"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="cd"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="SetICDVersion"/>
+          <source>
+            <context value="c"/>
+            <element value="version"/>
+            <variable value="v"/>
+          </source>
+          <target>
+            <context value="icd"/>
+            <contextType value="variable"/>
+            <element value="version"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="v"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="SetDiagnosedatum"/>
+      <source>
+        <context value="src"/>
+        <element value="onset"/>
+        <variable value="onset"/>
+        <condition value="$this.is(dateTime)"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="diagnosedatum"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="onset"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetHistPraeopDefault"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="histologischeSicherungPraeop"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="0"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetNeoadjDefault"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="neoadjuvanteTherapie"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="0"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="SetTKPraeopDefault"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="tumorkonferenzPraeop"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="9"/>
+        </parameter>
+      </target>
+    </rule>
+  </group>
+</StructureMap>
