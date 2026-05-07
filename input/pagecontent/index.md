@@ -2,6 +2,10 @@
 
 Der **Kerndatensatz Senologie** definiert FHIR-Profile für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus. Er umfasst den gesamten Versorgungspfad von der Erstvorstellung über Diagnostik, Therapie und Nachsorge bis zur Verlaufsdokumentation.
 
+<div style="margin: 1.5em 0;">
+<img src="versorgungspfad-uebersicht.svg" alt="Versorgungspfad Senologie: Diagnose, Tumorkonferenz, Therapie, Nachsorge" style="width:100%; max-width:900px;"/>
+</div>
+
 <div style="margin: 1em 0;">
 <a href="https://www.senologie.org/"><img src="dgs-logo.png" alt="Deutsche Gesellschaft für Senologie" style="height:60px"/></a>
 </div>
