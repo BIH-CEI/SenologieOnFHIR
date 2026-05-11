@@ -1,0 +1,178 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "SenologieToIRegEntlassung"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIRegEntlassung</b></p><a name=\"SenologieToIRegEntlassung\"> </a><a name=\"hcSenologieToIRegEntlassung\"> </a><pre class=\"fml\">#xD;\n<b>map</b><span style=\"color: navy\"> \"</span>https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung<span style=\"color: navy\">\" = \"</span>SenologieToIRegEntlassung<span style=\"color: navy\">\"#xD;\n#xD;\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplantat</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>#xD;\n#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">\" </span><b>alias </b>Bundle <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/encounter.html\" title=\"Encounter\">http://hl7.org/fhir/StructureDefinition/Encounter</a><span style=\"color: navy\">\" </span><b>alias </b>Encounter <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">\" </span><b>alias </b>Condition <b>as </b><b>source</b>#xD;\n<b>uses</b><span style=\"color: navy\"> \"</span><a href=\"StructureDefinition-ireg-brustimplantat-meldung.html\" title=\"IRegG Brustimplantat Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung</a><span style=\"color: navy\">\" </span><b>alias </b>IRegMeldung <b>as </b><b>target</b>#xD;\n#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the specific Logical Model sub-path when a parent</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">group passes a BackboneElement slice (e.g., `tgt.entlassung as entl then ...`).</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">The IG Publisher resolves target paths against BackboneElement, producing</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">SM_TARGET_PATH / SM_SOURCE_PATH errors. The element names are correct and</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">match the IRegG Brustimplantat Logical Model. These errors are cosmetic.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Entlassung: Encounter + Condition -&gt; ENT_* + DBI_*</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">Entlassungsdaten und Brustimplantat-spezifische Entlassungsdiagnosen.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">ENT_Datum kommt aus Encounter.period.end.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">ENT_GrundSchluessel kommt aus Encounter.hospitalization.dischargeDisposition.</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">DBI_* Diagnosen kommen aus Condition-Ressourcen im Bundle (ICD-10-GM).</span>#xD;\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>#xD;\n<b>group </b>MapEntlassung<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Encounter, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {#xD;\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">--- ENT_* Entlassungsdaten ---</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">ENT_Datum: aus Encounter.period.end (Entlassungsdatum)</span>#xD;\n  src.period<b> as </b><span style=\"color: maroon\">period</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    period.end<b> as </b><span style=\"color: maroon\">e</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.datum = <span style=\"color: maroon\">e</span> <i>\"SetEntlassungsDatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapEntlassungsDatum\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">ENT_GrundSchluessel: aus Encounter.hospitalization.dischargeDisposition</span>#xD;\n  <span style=\"color: navy\">// </span><span style=\"color: green\">2-stelliger Entlassungs-/Verlegungsgrund nach §301 SGB V</span>#xD;\n  src.hospitalization<b> as </b><span style=\"color: maroon\">hosp</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>    hosp.dischargeDisposition<b> as </b><span style=\"color: maroon\">dd</span><b> then</b><span style=\"color: navy\"> {#xD;\n</span>      dd.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/dkgev/Entlassungsgrund'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.grundSchluessel = <span style=\"color: maroon\">cd</span> <i>\"SetEntlassungsgrund\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapEntlassungsgrundCoding\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: beliebiges Coding</span>#xD;\n      dd.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system != 'http://fhir.de/CodeSystem/dkgev/Entlassungsgrund'<b> then</b><span style=\"color: navy\"> {#xD;\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.grundSchluessel = <span style=\"color: maroon\">cd</span> <i>\"SetEntlassungsgrundFallback\"</i><span style=\"color: navy\">;</span>#xD;\n      <span style=\"color: navy\">}</span> <i>\"MapEntlassungsgrundFallbackCoding\"</i><span style=\"color: navy\">;</span>#xD;\n    <span style=\"color: navy\">}</span> <i>\"MapDischargeDisposition\"</i><span style=\"color: navy\">;</span>#xD;\n  <span style=\"color: navy\">}</span> <i>\"MapHospitalization\"</i><span style=\"color: navy\">;</span>#xD;\n<span style=\"color: navy\">}#xD;\n#xD;\n</span></pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung"^^xsd:anyURI ;
+     fhir:l <https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung>
+  ] ; # 
+  fhir:version [ fhir:v "0.9.0"] ; # 
+  fhir:name [ fhir:v "SenologieToIRegEntlassung"] ; # 
+  fhir:status [ fhir:v "draft"] ; # 
+  fhir:date [ fhir:v "2026-05-11T18:43:40+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "Berlin Institute of Health at Charité (BIH)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "Berlin Institute of Health at Charité (BIH)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.bihealth.org" ]
+     ] )
+  ] ) ; # 
+  fhir:description [ fhir:v "title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplantat\r\nstatus: draft"] ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Bundle" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Encounter"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Encounter>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Encounter" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Condition"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Condition>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "Condition" ]
+  ] [
+     fhir:url [
+       fhir:v "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung"^^xsd:anyURI ;
+       fhir:l <https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "IRegMeldung" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "MapEntlassung" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:documentation [ fhir:v "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the specific Logical Model sub-path when a parent\r\ngroup passes a BackboneElement slice (e.g., `tgt.entlassung as entl then ...`).\r\nThe IG Publisher resolves target paths against BackboneElement, producing\r\nSM_TARGET_PATH / SM_SOURCE_PATH errors. The element names are correct and\r\nmatch the IRegG Brustimplantat Logical Model. These errors are cosmetic.\r\n============================================================================\r\nEntlassung: Encounter + Condition -> ENT_* + DBI_*\r\nEntlassungsdaten und Brustimplantat-spezifische Entlassungsdiagnosen.\r\nENT_Datum kommt aus Encounter.period.end.\r\nENT_GrundSchluessel kommt aus Encounter.hospitalization.dischargeDisposition.\r\nDBI_* Diagnosen kommen aus Condition-Ressourcen im Bundle (ICD-10-GM).\r\n============================================================================" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "Encounter" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:type [ fhir:v "BackboneElement" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "MapEntlassungsDatum" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "period" ] ;
+         fhir:variable [ fhir:v "period" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "SetEntlassungsDatum" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "period" ] ;
+           fhir:element [ fhir:v "end" ] ;
+           fhir:variable [ fhir:v "e" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "tgt" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "datum" ] ;
+           fhir:transform [ fhir:v "copy" ] ;
+           fhir:parameter ( [
+             fhir:value [
+               a fhir:Id ;
+               fhir:v "e"
+             ]
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "MapHospitalization" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "hospitalization" ] ;
+         fhir:variable [ fhir:v "hosp" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "MapDischargeDisposition" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "hosp" ] ;
+           fhir:element [ fhir:v "dischargeDisposition" ] ;
+           fhir:variable [ fhir:v "dd" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "MapEntlassungsgrundCoding" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "dd" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "system = 'http://fhir.de/CodeSystem/dkgev/Entlassungsgrund'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetEntlassungsgrund" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "c" ] ;
+               fhir:element [ fhir:v "code" ] ;
+               fhir:variable [ fhir:v "cd" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "grundSchluessel" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "cd"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "MapEntlassungsgrundFallbackCoding" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "dd" ] ;
+             fhir:element [ fhir:v "coding" ] ;
+             fhir:variable [ fhir:v "c" ] ;
+             fhir:condition [ fhir:v "system != 'http://fhir.de/CodeSystem/dkgev/Entlassungsgrund'" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "SetEntlassungsgrundFallback" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "c" ] ;
+               fhir:element [ fhir:v "code" ] ;
+               fhir:variable [ fhir:v "cd" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "grundSchluessel" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "cd"
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

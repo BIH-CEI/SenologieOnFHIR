@@ -1,0 +1,636 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToIqtigOperation",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIqtigOperation</b></p><a name=\"SenologieToIqtigOperation\"> </a><a name=\"hcSenologieToIqtigOperation\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation<span style=\"color: navy\">&quot; = &quot;</span>SenologieToIqtigOperation<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/procedure.html\" title=\"Procedure\">http://hl7.org/fhir/StructureDefinition/Procedure</a><span style=\"color: navy\">&quot; </span><b>alias </b>Procedure <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/specimen.html\" title=\"Specimen\">http://hl7.org/fhir/StructureDefinition/Specimen</a><span style=\"color: navy\">&quot; </span><b>alias </b>Specimen <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/condition.html\" title=\"Condition\">http://hl7.org/fhir/StructureDefinition/Condition</a><span style=\"color: navy\">&quot; </span><b>alias </b>Condition <b>as </b><b>source</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Import-only map: no target `uses` declaration — the calling map</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">context (teildatensatzOperation). Omitting the root-level target type avoids</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">SM_TARGET_PATH false positives where the validator would resolve property</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">names against iqtig-mammachirurgie-181 root.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Teildatensatz Operation (O): Procedure + Specimen + Observations -&gt; O:*</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Pro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Procedure (Senologie_BrustOP / Senologie_Operation) -&gt; OP-Datum, OPS,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Seitenlokalisation, Operationsart</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Specimen (Senologie_Pathologie_Praeparat) -&gt; Schnellschnitt,</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Praeparatkontrolle, Praeparat-spezifische Daten</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (Pathologie-Befund) -&gt; Histologie, Grading, pTNM, R-Status</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">- Observation (Rezeptorstatus: ER/PR/HER2) -&gt; QI-relevante Felder</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapOperation<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Procedure, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">O:LNROP - Laufende Nummer der Operation (Default 1; ueber Slicing iterierbar)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.laufendeNummer = <span style=\"color: blue\">1</span> <i>&quot;SetLnrOp&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:LNRBRUST - Zuordnung zum Brust-Teildatensatz (Default 1)</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.bezugLnrBrust = <span style=\"color: blue\">1</span> <i>&quot;SetLnrBrustRef&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:OPDATUM - aus Procedure.performedDateTime</span>\r\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(dateTime)<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsdatum = <span style=\"color: maroon\">perf</span> <i>&quot;SetOpDatum&quot;</i><span style=\"color: navy\">;</span>\r\n  src.performed<b> as </b><span style=\"color: maroon\">perf</span><b> where </b>$this.is(Period)<b> then</b><span style=\"color: navy\"> {\r\n</span>    perf.start<b> as </b><span style=\"color: maroon\">s</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsdatum = <span style=\"color: maroon\">s</span> <i>&quot;SetOpDatumPeriod&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpDatumPeriod&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:SEITE - Seitenlokalisation aus Procedure.bodySite (SNOMED CT)</span>\r\n  src.bodySite<b> as </b><span style=\"color: maroon\">bs</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    bs.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '24028007'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'R'</span> <i>&quot;SetOpSeiteR&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '7771000'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'L'</span> <i>&quot;SetOpSeiteL&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '51440002'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.seitenlokalisation = <span style=\"color: blue\">'B'</span> <i>&quot;SetOpSeiteB&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpSeiteSCT&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpSeitenlokalisation&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:OPSCHLUESSEL - OPS-Kodes aus Procedure.code</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.prozeduren<b> as </b><span style=\"color: maroon\">opsItem</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>opsItem.code = <span style=\"color: maroon\">cd</span> <i>&quot;SetOpsCode&quot;</i><span style=\"color: navy\">;</span>\r\n      c.version<b> as </b><span style=\"color: maroon\">v</span><span style=\"color: navy\"><b> -&gt; </b></span>opsItem.version = <span style=\"color: maroon\">v</span> <i>&quot;SetOpsVersion&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpsCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapProzeduren&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:OPART - Operationsart aus Procedure.category oder Senologie-Operation-Art VS</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">BET (5-870) -&gt; 1, Mastektomie einfach (5-871) -&gt; 2, Mastektomie SSM (5-872) -&gt; 3,</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Mastektomie NSM (5-883) -&gt; 4, Revision -&gt; 5, Wiederaufbau (5-885) -&gt; 6</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-870')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'1'</span> <i>&quot;SetOpArtBET&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-871')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'2'</span> <i>&quot;SetOpArtMastEinfach&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-872')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'3'</span> <i>&quot;SetOpArtMastSSM&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-883')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'4'</span> <i>&quot;SetOpArtMastNSM&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-885')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: blue\">'6'</span> <i>&quot;SetOpArtRekon&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpArtOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpArtFromOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Direkter Map aus Senologie-Operation-Art CodeSystem (falls vorhanden)</span>\r\n  src.category<b> as </b><span style=\"color: maroon\">cat</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    cat.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.operationsart = <span style=\"color: maroon\">cd</span> <i>&quot;SetOpArtDirect&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOpArtCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapOpArtCategory&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Bundle lookups for O:DIGNITAET, O:SCHNELLSCHNITT, O:PRAEPKONTROLLE,</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:HISTMORPH, O:GRADING, O:TGROESSEINV, O:TGROESSEDCIS, O:MULTIFOK,</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:PT/PN/PM, O:UICCPATHO have been moved to the calling orchestrator</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">(SenologieToIqtigMammachirurgie181.map) to avoid multiple source parameters.</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Residualstatus R0/R1/R2 aus Procedure.outcome ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:RSTATUSLOK / O:RSTATUSGES - aus Procedure.outcome (SNOMED CT)</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">122538001=R0, 122539009=R1, 122540006=R2, 122541005=RX</span>\r\n  src.outcome<b> as </b><span style=\"color: maroon\">out</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    out.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://snomed.info/sct'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122538001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'R0'</span> <i>&quot;SetRStatusLokR0&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122538001'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'R0'</span> <i>&quot;SetRStatusGesR0&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122539009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'R1'</span> <i>&quot;SetRStatusLokR1&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122539009'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'R1'</span> <i>&quot;SetRStatusGesR1&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122540006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'R2'</span> <i>&quot;SetRStatusLokR2&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122540006'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'R2'</span> <i>&quot;SetRStatusGesR2&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122541005'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusLokal = <span style=\"color: blue\">'RX'</span> <i>&quot;SetRStatusLokRX&quot;</i><span style=\"color: navy\">;</span>\r\n      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this = '122541005'<span style=\"color: navy\"><b> -&gt; </b></span>tgt.residualstatusGesamt = <span style=\"color: blue\">'RX'</span> <i>&quot;SetRStatusGesRX&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapOutcomeCoding&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapResidualstatus&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- Lymphknoten aus Pathologie-Observations ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:SENTINEL - Sentinel-Biopsie durchgefuehrt (OPS 5-401.1*)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-401.1')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.sentinelDurchgefuehrt = <span style=\"color: blue\">'1'</span> <i>&quot;SetSentinelJa&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapSentinelOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapSentinel&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">O:AXDISSEKTION - Axilladissektion (OPS 5-402)</span>\r\n  src.code<b> as </b><span style=\"color: maroon\">code</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    code.coding<b> as </b><span style=\"color: maroon\">c</span><b> where </b>system = 'http://fhir.de/CodeSystem/bfarm/ops'<b> then</b><span style=\"color: navy\"> {\r\n</span>      c.code<b> as </b><span style=\"color: maroon\">cd</span><b> where </b>$this.startsWith('5-402')<span style=\"color: navy\"><b> -&gt; </b></span>tgt.axillaDissektion = <span style=\"color: blue\">'1'</span> <i>&quot;SetAxDissJa&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapAxDissOPS&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapAxillaDissektion&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">LK counts, Rezeptorstatus, and Komplikationen bundle lookups</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">have been moved to the calling orchestrator.</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation",
+  "version" : "0.9.0",
+  "name" : "SenologieToIqtigOperation",
+  "status" : "draft",
+  "date" : "2026-05-11T18:43:40+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Procedure",
+    "mode" : "source",
+    "alias" : "Procedure"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Specimen",
+    "mode" : "source",
+    "alias" : "Specimen"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Condition",
+    "mode" : "source",
+    "alias" : "Condition"
+  }],
+  "group" : [{
+    "name" : "MapOperation",
+    "typeMode" : "none",
+    "documentation" : "Import-only map: no target `uses` declaration — the calling map\r\n(SenologieToIqtigMammachirurgie181) provides the correct BackboneElement\r\ncontext (teildatensatzOperation). Omitting the root-level target type avoids\r\nSM_TARGET_PATH false positives where the validator would resolve property\r\nnames against iqtig-mammachirurgie-181 root.\r\n============================================================================\r\nTeildatensatz Operation (O): Procedure + Specimen + Observations -> O:*\r\nPro Eingriff wird ein Operations-Teildatensatz erzeugt. Quellen:\r\n- Procedure (Senologie_BrustOP / Senologie_Operation) -> OP-Datum, OPS,\r\nSeitenlokalisation, Operationsart\r\n- Specimen (Senologie_Pathologie_Praeparat) -> Schnellschnitt,\r\nPraeparatkontrolle, Praeparat-spezifische Daten\r\n- Observation (Pathologie-Befund) -> Histologie, Grading, pTNM, R-Status\r\n- Observation (Rezeptorstatus: ER/PR/HER2) -> QI-relevante Felder\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Procedure",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetLnrOp",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "laufendeNummer",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueInteger" : 1
+        }]
+      }]
+    },
+    {
+      "name" : "SetLnrBrustRef",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "bezugLnrBrust",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueInteger" : 1
+        }]
+      }]
+    },
+    {
+      "name" : "SetOpDatum",
+      "source" : [{
+        "context" : "src",
+        "element" : "performed",
+        "variable" : "perf",
+        "condition" : "$this.is(dateTime)"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "operationsdatum",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "perf"
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpDatumPeriod",
+      "source" : [{
+        "context" : "src",
+        "element" : "performed",
+        "variable" : "perf",
+        "condition" : "$this.is(Period)"
+      }],
+      "rule" : [{
+        "name" : "SetOpDatumPeriod",
+        "source" : [{
+          "context" : "perf",
+          "element" : "start",
+          "variable" : "s"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "operationsdatum",
+          "transform" : "copy",
+          "parameter" : [{
+            "valueId" : "s"
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpSeitenlokalisation",
+      "source" : [{
+        "context" : "src",
+        "element" : "bodySite",
+        "variable" : "bs"
+      }],
+      "rule" : [{
+        "name" : "MapOpSeiteSCT",
+        "source" : [{
+          "context" : "bs",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "SetOpSeiteR",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '24028007'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpSeiteL",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '7771000'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "L"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpSeiteB",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '51440002'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "seitenlokalisation",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "B"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapProzeduren",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapOpsCoding",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "target" : [{
+          "context" : "tgt",
+          "contextType" : "variable",
+          "element" : "prozeduren",
+          "variable" : "opsItem"
+        }],
+        "rule" : [{
+          "name" : "SetOpsCode",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "opsItem",
+            "contextType" : "variable",
+            "element" : "code",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpsVersion",
+          "source" : [{
+            "context" : "c",
+            "element" : "version",
+            "variable" : "v"
+          }],
+          "target" : [{
+            "context" : "opsItem",
+            "contextType" : "variable",
+            "element" : "version",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "v"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpArtFromOPS",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapOpArtOPS",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "rule" : [{
+          "name" : "SetOpArtBET",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-870')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtMastEinfach",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-871')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtMastSSM",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-872')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "3"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtMastNSM",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-883')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "4"
+            }]
+          }]
+        },
+        {
+          "name" : "SetOpArtRekon",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-885')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "6"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapOpArtCategory",
+      "source" : [{
+        "context" : "src",
+        "element" : "category",
+        "variable" : "cat"
+      }],
+      "rule" : [{
+        "name" : "MapOpArtCoding",
+        "source" : [{
+          "context" : "cat",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'https://www.senologie.org/fhir/CodeSystem/cs-senologie-brustop-art'"
+        }],
+        "rule" : [{
+          "name" : "SetOpArtDirect",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "operationsart",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "cd"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapResidualstatus",
+      "source" : [{
+        "context" : "src",
+        "element" : "outcome",
+        "variable" : "out"
+      }],
+      "rule" : [{
+        "name" : "MapOutcomeCoding",
+        "source" : [{
+          "context" : "out",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://snomed.info/sct'"
+        }],
+        "rule" : [{
+          "name" : "SetRStatusLokR0",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122538001'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R0"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesR0",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122538001'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R0"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusLokR1",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122539009'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesR1",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122539009'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusLokR2",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122540006'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesR2",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122540006'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "R2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusLokRX",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122541005'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusLokal",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "RX"
+            }]
+          }]
+        },
+        {
+          "name" : "SetRStatusGesRX",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this = '122541005'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "residualstatusGesamt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "RX"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapSentinel",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapSentinelOPS",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "rule" : [{
+          "name" : "SetSentinelJa",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-401.1')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "sentinelDurchgefuehrt",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "MapAxillaDissektion",
+      "source" : [{
+        "context" : "src",
+        "element" : "code",
+        "variable" : "code"
+      }],
+      "rule" : [{
+        "name" : "MapAxDissOPS",
+        "source" : [{
+          "context" : "code",
+          "element" : "coding",
+          "variable" : "c",
+          "condition" : "system = 'http://fhir.de/CodeSystem/bfarm/ops'"
+        }],
+        "rule" : [{
+          "name" : "SetAxDissJa",
+          "source" : [{
+            "context" : "c",
+            "element" : "code",
+            "variable" : "cd",
+            "condition" : "$this.startsWith('5-402')"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "axillaDissektion",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}
