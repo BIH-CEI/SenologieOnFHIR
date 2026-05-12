@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressionstest | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Genexpressionstest |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Genexpressionstest |
 
  
 RiskAssessment für genomische Risikoscores bei Mammakarzinom (Oncotype DX, MammaPrint, Prosigna, EndoPredict). Bildet die Risikoklassifikation ab und referenziert die Score-Observation. 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-genexpress
   "name" : "Senologie_Genexpressionstest",
   "title" : "BIH PR Seno Genexpressionstest",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

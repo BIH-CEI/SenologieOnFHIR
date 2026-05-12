@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Diagnose_Maligne |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Diagnose_Maligne |
 
  
 Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Basiert auf MII PR Onko Diagnose Primärtumor mit oBDS-konformer Diagnosesicherung und Staging. 
@@ -52,7 +52,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-diagnose-m
   "name" : "Senologie_Diagnose_Maligne",
   "title" : "BIH PR Seno Diagnose Maligne",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

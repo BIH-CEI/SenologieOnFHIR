@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsTNM | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:SenologieToObdsTNM |
+| Draft as of 2026-05-12 | *Computable Name*:SenologieToObdsTNM |
 
  
 title: Senologie TNM Observations to oBDS TNM BackboneElement status: draft 
@@ -26,7 +26,7 @@ title: Senologie TNM Observations to oBDS TNM BackboneElement status: draft
   "version" : "0.9.0",
   "name" : "SenologieToObdsTNM",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsTod | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:SenologieToObdsTod |
+| Draft as of 2026-05-12 | *Computable Name*:SenologieToObdsTod |
 
  
 title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft 
@@ -26,7 +26,7 @@ title: Senologie Patient + Conditions to oBDS Todesmeldung status: draft
   "version" : "0.9.0",
   "name" : "SenologieToObdsTod",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

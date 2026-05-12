@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-seite | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:VS_Senologie_Seite |
+| Draft as of 2026-05-12 | *Computable Name*:VS_Senologie_Seite |
 
  
 Lateralität der Mamma-Erkrankung 
@@ -52,7 +52,7 @@ No formal definition provided for this value set
   "name" : "VS_Senologie_Seite",
   "title" : "VS Senologie Seite",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

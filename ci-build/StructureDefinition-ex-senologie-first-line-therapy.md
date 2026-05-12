@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/ex-senologie-first-line-therapy | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:EX_Senologie_FirstLineTherapy |
+| Draft as of 2026-05-12 | *Computable Name*:EX_Senologie_FirstLineTherapy |
 
 Flag ob es sich um die First-Line-Therapie bei metastasierter Situation handelt (OncoBox I02 / KB-8)
 
@@ -46,7 +46,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-first-l
   "name" : "EX_Senologie_FirstLineTherapy",
   "title" : "First-Line-Therapie bei Metastasierung",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:SenologieToOncoBoxBrustZentrum |
+| Draft as of 2026-05-12 | *Computable Name*:SenologieToOncoBoxBrustZentrum |
 
  
 title: Senologie Organization to OncoBox Brust Zentrum status: draft 
@@ -26,7 +26,7 @@ title: Senologie Organization to OncoBox Brust Zentrum status: draft
   "version" : "0.9.0",
   "name" : "SenologieToOncoBoxBrustZentrum",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

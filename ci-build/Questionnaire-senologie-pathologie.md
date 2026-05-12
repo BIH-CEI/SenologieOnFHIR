@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-pathologie | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:QuestPathologieBefund |
+| Draft as of 2026-05-12 | *Computable Name*:QuestPathologieBefund |
 
  
 Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation. 
@@ -116,7 +116,7 @@ Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SD
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

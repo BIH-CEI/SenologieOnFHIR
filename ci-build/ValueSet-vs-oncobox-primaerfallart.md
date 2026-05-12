@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-oncobox-primaerfallart | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:VS_OncoBox_Primaerfallart |
+| Draft as of 2026-05-12 | *Computable Name*:VS_OncoBox_Primaerfallart |
 
  
 Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01) 
@@ -51,7 +51,7 @@ Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01)
   "title" : "VS OncoBox Primaerfallart",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-icd10 | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:VSSenologieICD10 |
+| Draft as of 2026-05-12 | *Computable Name*:VSSenologieICD10 |
 
  
 ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotbase Codebook 
@@ -50,7 +50,7 @@ ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotb
   "name" : "VSSenologieICD10",
   "title" : "ValueSet Senologie ICD-10-GM",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

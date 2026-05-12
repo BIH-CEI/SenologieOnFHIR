@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-art | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:VS_Senologie_Nachsorge_Art |
+| Draft as of 2026-05-12 | *Computable Name*:VS_Senologie_Nachsorge_Art |
 
  
 Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (Akten/Register) — OncoBox M03 
@@ -50,7 +50,7 @@ Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (Akten/Register
   "name" : "VS_Senologie_Nachsorge_Art",
   "title" : "VS Senologie Nachsorge Art",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/iqtig-mammachirurgie-181 | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:IQTIGMammachirurgie181 |
+| Draft as of 2026-05-12 | *Computable Name*:IQTIGMammachirurgie181 |
 
  
 Logisches Modell des IQTIG-Datensatzes fuer das QS-Verfahren 18.1 Mammachirurgie (Spezifikation 2024 V05). 
@@ -47,7 +47,7 @@ Other representations of profile: [CSV](StructureDefinition-iqtig-mammachirurgie
   "name" : "IQTIGMammachirurgie181",
   "title" : "IQTIG QS 18.1 Mammachirurgie (Logical Model)",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

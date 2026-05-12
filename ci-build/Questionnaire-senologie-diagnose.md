@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-diagnose | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:QuestDiagnose |
+| Draft as of 2026-05-12 | *Computable Name*:QuestDiagnose |
 
  
 Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Spektrum von invasivem Karzinom über DCIS und B3-Läsionen bis hin zu benignen Befunden. Nutzt SDC Template-based Extraction zur Erzeugung einer Condition-Ressource. 
@@ -74,7 +74,7 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

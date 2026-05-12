@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Systemtherapie_Medikation |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Systemtherapie_Medikation |
 
  
 MedicationStatement für einzelne Medikamentengaben aus dotbase. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko. 
@@ -51,7 +51,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-systemther
   "name" : "Senologie_Systemtherapie_Medikation",
   "title" : "BIH Senologie Systemtherapie Medikation (einzelne Gabe)",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

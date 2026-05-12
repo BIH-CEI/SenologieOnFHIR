@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-oncobox-verlauf-gesamtbeurteilung-ereignis | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*: |
+| Draft as of 2026-05-12 | *Computable Name*: |
 
  
 Mapping der MII Onko Verlauf-Gesamtbeurteilung auf OncoBox Verlauf_Ereignis. Stabile Zustaende (V, T, K, B, R) erzeugen kein Verlaufsereignis. P (Progression) wird auf 6 (Progress) gemappt, Y (Rezidiv) auf 1 (Lokalrezidiv als Default). D (divergent) und U/X (unbekannt/fehlend) werden nicht gemappt. 
@@ -27,7 +27,7 @@ Mapping der MII Onko Verlauf-Gesamtbeurteilung auf OncoBox Verlauf_Ereignis. Sta
   "title" : "MII Verlauf Gesamtbeurteilung zu OncoBox Verlauf-Ereignis",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

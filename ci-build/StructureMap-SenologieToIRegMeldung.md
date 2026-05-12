@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIRegMeldung | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:SenologieToIRegMeldung |
+| Draft as of 2026-05-12 | *Computable Name*:SenologieToIRegMeldung |
 
  
 title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator) status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator) stat
   "version" : "0.9.0",
   "name" : "SenologieToIRegMeldung",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

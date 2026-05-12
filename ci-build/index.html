@@ -273,7 +273,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
         
           Draft
           
-            as of 2026-05-11
+            as of 2026-05-12
           
         
       </td>
@@ -300,12 +300,12 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 <div class="markdown-toc">
 <ul id="markdown-toc">
   <li><a href="#kerndatensatz-senologie" id="markdown-toc-kerndatensatz-senologie">Kerndatensatz Senologie</a>    <ul>
+      <li><a href="#für-wen-ist-dieser-ig" id="markdown-toc-für-wen-ist-dieser-ig">Für wen ist dieser IG?</a></li>
+      <li><a href="#versorgungspfad" id="markdown-toc-versorgungspfad">Versorgungspfad</a></li>
       <li><a href="#zielsetzung" id="markdown-toc-zielsetzung">Zielsetzung</a></li>
-      <li><a href="#klinischer-versorgungspfad" id="markdown-toc-klinischer-versorgungspfad">Klinischer Versorgungspfad</a></li>
-      <li><a href="#einordnung-in-die-mii" id="markdown-toc-einordnung-in-die-mii">Einordnung in die MII</a></li>
-      <li><a href="#technische-abhängigkeiten" id="markdown-toc-technische-abhängigkeiten">Technische Abhängigkeiten</a></li>
-      <li><a href="#inhaltliche-abhängigkeiten" id="markdown-toc-inhaltliche-abhängigkeiten">Inhaltliche Abhängigkeiten</a></li>
+      <li><a href="#einordnung" id="markdown-toc-einordnung">Einordnung</a></li>
       <li><a href="#designprinzip-formular-first" id="markdown-toc-designprinzip-formular-first">Designprinzip: Formular-First</a></li>
+      <li><a href="#abhängigkeiten" id="markdown-toc-abhängigkeiten">Abhängigkeiten</a></li>
       <li><a href="#übersicht" id="markdown-toc-übersicht">Übersicht</a></li>
       <li><a href="#geplante-weiterentwicklungen" id="markdown-toc-geplante-weiterentwicklungen">Geplante Weiterentwicklungen</a></li>
     </ul>
@@ -315,132 +315,145 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 </div>
 <h1 id="kerndatensatz-senologie">Kerndatensatz Senologie</h1>
 
-<p>Willkommen beim Implementation Guide für den <strong>Kerndatensatz Senologie</strong>.</p>
+<p>Der <strong>Kerndatensatz Senologie</strong> definiert FHIR-Profile für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus. Er umfasst den gesamten Versorgungspfad von der Erstvorstellung über Diagnostik, Therapie und Nachsorge bis zur Verlaufsdokumentation.</p>
 
-<p>Dieser Kerndatensatz definiert FHIR-Profile für die strukturierte Dokumentation der <strong>Brustkrebsversorgung</strong> an zertifizierten Brustzentren und darüber hinaus. Die technische Umsetzung erfolgt durch das <strong>Berlin Institute of Health at Charité (BIH)</strong>, die inhaltliche Abstimmung mit der <strong><a href="https://www.senologie.org/">Deutschen Gesellschaft für Senologie (DGS)</a></strong>, der <strong><a href="https://www.dggg.de/">Deutschen Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)</a></strong> und der <strong><a href="https://www.ago-online.de/">Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)</a></strong>.</p>
-
-<h3 id="zielsetzung">Zielsetzung</h3>
-
-<p>Das Modul verfolgt drei Ziele:</p>
-
-<ol>
-  <li><strong>Standardisierte Erfassung</strong> klinischer Daten entlang des Versorgungspfads Mammakarzinom — von der Erstvorstellung über Diagnostik, Therapie und Nachsorge</li>
-  <li><strong>Interoperabler Datenaustausch</strong> zwischen klinischen Systemen, Krebsregistern und Forschungsdatenbanken auf Basis von HL7 FHIR</li>
-  <li><strong>Sekundärnutzung</strong> der Versorgungsdaten für Qualitätssicherung, Versorgungsforschung und klinische Studien</li>
-</ol>
-
-<h3 id="klinischer-versorgungspfad">Klinischer Versorgungspfad</h3>
-
-<p>Das Modul bildet den gesamten klinischen Workflow der Senologie ab:</p>
-
-<div>
-<img src="senologie-ressourcenmodell.png" alt="FHIR Ressourcenmodell Senologie" style="width:100%" />
-<p><em>FHIR Ressourcenmodell Senologie — Klinischer Versorgungspfad Mammakarzinom</em></p>
+<div style="margin: 1.5em 0;">
+<img src="versorgungspfad-uebersicht.svg" alt="Versorgungspfad Senologie: Diagnose, Tumorkonferenz, Therapie, Nachsorge" style="width:100%; max-width:900px;" />
 </div>
-
-<h3 id="einordnung-in-die-mii">Einordnung in die MII</h3>
-
-<p>Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz — kein MII-Modul.</p>
 
 <div style="margin: 1em 0;">
 <a href="https://www.senologie.org/"><img src="dgs-logo.png" alt="Deutsche Gesellschaft für Senologie" style="height:60px" /></a>
 </div>
 
-<h3 id="technische-abhängigkeiten">Technische Abhängigkeiten</h3>
+<h3 id="für-wen-ist-dieser-ig">Für wen ist dieser IG?</h3>
 
 <table>
   <thead>
     <tr>
-      <th>Abhängigkeit</th>
-      <th>Verwendung</th>
+      <th>Zielgruppe</th>
+      <th>Was finde ich hier?</th>
+      <th>Einstieg</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><a href="https://simplifier.net/medizininformatikinitiative-modulonkologie">MII Onkologie</a></td>
-      <td>Diagnose, Operation, Systemtherapie, Strahlentherapie</td>
+      <td><strong>Kliniker:innen</strong></td>
+      <td>Welche Daten werden erfasst, welche Terminologien werden verwendet</td>
+      <td><a href="datenmodell.html">Datenmodell</a>, <a href="testpatientinnen.html">Testpatientinnen</a></td>
     </tr>
     <tr>
-      <td><a href="https://simplifier.net/medizininformatikinitiative-modulpathologie">MII Pathologie</a></td>
-      <td>Pathologiebefund, Präparat</td>
+      <td><strong>IT / Entwickler:innen</strong></td>
+      <td>FHIR-Profile, Questionnaires, Extraktion, technische Schnittstellen</td>
+      <td><a href="profilbeschreibungen.html">Profile</a>, <a href="artifacts.html">Artifacts</a></td>
     </tr>
     <tr>
-      <td><a href="https://simplifier.net/medizininformatikinitiative-modulbildgebung">MII Bildgebung</a></td>
-      <td>Tumorlokalisation (BodyStructure)</td>
+      <td><strong>Qualitätssicherung</strong></td>
+      <td>Ableitung von Meldedatensätzen (oBDS, IQTIG, OncoBox, IRegG)</td>
+      <td><a href="anwendungsfaelle-uebersicht.html">Anwendungsfälle</a></td>
     </tr>
     <tr>
-      <td><a href="https://simplifier.net/isik">ISiK</a></td>
-      <td>Basisprofil-Kompatibilität</td>
-    </tr>
-    <tr>
-      <td><a href="http://hl7.org/fhir/uv/ips/">IPS</a></td>
-      <td>International Patient Summary</td>
-    </tr>
-    <tr>
-      <td><a href="http://hl7.org/fhir/uv/sdc/">HL7 SDC</a></td>
-      <td>Formularbasierte Datenerfassung</td>
+      <td><strong>Forschende</strong></td>
+      <td>Sekundärnutzung, Terminologien, Interoperabilität</td>
+      <td><a href="terminologie-uebersicht.html">Terminologie</a>, <a href="datenmodell.html">Datenmodell</a></td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="inhaltliche-abhängigkeiten">Inhaltliche Abhängigkeiten</h3>
+<h3 id="versorgungspfad">Versorgungspfad</h3>
+
+<p>Der Datensatz bildet den klinischen Workflow der Senologie in folgenden Bereichen ab:</p>
 
 <table>
   <thead>
     <tr>
-      <th>Datensatz / Standard</th>
-      <th>Kontext</th>
+      <th>Bereich</th>
+      <th>Beschreibung</th>
+      <th>Profile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>S3-Leitlinie Mammakarzinom</strong> (AWMF 032-045OL)</td>
-      <td>Klinische Empfehlungen</td>
+      <td><strong>Diagnose</strong></td>
+      <td>Erstdiagnose, Rezidiv, Staging (cTNM), Seitenlokalisation</td>
+      <td><a href="StructureDefinition-senologie-diagnose-maligne.html">Diagnose</a></td>
     </tr>
     <tr>
-      <td><strong>Onkologischer Basisdatensatz (oBDS)</strong></td>
-      <td>Krebsregistermeldungen</td>
+      <td><strong>Diagnostik</strong></td>
+      <td>Bildgebung (Mammografie, Sono, MRT), Pathologie, Biomarker</td>
+      <td><a href="StructureDefinition-senologie-bildgebung-befund.html">Bildgebung</a>, <a href="StructureDefinition-senologie-pathologie-befund.html">Pathologie</a></td>
     </tr>
     <tr>
-      <td><strong>DKG-Zertifizierungskriterien</strong></td>
-      <td>Qualitätssicherung Brustzentren</td>
+      <td><strong>Therapie</strong></td>
+      <td>Operation, Systemtherapie, Strahlentherapie</td>
+      <td><a href="StructureDefinition-senologie-operation.html">Operation</a>, <a href="StructureDefinition-senologie-systemtherapie-procedure.html">Systemtherapie</a></td>
     </tr>
     <tr>
-      <td><strong>IQTIG QS-Verfahren 18/1 Mammachirurgie</strong></td>
-      <td>Externe stationäre Qualitätssicherung</td>
+      <td><strong>Tumorkonferenz</strong></td>
+      <td>Therapieempfehlungen, Fachdisziplinen</td>
+      <td><a href="StructureDefinition-senologie-tumorboard-empfehlung.html">Tumorboard</a></td>
     </tr>
     <tr>
-      <td><strong>Implantatregister (IRegG)</strong></td>
-      <td>Meldepflicht Brustimplantate</td>
+      <td><strong>Nachsorge</strong></td>
+      <td>Verlauf, Vitalstatus, Rezidivmonitoring</td>
+      <td><a href="StructureDefinition-senologie-follow-up.html">Follow-Up</a></td>
     </tr>
   </tbody>
 </table>
+
+<p>Das detaillierte FHIR-Ressourcenmodell finden Sie unter <a href="datenmodell.html">Datenmodell</a>.</p>
+
+<h3 id="zielsetzung">Zielsetzung</h3>
+
+<ol>
+  <li><strong>Standardisierte Erfassung</strong> klinischer Daten entlang des Versorgungspfads Mammakarzinom</li>
+  <li><strong>Interoperabler Datenaustausch</strong> zwischen klinischen Systemen, Krebsregistern und Forschungsdatenbanken auf Basis von HL7 FHIR</li>
+  <li><strong>Sekundärnutzung</strong> der Versorgungsdaten für Qualitätssicherung, Versorgungsforschung und klinische Studien</li>
+</ol>
+
+<h3 id="einordnung">Einordnung</h3>
+
+<p>Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz – kein MII-Modul. Die technische Umsetzung erfolgt durch das <strong>Berlin Institute of Health at Charité (BIH)</strong>, die inhaltliche Abstimmung mit der <strong><a href="https://www.senologie.org/">Deutschen Gesellschaft für Senologie (DGS)</a></strong>, der <strong><a href="https://www.dggg.de/">Deutschen Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)</a></strong> und der <strong><a href="https://www.ago-online.de/">Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)</a></strong>.</p>
 
 <h3 id="designprinzip-formular-first">Designprinzip: Formular-First</h3>
 
-<p>Die Datenerfassung erfolgt über <strong>SDC-Questionnaires</strong>, die sich am klinischen Workflow orientieren. Im Hintergrund werden die Formulardaten über Definition-based Extraction in domänenbasierte FHIR-Ressourcen überführt — aus einer Operationsdokumentation entstehen so einzelne Prozeduren, Implantate und Komplikationen. Siehe <a href="anwendungsfaelle-erfassung.html">Erfassung</a>.</p>
+<p>Die Datenerfassung erfolgt über <strong>SDC-Questionnaires</strong>, die sich am klinischen Workflow orientieren. Im Hintergrund werden die Formulardaten über Template-based Extraction in FHIR-Ressourcen überführt. Siehe <a href="anwendungsfaelle-erfassung.html">Erfassung</a>.</p>
+
+<h3 id="abhängigkeiten">Abhängigkeiten</h3>
+
+<table>
+<tr><th colspan="2">Technisch (FHIR-Pakete)</th></tr>
+<tr><td><a href="https://simplifier.net/medizininformatikinitiative-modulonkologie">MII Onkologie</a></td><td>Diagnose, Operation, Systemtherapie, Strahlentherapie</td></tr>
+<tr><td><a href="https://simplifier.net/medizininformatikinitiative-modulpathologie">MII Pathologie</a></td><td>Pathologiebefund, Präparat</td></tr>
+<tr><td><a href="https://simplifier.net/medizininformatikinitiative-modulbildgebung">MII Bildgebung</a></td><td>Tumorlokalisation (BodyStructure)</td></tr>
+<tr><td><a href="https://simplifier.net/isik">ISiK</a></td><td>Basisprofil-Kompatibilität</td></tr>
+<tr><td><a href="http://hl7.org/fhir/uv/sdc/">HL7 SDC</a></td><td>Formularbasierte Datenerfassung</td></tr>
+<tr><th colspan="2">Inhaltlich (Standards &amp; Leitlinien)</th></tr>
+<tr><td><strong>S3-Leitlinie Mammakarzinom</strong></td><td>Klinische Empfehlungen (AWMF 032-045OL)</td></tr>
+<tr><td><strong>oBDS</strong></td><td>Onkologischer Basisdatensatz (Krebsregistermeldungen)</td></tr>
+<tr><td><strong>IQTIG QS 18/1</strong></td><td>Externe stationäre Qualitätssicherung Mammachirurgie</td></tr>
+<tr><td><strong>DKG-Zertifizierung</strong></td><td>Qualitätsindikatoren Brustzentren (OncoBox)</td></tr>
+<tr><td><strong>IRegG</strong></td><td>Implantateregister-Meldepflicht</td></tr>
+</table>
 
 <h3 id="übersicht">Übersicht</h3>
 
 <ul>
-  <li><a href="datenmodell.html">Datenmodell</a> — Logisches Modell und FHIR-Mapping</li>
-  <li><a href="profilbeschreibungen.html">Profile</a> — Alle FHIR-Profile im Detail</li>
-  <li><a href="testpatientinnen.html">Testpatientinnen</a> — Zwei durchgängige Beispielfälle (kurativ + palliativ)</li>
-  <li><a href="anwendungsfaelle-uebersicht.html">Anwendungsfälle</a> — Erfassung, Austausch, Auswertung, Meldedatensätze</li>
-  <li><a href="terminologie-uebersicht.html">Terminologie</a> — ValueSets, CodeSystems, ConceptMaps</li>
-  <li><a href="offene-fragen.html">Offene Fragen</a> — Ballot-Fragen zur Kommentierung</li>
-  <li><a href="artifacts.html">Artifacts</a> — Alle FHIR-Artefakte</li>
+  <li><a href="datenmodell.html">Datenmodell</a> – Logisches Modell, Ressourcenmodell und FHIR-Mapping</li>
+  <li><a href="profilbeschreibungen.html">Profile</a> – Alle FHIR-Profile im Detail</li>
+  <li><a href="testpatientinnen.html">Testpatientinnen</a> – Zwei durchgängige Beispielfälle (kurativ + palliativ)</li>
+  <li><a href="anwendungsfaelle-uebersicht.html">Anwendungsfälle</a> – Erfassung, Austausch, Auswertung, Meldedatensätze</li>
+  <li><a href="terminologie-uebersicht.html">Terminologie</a> – ValueSets, CodeSystems, ConceptMaps</li>
+  <li><a href="offene-fragen.html">Offene Fragen</a> – Ballot-Fragen zur Kommentierung</li>
+  <li><a href="artifacts.html">Artifacts</a> – Alle FHIR-Artefakte</li>
 </ul>
 
 <h3 id="geplante-weiterentwicklungen">Geplante Weiterentwicklungen</h3>
 
-<p>Die folgenden Themen sind für zukünftige Versionen vorgesehen:</p>
-
 <ul>
-  <li><strong>Implantateregister-Meldung (IRegG)</strong> — StructureMaps für die automatische Ableitung von Implantateregisterdaten aus Device- und Procedure-Ressourcen, analog zum <a href="meldung-obds.html">oBDS-Transformationsansatz</a></li>
-  <li><strong>CQL-basierte Qualitätsindikatoren</strong> — Formale Definition der DKG-Kennzahlen und deskriptiver Statistiken als <a href="http://cql.hl7.org/">CQL</a> Measures für automatisierte Auswertung</li>
-  <li><strong>Synthetische Testkohorte</strong> — Regelbasiert generierte Testdaten (100 Patientinnen mit Variation von Subtypen, Stadien und Therapien) als Docker-Container für SQL on FHIR und CQL-Auswertungen</li>
-  <li><strong>PRO-Integration</strong> — Referenzierung von PRO-CTCAE und EORTC QLQ-BR23/BR45/BR42 aus dem MII PRO-Modul für therapiebegleitende Patientinnenbefragungen</li>
+  <li><strong>Implantateregister-Meldung (IRegG)</strong> – StructureMaps für automatische Ableitung von Implantateregisterdaten</li>
+  <li><strong>CQL-basierte Qualitätsindikatoren</strong> – Formale Definition der DKG-Kennzahlen als <a href="http://cql.hl7.org/">CQL</a> Measures</li>
+  <li><strong>Synthetische Testkohorte</strong> – Regelbasiert generierte Testdaten (100 Patientinnen) für SQL on FHIR und CQL</li>
+  <li><strong>PRO-Integration</strong> – PRO-CTCAE und EORTC QLQ-BR23/BR45/BR42 für Patientinnenbefragungen</li>
 </ul>
 
 
@@ -462,7 +475,7 @@ h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefi
 
       <div class="inner-wrapper">
         <p>
-          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.9.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Mon, May 11, 2026 18:43+0000">2026-05-11</span>
+          IG &#169; 2025+ <a style="color:var(--footer-hyperlink-text-color)" href="https://www.bihealth.org">Berlin Institute of Health at Charité (BIH)</a>.  Package kds-senologie#0.9.0 based on <a style="color: var(--footer-hyperlink-text-color)" href="http://hl7.org/fhir/R4/">FHIR 4.0.1</a>. Generated <span title="Tue, May 12, 2026 08:39+0000">2026-05-12</span>
           <br/>
           <span style="color: var(--footer-highlight-text-color)">
                       Links: <a style="color: var(--footer-hyperlink-text-color)" href="toc.html">Table of Contents</a> |

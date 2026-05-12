@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-grading | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*: |
+| Draft as of 2026-05-12 | *Computable Name*: |
 
  
 Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X, L, M, H, B) 
@@ -26,7 +26,7 @@ Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X, L, M, H, B)
   "version" : "0.9.0",
   "title" : "SNOMED CT to oBDS Grading",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

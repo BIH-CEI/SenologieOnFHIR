@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:QuestErstanamnese |
+| Draft as of 2026-05-12 | *Computable Name*:QuestErstanamnese |
 
  
 Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese, Raucherstatus und Familienanamnese. Nutzt SDC Template-based Extraction. 
@@ -103,7 +103,7 @@ Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese,
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

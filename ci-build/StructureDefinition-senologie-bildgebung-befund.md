@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Bildgebung_Befund |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Bildgebung_Befund |
 
  
 DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.) aus dotbase Questionnaire 'Bildgebung Mamma V1.0' 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-bildgebung
   "name" : "Senologie_Bildgebung_Befund",
   "title" : "BIH Senologie Bildgebung Befund",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

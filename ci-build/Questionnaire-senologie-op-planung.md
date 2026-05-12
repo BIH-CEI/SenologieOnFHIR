@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-op-planung | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:QuestOPPlanung |
+| Draft as of 2026-05-12 | *Computable Name*:QuestOPPlanung |
 
  
 Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel. 
@@ -73,7 +73,7 @@ Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

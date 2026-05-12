@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:SenologieToOncoBoxBrustTherapie |
+| Draft as of 2026-05-12 | *Computable Name*:SenologieToOncoBoxBrustTherapie |
 
  
 title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft 
@@ -26,7 +26,7 @@ title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie status: draft
   "version" : "0.9.0",
   "name" : "SenologieToOncoBoxBrustTherapie",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-geplante-systemtherapie | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Geplante_Systemtherapie |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Geplante_Systemtherapie |
 
  
 MedicationRequest für geplante Systemtherapie aus dotbase Questionnaire 'Geplante Systemtherapie' 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-geplante-s
   "name" : "Senologie_Geplante_Systemtherapie",
   "title" : "BIH Senologie Geplante Systemtherapie",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

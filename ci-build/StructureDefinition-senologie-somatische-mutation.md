@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Somatische_Mutation |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Somatische_Mutation |
 
  
 Somatischer Mutationsstatus für BRCA1, BRCA2 und PALB2 im Tumorgewebe. Erbt Gen-Kodierung und Ausprägung von MII Onko Genetische Variante. 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-somatische
   "name" : "Senologie_Somatische_Mutation",
   "title" : "BIH Senologie Somatische Mutation",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

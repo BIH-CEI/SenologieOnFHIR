@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Operative_Komplikation |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Operative_Komplikation |
 
  
 Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation aus dotbase Questionnaire 'Operative Komplikation(en) V2.0'. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent). 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-operative-
   "name" : "Senologie_Operative_Komplikation",
   "title" : "BIH Senologie Operative Komplikation",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

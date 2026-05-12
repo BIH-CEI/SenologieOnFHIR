@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sct | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:VS_Senologie_Diagnose_SCT |
+| Draft as of 2026-05-12 | *Computable Name*:VS_Senologie_Diagnose_SCT |
 
  
 SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für sct-Slice) 
@@ -51,7 +51,7 @@ SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für sct-Slice)
   "title" : "VS Senologie Diagnose SNOMED CT",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

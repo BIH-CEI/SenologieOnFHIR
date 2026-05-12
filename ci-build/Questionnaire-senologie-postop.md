@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-postop | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:QuestPostOPDokumentation |
+| Draft as of 2026-05-12 | *Computable Name*:QuestPostOPDokumentation |
 
  
 Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation). 
@@ -81,7 +81,7 @@ Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen,
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureDefinition/senologie-checkliste-erbliche-belastung | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*:Senologie_Checkliste_Erbliche_Belastung |
+| Draft as of 2026-05-12 | *Computable Name*:Senologie_Checkliste_Erbliche_Belastung |
 
  
 Observation für die DKG-Checkliste zur Identifikation erblicher Tumorbelastung (D24/D25). Erfasst ob die Checkliste durchgeführt wurde und ggf. den Score. 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-checkliste
   "name" : "Senologie_Checkliste_Erbliche_Belastung",
   "title" : "BIH Senologie Checkliste Erbliche Belastung",
   "status" : "draft",
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

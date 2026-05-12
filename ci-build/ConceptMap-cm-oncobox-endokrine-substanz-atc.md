@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/ConceptMap/cm-oncobox-endokrine-substanz-atc | *Version*:0.9.0 |
-| Draft as of 2026-05-11 | *Computable Name*: |
+| Draft as of 2026-05-12 | *Computable Name*: |
 
  
 Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxifen, 2=Aromatasehemmer, 3=GnRH-Analogon, 4=Fulvestrant, 5=CDK4/6-Inhibitor) 
@@ -27,7 +27,7 @@ Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxi
   "title" : "OncoBox Endokrine Substanzklasse zu ATC",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-11T18:43:40+00:00",
+  "date" : "2026-05-12T08:39:42+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
