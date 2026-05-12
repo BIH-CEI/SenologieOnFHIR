@@ -33,11 +33,15 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 * category[tumormanifestation] from https://www.senologie.org/fhir/ValueSet/vs-senologie-tumormanifestation (required)
 * category[tumormanifestation] ^short = "Tumormanifestation (Primärtumor/Rezidiv/LK/FM)"
 * category[tumormanifestation] ^definition = "Klassifikation der Tumormanifestation bei Diagnosestellung. Mehrfachauswahl möglich, z.B. Primärtumor + regionäre Lymphknotenmetastasen."
+* category[tumormanifestation] ^mapping[+].identity = "lm"
+* category[tumormanifestation] ^mapping[=].map = "Diagnose.Tumormanifestation"
 
 // Diagnosekode - use inherited slices
 * code MS
 * code ^short = "Diagnose"
 * code ^definition = "Diagnosestellung für Mamma-Erkrankungen"
+* code ^mapping[+].identity = "lm"
+* code ^mapping[=].map = "Diagnose.Diagnosekode"
 
 // SNOMED slice - bind to Senologie ValueSet (24 Hauptdiagnosen)
 * code.coding[sct] MS
@@ -62,6 +66,8 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 * stage ^short = "Grad/Stadium der Mammaerkrankung"
 * stage.summary MS
 * stage.summary ^short = "Grad"
+* stage.summary ^mapping[+].identity = "lm"
+* stage.summary ^mapping[=].map = "Diagnose.Grad"
 
 // Metastasierungsstadium - slice for M-stage
 * stage ^slicing.discriminator.type = #value
@@ -71,3 +77,5 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 * stage[metastasis].type = $SCT#385349001 "Clinical stage (observable entity)"
 * stage[metastasis].summary MS
 * stage[metastasis].summary ^short = "Metastasierungsstadium"
+* stage[metastasis].summary ^mapping[+].identity = "lm"
+* stage[metastasis].summary ^mapping[=].map = "Diagnose.Metastasierungsstadium"

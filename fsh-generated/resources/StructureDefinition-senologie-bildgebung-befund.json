@@ -42,6 +42,12 @@
               "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-examination-location"
             ]
           }
+        ],
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "BildgebungMamma.Standort"
+          }
         ]
       },
       {
@@ -75,7 +81,13 @@
         "id": "DiagnosticReport.code",
         "path": "DiagnosticReport.code",
         "comment": "Aus dotbase: 'Modalität' (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes",
-        "mustSupport": true
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "BildgebungMamma.Art"
+          }
+        ]
       },
       {
         "id": "DiagnosticReport.code.coding",
@@ -179,7 +191,13 @@
             "code": "dateTime"
           }
         ],
-        "mustSupport": true
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "BildgebungMamma.Datum"
+          }
+        ]
       },
       {
         "id": "DiagnosticReport.resultsInterpreter",
@@ -190,13 +208,25 @@
         "id": "DiagnosticReport.result",
         "path": "DiagnosticReport.result",
         "short": "Einzel-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status)",
-        "comment": "References zu einzelnen Observation-Ressourcen für Herdbefund, Mikrokalk, LK-Status, BI-RADS, ACR pro Seite"
+        "comment": "References zu einzelnen Observation-Ressourcen für Herdbefund, Mikrokalk, LK-Status, BI-RADS, ACR pro Seite",
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "BildgebungMamma.BIRADS | BildgebungMamma.ACRDichte | BildgebungMamma.Herdbefund | BildgebungMamma.Mikrokalk | BildgebungMamma.LymphknotenBildgebung"
+          }
+        ]
       },
       {
         "id": "DiagnosticReport.conclusion",
         "path": "DiagnosticReport.conclusion",
         "short": "Gesamtzusammenfassung des Befundes",
-        "comment": "Aus dotbase: 'Details (ausführlich)' Freitext"
+        "comment": "Aus dotbase: 'Details (ausführlich)' Freitext",
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "BildgebungMamma.Befundtext"
+          }
+        ]
       },
       {
         "id": "DiagnosticReport.presentedForm",

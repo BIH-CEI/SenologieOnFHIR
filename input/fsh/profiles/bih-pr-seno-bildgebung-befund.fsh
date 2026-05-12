@@ -48,6 +48,8 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 * code.coding[tomosynthesis] ^patternCoding.code = #RID40755
 * code.coding[tomosynthesis] ^short = "Digital breast tomosynthesis"
 * code ^comment = "Aus dotbase: 'Modalität' (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes"
+* code ^mapping[+].identity = "lm"
+* code ^mapping[=].map = "BildgebungMamma.Art"
 
 * subject MS
 * subject only Reference(Patient)
@@ -56,6 +58,8 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Datum der Untersuchung"
 * effectiveDateTime ^comment = "Aus dotbase: 'Datum' pro Modalität"
+* effectiveDateTime ^mapping[+].identity = "lm"
+* effectiveDateTime ^mapping[=].map = "BildgebungMamma.Datum"
 
 // Durchgeführt von/Befunder
 * resultsInterpreter ^short = "Befundender Arzt"
@@ -67,13 +71,19 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 * result ^short = "Einzel-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status)"
 * result only Reference(Observation)
 * result ^comment = "References zu einzelnen Observation-Ressourcen für Herdbefund, Mikrokalk, LK-Status, BI-RADS, ACR pro Seite"
+* result ^mapping[+].identity = "lm"
+* result ^mapping[=].map = "BildgebungMamma.BIRADS | BildgebungMamma.ACRDichte | BildgebungMamma.Herdbefund | BildgebungMamma.Mikrokalk | BildgebungMamma.LymphknotenBildgebung"
 
 // Gesamtfeststellung/Zusammenfassung
 * conclusion ^short = "Gesamtzusammenfassung des Befundes"
 * conclusion ^comment = "Aus dotbase: 'Details (ausführlich)' Freitext"
+* conclusion ^mapping[+].identity = "lm"
+* conclusion ^mapping[=].map = "BildgebungMamma.Befundtext"
 
 * presentedForm ^short = "Befund als Document/Text"
 
 // Standort der Untersuchung
 * extension contains EX_Senologie_ExaminationLocation named examinationLocation 0..1
 * extension[examinationLocation] ^short = "Standort der bildgebenden Untersuchung"
+* extension[examinationLocation] ^mapping[+].identity = "lm"
+* extension[examinationLocation] ^mapping[=].map = "BildgebungMamma.Standort"

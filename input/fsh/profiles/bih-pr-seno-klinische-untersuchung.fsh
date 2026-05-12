@@ -28,10 +28,14 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
 
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Datum der Untersuchung"
+* effectiveDateTime ^mapping[+].identity = "lm"
+* effectiveDateTime ^mapping[=].map = "KlinischeUntersuchung.Datum"
 
 * bodySite MS
 * bodySite ^short = "Untersuchte Seite (links/rechts)"
 * bodySite.coding from VS_Senologie_Seite (required)
+* bodySite ^mapping[+].identity = "lm"
+* bodySite ^mapping[=].map = "KlinischeUntersuchung.Seite"
 
 * component MS
 * component ^slicing.discriminator.type = #pattern
@@ -48,18 +52,26 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
 * component[palpationsbefund] ^short = "Palpationsbefund"
 * component[palpationsbefund] ^comment = "Aus dotbase: Tastbefund der Brust (Verhärtung, Knoten, etc.)"
 * component[palpationsbefund].value[x] only CodeableConcept or string
+* component[palpationsbefund] ^mapping[+].identity = "lm"
+* component[palpationsbefund] ^mapping[=].map = "KlinischeUntersuchung.Palpationsbefund"
 
 * component[hautveraenderungen].code = $SCT#115951000119105 "Breast symptom of change in skin"
 * component[hautveraenderungen] ^short = "Hautveränderungen"
 * component[hautveraenderungen] ^comment = "Aus dotbase: Hauteinziehung, Rötung, Orangenhaut etc."
 * component[hautveraenderungen].value[x] only CodeableConcept or string
+* component[hautveraenderungen] ^mapping[+].identity = "lm"
+* component[hautveraenderungen] ^mapping[=].map = "KlinischeUntersuchung.Hautveraenderungen"
 
 * component[mamillenbefund].code = $SCT#248819006 "Nipple finding"
 * component[mamillenbefund] ^short = "Mamillenbefund"
 * component[mamillenbefund] ^comment = "Aus dotbase: Mamillensekretion, Retraktion etc."
 * component[mamillenbefund].value[x] only CodeableConcept or string
+* component[mamillenbefund] ^mapping[+].identity = "lm"
+* component[mamillenbefund] ^mapping[=].map = "KlinischeUntersuchung.Mamillenbefund"
 
 * component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
 * component[lymphknotenstatus] ^short = "Klinischer Lymphknotenstatus"
 * component[lymphknotenstatus] ^comment = "Aus dotbase: Tastbare axilläre Lymphknoten"
 * component[lymphknotenstatus].value[x] only CodeableConcept or string
+* component[lymphknotenstatus] ^mapping[+].identity = "lm"
+* component[lymphknotenstatus] ^mapping[=].map = "KlinischeUntersuchung.Lymphknotenstatus"

@@ -50,7 +50,39 @@
         "binding": {
           "strength": "required",
           "valueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
-        }
+        },
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Art"
+          }
+        ]
+      },
+      {
+        "id": "Procedure.code",
+        "path": "Procedure.code",
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Art (OPS/SCT-codiert)"
+          }
+        ]
+      },
+      {
+        "id": "Procedure.performed[x]:performedDateTime",
+        "path": "Procedure.performed[x]",
+        "sliceName": "performedDateTime",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Datum"
+          }
+        ]
       },
       {
         "id": "Procedure.performer",
@@ -72,7 +104,13 @@
         "sliceName": "erstoperateur",
         "min": 0,
         "max": "1",
-        "mustSupport": true
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Erstoperateur"
+          }
+        ]
       },
       {
         "id": "Procedure.performer:erstoperateur.function",
@@ -109,7 +147,13 @@
         "sliceName": "zweitoperateur",
         "min": 0,
         "max": "1",
-        "mustSupport": true
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Zweitoperateur"
+          }
+        ]
       },
       {
         "id": "Procedure.performer:zweitoperateur.function",
@@ -146,15 +190,37 @@
         "short": "Bezogene Diagnose"
       },
       {
+        "id": "Procedure.bodySite",
+        "path": "Procedure.bodySite",
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Seite"
+          }
+        ]
+      },
+      {
         "id": "Procedure.outcome",
         "path": "Procedure.outcome",
-        "short": "Outcome der Operation, v.a. bei Revision"
+        "short": "Outcome der Operation, v.a. bei Revision",
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Outcome"
+          }
+        ]
       },
       {
         "id": "Procedure.complication",
         "path": "Procedure.complication",
         "short": "Komplikation (oBDS / ICD-10)",
-        "comment": "Verwendet geerbte Slices compl_obds und compl_icd10 vom MII Onko Operation Parent"
+        "comment": "Verwendet geerbte Slices compl_obds und compl_icd10 vom MII Onko Operation Parent",
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.Komplikation"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp",
@@ -168,7 +234,13 @@
           ],
           "rules": "open"
         },
-        "mustSupport": true
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.PostoperativeAnordnungen"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp:drainage",
@@ -184,7 +256,13 @@
               "display": "Drainage procedure"
             }
           ]
-        }
+        },
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.PostoperativeAnordnungen.Drainage"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp:drainage.coding",
@@ -205,7 +283,13 @@
               "display": "Dressing of wound"
             }
           ]
-        }
+        },
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.PostoperativeAnordnungen.Verband"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp:verband.coding",
@@ -226,7 +310,13 @@
               "display": "Antibiotic therapy (procedure)"
             }
           ]
-        }
+        },
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.PostoperativeAnordnungen.Antibiotika"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp:antibiotika.coding",
@@ -247,7 +337,13 @@
               "display": "Mobilization (procedure)"
             }
           ]
-        }
+        },
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.PostoperativeAnordnungen.Mobilisation"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp:mobilisation.coding",
@@ -268,7 +364,13 @@
               "display": "Laboratory test (procedure)"
             }
           ]
-        }
+        },
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Operation.PostoperativeAnordnungen.Laborkontrolle"
+          }
+        ]
       },
       {
         "id": "Procedure.followUp:laborkontrolle.coding",

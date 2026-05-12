@@ -34,14 +34,20 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Datum der Präparateentnahme"
 * effectiveDateTime ^comment = "Aus dotbase: 'Datum Präparateentnahme'"
+* effectiveDateTime ^mapping[+].identity = "lm"
+* effectiveDateTime ^mapping[=].map = "Pathologie.DatumEntnahme"
 
 * issued MS
 * issued ^short = "Datum der Befunderstellung"
+* issued ^mapping[+].identity = "lm"
+* issued ^mapping[=].map = "Pathologie.Datum"
 
 // Pathologisches Institut / Labor (replaces EX_Senologie_PathologyLab)
 * performer MS
 * performer ^short = "Pathologisches Institut / befundender Pathologe"
 * performer ^comment = "Aus dotbase: 'Pathologisches Institut' (choice) — ersetzt ehemalige PathologyLab-Extension"
+* performer ^mapping[+].identity = "lm"
+* performer ^mapping[=].map = "Pathologie.PathologischesInstitut"
 
 // Befundender Pathologe
 * resultsInterpreter ^short = "Befundender Pathologe"
@@ -50,14 +56,20 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 * specimen MS
 * specimen ^short = "Pathologisches Präparat"
 * specimen ^comment = "Soll Senologie_Pathologie_Praeparat referenzieren — enthält Art, Lokalisation, Seite, Uhrzeitposition, Mamillenabstand und Entnahme-Zeitpunkt"
+* specimen ^mapping[+].identity = "lm"
+* specimen ^mapping[=].map = "Pathologie.Praeparat"
 
 // Detailed findings via Observations (replaces HistologyFindings + B3LesionDetails extensions)
 * result MS
 * result ^short = "Detaillierte Befund-Komponenten"
 * result ^comment = "Erbt MII Patho Grouper-Slices (intraoperative, macroscopic, microscopic) — ER, PR, HER2, Ki-67, Histologie, B3-Läsion als Observations"
+* result ^mapping[+].identity = "lm"
+* result ^mapping[=].map = "Pathologie.BefundInvasiv | Pathologie.BefundDCIS (je nach Observation-Code)"
 
 // Freitext-Befund
 * conclusion ^short = "Gesamtbeurteilung des Pathologen"
 * conclusion ^comment = "Aus dotbase: 'Details' (text)"
+* conclusion ^mapping[+].identity = "lm"
+* conclusion ^mapping[=].map = "Pathologie.Befundtext"
 
 * presentedForm ^short = "Befund als Document/Text"

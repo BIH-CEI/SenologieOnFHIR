@@ -39,32 +39,46 @@ Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art 
 * valueCodeableConcept MS
 * valueCodeableConcept ^short = "Gesamtbeurteilung Tumorstatus (D27)"
 * valueCodeableConcept ^comment = "Gesamtbeurteilung des Tumoransprechens: V=CR, T=PR, K=NC/SD, P=Progression, D=divergent, B=MR, R=CRr, Y=Rezidiv, U=unmoeglich, X=fehlend."
+* valueCodeableConcept ^mapping[+].identity = "lm"
+* valueCodeableConcept ^mapping[=].map = "Verlauf.Gesamtbeurteilung"
 
 // M01: Meldedatum (effectiveDateTime geerbt von MII Verlauf)
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Meldedatum / Untersuchungsdatum (M01)"
 * effectiveDateTime ^comment = "Datum der Verlaufsuntersuchung oder Meldung. Entspricht OncoBox M01 und oBDS Untersuchungsdatum_Verlauf."
+* effectiveDateTime ^mapping[+].identity = "lm"
+* effectiveDateTime ^mapping[=].map = "Verlauf.Meldedatum"
 
 // M02: Melder (performer auf Practitioner oder Organization)
 * performer MS
 * performer only Reference(Practitioner or Organization)
 * performer ^short = "Melder / Meldende Einrichtung (M02)"
 * performer ^comment = "Person oder Einrichtung, die die Verlaufsmeldung erstellt. Entspricht OncoBox M02 und oBDS Melder_ID."
+* performer ^mapping[+].identity = "lm"
+* performer ^mapping[=].map = "Verlauf.Melder"
 
 // M03: Art der Nachsorge (aktiv/passiv) — Erhebungsmethode
 * method MS
 * method from VS_Senologie_Nachsorge_Art (required)
 * method ^short = "Art der Nachsorge (M03)"
 * method ^comment = "Aktive Nachsorge = Patientin persoenlich untersucht. Passive Nachsorge = Information aus Akten/Registern."
+* method ^mapping[+].identity = "lm"
+* method ^mapping[=].map = "Verlauf.NachsorgeArt"
 
 // M05-M07: Tumorstatus lokal/LK/FM — geerbt von MII_PR_Onko_Verlauf
 // (Gesamtbeurteilung als valueCodeableConcept, Einzelstatus als Komponenten)
 * component[Tumor_Verlauf] MS
 * component[Tumor_Verlauf] ^short = "Lokaler Tumorstatus (M05)"
+* component[Tumor_Verlauf] ^mapping[+].identity = "lm"
+* component[Tumor_Verlauf] ^mapping[=].map = "Verlauf.TumorstatusLokal"
 * component[Lymphknoten_Verlauf] MS
 * component[Lymphknoten_Verlauf] ^short = "Lymphknoten-Tumorstatus (M06)"
+* component[Lymphknoten_Verlauf] ^mapping[+].identity = "lm"
+* component[Lymphknoten_Verlauf] ^mapping[=].map = "Verlauf.TumorstatusLK"
 * component[Fernmetastasen_Verlauf] MS
 * component[Fernmetastasen_Verlauf] ^short = "Fernmetastasen-Tumorstatus (M07)"
+* component[Fernmetastasen_Verlauf] ^mapping[+].identity = "lm"
+* component[Fernmetastasen_Verlauf] ^mapping[=].map = "Verlauf.TumorstatusFM"
 
 // M08: Zweittumor ja/nein/unbekannt
 * component contains
@@ -75,3 +89,5 @@ Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art 
 * component[zweittumor] ^comment = "Wurde bei der Patientin ein zweiter Primaertumor (nicht Rezidiv/Metastase) diagnostiziert? Details (ICD, Datum) werden als eigene Condition dokumentiert."
 * component[zweittumor].value[x] only CodeableConcept
 * component[zweittumor].valueCodeableConcept from VS_Senologie_Zweittumor (required)
+* component[zweittumor] ^mapping[+].identity = "lm"
+* component[zweittumor] ^mapping[=].map = "Verlauf.Zweittumor"
