@@ -7,6 +7,15 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Operation"
+* ^mapping[=].name = "LM-Element: Operation"
+
 // Inherited from MII Onko Mamma Operation (via MII Onko Operation):
 // - extension:Intention (OP-Intention)
 // - usedCode:PraeoperativeMarkierung

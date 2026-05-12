@@ -14,19 +14,91 @@
       "verificationStatus": {
         "coding": [
           {
-            "code": "confirmed",
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherheit').answer.valueCoding"
+              }
+            ],
             "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherung-methode').answer.valueCoding"
+              }
+            ],
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung"
           }
         ]
       },
       "subject": {
-        "extension": [
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%qr.subject.reference"
+            }
+          ]
+        }
+      },
+      "code": {
+        "coding": [
           {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding"
+              }
+            ],
+            "system": "http://snomed.info/sct"
           }
         ]
       },
+      "bodySite": [
+        {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-seite').answer.valueCoding"
+                }
+              ],
+              "system": "http://snomed.info/sct"
+            }
+          ]
+        }
+      ],
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
+          "_valueDateTime": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-datum').answer.valueDate"
+              }
+            ]
+          }
+        }
+      ],
+      "category": [
+        {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-typ').answer.valueCoding"
+                }
+              ],
+              "system": "http://snomed.info/sct"
+            }
+          ]
+        }
+      ],
       "clinicalStatus": {
         "coding": [
           {
@@ -68,14 +140,49 @@
   ],
   "item": [
     {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+          "valueBoolean": true
+        },
+        {
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%patient"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+        }
+      ],
+      "linkId": "patient-ref",
+      "text": "Patient",
+      "type": "reference",
+      "required": true,
+      "readOnly": true
+    },
+    {
       "item": [
         {
           "answerOption": [
             {
-              "valueString": "Erstdiagnose"
+              "valueCoding": {
+                "code": "255217005",
+                "system": "http://snomed.info/sct",
+                "display": "Ersterkrankung"
+              }
             },
             {
-              "valueString": "Rezidiv"
+              "valueCoding": {
+                "code": "246455001",
+                "system": "http://snomed.info/sct",
+                "display": "Rezidiv"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "14799000",
+                "system": "http://snomed.info/sct",
+                "display": "Metastasierte Erkrankung"
+              }
             }
           ],
           "linkId": "diagnose-typ",
@@ -255,6 +362,106 @@
           "required": false
         },
         {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "confirmed",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                "display": "Gesichert"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "provisional",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                "display": "Verdacht"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "differential",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                "display": "Differentialdiagnose"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "unconfirmed",
+                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+                "display": "Nicht gesichert"
+              }
+            }
+          ],
+          "linkId": "diagnose-sicherheit",
+          "text": "Diagnosestatus",
+          "type": "choice",
+          "required": true
+        },
+        {
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "1",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "klinisch"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "2",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "klinische Diagnostik"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "4",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "spezifische Tumor-Marker"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "5",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "Zytologie"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "7",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "histologische Untersuchung eines Primärtumors"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "6",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "histologische Untersuchung einer Metastase"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "8",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "Zytogenetisch und/oder molekularer Test"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "9",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+                "display": "unbekannt"
+              }
+            }
+          ],
+          "linkId": "diagnose-sicherung-methode",
+          "text": "Diagnosesicherung (oBDS)",
+          "type": "choice",
+          "required": false
+        },
+        {
           "linkId": "diagnose-sonstiges",
           "text": "Details Sonstiges",
           "type": "string",
@@ -314,57 +521,37 @@
         {
           "linkId": "staging-ct",
           "text": "cT",
-          "type": "string",
-          "required": false
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-t-kategorie-werte"
         },
         {
           "linkId": "staging-cn",
           "text": "cN",
-          "type": "string",
-          "required": false
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-n-kategorie-werte"
         },
         {
-          "answerOption": [
-            {
-              "valueString": "cM0"
-            },
-            {
-              "valueString": "cM1"
-            },
-            {
-              "valueString": "cMX"
-            }
-          ],
           "linkId": "staging-cm",
           "text": "cM",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-m-kategorie-werte"
         },
         {
           "linkId": "staging-uicc",
           "text": "UICC-Stadium",
-          "type": "string",
-          "required": false
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-uicc-stadium"
         },
         {
-          "answerOption": [
-            {
-              "valueString": "G1"
-            },
-            {
-              "valueString": "G2"
-            },
-            {
-              "valueString": "G3"
-            },
-            {
-              "valueString": "G4"
-            }
-          ],
           "linkId": "staging-grading",
           "text": "Grading",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-grading"
         }
       ],
       "linkId": "staging",

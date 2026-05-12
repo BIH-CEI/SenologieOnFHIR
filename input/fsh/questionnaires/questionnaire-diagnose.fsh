@@ -11,9 +11,41 @@ InstanceOf: Condition
 Usage: #inline
 * id = "diagnose-maligne-template"
 * clinicalStatus = http://terminology.hl7.org/CodeSystem/condition-clinical#active
-* verificationStatus.coding[+] = http://terminology.hl7.org/CodeSystem/condition-ver-status#confirmed
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+// Slice: condition-ver-status (FHIR standard)
+* verificationStatus.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* verificationStatus.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherheit').answer.valueCoding"
+* verificationStatus.coding[=].system = "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+
+// Slice: primaertumorDiagnosesicherung (oBDS 5.7)
+* verificationStatus.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* verificationStatus.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherung-methode').answer.valueCoding"
+* verificationStatus.coding[=].system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung"
+
+// subject ← QuestionnaireResponse.subject (gesetzt durch Aidbox beim Ausfüllen)
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%qr.subject.reference"
+
+// code.coding (SNOMED) ← diagnose-sct
+* code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding"
+* code.coding[=].system = $SCT
+
+// ICD-10-GM: nicht per Template extrahierbar (String → Coding geht nicht), muss post-processing erfolgen
+
+// bodySite ← diagnose-seite
+* bodySite.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding[=].extension.valueString = "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-seite').answer.valueCoding"
+* bodySite.coding[=].system = $SCT
+
+// assertedDate ← diagnose-datum
+* extension[+].url = "http://hl7.org/fhir/StructureDefinition/condition-assertedDate"
+* extension[=].valueDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueDateTime.extension.valueString = "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-datum').answer.valueDate"
+
+// category (Tumormanifestation) ← diagnose-typ
+* category[+].coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* category[=].coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-typ').answer.valueCoding"
+* category[=].coding[=].system = $SCT
 
 // --- Questionnaire ---
 Instance: senologie-diagnose
@@ -46,6 +78,20 @@ Usage: #definition
 * extension[=].extension[=].valueReference = Reference(diagnose-maligne-template)
 
 // ============================================================
+// Hidden: Patient-Referenz (vorbefüllt aus Launch-Context)
+// ============================================================
+* item[+].linkId = "patient-ref"
+* item[=].text = "Patient"
+* item[=].type = #reference
+* item[=].required = true
+* item[=].readOnly = true
+* item[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"
+* item[=].extension[=].valueBoolean = true
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].extension[=].valueExpression.expression = "%patient"
+
+// ============================================================
 // Group 1: Diagnose
 // ============================================================
 * item[+].linkId = "diagnose-gruppe"
@@ -58,8 +104,9 @@ Usage: #definition
 * item[=].item[=].text = "Falltyp"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueString = "Erstdiagnose"
-* item[=].item[=].answerOption[+].valueString = "Rezidiv"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#255217005 "Ersterkrankung"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#246455001 "Rezidiv"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#14799000 "Metastasierte Erkrankung"
 
 // Diagnose (SNOMED CT)
 * item[=].item[+].linkId = "diagnose-sct"
@@ -107,6 +154,30 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueCoding = $SCT#444739008 "LIN — klassisches LCIS"
 * item[=].item[=].answerOption[+].valueCoding = $SCT#444591006 "LIN — nicht-klassisches (pleomorphes) LCIS"
 
+// Diagnosesicherheit (verificationStatus)
+* item[=].item[+].linkId = "diagnose-sicherheit"
+* item[=].item[=].text = "Diagnosestatus"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = true
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-ver-status#confirmed "Gesichert"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-ver-status#provisional "Verdacht"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-ver-status#differential "Differentialdiagnose"
+* item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/condition-ver-status#unconfirmed "Nicht gesichert"
+
+// Diagnosesicherung (Methode, oBDS 5.7)
+* item[=].item[+].linkId = "diagnose-sicherung-methode"
+* item[=].item[=].text = "Diagnosesicherung (oBDS)"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#1 "klinisch"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#2 "klinische Diagnostik"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#4 "spezifische Tumor-Marker"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#5 "Zytologie"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#7 "histologische Untersuchung eines Primärtumors"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#6 "histologische Untersuchung einer Metastase"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#8 "Zytogenetisch und/oder molekularer Test"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung#9 "unbekannt"
+
 // Freitext Sonstiges
 * item[=].item[+].linkId = "diagnose-sonstiges"
 * item[=].item[=].text = "Details Sonstiges"
@@ -147,36 +218,34 @@ Usage: #definition
 // cT
 * item[=].item[+].linkId = "staging-ct"
 * item[=].item[=].text = "cT"
-* item[=].item[=].type = #string
+* item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-t-kategorie-werte"
 
 // cN
 * item[=].item[+].linkId = "staging-cn"
 * item[=].item[=].text = "cN"
-* item[=].item[=].type = #string
+* item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-n-kategorie-werte"
 
 // cM
 * item[=].item[+].linkId = "staging-cm"
 * item[=].item[=].text = "cM"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "cM0"
-* item[=].item[=].answerOption[+].valueString = "cM1"
-* item[=].item[=].answerOption[+].valueString = "cMX"
+* item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-m-kategorie-werte"
 
 // UICC Stadium
 * item[=].item[+].linkId = "staging-uicc"
 * item[=].item[=].text = "UICC-Stadium"
-* item[=].item[=].type = #string
+* item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-uicc-stadium"
 
 // Grading
 * item[=].item[+].linkId = "staging-grading"
 * item[=].item[=].text = "Grading"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "G1"
-* item[=].item[=].answerOption[+].valueString = "G2"
-* item[=].item[=].answerOption[+].valueString = "G3"
-* item[=].item[=].answerOption[+].valueString = "G4"
+* item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-grading"

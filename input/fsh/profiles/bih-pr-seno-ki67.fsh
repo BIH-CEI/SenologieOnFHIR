@@ -7,6 +7,15 @@ Description: "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchun
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.Ki67"
+* ^mapping[=].name = "LM-Element: Pathologie.BefundInvasiv.Biomarker.Ki67"
+
 * status MS
 * status = #final (exactly)
 * status ^short = "Abgeschlossene Messung"

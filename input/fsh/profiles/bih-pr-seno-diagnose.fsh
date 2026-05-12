@@ -7,6 +7,15 @@ Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Bas
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Diagnose"
+* ^mapping[=].name = "LM-Element: Diagnose"
+
 // --- Inherited from MII_PR_Onko_Diagnose_Primaertumor: ---
 // extension[Feststellungsdatum] MS  → DatumErstdiagnose
 // verificationStatus.coding MS      → Diagnosesicherung (mii-vs-onko-primaertumor-diagnosesicherung)

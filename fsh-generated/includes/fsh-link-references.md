@@ -66,10 +66,6 @@
 [CS_Senologie_FollowUp]: CodeSystem-cs-senologie-follow-up.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
-<<<<<<< Updated upstream
-=======
-[CS_Senologie_Studienname]: CodeSystem-cs-senologie-studienname.html
->>>>>>> Stashed changes
 [CS_Senologie_Tumormanifestation]: CodeSystem-cs-senologie-tumormanifestation.html
 [EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
@@ -368,9 +364,5 @@
 [VS_Senologie_Seite]: ValueSet-vs-senologie-seite.html
 [VS_Senologie_Systemtherapie_Medikation]: ValueSet-vs-senologie-systemtherapie-medikation.html
 [VS_Senologie_Tumormanifestation]: ValueSet-vs-senologie-tumormanifestation.html
-<<<<<<< Updated upstream
-=======
-[VS_Senologie_Vitalstatus]: ValueSet-vs-senologie-vitalstatus.html
->>>>>>> Stashed changes
 [VS_Senologie_Zweittumor]: ValueSet-vs-senologie-zweittumor.html
 [EX_Senologie_Zentrumsfall]: StructureDefinition-ex-senologie-zentrumsfall.html

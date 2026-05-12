@@ -7,6 +7,15 @@ Description: "Specimen für pathologische Präparate aus dotbase (Biopsie, Resek
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.Praeparat"
+* ^mapping[=].name = "LM-Element: Pathologie.Praeparat"
+
 // Art des Präparats (Biopsie, Resektat, etc.)
 * type MS
 * type ^short = "Art des Präparats"

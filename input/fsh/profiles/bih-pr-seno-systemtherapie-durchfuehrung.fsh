@@ -7,6 +7,15 @@ Description: "MedicationStatement für einzelne Medikamentengaben aus dotbase. E
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#SystemischeTherapie.Medikation"
+* ^mapping[=].name = "LM-Element: SystemischeTherapie.Medikation"
+
 * status MS
 * status = #completed (exactly)
 * status ^short = "Durchgeführt"

@@ -9,6 +9,15 @@ Description: "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankun
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Diagnose"
+* ^mapping[=].name = "LM-Element: Diagnose"
+
 // === Required elements ===
 * code 1..1 MS
 * code ^short = "Benigne Mamma-Diagnose"

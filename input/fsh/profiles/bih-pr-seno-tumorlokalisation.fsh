@@ -7,6 +7,15 @@ Description: "BodyStructure für die Tumorlokalisation in der Brust (Seite, Quad
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Tumorlokalisation"
+* ^mapping[=].name = "LM-Element: Tumorlokalisation"
+
 // Lokalisation: Brust
 * location MS
 * location ^short = "Brust (SNOMED)"

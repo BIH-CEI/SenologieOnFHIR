@@ -7,6 +7,15 @@ Description: "MedicationRequest für geplante Systemtherapie aus dotbase Questio
 * insert PR_CS_VS_Version
 * ^status = #draft
 
+// Mapping zum Logischen Modell
+* ^mapping[+].identity = "lm"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
+* ^mapping[=].name = "BIH LM Senologie"
+* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
+* ^mapping[+].identity = "lm-element"
+* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#GeplanteSystemtherapie"
+* ^mapping[=].name = "LM-Element: GeplanteSystemtherapie"
+
 // Basis Mapping aus dotbase "Geplante Systemtherapie"
 * status MS
 * status = #draft (exactly)
