@@ -145,9 +145,11 @@
 [Fall1-Somatische-Mutation-BRCA1]: Observation-Fall1-Somatische-Mutation-BRCA1.html
 [Fall1-Somatische-Mutation-BRCA2]: Observation-Fall1-Somatische-Mutation-BRCA2.html
 [Fall1-ECOG-6Monate]: Observation-Fall1-ECOG-6Monate.html
+[Fall1-ER-Status]: Observation-Fall1-ER-Status.html
 [Fall1-Familienanamnese]: FamilyMemberHistory-Fall1-Familienanamnese.html
 [Fall1-Verlauf-PostTherapie]: Observation-Fall1-Verlauf-PostTherapie.html
 [Fall1-Gynaekologische-Anamnese]: Observation-Fall1-Gynaekologische-Anamnese.html
+[Fall1-HER2-Status]: Observation-Fall1-HER2-Status.html
 [Fall1-Klinische-Untersuchung]: Observation-Fall1-Klinische-Untersuchung.html
 [Fall1-Komorbiditaet-Hypertonie]: Condition-Fall1-Komorbiditaet-Hypertonie.html
 [Fall1-Komorbiditaet-Hypothyreose]: Condition-Fall1-Komorbiditaet-Hypothyreose.html
@@ -161,6 +163,7 @@
 [Fall1-Pathologie-Befund]: DiagnosticReport-Fall1-Pathologie-Befund.html
 [Fall1-Patho-Conclusion]: Observation-Fall1-Patho-Conclusion.html
 [Fall1-Patient-Erika-Neumann]: Patient-Fall1-Patient-Erika-Neumann.html
+[Fall1-PR-Status]: Observation-Fall1-PR-Status.html
 [Fall1-Operation-SLNB]: Procedure-Fall1-Operation-SLNB.html
 [Fall1-Bildgebung-Skelettszintigraphie]: DiagnosticReport-Fall1-Bildgebung-Skelettszintigraphie.html
 [Fall1-Pathologie-Praeparat]: Specimen-Fall1-Pathologie-Praeparat.html
