@@ -157,8 +157,11 @@ Usage: #example
 * specimen = Reference(Specimen/Fall1-Pathologie-Praeparat)
 
 * result[diagnostic-conclusion] = Reference(Observation/Fall1-Patho-Conclusion)
+* result[+] = Reference(Observation/Fall1-ER-Status)
+* result[+] = Reference(Observation/Fall1-PR-Status)
+* result[+] = Reference(Observation/Fall1-HER2-Status)
 
-* conclusion = "Invasives Karzinom NST, G2, ER+ IRS 12, PR+ IRS 8, HER2- Score 1+, Ki-67 15%"
+* conclusion = "Invasives Karzinom NST, G2, ER+ IRS 12 (Leitlinie: positiv), PR+ IRS 8 (Leitlinie: positiv), HER2 IHC 1+ → Leitlinie: HER2-low (oBDS: negativ), Ki-67 15%"
 
 
 Instance: Fall1-Patho-Conclusion
