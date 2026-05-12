@@ -143,11 +143,29 @@ Description: "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senol
       * Medial 0..1 Quantity "medial" "Abstand medial"
       * Lateral 0..1 Quantity "lateral" "Abstand lateral"
     * Biomarker 0..1 BackboneElement "Biomarker invasiv" "Tumor-Biomarker BC"
-      * ER 0..1 CodeableConcept "ER-Status" "Östrogenrezeptor"
-      * PR 0..1 CodeableConcept "PR-Status" "Progesteronrezeptor"
-      * HER2 0..1 CodeableConcept "HER2-Status" "HER2-IHC-Status"
-      * HER2ISH 0..1 CodeableConcept "HER2 ISH" "HER2 In-Situ-Hybridisierung"
-      * ArtDerISH 0..1 CodeableConcept "Art der ISH" "FISH, CISH, DISH etc."
+      // ER-Status: granulare Erfassung statt nur positiv/negativ
+      * ER 0..1 BackboneElement "ER-Status (Östrogenrezeptor)" "Erlaubt ER-low-Klassifikation; IRS und Allred sind alternative Scoring-Systeme"
+        * Gesamtstatus 0..1 CodeableConcept "Gesamtstatus" "positiv | ER-low | negativ | unbekannt"
+        * ProzentPositiveZellen 0..1 Quantity "% positive Zellen" "Anteil ER-positiver Tumorzellen in Prozent (UCUM %)"
+        * Faerbeintensitaet 0..1 CodeableConcept "Färbeintensität" "Intensität 0 | 1+ | 2+ | 3+"
+        * IRSScore 0..1 Quantity "IRS (Remmele-Stegner)" "Immunreaktiver Score 0–12 (DE-Standard)"
+        * AllredScore 0..1 Quantity "Allred Score" "Allred Score 0–8 (international)"
+      // PR-Status: analog
+      * PR 0..1 BackboneElement "PR-Status (Progesteronrezeptor)" "Analog ER; IRS und Allred sind alternative Scoring-Systeme"
+        * Gesamtstatus 0..1 CodeableConcept "Gesamtstatus" "positiv | PR-low | negativ | unbekannt"
+        * ProzentPositiveZellen 0..1 Quantity "% positive Zellen" "Anteil PR-positiver Tumorzellen in Prozent"
+        * Faerbeintensitaet 0..1 CodeableConcept "Färbeintensität" "0 | 1+ | 2+ | 3+"
+        * IRSScore 0..1 Quantity "IRS (Remmele-Stegner)" "Immunreaktiver Score 0–12"
+        * AllredScore 0..1 Quantity "Allred Score" "Allred Score 0–8"
+      // HER2-Status: IHC + ISH klar getrennt, HER2-low als eigener Gesamtstatus
+      * HER2 0..1 BackboneElement "HER2-Status" "IHC + ISH-Reflextestung; ermöglicht HER2-low-Klassifikation"
+        * IHCScore 0..1 CodeableConcept "HER2 IHC-Score" "0 | 1+ | 2+ | 3+"
+        * ISHDurchgefuehrt 0..1 boolean "ISH durchgeführt" "wurde ISH-Reflextestung durchgeführt (typ. bei IHC 2+)"
+        * ISHMethode 0..1 CodeableConcept "ISH-Methode" "FISH | CISH | DISH | SISH"
+        * ISHStatus 0..1 CodeableConcept "ISH-Ergebnis" "amplifiziert | nicht amplifiziert | equivocal"
+        * HER2CEN17Ratio 0..1 Quantity "HER2/CEN17-Ratio" "Ratio bei FISH (dimensionslos)"
+        * HER2Kopienzahl 0..1 Quantity "HER2-Kopienzahl/Zelle" "Mittlere Kopienzahl pro Zelle"
+        * Gesamtstatus 0..1 CodeableConcept "HER2-Gesamtstatus" "positiv | HER2-low | negativ | equivocal"
       * Ki67 0..1 Quantity "Ki-67" "Ki-67 Proliferationsindex in Prozent"
       * PDL1CPS 0..1 Quantity "PD-L1 CPS" "Combined Positive Score"
       * PDL1TPS 0..1 Quantity "PD-L1 TPS" "Tumor Proportion Score"
@@ -172,10 +190,26 @@ Description: "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senol
       * Medial 0..1 Quantity "medial" "Abstand medial"
       * Lateral 0..1 Quantity "lateral" "Abstand lateral"
     * Biomarker 0..1 BackboneElement "Biomarker DCIS" "Tumor-Biomarker DCIS"
-      * ER 0..1 CodeableConcept "ER-Status DCIS" "Östrogenrezeptor"
-      * PR 0..1 CodeableConcept "PR-Status DCIS" "Progesteronrezeptor"
-      * HER2neu 0..1 CodeableConcept "HER2neu DCIS" "HER2neu-Status"
-      * HER2ISH 0..1 CodeableConcept "HER2 ISH DCIS" "HER2 In-Situ-Hybridisierung"
+      // ER-Status DCIS: gleiche Granularität wie invasiv
+      * ER 0..1 BackboneElement "ER-Status DCIS" "Östrogenrezeptor am DCIS"
+        * Gesamtstatus 0..1 CodeableConcept "Gesamtstatus" "positiv | ER-low | negativ | unbekannt"
+        * ProzentPositiveZellen 0..1 Quantity "% positive Zellen" "Anteil ER-positiver DCIS-Zellen in Prozent"
+        * Faerbeintensitaet 0..1 CodeableConcept "Färbeintensität" "0 | 1+ | 2+ | 3+"
+        * IRSScore 0..1 Quantity "IRS (Remmele-Stegner)" "Immunreaktiver Score 0–12"
+        * AllredScore 0..1 Quantity "Allred Score" "Allred Score 0–8"
+      * PR 0..1 BackboneElement "PR-Status DCIS" "Progesteronrezeptor am DCIS"
+        * Gesamtstatus 0..1 CodeableConcept "Gesamtstatus" "positiv | PR-low | negativ | unbekannt"
+        * ProzentPositiveZellen 0..1 Quantity "% positive Zellen" "Anteil PR-positiver DCIS-Zellen in Prozent"
+        * Faerbeintensitaet 0..1 CodeableConcept "Färbeintensität" "0 | 1+ | 2+ | 3+"
+        * IRSScore 0..1 Quantity "IRS (Remmele-Stegner)" "Immunreaktiver Score 0–12"
+        * AllredScore 0..1 Quantity "Allred Score" "Allred Score 0–8"
+      * HER2 0..1 BackboneElement "HER2-Status DCIS" "HER2 am DCIS"
+        * IHCScore 0..1 CodeableConcept "HER2 IHC-Score" "0 | 1+ | 2+ | 3+"
+        * ISHDurchgefuehrt 0..1 boolean "ISH durchgeführt"
+        * ISHMethode 0..1 CodeableConcept "ISH-Methode" "FISH | CISH | DISH | SISH"
+        * ISHStatus 0..1 CodeableConcept "ISH-Ergebnis" "amplifiziert | nicht amplifiziert | equivocal"
+        * HER2CEN17Ratio 0..1 Quantity "HER2/CEN17-Ratio" "Ratio bei FISH"
+        * Gesamtstatus 0..1 CodeableConcept "HER2-Gesamtstatus" "positiv | HER2-low | negativ | equivocal"
       * Ki67 0..1 Quantity "Ki-67 DCIS" "Ki-67 Proliferationsindex in Prozent"
 
   // -- Globale M-Klassifikation (für BC und DCIS) --
@@ -645,3 +679,103 @@ Title: "Senologie FHIR-Profile (interne Abbildung)"
 
 // Verlauf
 * Verlauf -> "Senologie_Follow_Up (Observation)"
+
+// =============================================================================
+// Datenherkunft (MII-Modul oder Senologie-eigen)
+// =============================================================================
+// Markiert pro LM-Element, aus welchem Standard-Modul das Konzept stammt:
+//   - MII-Onko   = Medizininformatik-Initiative, Modul Onkologie
+//   - MII-Patho  = MII-Modul Pathologie-Befund
+//   - MII-MTB    = MII-Modul Molekulares Tumorboard
+//   - MII-Medikation = MII-Modul Medikation
+//   - Senologie  = Eigene Erweiterung der BIH/Senologie-Spezifikation
+
+Mapping: Datenherkunft
+Source: BIH_LM_Senologie
+Target: "https://www.medizininformatik-initiative.de/"
+Id: Datenherkunft
+Title: "Datenherkunft: MII-Modul oder Senologie-eigen"
+
+// Diagnose / Staging
+* Diagnose -> "MII-Onko (Primaerdiagnose)"
+* Diagnose.Falltyp -> "Senologie (Ersterkrankung/Rezidiv/Metastase)"
+* Diagnose.DiagnoseB3SubTyp -> "Senologie (B3-Laesion, KDS Biobank uebernommen)"
+* Diagnose.Tumormanifestation -> "MII-Onko (Tumormanifestation)"
+* Diagnose.Metastasierungsstadium -> "MII-Onko (cM)"
+* Diagnose.Grad -> "MII-Patho (Grading)"
+
+// Tumorlokalisation
+* Tumorlokalisation -> "Senologie (BodyStructure mit Quadrant/Uhrzeit, ueber MII Patho LateralityQualifier hinaus)"
+
+// Anamnese
+* Vorstellung -> "Senologie"
+* GynaekologischeAnamnese -> "Senologie"
+* Familienanamnese -> "Senologie (FamilyMemberHistory)"
+* ChecklisteErblicheBelastung -> "Senologie (DKG-Checkliste)"
+
+// Klinische Untersuchung
+* KlinischeUntersuchung -> "Senologie"
+* KlinischeUntersuchung.KlinischeTumorformel -> "MII-Onko (TNM-Klassifikation, c-Praefix)"
+
+// Bildgebung
+* BildgebungMamma -> "Senologie (BI-RADS, ACR, Herdbefund, Mikrokalk)"
+* BildgebungSonstige -> "Senologie"
+
+// Pathologie
+* Pathologie -> "MII-Patho (Patho Report)"
+* Pathologie.Praeparat -> "MII-Patho (Specimen)"
+* Pathologie.Histologie -> "MII-Patho (Histologie ICD-O-3)"
+* Pathologie.BefundInvasiv -> "MII-Patho (Grouper-Befund microscopic)"
+* Pathologie.BefundInvasiv.pT -> "MII-Onko (TNM-Klassifikation, p-Praefix)"
+* Pathologie.BefundInvasiv.pN -> "MII-Onko (TNM-Klassifikation, p-Praefix)"
+* Pathologie.BefundInvasiv.L -> "MII-Onko (TNM L-Status)"
+* Pathologie.BefundInvasiv.V -> "MII-Onko (TNM V-Status)"
+* Pathologie.BefundInvasiv.Pn -> "MII-Onko (TNM Pn-Status)"
+* Pathologie.BefundInvasiv.R -> "MII-Onko (Residualstatus)"
+* Pathologie.BefundInvasiv.Biomarker.ER -> "MII-Patho (Biomarker IHC) + Senologie (Erweiterung: %/IRS/Allred)"
+* Pathologie.BefundInvasiv.Biomarker.PR -> "MII-Patho (Biomarker IHC) + Senologie (Erweiterung: %/IRS/Allred)"
+* Pathologie.BefundInvasiv.Biomarker.HER2 -> "MII-Patho (Biomarker IHC) + Senologie (Erweiterung: ISH-Reflex, HER2-low)"
+* Pathologie.BefundInvasiv.Biomarker.Ki67 -> "MII-Patho (Biomarker, Ki-67)"
+* Pathologie.BefundInvasiv.Biomarker.PDL1CPS -> "Senologie (PD-L1 IHC)"
+* Pathologie.BefundDCIS -> "MII-Patho + Senologie (DCIS-Spezifika)"
+* Pathologie.M -> "MII-Onko (TNM pM)"
+* Pathologie.UICC -> "MII-Onko (UICC-Stadium)"
+* Pathologie.LymphknotenUntersucht -> "MII-Onko / oBDS"
+* Pathologie.LymphknotenBefallen -> "MII-Onko / oBDS"
+
+// Genetik (MTB-Anbindung)
+* Genetik -> "MII-MTB (Molekulares Tumorboard)"
+* Genetik.SomatischeMutation -> "MII-MTB (somatic variant)"
+* Genetik.SomatischeMutation.Gen -> "MII-MTB (HGNC-codiertes Gen)"
+* Genetik.Genexpressionstest -> "Senologie (Oncotype DX, MammaPrint, Prosigna, EndoPredict)"
+
+// OP-Planung & Operation
+* Operationsplanung -> "Senologie (ServiceRequest)"
+* Operation -> "MII-Onko Mamma Operation"
+* Operation.Komplikation -> "MII-Onko (Operative Komplikation)"
+* Operation.Implantat -> "Senologie (IRegG-Anbindung)"
+* Operation.PraeoperativeMarkierung -> "MII-Onko Mamma (usedCode)"
+* Operation.IntraoperativesImaging -> "MII-Onko Mamma (usedCode)"
+
+// Therapie
+* SystemischeTherapie -> "MII-Onko Systemtherapie / MII-Medikation"
+* SystemischeTherapie.Medikation -> "MII-Medikation (MedicationAdministration)"
+* GeplanteSystemtherapie -> "MII-Medikation (MedicationRequest)"
+* Strahlentherapie -> "MII-Onko Strahlentherapie"
+* Nebenwirkung -> "MII-Onko (AdverseEvent) + CTCAE"
+* Begleitmedikation -> "MII-Medikation (MedicationStatement)"
+
+// Tumorboard, Studien, Supportiv
+* Tumorkonferenz -> "Senologie (CarePlan, OncoBox-naher Aufbau)"
+* Studienteilnahme -> "MII-Studie (ResearchSubject)"
+* Psychoonkologie -> "Senologie"
+* Sozialdienst -> "Senologie"
+
+// Verlauf
+* Verlauf -> "MII-Onko Verlauf"
+* Verlauf.Gesamtbeurteilung -> "MII-Onko Verlauf (D27)"
+* Verlauf.TumorstatusLokal -> "MII-Onko Verlauf (M05)"
+* Verlauf.TumorstatusLK -> "MII-Onko Verlauf (M06)"
+* Verlauf.TumorstatusFM -> "MII-Onko Verlauf (M07)"
+* Verlauf.Vitalstatus -> "MII-Person (Patient.deceased)"
+* Verlauf.Zweittumor -> "MII-Onko (Senologie-Erweiterung M08–M10)"
