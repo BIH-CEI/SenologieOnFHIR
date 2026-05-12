@@ -4,9 +4,9 @@
   "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status",
   "version": "0.9.0",
   "name": "Senologie_HER2_Status",
-  "title": "BIH Senologie HER2-Status",
+  "title": "BIH Senologie HER2-Status (IHC)",
   "status": "draft",
-  "description": "HER2-Status — erbt MII Onko Mamma Her2neu Status (oBDS + Leitlinien-Slicing inkl. HER2-low/HER2-ultralow, IHC-Score + ISH-Status) und ergänzt HER2/CEN17-Ratio und HER2-Kopienzahl pro Zelle für quantitative ISH-Befunde.",
+  "description": "HER2-Status aus Immunhistochemie — erbt MII Onko Mamma Her2neu Status (oBDS + Leitlinien-Slicing inkl. HER2-low/HER2-ultralow, IHC-Score + ISH-Ergebnis). Quantitative ISH-Details (Ratio/Kopienzahl) werden über MII MTB INSITUHYBRIDIZATION_HER2 abgebildet.",
   "fhirVersion": "4.0.1",
   "mapping": [
     {
@@ -18,7 +18,7 @@
     {
       "identity": "lm-element",
       "uri": "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.HER2",
-      "name": "LM-Element: Pathologie.BefundInvasiv.Biomarker.HER2"
+      "name": "LM-Element: Pathologie.BefundInvasiv.Biomarker.HER2 (IHC-Anteil)"
     }
   ],
   "kind": "resource",
@@ -32,101 +32,15 @@
         "id": "Observation.value[x].coding:DefinitionLeitlinie",
         "path": "Observation.value[x].coding",
         "sliceName": "DefinitionLeitlinie",
-        "short": "Leitlinien-Klassifikation (positiv / HER2-low / HER2-ultralow / negativ / equivocal) — empfohlen für HER2-low-Analysen"
+        "short": "Leitlinien-Klassifikation (positiv / HER2-low / HER2-ultralow / negativ / equivocal) — empfohlen für HER2-low-Analysen",
+        "comment": "ER-low und HER2-low sind nur über den Leitlinien-Slice analysierbar (oBDS-Slice kennt nur positiv/negativ/unbekannt)."
       },
       {
-        "id": "Observation.component:her2Cen17Ratio",
-        "path": "Observation.component",
-        "sliceName": "her2Cen17Ratio",
-        "short": "HER2/CEN17-Ratio (FISH/CISH/DISH)",
-        "comment": "Ratio aus HER2- und CEN17-Signalen. Cutoff für Amplifikation typ. ≥ 2.0.",
-        "min": 0,
-        "max": "1",
-        "mustSupport": true,
-        "mapping": [
-          {
-            "identity": "lm",
-            "map": "Pathologie.BefundInvasiv.Biomarker.HER2.HER2CEN17Ratio"
-          }
-        ]
-      },
-      {
-        "id": "Observation.component:her2Cen17Ratio.code",
-        "path": "Observation.component.code",
-        "patternCodeableConcept": {
-          "coding": [
-            {
-              "code": "her2-cen17-ratio",
-              "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
-            }
-          ]
-        }
-      },
-      {
-        "id": "Observation.component:her2Cen17Ratio.value[x]",
-        "path": "Observation.component.value[x]",
-        "type": [
-          {
-            "code": "Quantity"
-          }
-        ]
-      },
-      {
-        "id": "Observation.component:her2Cen17Ratio.value[x].value",
-        "path": "Observation.component.value[x].value",
-        "min": 1
-      },
-      {
-        "id": "Observation.component:her2Cen17Ratio.value[x].system",
-        "path": "Observation.component.value[x].system",
-        "patternUri": "http://unitsofmeasure.org"
-      },
-      {
-        "id": "Observation.component:her2Cen17Ratio.value[x].code",
-        "path": "Observation.component.value[x].code",
-        "patternCode": "1"
-      },
-      {
-        "id": "Observation.component:her2CopyNumber",
-        "path": "Observation.component",
-        "sliceName": "her2CopyNumber",
-        "short": "HER2-Kopienzahl pro Zelle",
-        "comment": "Mittlere HER2-Gen-Kopienzahl pro Tumorzelle. Cutoff für Amplifikation typ. ≥ 6.",
-        "min": 0,
-        "max": "1",
-        "mustSupport": true,
-        "mapping": [
-          {
-            "identity": "lm",
-            "map": "Pathologie.BefundInvasiv.Biomarker.HER2.HER2Kopienzahl"
-          }
-        ]
-      },
-      {
-        "id": "Observation.component:her2CopyNumber.code",
-        "path": "Observation.component.code",
-        "patternCodeableConcept": {
-          "coding": [
-            {
-              "code": "her2-copy-number",
-              "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
-            }
-          ]
-        }
-      },
-      {
-        "id": "Observation.component:her2CopyNumber.value[x]",
-        "path": "Observation.component.value[x]",
-        "type": [
-          {
-            "code": "Quantity"
-          }
-        ]
-      },
-      {
-        "id": "Observation.component:her2CopyNumber.value[x].value",
-        "path": "Observation.component.value[x].value",
-        "min": 1
+        "id": "Observation.hasMember",
+        "path": "Observation.hasMember",
+        "short": "Verweis auf ISH-Reflextestung bei IHC 2+ (MII MTB INSITUHYBRIDIZATION_HER2)",
+        "comment": "Bei equivocal IHC (2+) sollte hier auf das MII MTB ISH-HER2 Observation-Profil referenziert werden, das HER2/CEP17-Ratio, Signale und Zellzahl quantitativ erfasst.",
+        "mustSupport": true
       }
     ]
   }

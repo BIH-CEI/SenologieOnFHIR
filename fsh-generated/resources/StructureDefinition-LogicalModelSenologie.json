@@ -2051,8 +2051,8 @@
       {
         "id": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2",
         "path": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2",
-        "short": "HER2-Status",
-        "definition": "IHC + ISH-Reflextestung; ermöglicht HER2-low-Klassifikation",
+        "short": "HER2-Status (IHC)",
+        "definition": "IHC-Befund; ermöglicht HER2-low-Klassifikation. ISH-Reflextestung wird über MII MTB INSITUHYBRIDIZATION_HER2 abgebildet.",
         "min": 0,
         "max": "1",
         "type": [
@@ -2071,11 +2071,11 @@
           },
           {
             "identity": "FHIRProfile",
-            "map": "Senologie_HER2_Status (erbt MII Onko Her2neu Status + Ratio/Kopienzahl)"
+            "map": "Senologie_HER2_Status (erbt MII Onko Her2neu Status, IHC); ISH-Reflextestung via MII_PR_MTB_INSITUHYBRIDIZATION_HER2"
           },
           {
             "identity": "Datenherkunft",
-            "map": "MII-Onko Mamma Her2neu Status (value: oBDS + Leitlinie [HER2-low, HER2-ultralow]; component: IHC-Score + ISH) + Senologie (ISH-Ratio + Kopienzahl)"
+            "map": "MII-Onko Mamma Her2neu Status (IHC: value oBDS + Leitlinie [HER2-low, HER2-ultralow]; component IHC-Score + ISH-Ergebnis); quantitative ISH-Details: MII-MTB INSITUHYBRIDIZATION_HER2 (LOINC Panel 74885-5)"
           }
         ]
       },
@@ -2096,64 +2096,31 @@
         "id": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.ISHDurchgefuehrt",
         "path": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.ISHDurchgefuehrt",
         "short": "ISH durchgeführt",
-        "definition": "wurde ISH-Reflextestung durchgeführt (typ. bei IHC 2+)",
+        "definition": "wurde ISH-Reflextestung durchgeführt (typ. bei IHC 2+)? Quantitative Details siehe Genetik.ISHReflexHER2",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "boolean"
           }
-        ]
-      },
-      {
-        "id": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.ISHMethode",
-        "path": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.ISHMethode",
-        "short": "ISH-Methode",
-        "definition": "FISH | CISH | DISH | SISH",
-        "min": 0,
-        "max": "1",
-        "type": [
+        ],
+        "mapping": [
           {
-            "code": "CodeableConcept"
+            "identity": "Datenherkunft",
+            "map": "MII-MTB INSITUHYBRIDIZATION_HER2 (LOINC Panel 74885-5: Ratio, Signale/Zellkern, gezaehlte Zellen)"
           }
         ]
       },
       {
         "id": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.ISHStatus",
         "path": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.ISHStatus",
-        "short": "ISH-Ergebnis",
-        "definition": "amplifiziert | nicht amplifiziert | equivocal",
+        "short": "ISH-Ergebnis (Zusammenfassung)",
+        "definition": "amplifiziert | nicht amplifiziert | equivocal — Detailwerte (Ratio, Kopienzahl) in MII MTB ISH HER2",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ]
-      },
-      {
-        "id": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.HER2CEN17Ratio",
-        "path": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.HER2CEN17Ratio",
-        "short": "HER2/CEN17-Ratio",
-        "definition": "Ratio bei FISH (dimensionslos)",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Quantity"
-          }
-        ]
-      },
-      {
-        "id": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.HER2Kopienzahl",
-        "path": "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2.HER2Kopienzahl",
-        "short": "HER2-Kopienzahl/Zelle",
-        "definition": "Mittlere Kopienzahl pro Zelle",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Quantity"
           }
         ]
       },
@@ -2671,8 +2638,8 @@
       {
         "id": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2",
         "path": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2",
-        "short": "HER2-Status DCIS",
-        "definition": "HER2 am DCIS",
+        "short": "HER2-Status DCIS (IHC)",
+        "definition": "IHC am DCIS; ISH-Details via MII MTB",
         "min": 0,
         "max": "1",
         "type": [
@@ -2708,41 +2675,15 @@
         ]
       },
       {
-        "id": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2.ISHMethode",
-        "path": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2.ISHMethode",
-        "short": "ISH-Methode",
-        "definition": "FISH | CISH | DISH | SISH",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept"
-          }
-        ]
-      },
-      {
         "id": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2.ISHStatus",
         "path": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2.ISHStatus",
-        "short": "ISH-Ergebnis",
+        "short": "ISH-Ergebnis (Zusammenfassung)",
         "definition": "amplifiziert | nicht amplifiziert | equivocal",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ]
-      },
-      {
-        "id": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2.HER2CEN17Ratio",
-        "path": "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2.HER2CEN17Ratio",
-        "short": "HER2/CEN17-Ratio",
-        "definition": "Ratio bei FISH",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Quantity"
           }
         ]
       },
