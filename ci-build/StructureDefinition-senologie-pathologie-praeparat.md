@@ -51,7 +51,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pathologie
   "name" : "Senologie_Pathologie_Praeparat",
   "title" : "BIH Senologie Pathologisches Präparat",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -62,6 +62,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pathologie
   }],
   "description" : "Specimen für pathologische Präparate aus dotbase (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details",
   "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Logisches Modell der Senologie-Spezifikation"
+  },
+  {
+    "identity" : "lm-element",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.Praeparat",
+    "name" : "LM-Element: Pathologie.Praeparat"
+  }],
   "kind" : "resource",
   "abstract" : false,
   "type" : "Specimen",

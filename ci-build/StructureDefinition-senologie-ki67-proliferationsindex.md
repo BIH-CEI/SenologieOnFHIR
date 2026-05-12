@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-ki67-proli
   "name" : "Senologie_Ki67_Proliferationsindex",
   "title" : "BIH Senologie Ki-67 Proliferationsindex",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -53,6 +53,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-ki67-proli
   "description" : "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchung. Kein MII-Onko-Profil vorhanden — senologiespezifisch, orientiert am MII ER/PR-Muster (LOINC-Code + valueQuantity %).",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Logisches Modell der Senologie-Spezifikation"
+  },
+  {
+    "identity" : "lm-element",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.Ki67",
+    "name" : "LM-Element: Pathologie.BefundInvasiv.Biomarker.Ki67"
+  },
+  {
     "identity" : "workflow",
     "uri" : "http://hl7.org/fhir/workflow",
     "name" : "Workflow Pattern"

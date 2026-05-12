@@ -13,7 +13,7 @@ These define data models that represent the domain covered by this implementatio
 
 | | |
 | :--- | :--- |
-| [BIH LM Senologie LogicalModel](StructureDefinition-LogicalModelSenologie.md) | LogicalModel der BIH-Spezifikation des Moduls Senologie |
+| [BIH LM Senologie LogicalModel](StructureDefinition-LogicalModelSenologie.md) | Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab. |
 | [IQTIG QS 18.1 Mammachirurgie (Logical Model)](StructureDefinition-iqtig-mammachirurgie-181.md) | Logisches Modell des IQTIG-Datensatzes fuer das QS-Verfahren 18.1 Mammachirurgie (Spezifikation 2024 V05).Der Datensatz besteht aus drei Teildatensaetzen:* Teildatensatz Basis (B): Patienten- und Falldaten
 * Teildatensatz Brust (BRUST): Brustspezifische Diagnose- und Befunddaten
 * Teildatensatz Operation (O): Operation, Histologie, Pathologie, Resektionsstatus

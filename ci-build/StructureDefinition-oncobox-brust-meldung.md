@@ -52,7 +52,7 @@ Other representations of profile: [CSV](StructureDefinition-oncobox-brust-meldun
   "name" : "OncoBoxBrustMeldung",
   "title" : "OncoBox Brust N1.1.1 Meldung (Logical Model)",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

@@ -25,6 +25,15 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
   "contained" : [{
     "resourceType" : "Condition",
     "id" : "diagnose-maligne-template",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
+      "_valueDateTime" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-datum').answer.valueDate"
+        }]
+      }
+    }],
     "clinicalStatus" : {
       "coding" : [{
         "system" : "http://terminology.hl7.org/CodeSystem/condition-clinical",
@@ -33,15 +42,54 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
     },
     "verificationStatus" : {
       "coding" : [{
-        "system" : "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-        "code" : "confirmed"
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherheit').answer.valueCoding"
+        }],
+        "system" : "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherung-methode').answer.valueCoding"
+        }],
+        "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung"
       }]
     },
-    "subject" : {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-        "valueString" : "%patient"
+    "category" : [{
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-typ').answer.valueCoding"
+        }],
+        "system" : "http://snomed.info/sct"
       }]
+    }],
+    "code" : {
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding"
+        }],
+        "system" : "http://snomed.info/sct"
+      }]
+    },
+    "bodySite" : [{
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-seite').answer.valueCoding"
+        }],
+        "system" : "http://snomed.info/sct"
+      }]
+    }],
+    "subject" : {
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%qr.subject.reference"
+        }]
+      }
     }
   }],
   "extension" : [{
@@ -74,7 +122,7 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -85,6 +133,24 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
   }],
   "description" : "Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Spektrum von invasivem Karzinom über DCIS und B3-Läsionen bis hin zu benignen Befunden. Nutzt SDC Template-based Extraction zur Erzeugung einer Condition-Ressource.",
   "item" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%patient"
+      }
+    }],
+    "linkId" : "patient-ref",
+    "text" : "Patient",
+    "type" : "reference",
+    "required" : true,
+    "readOnly" : true
+  },
+  {
     "linkId" : "diagnose-gruppe",
     "text" : "Diagnose Mamma",
     "type" : "group",
@@ -95,10 +161,25 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
       "type" : "choice",
       "required" : true,
       "answerOption" : [{
-        "valueString" : "Erstdiagnose"
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "255217005",
+          "display" : "Ersterkrankung"
+        }
       },
       {
-        "valueString" : "Rezidiv"
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "246455001",
+          "display" : "Rezidiv"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "14799000",
+          "display" : "Metastasierte Erkrankung"
+        }
       }]
     },
     {
@@ -267,6 +348,102 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
       }]
     },
     {
+      "linkId" : "diagnose-sicherheit",
+      "text" : "Diagnosestatus",
+      "type" : "choice",
+      "required" : true,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+          "code" : "confirmed",
+          "display" : "Gesichert"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+          "code" : "provisional",
+          "display" : "Verdacht"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+          "code" : "differential",
+          "display" : "Differentialdiagnose"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+          "code" : "unconfirmed",
+          "display" : "Nicht gesichert"
+        }
+      }]
+    },
+    {
+      "linkId" : "diagnose-sicherung-methode",
+      "text" : "Diagnosesicherung (oBDS)",
+      "type" : "choice",
+      "required" : false,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "1",
+          "display" : "klinisch"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "2",
+          "display" : "klinische Diagnostik"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "4",
+          "display" : "spezifische Tumor-Marker"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "5",
+          "display" : "Zytologie"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "7",
+          "display" : "histologische Untersuchung eines Primärtumors"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "6",
+          "display" : "histologische Untersuchung einer Metastase"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "8",
+          "display" : "Zytogenetisch und/oder molekularer Test"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
+          "code" : "9",
+          "display" : "unbekannt"
+        }
+      }]
+    },
+    {
       "linkId" : "diagnose-sonstiges",
       "text" : "Details Sonstiges",
       "type" : "string",
@@ -320,53 +497,37 @@ Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Sp
     "item" : [{
       "linkId" : "staging-ct",
       "text" : "cT",
-      "type" : "string",
-      "required" : false
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-t-kategorie-werte"
     },
     {
       "linkId" : "staging-cn",
       "text" : "cN",
-      "type" : "string",
-      "required" : false
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-n-kategorie-werte"
     },
     {
       "linkId" : "staging-cm",
       "text" : "cM",
       "type" : "choice",
       "required" : false,
-      "answerOption" : [{
-        "valueString" : "cM0"
-      },
-      {
-        "valueString" : "cM1"
-      },
-      {
-        "valueString" : "cMX"
-      }]
+      "answerValueSet" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-m-kategorie-werte"
     },
     {
       "linkId" : "staging-uicc",
       "text" : "UICC-Stadium",
-      "type" : "string",
-      "required" : false
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-uicc-stadium"
     },
     {
       "linkId" : "staging-grading",
       "text" : "Grading",
       "type" : "choice",
       "required" : false,
-      "answerOption" : [{
-        "valueString" : "G1"
-      },
-      {
-        "valueString" : "G2"
-      },
-      {
-        "valueString" : "G3"
-      },
-      {
-        "valueString" : "G4"
-      }]
+      "answerValueSet" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-grading"
     }]
   }]
 }

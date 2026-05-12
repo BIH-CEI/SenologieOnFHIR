@@ -51,7 +51,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-systemther
   "name" : "Senologie_Systemtherapie_Medikation",
   "title" : "BIH Senologie Systemtherapie Medikation (einzelne Gabe)",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -63,6 +63,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-systemther
   "description" : "MedicationStatement für einzelne Medikamentengaben aus dotbase. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko.",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Logisches Modell der Senologie-Spezifikation"
+  },
+  {
+    "identity" : "lm-element",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#SystemischeTherapie.Medikation",
+    "name" : "LM-Element: SystemischeTherapie.Medikation"
+  },
+  {
     "identity" : "oBDS",
     "name" : "Mapping FHIR zu oBDS"
   }],

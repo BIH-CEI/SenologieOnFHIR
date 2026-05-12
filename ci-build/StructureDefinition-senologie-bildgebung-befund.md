@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-bildgebung
   "name" : "Senologie_Bildgebung_Befund",
   "title" : "BIH Senologie Bildgebung Befund",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -53,6 +53,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-bildgebung
   "description" : "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Logisches Modell der Senologie-Spezifikation"
+  },
+  {
+    "identity" : "lm-element",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#BildgebungMamma",
+    "name" : "LM-Element: BildgebungMamma"
+  },
+  {
     "identity" : "workflow",
     "uri" : "http://hl7.org/fhir/workflow",
     "name" : "Workflow Pattern"

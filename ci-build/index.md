@@ -107,7 +107,7 @@ Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen 
   "name" : "SenologieKDS",
   "title" : "Kerndatensatz Senologie",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -1082,7 +1082,7 @@ Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen 
         "reference" : "StructureDefinition/LogicalModelSenologie"
       },
       "name" : "BIH LM Senologie LogicalModel",
-      "description" : "LogicalModel der BIH-Spezifikation des Moduls Senologie",
+      "description" : "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab.",
       "exampleBoolean" : false
     },
     {

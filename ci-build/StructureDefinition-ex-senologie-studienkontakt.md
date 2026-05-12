@@ -47,7 +47,7 @@ Other representations of profile: [CSV](StructureDefinition-ex-senologie-studien
   "name" : "EX_Senologie_Studienkontakt",
   "title" : "Kontaktperson Studie",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",

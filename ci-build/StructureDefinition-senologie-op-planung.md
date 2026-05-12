@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-op-planung
   "name" : "Senologie_OP_Planung",
   "title" : "BIH Senologie OP Planung",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -53,6 +53,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-op-planung
   "description" : "ServiceRequest für OP Planung aus dotbase Questionnaire 'OP Planung ärztlich V1.0'",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Logisches Modell der Senologie-Spezifikation"
+  },
+  {
+    "identity" : "lm-element",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Operationsplanung",
+    "name" : "LM-Element: Operationsplanung"
+  },
+  {
     "identity" : "workflow",
     "uri" : "http://hl7.org/fhir/workflow",
     "name" : "Workflow Pattern"

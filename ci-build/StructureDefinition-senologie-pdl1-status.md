@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pdl1-statu
   "name" : "Senologie_PDL1_Status",
   "title" : "BIH Senologie PD-L1 Status",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -52,6 +52,17 @@ Other representations of profile: [CSV](StructureDefinition-senologie-pdl1-statu
   }],
   "description" : "PD-L1 Immunhistochemie-Befund für Mamma-Karzinom. Erbt TPS, CPS, ICS und TC-Score Slices vom MII MTB PD-L1 Profil. Klinisch relevant bei TNBC (Pembrolizumab-Indikation bei CPS >= 10, KEYNOTE-522).",
   "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Logisches Modell der Senologie-Spezifikation"
+  },
+  {
+    "identity" : "lm-element",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker",
+    "name" : "LM-Element: Pathologie.BefundInvasiv.Biomarker (PDL1 CPS/TPS/IC)"
+  }],
   "kind" : "resource",
   "abstract" : false,
   "type" : "Observation",

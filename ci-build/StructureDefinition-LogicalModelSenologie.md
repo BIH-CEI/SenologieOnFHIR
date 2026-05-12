@@ -12,7 +12,7 @@
 | Draft as of 2026-05-12 | *Computable Name*:BIH_LM_Senologie |
 
  
-LogicalModel der BIH-Spezifikation des Moduls Senologie 
+Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab. 
 
 **Usages:**
 
@@ -41,7 +41,7 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
   "name" : "BIH_LM_Senologie",
   "title" : "BIH LM Senologie LogicalModel",
   "status" : "draft",
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -50,9 +50,34 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "LogicalModel der BIH-Spezifikation des Moduls Senologie",
+  "description" : "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab.",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
+    "identity" : "oBDS",
+    "uri" : "https://basisdatensatz.de/oBDS/2021",
+    "name" : "Onkologischer Basisdatensatz (oBDS 2021)"
+  },
+  {
+    "identity" : "IQTIG",
+    "uri" : "https://iqtig.org/qs-verfahren/18-1",
+    "name" : "IQTIG QS 18.1 Mammachirurgie (Spez. 2024 V05)"
+  },
+  {
+    "identity" : "OncoBox",
+    "uri" : "https://www.onkozert.de/oncobox/brust/N1.1.1",
+    "name" : "OncoBox Brust N1.1.1 (DKG-Zertifizierung)"
+  },
+  {
+    "identity" : "IRegG",
+    "uri" : "https://implantateregister-deutschland.de/spec/V4.1.1",
+    "name" : "IRegG Brustimplantat-Meldung (V4.1.1)"
+  },
+  {
+    "identity" : "FHIRProfile",
+    "uri" : "https://www.senologie.org/fhir",
+    "name" : "Senologie FHIR-Profile (interne Abbildung)"
+  },
+  {
     "identity" : "rim",
     "uri" : "http://hl7.org/v3",
     "name" : "RIM Mapping"
@@ -67,7 +92,7 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "id" : "LogicalModelSenologie",
       "path" : "LogicalModelSenologie",
       "short" : "BIH LM Senologie LogicalModel",
-      "definition" : "LogicalModel der BIH-Spezifikation des Moduls Senologie"
+      "definition" : "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab."
     },
     {
       "id" : "LogicalModelSenologie.Diagnose",
@@ -75,71 +100,236 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "short" : "Diagnose Mamma",
       "definition" : "Diagnose Mamma",
       "min" : 0,
-      "max" : "1",
+      "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5 Diagnose"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "primaerfall.diagnose"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Diagnose (Condition)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Diagnose.Falltyp",
+      "path" : "LogicalModelSenologie.Diagnose.Falltyp",
+      "short" : "Falltyp",
+      "definition" : "Ersterkrankung, Rezidiv oder metastasierte Erkrankung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
       }]
     },
     {
       "id" : "LogicalModelSenologie.Diagnose.Diagnosekode",
       "path" : "LogicalModelSenologie.Diagnose.Diagnosekode",
       "short" : "Diagnose",
-      "definition" : "Diagnosestellung nach SNOMED CT",
-      "min" : 0,
+      "definition" : "SNOMED CT, ICD-10-GM, ICD-11 (Dual-Coding)",
+      "min" : 1,
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.1 Tumordiagnose ICD-10-GM"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:DIAGICD"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Diagnose_ICD_Code"
       }]
     },
     {
       "id" : "LogicalModelSenologie.Diagnose.DiagnoseB3SubTyp",
       "path" : "LogicalModelSenologie.Diagnose.DiagnoseB3SubTyp",
-      "short" : "B3 Subtyp",
-      "definition" : "Abgebildet im KDS Modul Biobank",
-      "min" : 0,
-      "max" : "*",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Diagnose.Grad",
-      "path" : "LogicalModelSenologie.Diagnose.Grad",
-      "short" : "Grad",
-      "definition" : "Grad der Mammaerkrankung",
+      "short" : "B3-Subtyp",
+      "definition" : "ADH, FEA, Papillom, LIN etc.",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Diagnose_Benigne (Condition)"
       }]
     },
     {
       "id" : "LogicalModelSenologie.Diagnose.Seite",
       "path" : "LogicalModelSenologie.Diagnose.Seite",
-      "short" : "Seite",
-      "definition" : "Seite der Mammaerkrankung",
+      "short" : "Seitenlokalisation",
+      "definition" : "Rechts, Links, Beidseits",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.8 Seitenlokalisation"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:SEITE"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Diagnose_Seite"
       }]
     },
     {
       "id" : "LogicalModelSenologie.Diagnose.DatumErstdiagnose",
       "path" : "LogicalModelSenologie.Diagnose.DatumErstdiagnose",
       "short" : "Datum der Erstdiagnose",
-      "definition" : "Datum der Erstdiagnose der Mammaerkrankung",
+      "definition" : "assertedDate der Diagnosestellung",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "date"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.6 Diagnosedatum"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:DIAGDATUM"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Diagnose_Datum"
       }]
     },
     {
       "id" : "LogicalModelSenologie.Diagnose.Diagnosesicherung",
       "path" : "LogicalModelSenologie.Diagnose.Diagnosesicherung",
       "short" : "Diagnosesicherung",
-      "definition" : "Diagnosesicherung der Mammaerkrankung",
+      "definition" : "oBDS-konforme Diagnosesicherung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.7 Diagnosesicherung"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Diagnose_Histo_Praeop"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Diagnose.Tumormanifestation",
+      "path" : "LogicalModelSenologie.Diagnose.Tumormanifestation",
+      "short" : "Tumormanifestation",
+      "definition" : "Primärtumor, Rezidiv, LK-Metastase, Fernmetastase",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.9 Frühere Tumorerkrankungen"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Diagnose.Metastasierungsstadium",
+      "path" : "LogicalModelSenologie.Diagnose.Metastasierungsstadium",
+      "short" : "Metastasierungsstadium",
+      "definition" : "cM0, cM1, pM1",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "cTNM_M"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Diagnose.Grad",
+      "path" : "LogicalModelSenologie.Diagnose.Grad",
+      "short" : "Grading",
+      "definition" : "Differenzierungsgrad G1–G4",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.1 Grading"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Diagnose_Grading"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorlokalisation",
+      "path" : "LogicalModelSenologie.Tumorlokalisation",
+      "short" : "Tumorlokalisation",
+      "definition" : "Tumorlokalisation",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Tumorlokalisation (BodyStructure)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorlokalisation.Seite",
+      "path" : "LogicalModelSenologie.Tumorlokalisation.Seite",
+      "short" : "Seite",
+      "definition" : "Links, Rechts, Beidseits",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.8 Seitenlokalisation"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorlokalisation.Quadrant",
+      "path" : "LogicalModelSenologie.Tumorlokalisation.Quadrant",
+      "short" : "Quadrant",
+      "definition" : "Quadrant der Brust",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "5.4 Topographie ICD-O (abgeleitet)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorlokalisation.Uhrzeitposition",
+      "path" : "LogicalModelSenologie.Tumorlokalisation.Uhrzeitposition",
+      "short" : "Uhrzeitposition",
+      "definition" : "Uhrzeit-Lokalisation (12-Uhr-Schema)",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -147,14 +337,14 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Diagnose.Metastasierungsstadium",
-      "path" : "LogicalModelSenologie.Diagnose.Metastasierungsstadium",
-      "short" : "Metastasierungsstadium",
-      "definition" : "Metastasierungsstadium der Mammaerkrankung",
+      "id" : "LogicalModelSenologie.Tumorlokalisation.Mamillenabstand",
+      "path" : "LogicalModelSenologie.Tumorlokalisation.Mamillenabstand",
+      "short" : "Mamillenabstand",
+      "definition" : "Abstand zur Mamille in mm",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "CodeableConcept"
+        "code" : "string"
       }]
     },
     {
@@ -191,28 +381,6 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.AllgemeineAnamnese",
-      "path" : "LogicalModelSenologie.AllgemeineAnamnese",
-      "short" : "Allgemeine Anamnese",
-      "definition" : "Allgemeine Anamnese",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "BackboneElement"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.AllgemeineAnamnese.EQ5D5L",
-      "path" : "LogicalModelSenologie.AllgemeineAnamnese.EQ5D5L",
-      "short" : "EQ5D5L",
-      "definition" : "Gesundheitszustand nach EQ5D5L",
-      "min" : 0,
-      "max" : "*",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
       "id" : "LogicalModelSenologie.GynaekologischeAnamnese",
       "path" : "LogicalModelSenologie.GynaekologischeAnamnese",
       "short" : "Gynäkologische Anamnese",
@@ -221,17 +389,54 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "1",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Gynaekologische_Anamnese (Observation)"
       }]
     },
     {
       "id" : "LogicalModelSenologie.GynaekologischeAnamnese.Menarche",
       "path" : "LogicalModelSenologie.GynaekologischeAnamnese.Menarche",
       "short" : "Alter bei Menarche",
-      "definition" : "Alter bei Menarche",
+      "definition" : "Alter bei Menarche in Jahren",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "date"
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GynaekologischeAnamnese.Menopausenstatus",
+      "path" : "LogicalModelSenologie.GynaekologischeAnamnese.Menopausenstatus",
+      "short" : "Menopausenstatus",
+      "definition" : "Prä-/peri-/postmenopausal",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GynaekologischeAnamnese.Schwangerschaften",
+      "path" : "LogicalModelSenologie.GynaekologischeAnamnese.Schwangerschaften",
+      "short" : "Anzahl Schwangerschaften",
+      "definition" : "Gravida",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GynaekologischeAnamnese.Hormonersatztherapie",
+      "path" : "LogicalModelSenologie.GynaekologischeAnamnese.Hormonersatztherapie",
+      "short" : "Hormonersatztherapie",
+      "definition" : "HRT ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
       }]
     },
     {
@@ -240,38 +445,20 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "short" : "Familienanamnese",
       "definition" : "Familienanamnese",
       "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "BackboneElement"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Familienanamnese.Alter",
-      "path" : "LogicalModelSenologie.Familienanamnese.Alter",
-      "short" : "Alter",
-      "definition" : "aktuelles Alter der Angehörigen",
-      "min" : 0,
-      "max" : "*",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Medikation",
-      "path" : "LogicalModelSenologie.Medikation",
-      "short" : "Medikation",
-      "definition" : "Medikation",
-      "min" : 0,
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Familienanamnese (FamilyMemberHistory)"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Medikation.Medikationsname",
-      "path" : "LogicalModelSenologie.Medikation.Medikationsname",
-      "short" : "Name",
-      "definition" : "Name des Medikaments",
+      "id" : "LogicalModelSenologie.Familienanamnese.Verwandtschaftsgrad",
+      "path" : "LogicalModelSenologie.Familienanamnese.Verwandtschaftsgrad",
+      "short" : "Verwandtschaftsgrad",
+      "definition" : "Mutter, Schwester, Tante, etc.",
       "min" : 1,
       "max" : "1",
       "type" : [{
@@ -279,76 +466,69 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Medikation.Medikationsname.Dosis",
-      "path" : "LogicalModelSenologie.Medikation.Medikationsname.Dosis",
-      "short" : "Dosis",
-      "definition" : "Dosis des Medikaments",
+      "id" : "LogicalModelSenologie.Familienanamnese.Mammakarzinom",
+      "path" : "LogicalModelSenologie.Familienanamnese.Mammakarzinom",
+      "short" : "Mammakarzinom",
+      "definition" : "Mammakarzinom in der Familie",
       "min" : 0,
       "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Medikation.Medikationsname.Einheit",
-      "path" : "LogicalModelSenologie.Medikation.Medikationsname.Einheit",
-      "short" : "Einheit",
-      "definition" : "Einheit/ Darreichungsform der Medikation",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Medikation.Medikationsname.Dosierschema",
-      "path" : "LogicalModelSenologie.Medikation.Medikationsname.Dosierschema",
-      "short" : "Dosierschema",
-      "definition" : "Dosierschema",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "string"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Studien",
-      "path" : "LogicalModelSenologie.Studien",
-      "short" : "Studien",
-      "definition" : "Studien",
-      "min" : 0,
-      "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Studien.Studienname",
-      "path" : "LogicalModelSenologie.Studien.Studienname",
-      "short" : "Name",
-      "definition" : "Name der Studie",
-      "min" : 1,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Studien.StudiennameCode",
-      "path" : "LogicalModelSenologie.Studien.StudiennameCode",
-      "short" : "Name (kodiert)",
-      "definition" : "Studienname aus Auswahlliste (OncoBox 2.0 K02)",
+      "id" : "LogicalModelSenologie.Familienanamnese.Mammakarzinom.Erkrankungsalter",
+      "path" : "LogicalModelSenologie.Familienanamnese.Mammakarzinom.Erkrankungsalter",
+      "short" : "Erkrankungsalter",
+      "definition" : "Alter bei Erkrankung",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "CodeableConcept"
+        "code" : "Quantity"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Studien.Studienscreening",
-      "path" : "LogicalModelSenologie.Studien.Studienscreening",
-      "short" : "Screening",
-      "definition" : "Screening zur Studienteilnahme durchgeführt (OncoBox 2.0 K03)",
+      "id" : "LogicalModelSenologie.Familienanamnese.Ovarialkarzinom",
+      "path" : "LogicalModelSenologie.Familienanamnese.Ovarialkarzinom",
+      "short" : "Ovarialkarzinom",
+      "definition" : "Ovarialkarzinom in der Familie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Familienanamnese.Ovarialkarzinom.Erkrankungsalter",
+      "path" : "LogicalModelSenologie.Familienanamnese.Ovarialkarzinom.Erkrankungsalter",
+      "short" : "Erkrankungsalter",
+      "definition" : "Alter bei Erkrankung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.ChecklisteErblicheBelastung",
+      "path" : "LogicalModelSenologie.ChecklisteErblicheBelastung",
+      "short" : "Checkliste Erbliche Belastung",
+      "definition" : "Checkliste Erbliche Belastung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Checkliste_Erbliche_Belastung (Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.ChecklisteErblicheBelastung.Durchgefuehrt",
+      "path" : "LogicalModelSenologie.ChecklisteErblicheBelastung.Durchgefuehrt",
+      "short" : "Durchgeführt",
+      "definition" : "Checkliste durchgeführt ja/nein",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -356,58 +536,14 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Studien.Screeningstatus",
-      "path" : "LogicalModelSenologie.Studien.Screeningstatus",
-      "short" : "Screeningstatus",
-      "definition" : "Screeningstatus",
+      "id" : "LogicalModelSenologie.ChecklisteErblicheBelastung.Score",
+      "path" : "LogicalModelSenologie.ChecklisteErblicheBelastung.Score",
+      "short" : "Score",
+      "definition" : "Punktwert der Checkliste",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "string"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Studien.Studienarm",
-      "path" : "LogicalModelSenologie.Studien.Studienarm",
-      "short" : "Studienarm",
-      "definition" : "Studienarm",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Studien.Aufklaerungsdatum",
-      "path" : "LogicalModelSenologie.Studien.Aufklaerungsdatum",
-      "short" : "Aufklärungsdatum",
-      "definition" : "Datum der Aufklärung",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "date"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Studien.Teilnahmestatus",
-      "path" : "LogicalModelSenologie.Studien.Teilnahmestatus",
-      "short" : "Teilnahmestatus",
-      "definition" : "Teilnahmestatus an der Studie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Studien.Kontakt",
-      "path" : "LogicalModelSenologie.Studien.Kontakt",
-      "short" : "Kontakt",
-      "definition" : "Kontakt zur Studie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "ContactPoint"
+        "code" : "integer"
       }]
     },
     {
@@ -419,28 +555,198 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Klinische_Untersuchung (Observation)"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.KlinischeUntersuchung.MammaRechts",
-      "path" : "LogicalModelSenologie.KlinischeUntersuchung.MammaRechts",
-      "short" : "Untersuchung Mamma rechts",
-      "definition" : "Untersuchung Mamma rechts",
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.Datum",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.Datum",
+      "short" : "Untersuchungsdatum",
+      "definition" : "Datum der klinischen Untersuchung",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "BackboneElement"
+        "code" : "dateTime"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.KlinischeUntersuchung.MammaRechts.MammaCABefund",
-      "path" : "LogicalModelSenologie.KlinischeUntersuchung.MammaRechts.MammaCABefund",
-      "short" : "Befund",
-      "definition" : "Befund der Mamma rechts",
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.Seite",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.Seite",
+      "short" : "Seite",
+      "definition" : "Links/Rechts",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.Palpationsbefund",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.Palpationsbefund",
+      "short" : "Palpationsbefund",
+      "definition" : "Befund bei Tastuntersuchung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.Hautveraenderungen",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.Hautveraenderungen",
+      "short" : "Hautveränderungen",
+      "definition" : "Einziehung, Rötung, Peau d'orange",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.Mamillenbefund",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.Mamillenbefund",
+      "short" : "Mamillenbefund",
+      "definition" : "Sekretion, Einziehung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.Lymphknotenstatus",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.Lymphknotenstatus",
+      "short" : "Lymphknotenstatus",
+      "definition" : "Klinischer Lymphknotenbefund",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel",
+      "short" : "Klinische Tumorformel (cTNM)",
+      "definition" : "Klinische TNM-Klassifikation aus körperlicher Untersuchung und Bildgebung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "MII_PR_Onko_TNM_Klassifikation (Observation)",
+        "comment" : "cTNM via MII Onko TNM-Klassifikation"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cT",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cT",
+      "short" : "cT",
+      "definition" : "Klinische T-Kategorie (x, 0, is, 1a/b/c, 2, 3, 4a/b/c/d)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.1 TNM cT"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:CT"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "cTNM_T"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cN",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cN",
+      "short" : "cN",
+      "definition" : "Klinische N-Kategorie (x, 0, 1, 2a/b, 3a/b/c)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.2 TNM cN"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:CN"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "cTNM_N"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cM",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cM",
+      "short" : "cM",
+      "definition" : "Klinische M-Kategorie (0, 1)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.3 TNM cM"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:CM"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "cTNM_M"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cUICC",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.cUICC",
+      "short" : "cUICC-Stadium",
+      "definition" : "Klinisches UICC-Stadium",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.6 TNM UICC-Stadium (klinisch)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.y",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.y",
+      "short" : "y-Präfix",
+      "definition" : "Befund nach neoadjuvanter Therapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.r",
+      "path" : "LogicalModelSenologie.KlinischeUntersuchung.KlinischeTumorformel.r",
+      "short" : "r-Präfix",
+      "definition" : "Rezidiv-Befund",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
       }]
     },
     {
@@ -452,17 +758,125 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Bildgebung_Befund (DiagnosticReport) + Senologie_Bildgebung_Observation"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.BildgebungMamma.Bildgebungsart",
-      "path" : "LogicalModelSenologie.BildgebungMamma.Bildgebungsart",
+      "id" : "LogicalModelSenologie.BildgebungMamma.Datum",
+      "path" : "LogicalModelSenologie.BildgebungMamma.Datum",
+      "short" : "Untersuchungsdatum",
+      "definition" : "Datum der Bildgebung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.Art",
+      "path" : "LogicalModelSenologie.BildgebungMamma.Art",
       "short" : "Art der Bildgebung",
-      "definition" : "Art der Bildgebung",
+      "definition" : "Mammografie, Sonografie, MRT, Tomosynthese",
       "min" : 1,
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "BRUST:BILDGMETHODE"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Bildgebung_Methode"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.Standort",
+      "path" : "LogicalModelSenologie.BildgebungMamma.Standort",
+      "short" : "Untersuchungsstandort",
+      "definition" : "Standort der Untersuchung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.BIRADS",
+      "path" : "LogicalModelSenologie.BildgebungMamma.BIRADS",
+      "short" : "BI-RADS",
+      "definition" : "BI-RADS Kategorie 0–6",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "BRUST:BIRADS"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Bildgebung_BIRADS"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.ACRDichte",
+      "path" : "LogicalModelSenologie.BildgebungMamma.ACRDichte",
+      "short" : "ACR-Dichte",
+      "definition" : "ACR-Dichtegrad a–d",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.Herdbefund",
+      "path" : "LogicalModelSenologie.BildgebungMamma.Herdbefund",
+      "short" : "Herdbefund",
+      "definition" : "Beschreibung des Herdbefunds",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.Mikrokalk",
+      "path" : "LogicalModelSenologie.BildgebungMamma.Mikrokalk",
+      "short" : "Mikrokalk",
+      "definition" : "Mikrokalkbefund",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.LymphknotenBildgebung",
+      "path" : "LogicalModelSenologie.BildgebungMamma.LymphknotenBildgebung",
+      "short" : "Lymphknotenstatus",
+      "definition" : "Bildgebender Lymphknotenbefund",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungMamma.Befundtext",
+      "path" : "LogicalModelSenologie.BildgebungMamma.Befundtext",
+      "short" : "Befundtext",
+      "definition" : "Gesamtzusammenfassung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
       }]
     },
     {
@@ -474,15 +888,52 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Bildgebung_Sonstige (DiagnosticReport)"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.BildgebungSonstige.Bildgebungsart",
-      "path" : "LogicalModelSenologie.BildgebungSonstige.Bildgebungsart",
+      "id" : "LogicalModelSenologie.BildgebungSonstige.Datum",
+      "path" : "LogicalModelSenologie.BildgebungSonstige.Datum",
+      "short" : "Untersuchungsdatum",
+      "definition" : "Datum der Bildgebung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungSonstige.Art",
+      "path" : "LogicalModelSenologie.BildgebungSonstige.Art",
       "short" : "Art der Bildgebung",
-      "definition" : "Art der Bildgebung",
+      "definition" : "CT, PET-CT, Szintigrafie etc.",
       "min" : 1,
       "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungSonstige.Befundtext",
+      "path" : "LogicalModelSenologie.BildgebungSonstige.Befundtext",
+      "short" : "Befundtext",
+      "definition" : "Befundzusammenfassung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.BildgebungSonstige.KodierteBefundaussage",
+      "path" : "LogicalModelSenologie.BildgebungSonstige.KodierteBefundaussage",
+      "short" : "Kodierte Befundaussage",
+      "definition" : "Strukturierte Befundkodierung",
+      "min" : 0,
+      "max" : "*",
       "type" : [{
         "code" : "CodeableConcept"
       }]
@@ -496,13 +947,120 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Pathologie_Befund (DiagnosticReport, basiert auf MII Patho Report)"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Pathologie.ArtPraeparat",
-      "path" : "LogicalModelSenologie.Pathologie.ArtPraeparat",
-      "short" : "Befund",
-      "definition" : "Pathologischer Befund",
+      "id" : "LogicalModelSenologie.Pathologie.Datum",
+      "path" : "LogicalModelSenologie.Pathologie.Datum",
+      "short" : "Befunddatum",
+      "definition" : "Datum der Befunderstellung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.DatumProbeneingang",
+      "path" : "LogicalModelSenologie.Pathologie.DatumProbeneingang",
+      "short" : "Probeneingang",
+      "definition" : "Datum Probeneingang im Labor",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.DatumEntnahme",
+      "path" : "LogicalModelSenologie.Pathologie.DatumEntnahme",
+      "short" : "Entnahmedatum",
+      "definition" : "Datum der Präparateentnahme",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.ZeitpunktEntnahme",
+      "path" : "LogicalModelSenologie.Pathologie.ZeitpunktEntnahme",
+      "short" : "Zeitpunkt Präparatentnahme",
+      "definition" : "Uhrzeit der Entnahme",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.DatumMitteilungPatient",
+      "path" : "LogicalModelSenologie.Pathologie.DatumMitteilungPatient",
+      "short" : "Datum Mitteilung Patient*in",
+      "definition" : "Datum Befundmitteilung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.PathologischesInstitut",
+      "path" : "LogicalModelSenologie.Pathologie.PathologischesInstitut",
+      "short" : "Pathologisches Institut",
+      "definition" : "Befundendes Institut",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.EinrichtungEntnahme",
+      "path" : "LogicalModelSenologie.Pathologie.EinrichtungEntnahme",
+      "short" : "Einrichtung Präparateentnahme",
+      "definition" : "Einrichtung der Probenentnahme",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.StrukturierterBefund",
+      "path" : "LogicalModelSenologie.Pathologie.StrukturierterBefund",
+      "short" : "Strukturierter Befund",
+      "definition" : "Strukturierter Befund angelegt",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat",
+      "short" : "Präparat",
+      "definition" : "Pathologisches Präparat",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Pathologie_Praeparat (Specimen)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat.Art",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat.Art",
+      "short" : "Art des Präparats",
+      "definition" : "Biopsie, Resektat, etc.",
       "min" : 1,
       "max" : "1",
       "type" : [{
@@ -510,32 +1068,1094 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie",
-      "path" : "LogicalModelSenologie.Therapie",
-      "short" : "Therapie",
-      "definition" : "Therapie",
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat.Entnahmemethode",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat.Entnahmemethode",
+      "short" : "Entnahmemethode",
+      "definition" : "Methode der Gewebeentnahme",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat.Lokalisation",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat.Lokalisation",
+      "short" : "Entnahmelokalisation",
+      "definition" : "Körperstelle der Entnahme",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat.Seite",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat.Seite",
+      "short" : "Seite",
+      "definition" : "Lateralität des Präparats",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat.Uhrzeit",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat.Uhrzeit",
+      "short" : "Uhrzeit-Position",
+      "definition" : "Lokalisation als Uhrzeit",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Praeparat.Mamillenabstand",
+      "path" : "LogicalModelSenologie.Pathologie.Praeparat.Mamillenabstand",
+      "short" : "Mamillenabstand",
+      "definition" : "Abstand zur Mamille in mm",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Histologie",
+      "path" : "LogicalModelSenologie.Pathologie.Histologie",
+      "short" : "Histologischer Typ",
+      "definition" : "ICD-O-3 Morphologie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.3 Morphologie-Code (ICD-O-3)"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:HISTMORPH"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Diagnose_ICDO_Code"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv",
+      "short" : "Befund invasives Karzinom",
+      "definition" : "Pathologische Befundung invasives Mammakarzinom",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "MII_PR_Patho_GrouperBefund (Observation, microscopic)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Subtyp",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Subtyp",
+      "short" : "Subtyp",
+      "definition" : "Histologischer Subtyp (NST, lobulär, etc.)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.MaxTumordurchmesser",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.MaxTumordurchmesser",
+      "short" : "Max. Tumordurchmesser",
+      "definition" : "Maximaler invasiver Tumordurchmesser in mm",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.2 Tumorgröße"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:TGROESSEINV"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_Groesse_Invasiv_mm"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Multifokalitaet",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Multifokalitaet",
+      "short" : "Multifokal (m)",
+      "definition" : "Multifokales/multizentrisches Karzinom",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.10 m-Symbol"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:MULTIFOK"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_Multifokal"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Grading",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Grading",
+      "short" : "Grading",
+      "definition" : "G1–G4",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.1 Grading"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:GRADING"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.NukleaeresGrading",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.NukleaeresGrading",
+      "short" : "Nukleäres Grading",
+      "definition" : "Nukleäres Grading",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.pT",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.pT",
+      "short" : "pT (BC)",
+      "definition" : "Pathologische T-Kategorie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.1 TNM pT"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:PT"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_T"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "MII_PR_Onko_TNM_Klassifikation (Observation, pTNM)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.cN",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.cN",
+      "short" : "cN (BC)",
+      "definition" : "Klinische N-Kategorie (im Patho-Befund dokumentiert)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.pN",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.pN",
+      "short" : "pN (BC)",
+      "definition" : "Pathologische N-Kategorie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.2 TNM pN"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:PN"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_N"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "MII_PR_Onko_TNM_Klassifikation (Observation, pTNM)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.CpSwitch",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.CpSwitch",
+      "short" : "c/p-Switch",
+      "definition" : "Befund klinisch (c) oder pathologisch (p) klassifiziert",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.y",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.y",
+      "short" : "y-Präfix",
+      "definition" : "Nach neoadjuvanter Therapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.8 y-Symbol"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.r",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.r",
+      "short" : "r-Präfix",
+      "definition" : "Rezidiv-Befund",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.9 r-Symbol"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.L",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.L",
+      "short" : "L-Status",
+      "definition" : "Lymphgefäßinvasion (L0/L1/LX)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.4 TNM L"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.V",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.V",
+      "short" : "V-Status",
+      "definition" : "Veneninvasion (V0/V1/V2/VX)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.5 TNM V"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Pn",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Pn",
+      "short" : "Pn-Status",
+      "definition" : "Perineuralscheideninvasion (Pn0/Pn1/PnX)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.7 TNM Pn"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.R",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.R",
+      "short" : "R-Status (BC)",
+      "definition" : "Residualstatus invasiv",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "8.1 Lokale Beurteilung Residualstatus / 8.2 Gesamtbeurteilung Residualstatus"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:RSTATUSLOK / O:RSTATUSGES"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Op_R_Lokal / Op_R_Gesamt"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender",
+      "short" : "Resektionsränder",
+      "definition" : "Abstände zu Resektionsrändern in mm",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Anterior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Anterior",
+      "short" : "anterior",
+      "definition" : "Abstand anterior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Posterior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Posterior",
+      "short" : "posterior",
+      "definition" : "Abstand posterior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Superior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Superior",
+      "short" : "superior",
+      "definition" : "Abstand superior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Inferior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Inferior",
+      "short" : "inferior",
+      "definition" : "Abstand inferior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Medial",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Medial",
+      "short" : "medial",
+      "definition" : "Abstand medial",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Lateral",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Resektionsraender.Lateral",
+      "short" : "lateral",
+      "definition" : "Abstand lateral",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker",
+      "short" : "Biomarker invasiv",
+      "definition" : "Tumor-Biomarker BC",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.ER",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.ER",
+      "short" : "ER-Status",
+      "definition" : "Östrogenrezeptor",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "O:ERSTATUS"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "ER_Status"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PR",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PR",
+      "short" : "PR-Status",
+      "definition" : "Progesteronrezeptor",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "O:PRSTATUS"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "PR_Status"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2",
+      "short" : "HER2-Status",
+      "definition" : "HER2-IHC-Status",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "O:HER2STATUS"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "HER2_Status"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2ISH",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.HER2ISH",
+      "short" : "HER2 ISH",
+      "definition" : "HER2 In-Situ-Hybridisierung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.ArtDerISH",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.ArtDerISH",
+      "short" : "Art der ISH",
+      "definition" : "FISH, CISH, DISH etc.",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.Ki67",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.Ki67",
+      "short" : "Ki-67",
+      "definition" : "Ki-67 Proliferationsindex in Prozent",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "Ki67_Prozent"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Ki67 (Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PDL1CPS",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PDL1CPS",
+      "short" : "PD-L1 CPS",
+      "definition" : "Combined Positive Score",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_PDL1_Status (Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PDL1TPS",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PDL1TPS",
+      "short" : "PD-L1 TPS",
+      "definition" : "Tumor Proportion Score",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_PDL1_Status (Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PDL1IC",
+      "path" : "LogicalModelSenologie.Pathologie.BefundInvasiv.Biomarker.PDL1IC",
+      "short" : "PD-L1 IC",
+      "definition" : "Immune Cell Score",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_PDL1_Status (Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS",
+      "short" : "Befund DCIS",
+      "definition" : "Pathologische Befundung Ductales Carcinoma in situ",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "MII_PR_Patho_GrouperBefund (Observation, microscopic)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Art",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Art",
+      "short" : "DCIS Art",
+      "definition" : "Art des DCIS",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.MaxAusdehnung",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.MaxAusdehnung",
+      "short" : "Maximale Ausdehnung",
+      "definition" : "Größte Ausdehnung des DCIS in mm",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "O:TGROESSEDCIS"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_Groesse_DCIS_mm"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Grading",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Grading",
+      "short" : "DCIS Grading",
+      "definition" : "G1–G3",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.pT",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.pT",
+      "short" : "T (DCIS)",
+      "definition" : "T-Kategorie für DCIS (typ. pTis)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.cN",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.cN",
+      "short" : "cN (DCIS)",
+      "definition" : "Klinische N-Kategorie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.pN",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.pN",
+      "short" : "pN (DCIS)",
+      "definition" : "Pathologische N-Kategorie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.y",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.y",
+      "short" : "y-Präfix",
+      "definition" : "Nach neoadjuvanter Therapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.r",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.r",
+      "short" : "r-Präfix",
+      "definition" : "Rezidiv-Befund",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.R",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.R",
+      "short" : "R-Status (DCIS)",
+      "definition" : "Residualstatus DCIS",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender",
+      "short" : "Resektionsränder DCIS",
+      "definition" : "Abstände zu Resektionsrändern in mm",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Anterior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Anterior",
+      "short" : "anterior",
+      "definition" : "Abstand anterior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Posterior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Posterior",
+      "short" : "posterior",
+      "definition" : "Abstand posterior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Superior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Superior",
+      "short" : "superior",
+      "definition" : "Abstand superior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Inferior",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Inferior",
+      "short" : "inferior",
+      "definition" : "Abstand inferior",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Medial",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Medial",
+      "short" : "medial",
+      "definition" : "Abstand medial",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Lateral",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Resektionsraender.Lateral",
+      "short" : "lateral",
+      "definition" : "Abstand lateral",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker",
+      "short" : "Biomarker DCIS",
+      "definition" : "Tumor-Biomarker DCIS",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.ER",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.ER",
+      "short" : "ER-Status DCIS",
+      "definition" : "Östrogenrezeptor",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.PR",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.PR",
+      "short" : "PR-Status DCIS",
+      "definition" : "Progesteronrezeptor",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2neu",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2neu",
+      "short" : "HER2neu DCIS",
+      "definition" : "HER2neu-Status",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2ISH",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.HER2ISH",
+      "short" : "HER2 ISH DCIS",
+      "definition" : "HER2 In-Situ-Hybridisierung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.Ki67",
+      "path" : "LogicalModelSenologie.Pathologie.BefundDCIS.Biomarker.Ki67",
+      "short" : "Ki-67 DCIS",
+      "definition" : "Ki-67 Proliferationsindex in Prozent",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.M",
+      "path" : "LogicalModelSenologie.Pathologie.M",
+      "short" : "M-Kategorie",
+      "definition" : "Pathologische M-Klassifikation (gilt für BC und DCIS)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.3 TNM pM"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:PM"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_M"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "MII_PR_Onko_TNM_Klassifikation (Observation, pTNM)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.DetailM",
+      "path" : "LogicalModelSenologie.Pathologie.DetailM",
+      "short" : "Detail M",
+      "definition" : "Details zur M-Klassifikation",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.UICC",
+      "path" : "LogicalModelSenologie.Pathologie.UICC",
+      "short" : "UICC-Stadium",
+      "definition" : "Pathologisches UICC-Gesamtstadium",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "7.6 TNM UICC-Stadium"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:UICCPATHO"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "pTNM_UICC"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.LymphknotenUntersucht",
+      "path" : "LogicalModelSenologie.Pathologie.LymphknotenUntersucht",
+      "short" : "Lymphknoten untersucht",
+      "definition" : "Anzahl untersuchter LK",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.6 Zahl untersuchter Lymphknoten"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:LKUNTERSUCHT"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "LK_Untersucht"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.LymphknotenBefallen",
+      "path" : "LogicalModelSenologie.Pathologie.LymphknotenBefallen",
+      "short" : "Lymphknoten befallen",
+      "definition" : "Anzahl befallener LK",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.7 Zahl befallener Lymphknoten"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:LKBEFALLEN"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "LK_Befallen"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.SentinelUntersucht",
+      "path" : "LogicalModelSenologie.Pathologie.SentinelUntersucht",
+      "short" : "Sentinel-LK untersucht",
+      "definition" : "Anzahl untersuchter Sentinel-LK",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.8 Zahl untersuchter Sentinel-Lymphknoten"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:SLKUNTERSUCHT"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "SLK_Untersucht"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.SentinelBefallen",
+      "path" : "LogicalModelSenologie.Pathologie.SentinelBefallen",
+      "short" : "Sentinel-LK befallen",
+      "definition" : "Anzahl befallener Sentinel-LK",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "6.9 Zahl befallener Sentinel-Lymphknoten"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:SLKBEFALLEN"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "SLK_Befallen"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.LKRatioText",
+      "path" : "LogicalModelSenologie.Pathologie.LKRatioText",
+      "short" : "LK-Ratio (+LK/LK insg)",
+      "definition" : "Verhältnis befallene/untersuchte LK",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.CPSEGScore",
+      "path" : "LogicalModelSenologie.Pathologie.CPSEGScore",
+      "short" : "CPS-EG-Score",
+      "definition" : "CPS-EG Score (MD Anderson)",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.AbsoluterChemoNutzen",
+      "path" : "LogicalModelSenologie.Pathologie.AbsoluterChemoNutzen",
+      "short" : "Absoluter Chemotherapie-Nutzen",
+      "definition" : "Prognostischer Nutzen einer Chemotherapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Befundtext",
+      "path" : "LogicalModelSenologie.Pathologie.Befundtext",
+      "short" : "Befundtext",
+      "definition" : "Gesamtbeurteilung des Pathologen",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Pathologie.Sonstiges",
+      "path" : "LogicalModelSenologie.Pathologie.Sonstiges",
+      "short" : "Sonstiges",
+      "definition" : "Sonstige Befundaspekte",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Genetik",
+      "path" : "LogicalModelSenologie.Genetik",
+      "short" : "Genetische Diagnostik",
+      "definition" : "Genetische Diagnostik",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Genetik.SomatischeMutation",
+      "path" : "LogicalModelSenologie.Genetik.SomatischeMutation",
+      "short" : "Somatische Mutation",
+      "definition" : "Tumorgewebemutation",
       "min" : 0,
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Somatische_Mutation (Observation)"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie.Operation",
-      "path" : "LogicalModelSenologie.Therapie.Operation",
-      "short" : "Operation",
-      "definition" : "Operation",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "BackboneElement"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Operation.Art",
-      "path" : "LogicalModelSenologie.Therapie.Operation.Art",
-      "short" : "Art der Operation",
-      "definition" : "Art der Operation",
+      "id" : "LogicalModelSenologie.Genetik.SomatischeMutation.Gen",
+      "path" : "LogicalModelSenologie.Genetik.SomatischeMutation.Gen",
+      "short" : "Gen",
+      "definition" : "BRCA1, BRCA2, PALB2 etc.",
       "min" : 1,
       "max" : "1",
       "type" : [{
@@ -543,21 +2163,10 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie.Operation.Datum",
-      "path" : "LogicalModelSenologie.Therapie.Operation.Datum",
-      "short" : "Datum der Operation",
-      "definition" : "Datum der Operation",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "date"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Operation.Lokalisation",
-      "path" : "LogicalModelSenologie.Therapie.Operation.Lokalisation",
-      "short" : "Lokalisation",
-      "definition" : "Lokalisation der Operation",
+      "id" : "LogicalModelSenologie.Genetik.SomatischeMutation.Ergebnis",
+      "path" : "LogicalModelSenologie.Genetik.SomatischeMutation.Ergebnis",
+      "short" : "Ergebnis",
+      "definition" : "Mutation/Wildtyp/nicht bestimmbar",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -565,32 +2174,47 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie.Operation.Intention",
-      "path" : "LogicalModelSenologie.Therapie.Operation.Intention",
-      "short" : "Intention",
-      "definition" : "Intent der Operation",
+      "id" : "LogicalModelSenologie.Genetik.Genexpressionstest",
+      "path" : "LogicalModelSenologie.Genetik.Genexpressionstest",
+      "short" : "Genexpressionstest",
+      "definition" : "Oncotype DX, MammaPrint, Prosigna, EndoPredict",
       "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie",
-      "short" : "Systemische Therapie",
-      "definition" : "Systemische Therapie",
-      "min" : 0,
-      "max" : "1",
+      "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Genexpressionstest (Observation) + Senologie_Genexpressions_Score"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Intention",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Intention",
-      "short" : "Intention",
-      "definition" : "Intention der systemischen Therapie",
+      "id" : "LogicalModelSenologie.Genetik.Genexpressionstest.Testmethode",
+      "path" : "LogicalModelSenologie.Genetik.Genexpressionstest.Testmethode",
+      "short" : "Testmethode",
+      "definition" : "Art des Genexpressionstests",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Genetik.Genexpressionstest.Score",
+      "path" : "LogicalModelSenologie.Genetik.Genexpressionstest.Score",
+      "short" : "Score",
+      "definition" : "Numerischer Score-Wert",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Genetik.Genexpressionstest.Risikoklasse",
+      "path" : "LogicalModelSenologie.Genetik.Genexpressionstest.Risikoklasse",
+      "short" : "Risikoklasse",
+      "definition" : "Niedrig/mittel/hoch",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -598,168 +2222,1050 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Startdatum",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Startdatum",
-      "short" : "Startdatum",
-      "definition" : "Startdatum der systemischen Therapie",
+      "id" : "LogicalModelSenologie.Genetik.Genexpressionstest.Fernrezidivrisiko",
+      "path" : "LogicalModelSenologie.Genetik.Genexpressionstest.Fernrezidivrisiko",
+      "short" : "Fernrezidivrisiko",
+      "definition" : "Rezidivrisiko in Prozent",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "date"
+        "code" : "decimal"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Enddatum",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Enddatum",
-      "short" : "Enddatum",
-      "definition" : "Enddatum der systemischen Therapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "date"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Dosis",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Dosis",
-      "short" : "Dosis",
-      "definition" : "Dosis der systemischen Therapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Einheit",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Einheit",
-      "short" : "Einheit",
-      "definition" : "Einheit der systemischen Therapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Substanz",
-      "path" : "LogicalModelSenologie.Therapie.SystemischeTherapie.Substanz",
-      "short" : "Substanz",
-      "definition" : "Substanz der systemischen Therapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Strahlentherapie",
-      "path" : "LogicalModelSenologie.Therapie.Strahlentherapie",
-      "short" : "Strahlentherapie",
-      "definition" : "Strahlentherapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "BackboneElement"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Strahlentherapie.Intention",
-      "path" : "LogicalModelSenologie.Therapie.Strahlentherapie.Intention",
-      "short" : "Intention",
-      "definition" : "Intention der Strahlentherapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Strahlentherapie.Startdatum",
-      "path" : "LogicalModelSenologie.Therapie.Strahlentherapie.Startdatum",
-      "short" : "Startdatum",
-      "definition" : "Startdatum der Strahlentherapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "date"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Strahlentherapie.Enddatum",
-      "path" : "LogicalModelSenologie.Therapie.Strahlentherapie.Enddatum",
-      "short" : "Enddatum",
-      "definition" : "Enddatum der Strahlentherapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "date"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Strahlentherapie.Dosis",
-      "path" : "LogicalModelSenologie.Therapie.Strahlentherapie.Dosis",
-      "short" : "Dosis",
-      "definition" : "Dosis der Strahlentherapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.Therapie.Strahlentherapie.Einheit",
-      "path" : "LogicalModelSenologie.Therapie.Strahlentherapie.Einheit",
-      "short" : "Einheit",
-      "definition" : "Einheit der Strahlentherapie",
-      "min" : 0,
-      "max" : "1",
-      "type" : [{
-        "code" : "CodeableConcept"
-      }]
-    },
-    {
-      "id" : "LogicalModelSenologie.OperationsPlanung",
-      "path" : "LogicalModelSenologie.OperationsPlanung",
+      "id" : "LogicalModelSenologie.Operationsplanung",
+      "path" : "LogicalModelSenologie.Operationsplanung",
       "short" : "Operationsplanung",
       "definition" : "Operationsplanung",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_OP_Planung (ServiceRequest)"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.OperationsPlanung.Operationsdatum",
-      "path" : "LogicalModelSenologie.OperationsPlanung.Operationsdatum",
-      "short" : "Operationsdatum",
-      "definition" : "Datum der geplanten Operation",
+      "id" : "LogicalModelSenologie.Operationsplanung.GeplanteOP",
+      "path" : "LogicalModelSenologie.Operationsplanung.GeplanteOP",
+      "short" : "Geplante OP",
+      "definition" : "Art der geplanten Operation",
       "min" : 0,
       "max" : "1",
       "type" : [{
-        "code" : "date"
+        "code" : "CodeableConcept"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.WeitereTermine",
-      "path" : "LogicalModelSenologie.WeitereTermine",
-      "short" : "Weitere Termine",
-      "definition" : "Weitere Termine",
+      "id" : "LogicalModelSenologie.Operationsplanung.Seite",
+      "path" : "LogicalModelSenologie.Operationsplanung.Seite",
+      "short" : "Seite",
+      "definition" : "Geplante Lateralität",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operationsplanung.Operateur",
+      "path" : "LogicalModelSenologie.Operationsplanung.Operateur",
+      "short" : "Geplanter Operateur",
+      "definition" : "Geplanter Operateur",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operationsplanung.OPDauer",
+      "path" : "LogicalModelSenologie.Operationsplanung.OPDauer",
+      "short" : "Geplante OP-Dauer",
+      "definition" : "Dauer in Minuten",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operationsplanung.PraeoperativeMarkierung",
+      "path" : "LogicalModelSenologie.Operationsplanung.PraeoperativeMarkierung",
+      "short" : "Präoperative Markierung",
+      "definition" : "Magnetclip, Draht, Tusche etc.",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "BRUST:DRAHT",
+        "comment" : "Präoperative Markierung (M/S/T/N)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operationsplanung.PraeoperativeBlutabnahme",
+      "path" : "LogicalModelSenologie.Operationsplanung.PraeoperativeBlutabnahme",
+      "short" : "Präoperative Blutabnahme",
+      "definition" : "Geplant ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operationsplanung.PraeoperativeAntibiotikatherapie",
+      "path" : "LogicalModelSenologie.Operationsplanung.PraeoperativeAntibiotikatherapie",
+      "short" : "Präoperative Antibiotikatherapie",
+      "definition" : "Geplant ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operationsplanung.OPLagerung",
+      "path" : "LogicalModelSenologie.Operationsplanung.OPLagerung",
+      "short" : "OP-Lagerung",
+      "definition" : "Tischanordnung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation",
+      "path" : "LogicalModelSenologie.Operation",
+      "short" : "Operation",
+      "definition" : "Operation",
       "min" : 0,
       "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "8 OP"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "primaerfall.operation"
+      },
+      {
+        "identity" : "IRegG",
+        "map" : "fall.operation"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_BrustOP (Procedure)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Art",
+      "path" : "LogicalModelSenologie.Operation.Art",
+      "short" : "Art der Operation",
+      "definition" : "OPS- und SNOMED-codiert",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "8.3 OPS-Schlüssel"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:OPSCHLUESSEL / O:OPART"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Op_Art"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Datum",
+      "path" : "LogicalModelSenologie.Operation.Datum",
+      "short" : "Operationsdatum",
+      "definition" : "Datum der Operation",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "8.4 OP-Datum"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:OPDATUM"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Op_Datum"
+      },
+      {
+        "identity" : "IRegG",
+        "map" : "OPE_Datum"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Seite",
+      "path" : "LogicalModelSenologie.Operation.Seite",
+      "short" : "Seite",
+      "definition" : "Lateralität",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "O:SEITE"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Op_Seite"
+      },
+      {
+        "identity" : "IRegG",
+        "map" : "OPE_SeitenLokalisationSchluessel"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Intention",
+      "path" : "LogicalModelSenologie.Operation.Intention",
+      "short" : "Intention",
+      "definition" : "Diagnostisch/therapeutisch",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "8.5 Intention OP"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Erstoperateur",
+      "path" : "LogicalModelSenologie.Operation.Erstoperateur",
+      "short" : "Erstoperateur",
+      "definition" : "Erstoperateur",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Reference"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Zweitoperateur",
+      "path" : "LogicalModelSenologie.Operation.Zweitoperateur",
+      "short" : "Zweitoperateur",
+      "definition" : "Zweitoperateur",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Reference"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.PraeoperativeMarkierung",
+      "path" : "LogicalModelSenologie.Operation.PraeoperativeMarkierung",
+      "short" : "Präoperative Markierung",
+      "definition" : "Art der Markierung",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.IntraoperativesImaging",
+      "path" : "LogicalModelSenologie.Operation.IntraoperativesImaging",
+      "short" : "Intraoperatives Imaging",
+      "definition" : "Präparateradiografie etc.",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Outcome",
+      "path" : "LogicalModelSenologie.Operation.Outcome",
+      "short" : "Outcome",
+      "definition" : "Ergebnis der Operation",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen",
+      "path" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen",
+      "short" : "Postoperative Anordnungen",
+      "definition" : "Follow-up-Maßnahmen",
+      "min" : 0,
+      "max" : "1",
       "type" : [{
         "code" : "BackboneElement"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.WeitereTermine.Termin",
-      "path" : "LogicalModelSenologie.WeitereTermine.Termin",
-      "short" : "Termin",
-      "definition" : "Datum des Termins",
+      "id" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Drainage",
+      "path" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Drainage",
+      "short" : "Drainage",
+      "definition" : "Art der Drainage",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Verband",
+      "path" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Verband",
+      "short" : "Verband",
+      "definition" : "Art des Verbandes",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Antibiotika",
+      "path" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Antibiotika",
+      "short" : "Antibiotika",
+      "definition" : "Postoperative Antibiotika",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Mobilisation",
+      "path" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Mobilisation",
+      "short" : "Mobilisation",
+      "definition" : "Mobilisationsplan",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Laborkontrolle",
+      "path" : "LogicalModelSenologie.Operation.PostoperativeAnordnungen.Laborkontrolle",
+      "short" : "Laborkontrolle",
+      "definition" : "Geplante Laborkontrollen",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Komplikation",
+      "path" : "LogicalModelSenologie.Operation.Komplikation",
+      "short" : "Operative Komplikation",
+      "definition" : "Clavien-Dindo-klassifiziert",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "8.6 Komplikation(en)"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "O:KOMPL"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Op_Komplikation"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Operative_Komplikation (Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Komplikation.ClavienDindo",
+      "path" : "LogicalModelSenologie.Operation.Komplikation.ClavienDindo",
+      "short" : "Clavien-Dindo Grad",
+      "definition" : "Grad I–V",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Komplikation.Art",
+      "path" : "LogicalModelSenologie.Operation.Komplikation.Art",
+      "short" : "Art der Komplikation",
+      "definition" : "SNOMED-kodierte Komplikationsart",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Komplikation.Zeitpunkt",
+      "path" : "LogicalModelSenologie.Operation.Komplikation.Zeitpunkt",
+      "short" : "Zeitpunkt",
+      "definition" : "Intraoperativ/postoperativ/stationär/ambulant",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Komplikation.Konsequenz",
+      "path" : "LogicalModelSenologie.Operation.Komplikation.Konsequenz",
+      "short" : "Konsequenz",
+      "definition" : "Folgen der Komplikation",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Implantat",
+      "path" : "LogicalModelSenologie.Operation.Implantat",
+      "short" : "Implantat",
+      "definition" : "Brustimplantat",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "IRegG",
+        "map" : "operation.artikelidentifikation"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Brustimplantat (DeviceUseStatement)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Implantat.Art",
+      "path" : "LogicalModelSenologie.Operation.Implantat.Art",
+      "short" : "Art",
+      "definition" : "Art des Implantats",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "IRegG",
+        "map" : "ABI_ArtikelTypSchluessel"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Implantat.Hersteller",
+      "path" : "LogicalModelSenologie.Operation.Implantat.Hersteller",
+      "short" : "Hersteller",
+      "definition" : "Hersteller des Implantats",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }],
+      "mapping" : [{
+        "identity" : "IRegG",
+        "map" : "ABI_HerstellerSchluessel"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Implantat.REFNummer",
+      "path" : "LogicalModelSenologie.Operation.Implantat.REFNummer",
+      "short" : "REF-Nummer",
+      "definition" : "Referenznummer",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }],
+      "mapping" : [{
+        "identity" : "IRegG",
+        "map" : "ARI_Artikelkennzeichen"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Operation.Implantat.Seriennummer",
+      "path" : "LogicalModelSenologie.Operation.Implantat.Seriennummer",
+      "short" : "Seriennummer",
+      "definition" : "Seriennummer",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }],
+      "mapping" : [{
+        "identity" : "IRegG",
+        "map" : "ARB_SerienNummer"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie",
+      "path" : "LogicalModelSenologie.SystemischeTherapie",
+      "short" : "Systemische Therapie",
+      "definition" : "Systemische Therapie",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "9 Systemische Therapie"
+      },
+      {
+        "identity" : "IQTIG",
+        "map" : "BRUST:NEOADJ",
+        "comment" : "Neoadjuvante Therapie"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "primaerfall.systemtherapie"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Systemtherapie_Procedure (Procedure)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Intention",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Intention",
+      "short" : "Intention",
+      "definition" : "Neoadjuvant, adjuvant, palliativ",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "9.1 Intention"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Syst_Stellung"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Therapielinie",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Therapielinie",
+      "short" : "Therapielinie",
+      "definition" : "1., 2., 3. Linie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.FirstLineMetastasiert",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.FirstLineMetastasiert",
+      "short" : "First-Line bei Metastasierung",
+      "definition" : "Erste Linie bei metastasierter Erkrankung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Startdatum",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Startdatum",
+      "short" : "Startdatum",
+      "definition" : "Beginn der Therapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "9.3 Beginn"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Syst_Beginn"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Enddatum",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Enddatum",
+      "short" : "Enddatum",
+      "definition" : "Ende der Therapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "9.4 Ende"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Syst_Ende"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Protokoll",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Protokoll",
+      "short" : "Therapieprotokoll",
+      "definition" : "Protokollname",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "9.2 Therapieschema"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Syst_Protokoll"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Outcome",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Outcome",
+      "short" : "Outcome",
+      "definition" : "Abgeschlossen/abgebrochen",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Medikation",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Medikation",
+      "short" : "Medikation",
+      "definition" : "Einzelne Substanz/Gabe",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Systemtherapie_Durchfuehrung (MedicationAdministration)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Substanz",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Substanz",
+      "short" : "Substanz",
+      "definition" : "SNOMED-codierte Substanz",
       "min" : 1,
       "max" : "1",
       "type" : [{
-        "code" : "date"
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "9.5 Substanz"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Zyklus",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Zyklus",
+      "short" : "Zyklus",
+      "definition" : "Therapiezyklus-Nummer",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Medikation.TagImZyklus",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Medikation.TagImZyklus",
+      "short" : "Tag im Zyklus",
+      "definition" : "Tag innerhalb des Zyklus",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Dosis",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Dosis",
+      "short" : "Dosis",
+      "definition" : "Verabreichte Dosis",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Datum",
+      "path" : "LogicalModelSenologie.SystemischeTherapie.Medikation.Datum",
+      "short" : "Datum der Gabe",
+      "definition" : "Zeitpunkt der Medikamentengabe",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GeplanteSystemtherapie",
+      "path" : "LogicalModelSenologie.GeplanteSystemtherapie",
+      "short" : "Geplante Systemtherapie",
+      "definition" : "Geplante Systemtherapie",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Geplante_Systemtherapie (MedicationRequest)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GeplanteSystemtherapie.Substanz",
+      "path" : "LogicalModelSenologie.GeplanteSystemtherapie.Substanz",
+      "short" : "Substanz",
+      "definition" : "Geplantes Medikament",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GeplanteSystemtherapie.Intention",
+      "path" : "LogicalModelSenologie.GeplanteSystemtherapie.Intention",
+      "short" : "Intention",
+      "definition" : "Neoadjuvant/adjuvant/palliativ",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GeplanteSystemtherapie.Therapielinie",
+      "path" : "LogicalModelSenologie.GeplanteSystemtherapie.Therapielinie",
+      "short" : "Therapielinie",
+      "definition" : "Geplante Therapielinie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GeplanteSystemtherapie.Protokoll",
+      "path" : "LogicalModelSenologie.GeplanteSystemtherapie.Protokoll",
+      "short" : "Therapieprotokoll",
+      "definition" : "Geplantes Protokoll",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.GeplanteSystemtherapie.GeplanteDosisDatum",
+      "path" : "LogicalModelSenologie.GeplanteSystemtherapie.GeplanteDosisDatum",
+      "short" : "Geplante Dosis",
+      "definition" : "Geplante Dosierung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie",
+      "path" : "LogicalModelSenologie.Strahlentherapie",
+      "short" : "Strahlentherapie",
+      "definition" : "Strahlentherapie",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "10 Strahlentherapie"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "primaerfall.strahlentherapie"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Strahlentherapie (Procedure)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.Intention",
+      "path" : "LogicalModelSenologie.Strahlentherapie.Intention",
+      "short" : "Intention",
+      "definition" : "Adjuvant, neoadjuvant, palliativ",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "10.1 Intention"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.Startdatum",
+      "path" : "LogicalModelSenologie.Strahlentherapie.Startdatum",
+      "short" : "Startdatum",
+      "definition" : "Beginn der Bestrahlung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "10.2 Beginn"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "RT_Beginn"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.Enddatum",
+      "path" : "LogicalModelSenologie.Strahlentherapie.Enddatum",
+      "short" : "Enddatum",
+      "definition" : "Ende der Bestrahlung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "10.3 Ende"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "RT_Ende"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.Bestrahlungsregion",
+      "path" : "LogicalModelSenologie.Strahlentherapie.Bestrahlungsregion",
+      "short" : "Bestrahlungsregion",
+      "definition" : "Zielgebiet der Bestrahlung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "10.4 Zielgebiet"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "RT_Zielgebiet"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.Gesamtdosis",
+      "path" : "LogicalModelSenologie.Strahlentherapie.Gesamtdosis",
+      "short" : "Gesamtdosis",
+      "definition" : "Gesamtdosis in Gy",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "RT_Dosis_Gy"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.Einzeldosis",
+      "path" : "LogicalModelSenologie.Strahlentherapie.Einzeldosis",
+      "short" : "Einzeldosis",
+      "definition" : "Dosis pro Fraktion in Gy",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.AnzahlFraktionen",
+      "path" : "LogicalModelSenologie.Strahlentherapie.AnzahlFraktionen",
+      "short" : "Anzahl Fraktionen",
+      "definition" : "Anzahl der Bestrahlungssitzungen",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "integer"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Strahlentherapie.SimultaneRadiochemotherapie",
+      "path" : "LogicalModelSenologie.Strahlentherapie.SimultaneRadiochemotherapie",
+      "short" : "Simultane Radiochemotherapie",
+      "definition" : "Gleichzeitige Chemotherapie ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Nebenwirkung",
+      "path" : "LogicalModelSenologie.Nebenwirkung",
+      "short" : "Nebenwirkung",
+      "definition" : "Nebenwirkung",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Nebenwirkung (AdverseEvent)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Nebenwirkung.Ereignis",
+      "path" : "LogicalModelSenologie.Nebenwirkung.Ereignis",
+      "short" : "Ereignis",
+      "definition" : "MedDRA-kodiertes Ereignis",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Nebenwirkung.CTCAEGrad",
+      "path" : "LogicalModelSenologie.Nebenwirkung.CTCAEGrad",
+      "short" : "CTCAE-Grad",
+      "definition" : "Schweregrad 1–5",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Nebenwirkung.Datum",
+      "path" : "LogicalModelSenologie.Nebenwirkung.Datum",
+      "short" : "Datum",
+      "definition" : "Zeitpunkt des Ereignisses",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Nebenwirkung.VerursachendeTherapie",
+      "path" : "LogicalModelSenologie.Nebenwirkung.VerursachendeTherapie",
+      "short" : "Verursachende Therapie",
+      "definition" : "Bezug zur Systemtherapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Reference"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Begleitmedikation",
+      "path" : "LogicalModelSenologie.Begleitmedikation",
+      "short" : "Begleitmedikation",
+      "definition" : "Begleitmedikation",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Begleitmedikation (MedicationStatement)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Begleitmedikation.Medikament",
+      "path" : "LogicalModelSenologie.Begleitmedikation.Medikament",
+      "short" : "Medikament",
+      "definition" : "SNOMED-kodiertes Medikament",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Begleitmedikation.Einnahmezeitraum",
+      "path" : "LogicalModelSenologie.Begleitmedikation.Einnahmezeitraum",
+      "short" : "Einnahmezeitraum",
+      "definition" : "Start- und Enddatum",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Period"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Begleitmedikation.Dosierschema",
+      "path" : "LogicalModelSenologie.Begleitmedikation.Dosierschema",
+      "short" : "Dosierschema",
+      "definition" : "Freitext-Dosierung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Begleitmedikation.Dosis",
+      "path" : "LogicalModelSenologie.Begleitmedikation.Dosis",
+      "short" : "Dosis",
+      "definition" : "Dosierung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Quantity"
       }]
     },
     {
@@ -771,6 +3277,19 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "IQTIG",
+        "map" : "BRUST:TKPRAEOP",
+        "comment" : "Prätherapeutische Tumorkonferenz"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "primaerfall.tumorkonferenz"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Tumorboard_Empfehlung (CarePlan / ServiceRequest)"
       }]
     },
     {
@@ -782,22 +3301,26 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "1",
       "type" : [{
         "code" : "date"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "TK_Datum"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.Ort",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.Ort",
-      "short" : "Ort",
-      "definition" : "Ort der Tumorkonferenz",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Fachdisziplinen",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Fachdisziplinen",
+      "short" : "Fachdisziplinen",
+      "definition" : "Teilnehmende Fachdisziplinen",
       "min" : 0,
-      "max" : "1",
+      "max" : "*",
       "type" : [{
         "code" : "CodeableConcept"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung",
       "short" : "Empfehlung",
       "definition" : "Empfehlung der Tumorkonferenz",
       "min" : 0,
@@ -807,10 +3330,10 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.EmpfehlungText",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.EmpfehlungText",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.EmpfehlungText",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.EmpfehlungText",
       "short" : "Empfehlungstext",
-      "definition" : "Text der Empfehlung der Tumorkonferenz",
+      "definition" : "Freitext-Empfehlung",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -818,58 +3341,335 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.Therapieempfehlung",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.Therapieempfehlung",
-      "short" : "Therapieempfehlung",
-      "definition" : "Therapieempfehlung der Tumorkonferenz",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.OperativeTherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.OperativeTherapie",
+      "short" : "Operative Therapie",
+      "definition" : "Empfohlene OP",
       "min" : 0,
-      "max" : "*",
+      "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.DiagnostischeEmpfehlung",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.DiagnostischeEmpfehlung",
-      "short" : "Diagnostische Empfehlung",
-      "definition" : "Diagnostische Empfehlung der Tumorkonferenz",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Chemotherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Chemotherapie",
+      "short" : "Chemotherapie",
+      "definition" : "Empfohlene Chemotherapie",
       "min" : 0,
-      "max" : "*",
+      "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.Studienempfehlung",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.Studienempfehlung",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Strahlentherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Strahlentherapie",
+      "short" : "Strahlentherapie",
+      "definition" : "Empfohlene Bestrahlung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.EndokrineTherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.EndokrineTherapie",
+      "short" : "Endokrine Therapie",
+      "definition" : "Empfohlene Hormontherapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.ZielgerichteteTherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.ZielgerichteteTherapie",
+      "short" : "Zielgerichtete Therapie",
+      "definition" : "Empfohlene Targeted Therapy",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Immuntherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Immuntherapie",
+      "short" : "Immuntherapie",
+      "definition" : "Empfohlene Immuntherapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.AntiresorptiveTherapie",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.AntiresorptiveTherapie",
+      "short" : "Antiresorptive Therapie",
+      "definition" : "Empfohlene Knochentherapie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.WeitereDiagnostik",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.WeitereDiagnostik",
+      "short" : "Weitere Diagnostik",
+      "definition" : "Empfohlene Diagnostik",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Studienempfehlung",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Studienempfehlung",
       "short" : "Studienempfehlung",
-      "definition" : "Studienempfehlung der Tumorkonferenz",
+      "definition" : "Empfohlene Studienteilnahme",
       "min" : 0,
-      "max" : "*",
+      "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.VorsorgeNachsorgeEmpfehlung",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.VorsorgeNachsorgeEmpfehlung",
-      "short" : "Vorsorge- und Nachsorgeempfehlung",
-      "definition" : "Vorsorge- und Nachsorgeempfehlung der Tumorkonferenz",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Genetik",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Genetik",
+      "short" : "Genetische Beratung",
+      "definition" : "Empfohlene genetische Abklärung",
       "min" : 0,
-      "max" : "*",
+      "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
       }]
     },
     {
-      "id" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.Wiedervorstellung",
-      "path" : "LogicalModelSenologie.Tumorkonferenz.EmpfehlungTumorkonferenz.Wiedervorstellung",
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Nachsorge",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Nachsorge",
+      "short" : "Nachsorge",
+      "definition" : "Empfohlene Nachsorge",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Wiedervorstellung",
+      "path" : "LogicalModelSenologie.Tumorkonferenz.Empfehlung.Wiedervorstellung",
       "short" : "Wiedervorstellung",
       "definition" : "Datum der Wiedervorstellung",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "date"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme",
+      "path" : "LogicalModelSenologie.Studienteilnahme",
+      "short" : "Studienteilnahme",
+      "definition" : "Studienteilnahme",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "primaerfall.studienteilnahme"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Studienteilnahme (ResearchSubject)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Studienname",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Studienname",
+      "short" : "Studienname",
+      "definition" : "Name der klinischen Studie",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.StudiennameCode",
+      "path" : "LogicalModelSenologie.Studienteilnahme.StudiennameCode",
+      "short" : "Studienname (kodiert)",
+      "definition" : "Kodierter Studienname",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Teilnahmestatus",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Teilnahmestatus",
+      "short" : "Teilnahmestatus",
+      "definition" : "Kandidat/Screening/On-Study/Withdrawn etc.",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Studienscreening",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Studienscreening",
+      "short" : "Screening durchgeführt",
+      "definition" : "Screening zur Studienteilnahme ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Screeningstatus",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Screeningstatus",
+      "short" : "Screeningstatus",
+      "definition" : "Ergebnis des Screenings",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Studienarm",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Studienarm",
+      "short" : "Studienarm",
+      "definition" : "Zugewiesener Studienarm",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Aufklaerungsdatum",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Aufklaerungsdatum",
+      "short" : "Aufklärungsdatum",
+      "definition" : "Datum der Aufklärung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "date"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Teilnahmezeitraum",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Teilnahmezeitraum",
+      "short" : "Teilnahmezeitraum",
+      "definition" : "Beginn und Ende der Teilnahme",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Period"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Studienteilnahme.Kontakt",
+      "path" : "LogicalModelSenologie.Studienteilnahme.Kontakt",
+      "short" : "Kontaktperson",
+      "definition" : "Kontaktperson für die Studie",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Psychoonkologie",
+      "path" : "LogicalModelSenologie.Psychoonkologie",
+      "short" : "Psychoonkologische Mitbetreuung",
+      "definition" : "Psychoonkologische Mitbetreuung",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "primaerfall.psychoonkologie"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Psychoonkologie (Encounter / Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Psychoonkologie.Stattgefunden",
+      "path" : "LogicalModelSenologie.Psychoonkologie.Stattgefunden",
+      "short" : "Stattgefunden",
+      "definition" : "Kontakt erfolgt ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Psychoonkologie.Datum",
+      "path" : "LogicalModelSenologie.Psychoonkologie.Datum",
+      "short" : "Datum",
+      "definition" : "Datum des ersten Kontakts",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Sozialdienst",
+      "path" : "LogicalModelSenologie.Sozialdienst",
+      "short" : "Sozialdienst-Kontakt",
+      "definition" : "Sozialdienst-Kontakt",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "OncoBox",
+        "map" : "primaerfall.sozialdienst"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Sozialdienst (Encounter / Observation)"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Sozialdienst.Stattgefunden",
+      "path" : "LogicalModelSenologie.Sozialdienst.Stattgefunden",
+      "short" : "Stattgefunden",
+      "definition" : "Kontakt erfolgt ja/nein",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "boolean"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Sozialdienst.Datum",
+      "path" : "LogicalModelSenologie.Sozialdienst.Datum",
+      "short" : "Datum",
+      "definition" : "Datum des Kontakts",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "dateTime"
       }]
     },
     {
@@ -881,6 +3681,18 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "*",
       "type" : [{
         "code" : "BackboneElement"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11 Verlauf"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "primaerfall.verlauf"
+      },
+      {
+        "identity" : "FHIRProfile",
+        "map" : "Senologie_Follow_Up (Observation)"
       }]
     },
     {
@@ -892,6 +3704,14 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "1",
       "type" : [{
         "code" : "date"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11.1 Meldedatum"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Meldedatum"
       }]
     },
     {
@@ -909,7 +3729,7 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "id" : "LogicalModelSenologie.Verlauf.NachsorgeArt",
       "path" : "LogicalModelSenologie.Verlauf.NachsorgeArt",
       "short" : "Art der Nachsorge",
-      "definition" : "Aktiv (Untersuchung) oder passiv (Akten/Register) (M03)",
+      "definition" : "Aktiv oder passiv (M03)",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -920,11 +3740,34 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "id" : "LogicalModelSenologie.Verlauf.Vitalstatus",
       "path" : "LogicalModelSenologie.Verlauf.Vitalstatus",
       "short" : "Vitalstatus",
-      "definition" : "Lebend, verstorben oder unbekannt (M04)",
+      "definition" : "Lebend, verstorben, unbekannt (M04)",
       "min" : 0,
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11.4 Vitalstatus"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Vitalstatus"
+      }]
+    },
+    {
+      "id" : "LogicalModelSenologie.Verlauf.Gesamtbeurteilung",
+      "path" : "LogicalModelSenologie.Verlauf.Gesamtbeurteilung",
+      "short" : "Gesamtbeurteilung",
+      "definition" : "CR, PR, SD, PD etc.",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11.5 Gesamtbeurteilung"
       }]
     },
     {
@@ -936,6 +3779,14 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11.6 Tumorstatus lokal"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Tumorstatus_Lokal"
       }]
     },
     {
@@ -947,6 +3798,14 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11.7 Tumorstatus Lymphknoten"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Tumorstatus_LK"
       }]
     },
     {
@@ -958,13 +3817,21 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "max" : "1",
       "type" : [{
         "code" : "CodeableConcept"
+      }],
+      "mapping" : [{
+        "identity" : "oBDS",
+        "map" : "11.8 Tumorstatus Fernmetastasen"
+      },
+      {
+        "identity" : "OncoBox",
+        "map" : "Tumorstatus_FM"
       }]
     },
     {
       "id" : "LogicalModelSenologie.Verlauf.Zweittumor",
       "path" : "LogicalModelSenologie.Verlauf.Zweittumor",
       "short" : "Zweittumor",
-      "definition" : "Zweittumor diagnostiziert ja/nein/unbekannt (M08)",
+      "definition" : "Zweittumor ja/nein/unbekannt (M08)",
       "min" : 0,
       "max" : "1",
       "type" : [{
@@ -975,7 +3842,7 @@ Other representations of profile: [CSV](StructureDefinition-LogicalModelSenologi
       "id" : "LogicalModelSenologie.Verlauf.ZweitttumorICD",
       "path" : "LogicalModelSenologie.Verlauf.ZweitttumorICD",
       "short" : "Zweittumor ICD-10-GM",
-      "definition" : "ICD-10-GM Diagnose des Zweittumors (M09)",
+      "definition" : "ICD-10-GM des Zweittumors (M09)",
       "min" : 0,
       "max" : "1",
       "type" : [{

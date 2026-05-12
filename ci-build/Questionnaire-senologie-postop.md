@@ -81,7 +81,7 @@ Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen,
   "status" : "draft",
   "experimental" : true,
   "subjectType" : ["Patient"],
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
@@ -96,21 +96,21 @@ Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen,
       "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
       "valueExpression" : {
         "language" : "application/x-fhir-query",
-        "expression" : "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+        "expression" : "Condition?patient={{%patient.id}}&clinical-status=active"
       }
     },
     {
       "extension" : [{
         "url" : "path",
-        "valueString" : "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
+        "valueString" : "code.coding.first().display"
       },
       {
         "url" : "label",
-        "valueString" : "ICD-10"
+        "valueString" : "Diagnose"
       },
       {
         "url" : "forDisplay",
-        "valueBoolean" : false
+        "valueBoolean" : true
       }],
       "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
     },

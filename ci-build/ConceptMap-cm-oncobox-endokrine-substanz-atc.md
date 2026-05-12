@@ -27,7 +27,7 @@ Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxi
   "title" : "OncoBox Endokrine Substanzklasse zu ATC",
   "status" : "draft",
   "experimental" : true,
-  "date" : "2026-05-12T08:39:42+00:00",
+  "date" : "2026-05-12T14:42:03+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "contact" : [{
     "name" : "Berlin Institute of Health at Charité (BIH)",
