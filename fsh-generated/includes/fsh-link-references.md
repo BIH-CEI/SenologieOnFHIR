@@ -32,10 +32,12 @@
 [Senologie_Bildgebung_Observation]: StructureDefinition-senologie-bildgebung-observation.html
 [Senologie_Bildgebung_Sonstige]: StructureDefinition-senologie-bildgebung-sonstige.html
 [Senologie_Checkliste_Erbliche_Belastung]: StructureDefinition-senologie-checkliste-erbliche-belastung.html
+[Senologie_ER_Status]: StructureDefinition-senologie-er-status.html
 [Senologie_Familienanamnese]: StructureDefinition-senologie-familienanamnese.html
 [Senologie_FollowUp]: StructureDefinition-senologie-follow-up.html
 [Senologie_Geplante_Systemtherapie]: StructureDefinition-senologie-geplante-systemtherapie.html
 [Senologie_Gynaekologische_Anamnese]: StructureDefinition-senologie-gynaekologische-anamnese.html
+[Senologie_HER2_Status]: StructureDefinition-senologie-her2-status.html
 [Senologie_Ki67_Proliferationsindex]: StructureDefinition-senologie-ki67-proliferationsindex.html
 [Senologie_Klinische_Untersuchung]: StructureDefinition-senologie-klinische-untersuchung.html
 [Senologie_Nebenwirkung]: StructureDefinition-senologie-nebenwirkung.html
@@ -44,6 +46,7 @@
 [Senologie_Pathologie_Befund]: StructureDefinition-senologie-pathologie-befund.html
 [Senologie_Pathologie_Praeparat]: StructureDefinition-senologie-pathologie-praeparat.html
 [Senologie_PDL1_Status]: StructureDefinition-senologie-pdl1-status.html
+[Senologie_PR_Status]: StructureDefinition-senologie-pr-status.html
 [Senologie_Psychoonkologie]: StructureDefinition-senologie-psychoonkologie.html
 [Senologie_Somatische_Mutation]: StructureDefinition-senologie-somatische-mutation.html
 [Senologie_Sozialdienst]: StructureDefinition-senologie-sozialdienst.html
@@ -62,6 +65,7 @@
 [CM-Senologie-Medikation-SCT-ASK]: ConceptMap-CM-Senologie-Medikation-SCT-ASK.html
 [CM-Senologie-Medikation-SCT-ATC]: ConceptMap-CM-Senologie-Medikation-SCT-ATC.html
 [CS_OncoBox_Primaerfallart]: CodeSystem-cs-oncobox-primaerfallart.html
+[CS_Senologie_Biomarker]: CodeSystem-cs-senologie-biomarker.html
 [CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
 [CS_Senologie_FollowUp]: CodeSystem-cs-senologie-follow-up.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html

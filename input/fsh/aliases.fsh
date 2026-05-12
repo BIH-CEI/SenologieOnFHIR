@@ -12,6 +12,16 @@ Alias: $MII_PR_Onko_Systemische_Therapie_Medikation = https://www.medizininforma
 Alias: $MII_PR_Onko_Nebenwirkung = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-nebenwirkung-adverse-event
 Alias: $MII_PR_Onko_Genetische_Variante = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-genetische-variante
 
+// --- Senologie Biomarker CS ---
+Alias: $CS_Senologie_Biomarker = https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker
+
+// --- MII Onkologie Mamma Biomarker (Rezeptorstatus) ---
+Alias: $MII_PR_Onko_Mamma_Rezeptorstatus_Estrogen = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-rezeptorstatus-estrogen
+Alias: $MII_PR_Onko_Mamma_Rezeptorstatus_Progesteron = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-rezeptorstatus-progesteron
+Alias: $MII_PR_Onko_Mamma_Her2neu_Status = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-her2neu-status
+Alias: $MII_VS_Onko_Mamma_Rezeptorstatus_Leitlinie = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-mamma-rezeptorstatus-leitlinie
+Alias: $MII_VS_Onko_Mamma_Her2neu_Status_Leitlinie = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-mamma-her2neu-status-leitlinie
+
 // --- MII Onkologie CodeSystems / ValueSets ---
 Alias: $MII_CS_Onko_Residualstatus = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus
 Alias: $MII_CS_Onko_Therapie_Ende_Grund = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-ende-grund

@@ -1,0 +1,141 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-pr-status",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status",
+  "version": "0.9.0",
+  "name": "Senologie_PR_Status",
+  "title": "BIH Senologie PR-Status",
+  "status": "draft",
+  "description": "Progesteronrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Progesteron (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS und Allred-Score als Senologie-Erweiterung.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "lm",
+      "uri": "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+      "name": "BIH LM Senologie",
+      "comment": "Logisches Modell der Senologie-Spezifikation"
+    },
+    {
+      "identity": "lm-element",
+      "uri": "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.PR",
+      "name": "LM-Element: Pathologie.BefundInvasiv.Biomarker.PR"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-rezeptorstatus-progesteron",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.value[x].coding:DefinitionLeitlinie",
+        "path": "Observation.value[x].coding",
+        "sliceName": "DefinitionLeitlinie",
+        "short": "Leitlinien-Klassifikation (positiv / gering-positiv / negativ) — empfohlen für PR-low-Analysen"
+      },
+      {
+        "id": "Observation.component:irsScore",
+        "path": "Observation.component",
+        "sliceName": "irsScore",
+        "short": "IRS (Remmele-Stegner, 0–12)",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Pathologie.BefundInvasiv.Biomarker.PR.IRSScore"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:irsScore.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "irs-score",
+              "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:irsScore.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:irsScore.value[x].value",
+        "path": "Observation.component.value[x].value",
+        "min": 1
+      },
+      {
+        "id": "Observation.component:irsScore.value[x].system",
+        "path": "Observation.component.value[x].system",
+        "patternUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.component:irsScore.value[x].code",
+        "path": "Observation.component.value[x].code",
+        "patternCode": "{score}"
+      },
+      {
+        "id": "Observation.component:allredScore",
+        "path": "Observation.component",
+        "sliceName": "allredScore",
+        "short": "Allred Score (0–8). LOINC 85339-0 als alternative Kodierung möglich.",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Pathologie.BefundInvasiv.Biomarker.PR.AllredScore"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:allredScore.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "allred-score",
+              "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:allredScore.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:allredScore.value[x].value",
+        "path": "Observation.component.value[x].value",
+        "min": 1
+      },
+      {
+        "id": "Observation.component:allredScore.value[x].system",
+        "path": "Observation.component.value[x].system",
+        "patternUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.component:allredScore.value[x].code",
+        "path": "Observation.component.value[x].code",
+        "patternCode": "{score}"
+      }
+    ]
+  }
+}

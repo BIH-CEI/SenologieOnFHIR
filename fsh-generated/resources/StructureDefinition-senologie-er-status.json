@@ -1,0 +1,143 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "senologie-er-status",
+  "url": "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status",
+  "version": "0.9.0",
+  "name": "Senologie_ER_Status",
+  "title": "BIH Senologie ER-Status",
+  "status": "draft",
+  "description": "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Estrogen (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS (Remmele-Stegner) und Allred-Score als Senologie-Erweiterung. Erlaubt ER-low-Analysen.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "lm",
+      "uri": "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+      "name": "BIH LM Senologie",
+      "comment": "Logisches Modell der Senologie-Spezifikation"
+    },
+    {
+      "identity": "lm-element",
+      "uri": "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.ER",
+      "name": "LM-Element: Pathologie.BefundInvasiv.Biomarker.ER"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-mamma-rezeptorstatus-estrogen",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.value[x].coding:DefinitionLeitlinie",
+        "path": "Observation.value[x].coding",
+        "sliceName": "DefinitionLeitlinie",
+        "short": "Leitlinien-Klassifikation (positiv / gering-positiv / negativ) — empfohlen für ER-low-Analysen"
+      },
+      {
+        "id": "Observation.component:irsScore",
+        "path": "Observation.component",
+        "sliceName": "irsScore",
+        "short": "IRS (Remmele-Stegner, 0–12)",
+        "comment": "Immunreaktiver Score nach Remmele-Stegner (DE-Standard). Produkt aus Prozentscore (0–4) und Intensitätsscore (0–3).",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Pathologie.BefundInvasiv.Biomarker.ER.IRSScore"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:irsScore.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "irs-score",
+              "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:irsScore.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:irsScore.value[x].value",
+        "path": "Observation.component.value[x].value",
+        "min": 1
+      },
+      {
+        "id": "Observation.component:irsScore.value[x].system",
+        "path": "Observation.component.value[x].system",
+        "patternUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.component:irsScore.value[x].code",
+        "path": "Observation.component.value[x].code",
+        "patternCode": "{score}"
+      },
+      {
+        "id": "Observation.component:allredScore",
+        "path": "Observation.component",
+        "sliceName": "allredScore",
+        "short": "Allred Score (0–8)",
+        "comment": "Allred Score (international). Summe aus Proportion (0–5) und Intensity (0–3). LOINC 85337-4 als alternative Kodierung möglich.",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true,
+        "mapping": [
+          {
+            "identity": "lm",
+            "map": "Pathologie.BefundInvasiv.Biomarker.ER.AllredScore"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:allredScore.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "allred-score",
+              "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:allredScore.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:allredScore.value[x].value",
+        "path": "Observation.component.value[x].value",
+        "min": 1
+      },
+      {
+        "id": "Observation.component:allredScore.value[x].system",
+        "path": "Observation.component.value[x].system",
+        "patternUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.component:allredScore.value[x].code",
+        "path": "Observation.component.value[x].code",
+        "patternCode": "{score}"
+      }
+    ]
+  }
+}
