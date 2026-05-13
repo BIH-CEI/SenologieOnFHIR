@@ -349,6 +349,8 @@
 [MinimalMeasureLib]: Library-MinimalMeasureLib.html
 [OncoBoxBrustKennzahlen]: Library-OncoBoxBrustKennzahlen.html
 [QualitaetsindikatorenLeitlinie]: Library-QualitaetsindikatorenLeitlinie.html
+[cm-loinc-rezeptorstatus-to-obds]: ConceptMap-cm-loinc-rezeptorstatus-to-obds.html
+[cm-her2-leitlinie-to-obds]: ConceptMap-cm-her2-leitlinie-to-obds.html
 [cm-oncobox-verlauf-gesamtbeurteilung-ereignis]: ConceptMap-cm-oncobox-verlauf-gesamtbeurteilung-ereignis.html
 [OBDSMeldung]: StructureDefinition-obds-meldung.html
 [OncoBoxBrustMeldung]: StructureDefinition-oncobox-brust-meldung.html
