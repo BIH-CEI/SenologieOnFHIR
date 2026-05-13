@@ -83,6 +83,19 @@ for f in "$REPO_ROOT/input/data/iregg-schema-v4.1.1/Beispiele"/*.xml; do
 done
 
 echo
+echo "── OncoBox Brust ──────────────────────────────────────"
+ONCOBOX_FIELDS="$REPO_ROOT/validation/extractions/oncobox-fields.json"
+if [ -f "$ONCOBOX_FIELDS" ]; then
+  cnt=$(python3 -c "import json; print(json.load(open('$ONCOBOX_FIELDS'))['field_count'])")
+  echo "  ⊘ kein offizielles XSD/JSON-Schema verfuegbar — Coverage-Referenz:"
+  echo "    $cnt erwartete XML-Felder in oncobox-fields.json (aus Excel-Spec extrahiert)"
+  skip=$((skip + 1))
+else
+  echo "  ⊘ oncobox-fields.json nicht gefunden; python3 scripts/extractions/extract-oncobox-fields.py"
+  skip=$((skip + 1))
+fi
+
+echo
 echo "── IQTIG XSD (QS-Basisspezifikation 2026 V06) ─────────"
 IQTIG_DIR="$REPO_ROOT/input/data/iqtig-schema"
 # LE-Schema (interface_LE/2026_lqs_iv_1.0_Export.xsd) ist das Wurzel-Schema
