@@ -3,89 +3,325 @@
   "id": "senologie-klinische-untersuchung",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung",
   "title": "Fragebogen: Klinische Untersuchung Mamma",
-  "description": "Fragebogen zur strukturierten Dokumentation der klinischen Brustuntersuchung. Nutzt SDC Template-based Extraction mit dem Senologie_Klinische_Untersuchung-Profil (Observation) als Ziel. Das Extraction-Template liegt unter input/resources/Questionnaire-senologie-klinische-untersuchung-template.json.",
+  "description": "Klinische Inspektion, Palpation und klinisches TNM-Staging der Senologie. Bewusst ohne Sonographie/Bildgebung (→ Bildgebung-Form) und Biopsie-Doku (→ Pathologie-Form).",
   "subjectType": [
     "Patient"
   ],
   "contained": [
     {
       "resourceType": "Observation",
-      "id": "observation-template",
+      "id": "klin-unt-obs-template",
       "meta": {
         "profile": [
           "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
         ]
       },
+      "category": [
+        {
+          "coding": [
+            {
+              "code": "exam",
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+            }
+          ]
+        }
+      ],
       "subject": {
         "_reference": {
           "extension": [
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-              "valueString": "'Patient/' + %patient.id"
+              "valueString": "%resource.subject.reference"
             }
           ]
         }
       },
       "focus": [
         {
-          "reference": "placeholder",
           "_reference": {
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+                "valueString": "%diagnosis.reference"
               }
             ]
           }
         }
       ],
-      "bodySite": {
-        "coding": [
-          {
-            "_code": {
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "item.where(linkId='seitenlokalisation').answer.valueCoding.code"
-                }
-              ]
-            },
-            "_system": {
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "item.where(linkId='seitenlokalisation').answer.valueCoding.system"
-                }
-              ]
-            },
-            "_display": {
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "item.where(linkId='seitenlokalisation').answer.valueCoding.display"
-                }
-              ]
-            }
-          }
-        ]
-      },
       "component": [
         {
           "code": {
             "coding": [
               {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "24028007",
+                          "system": "http://snomed.info/sct",
+                          "display": "Right"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "76752008",
+                "system": "http://snomed.info/sct",
+                "display": "Breast structure"
+              }
+            ]
+          },
+          "_valueBoolean": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "iif(%resource.item.where(linkId='inspektion').item.where(linkId='inspektion-mamma-rechts-vorhanden').answer.valueBoolean.exists(), %resource.item.where(linkId='inspektion').item.where(linkId='inspektion-mamma-rechts-vorhanden').answer.valueBoolean, true)"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "24028007",
+                          "system": "http://snomed.info/sct",
+                          "display": "Right"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "225289005",
+                "system": "http://snomed.info/sct",
+                "display": "Examination of breast"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "iif(%resource.item.where(linkId='inspektion').item.where(linkId='inspektion-mamma-rechts').answer.valueCoding.code = 'auffaellig', '263654008', '17621005')"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "7771000",
+                          "system": "http://snomed.info/sct",
+                          "display": "Left"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "225289005",
+                "system": "http://snomed.info/sct",
+                "display": "Examination of breast"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "iif(%resource.item.where(linkId='inspektion').item.where(linkId='inspektion-mamma-links').answer.valueCoding.code = 'auffaellig', '263654008', '17621005')"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='inspektion').item.where(linkId='symmetrie').answer.valueCoding"
+                  }
+                ],
+                "system": "http://snomed.info/sct"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "366348007",
+                "system": "http://snomed.info/sct",
+                "display": "Finding of symmetry of breasts"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='inspektion').item.where(linkId='asymmetrisch-zugunsten').answer.valueCoding"
+                  }
+                ],
+                "system": "http://snomed.info/sct"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "271691008",
+                "system": "http://snomed.info/sct",
+                "display": "Finding of asymmetry"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "24028007",
+                          "system": "http://snomed.info/sct",
+                          "display": "Right"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "15955021000119100",
+                "system": "http://snomed.info/sct",
+                "display": "Ptosis of breast"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='inspektion').item.where(linkId='ptosis-rechts').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.senologie.org/fhir/CodeSystem/clinical-findings-custom"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "7771000",
+                          "system": "http://snomed.info/sct",
+                          "display": "Left"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "15955021000119100",
+                "system": "http://snomed.info/sct",
+                "display": "Ptosis of breast"
+              }
+            ]
+          },
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='inspektion').item.where(linkId='ptosis-links').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.senologie.org/fhir/CodeSystem/clinical-findings-custom"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "24028007",
+                          "system": "http://snomed.info/sct",
+                          "display": "Right"
+                        }
+                      ]
+                    }
+                  }
+                ],
                 "code": "118242002",
                 "system": "http://snomed.info/sct",
                 "display": "Finding by palpation"
               }
             ]
           },
-          "valueString": "Palpationsbefund",
-          "_valueString": {
-            "extension": [
+          "valueCodeableConcept": {
+            "coding": [
               {
-                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='palpationsbefund').answer.valueString"
+                "system": "http://snomed.info/sct",
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "iif(%resource.item.where(linkId='palpation').item.where(linkId='palpation-mamma-rechts').answer.valueCoding.code = 'auffaellig', '263654008', '17621005')"
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -94,18 +330,38 @@
           "code": {
             "coding": [
               {
-                "code": "115951000119105",
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "7771000",
+                          "system": "http://snomed.info/sct",
+                          "display": "Left"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "118242002",
                 "system": "http://snomed.info/sct",
-                "display": "Breast symptom of change in skin"
+                "display": "Finding by palpation"
               }
             ]
           },
-          "valueString": "Hautveränderungen",
-          "_valueString": {
-            "extension": [
+          "valueCodeableConcept": {
+            "coding": [
               {
-                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='hautveraenderungen').answer.valueString"
+                "system": "http://snomed.info/sct",
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "iif(%resource.item.where(linkId='palpation').item.where(linkId='palpation-mamma-links').answer.valueCoding.code = 'auffaellig', '263654008', '17621005')"
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -114,18 +370,38 @@
           "code": {
             "coding": [
               {
-                "code": "248819006",
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "24028007",
+                          "system": "http://snomed.info/sct",
+                          "display": "Right"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "284429001",
                 "system": "http://snomed.info/sct",
-                "display": "Nipple finding"
+                "display": "Examination of axillary lymph nodes"
               }
             ]
           },
-          "valueString": "Mamillenbefund",
-          "_valueString": {
-            "extension": [
+          "valueCodeableConcept": {
+            "coding": [
               {
-                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='mamillenbefund').answer.valueString"
+                "system": "http://snomed.info/sct",
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "iif(%resource.item.where(linkId='palpation').item.where(linkId='palpation-axilla-rechts').answer.valueCoding.code = 'auffaellig', '263654008', '17621005')"
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -134,18 +410,122 @@
           "code": {
             "coding": [
               {
-                "code": "301782006",
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "7771000",
+                          "system": "http://snomed.info/sct",
+                          "display": "Left"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "284429001",
                 "system": "http://snomed.info/sct",
-                "display": "Finding of lymph node of axillary region"
+                "display": "Examination of axillary lymph nodes"
               }
             ]
           },
-          "valueString": "Lymphknotenstatus",
-          "_valueString": {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "iif(%resource.item.where(linkId='palpation').item.where(linkId='palpation-axilla-links').answer.valueCoding.code = 'auffaellig', '263654008', '17621005')"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.uicc.org/resources/tnm"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "399504009",
+                "system": "http://snomed.info/sct",
+                "display": "cT category (observable entity)"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.uicc.org/resources/tnm"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "399534004",
+                "system": "http://snomed.info/sct",
+                "display": "cN category (observable entity)"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='zusammenfassung').item.where(linkId='tumornachweis').answer.valueCoding"
+                  }
+                ],
+                "system": "http://snomed.info/sct"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "363676003",
+                "system": "http://snomed.info/sct",
+                "display": "Status of disease (observable entity)"
+              }
+            ]
+          }
+        }
+      ],
+      "note": [
+        {
+          "_text": {
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='lymphknotenstatus').answer.valueString"
+                "valueString": "%resource.item.where(linkId='zusammenfassung').item.where(linkId='zusammenfassung-text').answer.valueString"
               }
             ]
           }
@@ -161,12 +541,11 @@
           }
         ]
       },
-      "effectiveDateTime": "2024-01-01",
       "_effectiveDateTime": {
         "extension": [
           {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "item.where(linkId='untersuchung-datum').answer.valueDate"
+            "valueString": "%resource.item.where(linkId='datum').answer.valueDate"
           }
         ]
       }
@@ -192,9 +571,25 @@
     {
       "extension": [
         {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
           "url": "template",
           "valueReference": {
-            "reference": "#observation-template"
+            "reference": "#klin-unt-obs-template"
           }
         }
       ],
@@ -205,144 +600,195 @@
     {
       "extension": [
         {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+          "valueBoolean": true
+        },
+        {
           "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Condition?patient={{%patient.id}}&code=254837009&clinical-status=active"
+            "language": "text/fhirpath",
+            "expression": "%patient"
           },
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
-        },
-        {
-          "extension": [
-            {
-              "url": "path",
-              "valueString": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').first().code"
-            },
-            {
-              "url": "label",
-              "valueString": "ICD-10"
-            },
-            {
-              "url": "forDisplay",
-              "valueBoolean": false
-            }
-          ],
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
-        },
-        {
-          "extension": [
-            {
-              "url": "path",
-              "valueString": "bodySite.coding.first().display"
-            },
-            {
-              "url": "label",
-              "valueString": "Seite"
-            },
-            {
-              "url": "forDisplay",
-              "valueBoolean": true
-            }
-          ],
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
         }
       ],
-      "linkId": "bezugsdiagnose",
-      "text": "Bezugsdiagnose (Seite)",
+      "linkId": "patient-ref",
+      "text": "Patient",
       "type": "reference",
+      "required": true,
+      "readOnly": true
+    },
+    {
+      "linkId": "datum",
+      "text": "Untersuchungsdatum",
+      "type": "date",
       "required": true
     },
     {
-      "linkId": "untersuchung-datum",
-      "text": "Untersuchungsdatum",
-      "type": "date",
-      "required": true,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.effectiveDateTime"
+      "linkId": "detailliert",
+      "text": "Detailliert anlegen?",
+      "type": "boolean",
+      "required": false
     },
     {
-      "answerOption": [
+      "item": [
         {
-          "valueCoding": {
-            "code": "80248007",
-            "system": "http://snomed.info/sct",
-            "display": "Links"
-          }
+          "linkId": "inspektion-mamma-rechts-vorhanden",
+          "text": "Mamma rechts vorhanden",
+          "type": "boolean",
+          "required": false
         },
         {
-          "valueCoding": {
-            "code": "73056007",
-            "system": "http://snomed.info/sct",
-            "display": "Rechts"
-          }
+          "linkId": "inspektion-mamma-rechts",
+          "text": "Inspektion Mamma rechts",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
         },
         {
-          "valueCoding": {
-            "code": "63762007",
-            "system": "http://snomed.info/sct",
-            "display": "Beidseits"
-          }
+          "linkId": "inspektion-mamma-links-vorhanden",
+          "text": "Mamma links vorhanden",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "linkId": "inspektion-mamma-links",
+          "text": "Inspektion Mamma links",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
+        },
+        {
+          "linkId": "symmetrie",
+          "text": "Symmetrie Mammae",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-symmetrie"
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "symmetrie",
+              "operator": "=",
+              "answerCoding": {
+                "code": "31739005",
+                "system": "http://snomed.info/sct"
+              }
+            }
+          ],
+          "linkId": "asymmetrisch-zugunsten",
+          "text": "Asymmetrisch zugunsten",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+        },
+        {
+          "linkId": "ptosis-rechts",
+          "text": "Ptosis rechts (Regnault)",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
+        },
+        {
+          "linkId": "ptosis-links",
+          "text": "Ptosis links (Regnault)",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
+        },
+        {
+          "linkId": "inspektion-details",
+          "text": "Details Inspektion",
+          "type": "text",
+          "required": false
         }
       ],
-      "linkId": "seitenlokalisation",
-      "text": "Untersuchte Seite",
-      "type": "choice",
-      "required": true,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.bodySite"
+      "linkId": "inspektion",
+      "text": "Inspektion",
+      "type": "group"
     },
     {
-      "code": [
+      "item": [
         {
-          "code": "118242002",
-          "system": "http://snomed.info/sct",
-          "display": "Finding by palpation"
+          "linkId": "palpation-mamma-rechts",
+          "text": "Palpation Mamma/Thoraxwand rechts",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
+        },
+        {
+          "linkId": "palpation-mamma-links",
+          "text": "Palpation Mamma/Thoraxwand links",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
+        },
+        {
+          "linkId": "palpation-axilla-rechts",
+          "text": "Palpation Axilla/LAW rechts",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
+        },
+        {
+          "linkId": "palpation-axilla-links",
+          "text": "Palpation Axilla/LAW links",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
+        },
+        {
+          "linkId": "palpation-details",
+          "text": "Details Palpation",
+          "type": "text",
+          "required": false
         }
       ],
-      "linkId": "palpationsbefund",
-      "text": "Palpationsbefund",
-      "type": "text",
-      "required": false,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
+      "linkId": "palpation",
+      "text": "Palpation",
+      "type": "group"
     },
     {
-      "code": [
+      "item": [
         {
-          "code": "115951000119105",
-          "system": "http://snomed.info/sct",
-          "display": "Breast symptom of change in skin"
+          "linkId": "ct",
+          "text": "cT",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-t-kategorie-mamma"
+        },
+        {
+          "linkId": "cn",
+          "text": "cN",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
         }
       ],
-      "linkId": "hautveraenderungen",
-      "text": "Hautveränderungen",
-      "type": "text",
-      "required": false,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
+      "linkId": "klinisches-tnm",
+      "text": "Klinisches TNM (Einschätzung des Untersuchers)",
+      "type": "group",
+      "required": false
     },
     {
-      "code": [
+      "item": [
         {
-          "code": "248819006",
-          "system": "http://snomed.info/sct",
-          "display": "Nipple finding"
+          "linkId": "tumornachweis",
+          "text": "Tumornachweis",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumornachweis-status"
+        },
+        {
+          "linkId": "zusammenfassung-text",
+          "text": "Zusammenfassung (Freitext)",
+          "type": "text",
+          "required": false
         }
       ],
-      "linkId": "mamillenbefund",
-      "text": "Mamillenbefund (Retraktion, Sekretion, Ekzem)",
-      "type": "text",
-      "required": false,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
-    },
-    {
-      "code": [
-        {
-          "code": "284429001",
-          "system": "http://snomed.info/sct",
-          "display": "Examination of axillary lymph nodes"
-        }
-      ],
-      "linkId": "lymphknotenstatus",
-      "text": "Klinischer Lymphknotenstatus (axillär)",
-      "type": "text",
-      "required": false,
-      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.component.valueString"
+      "linkId": "zusammenfassung",
+      "text": "Zusammenfassung",
+      "type": "group",
+      "required": false
     }
   ],
   "name": "QuestKlinischeUntersuchung",

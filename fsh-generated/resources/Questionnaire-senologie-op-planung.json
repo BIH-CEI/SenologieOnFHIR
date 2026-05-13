@@ -17,22 +17,28 @@
         ]
       },
       "subject": {
-        "reference": "placeholder"
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "reasonReference": [
         {
-          "reference": "placeholder",
           "_reference": {
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+                "valueString": "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
               }
             ]
           }
         }
       ],
-      "status": "draft",
+      "status": "active",
       "intent": "plan"
     }
   ],
@@ -60,6 +66,27 @@
         {
           "url": "type",
           "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        },
+        {
+          "url": "description",
+          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -123,34 +150,28 @@
       "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.code.text"
     },
     {
-      "answerOption": [
-        {
-          "valueCoding": {
-            "code": "80248007",
-            "system": "http://snomed.info/sct",
-            "display": "Left breast structure"
-          }
-        },
-        {
-          "valueCoding": {
-            "code": "73056007",
-            "system": "http://snomed.info/sct",
-            "display": "Right breast structure"
-          }
-        },
-        {
-          "valueCoding": {
-            "code": "63762007",
-            "system": "http://snomed.info/sct",
-            "display": "Both breasts"
-          }
-        }
-      ],
       "linkId": "seitenlokalisation",
       "text": "Seite",
       "type": "choice",
       "required": true,
-      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.bodySite"
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.bodySite",
+      "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+    },
+    {
+      "extension": [
+        {
+          "valueExpression": {
+            "language": "application/x-fhir-query",
+            "expression": "BodyStructure?patient={{%patient.id}}&active=true"
+          },
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+        }
+      ],
+      "linkId": "op-tumor-entitaet",
+      "text": "Zu operierende Tumor-Entität(en)",
+      "type": "reference",
+      "repeats": true,
+      "required": false
     },
     {
       "linkId": "intention",
@@ -174,37 +195,12 @@
       "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:tumorConferenceConsent.valueCodeableConcept"
     },
     {
-      "answerOption": [
-        {
-          "valueCoding": {
-            "code": "405815000",
-            "system": "http://snomed.info/sct",
-            "display": "Procedure device"
-          }
-        },
-        {
-          "valueCoding": {
-            "code": "397956004",
-            "system": "http://snomed.info/sct",
-            "display": "Wire guided localization of breast lesion"
-          }
-        },
-        {
-          "valueCoding": {
-            "code": "77343006",
-            "system": "http://snomed.info/sct",
-            "display": "Angiography"
-          }
-        },
-        {
-          "valueString": "Keine"
-        }
-      ],
       "linkId": "pre-op-markierung",
       "text": "Präoperative Markierung geplant",
       "type": "choice",
       "required": false,
-      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.valueCodeableConcept"
+      "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.valueCodeableConcept",
+      "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
     },
     {
       "linkId": "notes",

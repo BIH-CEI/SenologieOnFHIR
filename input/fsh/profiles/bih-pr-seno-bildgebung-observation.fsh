@@ -2,7 +2,7 @@ Profile: Senologie_Bildgebung_Observation
 Parent: Observation
 Id: senologie-bildgebung-observation
 Title: "BIH Senologie Bildgebung Observation"
-Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'"
+Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status)"
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -27,14 +27,14 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Zeitpunkt der Beobachtung"
-* effectiveDateTime ^comment = "Aus dotbase: 'Datum' der Bildgebung"
+* effectiveDateTime ^comment = "Datum: der Bildgebung"
 
 * performer ^short = "Befundender Arzt"
 
 // Bestrahlungsregion/Seite (Links/Rechts/Beidseits)
 * bodySite MS
 * bodySite ^short = "Seite/Region"
-* bodySite ^comment = "Aus dotbase: Lateralität des Befunds (Links, Rechts, Beidseits)"
+* bodySite ^comment = "Lateralität des Befunds (Links, Rechts, Beidseits)"
 
 // Wert des Befunds - je nach Art unterschiedlich
 * value[x] MS
@@ -48,7 +48,7 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 
 // Detaillierte Beschreibung
 * note ^short = "Freitext-Kommentare zum Befund"
-* note ^comment = "Aus dotbase: 'Details' Freitext pro Seite"
+* note ^comment = "Details: Freitext pro Seite"
 
 // Slicing für verschiedene Befund-Typ-Codes auf code.coding
 * code.coding ^slicing.discriminator.type = #pattern

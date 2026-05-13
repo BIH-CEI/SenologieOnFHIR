@@ -22,21 +22,55 @@
           ]
         }
       ],
-      "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
-      },
-      "status": "final",
       "code": {
         "coding": [
           {
-            "code": "24606-6",
-            "system": "http://loinc.org",
-            "display": "Breast Screening"
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='untersuchung').item.where(linkId='bildgebungsart').answer.valueCoding"
+              }
+            ],
+            "system": "http://snomed.info/sct"
+          }
+        ]
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "result": [
+        {
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%NewBildgebungObsId"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "final",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='untersuchung').item.where(linkId='untersuchung-datum').answer.valueDate"
+          }
+        ]
+      },
+      "_conclusion": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='zusammenfassung').item.where(linkId='gesamtbeurteilung').answer.valueString"
           }
         ]
       }
@@ -44,14 +78,235 @@
     {
       "resourceType": "Observation",
       "id": "bildgebung-befund-template",
+      "category": [
+        {
+          "coding": [
+            {
+              "code": "imaging",
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+            }
+          ]
+        }
+      ],
       "subject": {
-        "extension": [
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "focus": [
+        {
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%diagnosis.reference"
+              }
+            ]
+          }
+        },
+        {
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%NewBildgebungBsId"
+              }
+            ]
+          }
+        }
+      ],
+      "valueCodeableConcept": {
+        "coding": [
           {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='befund').item.where(linkId='birads-kategorie').answer.valueCoding"
+              }
+            ],
+            "system": "http://snomed.info/sct"
           }
         ]
       },
+      "component": [
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='befund').item.where(linkId='acr-brustdichte').answer.valueCoding"
+                  }
+                ],
+                "system": "http://snomed.info/sct"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "89180-4",
+                "system": "http://loinc.org",
+                "display": "Breast density"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='befund').item.where(linkId='mikrokalk').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "27931000119107",
+                "system": "http://snomed.info/sct",
+                "display": "Microcalcification of breast on mammogram"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='befund').item.where(linkId='lk-status').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "82127004",
+                "system": "http://snomed.info/sct",
+                "display": "Axillary lymph node assessment"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "444024003",
+                "system": "http://snomed.info/sct",
+                "display": "Number of suspicious lymph nodes"
+              }
+            ]
+          },
+          "_valueInteger": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='befund').item.where(linkId='lk-anzahl-suspekt').answer.valueInteger"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='befund').item.where(linkId='us-degum').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "us-degum-0",
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='befund').item.where(linkId='beurteilbarkeit').answer.valueCoding"
+                  }
+                ],
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "106233006",
+                "system": "http://snomed.info/sct",
+                "display": "Topographical modifier"
+              }
+            ]
+          }
+        },
+        {
+          "valueQuantity": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='befund').item.where(linkId='herdbefund-groesse').answer.valueInteger"
+              }
+            ],
+            "unit": "mm",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm"
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "33728-7",
+                "system": "http://loinc.org",
+                "display": "Size of mass"
+              }
+            ]
+          }
+        }
+      ],
+      "note": [
+        {
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='befund').item.where(linkId='herdbefund-beschreibung').answer.valueString"
+              }
+            ]
+          }
+        }
+      ],
       "status": "final",
       "code": {
         "coding": [
@@ -61,23 +316,189 @@
             "display": "Breast Imaging-Reporting and Data System"
           }
         ]
+      },
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='untersuchung').item.where(linkId='untersuchung-datum').answer.valueDate"
+          }
+        ]
       }
     },
     {
       "resourceType": "BodyStructure",
       "id": "bildgebung-bodystructure-template",
-      "patient": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorlokalisation"
         ]
       },
-      "active": true
+      "identifier": [
+        {
+          "system": "https://www.senologie.org/fhir/sid/tumor-entity",
+          "_value": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "iif(%NewBildgebungBsId.exists(), %NewBildgebungBsId.substring(9), '')"
+              }
+            ]
+          }
+        }
+      ],
+      "patient": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "structure",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "code": "76752008",
+                    "system": "http://snomed.info/sct",
+                    "display": "Breast structure"
+                  }
+                ]
+              }
+            },
+            {
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.where(linkId='lokalisation').item.where(linkId='lokalisation-seite').answer.valueCoding"
+                      }
+                    ],
+                    "system": "http://snomed.info/sct"
+                  }
+                ]
+              },
+              "url": "laterality"
+            },
+            {
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.where(linkId='lokalisation').item.where(linkId='lokalisation-quadrant').answer.valueCoding"
+                      }
+                    ],
+                    "system": "http://snomed.info/sct"
+                  }
+                ]
+              },
+              "url": "qualifier"
+            },
+            {
+              "extension": [
+                {
+                  "url": "landmarkDescription",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "code": "244091003",
+                        "system": "http://snomed.info/sct",
+                        "display": "Nipple structure"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "extension": [
+                          {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                            "valueString": "%resource.item.where(linkId='lokalisation').item.where(linkId='lokalisation-uhrzeit').answer.valueCoding"
+                          }
+                        ],
+                        "system": "http://snomed.info/sct"
+                      }
+                    ]
+                  },
+                  "url": "clockFacePosition"
+                },
+                {
+                  "extension": [
+                    {
+                      "valueQuantity": {
+                        "unit": "mm",
+                        "system": "http://unitsofmeasure.org",
+                        "code": "mm",
+                        "_value": {
+                          "extension": [
+                            {
+                              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                              "valueString": "%resource.item.where(linkId='lokalisation').item.where(linkId='lokalisation-mamillenabstand').answer.valueInteger"
+                            }
+                          ]
+                        }
+                      },
+                      "url": "value"
+                    }
+                  ],
+                  "url": "distanceFromLandmark"
+                }
+              ],
+              "url": "bodyLandmarkOrientation"
+            }
+          ],
+          "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-BodyStructure.includedStructure"
+        }
+      ],
+      "active": true,
+      "location": {
+        "coding": [
+          {
+            "code": "76752008",
+            "system": "http://snomed.info/sct",
+            "display": "Breast structure"
+          }
+        ]
+      }
     }
   ],
   "extension": [
+    {
+      "valueExpression": {
+        "name": "NewBildgebungReportId",
+        "language": "text/fhirpath",
+        "expression": "'urn:uuid:' + uuid()"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/variable"
+    },
+    {
+      "valueExpression": {
+        "name": "NewBildgebungObsId",
+        "language": "text/fhirpath",
+        "expression": "'urn:uuid:' + uuid()"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/variable"
+    },
+    {
+      "valueExpression": {
+        "name": "NewBildgebungBsId",
+        "language": "text/fhirpath",
+        "expression": "'urn:uuid:' + uuid()"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/variable"
+    },
     {
       "extension": [
         {
@@ -93,6 +514,27 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        },
+        {
+          "url": "description",
+          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
     }
   ],
   "item": [
@@ -105,6 +547,13 @@
               "valueReference": {
                 "reference": "#bildgebung-report-template"
               }
+            },
+            {
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%NewBildgebungReportId"
+              },
+              "url": "fullUrl"
             }
           ],
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
@@ -118,36 +567,18 @@
           "required": true
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "24606-6",
-                "system": "http://loinc.org",
-                "display": "Mammographie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "24590-2",
-                "system": "http://loinc.org",
-                "display": "Sonographie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "24589-4",
-                "system": "http://loinc.org",
-                "display": "MRT Mamma"
-              }
-            },
-            {
-              "valueString": "Tomosynthese"
-            }
-          ],
           "linkId": "bildgebungsart",
           "text": "Bildgebungsart",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-bildgebung-modalitaet"
+        },
+        {
+          "linkId": "untersuchung-standort",
+          "text": "Standort",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-standort"
         },
         {
           "linkId": "befundender-arzt",
@@ -170,6 +601,13 @@
               "valueReference": {
                 "reference": "#bildgebung-bodystructure-template"
               }
+            },
+            {
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%NewBildgebungBsId"
+              },
+              "url": "fullUrl"
             }
           ],
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
@@ -177,127 +615,40 @@
       ],
       "item": [
         {
-          "answerOption": [
+          "extension": [
             {
-              "valueCoding": {
-                "code": "80248007",
-                "system": "http://snomed.info/sct",
-                "display": "Links"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "73056007",
-                "system": "http://snomed.info/sct",
-                "display": "Rechts"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "63762007",
-                "system": "http://snomed.info/sct",
-                "display": "Beidseits"
-              }
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "BodyStructure?patient={{%patient.id}}&active=true"
+              },
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
             }
           ],
+          "linkId": "lokalisation-tumor-entitaet-bekannt",
+          "text": "Existierende Tumor-Entität (für Re-Imaging)",
+          "type": "reference",
+          "required": false
+        },
+        {
           "linkId": "lokalisation-seite",
           "text": "Seite",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "76365002",
-                "system": "http://snomed.info/sct",
-                "display": "Oberer äußerer Quadrant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "77831004",
-                "system": "http://snomed.info/sct",
-                "display": "Oberer innerer Quadrant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "33564002",
-                "system": "http://snomed.info/sct",
-                "display": "Unterer äußerer Quadrant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "19100000",
-                "system": "http://snomed.info/sct",
-                "display": "Unterer innerer Quadrant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "24142002",
-                "system": "http://snomed.info/sct",
-                "display": "Mamille"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "70925003",
-                "system": "http://snomed.info/sct",
-                "display": "Zentral"
-              }
-            }
-          ],
           "linkId": "lokalisation-quadrant",
           "text": "Quadrant",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-quadrant-mamma"
         },
         {
-          "answerOption": [
-            {
-              "valueString": "12 Uhr"
-            },
-            {
-              "valueString": "1 Uhr"
-            },
-            {
-              "valueString": "2 Uhr"
-            },
-            {
-              "valueString": "3 Uhr"
-            },
-            {
-              "valueString": "4 Uhr"
-            },
-            {
-              "valueString": "5 Uhr"
-            },
-            {
-              "valueString": "6 Uhr"
-            },
-            {
-              "valueString": "7 Uhr"
-            },
-            {
-              "valueString": "8 Uhr"
-            },
-            {
-              "valueString": "9 Uhr"
-            },
-            {
-              "valueString": "10 Uhr"
-            },
-            {
-              "valueString": "11 Uhr"
-            }
-          ],
           "linkId": "lokalisation-uhrzeit",
           "text": "Uhrzeitposition",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-clockface-position"
         },
         {
           "linkId": "lokalisation-mamillenabstand",
@@ -320,6 +671,13 @@
               "valueReference": {
                 "reference": "#bildgebung-befund-template"
               }
+            },
+            {
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%NewBildgebungObsId"
+              },
+              "url": "fullUrl"
             }
           ],
           "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
@@ -334,61 +692,11 @@
               "display": "BI-RADS"
             }
           ],
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "397138000",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 0 — Zusätzliche Bildgebung erforderlich"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "397140005",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 1 — Unauffällig"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "397141009",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 2 — Gutartiger Befund"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "397143007",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 3 — Wahrscheinlich gutartig"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "397144001",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 4 — Suspekt"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "397145000",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 5 — Hochverdächtig auf Malignität"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "6111000179101",
-                "system": "http://snomed.info/sct",
-                "display": "BI-RADS 6 — Histologisch gesichert maligne"
-              }
-            }
-          ],
           "linkId": "birads-kategorie",
           "text": "BI-RADS Kategorie",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-birads"
         },
         {
           "code": [
@@ -398,24 +706,11 @@
               "display": "Breast density"
             }
           ],
-          "answerOption": [
-            {
-              "valueString": "A — Fast vollständig fetthaltig"
-            },
-            {
-              "valueString": "B — Verstreute fibroglanduläre Verdichtungen"
-            },
-            {
-              "valueString": "C — Heterogen dicht"
-            },
-            {
-              "valueString": "D — Extrem dicht"
-            }
-          ],
           "linkId": "acr-brustdichte",
           "text": "ACR Brustdichte",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-acr-brustdichte"
         },
         {
           "linkId": "herdbefund-groesse",
@@ -432,15 +727,19 @@
         {
           "linkId": "mikrokalk",
           "text": "Mikrokalkifikationen",
-          "type": "boolean",
-          "required": false
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-mikrokalk-triage"
         },
         {
           "enableWhen": [
             {
               "question": "mikrokalk",
-              "operator": "=",
-              "answerBoolean": true
+              "operator": "!=",
+              "answerCoding": {
+                "code": "mikrokalk-nein",
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
             }
           ],
           "linkId": "mikrokalk-beschreibung",
@@ -449,10 +748,41 @@
           "required": false
         },
         {
-          "linkId": "lymphknoten-auffaellig",
-          "text": "Axilläre Lymphknoten auffällig",
-          "type": "boolean",
+          "linkId": "lk-status",
+          "text": "Axilläre Lymphknoten",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-lk-status-bildgebung"
+        },
+        {
+          "enableWhen": [
+            {
+              "question": "lk-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "lk-suspekt",
+                "system": "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
+              }
+            }
+          ],
+          "linkId": "lk-anzahl-suspekt",
+          "text": "Anzahl suspekter Lymphknoten",
+          "type": "integer",
           "required": false
+        },
+        {
+          "linkId": "us-degum",
+          "text": "US-DEGUM Klassifikation",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-us-degum"
+        },
+        {
+          "linkId": "beurteilbarkeit",
+          "text": "Beurteilbarkeit",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-beurteilbarkeit"
         }
       ],
       "linkId": "befund",

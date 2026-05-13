@@ -6,7 +6,7 @@
   "name": "Senologie_Klinische_Untersuchung",
   "title": "BIH Senologie Klinische Untersuchung",
   "status": "draft",
-  "description": "Observation für klinische Brustuntersuchung (Mammabefund pro Seite) aus dotbase Questionnaire 'Klinische Untersuchung'",
+  "description": "Observation für klinische Brustuntersuchung (Mammabefund pro Seite)",
   "fhirVersion": "4.0.1",
   "mapping": [
     {
@@ -130,9 +130,9 @@
         "path": "Observation.component",
         "sliceName": "palpationsbefund",
         "short": "Palpationsbefund",
-        "comment": "Aus dotbase: Tastbefund der Brust (Verhärtung, Knoten, etc.)",
+        "comment": "Tastbefund der Brust (Verhärtung, Knoten, etc.)",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "mustSupport": true,
         "mapping": [
           {
@@ -171,9 +171,9 @@
         "path": "Observation.component",
         "sliceName": "hautveraenderungen",
         "short": "Hautveränderungen",
-        "comment": "Aus dotbase: Hauteinziehung, Rötung, Orangenhaut etc.",
+        "comment": "Hauteinziehung, Rötung, Orangenhaut etc.",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "mustSupport": true,
         "mapping": [
           {
@@ -212,7 +212,7 @@
         "path": "Observation.component",
         "sliceName": "mamillenbefund",
         "short": "Mamillenbefund",
-        "comment": "Aus dotbase: Mamillensekretion, Retraktion etc.",
+        "comment": "Mamillensekretion, Retraktion etc.",
         "min": 0,
         "max": "1",
         "mustSupport": true,
@@ -253,9 +253,9 @@
         "path": "Observation.component",
         "sliceName": "lymphknotenstatus",
         "short": "Klinischer Lymphknotenstatus",
-        "comment": "Aus dotbase: Tastbare axilläre Lymphknoten",
+        "comment": "Tastbare axilläre Lymphknoten",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "mustSupport": true,
         "mapping": [
           {
@@ -286,6 +286,195 @@
           },
           {
             "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:inspektion",
+        "path": "Observation.component",
+        "sliceName": "inspektion",
+        "short": "Inspektionsbefund Brust (per Seite via observation-bodyPosition)",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:inspektion.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "225289005",
+              "system": "http://snomed.info/sct",
+              "display": "Examination of breast"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:inspektion.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:symmetrie",
+        "path": "Observation.component",
+        "sliceName": "symmetrie",
+        "short": "Symmetrie der Brüste",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:symmetrie.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "366348007",
+              "system": "http://snomed.info/sct",
+              "display": "Finding of symmetry of breasts"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:symmetrie.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:ptosis",
+        "path": "Observation.component",
+        "sliceName": "ptosis",
+        "short": "Ptosis-Grad (Regnault, pro Seite via observation-bodyPosition)",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:ptosis.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "15955021000119100",
+              "system": "http://snomed.info/sct",
+              "display": "Ptosis of breast"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:ptosis.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:klinisches-ct",
+        "path": "Observation.component",
+        "sliceName": "klinisches-ct",
+        "short": "Klinisches cT (Einschätzung des Untersuchers)",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:klinisches-ct.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "399504009",
+              "system": "http://snomed.info/sct",
+              "display": "cT category (observable entity)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:klinisches-ct.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:klinisches-cn",
+        "path": "Observation.component",
+        "sliceName": "klinisches-cn",
+        "short": "Klinisches cN (Einschätzung des Untersuchers)",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:klinisches-cn.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "399534004",
+              "system": "http://snomed.info/sct",
+              "display": "cN category (observable entity)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:klinisches-cn.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation.component:tumornachweis-status",
+        "path": "Observation.component",
+        "sliceName": "tumornachweis-status",
+        "short": "Tumornachweis / Response Assessment",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.component:tumornachweis-status.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "363676003",
+              "system": "http://snomed.info/sct",
+              "display": "Status of disease (observable entity)"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:tumornachweis-status.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
           }
         ]
       }

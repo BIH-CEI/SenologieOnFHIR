@@ -2,7 +2,7 @@ Profile: Senologie_Operative_Komplikation
 Parent: Observation
 Id: senologie-operative-komplikation
 Title: "BIH Senologie Operative Komplikation"
-Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation aus dotbase Questionnaire 'Operative Komplikation(en) V2.0'. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent)."
+Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent)."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -35,12 +35,12 @@ Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Kl
 // Datum der Komplikation
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Datum der Komplikation"
-* effectiveDateTime ^comment = "Aus dotbase: 'Datum der Komplikation'"
+* effectiveDateTime ^comment = "'Datum der Komplikation'"
 
 // Zeitpunkt der Komplikation (replaces EX_Senologie_ComplicationTiming)
 * method MS
 * method ^short = "Zeitpunkt der Komplikation"
-* method ^comment = "Aus dotbase: 'Zeitpunkt der Komplikation' (intraoperativ, postoperativ, stationär, ambulant) — ersetzt ehemalige ComplicationTiming-Extension"
+* method ^comment = "Zeitpunkt der Komplikation: (intraoperativ, postoperativ, stationär, ambulant) — ersetzt ehemalige ComplicationTiming-Extension"
 
 // Bezug zur verursachenden Operation (replaces AdverseEvent.suspectEntity)
 * focus MS
@@ -59,8 +59,8 @@ Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Kl
 * component[komplikationsart].code ^short = "Art der Komplikation"
 * component[komplikationsart].valueCodeableConcept MS
 * component[komplikationsart].valueCodeableConcept ^short = "Art der Komplikation"
-* component[komplikationsart].valueCodeableConcept ^comment = "Aus dotbase: 'Art der Komplikation' (SNOMED-kodiert)"
+* component[komplikationsart].valueCodeableConcept ^comment = "Art der Komplikation: (SNOMED-kodiert)"
 
 // Konsequenzen
 * note ^short = "Konsequenzen / Kommentar"
-* note ^comment = "Aus dotbase: 'Konsequenz' + 'Kommentar' Freitext"
+* note ^comment = "Konsequenz: + 'Kommentar' Freitext"

@@ -14,10 +14,10 @@ Usage: #inline
 * status = #completed
 * code = $SCT#367336001 "Chemotherapy"
 * code.text = "Systemtherapie"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* reasonReference.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+* reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 // --- Contained template: MedicationStatement ---
 Instance: syst-medikation-template
@@ -26,8 +26,8 @@ Usage: #inline
 * id = "syst-medikation-template"
 * status = #active
 * medicationCodeableConcept.text = "Substanz"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 
 // --- Questionnaire ---
 Instance: senologie-systemtherapie
@@ -55,6 +55,17 @@ Usage: #definition
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
 
+
+// Launch Context: Diagnose (Condition als Anker für Pre-Population)
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+* extension[=].extension[+].url = "name"
+* extension[=].extension[=].valueCoding.system = "https://www.senologie.org/fhir/CodeSystem/launchContext"
+* extension[=].extension[=].valueCoding.code = #diagnosis
+* extension[=].extension[=].valueCoding.display = "Diagnose (Anker-Condition)"
+* extension[=].extension[+].url = "type"
+* extension[=].extension[=].valueCode = #Condition
+* extension[=].extension[+].url = "description"
+* extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
 // ============================================================
 // Bezugsdiagnose
 // ============================================================
@@ -91,19 +102,14 @@ Usage: #definition
 * item[=].item[=].text = "Therapieart"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#385786002 "Chemotherapie"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#169413002 "Endokrine Therapie"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#432105003 "Zielgerichtete Therapie"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76334006 "Immuntherapie"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-art"
 
 // Intention
 * item[=].item[+].linkId = "intention"
 * item[=].item[=].text = "Intention"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neoadjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliativ"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
 
 // First-Line bei Metastasierung (conditional)
 * item[=].item[+].linkId = "first-line"

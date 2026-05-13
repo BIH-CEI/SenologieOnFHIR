@@ -22,12 +22,14 @@
         "text": "Strahlentherapie"
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "reasonReference": [
         {
@@ -35,7 +37,7 @@
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+                "valueString": "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
               }
             ]
           }
@@ -66,6 +68,27 @@
         {
           "url": "type",
           "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        },
+        {
+          "url": "description",
+          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -103,33 +126,11 @@
       ],
       "item": [
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "373846009",
-                "system": "http://snomed.info/sct",
-                "display": "Adjuvant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "373847000",
-                "system": "http://snomed.info/sct",
-                "display": "Neoadjuvant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "363676003",
-                "system": "http://snomed.info/sct",
-                "display": "Palliativ"
-              }
-            }
-          ],
           "linkId": "rt-intention",
           "text": "Intention",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
         },
         {
           "linkId": "rt-startdatum",
@@ -144,33 +145,27 @@
           "required": false
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "80248007",
-                "system": "http://snomed.info/sct",
-                "display": "Links"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "73056007",
-                "system": "http://snomed.info/sct",
-                "display": "Rechts"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "63762007",
-                "system": "http://snomed.info/sct",
-                "display": "Beidseits"
-              }
-            }
-          ],
           "linkId": "rt-seite",
           "text": "Bestrahlte Seite",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+        },
+        {
+          "extension": [
+            {
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "BodyStructure?patient={{%patient.id}}&active=true"
+              },
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+            }
+          ],
+          "linkId": "rt-tumor-entitaet",
+          "text": "Bestrahlte Tumor-Entität(en)",
+          "type": "reference",
+          "repeats": true,
+          "required": false
         },
         {
           "linkId": "rt-simultane-rct",
@@ -187,77 +182,19 @@
     {
       "item": [
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "76752008",
-                "system": "http://snomed.info/sct",
-                "display": "Ganze Brust"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "78904004",
-                "system": "http://snomed.info/sct",
-                "display": "Brustwand"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "68171009",
-                "system": "http://snomed.info/sct",
-                "display": "Axilläre Lymphknoten"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "76838003",
-                "system": "http://snomed.info/sct",
-                "display": "Supraklavikuläre Lymphknoten"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "245282001",
-                "system": "http://snomed.info/sct",
-                "display": "Parasternale Lymphknoten"
-              }
-            }
-          ],
           "linkId": "rt-zielvolumen",
           "text": "Zielvolumen",
           "type": "choice",
           "required": false,
-          "repeats": true
+          "repeats": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-zielvolumen"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "1163834000",
-                "system": "http://snomed.info/sct",
-                "display": "3D-konformale Bestrahlung"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "1163833006",
-                "system": "http://snomed.info/sct",
-                "display": "IMRT (intensitätsmoduliert)"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "152198000",
-                "system": "http://snomed.info/sct",
-                "display": "Brachytherapie"
-              }
-            }
-          ],
           "linkId": "rt-applikationsart",
           "text": "Applikationsart",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-applikationsart"
         },
         {
           "extension": [

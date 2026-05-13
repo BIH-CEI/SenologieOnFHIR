@@ -29,13 +29,14 @@ Description: "BodyStructure für die Tumorlokalisation in der Brust (Seite, Quad
     uhrzeitposition 0..1
 
 * locationQualifier[seitenlokalisation] ^short = "Seite (Links/Rechts/Beidseits)"
-* locationQualifier[seitenlokalisation] ^comment = "Aus dotbase: 'Seite' (Links/Rechts/Beidseits)"
+* locationQualifier[seitenlokalisation] ^comment = "Seite: (Links/Rechts/Beidseits)"
 
 * locationQualifier[quadrant] ^short = "Quadrant der Brust"
 * locationQualifier[quadrant] ^comment = "Quadrant (z.B. oben-aussen, oben-innen, etc.)"
 
 * locationQualifier[uhrzeitposition] ^short = "Uhrzeitposition (12-Uhr-Einteilung)"
 * locationQualifier[uhrzeitposition] ^comment = "Uhrzeitposition im Drüsenquadranten (12-Uhr-Position)"
+* locationQualifier[uhrzeitposition] from https://www.senologie.org/fhir/ValueSet/vs-senologie-clockface-position (required)
 
 // Freitext mit z.B. Mamillenabstand
 * description MS

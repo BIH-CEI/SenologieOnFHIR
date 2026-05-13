@@ -2,7 +2,7 @@ Profile: Senologie_Gynaekologische_Anamnese
 Parent: Observation
 Id: senologie-gynaekologische-anamnese
 Title: "BIH Senologie Gynäkologische Anamnese"
-Description: "Observation für gynäkologische Anamnese (Menarche, Menopause, Schwangerschaften, HRT) aus dotbase Questionnaire 'Gynäkologische Anamnese'"
+Description: "Observation für gynäkologische Anamnese (Menarche, Menopause, Schwangerschaften, HRT)"
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -39,22 +39,22 @@ Description: "Observation für gynäkologische Anamnese (Menarche, Menopause, Sc
 
 * component[menarche].code = $LOINC#42798-9 "Age at menarche"
 * component[menarche] ^short = "Alter bei Menarche"
-* component[menarche] ^comment = "Aus dotbase: Menarche-Alter in Jahren"
+* component[menarche] ^comment = "Menarche-Alter in Jahren"
 * component[menarche].value[x] only Quantity
 * component[menarche].valueQuantity.system = "http://unitsofmeasure.org" (exactly)
 * component[menarche].valueQuantity.code = #a (exactly)
 
 * component[menopause].code = $LOINC#42802-9 "Age at menopause"
 * component[menopause] ^short = "Menopausenstatus / Alter bei Menopause"
-* component[menopause] ^comment = "Aus dotbase: prä-/postmenopausal, Alter bei Menopause"
+* component[menopause] ^comment = "prä-/postmenopausal, Alter bei Menopause"
 * component[menopause].value[x] only Quantity or CodeableConcept
 
 * component[schwangerschaften].code = $LOINC#11996-6 "[#] Pregnancies"
 * component[schwangerschaften] ^short = "Anzahl Schwangerschaften"
-* component[schwangerschaften] ^comment = "Aus dotbase: Gravida"
+* component[schwangerschaften] ^comment = "Gravida"
 * component[schwangerschaften].value[x] only Quantity
 
 * component[hormonersatztherapie].code = $SCT#266717002 "Hormone replacement therapy"
 * component[hormonersatztherapie] ^short = "Hormonersatztherapie (HRT)"
-* component[hormonersatztherapie] ^comment = "Aus dotbase: HRT ja/nein, Art der HRT"
+* component[hormonersatztherapie] ^comment = "HRT ja/nein, Art der HRT"
 * component[hormonersatztherapie].value[x] only CodeableConcept or boolean

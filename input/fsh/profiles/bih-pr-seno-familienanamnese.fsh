@@ -2,7 +2,7 @@ Profile: Senologie_Familienanamnese
 Parent: FamilyMemberHistory
 Id: senologie-familienanamnese
 Title: "BIH Senologie Familienanamnese"
-Description: "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom aus dotbase Questionnaire 'Familienanamnese'"
+Description: "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom"
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -20,7 +20,7 @@ Description: "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovari
 
 * relationship MS
 * relationship ^short = "Verwandtschaftsgrad"
-* relationship ^comment = "Aus dotbase: Mutter, Schwester, Tante, Großmutter etc."
+* relationship ^comment = "Mutter, Schwester, Tante, Großmutter etc."
 
 * age[x] MS
 * age[x] ^short = "Alter des Familienmitglieds"

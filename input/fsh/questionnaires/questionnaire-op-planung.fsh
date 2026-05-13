@@ -13,14 +13,16 @@ Usage: #inline
 
 * id = "op-planung-template"
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung"
-* status = #draft
+* status = #active
 * intent = #plan
-* subject.reference = "placeholder"
+
+// subject ← QR.subject.reference (Patient via launchContext)
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 
 // reasonReference -> Bezugsdiagnose (Condition) aus SDC Choice Selection
-* reasonReference.reference = "placeholder"
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* reasonReference.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+* reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 // --- Questionnaire ---
 Instance: senologie-op-planung
@@ -52,6 +54,17 @@ Usage: #definition
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
 
+
+// Launch Context: Diagnose (Condition als Anker für Pre-Population)
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+* extension[=].extension[+].url = "name"
+* extension[=].extension[=].valueCoding.system = "https://www.senologie.org/fhir/CodeSystem/launchContext"
+* extension[=].extension[=].valueCoding.code = #diagnosis
+* extension[=].extension[=].valueCoding.display = "Diagnose (Anker-Condition)"
+* extension[=].extension[+].url = "type"
+* extension[=].extension[=].valueCode = #Condition
+* extension[=].extension[+].url = "description"
+* extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
 // ============================================================
 // Items
 // ============================================================
@@ -86,15 +99,23 @@ Usage: #definition
 * item[=].required = true
 * item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.code.text"
 
-// Seite
+// Seite (korrigierte SCT-Codes)
 * item[+].linkId = "seitenlokalisation"
 * item[=].text = "Seite"
 * item[=].type = #choice
 * item[=].required = true
 * item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.bodySite"
-* item[=].answerOption[+].valueCoding = $SCT#80248007 "Left breast structure"
-* item[=].answerOption[+].valueCoding = $SCT#73056007 "Right breast structure"
-* item[=].answerOption[+].valueCoding = $SCT#63762007 "Both breasts"
+* item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+
+// Tumor-Entität(en) — User picked die zu operierenden BodyStructures
+* item[+].linkId = "op-tumor-entitaet"
+* item[=].text = "Zu operierende Tumor-Entität(en)"
+* item[=].type = #reference
+* item[=].repeats = true
+* item[=].required = false
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+* item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].extension[=].valueExpression.expression = "BodyStructure?patient={{%patient.id}}&active=true"
 
 // Intention / Grund der OP
 * item[+].linkId = "intention"
@@ -123,10 +144,7 @@ Usage: #definition
 * item[=].type = #choice
 * item[=].required = false
 * item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.valueCodeableConcept"
-* item[=].answerOption[+].valueCoding = $SCT#405815000 "Procedure device"
-* item[=].answerOption[+].valueCoding = $SCT#397956004 "Wire guided localization of breast lesion"
-* item[=].answerOption[+].valueCoding = $SCT#77343006 "Angiography"
-* item[=].answerOption[+].valueString = "Keine"
+* item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 
 // Planungsdetails / Notes
 * item[+].linkId = "notes"

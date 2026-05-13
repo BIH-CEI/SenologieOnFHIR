@@ -12,10 +12,10 @@ Usage: #inline
 * code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy"
 * code.text = "Strahlentherapie"
 * category = $SCT#1287742003 "Radiotherapy"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* reasonReference.reference.extension.valueString = "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+* reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 // --- Questionnaire ---
 Instance: senologie-strahlentherapie-quest
@@ -42,6 +42,17 @@ Usage: #definition
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
 
+
+// Launch Context: Diagnose (Condition als Anker für Pre-Population)
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+* extension[=].extension[+].url = "name"
+* extension[=].extension[=].valueCoding.system = "https://www.senologie.org/fhir/CodeSystem/launchContext"
+* extension[=].extension[=].valueCoding.code = #diagnosis
+* extension[=].extension[=].valueCoding.display = "Diagnose (Anker-Condition)"
+* extension[=].extension[+].url = "type"
+* extension[=].extension[=].valueCode = #Condition
+* extension[=].extension[+].url = "description"
+* extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
 // ============================================================
 // Bezugsdiagnose
 // ============================================================
@@ -71,9 +82,7 @@ Usage: #definition
 * item[=].item[=].text = "Intention"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373846009 "Adjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373847000 "Neoadjuvant"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#363676003 "Palliativ"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
 
 // Startdatum
 * item[=].item[+].linkId = "rt-startdatum"
@@ -87,14 +96,22 @@ Usage: #definition
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 
-// Seite
+// Seite (korrigierte SCT-Codes)
 * item[=].item[+].linkId = "rt-seite"
 * item[=].item[=].text = "Bestrahlte Seite"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#80248007 "Links"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#73056007 "Rechts"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#63762007 "Beidseits"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+
+// Tumor-Entität(en) — User picked die bestrahlten BodyStructures
+* item[=].item[+].linkId = "rt-tumor-entitaet"
+* item[=].item[=].text = "Bestrahlte Tumor-Entität(en)"
+* item[=].item[=].type = #reference
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+* item[=].item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].item[=].extension[=].valueExpression.expression = "BodyStructure?patient={{%patient.id}}&active=true"
 
 // Simultane Radiochemotherapie
 * item[=].item[+].linkId = "rt-simultane-rct"
@@ -116,20 +133,14 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].repeats = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76752008 "Ganze Brust"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#78904004 "Brustwand"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#68171009 "Axilläre Lymphknoten"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76838003 "Supraklavikuläre Lymphknoten"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#245282001 "Parasternale Lymphknoten"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-zielvolumen"
 
 // Applikationsart
 * item[=].item[+].linkId = "rt-applikationsart"
 * item[=].item[=].text = "Applikationsart"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1163834000 "3D-konformale Bestrahlung"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#1163833006 "IMRT (intensitätsmoduliert)"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#152198000 "Brachytherapie"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-applikationsart"
 
 // Gesamtdosis
 * item[=].item[+].linkId = "rt-gesamtdosis"

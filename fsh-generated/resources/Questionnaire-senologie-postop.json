@@ -17,16 +17,22 @@
         ]
       },
       "subject": {
-        "reference": "placeholder"
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "reasonReference": [
         {
-          "reference": "placeholder",
           "_reference": {
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+                "valueString": "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
               }
             ]
           }
@@ -52,7 +58,14 @@
         ]
       },
       "subject": {
-        "reference": "placeholder"
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "final"
     }
@@ -70,6 +83,27 @@
         {
           "url": "type",
           "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        },
+        {
+          "url": "description",
+          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -149,34 +183,28 @@
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "80248007",
-                "system": "http://snomed.info/sct",
-                "display": "Left breast structure"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "73056007",
-                "system": "http://snomed.info/sct",
-                "display": "Right breast structure"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "63762007",
-                "system": "http://snomed.info/sct",
-                "display": "Both breasts"
-              }
-            }
-          ],
           "linkId": "op-seite",
           "text": "Seite",
           "type": "choice",
           "required": true,
-          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.bodySite"
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.bodySite",
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+        },
+        {
+          "extension": [
+            {
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "BodyStructure?patient={{%patient.id}}&active=true"
+              },
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+            }
+          ],
+          "linkId": "op-tumor-entitaet",
+          "text": "Operierte Tumor-Entität(en)",
+          "type": "reference",
+          "repeats": true,
+          "required": false
         },
         {
           "linkId": "op-datum",
@@ -193,62 +221,26 @@
           "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.text"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "K",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
-                "display": "kurativ"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "P",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
-                "display": "palliativ"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "D",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
-                "display": "diagnostisch"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "R",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
-                "display": "Revision/Komplikation"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "S",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
-                "display": "sonstiges"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "X",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention",
-                "display": "Fehlende Angabe"
-              }
-            }
-          ],
           "linkId": "op-intention",
           "text": "OP-Intention",
           "type": "choice",
           "required": false,
-          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.extension:Intention.valueCodeableConcept"
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.extension:Intention.valueCodeableConcept",
+          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-operation-intention"
         },
         {
-          "linkId": "op-outcome",
-          "text": "OP-Outcome (z.B. R-Status, Sentinel)",
-          "type": "string",
+          "linkId": "op-r-status",
+          "text": "Resektionsstatus (R)",
+          "type": "choice",
           "required": false,
-          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.outcome.text"
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.outcome",
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
+        },
+        {
+          "linkId": "op-sentinel-anzahl-befallen",
+          "text": "Sentinel-LK: Anzahl befallen (von Anzahl entnommen)",
+          "type": "string",
+          "required": false
         },
         {
           "linkId": "followup-drainage",
@@ -303,48 +295,12 @@
       ],
       "item": [
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "1367519000",
-                "system": "http://snomed.info/sct",
-                "display": "Clavien-Dindo classification grade I"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "1367520006",
-                "system": "http://snomed.info/sct",
-                "display": "Clavien-Dindo classification grade II"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "1367521005",
-                "system": "http://snomed.info/sct",
-                "display": "Clavien-Dindo classification grade III"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "1367524002",
-                "system": "http://snomed.info/sct",
-                "display": "Clavien-Dindo classification grade IV"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "1367527009",
-                "system": "http://snomed.info/sct",
-                "display": "Clavien-Dindo classification grade V"
-              }
-            }
-          ],
           "linkId": "clavien-dindo",
           "text": "Clavien-Dindo-Grad",
           "type": "choice",
           "required": false,
-          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.valueCodeableConcept"
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.valueCodeableConcept",
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-clavien-dindo"
         },
         {
           "linkId": "komplikation-datum",

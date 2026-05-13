@@ -2,7 +2,7 @@ Profile: Senologie_Pathologie_Praeparat
 Parent: MII_PR_Patho_Specimen
 Id: senologie-pathologie-praeparat
 Title: "BIH Senologie Pathologisches Präparat"
-Description: "Specimen für pathologische Präparate aus dotbase (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details"
+Description: "Specimen für pathologische Präparate (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details"
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -16,7 +16,7 @@ Description: "Specimen für pathologische Präparate aus dotbase (Biopsie, Resek
 // Art des Präparats (Biopsie, Resektat, etc.)
 * type MS
 * type ^short = "Art des Präparats"
-* type ^comment = "Aus dotbase: 'Art des Präparats' (z.B. Biopsie, Resektat)"
+* type ^comment = "Art des Präparats: (z.B. Biopsie, Resektat)"
 * type ^mapping[+].identity = "lm"
 * type ^mapping[=].map = "Pathologie.Praeparat.Art"
 
@@ -33,14 +33,14 @@ Description: "Specimen für pathologische Präparate aus dotbase (Biopsie, Resek
 // Entnahme-Methode (trägt Kontext: intraoperativ/präoperativ)
 * collection.method MS
 * collection.method ^short = "Entnahme-Methode / Timing"
-* collection.method ^comment = "Aus dotbase: 'Zeitpunkt Präparatentnahme' (intraop, präop, etc.) als Methoden-Kontext"
+* collection.method ^comment = "Zeitpunkt Präparatentnahme: (intraop, präop, etc.) als Methoden-Kontext"
 * collection.method ^mapping[+].identity = "lm"
 * collection.method ^mapping[=].map = "Pathologie.Praeparat.Entnahmemethode"
 
 // Zeitpunkt der Entnahme
 * collection.collected[x] MS
 * collection.collected[x] ^short = "Datum der Präparateentnahme"
-* collection.collected[x] ^comment = "Aus dotbase: 'Datum Präparateentnahme'"
+* collection.collected[x] ^comment = "'Datum Präparateentnahme'"
 * collection.collected[x] ^mapping[+].identity = "lm"
 * collection.collected[x] ^mapping[=].map = "Pathologie.DatumEntnahme | Pathologie.ZeitpunktEntnahme"
 

@@ -3,14 +3,39 @@
   "id": "senologie-diagnose",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose",
   "title": "Fragebogen: Diagnose Mamma",
-  "description": "Fragebogen zur Erfassung der senologischen Diagnose. Unterstützt das gesamte Spektrum von invasivem Karzinom über DCIS und B3-Läsionen bis hin zu benignen Befunden. Nutzt SDC Template-based Extraction zur Erzeugung einer Condition-Ressource.",
+  "description": "Klinische Anker-Diagnose der Senologie (Mammakarzinom, in-situ, B3-Läsion, benigne Befunde, kosmetische/funktionelle Anomalien). Bewusst schlank: TNM, Grading und detailliertes Staging werden in den Folge-Formularen Bildgebung, Pathologie und Verlauf erhoben.",
   "subjectType": [
     "Patient"
   ],
   "contained": [
     {
       "resourceType": "Condition",
-      "id": "diagnose-maligne-template",
+      "id": "diagnose-condition-template",
+      "clinicalStatus": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            "_code": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "iif(%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.code = 'bc-recurrence', 'recurrence', 'active')"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
       "verificationStatus": {
         "coding": [
           {
@@ -21,27 +46,8 @@
               }
             ],
             "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status"
-          },
-          {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherung-methode').answer.valueCoding"
-              }
-            ],
-            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung"
           }
         ]
-      },
-      "subject": {
-        "_reference": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-              "valueString": "%qr.subject.reference"
-            }
-          ]
-        }
       },
       "code": {
         "coding": [
@@ -49,10 +55,19 @@
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding"
+                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.where(system='http://snomed.info/sct')"
               }
             ],
             "system": "http://snomed.info/sct"
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.where(system='https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom')"
+              }
+            ],
+            "system": "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
           }
         ]
       },
@@ -67,6 +82,17 @@
                 }
               ],
               "system": "http://snomed.info/sct"
+            },
+            {
+              "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation",
+              "_code": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "iif(%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-seite').answer.valueCoding.code = '24028007', 'R', iif(%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-seite').answer.valueCoding.code = '7771000', 'L', 'B'))"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -84,26 +110,23 @@
           }
         }
       ],
-      "category": [
+      "note": [
         {
-          "coding": [
-            {
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-typ').answer.valueCoding"
-                }
-              ],
-              "system": "http://snomed.info/sct"
-            }
-          ]
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-details').answer.valueString"
+              }
+            ]
+          }
         }
       ],
-      "clinicalStatus": {
-        "coding": [
+      "_onsetDateTime": {
+        "extension": [
           {
-            "code": "active",
-            "system": "http://terminology.hl7.org/CodeSystem/condition-clinical"
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='lokalisation-zeit').item.where(linkId='diagnose-datum').answer.valueDate"
           }
         ]
       }
@@ -131,7 +154,7 @@
         {
           "url": "template",
           "valueReference": {
-            "reference": "#diagnose-maligne-template"
+            "reference": "#diagnose-condition-template"
           }
         }
       ],
@@ -162,130 +185,11 @@
     {
       "item": [
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "255217005",
-                "system": "http://snomed.info/sct",
-                "display": "Ersterkrankung"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "246455001",
-                "system": "http://snomed.info/sct",
-                "display": "Rezidiv"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "14799000",
-                "system": "http://snomed.info/sct",
-                "display": "Metastasierte Erkrankung"
-              }
-            }
-          ],
-          "linkId": "diagnose-typ",
-          "text": "Falltyp",
-          "type": "choice",
-          "required": true
-        },
-        {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "254837009",
-                "system": "http://snomed.info/sct",
-                "display": "Mammakarzinom"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "109889007",
-                "system": "http://snomed.info/sct",
-                "display": "Carcinoma in situ (DCIS)"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "439401001",
-                "system": "http://snomed.info/sct",
-                "display": "B3-Läsion"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "254845004",
-                "system": "http://snomed.info/sct",
-                "display": "Fibroadenom"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "27431007",
-                "system": "http://snomed.info/sct",
-                "display": "Fibrozystische Mastopathie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "53430007",
-                "system": "http://snomed.info/sct",
-                "display": "Mastodynie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "4754008",
-                "system": "http://snomed.info/sct",
-                "display": "Gynäkomastie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "83620003",
-                "system": "http://snomed.info/sct",
-                "display": "Mastitis non-puerperalis"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "399123008",
-                "system": "http://snomed.info/sct",
-                "display": "Einfache Mammazyste"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "449837001",
-                "system": "http://snomed.info/sct",
-                "display": "Komplexe Mammazyste"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "718220008",
-                "system": "http://snomed.info/sct",
-                "display": "Genetische Hochrisikosituation"
-              }
-            }
-          ],
           "linkId": "diagnose-sct",
           "text": "Diagnose",
           "type": "choice",
-          "required": true
-        },
-        {
-          "linkId": "diagnose-icd10",
-          "text": "ICD-10-GM Code",
-          "type": "string",
-          "required": false
-        },
-        {
-          "linkId": "diagnose-icd10-display",
-          "text": "ICD-10-GM Bezeichnung",
-          "type": "string",
-          "required": false
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-mamma-24"
         },
         {
           "enableWhen": [
@@ -293,178 +197,28 @@
               "question": "diagnose-sct",
               "operator": "=",
               "answerCoding": {
-                "code": "439401001",
+                "code": "269497004",
                 "system": "http://snomed.info/sct"
-              }
-            }
-          ],
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "427785007",
-                "system": "http://snomed.info/sct",
-                "display": "ADH — Atypische duktale Hyperplasie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "860895001",
-                "system": "http://snomed.info/sct",
-                "display": "FEA — Flache epitheliale Atypie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "99571000119102",
-                "system": "http://snomed.info/sct",
-                "display": "Papillom ohne Atypie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "1144917006",
-                "system": "http://snomed.info/sct",
-                "display": "Atypisches Papillom"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "390787006",
-                "system": "http://snomed.info/sct",
-                "display": "Radiäre Narbe / komplex sklerosierende Läsion"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "450697004",
-                "system": "http://snomed.info/sct",
-                "display": "LIN — ALH (Atypische lobuläre Hyperplasie)"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "444739008",
-                "system": "http://snomed.info/sct",
-                "display": "LIN — klassisches LCIS"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "444591006",
-                "system": "http://snomed.info/sct",
-                "display": "LIN — nicht-klassisches (pleomorphes) LCIS"
               }
             }
           ],
           "linkId": "diagnose-b3-detail",
           "text": "Details B3-Läsion",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-b3-subtypen"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "confirmed",
-                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                "display": "Gesichert"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "provisional",
-                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                "display": "Verdacht"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "differential",
-                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                "display": "Differentialdiagnose"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "unconfirmed",
-                "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                "display": "Nicht gesichert"
-              }
-            }
-          ],
           "linkId": "diagnose-sicherheit",
-          "text": "Diagnosestatus",
+          "text": "Diagnostische Sicherheit",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sicherheit"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "1",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "klinisch"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "2",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "klinische Diagnostik"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "4",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "spezifische Tumor-Marker"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "5",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "Zytologie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "7",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "histologische Untersuchung eines Primärtumors"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "6",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "histologische Untersuchung einer Metastase"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "8",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "Zytogenetisch und/oder molekularer Test"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "9",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung",
-                "display": "unbekannt"
-              }
-            }
-          ],
-          "linkId": "diagnose-sicherung-methode",
-          "text": "Diagnosesicherung (oBDS)",
-          "type": "choice",
-          "required": false
-        },
-        {
-          "linkId": "diagnose-sonstiges",
-          "text": "Details Sonstiges",
-          "type": "string",
+          "linkId": "diagnose-details",
+          "text": "Details",
+          "type": "text",
           "required": false
         }
       ],
@@ -476,37 +230,15 @@
     {
       "item": [
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "24028007",
-                "system": "http://snomed.info/sct",
-                "display": "Rechts"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "7771000",
-                "system": "http://snomed.info/sct",
-                "display": "Links"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "51440002",
-                "system": "http://snomed.info/sct",
-                "display": "Beidseits"
-              }
-            }
-          ],
           "linkId": "diagnose-seite",
           "text": "Seitenlokalisation",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
         },
         {
           "linkId": "diagnose-datum",
-          "text": "Erstdiagnosedatum",
+          "text": "Datum",
           "type": "date",
           "required": true
         }
@@ -515,49 +247,6 @@
       "text": "Lokalisation & Zeitpunkt",
       "type": "group",
       "required": true
-    },
-    {
-      "item": [
-        {
-          "linkId": "staging-ct",
-          "text": "cT",
-          "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-t-kategorie-werte"
-        },
-        {
-          "linkId": "staging-cn",
-          "text": "cN",
-          "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-n-kategorie-werte"
-        },
-        {
-          "linkId": "staging-cm",
-          "text": "cM",
-          "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-m-kategorie-werte"
-        },
-        {
-          "linkId": "staging-uicc",
-          "text": "UICC-Stadium",
-          "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-tnm-uicc-stadium"
-        },
-        {
-          "linkId": "staging-grading",
-          "text": "Grading",
-          "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-grading"
-        }
-      ],
-      "linkId": "staging",
-      "text": "Staging",
-      "type": "group",
-      "required": false
     }
   ],
   "name": "QuestDiagnose",

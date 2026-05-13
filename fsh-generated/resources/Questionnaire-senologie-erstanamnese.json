@@ -22,12 +22,14 @@
         "text": "Gynäkologische Anamnese"
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "final"
     },
@@ -49,12 +51,14 @@
         ]
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "final"
     },
@@ -62,12 +66,14 @@
       "resourceType": "FamilyMemberHistory",
       "id": "anamnese-familie-template",
       "patient": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "completed",
       "relationship": {
@@ -109,76 +115,18 @@
           "required": true
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "185387006",
-                "system": "http://snomed.info/sct",
-                "display": "Erstvorstellung"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "726007",
-                "system": "http://snomed.info/sct",
-                "display": "Zweitmeinung"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "390906007",
-                "system": "http://snomed.info/sct",
-                "display": "Nachsorge"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "183620003",
-                "system": "http://snomed.info/sct",
-                "display": "Wiedervorstellung"
-              }
-            }
-          ],
           "linkId": "vorstellungsgrund",
           "text": "Vorstellungsgrund",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "268547008",
-                "system": "http://snomed.info/sct",
-                "display": "Screening-detektiert"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "444589003",
-                "system": "http://snomed.info/sct",
-                "display": "Intervallkarzinom"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "129434009",
-                "system": "http://snomed.info/sct",
-                "display": "Selbstuntersuchung"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "261087003",
-                "system": "http://snomed.info/sct",
-                "display": "Zufallsbefund"
-              }
-            }
-          ],
           "linkId": "screeningstatus",
           "text": "Screeningstatus",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-detektion-modus"
         },
         {
           "code": [
@@ -265,34 +213,12 @@
               "display": "Tobacco smoking status"
             }
           ],
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "LA18978-9",
-                "system": "http://loinc.org",
-                "display": "Nie geraucht"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "LA15920-4",
-                "system": "http://loinc.org",
-                "display": "Ehemaliger Raucher"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "LA18976-3",
-                "system": "http://loinc.org",
-                "display": "Aktueller Raucher"
-              }
-            }
-          ],
           "linkId": "raucherstatus-wert",
           "text": "Raucherstatus",
           "type": "choice",
           "required": false,
-          "definition": "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus#Observation.valueCodeableConcept"
+          "definition": "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus#Observation.valueCodeableConcept",
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-raucherstatus"
         }
       ],
       "linkId": "raucherstatus",
@@ -337,34 +263,12 @@
               "display": "Age at menopause"
             }
           ],
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "309606002",
-                "system": "http://snomed.info/sct",
-                "display": "Prämenopausal"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "161541000119104",
-                "system": "http://snomed.info/sct",
-                "display": "Perimenopausal"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "76498008",
-                "system": "http://snomed.info/sct",
-                "display": "Postmenopausal"
-              }
-            }
-          ],
           "linkId": "menopausenstatus",
           "text": "Menopausenstatus",
           "type": "choice",
           "required": false,
-          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueCodeableConcept"
+          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueCodeableConcept",
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus-erweitert"
         },
         {
           "code": [
@@ -402,26 +306,11 @@
               "display": "Hormone replacement therapy"
             }
           ],
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "373066001",
-                "system": "http://snomed.info/sct",
-                "display": "Ja"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "373067005",
-                "system": "http://snomed.info/sct",
-                "display": "Nein"
-              }
-            }
-          ],
           "linkId": "hormonersatztherapie",
           "text": "Hormonersatztherapie (HRT)",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ja-nein"
         },
         {
           "answerOption": [
@@ -470,72 +359,12 @@
           ],
           "item": [
             {
-              "answerOption": [
-                {
-                  "valueCoding": {
-                    "code": "MTH",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Mutter"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "SIS",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Schwester"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "DAUC",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Tochter"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "GRMTH",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Großmutter"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "AUNT",
-                    "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                    "display": "Tante"
-                  }
-                }
-              ],
               "linkId": "verwandtschaftsgrad",
               "text": "Verwandtschaftsgrad",
               "type": "choice",
               "required": true
             },
             {
-              "answerOption": [
-                {
-                  "valueCoding": {
-                    "code": "254837009",
-                    "system": "http://snomed.info/sct",
-                    "display": "Mammakarzinom"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "363443007",
-                    "system": "http://snomed.info/sct",
-                    "display": "Ovarialkarzinom"
-                  }
-                },
-                {
-                  "valueCoding": {
-                    "code": "74964007",
-                    "system": "http://snomed.info/sct",
-                    "display": "Sonstiges"
-                  }
-                }
-              ],
               "linkId": "erkrankung",
               "text": "Erkrankung",
               "type": "choice",
@@ -552,7 +381,8 @@
           "text": "Familienmitglied",
           "type": "group",
           "required": false,
-          "repeats": true
+          "repeats": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
         }
       ],
       "linkId": "familienanamnese",

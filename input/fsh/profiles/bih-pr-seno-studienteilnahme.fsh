@@ -2,7 +2,7 @@ Profile: Senologie_Studienteilnahme
 Parent: ResearchSubject
 Id: senologie-studienteilnahme
 Title: "BIH Senologie Studienteilnahme"
-Description: "ResearchSubject für klinische Studienteilnahme in der Senologie aus dotbase Questionnaire 'Studien'. Bildet Studienname, Screeningstatus, Studienscreening, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab."
+Description: "ResearchSubject für klinische Studienteilnahme in der Senologie. Bildet Studienname, Screeningstatus, Studienscreening, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -16,7 +16,7 @@ Description: "ResearchSubject für klinische Studienteilnahme in der Senologie a
 // --- Teilnahmestatus → ResearchSubject.status ---
 * status MS
 * status ^short = "Teilnahmestatus"
-* status ^comment = "Aus dotbase: Teilnahmestatus der Patientin. Mapping auf ResearchSubject.status (candidate | screening | eligible | on-study | on-study-intervention | on-study-observation | withdrawn | follow-up | off-study | not-registered)"
+* status ^comment = "Teilnahmestatus der Patientin. Mapping auf ResearchSubject.status (candidate | screening | eligible | on-study | on-study-intervention | on-study-observation | withdrawn | follow-up | off-study | not-registered)"
 
 // --- Studie (ResearchStudy-Referenz) ---
 * study MS
@@ -36,7 +36,7 @@ Description: "ResearchSubject für klinische Studienteilnahme in der Senologie a
 // --- Studienarm → assignedArm ---
 * assignedArm MS
 * assignedArm ^short = "Studienarm"
-* assignedArm ^comment = "Aus dotbase: Studienarm der Patientin"
+* assignedArm ^comment = "Studienarm der Patientin"
 
 // --- Einwilligung ---
 * consent MS
@@ -48,7 +48,7 @@ Description: "ResearchSubject für klinische Studienteilnahme in der Senologie a
 // Screeningstatus
 * extension contains EX_Senologie_Screeningstatus named Screeningstatus 0..1
 * extension[Screeningstatus] ^short = "Screeningstatus"
-* extension[Screeningstatus] ^comment = "Aus dotbase: Screeningstatus der Studienteilnahme"
+* extension[Screeningstatus] ^comment = "Screeningstatus der Studienteilnahme"
 
 // Studienscreening (K03)
 * extension contains EX_Senologie_Studienscreening named Studienscreening 0..1
@@ -58,7 +58,7 @@ Description: "ResearchSubject für klinische Studienteilnahme in der Senologie a
 // Kontaktperson für die Studie
 * extension contains EX_Senologie_Studienkontakt named Kontakt 0..1
 * extension[Kontakt] ^short = "Kontaktperson für die Studie"
-* extension[Kontakt] ^comment = "Aus dotbase: Kontakt"
+* extension[Kontakt] ^comment = "Kontakt"
 
 // Aufklärungsdatum
 * extension contains EX_Senologie_Aufklaerungsdatum named Aufklaerungsdatum 0..1

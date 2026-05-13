@@ -22,12 +22,14 @@
         "text": "Systemtherapie"
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "reasonReference": [
         {
@@ -35,7 +37,7 @@
             "extension": [
               {
                 "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+                "valueString": "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
               }
             ]
           }
@@ -50,12 +52,14 @@
         "text": "Substanz"
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "active"
     }
@@ -73,6 +77,27 @@
         {
           "url": "type",
           "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        },
+        {
+          "url": "description",
+          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -127,69 +152,18 @@
       ],
       "item": [
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "385786002",
-                "system": "http://snomed.info/sct",
-                "display": "Chemotherapie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "169413002",
-                "system": "http://snomed.info/sct",
-                "display": "Endokrine Therapie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "432105003",
-                "system": "http://snomed.info/sct",
-                "display": "Zielgerichtete Therapie"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "76334006",
-                "system": "http://snomed.info/sct",
-                "display": "Immuntherapie"
-              }
-            }
-          ],
           "linkId": "therapieart",
           "text": "Therapieart",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-art"
         },
         {
-          "answerOption": [
-            {
-              "valueCoding": {
-                "code": "373847000",
-                "system": "http://snomed.info/sct",
-                "display": "Neoadjuvant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "373846009",
-                "system": "http://snomed.info/sct",
-                "display": "Adjuvant"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "363676003",
-                "system": "http://snomed.info/sct",
-                "display": "Palliativ"
-              }
-            }
-          ],
           "linkId": "intention",
           "text": "Intention",
           "type": "choice",
-          "required": true
+          "required": true,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
         },
         {
           "enableWhen": [

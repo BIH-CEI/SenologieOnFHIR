@@ -2,7 +2,7 @@ Profile: Senologie_Pathologie_Befund
 Parent: MII_PR_Patho_Report
 Id: senologie-pathologie-befund
 Title: "BIH Senologie Pathologie Befund"
-Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionnaire 'Pathologie'. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert."
+Description: "DiagnosticReport für pathologische Befunde. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert."
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -13,8 +13,7 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 * ^mapping[=].name = "BIH LM Senologie"
 * ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie"
 
-// Basis Mapping aus dotbase
-* status MS
+// Basis-Mapping
 * status = #final (exactly)
 * status ^short = "Abgeschlossener Pathologie-Bericht"
 
@@ -30,7 +29,7 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 // Zeitpunkt der Präparateentnahme
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Datum der Präparateentnahme"
-* effectiveDateTime ^comment = "Aus dotbase: 'Datum Präparateentnahme'"
+* effectiveDateTime ^comment = "'Datum Präparateentnahme'"
 * effectiveDateTime ^mapping[+].identity = "lm"
 * effectiveDateTime ^mapping[=].map = "Pathologie.DatumEntnahme"
 
@@ -42,7 +41,7 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 // Pathologisches Institut / Labor (replaces EX_Senologie_PathologyLab)
 * performer MS
 * performer ^short = "Pathologisches Institut / befundender Pathologe"
-* performer ^comment = "Aus dotbase: 'Pathologisches Institut' (choice) — ersetzt ehemalige PathologyLab-Extension"
+* performer ^comment = "Pathologisches Institut: (choice) — ersetzt ehemalige PathologyLab-Extension"
 * performer ^mapping[+].identity = "lm"
 * performer ^mapping[=].map = "Pathologie.PathologischesInstitut"
 
@@ -65,7 +64,7 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 
 // Freitext-Befund
 * conclusion ^short = "Gesamtbeurteilung des Pathologen"
-* conclusion ^comment = "Aus dotbase: 'Details' (text)"
+* conclusion ^comment = "Details: (text)"
 * conclusion ^mapping[+].identity = "lm"
 * conclusion ^mapping[=].map = "Pathologie.Befundtext"
 

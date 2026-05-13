@@ -22,12 +22,14 @@
         "text": "Klinischer Status Verlauf"
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "final"
     },
@@ -45,12 +47,14 @@
         "text": "Tumorstatus Verlauf"
       },
       "subject": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%patient"
-          }
-        ]
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
       },
       "status": "final"
     }
@@ -68,6 +72,27 @@
         {
           "url": "type",
           "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        },
+        {
+          "url": "description",
+          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -276,43 +301,27 @@
       ],
       "item": [
         {
-          "answerOption": [
+          "extension": [
             {
-              "valueCoding": {
-                "code": "103338009",
-                "system": "http://snomed.info/sct",
-                "display": "In full remission"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "103337004",
-                "system": "http://snomed.info/sct",
-                "display": "In partial remission"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "58158008",
-                "system": "http://snomed.info/sct",
-                "display": "Stable"
-              }
-            },
-            {
-              "valueCoding": {
-                "code": "271299001",
-                "system": "http://snomed.info/sct",
-                "display": "Tumor progression"
-              }
-            },
-            {
-              "valueString": "Kein Anhalt für Tumor"
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "BodyStructure?patient={{%patient.id}}&active=true"
+              },
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
             }
           ],
+          "linkId": "verlauf-tumor-entitaet",
+          "text": "Beurteilte Tumor-Entität(en)",
+          "type": "reference",
+          "repeats": true,
+          "required": false
+        },
+        {
           "linkId": "tumorstatus-gesamtbeurteilung",
           "text": "Gesamtbeurteilung Verlauf",
           "type": "choice",
-          "required": false
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
         },
         {
           "code": [

@@ -15,8 +15,8 @@ Usage: #inline
 * status = #final
 * code = $LOINC#89221-6 "Gynecology History and physical note"
 * code.text = "Gynäkologische Anamnese"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 
 // --- Contained template: Observation (Raucherstatus) ---
 Instance: anamnese-raucher-template
@@ -26,8 +26,8 @@ Usage: #inline
 * status = #final
 * code.coding[+] = $LOINC#72166-2 "Tobacco smoking status"
 * code.coding[+] = $SCT#77176002 "Smoker"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 
 // --- Contained template: FamilyMemberHistory ---
 Instance: anamnese-familie-template
@@ -36,8 +36,8 @@ Usage: #inline
 * id = "anamnese-familie-template"
 * status = #completed
 * relationship = http://terminology.hl7.org/CodeSystem/v3-RoleCode#FAMMEMB "family member"
-* patient.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* patient.extension.valueString = "%patient"
+* patient.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* patient.reference.extension.valueString = "%resource.subject.reference"
 
 // --- Questionnaire ---
 Instance: senologie-erstanamnese
@@ -84,19 +84,13 @@ Usage: #definition
 * item[=].item[=].text = "Vorstellungsgrund"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueCoding = $SCT#185387006 "Erstvorstellung"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#726007 "Zweitmeinung"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#390906007 "Nachsorge"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#183620003 "Wiedervorstellung"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
 
 * item[=].item[+].linkId = "screeningstatus"
 * item[=].item[=].text = "Screeningstatus"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#268547008 "Screening-detektiert"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#444589003 "Intervallkarzinom"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#129434009 "Selbstuntersuchung"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#261087003 "Zufallsbefund"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-detektion-modus"
 
 // Größe (cm)
 * item[=].item[+].linkId = "groesse"
@@ -143,9 +137,7 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#72166-2 "Tobacco smoking status"
 * item[=].item[=].definition = "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus#Observation.valueCodeableConcept"
-* item[=].item[=].answerOption[+].valueCoding = $LOINC#LA18978-9 "Nie geraucht"
-* item[=].item[=].answerOption[+].valueCoding = $LOINC#LA15920-4 "Ehemaliger Raucher"
-* item[=].item[=].answerOption[+].valueCoding = $LOINC#LA18976-3 "Aktueller Raucher"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-raucherstatus"
 
 // ============================================================
 // Group 3: Gynäkologische Anamnese → Observation
@@ -173,9 +165,7 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#42802-9 "Age at menopause"
 * item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueCodeableConcept"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#309606002 "Prämenopausal"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#161541000119104 "Perimenopausal"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#76498008 "Postmenopausal"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus-erweitert"
 
 * item[=].item[+].linkId = "gravida"
 * item[=].item[=].text = "Gravida (Schwangerschaften)"
@@ -196,8 +186,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#266717002 "Hormone replacement therapy"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373066001 "Ja"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#373067005 "Nein"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ja-nein"
 
 * item[=].item[+].linkId = "orale-kontrazeption"
 * item[=].item[=].text = "Hormonelle Verhütung"
@@ -235,19 +224,13 @@ Usage: #definition
 * item[=].item[=].item[=].text = "Verwandtschaftsgrad"
 * item[=].item[=].item[=].type = #choice
 * item[=].item[=].item[=].required = true
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#MTH "Mutter"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#SIS "Schwester"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#DAUC "Tochter"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#GRMTH "Großmutter"
-* item[=].item[=].item[=].answerOption[+].valueCoding = http://terminology.hl7.org/CodeSystem/v3-RoleCode#AUNT "Tante"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verwandtschaftsgrad"
 
 * item[=].item[=].item[+].linkId = "erkrankung"
 * item[=].item[=].item[=].text = "Erkrankung"
 * item[=].item[=].item[=].type = #choice
 * item[=].item[=].item[=].required = true
-* item[=].item[=].item[=].answerOption[+].valueCoding = $SCT#254837009 "Mammakarzinom"
-* item[=].item[=].item[=].answerOption[+].valueCoding = $SCT#363443007 "Ovarialkarzinom"
-* item[=].item[=].item[=].answerOption[+].valueCoding = $SCT#74964007 "Sonstiges"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
 
 * item[=].item[=].item[+].linkId = "erkrankungsalter"
 * item[=].item[=].item[=].text = "Erkrankungsalter (Jahre)"

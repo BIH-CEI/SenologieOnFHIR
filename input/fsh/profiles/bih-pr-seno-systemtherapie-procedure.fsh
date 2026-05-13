@@ -41,7 +41,7 @@ Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt I
 
 * outcome MS
 * outcome ^short = "Therapie-Status am Ende"
-* outcome ^comment = "Aus dotbase: Status (abgeschlossen, abgebrochen, etc.) — ersetzt ehemalige TherapyStatus-Extension"
+* outcome ^comment = "Status (abgeschlossen, abgebrochen, etc.) — ersetzt ehemalige TherapyStatus-Extension"
 
 // usedCode (Protokolle) — inherited from MII Onko with VS mii-vs-onko-systemische-therapie-protokolle
 

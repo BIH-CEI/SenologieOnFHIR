@@ -15,8 +15,8 @@ Usage: #inline
 * status = #final
 * code = $LOINC#11323-3 "Health status"
 * code.text = "Klinischer Status Verlauf"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 
 // --- Contained template: Observation (Tumorstatus / Follow-Up) ---
 Instance: verlauf-tumorstatus-template
@@ -26,8 +26,8 @@ Usage: #inline
 * status = #final
 * code = $LOINC#88040-1 "Response to cancer treatment"
 * code.text = "Tumorstatus Verlauf"
-* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* subject.extension.valueString = "%patient"
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
 
 // --- Questionnaire ---
 Instance: senologie-verlauf
@@ -55,6 +55,17 @@ Usage: #definition
 * extension[=].extension[+].url = "type"
 * extension[=].extension[=].valueCode = #Patient
 
+
+// Launch Context: Diagnose (Condition als Anker für Pre-Population)
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+* extension[=].extension[+].url = "name"
+* extension[=].extension[=].valueCoding.system = "https://www.senologie.org/fhir/CodeSystem/launchContext"
+* extension[=].extension[=].valueCoding.code = #diagnosis
+* extension[=].extension[=].valueCoding.display = "Diagnose (Anker-Condition)"
+* extension[=].extension[+].url = "type"
+* extension[=].extension[=].valueCode = #Condition
+* extension[=].extension[+].url = "description"
+* extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
 // ============================================================
 // Group 1: Kontrolltermin
 // Administrativ — kein eigener Extraction Context.
@@ -163,15 +174,22 @@ Usage: #definition
 * item[=].extension[=].extension[+].url = "template"
 * item[=].extension[=].extension[=].valueReference = Reference(verlauf-tumorstatus-template)
 
+// Tumor-Entität(en) — User picked die aktuell beurteilten BodyStructures
+// Beurteilung gilt pro picked BS; ggf. mehrere BS für getrennte Response-Bewertungen
+* item[=].item[+].linkId = "verlauf-tumor-entitaet"
+* item[=].item[=].text = "Beurteilte Tumor-Entität(en)"
+* item[=].item[=].type = #reference
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
+* item[=].item[=].extension[=].valueExpression.language = #application/x-fhir-query
+* item[=].item[=].extension[=].valueExpression.expression = "BodyStructure?patient={{%patient.id}}&active=true"
+
 * item[=].item[+].linkId = "tumorstatus-gesamtbeurteilung"
 * item[=].item[=].text = "Gesamtbeurteilung Verlauf"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueCoding = $SCT#103338009 "In full remission"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#103337004 "In partial remission"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#58158008 "Stable"
-* item[=].item[=].answerOption[+].valueCoding = $SCT#271299001 "Tumor progression"
-* item[=].item[=].answerOption[+].valueString = "Kein Anhalt für Tumor"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
 
 * item[=].item[+].linkId = "tumorstatus-lokalrezidiv"
 * item[=].item[=].text = "Lokalrezidiv"

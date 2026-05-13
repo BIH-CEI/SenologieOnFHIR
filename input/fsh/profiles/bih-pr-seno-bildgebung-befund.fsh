@@ -2,7 +2,7 @@ Profile: Senologie_Bildgebung_Befund
 Parent: DiagnosticReport
 Id: senologie-bildgebung-befund
 Title: "BIH Senologie Bildgebung Befund"
-Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.) aus dotbase Questionnaire 'Bildgebung Mamma V1.0'"
+Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.)"
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -13,8 +13,7 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 * ^mapping[=].name = "BIH LM Senologie"
 * ^mapping[=].comment = "Bezugselement im Logischen Modell: BildgebungMamma"
 
-// Basis Mapping aus dotbase
-* status MS
+// Basis-Mapping
 * status = #final (exactly)
 * status ^short = "Abschlossener Befundbericht"
 
@@ -44,7 +43,7 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 * code.coding[tomosynthesis] ^patternCoding.system = "http://radlex.org"
 * code.coding[tomosynthesis] ^patternCoding.code = #RID40755
 * code.coding[tomosynthesis] ^short = "Digital breast tomosynthesis"
-* code ^comment = "Aus dotbase: 'Modalität' (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes"
+* code ^comment = "Modalität: (Mammographie, Sonographie, MRT, Tomosynthese) mit LOINC/RADLEX Codes"
 * code ^mapping[+].identity = "lm"
 * code ^mapping[=].map = "BildgebungMamma.Art"
 
@@ -54,7 +53,7 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 // Zeitpunkt der Untersuchung
 * effectiveDateTime MS
 * effectiveDateTime ^short = "Datum der Untersuchung"
-* effectiveDateTime ^comment = "Aus dotbase: 'Datum' pro Modalität"
+* effectiveDateTime ^comment = "Datum: pro Modalität"
 * effectiveDateTime ^mapping[+].identity = "lm"
 * effectiveDateTime ^mapping[=].map = "BildgebungMamma.Datum"
 
@@ -73,7 +72,7 @@ Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie
 
 // Gesamtfeststellung/Zusammenfassung
 * conclusion ^short = "Gesamtzusammenfassung des Befundes"
-* conclusion ^comment = "Aus dotbase: 'Details (ausführlich)' Freitext"
+* conclusion ^comment = "Details (ausführlich): Freitext"
 * conclusion ^mapping[+].identity = "lm"
 * conclusion ^mapping[=].map = "BildgebungMamma.Befundtext"
 
