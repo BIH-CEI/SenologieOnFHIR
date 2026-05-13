@@ -125,15 +125,18 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
     src.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92833-3') then {
       slkbEntry.resource as slkbObs then { slkbObs.value as val then { val.value as v -> op.sentinelLkBefallen = truncate(v) "SetSLKBefallen"; } "MapSLKBefallenValue"; } "MapSLKBefallenObs";
     } "EntrySLKBefallen";
-    src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
-      erEntry.resource as erObs then { erObs.value as val then { val.coding as c where code = '10828004' -> op.hormonrezeptorStatusER = 'P' "SetERPositiv"; val.coding as c where code = '260385009' -> op.hormonrezeptorStatusER = 'N' "SetERNegativ"; val.coding as c where code = '261665006' -> op.hormonrezeptorStatusER = 'U' "SetERUnbekannt"; } "MapERValue"; } "MapERObs";
-    } "EntryER";
-    src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
-      prEntry.resource as prObs then { prObs.value as val then { val.coding as c where code = '10828004' -> op.hormonrezeptorStatusPR = 'P' "SetPRPositiv"; val.coding as c where code = '260385009' -> op.hormonrezeptorStatusPR = 'N' "SetPRNegativ"; val.coding as c where code = '261665006' -> op.hormonrezeptorStatusPR = 'U' "SetPRUnbekannt"; } "MapPRValue"; } "MapPRObs";
-    } "EntryPR";
-    src.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
-      herEntry.resource as herObs then { herObs.value as val then { val.coding as c where code = '10828004' -> op.her2Status = 'P' "SetHER2Positiv"; val.coding as c where code = '260385009' -> op.her2Status = 'N' "SetHER2Negativ"; val.coding as c where code = '261665006' -> op.her2Status = 'U' "SetHER2Unbekannt"; } "MapHER2Value"; } "MapHER2Obs";
-    } "EntryHER2";
+    // TODO: ER/PR/HER2-Status (O:ERSTATUS, O:PRSTATUS, O:HER2STATUS)
+    // Latenter op-Context-Bug: wenn die where-Clause matcht, scheitert Matchbox
+    // mit "target context not known: op" (gilt fuer alle sub-block-Mappings in
+    // diesem Operation-Block — pT/pN/grading/lk*/tg*; war bisher unsichtbar,
+    // weil die alten SNOMED-Codes 10828004 etc. nie matchten).
+    // Fix: Operation-Mappings als eigene group MapOperationBundle(bundle, op)
+    // refactorn — siehe Issue.
+    // Workaround bis dahin: ER/PR/HER2 werden ueber oBDS/OncoBox extrahiert.
+    //
+    // src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '40556-3') then { ... } "EntryER";
+    // src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then { ... } "EntryPR";
+    // src.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '48676-1') then { ... } "EntryHER2";
     src.entry as kompEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
       kompEntry.resource as kompObs -> op.komplikationen as kompItem then { kompObs.value as val then { val.coding as c then { c.code as cd -> kompItem.kuerzel = cd "SetKomplKuerzel"; } "MapKomplKuerzelCoding"; } "MapKomplValue"; } "MapKomplObs";
     } "EntryKomplikationen";
