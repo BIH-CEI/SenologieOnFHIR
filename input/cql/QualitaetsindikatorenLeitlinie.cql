@@ -6,7 +6,7 @@
 // Aufruf: POST /fhir/$cql mit expression = "QI_xx_Rate_Prozent"
 // ============================================================================
 
-library QualitaetsindikatorenLeitlinie version '0.3.0'
+library QualitaetsindikatorenLeitlinie version '0.4.0'
 
 using FHIR version '4.0.1'
 
@@ -47,29 +47,86 @@ define "Invasive oder DCIS":
 define "Alle Prozeduren":
   [Procedure]
 
+// Procedure-Defines: SNOMED CT primary (FHIR Common Data Model), OPS als Fallback
+// fuer deutsche Klinikdaten. So bleibt die CQL international auswertbar.
+
+// Brust-Biopsien (diagnostisch — wichtig fuer QI-2 / KB-12 Praeop. Sicherung)
+// SNOMED 119738008  Core biopsy of breast        (Stanzbiopsie)
+// SNOMED 1188850001 Vacuum-assisted biopsy       (Vakuumbiopsie)
+// SNOMED 122548005  Biopsy of breast (generic)
+// SNOMED 274474001  Biopsy of breast (procedure)
+// OPS    1-490*     Perkutane Biopsie
+// OPS    1-491*     Perkutane Stanzbiopsie
+// OPS    1-494*     Vakuum-Biopsie
+define "Brust Biopsien":
+  [Procedure] P
+    where exists(P.code.coding c
+      where (c.system = 'http://snomed.info/sct'
+        and (c.code = '119738008' or c.code = '1188850001'
+          or c.code = '122548005' or c.code = '274474001'))
+      or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops'
+        and (c.code.startsWith('1-490') or c.code.startsWith('1-491') or c.code.startsWith('1-494'))))
+
+// BET (Brusterhaltende Therapie)
+// SNOMED 392021009  Lumpectomy of breast
+// SNOMED 392090004  Partial mastectomy of breast
+// SNOMED 64368001   Partial mastectomy
+// OPS    5-870*     BET
 define "BET Operationen":
   [Procedure] P
-    where exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('5-870'))
+    where exists(P.code.coding c
+      where (c.system = 'http://snomed.info/sct'
+        and (c.code = '392021009' or c.code = '392090004' or c.code = '64368001'))
+      or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('5-870')))
 
+// Mastektomie (Brust komplett entfernt)
+// SNOMED 172043006  Simple mastectomy
+// SNOMED 359740005  Radical mastectomy
+// SNOMED 392011008  Mastectomy
+// OPS    5-871*, 5-872*
 define "Mastektomie Operationen":
   [Procedure] P
-    where exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops'
-      and (c.code.startsWith('5-872') or c.code.startsWith('5-871')))
+    where exists(P.code.coding c
+      where (c.system = 'http://snomed.info/sct'
+        and (c.code = '172043006' or c.code = '359740005' or c.code = '392011008'))
+      or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops'
+        and (c.code.startsWith('5-872') or c.code.startsWith('5-871'))))
 
+// Sentinel-LK-Biopsie
+// SNOMED 442619000  Sentinel lymph node biopsy
+// SNOMED 432722007  Excision of sentinel lymph node
+// OPS    5-401.1*   SLNB
 define "SNB Operationen":
   [Procedure] P
-    where exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('5-401'))
+    where exists(P.code.coding c
+      where (c.system = 'http://snomed.info/sct'
+        and (c.code = '442619000' or c.code = '432722007'))
+      or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('5-401')))
 
+// Axilla-Dissektion
+// SNOMED 234262008  Excision of axillary lymph nodes
+// SNOMED 110469001  Axillary lymphadenectomy
+// OPS    5-402*
 define "Axilladissektion Operationen":
   [Procedure] P
-    where exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('5-402'))
+    where exists(P.code.coding c
+      where (c.system = 'http://snomed.info/sct'
+        and (c.code = '234262008' or c.code = '110469001'))
+      or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('5-402')))
 
 define "Alle Brustoperationen":
   "BET Operationen" union "Mastektomie Operationen"
 
+// Strahlentherapie
+// SNOMED 108290001  Radiation oncology AND/OR radiotherapy
+// SNOMED 33195004   Teleradiotherapy procedure
+// OPS    8-52*      Strahlentherapie (alle)
 define "Strahlentherapien":
   [Procedure] P
-    where exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('8-52'))
+    where exists(P.code.coding c
+      where (c.system = 'http://snomed.info/sct'
+        and (c.code = '108290001' or c.code = '33195004'))
+      or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('8-52')))
     or P.meta.profile.value contains 'https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie'
 
 // ============================================================================
@@ -77,14 +134,17 @@ define "Strahlentherapien":
 // Ziel: möglichst viele mit Stanz-/Vakuumbiopsie vor Ersteingriff
 // ============================================================================
 
+// QI-2 robust: prüft drei Datenquellen
+//   1) FHIR-Klinikdaten: Procedure mit SNOMED-Biopsie-Codes oder OPS 1-490/491/494
+//   2) FHIR-Klinikdaten (alternativ): Condition.verificationStatus mit MII-Onko
+//      Diagnosesicherung Code 7 (histologische Untersuchung Primärtumor)
+//      → wird auch aus oBDS-Importen befüllt (oBDS 5.7 Diagnosesicherung)
 define "QI_02_Zaehler":
   "Invasive oder DCIS" C
-    where exists(
-      [Procedure] P
-        where P.subject.reference = C.subject.reference
-          and exists(P.code.coding c where c.system = 'http://fhir.de/CodeSystem/bfarm/ops'
-            and (c.code.startsWith('1-490') or c.code.startsWith('1-491') or c.code.startsWith('1-494')))
-    )
+    where exists("Brust Biopsien")
+       or exists(C.verificationStatus.coding c
+            where c.system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung'
+              and (c.code = '7' or c.code = '8'))
 
 define "QI_02_Nenner":
   "Invasive oder DCIS"
