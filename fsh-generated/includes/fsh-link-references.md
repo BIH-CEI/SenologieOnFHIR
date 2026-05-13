@@ -156,6 +156,13 @@
 [Fall14-Tumorboard-Postop]: CarePlan-Fall14-Tumorboard-Postop.html
 [Fall14-PR-Status]: Observation-Fall14-PR-Status.html
 [Fall14-Tumorboard-Praetherapeutisch]: CarePlan-Fall14-Tumorboard-Praetherapeutisch.html
+[Fall15-Fernmetastase-Leber]: Observation-Fall15-Fernmetastase-Leber.html
+[Fall15-Fernmetastase-Lunge]: Observation-Fall15-Fernmetastase-Lunge.html
+[Fall15-Histologie-Rebiopsie]: Observation-Fall15-Histologie-Rebiopsie.html
+[Fall15-Diagnose-Mammakarzinom]: Condition-Fall15-Diagnose-Mammakarzinom.html
+[Fall15-Patient-Michaela-Musterfrau]: Patient-Fall15-Patient-Michaela-Musterfrau.html
+[Fall15-Todesursache]: Observation-Fall15-Todesursache.html
+[Fall15-Verlauf-Progression]: Observation-Fall15-Verlauf-Progression.html
 [Fall1-Strahlentherapie]: Procedure-Fall1-Strahlentherapie.html
 [Fall1-Begleitmedikation-LThyroxin]: MedicationStatement-Fall1-Begleitmedikation-LThyroxin.html
 [Fall1-Begleitmedikation-Metoprolol]: MedicationStatement-Fall1-Begleitmedikation-Metoprolol.html

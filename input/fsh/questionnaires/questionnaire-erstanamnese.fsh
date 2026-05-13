@@ -224,13 +224,13 @@ Usage: #definition
 * item[=].item[=].item[=].text = "Verwandtschaftsgrad"
 * item[=].item[=].item[=].type = #choice
 * item[=].item[=].item[=].required = true
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verwandtschaftsgrad"
+* item[=].item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verwandtschaftsgrad"
 
 * item[=].item[=].item[+].linkId = "erkrankung"
 * item[=].item[=].item[=].text = "Erkrankung"
 * item[=].item[=].item[=].type = #choice
 * item[=].item[=].item[=].required = true
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
+* item[=].item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
 
 * item[=].item[=].item[+].linkId = "erkrankungsalter"
 * item[=].item[=].item[=].text = "Erkrankungsalter (Jahre)"

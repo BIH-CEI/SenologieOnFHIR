@@ -275,6 +275,9 @@ Description: "Material-Art für Patho-Specimen (Stanze/Vakuum/Punch/Resektat/Zyt
 
 // ============================================================
 // Diagnose Mamma (24 Choices, klinisch sortiert)
+//
+// Mit pre-baked expansion.contains um die klinische Reihenfolge zu locken
+// (Aidbox/FormBox respektiert compose.include.concept-Reihenfolge nicht).
 // ============================================================
 ValueSet: VS_Senologie_Diagnose_Mamma
 Id: vs-senologie-diagnose-mamma-24
@@ -308,6 +311,83 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * $SCT#718220008 "Genetische Hochrisikosituation"
 * https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#befund-unklarer-dignitaet "Befund unklarer Dignität"
 * https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#sonstiges "Sonstiges"
+
+// Pre-baked expansion (locks display order in clients that respect it)
+* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-mamma-24-expansion"
+* ^expansion.timestamp = "2026-05-13T00:00:00Z"
+* ^expansion.total = 24
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #254837009
+* ^expansion.contains[=].display = "Mammakarzinom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #bc-recurrence
+* ^expansion.contains[=].display = "Mammakarzinom Rezidiv"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #109889007
+* ^expansion.contains[=].display = "Carcinoma in situ (DCIS)"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #269497004
+* ^expansion.contains[=].display = "B3-Läsion (Neoplasm of uncertain behaviour of breast)"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #254845004
+* ^expansion.contains[=].display = "Fibroadenom"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #27431007
+* ^expansion.contains[=].display = "Fibrozystische Mastopathie"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #399123008
+* ^expansion.contains[=].display = "Einfache Mammazyste"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #449837001
+* ^expansion.contains[=].display = "Komplexe Mammazyste"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #53430007
+* ^expansion.contains[=].display = "Mastodynie"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #83620003
+* ^expansion.contains[=].display = "Mastitis non-puerperalis"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #1287638006
+* ^expansion.contains[=].display = "Mastitis puerperalis"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #16698000
+* ^expansion.contains[=].display = "Abszess non-puerperalis der Mamma"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #10745131000119107
+* ^expansion.contains[=].display = "Abszess puerperalis der Mamma"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #237444008
+* ^expansion.contains[=].display = "Granulomatöse Mastitis"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #mamillensekretion-blutig
+* ^expansion.contains[=].display = "Blutige Mamillensekretion"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #mamillensekretion-nicht-blutig
+* ^expansion.contains[=].display = "Nicht blutige Mamillensekretion"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #237474000
+* ^expansion.contains[=].display = "Kapselfibrose"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #237473006
+* ^expansion.contains[=].display = "Rupturiertes Mammaimplantat"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #4754008
+* ^expansion.contains[=].display = "Gynäkomastie"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #anisomastie
+* ^expansion.contains[=].display = "Anisomastie"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #makromastie
+* ^expansion.contains[=].display = "Makromastie"
+* ^expansion.contains[+].system = $SCT
+* ^expansion.contains[=].code = #718220008
+* ^expansion.contains[=].display = "Genetische Hochrisikosituation"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #befund-unklarer-dignitaet
+* ^expansion.contains[=].display = "Befund unklarer Dignität"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[=].code = #sonstiges
+* ^expansion.contains[=].display = "Sonstiges"
 
 // ============================================================
 // B3-Subtypen

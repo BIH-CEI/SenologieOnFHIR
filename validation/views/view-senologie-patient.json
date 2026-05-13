@@ -1,0 +1,27 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-patient-flat",
+  "name": "senologie_patient_flat",
+  "title": "Senologie Patient Flat View",
+  "description": "Flache Tabelle aller Patient:innen mit Stammdaten (Name, Geschlecht, Geburts-/Sterbedatum, KVID, lokale Patient-ID). Basis für patient-bezogene Auswertungen und Joins über patient_id.",
+  "status": "active",
+  "resource": "Patient",
+  "select": [
+    {
+      "column": [
+        { "name": "patient_id", "path": "id", "description": "Technische Patient-ID (FHIR `Patient.id`). Join-Key für alle anderen Flat-Views (`*.patient_id`)." },
+        { "name": "kvid", "path": "identifier.where(system='http://fhir.de/sid/gkv/kvid-10').value.first()", "description": "GKV-KVID-10 (Versichertennummer). System: http://fhir.de/sid/gkv/kvid-10." },
+        { "name": "local_id", "path": "identifier.where(system='http://fhir.bih-charite.de/sid/patient-id').value.first()", "description": "Lokale Patient-ID (BIH/Charité). Optional, einrichtungsspezifisch." },
+        { "name": "family", "path": "name.where(use='official').family.first()", "description": "Nachname (use=official)." },
+        { "name": "given", "path": "name.where(use='official').given.first()", "description": "Vorname (use=official, erster Given-Name)." },
+        { "name": "maiden_name", "path": "name.where(use='maiden').family.first()", "description": "Geburtsname (use=maiden), optional." },
+        { "name": "gender", "path": "gender", "description": "Administratives Geschlecht (FHIR AdministrativeGender: male/female/other/unknown)." },
+        { "name": "birth_date", "path": "birthDate", "description": "Geburtsdatum (ISO-8601, Tagesgenauigkeit)." },
+        { "name": "deceased_date", "path": "deceasedDateTime", "description": "Sterbedatum, sofern dokumentiert. Leer wenn Patient:in lebt." },
+        { "name": "city", "path": "address.city.first()", "description": "Wohnort (erste Adresse)." },
+        { "name": "postal_code", "path": "address.postalCode.first()", "description": "PLZ (erste Adresse)." },
+        { "name": "country", "path": "address.country.first()", "description": "Land (ISO 3166)." }
+      ]
+    }
+  ]
+}
