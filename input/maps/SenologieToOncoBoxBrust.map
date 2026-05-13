@@ -82,6 +82,47 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
               cond -> fi.Falldokumentation = 'A' "SetFalldokA";
             } "MapFallinfo";
 
+            // -- Anamnese (BRCA Keimbahn, Komorbiditaeten, Menopausenstatus, RaucherStatus) --
+            cond -> f.Anamnese as an then {
+              // Krebsvorerkrankungen aus Condition.evidence oder Anamnese-Obs
+              src.entry as vorEntry where resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item') then {
+                vorEntry.resource as vorCond -> an.Krebsvorerkrankungen = 'J' "SetKrebsvor";
+              } "EntryVorerkrankungen";
+
+              // RaucherStatus aus ISiK Raucher-Observation (LOINC 72166-2)
+              src.entry as rauchEntry where resource.is(Observation) and resource.code.coding.exists(code = '72166-2') then {
+                rauchEntry.resource as rauchObs then {
+                  rauchObs.value as val then {
+                    val.coding as c then {
+                      c.code as cd where $this = '8517006' -> an.RaucherStatus = 'Ex' "SetRauchEx";
+                      c.code as cd where $this = '266919005' -> an.RaucherStatus = 'N' "SetRauchN";
+                      c.code as cd where $this = '428041000124106' -> an.RaucherStatus = 'G' "SetRauchG";
+                      c.code as cd where $this = '77176002' -> an.RaucherStatus = 'R' "SetRauchR";
+                    } "MapRauchCoding";
+                  } "MapRauchVal";
+                } "MapRauchObs";
+              } "EntryRaucher";
+
+              // Menopausenstatus aus Gynaekologische Anamnese (LOINC 63612-8)
+              src.entry as menoEntry where resource.is(Observation) and resource.code.coding.exists(code = '63612-8') then {
+                menoEntry.resource as menoObs then {
+                  menoObs.value as val then {
+                    val.coding as c then {
+                      c.code as cd where $this = '289903006' -> an.Praetherapeutischer_Menopausenstatus = '1' "SetMenoPrae";
+                      c.code as cd where $this = '60001007' -> an.Praetherapeutischer_Menopausenstatus = '3' "SetMenoPost";
+                    } "MapMenoCoding";
+                  } "MapMenoVal";
+                } "MapMenoObs";
+              } "EntryMeno";
+
+              // BRCA1/2/PALB2 Keimbahn-Observation
+              src.entry as brca1Entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('somatische-mutation')) and resource.component.code.coding.exists(code = 'BRCA1') then {
+                brca1Entry.resource as brca1Obs then {
+                  brca1Obs.value as val then { val.coding as c then { c.code as cd where $this = '1156843009' -> an.BRCA1_Keimbahn = 'P' "SetBRCA1Pos"; c.code as cd where $this = '260385009' -> an.BRCA1_Keimbahn = 'N' "SetBRCA1Neg"; } "MapBRCA1Coding"; } "MapBRCA1Val";
+                } "MapBRCA1Obs";
+              } "EntryBRCA1";
+            } "MapAnamnese";
+
             // -- Diagnose --
             cond -> f.Diagnose as d then {
               // ICD-10 / ICD-11 aus Condition.code Slices
@@ -138,6 +179,8 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
               erEntry.resource as erObs -> f.Histologie as h then {
                 erObs.value as val then { val.coding as c then { c.code as cd where $this = 'LA6576-8' -> h.HormonrezeptorStatus_Oestrogen = 'P' "SetERPos"; c.code as cd where $this = 'LA6577-6' -> h.HormonrezeptorStatus_Oestrogen = 'N' "SetERNeg"; c.code as cd where $this = 'LA4489-6' -> h.HormonrezeptorStatus_Oestrogen = 'U' "SetERUnb"; } "MapERStatusCode"; } "MapERValue";
                 erObs.component as comp where code.coding.exists(code = '1234804006') then { comp.value as val then { val.value as v -> h.Anteil_positiv_Oestrogen = v "SetERAnteil"; } "MapERAnteilVal"; } "ERAnteil";
+                // IRS-Score (Senologie-Erweiterung, code aus CS_Senologie_Biomarker)
+                erObs.component as comp where code.coding.exists(code = 'irs-score') then { comp.value as val then { val.value as v -> h.IRS_Oestrogen = v "SetERIRS"; } "MapERIRSVal"; } "ERIRS";
               } "MapEREntry";
             } "EntryER";
 
@@ -145,6 +188,7 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
               prEntry.resource as prObs -> f.Histologie as h then {
                 prObs.value as val then { val.coding as c then { c.code as cd where $this = 'LA6576-8' -> h.HormonrezeptorStatus_Progesteron = 'P' "SetPRPos"; c.code as cd where $this = 'LA6577-6' -> h.HormonrezeptorStatus_Progesteron = 'N' "SetPRNeg"; c.code as cd where $this = 'LA4489-6' -> h.HormonrezeptorStatus_Progesteron = 'U' "SetPRUnb"; } "MapPRStatusCode"; } "MapPRValue";
                 prObs.component as comp where code.coding.exists(code = '1234803000') then { comp.value as val then { val.value as v -> h.Anteil_positiv_Progesteron = v "SetPRAnteil"; } "MapPRAnteilVal"; } "PRAnteil";
+                prObs.component as comp where code.coding.exists(code = 'irs-score') then { comp.value as val then { val.value as v -> h.IRS_Progesteron = v "SetPRIRS"; } "MapPRIRSVal"; } "PRIRS";
               } "MapPREntry";
             } "EntryPR";
 
@@ -160,6 +204,68 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
                 ki67Obs.value as val then { val.value as v -> h.Ki_67 = v "SetKi67"; } "MapKi67Val";
               } "MapKi67Entry";
             } "EntryKi67";
+
+            // -- Grading (LOINC 33732-9) --
+            src.entry as gradEntry where resource.is(Observation) and resource.code.coding.exists(code = '33732-9') then {
+              gradEntry.resource as gradObs -> f.Histologie as h then {
+                gradObs.value as val then { val.coding as c then { c.code as cd -> h.Grading = cd "SetGrading"; } "MapGradingCoding"; } "MapGradingVal";
+              } "MapGradingEntry";
+            } "EntryGrad";
+
+            // -- Lymphknoten untersucht/befallen, Sentinel-LK --
+            src.entry as lkuEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
+              lkuEntry.resource as lkuObs -> f.Histologie as h then {
+                lkuObs.value as val then { val.value as v -> h.LK_untersucht = truncate(v) "SetLKUnt"; } "MapLKUntVal";
+              } "MapLKUntEntry";
+            } "EntryLKUnt";
+            src.entry as lkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '21893-3') then {
+              lkbEntry.resource as lkbObs -> f.Histologie as h then {
+                lkbObs.value as val then { val.value as v -> h.LK_befallen = truncate(v) "SetLKBef"; } "MapLKBefVal";
+              } "MapLKBefEntry";
+            } "EntryLKBef";
+            src.entry as slkuEntry where resource.is(Observation) and resource.code.coding.exists(code = '92832-5') then {
+              slkuEntry.resource as slkuObs -> f.Histologie as h then {
+                slkuObs.value as val then { val.value as v -> h.Sentinel_LK_untersucht = truncate(v) "SetSLKUnt"; } "MapSLKUntVal";
+              } "MapSLKUntEntry";
+            } "EntrySLKUnt";
+            src.entry as slkbEntry where resource.is(Observation) and resource.code.coding.exists(code = '92833-3') then {
+              slkbEntry.resource as slkbObs -> f.Histologie as h then {
+                slkbObs.value as val then { val.value as v -> h.Sentinel_LK_befallen = truncate(v) "SetSLKBef"; } "MapSLKBefVal";
+              } "MapSLKBefEntry";
+            } "EntrySLKBef";
+
+            // -- PD-L1 Status (MII MTB Immunohistochemistry PDL1 Profil) --
+            src.entry as pdl1Entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-pdl1-status') or $this.contains('immunohistochemistry-pdl1')) then {
+              pdl1Entry.resource as pdl1Obs -> f.Histologie as h then {
+                pdl1Obs.value as val then { val.coding as c then { c.code as cd -> h.PD_L1 = cd "SetPDL1"; } "MapPDL1Coding"; } "MapPDL1Val";
+              } "MapPDL1Entry";
+            } "EntryPDL1";
+
+            // -- Tumorkonferenz (CarePlan / Senologie_Tumorboard_Empfehlung) --
+            src.entry as tkEntry where resource.is(CarePlan) and resource.meta.profile.exists($this.contains('senologie-tumorboard-empfehlung')) then {
+              tkEntry.resource as tkCP -> f.Tumorkonferenz as tk then {
+                tkCP.created as crd -> tk.Tumorkonferenz_Datum = crd "SetTKDatum";
+                tkCP.category as cat then { cat.coding as c then { c.code as cd -> tk.Tumorkonferenz_Typ = cd "SetTKTyp"; } "MapTKTypCoding"; } "MapTKTypVal";
+              } "MapTKEntry";
+            } "EntryTK";
+
+            // -- Fernmetastasen (Condition mit Tumormanifestation Fernmetastase) --
+            src.entry as fmEntry where resource.is(Condition) and resource.category.coding.exists(code = 'distant-metastasis' or code = 'fernmetastase') then {
+              fmEntry.resource as fmCond -> f.Fernmetastase as fm then {
+                fmCond.bodySite as bs then { bs.coding as c then { c.code as cd -> fm.Fernmetastase_Lokalisation = cd "SetFMLok"; } "MapFMLokCoding"; } "MapFMLok";
+                fmCond.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum' then { ext.value as v -> fm.Fernmetastase_Diagnosedatum = v "SetFMDatum"; } "MapFMDatum";
+              } "MapFMEntry";
+            } "EntryFM";
+
+            // -- Studienteilnahme (ResearchSubject / Senologie_Studienteilnahme) --
+            src.entry as studyEntry where resource.is(ResearchSubject) then {
+              studyEntry.resource as rs -> f.Studie as st then {
+                rs.status as rsStat then {
+                  rsStat where $this = 'on-study' -> st.Studienteilnahme = 'J' "SetStudOn";
+                  rsStat where $this = 'off-study' -> st.Studienteilnahme = 'N' "SetStudOff";
+                } "MapStudStatus";
+              } "MapStudEntry";
+            } "EntryStud";
 
             // -- Operation[] aus Procedure (Senologie_Operation) --
             src.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
