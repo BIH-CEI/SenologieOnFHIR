@@ -123,7 +123,7 @@ Zugang zur Admin-UI: [http://localhost:8888](http://localhost:8888) (Login: admi
 docker compose up -d hapi-fhir-server fhir-postgres
 ```
 
-HAPI unterstützt die Ausführung von CQL-Expressions (`$cql`) und FHIR Measures (`$evaluate-measure`). Die [CQL-Library](https://github.com/BIH-CEI/SenologieOnFHIR/blob/main/input/cql/SenologieQualitaetsindikatoren.cql) mit den S3-Qualitätsindikatoren kann direkt gegen die geladenen Testdaten ausgeführt werden.
+HAPI unterstützt die Ausführung von CQL-Expressions (`$cql`) und FHIR Measures (`$evaluate-measure`). Die [CQL-Library](https://github.com/BIH-CEI/SenologieOnFHIR/blob/main/input/cql/QualitaetsindikatorenLeitlinie.cql) mit den S3-Qualitätsindikatoren kann direkt gegen die geladenen Testdaten ausgeführt werden.
 
 #### Pathling (empfohlen für analytische Abfragen)
 
@@ -209,7 +209,7 @@ Siehe `notebooks/README.md` für die vollständige Anleitung.
 
 ### CQL-Auswertung
 
-Die [CQL-Library](https://github.com/BIH-CEI/SenologieOnFHIR/blob/main/input/cql/SenologieQualitaetsindikatoren.cql) enthält S3-Qualitätsindikatoren (QI-2 bis QI-14) und deskriptive Statistiken. Ausführung gegen HAPI:
+Die [CQL-Library](https://github.com/BIH-CEI/SenologieOnFHIR/blob/main/input/cql/QualitaetsindikatorenLeitlinie.cql) enthält S3-Qualitätsindikatoren (QI-2 bis QI-14) und deskriptive Statistiken. Ausführung gegen HAPI:
 
 ```bash
 curl -X POST "http://localhost:8095/fhir/\$cql" \

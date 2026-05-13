@@ -70,7 +70,7 @@ GET Observation?code=clavien-dindo
 
 Die Auswertungen (insbesondere Qualitätsindikatoren und Leitlinien-Compliance) können in zukünftigen Versionen dieses IGs durch die [Clinical Quality Language (CQL)](http://cql.hl7.org/) automatisiert werden. CQL ermöglicht die formale Definition von Qualitätsmaßen und Entscheidungslogik direkt auf FHIR-Ressourcen, sodass Kennzahlen reproduzierbar und maschinenlesbar berechnet werden können.
 
-Eine erste CQL-Bibliothek mit den 17 Qualitätsindikatoren der S3-Leitlinie findet sich unter [`input/cql/SenologieQualitaetsindikatoren.cql`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/input/cql/SenologieQualitaetsindikatoren.cql). Sie ist gegen die synthetische 12-Patientinnen-Kohorte lauffähig (HAPI, Port 8095, Endpoint `POST /fhir/$cql`).
+Eine erste CQL-Bibliothek mit den 17 Qualitätsindikatoren der S3-Leitlinie findet sich unter [`input/cql/QualitaetsindikatorenLeitlinie.cql`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/input/cql/QualitaetsindikatorenLeitlinie.cql). Sie ist gegen die synthetische 12-Patientinnen-Kohorte lauffähig (HAPI, Port 8095, Endpoint `POST /fhir/$cql`).
 
 ### SQL on FHIR ViewDefinitions
 

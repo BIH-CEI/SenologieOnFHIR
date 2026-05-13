@@ -21,7 +21,7 @@ library OncoBoxBrustKennzahlen version '0.1.0'
 using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.1'
-include SenologieQualitaetsindikatoren version '0.1.0' called S3
+include QualitaetsindikatorenLeitlinie version '0.1.0' called S3
 
 codesystem "SCT": 'http://snomed.info/sct'
 codesystem "ICD10GM": 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'

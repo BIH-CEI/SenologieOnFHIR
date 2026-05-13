@@ -1,12 +1,12 @@
 // ============================================================================
-// CQL Library: Senologie Qualitätsindikatoren
+// CQL Library: Qualitätsindikatoren (S3-Leitlinie)
 // S3-Leitlinie Mammakarzinom v5.0, Kapitel 8 (17 QIs)
 // ============================================================================
 // Testbar gegen die synthetische Kohorte (12 Patientinnen auf HAPI :8095).
 // Aufruf: POST /fhir/$cql mit expression = "QI_xx_Rate_Prozent"
 // ============================================================================
 
-library SenologieQualitaetsindikatoren version '0.1.0'
+library QualitaetsindikatorenLeitlinie version '0.1.0'
 
 using FHIR version '4.0.1'
 
