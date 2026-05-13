@@ -90,37 +90,50 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
               } "EntryVorerkrankungen";
 
               // RaucherStatus aus ISiK Raucher-Observation (LOINC 72166-2)
+              // Werte sind LOINC LA-Codes (Answer List LL2828-3)
               src.entry as rauchEntry where resource.is(Observation) and resource.code.coding.exists(code = '72166-2') then {
                 rauchEntry.resource as rauchObs then {
                   rauchObs.value as val then {
                     val.coding as c then {
-                      c.code as cd where $this = '8517006' -> an.RaucherStatus = 'Ex' "SetRauchEx";
-                      c.code as cd where $this = '266919005' -> an.RaucherStatus = 'N' "SetRauchN";
-                      c.code as cd where $this = '428041000124106' -> an.RaucherStatus = 'G' "SetRauchG";
-                      c.code as cd where $this = '77176002' -> an.RaucherStatus = 'R' "SetRauchR";
+                      c.code as cd where $this = 'LA18976-3' -> an.RaucherStatus = 'R' "SetRauchR";       // Current every day smoker
+                      c.code as cd where $this = 'LA18977-1' -> an.RaucherStatus = 'G' "SetRauchG";       // Current some day smoker
+                      c.code as cd where $this = 'LA15920-4' -> an.RaucherStatus = 'Ex' "SetRauchEx";     // Former smoker
+                      c.code as cd where $this = 'LA18978-9' -> an.RaucherStatus = 'N' "SetRauchN";       // Never smoker
                     } "MapRauchCoding";
                   } "MapRauchVal";
                 } "MapRauchObs";
               } "EntryRaucher";
 
-              // Menopausenstatus aus Gynaekologische Anamnese (LOINC 63612-8)
-              src.entry as menoEntry where resource.is(Observation) and resource.code.coding.exists(code = '63612-8') then {
-                menoEntry.resource as menoObs then {
-                  menoObs.value as val then {
-                    val.coding as c then {
-                      c.code as cd where $this = '289903006' -> an.Praetherapeutischer_Menopausenstatus = '1' "SetMenoPrae";
-                      c.code as cd where $this = '60001007' -> an.Praetherapeutischer_Menopausenstatus = '3' "SetMenoPost";
-                    } "MapMenoCoding";
-                  } "MapMenoVal";
-                } "MapMenoObs";
-              } "EntryMeno";
+              // Menopausenstatus: abgeleitet aus Gynaekologische Anamnese
+              // Wenn component 42802-9 (Age at menopause) vorhanden → postmenopausal (3)
+              src.entry as gynEntry where resource.is(Observation) and resource.code.coding.exists(code = '89221-6') then {
+                gynEntry.resource as gynObs then {
+                  gynObs.component as comp where code.coding.exists(code = '42802-9') -> an.Praetherapeutischer_Menopausenstatus = '3' "SetMenoPost";
+                } "MapGynObs";
+              } "EntryGyn";
 
-              // BRCA1/2/PALB2 Keimbahn-Observation
-              src.entry as brca1Entry where resource.is(Observation) and resource.meta.profile.exists($this.contains('somatische-mutation')) and resource.component.code.coding.exists(code = 'BRCA1') then {
+              // BRCA1/2/PALB2 Keimbahn-Observations (MII Onko Genetische Variante, LOINC 69548-6)
+              // Gen ist als component (48018-6, valueCodeableConcept HGNC) codiert.
+              // value (Observation.valueCodeableConcept) ist das Gesamtergebnis (positive/negative).
+              src.entry as brca1Entry where resource.is(Observation) and resource.code.coding.exists(code = '69548-6') and resource.component.value.coding.exists(code = 'HGNC:1100') then {
                 brca1Entry.resource as brca1Obs then {
-                  brca1Obs.value as val then { val.coding as c then { c.code as cd where $this = '1156843009' -> an.BRCA1_Keimbahn = 'P' "SetBRCA1Pos"; c.code as cd where $this = '260385009' -> an.BRCA1_Keimbahn = 'N' "SetBRCA1Neg"; } "MapBRCA1Coding"; } "MapBRCA1Val";
+                  brca1Obs.value as val then { val.coding as c then { c.code as cd where $this = 'LA9633-4' -> an.BRCA1_Keimbahn = 'P' "SetBRCA1Pos"; c.code as cd where $this = 'LA9634-2' -> an.BRCA1_Keimbahn = 'N' "SetBRCA1Neg"; } "MapBRCA1Coding"; } "MapBRCA1Val";
                 } "MapBRCA1Obs";
               } "EntryBRCA1";
+              src.entry as brca2Entry where resource.is(Observation) and resource.code.coding.exists(code = '69548-6') and resource.component.value.coding.exists(code = 'HGNC:1101') then {
+                brca2Entry.resource as brca2Obs then {
+                  brca2Obs.value as val then { val.coding as c then { c.code as cd where $this = 'LA9633-4' -> an.BRCA2_Keimbahn = 'P' "SetBRCA2Pos"; c.code as cd where $this = 'LA9634-2' -> an.BRCA2_Keimbahn = 'N' "SetBRCA2Neg"; } "MapBRCA2Coding"; } "MapBRCA2Val";
+                } "MapBRCA2Obs";
+              } "EntryBRCA2";
+
+              // Krebsvorerkrankungen: wenn weitere Conditions im Bundle (mit anderen ICD-10-Codes als der Hauptdiagnose)
+              src.entry as komorbEntry where resource.is(Condition) and resource.meta.profile.exists($this.contains('komorbiditaet')) then {
+                komorbEntry.resource as kc then {
+                  kc.code as kcc -> an.KomorbiditaetenVorDiagnose as kvd then {
+                    kcc.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then { c.code as cd -> kvd.Wert = cd "SetKomorbWert"; } "MapKomorbCoding";
+                  } "MapKomorbCode";
+                } "MapKomorbCond";
+              } "EntryKomorb";
             } "MapAnamnese";
 
             // -- Diagnose --
