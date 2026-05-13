@@ -36,14 +36,14 @@ Usage: #definition
 * group[=].population[+].id = "qi-02-initial-population"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#initial-population
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "Has Invasive oder DCIS"
+* group[=].population[=].criteria.expression = "HasInvasiveOrDCIS"
 
 * group[=].population[+].id = "qi-02-denominator"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#denominator
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "Has QI_02_Nenner"
+* group[=].population[=].criteria.expression = "HasQI02Nenner"
 
 * group[=].population[+].id = "qi-02-numerator"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#numerator
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "Has QI_02_Zaehler"
+* group[=].population[=].criteria.expression = "HasQI02Zaehler"

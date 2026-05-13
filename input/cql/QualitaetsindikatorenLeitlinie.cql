@@ -6,7 +6,7 @@
 // Aufruf: POST /fhir/$cql mit expression = "QI_xx_Rate_Prozent"
 // ============================================================================
 
-library QualitaetsindikatorenLeitlinie version '0.1.0'
+library QualitaetsindikatorenLeitlinie version '0.2.0'
 
 using FHIR version '4.0.1'
 
@@ -18,6 +18,10 @@ codesystem "ICD10GM": 'http://fhir.de/CodeSystem/bfarm/icd-10-gm'
 codesystem "LOINC": 'http://loinc.org'
 codesystem "OPS": 'http://fhir.de/CodeSystem/bfarm/ops'
 codesystem "CondClinical": 'http://terminology.hl7.org/CodeSystem/condition-clinical'
+
+// Patient-Context erforderlich für FHIR Measure $evaluate-measure
+// (sonst werden [Condition]/[Procedure] nicht auf den aktuellen Patienten gefiltert)
+context Patient
 
 // ============================================================================
 // Hilfsdefinitionen
@@ -92,13 +96,13 @@ define "QI_02_Nenner":
 // Listen zurueck — diese Wrapper machen daraus exists()-Checks.
 // ----------------------------------------------------------------------------
 
-define "Has Invasive oder DCIS":
+define "HasInvasiveOrDCIS":
   exists("Invasive oder DCIS")
 
-define "Has QI_02_Nenner":
+define "HasQI02Nenner":
   exists("QI_02_Nenner")
 
-define "Has QI_02_Zaehler":
+define "HasQI02Zaehler":
   exists("QI_02_Zaehler")
 
 define "QI_02_Rate_Prozent":
