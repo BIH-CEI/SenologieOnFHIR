@@ -83,16 +83,16 @@ for f in "$REPO_ROOT/input/data/iregg-schema-v4.1.1/Beispiele"/*.xml; do
 done
 
 echo
-echo "── OncoBox Brust ──────────────────────────────────────"
-ONCOBOX_FIELDS="$REPO_ROOT/validation/extractions/oncobox-fields.json"
-if [ -f "$ONCOBOX_FIELDS" ]; then
-  cnt=$(python3 -c "import json; print(json.load(open('$ONCOBOX_FIELDS'))['field_count'])")
-  echo "  ⊘ kein offizielles XSD/JSON-Schema verfuegbar — Coverage-Referenz:"
-  echo "    $cnt erwartete XML-Felder in oncobox-fields.json (aus Excel-Spec extrahiert)"
+echo "── OncoBox Brust 2.0 XSD ──────────────────────────────"
+ONCOBOX_XSD="$REPO_ROOT/input/data/oncobox-brust-2.0/oncobox-brust-2.0.xsd"
+if [ ! -f "$ONCOBOX_XSD" ]; then
+  echo "  ⊘ OncoBox 2.0 XSD nicht gefunden"
   skip=$((skip + 1))
 else
-  echo "  ⊘ oncobox-fields.json nicht gefunden; python3 scripts/extractions/extract-oncobox-fields.py"
-  skip=$((skip + 1))
+  for f in "$REPO_ROOT/input/data/oncobox-brust-2.0/examples"/*.xml; do
+    [ -f "$f" ] || continue
+    validate "$(basename "$f") vs. oncobox-brust-2.0.xsd" "$ONCOBOX_XSD" "$f" pass
+  done
 fi
 
 echo
