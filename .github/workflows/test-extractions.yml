@@ -1,0 +1,82 @@
+name: Test Extractions (oBDS, OncoBox, IQTIG, IRegG)
+
+on:
+  push:
+    paths:
+      - 'input/fsh/**'
+      - 'input/maps/**'
+      - 'validation/extractions/**'
+      - 'scripts/extractions/**'
+      - '.github/workflows/test-extractions.yml'
+  pull_request:
+    paths:
+      - 'input/fsh/**'
+      - 'input/maps/**'
+      - 'validation/extractions/**'
+      - 'scripts/extractions/**'
+  workflow_dispatch:
+
+jobs:
+  obds:
+    name: oBDS Extraction Snapshot Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node (for SUSHI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install SUSHI
+        run: npm install -g fsh-sushi
+
+      - name: Build IG with SUSHI
+        run: sushi .
+
+      - name: Start Matchbox
+        run: |
+          docker compose -f docker-compose.matchbox.yaml up -d
+          for i in {1..60}; do
+            if curl -sf http://localhost:8080/matchboxv3/fhir/metadata > /dev/null; then
+              echo "Matchbox ready after ${i}s"; break
+            fi
+            sleep 1
+          done
+
+      - name: Load IG into Matchbox
+        run: |
+          # IG-Publisher-Lauf wird nicht benoetigt fuer Maps/Profile —
+          # ./scripts/matchbox/load-ig.sh nutzt output/ (vom IG Publisher).
+          # Fallback: nutze fsh-generated/resources/ und input/maps/
+          ./scripts/matchbox/load-ig.sh || true
+
+      - name: Build test bundles
+        run: |
+          python3 scripts/extractions/build-test-bundle.py 1
+          # weitere Faelle hier hinzufuegen wenn relevant
+
+      - name: Run oBDS snapshot tests
+        run: ./scripts/extractions/test-obds-snapshot.sh
+
+      - name: Upload diffs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: obds-extraction-diffs
+          path: |
+            validation/extractions/actual/
+            validation/extractions/expected/
+          retention-days: 14
+
+  # Placeholders fuer die kommenden Targets:
+  # oncobox:  ...
+  # iqtig:    ...
+  # iregg:    ...
