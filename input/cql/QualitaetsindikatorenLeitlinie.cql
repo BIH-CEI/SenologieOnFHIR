@@ -85,6 +85,22 @@ define "QI_02_Zaehler":
 define "QI_02_Nenner":
   "Invasive oder DCIS"
 
+// ----------------------------------------------------------------------------
+// Boolean-Wrapper fuer Measure /$evaluate-measure
+// FHIR Measure-Population-Criteria muessen boolean-per-Patient liefern
+// (true wenn der Patient in der Population ist). Die obigen Defines geben
+// Listen zurueck — diese Wrapper machen daraus exists()-Checks.
+// ----------------------------------------------------------------------------
+
+define "Has Invasive oder DCIS":
+  exists("Invasive oder DCIS")
+
+define "Has QI_02_Nenner":
+  exists("QI_02_Nenner")
+
+define "Has QI_02_Zaehler":
+  exists("QI_02_Zaehler")
+
 define "QI_02_Rate_Prozent":
   if Count("QI_02_Nenner") > 0
   then (Count("QI_02_Zaehler") * 100) / Count("QI_02_Nenner")
