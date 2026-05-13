@@ -40,13 +40,58 @@ Usage: #inline
 * subject.extension.valueString = "%patient"
 
 // --- Contained template: Observation (IHC / Rezeptorstatus) ---
-Instance: patho-ihc-template
+// ER-Status Template — erzeugt Senologie_ER_Status Observation
+Instance: patho-er-template
 InstanceOf: Observation
 Usage: #inline
-* id = "patho-ihc-template"
+* id = "patho-er-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status"
 * status = #final
-* code = $LOINC#85337-4 "Estrogen receptor Ag [Presence] in Breast cancer specimen by Immune stain"
-* code.text = "Immunhistochemie / Rezeptorstatus"
+* code = $LOINC#40556-3 "Estrogen receptor Ag [Presence] in Tissue by Immune stain"
+* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.extension.valueString = "%patient"
+
+// PR-Status Template — erzeugt Senologie_PR_Status Observation
+Instance: patho-pr-template
+InstanceOf: Observation
+Usage: #inline
+* id = "patho-pr-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status"
+* status = #final
+* code = $LOINC#85339-0 "Progesterone receptor [Interpretation] in Tissue by Immune stain"
+* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.extension.valueString = "%patient"
+
+// HER2-Status Template — erzeugt Senologie_HER2_Status Observation
+Instance: patho-her2-template
+InstanceOf: Observation
+Usage: #inline
+* id = "patho-her2-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status"
+* status = #final
+* code = $LOINC#48676-1 "HER2 [Interpretation] in Tissue"
+* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.extension.valueString = "%patient"
+
+// Ki-67 Template — erzeugt Senologie_Ki67_Proliferationsindex Observation
+Instance: patho-ki67-template
+InstanceOf: Observation
+Usage: #inline
+* id = "patho-ki67-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"
+* status = #final
+* code = $LOINC#29593-1 "Cells.Ki-67 nuclear Ag/cells in Tissue by Immune stain"
+* subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.extension.valueString = "%patient"
+
+// PD-L1 Template — erzeugt Senologie_PDL1_Status Observation
+Instance: patho-pdl1-template
+InstanceOf: Observation
+Usage: #inline
+* id = "patho-pdl1-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-pdl1-status"
+* status = #final
+* code = $LOINC#85318-4 "HER2 [Presence] in Breast cancer specimen by Immune stain"
 * subject.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.extension.valueString = "%patient"
 
@@ -69,7 +114,11 @@ Usage: #definition
 * contained[+] = patho-report-template
 * contained[+] = patho-specimen-template
 * contained[+] = patho-histo-template
-* contained[+] = patho-ihc-template
+* contained[+] = patho-er-template
+* contained[+] = patho-pr-template
+* contained[+] = patho-her2-template
+* contained[+] = patho-ki67-template
+* contained[+] = patho-pdl1-template
 
 // Launch Context
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -214,10 +263,25 @@ Usage: #definition
 * item[=].type = #group
 * item[=].required = false
 
-// SDC templateExtract → contained IHC template
+// SDC templateExtract → drei contained Templates (ER, PR, HER2)
+//   Jeder Template erzeugt eine eigene Observation mit dem entsprechenden
+//   Senologie-Profil. Beim Submit des QR werden also drei Observations
+//   pro Pathologie-Befund extrahiert (sofern die Q-Items befüllt sind).
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
 * item[=].extension[=].extension[+].url = "template"
-* item[=].extension[=].extension[=].valueReference = Reference(patho-ihc-template)
+* item[=].extension[=].extension[=].valueReference = Reference(patho-er-template)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(patho-pr-template)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(patho-her2-template)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(patho-ki67-template)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(patho-pdl1-template)
 
 // ER Prozent positiv
 * item[=].item[+].linkId = "ihc-er-prozent"
