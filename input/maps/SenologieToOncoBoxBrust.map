@@ -275,6 +275,25 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
                 opProc.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention' then {
                   ext.value as v then { v.coding as c then { c.code as cd -> op.OP_Intention = cd "SetOpIntention"; } "MapOpIntCoding"; } "MapOpIntVal";
                 } "MapOpIntExt";
+                // usedCode: PraeoperativeMarkierung (M/S/T/N) - MII Mamma-Op
+                opProc.usedCode as uc then { uc.coding as c where system.contains('praeoperative-markierung') then { c.code as cd -> op.PraeopMarkierung = cd "SetPraeopMark"; } "MapPraeopMarkCoding"; } "MapUsedCodeMark";
+                // Komplikationen: bei Vorhandensein der complication-Liste
+                opProc.complication as compl then {
+                  compl.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-operation-komplikation' then {
+                    c.code as cd -> op.OP_Komplikationen_Art = cd "SetOpKomplArt";
+                  } "MapOpKomplCoding";
+                } "MapOpKompl";
+                // Operateure (G08 = Erstoperateur, G09 = Zweitoperateur)
+                opProc.performer as perfp then {
+                  perfp.function as fn then {
+                    fn.coding as c where code = '304292004' then {
+                      perfp.actor as act then { act.reference as ref -> op.Erstoperateur = ref "SetErstOp"; } "MapErstActor";
+                    } "MapErstFn";
+                    fn.coding as c where code = '309388001' then {
+                      perfp.actor as act then { act.reference as ref -> op.Zweitoperateur = ref "SetZweitOp"; } "MapZweitActor";
+                    } "MapZweitFn";
+                  } "MapPerfFn";
+                } "MapPerformer";
               } "MapOpEntry";
             } "EntryOp";
 
@@ -285,6 +304,20 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
                   perf.start as st -> rt.Strahlentherapie_Beginn = st "SetRTBeginn";
                   perf.end as en -> rt.Strahlentherapie_Ende = en "SetRTEnde";
                 } "MapRTPeriod";
+                // Intention
+                rtProc.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention' then {
+                  ext.value as v then { v.coding as c then { c.code as cd -> rt.Strahlentherapie_Intention = cd "SetRTInt"; } "MapRTIntCoding"; } "MapRTIntVal";
+                } "MapRTIntExt";
+                // Boost (extension)
+                rtProc.extension as ext where url.contains('strahlentherapie-bestrahlung-boost') then {
+                  ext.value as v -> rt.Strahlentherapie_Boost = v "SetRTBoost";
+                } "MapRTBoost";
+                // Gesamtdosis (extension)
+                rtProc.extension as ext where url.contains('strahlentherapie-bestrahlung-gesamtdosis') then {
+                  ext.value as v then { v.value as vv -> rt.Strahlentherapie_Gesamtdosis = vv "SetRTGesamtdosis"; } "MapRTGesamtdosisVal";
+                } "MapRTGesamtdosis";
+                // Zielgebiet (bodySite)
+                rtProc.bodySite as bs then { bs.coding as c then { c.code as cd -> rt.Strahlentherapie_Zielgebiet = cd "SetRTZielgeb"; } "MapRTZielgebCoding"; } "MapRTZielgeb";
               } "MapRTEntry";
             } "EntryRT";
 
@@ -295,14 +328,39 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
                   perf.start as st -> syst.Systemtherapie_Beginn = st "SetSTBeginn";
                   perf.end as en -> syst.Systemtherapie_Ende = en "SetSTEnde";
                 } "MapSTPeriod";
+                // Intention
+                stProc.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention' then {
+                  ext.value as v then { v.coding as c then { c.code as cd -> syst.Systemtherapie_Intention = cd "SetSTInt"; } "MapSTIntCoding"; } "MapSTIntVal";
+                } "MapSTIntExt";
+                // Therapieart aus category
+                stProc.category as cat then { cat.coding as c then { c.code as cd -> syst.Systemtherapie_Therapieart = cd "SetSTArt"; } "MapSTArtCoding"; } "MapSTArt";
               } "MapSTEntry";
             } "EntryST";
+
+            // -- Begleitmedikation / CHT-Substanzen aus MedicationAdministration --
+            //    OncoBox 2.0 hat CHT_Substanzen / HO_Substanzen / IM_Substanzen / Zielgerichtete_Substanzen
+            //    Aktuell vereinfacht: jede Substanz wandert in CHT_Substanzen
+            //    TODO: Klassifikation nach Substanz-Typ (ATC-Gruppe) fuer korrekte Zuordnung
+            //
+            // src.entry as medEntry where resource.is(MedicationAdministration) ...
 
             // -- Follow_Up[] aus Verlauf-Observation --
             src.entry as fuEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-follow-up')) then {
               fuEntry.resource as fuObs -> f.Follow_Up as fu then {
                 fuObs.effective as eff where $this.is(dateTime) -> fu.Untersuchungsdatum_Verlauf = eff "SetFUDatum";
+                fuObs.issued as iss -> fu.Meldedatum = iss "SetFUMeldedatum";
                 fuObs.value as val then { val.coding as c then { c.code as cd -> fu.Gesamtbeurteilung_Tumorstatus = cd "SetFUGesamt"; } "MapFUGesamtCoding"; } "MapFUValue";
+                // Aktive vs. passive Nachsorge aus method
+                fuObs.method as m then {
+                  m.coding as c then {
+                    c.code as cd where $this = 'A' -> fu.Follow_Up_Aktiv_Passiv = 'A' "SetFUAktiv";
+                    c.code as cd where $this = 'P' -> fu.Follow_Up_Aktiv_Passiv = 'P' "SetFUPassiv";
+                  } "MapFUMethCoding";
+                } "MapFUMeth";
+                // Lokaler / LK / FM Tumorstatus aus components
+                fuObs.component as comp where code.coding.exists(code = '21976-6') then { comp.value as val then { val.coding as c then { c.code as cd -> fu.Verlauf_Lokaler_Tumorstatus = cd "SetFULokTu"; } "MapFULokTuCoding"; } "MapFULokTuVal"; } "FULokTu";
+                fuObs.component as comp where code.coding.exists(code = '21977-4') then { comp.value as val then { val.coding as c then { c.code as cd -> fu.Verlauf_Tumorstatus_Lymphknoten = cd "SetFULKTu"; } "MapFULKTuCoding"; } "MapFULKTuVal"; } "FULKTu";
+                fuObs.component as comp where code.coding.exists(code = '21978-2') then { comp.value as val then { val.coding as c then { c.code as cd -> fu.Verlauf_Tumorstatus_Fernmetastasen = cd "SetFUFMTu"; } "MapFUFMTuCoding"; } "MapFUFMTuVal"; } "FUFMTu";
               } "MapFUEntry";
             } "EntryFU";
 
