@@ -22,6 +22,10 @@ Alias: $MII_PR_Onko_Mamma_Her2neu_Status = https://www.medizininformatik-initiat
 Alias: $MII_VS_Onko_Mamma_Rezeptorstatus_Leitlinie = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-mamma-rezeptorstatus-leitlinie
 Alias: $MII_VS_Onko_Mamma_Her2neu_Status_Leitlinie = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-mamma-her2neu-status-leitlinie
 
+// --- MII MTB HER2 (IHC + ISH) ---
+Alias: $MII_PR_MTB_IHC_HER2 = https://www.medizininformatik-initiative.de/fhir/ext/modul-mtb/StructureDefinition/mii-pr-mtb-immunohistochemistry-her2
+Alias: $MII_PR_MTB_ISH_HER2 = https://www.medizininformatik-initiative.de/fhir/ext/modul-mtb/StructureDefinition/mii-pr-mtb-insituhybridization-her2
+
 // --- MII Onkologie CodeSystems / ValueSets ---
 Alias: $MII_CS_Onko_Residualstatus = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-residualstatus
 Alias: $MII_CS_Onko_Therapie_Ende_Grund = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-ende-grund

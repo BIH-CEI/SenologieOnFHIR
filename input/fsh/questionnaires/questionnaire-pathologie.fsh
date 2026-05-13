@@ -283,92 +283,109 @@ Usage: #definition
 * item[=].extension[=].extension[+].url = "template"
 * item[=].extension[=].extension[=].valueReference = Reference(patho-pdl1-template)
 
-// ER Prozent positiv
+// ER Prozent positiv → component[AnteilPositiveZellen].valueQuantity
 * item[=].item[+].linkId = "ihc-er-prozent"
 * item[=].item[=].text = "ER Prozent positiv (%)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#85337-4 "Estrogen receptor"
+* item[=].item[=].code[+] = $SCT#1234804006 "Percent of cells with estrogen receptor"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status#Observation.component.valueQuantity"
 
-// ER IRS Score
+// ER IRS Score → component[irsScore].valueQuantity
 * item[=].item[+].linkId = "ihc-er-irs"
 * item[=].item[=].text = "ER IRS Score (0–12, Remmele-Stegner, DE-Standard)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
+* item[=].item[=].code[+] = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status#Observation.component.valueQuantity"
 
-// ER Allred Score (Senologie-Erweiterung — nicht in dotbase v1)
+// ER Allred Score → component[allredScore].valueQuantity
 * item[=].item[+].linkId = "ihc-er-allred"
 * item[=].item[=].text = "ER Allred Score (0–8, international)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
+* item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status#Observation.component.valueQuantity"
 
-// ER Färbeintensität (LOINC LL4358-9)
+// ER Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-er-intensitaet"
 * item[=].item[=].text = "ER Färbeintensität"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].code[+] = $SCT#1236874005 "Intensity of stain of estrogen receptor"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status#Observation.component.valueCodeableConcept"
 * item[=].item[=].answerOption[+].valueString = "negative"
 * item[=].item[=].answerOption[+].valueString = "weak"
 * item[=].item[=].answerOption[+].valueString = "moderate"
 * item[=].item[=].answerOption[+].valueString = "strong"
 
-// PR Prozent positiv
+// PR Prozent positiv → component[AnteilPositiveZellen].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-prozent"
 * item[=].item[=].text = "PR Prozent positiv (%)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#85339-0 "Progesterone receptor"
+* item[=].item[=].code[+] = $SCT#1234803000 "Percent of cells with progesterone receptor"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status#Observation.component.valueQuantity"
 
-// PR IRS Score
+// PR IRS Score → component[irsScore].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-irs"
 * item[=].item[=].text = "PR IRS Score (0–12)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
+* item[=].item[=].code[+] = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status#Observation.component.valueQuantity"
 
-// PR Allred Score (Senologie-Erweiterung)
+// PR Allred Score → component[allredScore].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-allred"
 * item[=].item[=].text = "PR Allred Score (0–8)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
+* item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status#Observation.component.valueQuantity"
 
-// PR Färbeintensität
+// PR Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-pr-intensitaet"
 * item[=].item[=].text = "PR Färbeintensität"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].code[+] = $SCT#1237278006 "Intensity of stain of progesterone receptor"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status#Observation.component.valueCodeableConcept"
 * item[=].item[=].answerOption[+].valueString = "negative"
 * item[=].item[=].answerOption[+].valueString = "weak"
 * item[=].item[=].answerOption[+].valueString = "moderate"
 * item[=].item[=].answerOption[+].valueString = "strong"
 
-// HER2 IHC Score
+// HER2 IHC Score → component[IHCScore].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-score"
 * item[=].item[=].text = "HER2 IHC Score"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status#Observation.component.valueCodeableConcept"
 * item[=].item[=].answerOption[+].valueString = "0"
 * item[=].item[=].answerOption[+].valueString = "1+"
 * item[=].item[=].answerOption[+].valueString = "2+"
 * item[=].item[=].answerOption[+].valueString = "3+"
 
-// HER2-Gesamtstatus nach Leitlinie (Senologie-Erweiterung; HER2-low, HER2-ultralow)
+// HER2-Gesamtstatus nach Leitlinie → value[x].coding[DefinitionLeitlinie]
 * item[=].item[+].linkId = "ihc-her2-gesamt"
 * item[=].item[=].text = "HER2-Gesamtstatus (Leitlinie, inkl. HER2-low / HER2-ultralow)"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status#Observation.valueCodeableConcept"
 * item[=].item[=].answerOption[+].valueString = "positiv"
 * item[=].item[=].answerOption[+].valueString = "low"
 * item[=].item[=].answerOption[+].valueString = "ultralow"
 * item[=].item[=].answerOption[+].valueString = "negativ"
 * item[=].item[=].answerOption[+].valueString = "equivocal"
 
-// HER2 ISH/FISH (bei HER2 IHC = 2+)
+// HER2 ISH/FISH (bei HER2 IHC = 2+) → component[ISHResult].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-fish"
 * item[=].item[=].text = "HER2 ISH/FISH"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85318-4 "ERBB2 gene duplication"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status#Observation.component.valueCodeableConcept"
 * item[=].item[=].enableWhen[+].question = "ihc-her2-score"
 * item[=].item[=].enableWhen[=].operator = #=
 * item[=].item[=].enableWhen[=].answerString = "2+"
@@ -407,12 +424,13 @@ Usage: #definition
 * item[=].item[=].enableWhen[=].operator = #exists
 * item[=].item[=].enableWhen[=].answerBoolean = true
 
-// Ki-67 Index %
+// Ki-67 Index % → valueQuantity
 * item[=].item[+].linkId = "ihc-ki67"
 * item[=].item[=].text = "Ki-67 Index (%)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#29593-1 "Ki-67 [Percentile] in Tissue"
+* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex#Observation.valueQuantity"
 
 // ============================================================
 // Group 4: Gesamtbeurteilung (DiagnosticReport)
