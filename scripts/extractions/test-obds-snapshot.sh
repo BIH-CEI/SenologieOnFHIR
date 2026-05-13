@@ -65,10 +65,11 @@ for case_name in "${CASES[@]}"; do
     continue
   fi
 
-  # $transform aufrufen
+  # $transform aufrufen (JSON-Output erzwingen)
   http_code=$(curl -sf -o "$actual.raw" -w "%{http_code}" \
     -X POST "$FHIR_URL/StructureMap/\$transform?source=$MAP_URL" \
     -H "Content-Type: application/fhir+json" \
+    -H "Accept: application/fhir+json" \
     --data-binary "@$input" 2>/dev/null || echo "ERR")
 
   if [ "$http_code" != "200" ]; then
@@ -79,16 +80,28 @@ for case_name in "${CASES[@]}"; do
     continue
   fi
 
-  # Normalisieren (sort keys, strip volatile fields)
+  # Normalisieren (sort keys, strip volatile fields, ersetze frisch generierte UUIDs)
   python3 -c "
-import json, sys
-d = json.load(open('$actual.raw'))
-# Strip volatile metadata
-if 'meta' in d:
-    for k in ('lastUpdated','versionId','source'):
-        d['meta'].pop(k, None)
-    if not d['meta']:
-        d.pop('meta')
+import json, sys, re
+UUID_RE = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\$')
+VOLATILE_KEYS = {'meldungID', 'lastUpdated', 'versionId', 'source'}
+def scrub(o):
+    if isinstance(o, dict):
+        out = {}
+        for k, v in o.items():
+            if k in VOLATILE_KEYS and isinstance(v, str) and (UUID_RE.match(v) or k != 'meldungID'):
+                out[k] = '<volatile>'
+            else:
+                out[k] = scrub(v)
+        return out
+    if isinstance(o, list):
+        return [scrub(x) for x in o]
+    if isinstance(o, str) and UUID_RE.match(o):
+        return '<uuid>'
+    return o
+d = scrub(json.load(open('$actual.raw')))
+if 'meta' in d and not d['meta']:
+    d.pop('meta')
 print(json.dumps(d, indent=2, sort_keys=True, ensure_ascii=False))
 " > "$actual"
   rm -f "$actual.raw"
