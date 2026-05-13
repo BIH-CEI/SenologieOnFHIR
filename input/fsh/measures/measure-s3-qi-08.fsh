@@ -1,37 +1,37 @@
-// FHIR Measure: S3-QI-02  Prätherapeutische histologische Sicherung
+// FHIR Measure: S3-QI-08  BET bei pT1
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
-Instance: senologie-measure-s3-qi-02
+Instance: senologie-measure-s3-qi-08
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-02: Prätherapeutische histologische Sicherung"
-Description: "Prätherapeutische histologische Sicherung (S3-Leitlinie Mammakarzinom Kapitel 8, QI-02)"
+Title: "Senologie Measure S3-QI-08: BET bei pT1"
+Description: "BET bei pT1 (S3-Leitlinie Mammakarzinom Kapitel 8, QI-08)"
 Usage: #definition
 
-* url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-02"
+* url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-08"
 * version = "0.1.0"
-* name = "SenologieMeasureS3QI02"
+* name = "SenologieMeasureS3QI08"
 * status = #active
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "Prätherapeutische histologische Sicherung — S3 Mammakarzinom QI-02"
+* description = "BET bei pT1 — S3 Mammakarzinom QI-08"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion
 * type = http://terminology.hl7.org/CodeSystem/measure-type#process
 
-* group[+].id = "qi-02-group"
-* group[=].population[+].id = "qi-02-initial-population"
+* group[+].id = "qi-08-group"
+* group[=].population[+].id = "qi-08-initial-population"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#initial-population
 * group[=].population[=].criteria.language = #text/cql-identifier
 * group[=].population[=].criteria.expression = "HasInvasiveOrDCIS"
 
-* group[=].population[+].id = "qi-02-denominator"
+* group[=].population[+].id = "qi-08-denominator"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#denominator
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "HasQI02Nenner"
+* group[=].population[=].criteria.expression = "HasQI08Nenner"
 
-* group[=].population[+].id = "qi-02-numerator"
+* group[=].population[+].id = "qi-08-numerator"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#numerator
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "HasQI02Zaehler"
+* group[=].population[=].criteria.expression = "HasQI08Zaehler"

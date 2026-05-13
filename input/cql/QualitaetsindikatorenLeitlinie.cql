@@ -6,7 +6,7 @@
 // Aufruf: POST /fhir/$cql mit expression = "QI_xx_Rate_Prozent"
 // ============================================================================
 
-library QualitaetsindikatorenLeitlinie version '0.2.0'
+library QualitaetsindikatorenLeitlinie version '0.3.0'
 
 using FHIR version '4.0.1'
 
@@ -99,11 +99,37 @@ define "QI_02_Nenner":
 define "HasInvasiveOrDCIS":
   exists("Invasive oder DCIS")
 
-define "HasQI02Nenner":
-  exists("QI_02_Nenner")
+// QI-2: Praetherapeutische histologische Sicherung
+define "HasQI02Nenner":  exists("QI_02_Nenner")
+define "HasQI02Zaehler": exists("QI_02_Zaehler")
 
-define "HasQI02Zaehler":
-  exists("QI_02_Zaehler")
+// QI-4: BET bei DCIS
+define "HasQI04Nenner":  exists("QI_04_Nenner")
+define "HasQI04Zaehler": exists("QI_04_Zaehler")
+
+// QI-6: BET bei invasivem MaCa
+define "HasQI06Nenner":  exists("QI_06_Nenner")
+define "HasQI06Zaehler": exists("QI_06_Zaehler")
+
+// QI-8: BET bei pT1
+define "HasQI08Nenner":  exists("QI_08_Nenner")
+define "HasQI08Zaehler": exists("QI_08_Zaehler")
+
+// QI-9: Adjuvante endokrine Therapie bei HR+
+define "HasQI09Nenner":  exists("QI_09_Nenner")
+define "HasQI09Zaehler": exists("QI_09_Zaehler")
+
+// QI-11: Trastuzumab bei HER2+
+define "HasQI11Nenner":  exists("QI_11_Nenner")
+define "HasQI11Zaehler": exists("QI_11_Zaehler")
+
+// QI-12: Adjuvante Strahlentherapie
+define "HasQI12Nenner":  exists("QI_12_Nenner")
+define "HasQI12Zaehler": exists("QI_12_Zaehler")
+
+// QI-13: Adjuvante Chemotherapie
+define "HasQI13Nenner":  exists("QI_13_Nenner")
+define "HasQI13Zaehler": exists("QI_13_Zaehler")
 
 define "QI_02_Rate_Prozent":
   if Count("QI_02_Nenner") > 0

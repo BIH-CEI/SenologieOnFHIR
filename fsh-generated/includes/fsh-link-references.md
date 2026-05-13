@@ -363,6 +363,13 @@
 [senologie-measure-minimal]: Measure-senologie-measure-minimal.html
 [senologie-measure-oncobox-kb-12]: Measure-senologie-measure-oncobox-kb-12.html
 [senologie-measure-s3-qi-02]: Measure-senologie-measure-s3-qi-02.html
+[senologie-measure-s3-qi-04]: Measure-senologie-measure-s3-qi-04.html
+[senologie-measure-s3-qi-06]: Measure-senologie-measure-s3-qi-06.html
+[senologie-measure-s3-qi-08]: Measure-senologie-measure-s3-qi-08.html
+[senologie-measure-s3-qi-09]: Measure-senologie-measure-s3-qi-09.html
+[senologie-measure-s3-qi-11]: Measure-senologie-measure-s3-qi-11.html
+[senologie-measure-s3-qi-12]: Measure-senologie-measure-s3-qi-12.html
+[senologie-measure-s3-qi-13]: Measure-senologie-measure-s3-qi-13.html
 [EX_Senologie_SimultaneRadiochemotherapie]: StructureDefinition-ex-senologie-simultane-radiochemotherapie.html
 [cm-sct-to-obds-fm-lokalisation]: ConceptMap-cm-sct-to-obds-fm-lokalisation.html
 [cm-sct-to-obds-grading]: ConceptMap-cm-sct-to-obds-grading.html
