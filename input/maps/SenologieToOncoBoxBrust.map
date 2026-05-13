@@ -188,26 +188,40 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
             // -- Biomarker (ER/PR/HER2) als separate Histologie-Eintraege --
             //    OncoBox 2.0: Anteil_positiv_Oestrogen, IRS_Oestrogen,
             //    HormonrezeptorStatus_Oestrogen sind SEPARATE Felder
+            // ER-Status → Histologie.HormonrezeptorStatus_Oestrogen (P/N/U via translate)
             src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '40556-3') then {
               erEntry.resource as erObs -> f.Histologie as h then {
-                erObs.value as val then { val.coding as c then { c.code as cd where $this = 'LA6576-8' -> h.HormonrezeptorStatus_Oestrogen = 'P' "SetERPos"; c.code as cd where $this = 'LA6577-6' -> h.HormonrezeptorStatus_Oestrogen = 'N' "SetERNeg"; c.code as cd where $this = 'LA4489-6' -> h.HormonrezeptorStatus_Oestrogen = 'U' "SetERUnb"; } "MapERStatusCode"; } "MapERValue";
+                erObs.value as val then {
+                  val.coding as c where system = 'http://loinc.org' ->
+                    h.HormonrezeptorStatus_Oestrogen = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-loinc-rezeptorstatus-to-obds', 'code') "TranslateER";
+                } "MapERValue";
                 erObs.component as comp where code.coding.exists(code = '1234804006') then { comp.value as val then { val.value as v -> h.Anteil_positiv_Oestrogen = v "SetERAnteil"; } "MapERAnteilVal"; } "ERAnteil";
-                // IRS-Score (Senologie-Erweiterung, code aus CS_Senologie_Biomarker)
                 erObs.component as comp where code.coding.exists(code = 'irs-score') then { comp.value as val then { val.value as v -> h.IRS_Oestrogen = v "SetERIRS"; } "MapERIRSVal"; } "ERIRS";
               } "MapEREntry";
             } "EntryER";
 
+            // PR-Status → Histologie.HormonrezeptorStatus_Progesteron (P/N/U via translate)
             src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
               prEntry.resource as prObs -> f.Histologie as h then {
-                prObs.value as val then { val.coding as c then { c.code as cd where $this = 'LA6576-8' -> h.HormonrezeptorStatus_Progesteron = 'P' "SetPRPos"; c.code as cd where $this = 'LA6577-6' -> h.HormonrezeptorStatus_Progesteron = 'N' "SetPRNeg"; c.code as cd where $this = 'LA4489-6' -> h.HormonrezeptorStatus_Progesteron = 'U' "SetPRUnb"; } "MapPRStatusCode"; } "MapPRValue";
+                prObs.value as val then {
+                  val.coding as c where system = 'http://loinc.org' ->
+                    h.HormonrezeptorStatus_Progesteron = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-loinc-rezeptorstatus-to-obds', 'code') "TranslatePR";
+                } "MapPRValue";
                 prObs.component as comp where code.coding.exists(code = '1234803000') then { comp.value as val then { val.value as v -> h.Anteil_positiv_Progesteron = v "SetPRAnteil"; } "MapPRAnteilVal"; } "PRAnteil";
                 prObs.component as comp where code.coding.exists(code = 'irs-score') then { comp.value as val then { val.value as v -> h.IRS_Progesteron = v "SetPRIRS"; } "MapPRIRSVal"; } "PRIRS";
               } "MapPREntry";
             } "EntryPR";
 
+            // HER2-Status → Histologie.Her2neuStatus (Leitlinie-Slice via translate; oBDS-Slice durchgereicht)
             src.entry as her2Entry where resource.is(Observation) and resource.code.coding.exists(code = '48676-1') then {
               her2Entry.resource as her2Obs -> f.Histologie as h then {
-                her2Obs.value as val then { val.coding as c then { c.code as cd where $this = 'P' -> h.Her2neuStatus = 'P' "SetHER2Pos"; c.code as cd where $this = 'N' -> h.Her2neuStatus = 'N' "SetHER2Neg"; c.code as cd where $this = 'low' -> h.Her2neuStatus = 'N' "SetHER2LowToN"; c.code as cd where $this = 'ultralow' -> h.Her2neuStatus = 'N' "SetHER2UltraLowToN"; c.code as cd where $this = 'U' -> h.Her2neuStatus = 'U' "SetHER2Unb"; } "MapHER2StatusCode"; } "MapHER2Value";
+                her2Obs.value as val then {
+                  val.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie' ->
+                    h.Her2neuStatus = translate(c, 'https://www.senologie.org/fhir/ConceptMap/cm-her2-leitlinie-to-obds', 'code') "TranslateHER2Leitlinie";
+                  val.coding as c where system = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds' then {
+                    c.code as cd -> h.Her2neuStatus = cd "PassthroughHER2OBDS";
+                  } "MapHER2OBDSCoding";
+                } "MapHER2Value";
               } "MapHER2Entry";
             } "EntryHER2";
 
