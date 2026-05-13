@@ -1,0 +1,31 @@
+# HAPI FHIR JPA Server mit Clinical Reasoning (CQL / Measures)
+# Genutzt für $evaluate-measure-Tests auf Senologie-Library und -Measures.
+#
+# Starten:  docker compose -f docker-compose.hapi.yaml up -d
+# URL:      http://localhost:8095/fhir
+# Healthcheck: curl -sf http://localhost:8095/fhir/metadata
+
+services:
+  hapi:
+    image: hapiproject/hapi:latest
+    ports:
+      - "8095:8080"
+    environment:
+      # FHIR R4
+      hapi.fhir.fhir_version: R4
+      # Clinical Reasoning aktivieren (Library/Measure/$evaluate-measure)
+      hapi.fhir.cr_enabled: "true"
+      hapi.fhir.cr.enabled: "true"
+      # Validation deaktiviert um schnelle Test-Loads zu erlauben
+      hapi.fhir.validation.requests_enabled: "false"
+      hapi.fhir.validation.responses_enabled: "false"
+      # Erlaube grosse Bundles
+      hapi.fhir.max_page_size: 200
+      # Auto-create indexes
+      hapi.fhir.allow_external_references: "true"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/fhir/metadata"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
