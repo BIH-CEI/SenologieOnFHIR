@@ -1,6 +1,6 @@
 map "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrust" = "SenologieToOncoBoxBrust"
 
-// title: Senologie FHIR Bundle to OncoBox Brust N1.1.1 (Orchestrator)
+// title: Senologie FHIR Bundle to OncoBox Brust 2.0 (Auditjahr 2026 v2.1.1)
 // status: draft
 
 uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as source
@@ -15,38 +15,39 @@ uses "http://hl7.org/fhir/StructureDefinition/CarePlan" alias CarePlan as source
 uses "http://hl7.org/fhir/StructureDefinition/ResearchSubject" alias ResearchSubject as source
 uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" alias OncoBoxBrust as target
 
-// Teil-Maps importieren
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustZentrum"
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustPrimaerfall"
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation"
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustTherapie"
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf"
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustKennzahlen"
-imports "https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustVerlauf"
-
 // ============================================================================
-// Master Orchestrator: Bundle -> OncoBox Brust N1.1.1 Meldung
+// Master Orchestrator: Bundle -> OncoBox Brust 2.0 Meldung
 //
-// Erzeugt aus einem FHIR-Bundle mit Senologie-Ressourcen eine OncoBox-Brust-
-// Meldung. Pro Patientin/Fall wird ein Primaerfall-Block erzeugt. Die Kennzahlen
-// (KB-1 bis KB-20) werden ueber eine separate Sub-Map aggregiert befuellt.
+// MIGRATION-STATUS (2026-05-13):
+//   LM wurde auf OncoBox Brust 2.0 (XSD aus xml-oncobox.de/de/Home/FuerHersteller)
+//   umgestellt. Die 1.0-Sub-Maps (Zentrum/Primaerfall/Operation/Therapie/
+//   Verlauf/Kennzahlen) sind STRUKTURELL INKOMPATIBEL mit 2.0 (Wurzel ist
+//   <Patienten><Patient><Fall> statt <primaerfall>; Felder umbenannt;
+//   Histologie/Biomarker als eigener Block; ER/PR separat als Anteil_positiv_*
+//   und IRS_*; BRCA Keimbahn/somatisch getrennt).
 //
-// Scope: OncoBox Brust N1.1.1 + OncoBox 2.0 FM-Erweiterung (J03-J05)
-// (DKG/OnkoZert-Zertifizierung Brustzentren)
+//   Aktueller Stand: nur ImportInfo + Patient-Skelett werden befuellt.
+//   Vollstaendige Sub-Map-Migration siehe Issue / TODO.
 // ============================================================================
 
 group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
 
-  // --- Zentrum / Meldungs-Metadaten ---
-  src -> tgt.zentrum as zentrum then MapZentrum(src, zentrum) "CallMapZentrum";
+  // ImportInfo: Pflicht-Metadaten der Meldung
+  src -> tgt.ImportInfo as ii then {
+    src -> ii.DatumXML = '2026-05-13' "SetDatumXML";
+    src -> ii.NameTudokusys = 'Senologie-KDS FHIR IG' "SetNameTudokusys";
+    src -> ii.VersionTudokusys = '0.9.0' "SetVersionTudokusys";
+  } "MapImportInfo";
 
-  // --- Primaerfall: pro Brust-Diagnose ein Primaerfall-Block ---
-  // Ein Bundle sollte typischerweise einen Primaerfall enthalten (eine Patientin,
-  // eine Erstdiagnose). Bei Bundles mit mehreren Faellen (z.B. Rezidiven) wird
-  // pro Condition (C50.* / D05.* / Z40.* / Z42.*) ein Block erzeugt.
-  // Primaerfall: MapPrimaerfall now takes Bundle as single source
-  src -> tgt.primaerfall as pf then MapPrimaerfall(src, pf) "CallMapPrimaerfall";
-
-  // --- Kennzahlen KB-1 bis KB-20 aggregieren ---
-  src -> tgt then MapKennzahlen(src, tgt) "CallMapKennzahlen";
+  // Patienten-Container mit mindestens einem Patienten-Skelett
+  src -> tgt.Patienten as ps then {
+    src.entry as patEntry where resource.is(Patient) then {
+      patEntry.resource as pat -> ps.Patient as p then {
+        pat -> p.Stammdaten as sd then {
+          pat.id as pid -> sd.OncoBoxID = pid "SetOncoBoxID";
+          pat.birthDate as bd -> sd.Geburtsjahr = bd "SetGeburtsjahr";
+        } "MapStammdaten";
+      } "MapPatient";
+    } "EntryPatient";
+  } "MapPatienten";
 }
