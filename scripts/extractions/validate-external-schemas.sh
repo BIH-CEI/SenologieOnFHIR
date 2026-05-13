@@ -55,13 +55,21 @@ validate() {
 }
 
 echo "── oBDS XSD ───────────────────────────────────────────"
-validate "Testpatient_Mamma vs. oBDS 3.0.1" \
+# Testpatient ist mit Schema_Version="3.0.1" deklariert → primär gegen 3.0.1.
+validate "Testpatient_Mamma vs. oBDS 3.0.1 (deklarierte Version)" \
   "$REPO_ROOT/input/data/obds-testdaten/oBDS_v3.0.1.xsd" \
   "$REPO_ROOT/input/data/obds-testdaten/Testpatient_Mamma.xml" \
   pass
 validate "Folgepaket_Testpatient_Mamma vs. oBDS 3.0.1" \
   "$REPO_ROOT/input/data/obds-testdaten/oBDS_v3.0.1.xsd" \
   "$REPO_ROOT/input/data/obds-testdaten/Folgepaket_Testpatient_Mamma.xml" \
+  pass
+# Cross-Check: laeuft der gleiche XML auch gegen die neueste Spec 3.0.5?
+# (Indikator fuer Abwaertskompatibilitaet — falls 3.0.5 abwaertskompatibel ist,
+# muesste das 3.0.1-XML auch hier durchlaufen.)
+validate "Testpatient_Mamma vs. oBDS 3.0.5 (Cross-Check Abwaertskompat.)" \
+  "$REPO_ROOT/input/data/obds-testdaten/oBDS_v3.0.5.xsd" \
+  "$REPO_ROOT/input/data/obds-testdaten/Testpatient_Mamma.xml" \
   pass
 
 echo
