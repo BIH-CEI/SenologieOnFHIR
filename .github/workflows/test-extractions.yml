@@ -108,3 +108,17 @@ jobs:
             validation/extractions/actual/${{ matrix.target }}/
             validation/extractions/expected/${{ matrix.target }}/
           retention-days: 14
+
+  external-schemas:
+    name: External Schema Sanity (oBDS / IRegG / IQTIG)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xmllint
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libxml2-utils
+
+      - name: Validate external test data against committed XSDs
+        run: ./scripts/extractions/validate-external-schemas.sh
