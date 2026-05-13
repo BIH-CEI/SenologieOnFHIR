@@ -137,6 +137,9 @@
 [Fall13-Patient-Margarete-Schreiber]: Patient-Fall13-Patient-Margarete-Schreiber.html
 [Fall13-QR-Bezugsdiagnose-Selection]: QuestionnaireResponse-Fall13-QR-Bezugsdiagnose-Selection.html
 [Fall13-Encounter-Stationaer]: Encounter-Fall13-Encounter-Stationaer.html
+[Fall14-Strahlentherapie]: Procedure-Fall14-Strahlentherapie.html
+[Fall14-Systemtherapie]: Procedure-Fall14-Systemtherapie.html
+[Fall14-Operation-BET]: Procedure-Fall14-Operation-BET.html
 [Fall14-ER-Status]: Observation-Fall14-ER-Status.html
 [Fall14-FollowUp]: Observation-Fall14-FollowUp.html
 [Fall14-Grading]: Observation-Fall14-Grading.html
@@ -145,7 +148,9 @@
 [Fall14-Diagnose-Mammakarzinom]: Condition-Fall14-Diagnose-Mammakarzinom.html
 [Fall14-Raucherstatus]: Observation-Fall14-Raucherstatus.html
 [Fall14-Patient-OncoBox-Beispiel]: Patient-Fall14-Patient-OncoBox-Beispiel.html
+[Fall14-Tumorboard-Postop]: CarePlan-Fall14-Tumorboard-Postop.html
 [Fall14-PR-Status]: Observation-Fall14-PR-Status.html
+[Fall14-Tumorboard-Praetherapeutisch]: CarePlan-Fall14-Tumorboard-Praetherapeutisch.html
 [Fall1-Strahlentherapie]: Procedure-Fall1-Strahlentherapie.html
 [Fall1-Begleitmedikation-LThyroxin]: MedicationStatement-Fall1-Begleitmedikation-LThyroxin.html
 [Fall1-Begleitmedikation-Metoprolol]: MedicationStatement-Fall1-Begleitmedikation-Metoprolol.html

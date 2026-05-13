@@ -145,11 +145,90 @@ Usage: #example
 * valueCodeableConcept.coding.display = "Maeßig differenziert (G2)"
 
 
-// TODO: Operation, Strahlentherapie, Systemtherapie, Tumorboards — Profile-
-// spezifische Pflichtfelder benoetigen sorgfaeltigere Befuellung (OPS-Codes
-// aus restricted VS, MII-Intention-Pattern, Tumorboard-Slicing). Fuer das
-// Maximalbeispiel zunaechst weggelassen, Fokus auf Anamnese/Diagnose/
-// Biomarker, die in Fall 1 auch schon abgedeckt sind.
+// --- Operation: BET + SLNB, 2025-02-08, kurativ ---
+// Hinweis: performer.function ist Profil-Pflicht und Erstoperateur synthetisch.
+Instance: Fall14-Operation-BET
+InstanceOf: Senologie_Operation
+Title: "Fall 14: BET + Sentinel-LK-Biopsie links"
+Usage: #example
+
+* status = #completed
+* code.coding.system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding.code = #5-870.91
+* code.coding.version = "2025"
+* code.coding.display = "BET mit primärer Wundnaht"
+* subject = Reference(Fall14-Patient-OncoBox-Beispiel)
+* performedDateTime = "2025-02-08"
+* bodySite.coding = http://snomed.info/sct#7771000 "Links"
+* extension[Intention].valueCodeableConcept.coding.system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention"
+* extension[Intention].valueCodeableConcept.coding.code = #K
+* extension[Intention].valueCodeableConcept.coding.display = "Kurativ"
+* performer[erstoperateur].function = $SCT#304292004 "Surgeon (occupation)"
+* performer[erstoperateur].actor.display = "Synthetischer Erstoperateur (Quelle: OncoBox-Beispiel, nicht spezifiziert)"
+
+
+// --- Strahlentherapie: 02-17 bis 03-17, 40 Gy / 2.5 Gy, adjuvant, kurativ ---
+Instance: Fall14-Strahlentherapie
+InstanceOf: Senologie_Strahlentherapie
+Title: "Fall 14: Adjuvante Bestrahlung Brust links 40 Gy"
+Usage: #example
+
+* status = #completed
+* code.coding.system = "http://fhir.de/CodeSystem/bfarm/ops"
+* code.coding.code = #8-522.90
+* code.coding.version = "2025"
+* code.coding.display = "Hochvoltstrahlentherapie"
+* subject = Reference(Fall14-Patient-OncoBox-Beispiel)
+* performedPeriod.start = "2025-02-17"
+* performedPeriod.end = "2025-03-17"
+* bodySite.coding = http://snomed.info/sct#80248007 "Breast structure"
+* extension[Intention].valueCodeableConcept.coding.system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention"
+* extension[Intention].valueCodeableConcept.coding.code = #K
+
+
+// --- Systemtherapie: Hormontherapie, Beginn 02-24, kurativ, adjuvant ---
+Instance: Fall14-Systemtherapie
+InstanceOf: Senologie_Systemtherapie_Procedure
+Title: "Fall 14: Adjuvante endokrine Therapie"
+Usage: #example
+
+* status = #completed
+* code.coding = $SCT#169413002 "Hormone therapy (procedure)"
+* subject = Reference(Fall14-Patient-OncoBox-Beispiel)
+* performedPeriod.start = "2025-02-24"
+* extension[Intention].valueCodeableConcept.coding.system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention"
+* extension[Intention].valueCodeableConcept.coding.code = #K
+
+
+// --- Tumorkonferenzen ---
+Instance: Fall14-Tumorboard-Praetherapeutisch
+InstanceOf: Senologie_Tumorboard_Empfehlung
+Title: "Fall 14: Prätherapeutisches Tumorboard 2025-02-12"
+Usage: #example
+
+* status = #active
+* intent = #plan
+* category.coding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumorboard-typ"
+* category.coding.code = #praeth
+* subject = Reference(Fall14-Patient-OncoBox-Beispiel)
+* created = "2025-02-12"
+* activity.detail.code.text = "Synthetische Empfehlung (Quelle: OncoBox-Beispiel)"
+* activity.detail.status = #scheduled
+
+
+Instance: Fall14-Tumorboard-Postop
+InstanceOf: Senologie_Tumorboard_Empfehlung
+Title: "Fall 14: Postoperatives Tumorboard 2025-02-23"
+Usage: #example
+
+* status = #active
+* intent = #plan
+* category.coding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumorboard-typ"
+* category.coding.code = #postop
+* subject = Reference(Fall14-Patient-OncoBox-Beispiel)
+* created = "2025-02-23"
+* activity.detail.code.text = "Synthetische Empfehlung (Quelle: OncoBox-Beispiel)"
+* activity.detail.status = #scheduled
 
 
 // --- Anamnese: Raucher N, BRCA NU ---
