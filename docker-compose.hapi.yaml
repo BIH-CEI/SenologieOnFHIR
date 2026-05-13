@@ -1,6 +1,11 @@
 # HAPI FHIR JPA Server mit Clinical Reasoning (CQL / Measures)
 # Genutzt für $evaluate-measure-Tests auf Senologie-Library und -Measures.
 #
+# Architektur:
+#   - hapi:       FHIR-Server mit Clinical Reasoning aktiv
+#   - hapi-init:  Init-Container der den IG (StructureDefinitions, ValueSets,
+#                 ConceptMaps, Libraries, Measures) beim Start lädt
+#
 # Starten:  docker compose -f docker-compose.hapi.yaml up -d
 # URL:      http://localhost:8095/fhir
 # Healthcheck: curl -sf http://localhost:8095/fhir/metadata
@@ -8,24 +13,41 @@
 services:
   hapi:
     image: hapiproject/hapi:latest
+    container_name: senologie-hapi
     ports:
       - "8095:8080"
     environment:
-      # FHIR R4
       hapi.fhir.fhir_version: R4
-      # Clinical Reasoning aktivieren (Library/Measure/$evaluate-measure)
+      # Clinical Reasoning aktivieren (Library / Measure / $evaluate-measure)
       hapi.fhir.cr_enabled: "true"
       hapi.fhir.cr.enabled: "true"
-      # Validation deaktiviert um schnelle Test-Loads zu erlauben
+      # Validation gegen unbekannte Profile abschalten — der IG wird per
+      # init-Container nachgeladen, aber wir wollen Resources auch ohne
+      # vollstaendige Profile-Validierung akzeptieren.
       hapi.fhir.validation.requests_enabled: "false"
       hapi.fhir.validation.responses_enabled: "false"
-      # Erlaube grosse Bundles
-      hapi.fhir.max_page_size: 200
-      # Auto-create indexes
       hapi.fhir.allow_external_references: "true"
+      hapi.fhir.max_page_size: 200
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:8080/fhir/metadata"]
+      test: ["CMD-SHELL", "wget -q -O- http://localhost:8080/fhir/metadata >/dev/null"]
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 120s
+      start_period: 90s
+
+  hapi-init:
+    image: curlimages/curl:latest
+    container_name: senologie-hapi-init
+    depends_on:
+      hapi:
+        condition: service_healthy
+    volumes:
+      - ./fsh-generated/resources:/ig:ro
+      - ./scripts/cql/hapi-init.sh:/init.sh:ro
+    entrypoint: ["/bin/sh", "/init.sh"]
+    restart: "no"
+
+networks:
+  default:
+    name: senologie-net
+    external: true
