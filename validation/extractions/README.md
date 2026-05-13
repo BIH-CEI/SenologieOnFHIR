@@ -5,9 +5,9 @@ Regression-Tests für die Ausleitungen aus der Senologie-IG in externe Standard-
 | Ziel | StructureMap (Top-Level) | Status |
 |---|---|---|
 | **oBDS** (Onkologischer Basisdatensatz) | `SenologieToObdsMeldung` | aktiv |
-| **OncoBox Brust** (DKG) | `SenologieToOncoBoxBrust` | geplant |
-| **IQTIG QS 18.1** | `SenologieToIqtigMammachirurgie181` | geplant |
-| **IRegG** (Implantatregister) | `SenologieToIRegMeldung` | geplant |
+| **OncoBox Brust** (DKG) | `SenologieToOncoBoxBrust` | aktiv |
+| **IQTIG QS 18.1** | `SenologieToIqtigMammachirurgie181` | aktiv |
+| **IRegG** (Implantatregister) | `SenologieToIRegMeldung` | aktiv |
 
 ## Funktionsweise
 
@@ -26,11 +26,14 @@ docker compose -f docker-compose.matchbox.yaml up -d
 # Test-Bundle aus Fall 1 bauen
 python3 scripts/extractions/build-test-bundle.py 1
 
-# oBDS-Test laufen lassen
-./scripts/extractions/test-obds-snapshot.sh
+# Einzelnen Target-Test laufen lassen
+./scripts/extractions/test-extraction-snapshot.sh obds
+./scripts/extractions/test-extraction-snapshot.sh oncobox
+./scripts/extractions/test-extraction-snapshot.sh iqtig
+./scripts/extractions/test-extraction-snapshot.sh iregg
 
 # Snapshot neu schreiben (z.B. nach gewolltem Mapping-Update)
-UPDATE_SNAPSHOTS=1 ./scripts/extractions/test-obds-snapshot.sh fall1
+UPDATE_SNAPSHOTS=1 ./scripts/extractions/test-extraction-snapshot.sh obds fall1
 ```
 
 ## Verzeichnisstruktur
