@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  attributeFormDefault="unqualified" targetNamespace="urn:gba:sqg" xmlns:xi="urn:gba:sqg">
+  <!-- targetNamespace wird in interface bereits definiert, daher hier eigentlich nicht notwendig, jedoch ist diese Schemadatai somit in sich vollständig -->
+  <!-- xmlns:xi wird benötigt, um xpath-Ausdrücke referenzieren zu können, da z.B. individuelle unique-Definitionen nicht durch W3 definiert sind -->
+  <xs:complexType name="pid_data_type">
+    <xs:sequence>
+      <xs:element name="VERSICHERTENIDNEU" type="xi:insurance_id_de_type">
+        <xs:annotation>
+          <xs:documentation>lebenslange Versichertennummer - 10 Stellen</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+	
+	<xs:complexType name="pb_data_type">
+		<xs:sequence>
+			<xs:element name="TITEL">
+				<xs:complexType>
+					<xs:attribute name="V" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="20"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VORSATZ">
+				<xs:complexType>
+					<xs:attribute name="V" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="20"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NAMZUSATZ">
+				<xs:complexType>
+					<xs:attribute name="V" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="20"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NNAME">
+				<xs:complexType>
+					<xs:attribute name="V" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="45"/>
+							  <!-- Prüfung 62: Ist der Wert (Attribut V) eines Pflichtfelds angegeben? -->
+							  <!-- anything but newline + something not whitespace + anything but newline -->
+							  <xs:pattern value=".*\S.*"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VNAME">
+				<xs:complexType>
+					<xs:attribute name="V" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="45"/>
+							  <!-- Prüfung 62: Ist der Wert (Attribut V) eines Pflichtfelds angegeben? -->
+							  <!-- anything but newline + something not whitespace + anything but newline -->
+							  <xs:pattern value=".*\S.*"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ADZUSATZ">
+				<xs:complexType>
+					<xs:attribute name="V" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="40"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="STRASSE">
+				<xs:complexType>
+					<xs:attribute name="V" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="56"/>
+							  <!-- Prüfung 62: Ist der Wert (Attribut V) eines Pflichtfelds angegeben? -->
+							  <!-- anything but newline + something not whitespace + anything but newline -->
+							  <xs:pattern value=".*\S.*"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PLZ10">
+				<xs:complexType>
+					<xs:attribute name="V" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="10"/>
+							  <!-- Prüfung 62: Ist der Wert (Attribut V) eines Pflichtfelds angegeben? -->
+							  <!-- anything but newline + something not whitespace + anything but newline -->
+							  <xs:pattern value=".*\S.*"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ORT">
+				<xs:complexType>
+					<xs:attribute name="V" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="40"/>
+							  <!-- Prüfung 62: Ist der Wert (Attribut V) eines Pflichtfelds angegeben? -->
+							  <!-- anything but newline + something not whitespace + anything but newline -->
+							  <xs:pattern value=".*\S.*"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		  <xs:element name="LAND">
+		    <xs:complexType>
+		      <xs:attribute name="V" use="optional">
+		        <xs:simpleType>
+		          <xs:restriction base="xs:string">
+		            <xs:maxLength value="3"/>
+		          </xs:restriction>
+		        </xs:simpleType>
+		      </xs:attribute>
+		    </xs:complexType>
+		  </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+  
+  <xs:complexType name="perineo_le_data_type">
+    <xs:sequence>
+      <xs:element name="vorname_mutter" type="xi:perineo_vornmut_type"/>
+      <xs:element name="nachname_mutter" type="xi:perineo_nachnmut_type"/>
+      <xs:element name="GEBDATUMK" type="xi:datum_k_type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="perineo_vst_data_type">
+    <xs:annotation>
+      <xs:documentation> Festlegung einer jeweils eindeutigen, fortlaufenden Nummerierung bzgl. der
+        Jahresangaben für Pseudonyme. </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="bloomfilter" type="xi:bloomfilter_type">
+        <xs:unique name="jahruq_bloom">
+          <xs:selector xpath="xi:jahr"/>
+          <xs:field xpath="@V"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bloomfilter_type">
+    <xs:annotation>
+      <xs:documentation>Bloomfilter</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="jahr" minOccurs="4" maxOccurs="4">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="vorname" type="xi:binary_type"/>
+            <xs:element name="nachname" type="xi:binary_type"/>
+          </xs:sequence>
+          <xs:attribute name="V" type="xi:perineo_jahrdatum_type" use="required"> </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+   <xs:complexType name="perineo_nachnmut_type">
+    <xs:annotation>
+      <xs:documentation>Nachname der Mutter</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="V" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[a-z\s]{0,99}"/>
+          <xs:maxLength value="99"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="perineo_vornmut_type">
+    <xs:annotation>
+      <xs:documentation>Vorname der Mutter (ggf. einschließlich angehängten Namenszusatz, getrennt
+        durch ein Leerzeichen)</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="V" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[a-z\s]{0,99}"/>
+          <xs:maxLength value="99"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="insurance_id_de_type">
+    <xs:annotation>
+      <xs:documentation>Versichertennummer der neuen Versichertenkarte</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="V" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[a-zA-Z][0-9]{9}"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="patient_base_type" abstract="true">
+    <xs:annotation>
+      <xs:documentation>Personen identifizierende Daten</xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+  <xs:complexType name="patient_ngkv_base_type" abstract="true">
+    <xs:annotation>
+      <xs:documentation>Personen identifizierende Daten</xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+  <xs:simpleType name="twodigitik_type">
+    <xs:annotation>
+      <xs:documentation>Zweistellige Ziffernfolge</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:totalDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="binary_type">
+    <xs:annotation>
+      <xs:documentation>Die Werte (Attribut V = Value) enthalten die jeweilige
+        Bloomfilterrepräsentation des Vor- bzw. Nachnamens als 1000-stelliger String der Zeichen 0
+        und 1.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="V" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[0-1]{0,1000}"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:simpleType name="perineo_jahrdatum_type">
+    <xs:annotation>
+      <xs:documentation>Zur Übermittlung von Pseudonymen für jeweils vier fortlaufende
+        Spezifikationsjahre.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="2026"/>
+      <xs:maxInclusive value="2029"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="datum_k_type">
+    <xs:attribute name="V" type="xi:datum_type"/>
+  </xs:complexType>
+</xs:schema>

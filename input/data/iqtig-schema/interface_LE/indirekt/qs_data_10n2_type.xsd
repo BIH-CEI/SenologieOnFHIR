@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_10n2_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_b10n2_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="10/2" name="module" type="enum_exportmodul_type" use="required">
+          <xs:annotation>
+            <xs:documentation>Karotis-Revaskularisation</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_b10n2_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BSNR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Betriebsstätten-Nummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="[0-9]{1,2}"/>
+                      <xs:maxLength value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="fachabt_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:gYear" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_geschlecht_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGROESSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergröße</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="50"/>
+                      <xs:maxInclusive value="270"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGROESSENB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergröße unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGEWICHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergewicht bei Aufnahme</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:maxInclusive value="500"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGEWICHTNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergewicht unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="aufnquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Aufnahmetages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNBEFUNDDIABETES">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Diabetes mellitus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_diabeteshch_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAENIEREERSATZTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: präprozedurale Nierenersatztherapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_nierenersatztherapie_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTMGDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in mg/dl;
+präprozedural (letzter Wert vor der Prozedur)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:decimal">
+                      <xs:minInclusive value="0.0"/>
+                      <xs:maxInclusive value="99.9"/>
+                      <xs:totalDigits value="3"/>
+                      <xs:fractionDigits value="1"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTMOLL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in µmol/l;
+präprozedural (letzter Wert vor der Prozedur)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="4"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VORPROZSCHLAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Lag vor der Prozedur ein Schlaganfall vor?;
+unabhängig von einer Seitenlokalisation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_vorprozschlag_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ASYMPCAROTIS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Karotisläsion rechts;
+Asymptomatisch: Kein neu aufgetretenes fokal-neurologisches Defizit im ipsilateralen Stromgebiet innerhalb der letzten 6 Monate&#13;
+Symptomatisch: Neu aufgetretenes fokal-neurologisches Defizit im ipsilateralen Stromgebiet innerhalb der letzten 6 Monate</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_carotisrechts_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SYMPCAROELEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatische Karotisläsion rechts (elektiv)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_carotelektiv_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SYMPCARONOT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatische Karotisläsion rechts (Notfall)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_carotnotfall_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZEITEREIGOP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Zeitraum letztes Ereignis, das auf die Stenose an der rechten Karotis zurückzuführen ist, bis zum ersten Eingriff an dieser Seite während dieses Aufenthaltes;
+anamnestische Angaben ausreichend</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KEINEINGCARR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Es wurde kein Eingriff an der rechten Karotis vorgenommen.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ASYMPCAROTISLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Karotisläsion links;
+Asymptomatisch: Kein neu aufgetretenes fokal-neurologisches Defizit im ipsilateralen Stromgebiet innerhalb der letzten 6 Monate&#13;
+Symptomatisch: Neu aufgetretenes fokal-neurologisches Defizit im ipsilateralen Stromgebiet innerhalb der letzten 6 Monate</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_carotislinks_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SYMPCAROELEKLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatische Karotisläsion links (elektiv)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_carotelektiv_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SYMPCARONOTLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatische Karotisläsion links (Notfall)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_carotnotfall_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZEITEREIGOPLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Zeitraum letztes Ereignis, das auf die Stenose an der linken Karotis zurückzuführen ist, bis zum ersten Eingriff an dieser Seite während dieses Aufenthaltes;
+anamnestische Angaben ausreichend</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KEINEINGCARL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Es wurde kein Eingriff an der linken Karotis vorgenommen.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="RANKIN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Schweregrad der Behinderung (bei Aufnahme);
+An dieser Stelle ist das neurologische Defizit anzugeben, das bei Aufnahme des Patienten vorhanden war bzw. anhand der ersten Diagnostik festgestellt wurde.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_schwebehind_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STENOSEGRADR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Stenosegrad rechts (nach NASCET-Kriterien)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:maxInclusive value="100"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STENOSEGRADL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Stenosegrad links (nach NASCET-Kriterien)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:maxInclusive value="100"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STENOSEGRADUEB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Überprüfung des Stenosegrades erfolgt;
+Wenn vor dem stationären Aufenthalt Befunde zum Stenosegrad vorliegen, die zur Überweisung oder Aufnahme geführt haben, können diese berücksichtigt werden.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_untersdiagverf_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTCALAES">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige Karotisläsionen der rechten Seite;
+Alle folgend abgefragten Läsionen bzw. anatomischen Befunde müssen vor dem Eingriff bekannt gewesen sein und zur Karotisrevaskularisation auf dieser Seite geführt haben.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCAEXPLAQ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: exulzerierende Plaques mit thrombotischer Auflagerung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCAANEURYS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aneurysma;
+Exklusive Aneurysma spurium oder Pseudoaneurysma. Diese sollten unter der Auswahl "sonstige" dokumentiert werden.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCACOILING">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatisches Coiling;
+Eine präoperativ bestehende Elongation der A. carotis interna, die zur Vermeidung einer Knickstenose gekürzt wird, ist nicht als symptomatisches Coiling zu werten.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCAMELAESIO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Mehretagenläsion;
+operativ oder endovaskulär zu versorgende Karotisstenose und vor- oder nachgeschaltete Stenose der ipsilateralen Strombahn (über 70%); nicht gemeint sind Doppelstenosen der extrakraniellen ACI. &#13;
+&#13;
+Diagnosesicherung durch Angiographie erforderlich</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCASONSTIGE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige;
+Zum Beispiel ein Aneurysma spurium oder Pseudoaneurysma.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTCALAESLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige Karotisläsionen der linken Seite;
+Alle folgend abgefragten Läsionen bzw. anatomischen Befunde müssen vor dem Eingriff bekannt gewesen sein und zur Karotisrevaskularisation auf dieser Seite geführt haben.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCAEXPLAQLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: exulzerierende Plaques mit thrombotischer Auflagerung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCAANEURYSLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aneurysma;
+Exklusive Aneurysma spurium oder Pseudoaneurysma. Diese sollten unter der Auswahl "sonstige" dokumentiert werden.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCACOILINGLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatisches Coiling;
+Eine präoperativ bestehende Elongation der A. carotis interna, die zur Vermeidung einer Knickstenose gekürzt wird, ist nicht als symptomatisches Coiling zu werten.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCAMELAESIOLINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Mehretagenläsion;
+operativ oder endovaskulär zu versorgende Karotisstenose und vor- oder nachgeschaltete Stenose der ipsilateralen Strombahn (über 70%); nicht gemeint sind Doppelstenosen der extrakraniellen ACI. &#13;
+&#13;
+Diagnosesicherung durch Angiographie erforderlich</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOCASONSTIGELINKS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige;
+Zum Beispiel ein Aneurysma spurium oder Pseudoaneurysma.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATINTERDIS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte die Indikationsstellung zum Eingriff an der Karotis durch mehrere Fachdisziplinen?;
+Es sind alle Fachdisziplinen (inkl. der Eigenen) anzugeben, die an der Indikationsstellung beteiligt waren.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATNEURO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Neurologie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATGEF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gefäßchirurgie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATRADIO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Interventionelle Radiologie oder Neuroradiologie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATANGIO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Angiologie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATKARDIO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kardiologie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATKARDIOCHI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kardiochirurgie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATSONST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKATBILD">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ist eine Bildgebung des Hirnparenchyms vor dem Eingriff erfolgt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jnu_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VERAENDSCHWEREGRAD">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Veränderung des Schweregrades der Behinderung bis zum (ersten) Eingriff?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRADBEHINDERVOROP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Schweregrad der Behinderung (unmittelbar vor dem Eingriff)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_schwebehind_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Entlassungstages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlwochtag">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Wochentag 1 - 7</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_wochentag_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="vwDauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Verweildauer im Krankenhaus in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="30" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdiagnose(n);
+alle Entlassungsdiagnosen, die in inhaltlichem Zusammenhang mit der in diesem Leistungsbereich dokumentierten Leistung stehen &#13;
+&#13;
+ICD-10-GM</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="icd10_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_entlgrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_b10n2_type">
+    <xs:complexContent>
+      <xs:extension base="tds_b10n2_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="PROZ" type="tds_proz10n2_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Prozedur // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_proz10n2_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNREINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte Prozedur während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="poopvwdauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Postoperative Verweildauer: Differenz in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="opquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal der Operation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ASA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Einstufung nach ASA-Klassifikation (vor dem Eingriff)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_asa_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ASANV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: ASA-Einstufung liegt nicht vor</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FORMANAESTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Form der Anästhesie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_formanae_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZUOPSEITE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: therapierte Seite</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_zuopseite_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LFDNRSEITE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte Prozedur während dieses Aufenthaltes an dieser Seite?;
+1 … 99</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" name="OPSCHLUESSEL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Prozedur(en);
+alle OPS-Kodes des durchgeführten Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="ops301_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTEINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Art des Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_artdeseingriffs_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KATHSCHLAGBEHAND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte eine kathetergestützte akute Schlaganfallbehandlung?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_schlaganfallbehand_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SIMULTANEING">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Simultaneingriff am arteriellen Gefäßsystem?;
+Patienten mit aorto-koronaren Bypass-Operationen sind unabhängig von weiteren Herzeingriffen mit „aorto-koronarer Bypass“ zu dokumentieren.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_karotiseing_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERSTREZEINGR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Handelt es sich um einen Erst- oder Rezidiveingriff an der gleichen Karotis?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_erstrezeingr_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEFANEUUNT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde eine präprozedurale fachneurologische Untersuchung von einem Facharzt für Neurologie durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPMITTHROMBOHEMM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte der Eingriff unter Gabe einer gerinnungshemmenden Medikation?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ASS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: ASS</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="CLOPIDOGREL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Clopidogrel</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTADP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige ADP-Rezeptorantagonisten;
+z.B. Prasugrel, Ticagrelor</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GPREZEPT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: GP-IIb/IIIa-Rezeptorantagonisten;
+z.B. Abciximab, Eptifibatid, Tirofiban</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTMEDDOAKNOAK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: NOAK/DOAK</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTMEDVITKANT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Vitamin-K-Antagonisten</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTTHROMB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige;
+z.B. Cilostazol</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTPROZUNTDATUMK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: keine postprozedurale fachneurologische Untersuchung erfolgt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEURODEFIENT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: neu aufgetretenes zerebrales / zerebrovaskuläres Ereignis;
+bis zur Entlassung, es sei denn, es ist ein weiterer dokumentationspflichtiger Eingriff an der Karotis durchgeführt worden, dann bis zum nächsten Eingriff; jedes periprozedural neu aufgetretene ipsi- und/oder kontralaterale Ereignis ist anzugeben</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TIA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: TIA</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="HYPERPERFSYND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Hyperperfusionssyndrom</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="HIRNNERVAUS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Hirnnervenausfälle</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="APOPLEX">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: ischämischer Schlaganfall</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BLUTUNGJL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: symptomatische intrakranielle Blutung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEURODEFIENTSONST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRADNEUDEFI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Schweregrad des neurologischen Defizits;
+zum Zeitpunkt der Entlassung bzw. unmittelbar vor dem nächsten dokumentationspflichtigen Eingriff an der Karotis</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_schwebehine_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMPLIKAT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: lokale Komplikationen;
+bis zur Entlassung - es sei denn, es ist ein weiterer&#13;
+dokumentationspflichtiger Eingriff an der Karotis durchgeführt&#13;
+worden, dann bis zum nächsten Eingriff</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NACHBLUTUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: OP-pflichtige Nachblutung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NERVENLAESION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Nervenläsion als Folge des Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KAROTVERSCHLUSS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Karotisverschluss</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PEROPKOMPPUST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: behandlungspflichtige Komplikationen an der Punktionsstelle</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="WUNDINFEKTION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wundinfektionen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMPLIKATSONST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_dek_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_bdek_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="DEK" name="module" type="enum_exportmodul_type" use="required">
+          <xs:annotation>
+            <xs:documentation>Dekubitusprophylaxe</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bdek_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BSNR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Betriebsstätten-Nummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="[0-9]{1,2}"/>
+                      <xs:maxLength value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNFACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="fachabt_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:gYear" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHTDEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_geschlechtdek_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatAufn">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat des Aufnahmetages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="mondatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmegrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_aufngrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZAUFNGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Aufnahmegrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatEntl">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat des Entlassungstages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="mondatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="vwDauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Verweildauer im Krankenhaus in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="vwDauerStunden">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Verweildauer im Krankenhaus in Stunden</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_entlgrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIABETESTYP1U2">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Diabetes Mellitus;
+gemäß ICD-10-GM: E10.-, E11.-, E13.-</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOBILITAET">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: eingeschränkte Mobilität;
+gemäß ICD-10-GM: G20.-, G81.-, G82.-, G83.-, M24.5, M62.0-, M62.1-, M62.2-, M62.3-, M62.4-, M62.5-, M62.8-, M62.9-, R26.3, R40.-, R46.3, S14.-, S24.-, Z74.0, Z99.3</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOBILITAETMZ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: eingeschränkte Mobilität - Muskelzerrung;
+gemäß ICD-10-GM: M62.6-</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOBILITAETV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: eingeschränkte Mobilität - Verhalten;
+gemäß ICD-10-GM: R46.0, R46.1, R46.2, R46.4, R46.5, R46.6, R46.7, R46.8</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INFEKTION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Infektion;
+gemäß ICD-10-GM: A40.-, A41.-, J15.-, J16.-, J17.-, J18.-, J69.- M72.6, M86.-, R57.2, R65.-</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INFEKTIONPNEU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Infektion - Pneumonie;
+gemäß ICD-10-GM: J12.-, J13, J14</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INFEKTIONARDS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Infektion - ARDS;
+gemäß ICD-10-GM: J80.-</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DEMENZ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Demenz und Vigilanzstörung;
+gemäß ICD-10-GM: F00.-, F01.-, F02.-, F03.-, G30.-</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INKONTINENZ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Inkontinenz;
+gemäß ICD-10-GM: N39.-, R15, R32</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="UNTERGEWICHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Untergewicht oder Mangelernährung;
+gemäß ICD-10-GM: E41.-, E43.-, E44.-, E46.-, R64</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ADIPOSITAS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Adipositas;
+gemäß ICD-10-GM: E66.06, E66.07, E66.08, E66.16, E66.17, E66.18, E66.26, E66.27, E66.28, E66.86, E66.87, E66.88, E66.96, E66.97, E66.98</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTERKRANKUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: weitere schwere Erkrankungen;
+gemäß ICD-10-GM: B37.1, B37.7, D50.-, D51.-, D52.-, D53.-, D61.-, D62.-, D63.-, D64.-, D72.8, G63.2, K70.-, K72.-, K74.-, N17.-, N18.4, N18.5, N99.0, R18, R34, R60.-, R77.0, Z99.2</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTERKRANKUNGPNEU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: weitere schwere Erkrankungen - anderenorts klassifizierte Pneumonie;
+gemäß ICD-10-GM: U69.0-</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DAUERBEATMUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dauer der Beatmung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="5"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_bdek_type">
+    <xs:complexContent>
+      <xs:extension base="tds_bdek_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="DEK" type="tds_dekdek_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Dekubitus // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_dekdek_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRDEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielter Dekubitus?;
+1 ... 99</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="HOECHSTGRADDEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Stadieneinteilung und Lokalisation des Dekubitus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="icd10_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEITENLOKALISATION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Seitenlokalisation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_seitenlokalisation_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: War der Dekubitus bei der Aufnahme vorhanden? ("Present on Admission");
+bezogen auf den Dekubitus an dieser Lokalisation, unabhängig vom Stadium</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_poa_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

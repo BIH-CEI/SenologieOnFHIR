@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_llsfu_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="tds_bllsfu_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="module" use="required">
+          <xs:annotation>
+            <xs:documentation>Follow-up Leberlebendspende</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="enum_exportmodul_type">
+              <xs:enumeration value="LLSFU_DeQS"/>
+
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>		
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bllsfu_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="kasseiknr2StellenSp">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Ersatzfeld Institutionskennzeichen der Krankenkasse der Versichertenkarte Spender</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versichertenstatusgkvSp">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: GKV-Versichertenstatus Spender</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VERSICHERTENIDNEUNV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Der Spender verfügt über keine eGK-Versichertennummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BSNR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Betriebsstätten-Nummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINWBAS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Liegt eine wirksame Einwilligung des Patienten zur weiteren Verarbeitung personenbezogener QS-Daten (einschließlich ET-Nummer) in der Bundesauswertungsstelle vor?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINWTXREG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Liegt eine wirksame Einwilligung des Patienten zur weiteren Übermittlung personenbezogener QS-Daten (einschließlich ET-Nummer) an das Transplantationsregister vor?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINWTXREGAUFK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde der Patient im Rahmen eines ärztlichen Aufklärungsgesprächs über die Einwilligung und die Folgen eines möglichen Widerrufs der Einwilligung zur Übermittlung der personenbezogenen Daten an das Transplantationsregister aufgeklärt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LSDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der Leberlebendspende</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatLs">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Lebendspende</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FUERHEBDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der Follow-up-Erhebung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstFUErhebungsdatumLsDatum">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand Erhebungsdatum des Follow-up und Datum der Lebendspende in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatFUErhebung">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat des Follow-up Erhebungsdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTFUEMPF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Art der Follow-up-Erhebung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FUJAHR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Follow-up: Jahr(e) nach Lebendspende;
+(1, 2, 3)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FUVERSTORBEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Spender verstorben</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TODESDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Todesdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatTod">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat des Todesdatums</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstTodLsDatum">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Todesdatum und Datum der Lebendspende</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BILIRUBINMGDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Bilirubin i. S. in mg/dl</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BILIRUBINMOLL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Bilirubin i. S. in µmol/l</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BILIRUBINNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Bilirubin i. S. unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GAMMAGT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gamma-GT</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GAMMAGTNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gamma-GT unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMPLFU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Komplikation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="CLAVIENDINDONB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: unbekannt, ob Komplikation vorliegt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GALLENWEGSKOMPL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gallenwegskomplikation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NARBENHERNIE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Narbenhernie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LEBERKOMPL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: leberbezogene Komplikationen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="IABDOKOMP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: intraabdominelle Komplikationen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTKOMPLIKSPEZ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige Komplikationen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERFTRANSLEB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Lebertransplantation des Lebendspenders erforderlich</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TXDATUMSPENDER">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der letzten Transplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstTxDatumSpenderLSDatum">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Datum der letzten Transplantation des Spenders und dem Datum der Lebendspende (in Tagen)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatTxSpender">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der letzten Transplantation des Spenders</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

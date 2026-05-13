@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="../imports/xenc-schema.xsd"/>
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../imports/xmldsig-core-schema.xsd"/>
+
+	<xs:complexType name="encryption_base_type">
+		<xs:sequence>
+			<xs:element ref="ds:KeyInfo" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="feedback_key" type="feedback_key_type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Passwort mit dem der Rückmeldebericht verschlüsselt wird. Die Auswertungsstelle leitet den Bericht so an die Datenannahmestelle (LQS/LKG, KV) weiter, dass diese keine Möglichkeit zur Einsichtnahme hat.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="key_name_type">
+		<xs:annotation>
+			<xs:documentation>Auflistung über den Verwendungszweck eines Passwortes.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Rueckmeldebericht"/>
+			<xs:enumeration value="Sonstige"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="key_value_type">
+		<xs:annotation>
+			<xs:documentation>Als Passwort sind alle 6 bis 20-stelligen Zeichenfolgen zulässig, welche insbesondere keine Leerraumzeichen (z.B. Leerzeichen, Tabulator oder Zeilenumbruch) enthalten. Von der Verwendung von Umlauten sowie Sonderzeichen, welche bereits technisch vorbelegt sind, ist ebenfalls abzusehen.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9.,:;=+*#_!$%?@(){}|'^~]{6,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <xs:include schemaLocation="../sqg_admin_datatypes.xsd"/>
+    <!-- 
+		
+		
+		Im Rahmen der Leistungserbringerpseudonymisierung ersetzt die DAS für Krankenkhäuser
+		======================
+		IKNR 			-> pseudonym
+		standortID 		-> pseudonym_standort
+		standortIDaufn 	-> pseudonym_standortaufn 	(falls vorliegend)
+		standortIDicd 	-> pseudonym_standorticd	(falls vorliegend)
+		standortIDops 	-> pseudonym_standortops	(falls vorliegend)
+		
+		DAS für Vertragsärzte
+		=====================
+		BSNRAMBULANT	-> pseudonym
+		NBSNRAMBULANT	-> pseudonym_nbsnr			(falls vorliegend)
+	-->
+    <xs:complexType name="care_provider_base_type" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Diese abstrakte Typdefinition beinhaltet sämtliche Ausprägungen von
+                Leistungserbringerkennungen. Zu unterscheiden ist zwischen Echtkennungen und
+                Pseudonymen sowie zwischen Krankenhaus-Bereich und vertragsärztlichen Bereich. Eine
+                konkrete Datenlieferung kann nicht gleichzeitg mehrere dieser Ausprägungen
+                beinhalten. Dies wird bereits in dieser abstrakten BaseType-Definition durch eine
+                Auswahl (von Sequenzen) vorgegeben. Je nach Zweck einzelner Ableitungen kann somit
+                auf die dafür erforderlichen Ausprägungen eingeschränkt werden.</xs:documentation>
+        </xs:annotation>
+        <xs:choice maxOccurs="unbounded">
+            <!-- Echtkennungen -->
+            <xs:sequence>
+                <!-- KH-Bereich -->
+                <xs:element ref="IKNR" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Institutionskennzeichen des Krankenhauses
+                            (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="standortID" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>entlassender Standort
+                            (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="standortIDaufn" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>aufnehmender Standort
+                            (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="standortIDicd" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>diagnostizierender Standort
+                            (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="standortIDops" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>behandelnder Standort
+                            (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:sequence>
+                <!-- vertragsärztlicher Bereich -->
+                <xs:element ref="BSNRAMBULANT" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Betriebsstättennummer (vertragsärztlicher
+                            Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="NBSNRAMBULANT" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Nebenbetriebsstättennummer (vertragsärztlicher
+                            Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <!-- Pseudonyme -->
+            <xs:sequence>
+                <xs:element ref="pseudonym" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pseudonym entweder für IKNR (Krankenhaus-Bereich) oder für
+                            BSNRAMBULANT (vertragsärztlicher Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="pseudonym_nbsnr" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pseudonym für NBSNRAMBULANT bei belegärztlichen Leistungen
+                            (vertragsärztlicher Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="pseudonym_standort" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pseudonym für STANDORT, welcher dem entlassenden Standort
+                            entspricht (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="pseudonym_standortaufn" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pseudonym für STANDORTAUFN, welcher dem aufnehmenden
+                            Standort entspricht (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="pseudonym_standorticd" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pseudonym für STANDORTICD, welcher dem diagnostizierenden
+                            Standort entspricht (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="pseudonym_standortops" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pseudonym für STANDORTOPS, welcher dem
+                            leistungserbringenden Standort entspricht
+                            (Krankenhaus-Bereich)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <!--<xs:element ref="KASSEIKNR" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> Haupt-IKNR der Krankenkasse </xs:documentation>
+				</xs:annotation>
+			</xs:element>-->
+        </xs:choice>
+    </xs:complexType>
+    
+    <xs:element name="IKNR" type="iknr_type"/>
+    <!-- iknr or bsnr: -->
+    <xs:element name="pseudonym" type="pseudonym_type"/>
+    <xs:element name="BSNRAMBULANT" type="iknr_type"/>
+    <xs:element name="NBSNRAMBULANT" type="iknr_type"/>
+    <xs:element name="pseudonym_nbsnr" type="pseudonym_bsnr_type"/>
+    <xs:element name="standortID" type="standortid_type"/>
+    <xs:element name="standortIDaufn" type="standortid_type"/>
+    <xs:element name="standortIDicd" type="standortid_type"/>
+    <xs:element name="standortIDops" type="standortid_type"/>
+    
+    
+    
+    <xs:element name="pseudonym_standort" type="pseudonym_standorte_type"/>
+    <xs:element name="pseudonym_standortaufn" type="pseudonym_standorte_type"/>
+    <xs:element name="pseudonym_standorticd" type="pseudonym_standorte_type"/>
+    <xs:element name="pseudonym_standortops" type="pseudonym_standorte_type"/>
+    
+    
+    
+    
+    <!-- folgende beiden complexTypes werden noch verschoben in sqg_admin_datatypes.xsd, vgl. standort_nummer_type, standort_id_type, ... -->
+    <xs:complexType name="standortnummer_type">
+        <xs:annotation>
+            <xs:documentation>Ebene 2 Standort-Einrichtung (9-stellig): Vollständige Standortnummer
+                gemäß § 3 Abs. 7 Nr. 9 Vereinbarung gemäß § 293 Abs. 6 SGB V (77 + StandortID + 0 +
+                Einrichtungstyp) </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="V" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="77\d{4}0\d{2}"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="standortid_type">
+        <xs:annotation>
+            <xs:documentation>Ebene 1 Krankenkhaus-Standort (6-stellig): Eindeutiges Kennzeichen für
+                den Standort (Stellen 1-2: "77", Stellen 3-6 fortlaufende Vergabe durch
+                Verzeichnisstelle.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="V" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="77\d{4}"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    
+</xs:schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../sqg_admin_datatypes.xsd"/>
+
+	<xs:complexType name="sqg_header_base_type">
+		<xs:sequence>
+			<xs:element name="document" type="document_type">
+				<xs:annotation>
+					<xs:documentation>Dieses Element ist weitestgehend über den gesamten Datenfluss hinweg beständig. Nur das Element modification_dttm wird bei jeder Bearbeitung neu gesetzt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="provider" type="organisation_type">
+				<xs:annotation>
+					<xs:documentation>Das Element provider gibt an, welche Institution dieses Dokument zuletzt bearbeitet hat. Es wird in jeder am Datenfluss beteiligten Instanz durch diese ersetzt und so zur nächsten Instanz geschickt. Einzige Ausnahme ist die Vertrauensstelle, die dort nur im Fall selektiv vertraglicher ambulanter Leistungserbringer als provider auftreten würde. In der Regel lässt die Vertrauensstelle das Providerelement unberührt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="protocol" type="protocol_header_type">
+				<xs:annotation>
+					<xs:documentation>Das Protocol Element nimmt Informationen zu Prüfungen auf, die im Datenfluss durchgeführt wurden. Es ist Teil der Rückprotokollierung. Dieses Element ist nicht optional und soll gemeinsam mit dem Unterelement status_document von Anfang an im Datenfluss vorhanden sein, um nachfolgende im Datenfluss vorgenommene Prüfergebnisse aufzunehmen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="encryption" type="encryption_key_type">
+				<xs:annotation>
+					<xs:documentation>Das Element encryption nimmt eine List von asymetrisch Verschlüsselten symetrischen Schlüsseln auf, mit denen die Verschlüsselten Daten verschlüsselt wurden. Die Schlüsselinformationen stecken im Element ds:keyInfo Im Attribut ID des Elementes ds:keyInfo enthält den Namen der Elemente, die verschlüsselt wurden. Das Element ds:keyInfo entspricht einem W3C Standard.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

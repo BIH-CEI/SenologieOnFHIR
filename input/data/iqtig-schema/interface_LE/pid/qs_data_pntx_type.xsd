@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_pntx_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_bpntx_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="PNTX" name="module" type="enum_exportmodul_type" use="required">
+          <xs:annotation>
+            <xs:documentation>Nieren- und Pankreas- (Nieren-) transplantation</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bpntx_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="kasseiknr2Stellen">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Ersatzfeld Institutionskennzeichen der Krankenkasse der Versichertenkarte</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="[0-9]{2}"/>
+                      <xs:maxLength value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versichertenstatusgkv">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: GKV-Versichertenstatus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="1"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VERSICHERTENIDNEUNV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Der Patient verfügt über keine eGK-Versichertennummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINWBAS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Liegt eine wirksame Einwilligung des Patienten zur weiteren Verarbeitung personenbezogener QS-Daten (einschließlich ET-Nummer) in der Bundesauswertungsstelle vor?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="fachabt_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINWTXREG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Liegt eine wirksame Einwilligung des Patienten zur weiteren Übermittlung personenbezogener QS-Daten (einschließlich ET-Nummer) an das Transplantationsregister vor?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINWTXREGAUFK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde der Patient im Rahmen eines ärztlichen Aufklärungsgesprächs über die Einwilligung und die Folgen eines möglichen Widerrufs der Einwilligung zur Übermittlung der personenbezogenen Daten an das Transplantationsregister aufgeklärt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jnu_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="aufnquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Aufnahmetages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:gYear" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_geschlecht_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGROESSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergröße</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KGEWICHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergewicht bei Aufnahme</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZUGRUNDNIERENERKR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: renale Grunderkrankung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_rengrunderk_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VORERKRANKDIABETES">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Diabetes mellitus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_diabetesniere_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DAUERINSULIN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dauer des Diabetes</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NIERENERSATZTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dialysetherapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BEGINNNIERENERSATZTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Beginn der Dialysetherapie (Datum der Erstdialyse)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ETURGENCYPN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dringlichkeit der Transplantation gemäß Medical Urgency Code ET-Status</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_eturgencypn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BLUTGRUPPE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Blutgruppe des Empfängers</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_blutgruppe_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTOPKREAT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in mg/dl;
+letzter vorliegender Wert vor Entlassung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:decimal">
+                      <xs:minInclusive value="0.1"/>
+                      <xs:maxInclusive value="99.9"/>
+                      <xs:totalDigits value="3"/>
+                      <xs:fractionDigits value="1"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANDPOSTOPKREAT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in µmol/l;
+letzter vorliegender Wert vor Entlassung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="4"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLINSULINFREI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Patient bei Entlassung insulinfrei?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdatum Krankenhaus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Entlassungstages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="30" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdiagnose(n);
+ICD-10-GM</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="icd10_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_entlgrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TODESURSACHENTX">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Todesursache</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_todesursachentx_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_bpntx_type">
+    <xs:complexContent>
+      <xs:extension base="tds_bpntx_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="T" type="tds_tpntx_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Transplantation // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_tpntx_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNREINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte Transplantation während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMBTRANSNIERE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: durchgeführte Transplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_transnierepankreas_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EINZELDOPPELTX">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Einzel- oder Doppeltransplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_einzeldoppeltx_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="RETRANSPLANTNIERE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Retransplantation Niere</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NIEREOPZAHL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte Nierentransplantation?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="1"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VORTXDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der letzten Nierentransplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SPENDERTYP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Spendertyp</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_spendertyp_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ALTERSPEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Spenderalter;
+Alter in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:maxInclusive value="200"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHTSPEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht des Spenders</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_geschlecht_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BLUTGRUPPESPEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Blutgruppe des Spenders</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_blutgruppe_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTSPMGDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in mg/dl;
+letzter vorliegender Wert</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:decimal">
+                      <xs:minInclusive value="0.1"/>
+                      <xs:maxInclusive value="99.9"/>
+                      <xs:totalDigits value="3"/>
+                      <xs:fractionDigits value="1"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTSPMOLL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in µmol/l;
+letzter vorliegender Wert</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="4"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TODESURSACHESPEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Todesursache;
+Spender</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_todesursachespen_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: OP-Datum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="poopvwdauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Postoperative Verweildauer: Differenz in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="monatOp">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Operation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="mondatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" name="OPSCHLUESSEL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Operation;
+OPS</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="ops301_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OCSYSTEM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Einsatz eines Perfusionssystems</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_einsatzperfusionsys_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ABBRUCHTX">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Abbruch der Transplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ORGANQUALITAETTRANS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Organqualität zum Zeitpunkt der Transplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_organqualitaet_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ISCHAEMIEZEITKALTNIERE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: kalte Ischämiezeit Niere;
+Die Dokumentation eines Wertes oberhalb von 2880 ist nur bei Einsatz eines hypothermen (auch in Kombination mit normothermen) Perfusionssystems zulässig.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:maxInclusive value="14400"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ISCHAEMIEZEITKALTPANK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: kalte Ischämiezeit Pankreas;
+Die Dokumentation eines Wertes oberhalb von 2160 ist nur bei Einsatz eines hypothermen (auch in Kombination mit normothermen) Perfusionssystems zulässig.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:maxInclusive value="14400"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FUNKTAUFNTRANSENTL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: funktionierendes Nierentransplantat bei Entlassung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FUNKTAUFNTRANSPOSTOP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postoperative Funktionsaufnahme des Transplantats</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANZPOSTOPDIALYSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Anzahl postoperativer intermittierender Dialysen bis Funktionsaufnahme</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DAUERDIALYSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dauer der postoperativen kontinuierlichen Dialysen bis zur Funktionsaufnahme</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="CLAVIENDINDO4">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Komplikation in Anlehnung an die Clavien-Dindo-Klassifikation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_claviendindo4_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BLUTUNGJL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Blutung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REOPERFORDERLICH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Reoperation erforderlich</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTKOMPLIK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige Komplikationen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTNTRANSPLERFJN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entnahme des Pankreastransplantats erforderlich</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="URSACHENPNTX">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ursache für die Entnahme des Pankreastransplantats</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_ursachentransverlustpankreas_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REJEKTION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: behandlungsbedürftige Abstoßung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_rejektion_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REJEKTBIOPS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Abstoßung durch Biopsie gesichert</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

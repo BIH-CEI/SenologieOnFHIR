@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_hep_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_bhep_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="HEP" name="module" type="enum_exportmodul_type" use="required">
+          <xs:annotation>
+            <xs:documentation>Hüftendoprothesenversorgung</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bhep_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="kasseiknr2Stellen">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Ersatzfeld Institutionskennzeichen der Krankenkasse der Versichertenkarte</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="[0-9]{2}"/>
+                      <xs:maxLength value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versichertenstatusgkv">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: GKV-Versichertenstatus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="1"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VERSICHERTENIDNEUNV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Der Patient verfügt über keine eGK-Versichertennummer.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BSNR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Betriebsstätten-Nummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="[0-9]{1,2}"/>
+                      <xs:maxLength value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="fachabt_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmedatum Krankenhaus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="aufnquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Aufnahmetages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNZEIT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmeuhrzeit Krankenhaus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="uhrzeit_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmegrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_aufngrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZAUFNGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Aufnahmegrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:gYear" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_geschlecht_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GEHSTRECKE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gehstrecke (vor Aufnahme bzw. vor der Fraktur)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_gehstrecke_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GEHHILFEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: verwendete Gehhilfen (vor Aufnahme bzw. vor der Fraktur)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_gehhilfe_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TREPPENSTEIGEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Treppensteigen vor Aufnahme;
+nicht auszufüllen, wenn im Aufenthalt eine Femurfraktur behandelt wurde</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_treppensteigen_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="30" name="OPSCHLUEAUSL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: teildatensatzsteuernde OPS-Kodes</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="ops301_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="100" minOccurs="1" name="OPSCHLUESON">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige OPS-Kodes</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="ops301_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GEHSTRECKEENTL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gehstrecke bei Entlassung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_gehstrecke_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GEHHILFEENTL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gehhilfen bei Entlassung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_gehhilfe_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TREPPENSTEIGENENTL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Treppensteigen bei Entlassung;
+nicht auszufüllen, wenn im Aufenthalt eine Femurfraktur behandelt wurde</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_treppensteigenentl_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Entlassungstages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlwochtag">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Wochentag 1 - 7</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_wochentag_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="vwDauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Verweildauer im Krankenhaus in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_entlgrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLKOMPLEXBEHAND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassung in die geriatrische frührehabilitative Komplexbehandlung;
+gemäß § 109 SGB V</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMPLEXBEHANDLUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: geriatrische frührehabilitative Komplexbehandlung intern durchgeführt;
+(OPS 8-550.-)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="100" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdiagnose(n);
+ICD-10-GM</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="icd10_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="APOPLEXZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Schlaganfall</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GELENKINFEKTZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Infektion am Gelenk</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KARDVASKKOMPZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: behandlungsbedürftige kardiale Komplikation(en)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LUNGEMBOLIEZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Lungenembolie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MECHANKOMPLZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Mechanische Komplikation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NIERENINSUFFIZIENZZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: akute Niereninsuffizienz</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PNEUMONIEZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Pneumonie;
+nach den KISS-Definitionen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PROTHLUXATIONZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Endoprothesen(sub)luxation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="THROMBOSENZP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Bein- /Beckenvenenthrombose</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_komplzeitpunkt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_bhep_type">
+    <xs:complexContent>
+      <xs:extension base="tds_bhep_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="PROZ" type="gr_prozhep_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Prozedur // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_prozhep_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNREINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielter operativer Eingriff während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INITIALACETAB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: initial/vor dem Eingriff vorliegende Acetabulumfraktur</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ASA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Einstufung nach ASA-Klassifikation;
+Es ist die ASA-Einstufung der Anästhesiedokumentation zu übernehmen.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_asa_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEOPCDC">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wundkontaminationsklassifikation;
+nach Definition der CDC</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_praecdc_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTEINGRIFFHUE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Art des Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_arteingriffhep_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum des Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="poopvwdauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Postoperative Verweildauer: Differenz in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="opquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal der Operation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="praeopminutenMin1">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Praeoperative Verweildauer in Minuten</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPZEIT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Beginn des Eingriffs;
+Hautschnitt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="uhrzeit_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" name="OPSCHLUESSEL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Prozedur(en);
+alle OPS-Kodes des durchgeführten Eingriffs inkl. möglicher Zusatzkodierungen z.B. minimalinvasiver Eingriffe</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="ops301_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="IMPLANTATFEHLLAGE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: primäre Implantatfehllage;
+fehlerhafter Einbau der Endoprothese mit Notwendigkeit einer Reoperation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="IMPLANTATDSLOKATIONJN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sekundäre Implantatdislokation;
+nach Beendigung des Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REVWUNDSEKR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: revisionsbedürftige prolongierte Wundsekretion oder Serom</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="WUNDDEHISZENZJN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wunddehiszenz</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEKROSEWUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sekundäre Nekrose der Wundränder</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTOPWUNDINFEKTION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postoperative Wundinfektion;
+nach den KISS-Definitionen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTOPCDC">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wundinfektionstiefe;
+nach den KISS-Definitionen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_postcdc_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_prozhep_type">
+    <xs:complexContent>
+      <xs:extension base="tds_prozhep_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="F" type="tds_fhep_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Hüftgelenknahe Femurfraktur // Existenzbedingung: ARTEINGRIFFHUE = 1 // Bogenzahl: ? </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="E" type="tds_ehep_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Elektive Hüftendoprothesen-Erstimplantation // Existenzbedingung: ARTEINGRIFFHUE = 2 // Bogenzahl: ? </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="W" type="tds_whep_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Wechsel bzw. Komponentenwechsel // Existenzbedingung: ARTEINGRIFFHUE IN (3;4) // Bogenzahl: ? </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_fhep_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRFRAKTUR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte endoprothetische Versorgung einer hüftgelenknahen Femurfraktur während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="COXARTHROSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Koxarthrose</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VOROPHUEFTEF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde eine Voroperation am betroffenen Hüftgelenk oder hüftgelenknah durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FRAKTUREREIG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Femurfraktur ereignete sich während des Krankenhausaufenthaltes;
+Inhouse-Sturz</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FRAKTURDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der Fraktur (nur bei Frakturen während des stationären Krankenhausaufenthaltes)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZEITPUNKTFRAKTUR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Zeitpunkt der Fraktur</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="uhrzeit_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FRAKTURLOKAL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Frakturlokalisation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_lokalfraktur_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FEMURFRAKTU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: hüftgelenknahe Femurfraktur - Einteilung nach Garden</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_femurgarden_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANTITHROMBMITTELJN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Patient wurde mit antithrombotischer Dauertherapie aufgenommen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTMEDTHROMBAGGHEMM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Thrombozytenaggregationshemmer;
+z.B. Clopidogrel, Prasugrel, Ticagrelor, Acetylsalicylsäure</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTMEDVITKANTJN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Vitamin-K-Antagonisten;
+z.B. Phenprocoumon, Warfarin</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTMEDDOAKNOAKJN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: DOAK/NOAK;
+z.B. Dabigatran, Rivaroxaban, Apixaban</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTMEDSONST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Sonstige</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tds_ehep_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRERSTIMP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte elektive Hüftendoprothesen-Erstimplantation während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VOROPHUEFTEE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde eine Voroperation am betroffenen Hüftgelenk oder hüftgelenknah durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tds_whep_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRWECHSELOP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte Wechsel-Operation während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="IMPLANTATBRUCH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Implantatbruch</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ABRIEB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Implantatabrieb/-verschleiß</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="IMPLANTATFEHLLAGEPFANNE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Implantatfehllage der Pfanne</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="IMPLANTATFEHLLAGESCHAFT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Implantatfehllage des Schafts</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LOCKERUNGPFANNE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Lockerung der Pfannenkomponente</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LOCKERUNGSCHAFT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Lockerung der Schaftkomponente</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GELENKPFANNENENTZUEND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gelenkpfannenentzündung mit Defekt des Knorpels (Cotyloiditis) z.B. nach Duokopfprothesenimplantation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

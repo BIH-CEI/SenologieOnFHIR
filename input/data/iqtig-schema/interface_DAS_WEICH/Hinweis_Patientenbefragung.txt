@@ -1,0 +1,11 @@
+Betrifft Datenfluss Patientenbefragung:
+Für das verschlüsselte Element qs_data werden keine weichen Schemata zur Verfügung gestellt. Das DPP wird stattdessen mit den folgenden Schemata aufgerufen:
+--nach Empfang bei der KV: interface_LE_DAS\interface_LE_KV_vpb.xsd
+--nach Empfang bei der SV: interface_LE_DAS\interface_LE_SV_vpb.xsd
+--nach Empfang bei der LQS: interface_LE_DAS\interface_LE_LQS_vpb.xsd
+
+Die QSDOK.Regeln bzw. Mehrfachregeln werden durch das DPP bei verschlüsseltem qs_data-Element nicht geprüft. Die im DPP enthaltenen administrativen Prüfungen, siehe QSDOK.vPruefung Attribut dpp, werden hingegen vom DPP ausgeführt.
+
+Aufruf bspw.:
+java -jar datenpruefprogramm-4.2.2-jar-with-dependencies.jar -c config_KV.xml --xsd-path xsd\interface_LE_DAS\interface_LE_KV_vpb.xsd
+

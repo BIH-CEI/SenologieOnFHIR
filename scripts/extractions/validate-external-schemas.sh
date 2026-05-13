@@ -83,24 +83,20 @@ for f in "$REPO_ROOT/input/data/iregg-schema-v4.1.1/Beispiele"/*.xml; do
 done
 
 echo
-echo "── IQTIG XSD ──────────────────────────────────────────"
+echo "── IQTIG XSD (QS-Basisspezifikation 2026 V06) ─────────"
 IQTIG_DIR="$REPO_ROOT/input/data/iqtig-schema"
-IQTIG_XSD=$(find "$IQTIG_DIR" -name "*.xsd" 2>/dev/null | head -1)
-if [ -z "$IQTIG_XSD" ]; then
-  echo "  ⊘ no IQTIG XSDs found in $IQTIG_DIR — skipping (download manually from iqtig.org)"
+# LE-Schema (interface_LE/2026_lqs_iv_1.0_Export.xsd) ist das Wurzel-Schema
+# fuer Leistungserbringer-Exports und importiert alle indirekt-/abstract-XSDs.
+IQTIG_LE_XSD="$IQTIG_DIR/interface_LE/2026_lqs_iv_1.0_Export.xsd"
+if [ ! -f "$IQTIG_LE_XSD" ]; then
+  echo "  ⊘ IQTIG XSD nicht gefunden ($IQTIG_LE_XSD) — Schema-Paket nicht entpackt?"
   skip=$((skip + 1))
 else
-  # Validiere alle XML-Testdatensaetze (falls vorhanden) gegen das Hauptschema
-  found_xml=0
-  for f in "$IQTIG_DIR"/Testdaten/*.xml "$IQTIG_DIR"/Beispiele/*.xml "$IQTIG_DIR"/examples/*.xml; do
+  # Validiere alle 18.1-Beispiele aus Beispiele/ und XML-Beispiele/interface_LE/
+  for f in "$IQTIG_DIR"/Beispiele/*18n1*.xml "$IQTIG_DIR"/XML-Beispiele/interface_LE/indirekt/*18n1*.xml; do
     [ -f "$f" ] || continue
-    found_xml=1
-    validate "$(basename "$f") vs. $(basename "$IQTIG_XSD")" "$IQTIG_XSD" "$f" pass
+    validate "$(basename "$f") vs. interface_LE/2026_lqs_iv_1.0_Export.xsd" "$IQTIG_LE_XSD" "$f" pass
   done
-  if [ $found_xml -eq 0 ]; then
-    echo "  ⊘ XSD found ($IQTIG_XSD) but no test data — schema sanity check skipped"
-    skip=$((skip + 1))
-  fi
 fi
 
 echo

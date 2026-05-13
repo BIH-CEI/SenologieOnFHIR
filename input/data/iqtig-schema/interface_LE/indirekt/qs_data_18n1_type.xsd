@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_18n1_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_b18n1_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="18/1" name="module" type="enum_exportmodul_type" use="required">
+          <xs:annotation>
+            <xs:documentation>Mammachirurgie</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_b18n1_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BSNR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Betriebsstätten-Nummer</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="[0-9]{1,2}"/>
+                      <xs:maxLength value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="fachabt_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:gYear" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_geschlecht_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmedatum Krankenhaus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="aufnquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Aufnahmetages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="30" name="AUFNDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmediagnose(n);
+ICD-10-GM</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="icd10_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ADJUTHERAPIEPLANUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postoperative Therapieplanung in interdisziplinärer Tumorkonferenz;
+Tumorboard und Befunde</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdatum Krankenhaus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="vwDauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Verweildauer im Krankenhaus in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Entlassungstages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlwochtag">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Wochentag 1 - 7</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_wochentag_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="30" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdiagnose(n);
+alle Entlassungsdiagnosen, die in inhaltlichem Zusammenhang mit der in diesem Leistungsbereich dokumentierten Leistung stehen &#13;
+&#13;
+ICD-10-GM</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="icd10_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_entlgrund_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jleer_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_b18n1_type">
+    <xs:complexContent>
+      <xs:extension base="tds_b18n1_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="BRUST" type="gr_brust18n1_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Brust // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_brust18n1_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ZUOPSEITE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: betroffene Brust / Seite</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_zuopseite_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTERKRANK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erkrankung an dieser Brust;
+oder Eingriff an dieser Brust</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_arterkrankung_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERSTOFFEINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahme zum ersten offenen Eingriff an Brust oder Axilla wegen Primärerkrankung an dieser Brust</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERSTOFFEINGRIFFBR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Operativer Ersteingriff (Tumor-OP) an dieser Brust in Ihrer Einrichtung durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TASTBARMAMMABEFUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: tastbarer Mammabefund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KLINLYMPHBEF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Klinischer Lymphknotenbefund cN0</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MIKROKALK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Mikrokalk ohne Herdbefund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEHISTDIAGSICHERUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Prätherapeutische histologische Diagnosesicherung durch Stanz- oder Vakuumbiopsie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEHISTBEFUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Prätherapeutische Histologie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_histbefundmamma_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEICDO3">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Prätherapeutischer Befund: maligne Neoplasie;
+einschließlich in-situ-Karzinom&#13;
+ICD-O-3</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_icdo3mamma_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSGANGHISTBEFUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum (Ausgang bei Pathologie) des letzten prätherapeutischen histologischen Befundes</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAusgangHistBefund">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum (Ausgang bei Pathologie) des letzten prätherapeutischen histologischen Befundes in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="quartalAusgangHistBefund">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal (Ausgang bei Pathologie) des letzten prätherapeutischen histologischen Befundes</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KI67JN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ki67-Status (MIB-1-Index)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAETHINTERDISZTHERAPIEPLAN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: prätherapeutische Therapieplanung in interdisziplinärer Tumorkonferenz;
+Tumorboard und Befunde</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEOPTUMORTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: erhaltene präoperative tumorspezifische Therapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstDiagGespr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum Diagnosemitteilung / Therapie-Planungsgespräch mit Pat. in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="quartalDiagGespr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal der Diagnosemitteilung / des Therapie-Planungsgesprächs mit Pat.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTHISTBEFUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Postoperativer histologischer Befund unter Berücksichtigung der Vorbefunde</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_histbefundmammapost_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTICDO3">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Postoperativer Befund: maligne Neoplasie;
+einschließlich in-situ-Karzinom&#13;
+ICD-O-3</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_icdo3mamma_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTDCIS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Postoperativer Befund: begleitendes DCIS</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPTHERAPIEENDE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: primär-operative Therapie abgeschlossen;
+ausgenommen plastisch-rekonstruktive Operationen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TNMPTMAMMA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: pT</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_ptmamma_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TNMPNMAMMA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: pN</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_pnmamma_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESAMTTUMORGROESSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gesamttumorgröße</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="optional">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:totalDigits value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MULTIZENTRIZITAET">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: histologisch gesicherte Multizentrizität</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="R0RESEKTION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: R0-Resektion</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_pathsicherabstand_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SICHERABSTAND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: geringster Abstand des Tumors (invasiver und nicht-invasiver Anteil) zum Resektionsrand;
+abschließende Bewertung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_sicherabstand_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NOTWOPSR0EIGEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wie viele Nachoperationen an der betroffenen Brust zur Erlangung R0 wurden davon in Ihrer Einrichtung durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_notwopsr0eigen_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BET">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: brusterhaltende Therapie (BET)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_brusterhalt_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AXLKENTFOMARK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entfernung unmarkierter axillärer Lymphknoten bei diesem oder vorausgegangenem Aufenthalt durchgeführt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_axilladissektion_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SLKBIOPSIE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Sentinel-Lymphknoten-Biopsie bei diesem oder vorausgegangenem Aufenthalt durchgeführt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_jn_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_brust18n1_type">
+    <xs:complexContent>
+      <xs:extension base="tds_brust18n1_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="O" type="tds_o18n1_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Operation // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_o18n1_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNREINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielter mammachirurgischer Eingriff während dieses Aufenthaltes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRAEOPMARKIERUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: präoperative Draht-Markierung von Brustgewebe gesteuert durch bildgebende Verfahren;
+gemäß leitlinienkonformer Operationsplanung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_praeopmarkierung_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="RADIOSONOGRAPHIE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: intraoperative Präparateradiografie oder -sonografie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="enum_radiosonographie_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: OP-Datum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="datum_type" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="poopvwdauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Postoperative Verweildauer: Differenz in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:totalDigits value="7"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="opquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal der Operation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="quartdatum_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" name="OPSCHLUESSEL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Operation;
+alle OPS-Kodes des durchgeführten Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="ops301_type" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_apsy_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_bapsy_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="module" use="required">
+          <xs:simpleType>
+            <xs:restriction base="enum_exportmodul_type">
+              <xs:enumeration value="APSY_KV"/>
+              <xs:enumeration value="APSY_SV"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bapsy_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STATUSLEAPSY">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Status der Leistungserbringung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="kasseiknr2Stellen">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Ersatzfeld Institutionskennzeichen der Krankenkasse der Versichertenkarte</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versichertenstatusgkvamb">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: GKV-Versichertenstatus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUPPENTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Hat die Patientin/ der Patient im Rahmen der gesamten Behandlung an einer ambulanten Gruppentherapie teilgenommen?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KJPSYT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Behandlung als Kinder- und Jugendlichenpsychotherapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ThBegvorRL">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Therapiebeginn vor dem 1. September 2024</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DauerTh">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Dauer der Therapie in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENDRLTP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Enddatum dieser Richtlinientherapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AlterzuBeg">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Der Patient war zu Beginn der Therapie mindestens 18 Jahre alt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="3" minOccurs="1" name="EBM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Welches psychotherapeutische Verfahren wurde angewendet? (GOP für die psychotherapeutische Sitzung und Pseudo-GOP für Therapieende);
+ausgelöste EBM-Ziffer(n)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" minOccurs="1" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Diagnose(n)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_bapsy_type">
+    <xs:complexContent>
+      <xs:extension base="tds_bapsy_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="ET" type="tds_etapsy_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Einzeltherapie</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_etapsy_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRTDS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielter optionaler Teildatensatz?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ORTLEAPSY">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ort der Leistungserbringung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHTDEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SYMPTOMATIK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Symptomatik erfasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANAMNBIOG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die biographische Anamnese erfasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMORBPSY">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde abgeklärt, ob psychische Komorbiditäten vorliegen?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOMORBSOM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde abgeklärt, ob somatische Komorbiditäten vorliegen?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANAMNMEDI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Medikamentenanamnese erfasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BEHANDGESCH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Behandlungsgeschichte erfasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FUNKTEINSCH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde abgeklärt, ob funktionale Einschränkungen vorliegen?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="LEBENSQUALI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die gesundheitsbezogene Lebensqualität erfasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SUBSTMISS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde abgeklärt, ob ein Substanzmissbrauch vorliegt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SUIZIDAL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde abgeklärt, ob eine Suizidalität vorliegt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MOTIVATION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Therapiemotivation der Patientin/des Patienten abgeklärt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PASSUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Passung zwischen Patientin/Patient und Psychotherapeutin/Psychotherapeut abgeklärt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGSONST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde eine verfahrensspezifische weitere Diagnostik durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGTEST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein, dem individuellen Behandlungsfall angemessenes, psychodiagnostisches Testverfahren durchgeführt?;
+Fremd- und/oder Selbstbeurteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGTESTSTAND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein standardisiertes Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonDiagTestStand">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PSYCHOMETR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein psychometrisches Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonPsychoMetr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGTESTGRU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund wurde kein psychodiagnostisches Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTERVIEW">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein standardisiertes/strukturiertes klinisches Interview durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonInterview">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTERVIEWGRU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund wurde kein standardisiertes/strukturiertes klinisches Interview durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="THERAZIEL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden in der Anfangsphase der Behandlung patientenindividuelle Therapieziele vereinbart?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="THERAZIELDOK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden die patientenindividuellen Therapieziele in der Patientenakte dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIMENSION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden die für diesen individuellen Behandlungsfall relevanten Aspekte überprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonDimension">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="THERAZIELERR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde überprüft, ob die patientenindividuellen Therapieziele erreicht wurden?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonTherapiezielerr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="THERAZIELANP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden, sofern erforderlich, die patientenindividuellen Therapieziele angepasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonTheraZielAnp">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGTESTVL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein, dem individuellen Behandlungsfall angemessenes, psychodiagnostisches Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGTESTSTANDVL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein standardisiertes Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonDiagTestStandVL">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PSYCHTESTVL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein psychometrisches Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonPsychTestVL">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIAGTESTGRUVL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund wurde kein psychodiagnostisches Testverfahren durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTERVIEWVL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde ein standardisiertes/strukturiertes klinisches Interview durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonInterviewVL">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTERVIEWGRUVL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund wurde kein standardisiertes/strukturiertes klinisches Interview durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANDERELE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Waren für diese Patientin / diesen Patienten andere ärztliche oder nicht-ärztliche Leistungserbringer an der Behandlung beteiligt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="HAUSARZTVERS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Patientin / der Patient während der Psychotherapie hausärztlich versorgt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHHA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit der Hausärztin / dem Hausarzt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKU">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PSYMITBEHANDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Patientin / der Patient während der Psychotherapie durch eine Fachärztin / einen Facharzt für Psychiatrie und Psychotherapie/Psychosomatische Medizin und Psychotherapie/Nervenheilkunde/Neurologie/Neurologie und Psychiatrie mitbehandelt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHFA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit der Fachärztin / dem Facharzt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKUFA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCHFA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REHAMITBEHANDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Patientin / der Patient unmittelbar vor, während oder unmittelbar nach der Psychotherapie in einer psychiatrischen/psychosomatischen Klinik, Tagesklinik oder Rehabilitationsklinik behandelt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHKLI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit der entsprechenden Klinik?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKUREHA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCHREHA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MEDI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Bestand bei der Patientin / dem Patienten während der Psychotherapie eine durch eine andere Ärztin / einen anderen Arzt verordnete begleitende Medikation mit Psychopharmaka?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHMEDI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit der verordnenden Ärztin / dem verordnenden Arzt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKUMED">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCHMED">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANDERETHERA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Hat die Patientin / der Patient während der Psychotherapie, aus psychotherapeutischer/psychiatrischer Indikation, begleitende nicht-ärztliche Therapien erhalten?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHTHERA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit den nicht-ärztlichen Mitbehandelnden?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKUTHERA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCHTHERA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INSTMITBEHANDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Patientin / der Patient während der Psychotherapie durch sozialpsychiatrische bzw. psychosoziale Institutionen mitbetreut?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHINST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit den sozialpsychiatrischen bzw. psychosozialen Institutionen?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKUINST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCHINST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="HAUSKP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erhielt die Patientin / der Patient während der Psychotherapie psychiatrische häusliche Krankenpflege entsprechend der Häusliche Krankenpflege-Richtlinie?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUSTAUSCHHAUSKP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte ein Austausch mit den Erbringern der psychiatrischen häuslichen Krankenpflege?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGEBNISDOKUHKP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde das Ergebnis dokumentiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDAUSTAUSCHHKP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund fand kein Austausch statt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRUEFTV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde der patientenindividuelle Therapieverlauf überprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRUEFDIM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden die für diesen Behandlungsfall relevanten Aspekte überprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonDatDim">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRUEFZIE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde überprüft, ob die patientenindividuellen Therapieziele erreicht wurden?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonDatZie">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANPAZIE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden, sofern erforderlich, die patientenindividuellen Therapieziele angepasst?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonAnpaZie">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUNDTV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aus welchem Grund wurde der patientenindividuelle Therapieverlauf nicht überprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANSMAS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Besteht im individuellen Behandlungsfall die Notwendigkeit anschließender Maßnahmen, um das Behandlungsergebnis abzusichern?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PRUEFPG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Erforderlichkeit einer weiteren Betreuung mittels eines psychotherapeutischen Gespräches geprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REZPRO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Erforderlichkeit einer anschließenden Rezidivprophylaxe gemäß § 14 Abs. 2 ff. Psychotherapie-Richtlinie geprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANSMASFA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Erforderlichkeit einer anschließenden Weiterbehandlung durch Fachärztinnen und Fachärzte geprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANSBEH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Erforderlichkeit einer anschließenden Behandlung durch nicht-ärztliche Behandelnde geprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANSINST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Erforderlichkeit einer anschließenden Versorgung durch sozialpsychiatrische bzw. psychosoziale Institutionen geprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANSLE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Erforderlichkeit einer anschließenden Behandlung durch (teil-)stationäre Leistungserbringer geprüft?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GRUBEE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Grund der Beendigung dieser Richtlinientherapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERGDIM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde eine Erhebung des Ergebnisses in den für die individuelle Behandlung relevanten Aspekten durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonErgDim">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ERHZIE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde eine Erhebung, inwieweit die patientenindividuellen Therapieziele erreicht wurden, durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MonErhZie">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Monat der Durchführung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

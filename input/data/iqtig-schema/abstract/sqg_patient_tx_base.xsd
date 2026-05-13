@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" targetNamespace="urn:gba:sqg" xmlns:xi="urn:gba:sqg">
+
+	<xs:complexType name="patient_tx_base_type" abstract="true">
+		<xs:choice>
+			<xs:element name="et_nummer" type="xi:et_nummer_type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ET Nummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="et_pseudonym" type="xi:et_pseudonym_type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ET Nummer pseudonymisiert</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<!--		<xs:sequence>
+			<!-\-<xs:element name="et_nummer" minOccurs="0" maxOccurs="3" type="xi:et_nummer_type">-\->
+			<!-\-<xs:element name="et_nummer" minOccurs="1" maxOccurs="1" type="xi:et_nummer_type">-\->
+			<xs:element name="et_nummer">				
+				<xs:annotation>
+					<xs:documentation>ET Nummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-\-<xs:element name="et_pseudonym" minOccurs="1" maxOccurs="1" type="xi:et_pseudonym_type">-\->
+			<xs:element name="et_pseudonym">
+				<xs:annotation>
+					<xs:documentation>ET Nummer pseudonymisiert</xs:documentation>
+				</xs:annotation>
+			</xs:element>			
+			<!-\-<xs:element name="dso_nummer" minOccurs="0" maxOccurs="1" type="xi:dso_nummer_type">
+				<xs:annotation>
+					<xs:documentation>DSO Nummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>-\->
+		</xs:sequence>-->
+	</xs:complexType>
+
+	<xs:complexType name="et_pseudonym_type">
+		<xs:complexContent>
+			<xs:extension base="xi:patient_pseudonym_type">
+				<xs:attribute name="art" use="required" type="xi:enum_et_nummer_type"/>
+				<xs:attribute name="einwilligung" use="required" type="xi:enum_et_einwilligung_type"
+				/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="et_nummer_type">
+		<xs:simpleContent>
+			<xs:extension base="xi:et_nummer_v_type">
+				<xs:attribute name="art" use="required" type="xi:enum_et_nummer_type"/>
+				<xs:attribute name="einwilligung" use="required" type="xi:enum_et_einwilligung_type"
+				/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!--<xs:simpleType name="dso_nummer_type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="D[\d]{7}" />
+		</xs:restriction>
+    </xs:simpleType>-->
+
+	<xs:simpleType name="et_nummer_v_type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\d]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enum_et_einwilligung_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="V">
+				<xs:annotation>
+					<xs:documentation>Einwilligung vorliegend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<!--<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>Einwilligung nicht vorliegend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+			<!--<xs:enumeration value="X">
+				<xs:annotation>
+					<xs:documentation>Einwilligung nicht erforderlich</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enum_et_nummer_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ETE">
+				<xs:annotation>
+					<xs:documentation>Eurotransplantnummer des Empfaengers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ETS">
+				<xs:annotation>
+					<xs:documentation>Eurotransplantnummer des Spenders</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<!--<xs:enumeration value="ETT">
+				<xs:annotation>
+					<xs:documentation>Eurotransplantnummer des Transplantats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>-->
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

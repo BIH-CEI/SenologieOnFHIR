@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_pci_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="gr_bpci_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="module" use="required">
+          <xs:simpleType>
+            <xs:restriction base="enum_exportmodul_type">
+              <xs:enumeration value="PCI_KV"/>
+              <xs:enumeration value="PCI_LKG"/>
+              <xs:enumeration value="PCI_SV"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bpci_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STATUSLE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Status des Leistungserbringers</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTLE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Art der Leistungserbringung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DOKINSTIDENTEINGINST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Verbringungsleistung (Die dokumentierende und die den Eingriff durchführende Einrichtung sind NICHT identisch)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="kasseiknr2Stellen">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Ersatzfeld Institutionskennzeichen der Krankenkasse der Versichertenkarte</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versichertenstatusgkv">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: GKV-Versichertenstatus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHTDEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AUFNDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Aufnahmedatum (stationär)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZNBYPASS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Zustand nach koronarer Bypass-OP</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EJEKTIONSFRAKTION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ejektionsfraktion unter 40%</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGROESSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergröße</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGROESSENB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergröße unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGEWICHT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergewicht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KOERPERGEWICHTNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Körpergewicht unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZEITINFARKT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postprozedural neu aufgetretener Herzinfarkt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PPINFARKTDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum des postprozedural neu aufgetretenen Herzinfarkts</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZEITSCHLAGANFALL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postprozedural neu aufgetretene/r TIA/Schlaganfall</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PPANFALLDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der/des postprozedural neu aufgetretenen TIA/Schlaganfalls</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTPROZCABGOP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postprozedurale Verlegung bzw. Einweisung zur Notfall CABG-Operation aufgrund von Komplikationen bei einer Koronarangiographie oder PCI</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PPCABGDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der postprozeduralen Verlegung bzw. Einweisung zur Notfall-CABG-Operation</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="POSTPROZTRANSFUSION">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postprozedurale Transfusion im Zusammenhang mit der durchgeführten PCI oder Koronarangiographie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PPTRANSFUSIONDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der postprozeduralen Transfusion;
+Wurden mehrere postprozedurale Transfusionen durchgeführt, ist das Datum der ersten postprozeduralen Transfusion zu dokumentieren.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANEURPP">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: postprozedurales Aneurysma spurium</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANEURPPDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum des postprozeduralen Aneurysma spuriums</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdatum;
+stationär</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="30" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdiagnose(n) (stationär) bzw. Quartalsdiagnose(n) (ambulant);
+&#13;
+&#13;
+ICD-10-GM</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_bpci_type">
+    <xs:complexContent>
+      <xs:extension base="tds_bpci_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="PROZ" type="gr_prozpci_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Prozedur // Existenzbedingung: keine // Bogenzahl: + </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_prozpci_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNREINGRIFF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte Prozedur während dieses Aufenthaltes (stationär) bzw. innerhalb dieses Behandlungsfalles (ambulant)?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OPDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der Prozedur</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alteramb">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Behandlungstag in Jahren (ambulant)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KORONARSYNDR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: akutes Koronarsyndrom;
+(ST-Hebungsinfarkt oder Infarkt ohne ST-Hebung, aber mit Markererhöhung oder instabile Angina pectoris (Ruheangina))</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="REANIMKORO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Reanimation im Rahmen des akuten Koronarsyndroms</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANGINAPECTOR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Angina pectoris oder Angina-pectoris-Äquivalent (Belastungs-Dyspnoe) bei chronischem Koronarsyndrom;
+Einteilung nach Canadian Cardiovascular Society (CCS)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ANTIANGTH">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: leitliniengerechte optimierte medikamentöse antianginöse Therapie</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ISCHAEMIEZEI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: objektive (apparative) nicht-invasive Ischämiezeichen oder pathologische Computertomographie-Koronarangiographie (CCTA)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="VORDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: zur Prozedur führende Art der objektiven (apparativen) nicht-invasiven Vordiagnostik</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="HERZINSUFFIZIENZ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Herzinsuffizienz</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PROZBEGINNSCHOCK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: kardiogener Schock</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ARTPROZEDUR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Art der Prozedur</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EBMPCI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Gebührenordnungsposition (GOP)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DRINGLICHPROZ">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dringlichkeit der Prozedur</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTMGDL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in mg/dl</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTMOLL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. in µmol/l</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="KREATININWERTNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Kreatininwert i.S. unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DIALYSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Dialysepflicht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="FIBRINOLYSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Fibrinolyse vor der Prozedur</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZUGANG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Zugangsweg</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTRAPROZEREIGNIS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: intraprozedural auftretende Ereignisse</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GEFVERSCHLNR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: koronarer Verschluss</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="TIA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: TIA/Schlaganfall</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="EXITUS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Exitus im Herzkatheterlabor</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SONSTIGEEREIGNISSE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstige</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gr_prozpci_type">
+    <xs:complexContent>
+      <xs:extension base="tds_prozpci_type">
+        <xs:sequence>
+          <xs:element name="bogen">
+            <xs:annotation>
+              <xs:documentation>Kindbögen</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="KORO" type="tds_koropci_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: Koronarangiographie // Existenzbedingung: ARTPROZEDUR IN (1;3) // Bogenzahl: ? </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="PCI" type="tds_pcipci_type">
+                  <xs:annotation>
+                    <xs:documentation>Bogen: PCI // Existenzbedingung: ARTPROZEDUR IN (2;3) // Bogenzahl: ? </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_koropci_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRKORO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte diagnostische Koronarangiographie (mit oder ohne Intervention) während dieses Aufenthaltes (stationär) bzw. innerhalb dieses Behandlungsfalles (ambulant)?;
+1 ... 99</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKKORO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: führende Indikation für diese Koronarangiographie;
+nach Einschätzung des Untersuchers vor dem Eingriff</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" minOccurs="1" name="OPSCHLUEKORO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Operationen- und Prozedurenschlüssel;
+alle OPS-Kodes des durchgeführten Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tds_pcipci_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LFDNRPCI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wievielte PCI während dieses Aufenthaltes (stationär) bzw. innerhalb dieses Behandlungsfalls (ambulant)?;
+1 ... 99</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INDIKPTCA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Indikation zur PCI</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STEMIHD">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: War der aktuelle STEMI Anlass der stationären Aufnahme bzw. des Behandlungsfalls?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="10" minOccurs="1" name="OPSCHLUEPTCA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Operationen- und Prozedurenschlüssel;
+alle OPS-Kodes des durchgeführten Eingriffs</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCISTAMM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI an Hauptstamm</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCILAD">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI an LAD</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCIRCX">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI an RCX</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCIRCA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI an RCA</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ISCHPASS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ist der Befund des nicht invasiven Ischämienachweises passend zum Versorgungsgebiet des intervenierten Gefäßes?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STENOSEGRAD">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Stenosegrad (angiographischer Diameter)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="STENOSEGRADNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Stenosegrad (angiographischer Diameter) nicht bestimmt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTRAKOROBG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ergab die intrakoronare Bildgebung einen pathologischen interventionsbedürftigen Befund?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="RELMESS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ergab die (hämodynamische) Relevanzmessung einen pathologischen Messwert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PTCAMERKMALE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI mit besonderen Merkmalen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCIKOMPLGV">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI am kompletten Gefäßverschluss</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCIKBYPASS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI eines Koronarbypasses</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCIUNGESCHHS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI am ungeschützten Hauptstamm</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCIOSTIUMST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI einer Ostiumstenose LAD/RCX/RCA</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCILETZTGEF">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI am letzten verbliebenen Gefäß</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCISTENTSTEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI an einer In-Stent Stenose</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BIFUR">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: PCI an einer Bifurkationsstenose</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PCISONST">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: sonstiges</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="INTERVENTSTEMI">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: erreichter TIMI-Fluss im Zielgefäß</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DOORBALLOONBEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Door-Zeitpunkt und Balloon-Zeitpunkt bekannt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DOORDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Door-Zeitpunkt (Datum)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DOORZEIT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Door-Zeitpunkt (Uhrzeit)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BALLOONDATUM">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Balloon-Zeitpunkt (Datum)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="BALLOONZEIT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Balloon-Zeitpunkt (Uhrzeit)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="cases_base_type">
+		<xs:sequence>
+			<xs:element name="case" type="case_type" maxOccurs="unbounded" minOccurs="0"/>
+			<xs:element name="statistic" type="statistic_type" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="cases_attributes"/>
+	</xs:complexType>
+	
+	<xs:attributeGroup name="cases_attributes">    
+		<xs:attribute name="module" type="enum_exportmodul_type" use="required">
+		<xs:annotation>
+			<xs:documentation>Enthält das Modul , aus dem die Vorgänge stammen. Redundanzen dienen zur Konsistenzprüfung</xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+		<xs:attribute name="pseud_procedure" type="enum_procedure_type" use="required">
+			<xs:annotation>
+				<xs:documentation>Enthält die Verfahrenskennung, die zusammengehörende Exportmodule vermerkt. Die PID-Felder eines Pseudonymisierungsverfahren müssen von der Vertrauensstelle mit demselben Schlüssel pseudonymisiert werden.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+</xs:schema>

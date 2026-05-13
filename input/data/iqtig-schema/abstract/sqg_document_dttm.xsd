@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="sqg_document_base.xsd"/>
+
+	<xs:complexType name="document_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Entspricht dem document_base_type mit der Veränderung, dass das_receive_dttm nicht optional ist.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="document_base_type">
+				<xs:sequence>
+					<xs:element name="id" type="guid_type">
+						<xs:annotation>
+							<xs:documentation>Nach Erstellung nicht mehr modifizierbar. Eindeutige ID des Dokuments, wird vom Dokumentenersteller als GUID erzeugt</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="set_id" type="guid_type">
+						<xs:annotation>
+							<xs:documentation>Nach Erstellung nicht mehr modifizierbar. Eindeutige ID für mehrere Dokumente, die im selben Zusammenhang stehen, wird vom Leistungserbringer erzeugt. Dafür könnte z.B. die guid des ersten Dokumentes des Zusammenhangs verwendet werden</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="origination_dttm" type="date_type">
+						<xs:annotation>
+							<xs:documentation>Nach Erstellung nicht mehr modifizierbar. Ist der Zeitstempel der ursprünglichen Dokumenterzeugung, ursprünglich c_date</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="das_receive_dttm" type="date_type">
+						<xs:annotation>
+							<xs:documentation>Ist der Zeitstempel des Dateneingangs nach Übermittlung von LE an DAS. Nach Einfügen durch die DAS nicht mehr modifizierbar.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="modification_dttm" type="date_type">
+						<xs:annotation>
+							<xs:documentation>Jede Modifikation des Dokuments erfordert hier ein neuen Zeitstempel</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="validity_period" type="validity_period_type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Bezugszeitraum der übermittelten Daten</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="software" type="software_type">
+						<xs:annotation>
+							<xs:documentation>Nach Erstellung nicht mehr modifizierbar. Sammelelement fuer Angaben zur eingesetzten Software</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="data_flow" type="flow_type">
+						<xs:annotation>
+							<xs:documentation>Nach Erstellung nicht mehr modifizierbar. Gibt an, für welchen Datenfluss dieses Dokument erzeugt wurde</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="data_target" type="target_type">
+						<xs:annotation>
+							<xs:documentation>Nach Erstellung nicht mehr modifizierbar. Gibt an, welches Ziel der Datenfluss hat: Bundesdatenpool, Probedatenpool, Testdatenpool</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="./sqg_header_protocol_base.xsd"/>
+	<xs:complexType name="protocol_header_type">
+		<xs:complexContent>
+			<xs:extension base="protocol_header_base_type">
+				<xs:attribute name="feedback_range" type="enum_feedback_type" use="required">
+					<xs:annotation>
+						<xs:documentation>Für die Rückprotokollierung muss hier angegeben werden, ob nur eine Transaktion (dann jeweils die Letzte) betroffen ist, oder ob es sich um eine Rückprotokollierung zum gesamten Datenfluss handelt (enum:transcation, dataflow)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="document_id" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>
+							Dieses optionales Attribut nimmt die GUID (ID des zu prüfenden XML-Dokuments) auf.
+							Das Attribut wird nur für das 'Mini-Protokoll' benötigt und zwar, wenn das XML-Dokument nicht Schema-Konform aber wohlgeformt ist.
+							Das 'Mini-Protokoll' wird jedes Mal erstellt, wenn die Prüfungsergebnisse nicht in das Hauptdokument integrierbar sind (z.B. bei einem gravierenden Schemaverstoß).
+							Das Attribut ist nicht vom selben Datentypen wie die ursprüngliche Dokumenten-ID (GUID), weil diese ID selber fehlerhaft sein könnte.
+							Das Attribut darf nur von einer Datenprüfstelle gesetzt werden (Datenannahmestelle, Vertrauensstelle, BAS, Datenprüfprogramm beim Leistungserbringer).
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

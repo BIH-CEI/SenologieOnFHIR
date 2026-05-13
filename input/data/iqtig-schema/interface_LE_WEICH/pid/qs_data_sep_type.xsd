@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom 
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+  <xs:include schemaLocation="../../sqg_datatypes.xsd"/>
+  <xs:include schemaLocation="../../abstract/sqg_qs_data_base.xsd"/>
+  <xs:complexType name="qs_data_sep_type">
+    <xs:complexContent>
+      <xs:extension base="qs_data_type">
+        <xs:sequence>
+          <xs:element name="B" type="tds_bsep_type">
+            <xs:annotation>
+              <xs:documentation>Bogen: Basis // Bogenzahl: 1 </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute fixed="SEP" name="module" type="enum_exportmodul_type" use="required">
+          <xs:annotation>
+            <xs:documentation>Sepsis</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="tds_bsep_type">
+    <xs:sequence>
+      <xs:element name="felder">
+        <xs:annotation>
+          <xs:documentation>Exportfelder des Bogens</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DokAbschlDat">
+              <xs:annotation>
+                <xs:documentation>ZusatzFeld: Dokumentationsabschlussdatum</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="kasseiknr2Stellen">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Ersatzfeld Institutionskennzeichen der Krankenkasse der Versichertenkarte</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versichertenstatusgkv">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: GKV-Versichertenstatus</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLFACHABT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: entlassende Fachabteilung</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="gebjahr">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Geburtsjahr</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="GESCHLECHTDEK">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Geschlecht</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="aufnquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Aufnahmetages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="alter">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Patientenalter am Aufnahmetag in Jahren</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlquartal">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Quartal des Entlassungstages</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="entlwochtag">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Wochentag 1 - 7</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="vwDauer">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Verweildauer im Krankenhaus in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NICHTSPEZENTLGRUND">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: nicht spezifizierter Entlassungsgrund</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufndatSepdat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der Sepsisdiagnose am Krankenhaus in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPDATUB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der Sepsisdiagnose am Krankenhaus unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="15" name="ENTLDIAG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Entlassungsdiagnose(n)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element maxOccurs="15" name="OPSCHLUESSEL">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Operationen- und Prozedurenschlüssel</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DAUERBEATMUNG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Anzahl der Beatmungsstunden;
+Gemäß § 301 SGB V</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SCREENINGRISIKO">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde am Krankenhaus ein Screening zur Risikoabschätzung durchgeführt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SCREENUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Ist das Instrument, mit dem gescreent wurde, bekannt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="QSOFASCREEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde mit dem Instrument „qSOFA“ gescreent?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEWS2SCREEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde mit dem Instrument „NEWS2“ gescreent?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="QSOFANEWS2SCREEN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde mit einem anderen Instrument als qSOFA oder NEWS2 gescreent?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufndatqSOFAdat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der ersten Bestimmung des qSOFA-Scores in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="QSOFADATUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der ersten Bestimmung des qSOFA-Scores unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="QSOFASCORE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Score (Punktwert) des ersten qSOFA;
+Auch einen Punktwert von 0 ggf. eintragen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="QSOFASCOREUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Score (Punktwert) des ersten qSOFA unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufndatNEWS2dat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der ersten Bestimmung des NEWS2-Score in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEWS2DATUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der ersten Bestimmung des NEWS2-Scores unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEWS2SCORE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Score (Punktwert) des ersten NEWS2;
+Auch einen Punktwert von 0 ggf. eintragen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NEWS2SCOREUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Score (Punktwert) des ersten NEWS2 unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOFA">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Erfolgte am Krankenhaus die Bestimmung des SOFA?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufndatSOFAdat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der ersten Bestimmung des SOFA-Scores in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOFADATUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum der ersten Bestimmung des SOFA-Scores unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOFASCORE">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Score (Punktwert) des ersten SOFA;
+Auch einen Punktwert von 0 ggf. eintragen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SOFASCOREUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Score (Punktwert) des ersten SOFA unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPANTIB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Patientin/der Patient aufgrund der Sepsisdiagnose am Krankenhaus antibiotisch und/oder antimykotisch behandelt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufndatSepantibdat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der ersten antibiotischen oder antimykotischen therapeutischen Aktion aufgrund der Sepsisdiagnose in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPANTIBDATUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum und/oder Uhrzeit der ersten antibiotischen oder antimykotischen therapeutischen Aktion aufgrund der Sepsisdiagnose unbekannt;
+Falls eine antibiotische UND antimykotische Behandlung stattgefunden hat, ist Datum und Uhrzeit der früheren Therapieform anzugeben</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPBLUT">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurden Blutkulturen zur Identifizierung des Erregers einer möglichen Sepsis, am Krankenhaus abgenommen und mikrobiologisch analysiert?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufndatSepblutdat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der Erstabnahme von Blutkulturen zur Identifizierung des Erregers einer möglichen Sepsis in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstSepantibBlut">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen der ersten antibiotischen oder antimykotischen therapeutischen Aktion aufgrund der Sepsisdiagnose und Erstabnahme von Blutkulturen zur Identifizierung des Erregers einer möglichen Sepsis in Minuten</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPBLUTDATUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum und/oder Uhrzeit der Erstabnahme von Blutkulturen zur Identifizierung des Erregers einer möglichen Sepsis unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPBLUTABN">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Anzahl der abgenommenen Blutkulturen-Sets (bestehend mindestens aus aerober und anaerober Flasche) bei dieser Erstabnahme</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPBLUTABNUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Anzahl der abgenommenen Blutkulturen-Sets (bestehend mindestens aus aerober und anaerober Flasche) bei dieser Erstabnahme unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPBLUTPOS">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: War das Ergebnis dieser Erstabnahme positiv?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstAufnDatSepblutposdat">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Aufnahmedatum und Datum der Übermittlung des ersten Ergebnisses dieser Erstabnahme in Tagen</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="abstSepblutdatPos">
+              <xs:annotation>
+                <xs:documentation>ErsatzFeld: Abstand zwischen Erstabnahme von Blutkulturen zur Identifizierung des Erregers einer möglichen Sepsis und Übermittlung des ersten Ergebnisses in Minuten</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SEPBLUTPOSDATUNB">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Datum und/oder Uhrzeit der Übermittlung des ersten Ergebnisses dieser Erstabnahme unbekannt</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ZUVERLEG">
+              <xs:annotation>
+                <xs:documentation>BogenFeld: Wurde die Patientin/der Patient aus einem anderen Krankenhaus zuverlegt?</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="V" type="xs:anySimpleType" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

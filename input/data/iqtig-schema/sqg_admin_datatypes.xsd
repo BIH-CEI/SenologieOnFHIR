@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+	<!-- 
+========================================================================================================= 
+Schema für:
+Datei-Art:		Administrative Datentypen
+=========================================================================================================
+-->
+	<xs:import namespace="http://www.w3.org/2001/04/xmlenc#"
+		schemaLocation="./imports/xenc-schema.xsd"/>
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+		schemaLocation="./imports/xmldsig-core-schema.xsd"/>
+	<xs:include schemaLocation="sqg_datatypes.xsd"/>
+	<xs:complexType name="case_id_type">
+		<xs:attribute name="V" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="38"/>
+					<xs:minLength value="1"/>
+					<!-- Prüfung 62: Ist der Wert (Attribut V) eines Pflichtfelds angegeben? -->
+					<!-- anything but newline + something not whitespace + anything but newline -->
+					<xs:pattern value=".*\S.*"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>	
+	<xs:complexType name="date_type">
+		<xs:attribute name="V" type="xs:dateTime" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="date_woTime_type">
+		<xs:attribute name="V" type="xs:date" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="guid_type">
+		<xs:attribute name="V" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern
+						value="\{([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}"
+					/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="emailAddress_type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_crud_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="create"/>
+			<xs:enumeration value="update"/>
+			<xs:enumeration value="delete"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="validity_period_type">
+		<xs:sequence>
+			<xs:element name="start_date" type="date_woTime_type">
+				<xs:annotation>
+					<xs:documentation>Anfangsdatum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="end_date" type="date_woTime_type">
+				<xs:annotation>
+					<xs:documentation>Enddatum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="target_type">
+		<xs:attribute name="V" type="enum_target_type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="crud_type">
+		<xs:annotation>
+			<xs:documentation>werte können create, update, delete sein und legen fest, wie im
+				Datenfluss mit den Daten umgegangen werden müssen. Bei delete entfällt z.B. eine
+				Plausibilitätsprüfung von QS-Daten. diese Daten würden im delete Fall gar nicht
+				vorliegen.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="enum_crud_type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="module_type">
+		<xs:attribute name="V" type="enum_exportmodul_type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="quarter_type">
+		<xs:annotation>
+			<xs:documentation>Für die Angabe von Quartalen auf Fallebene.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="quartdatum_type" use="required"/>
+	</xs:complexType>	
+	<xs:complexType name="flow_type">
+		<xs:attribute name="V" type="enum_flow_type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="organisation_base_type">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="email" type="emailAddress_type" use="optional"/>
+		<xs:attribute name="fax" type="xs:string"/>
+		<xs:attribute name="phone" type="xs:string"/>
+		<xs:attribute name="address" type="xs:string"/>
+		<xs:attribute name="function" type="enum_organisation_type" use="required">
+			<xs:annotation>
+				<xs:documentation>In diesem Attribut wird aus einer Enum ausgewählt, welche die
+					Funktion im QS-Datenfluss beschreibt</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="registration" type="registration_type" use="optional">
+			<xs:annotation>
+				<xs:documentation>(1) Leistungserbringer -> DAS: Registriernummer des Dokumentationssystems (Länderkode + Registrierkode) vergeben durch die Datenannahmestelle (2) Leistungserbringer -> BAS: Registriernummer des Dokumentationssystems (BQ + Registrierkode) vergeben durch die Bundesauswertestelle</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="organisation_type">
+		<xs:complexContent>
+			<xs:restriction base="organisation_base_type">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="email" type="emailAddress_type" use="optional"/>
+		<xs:attribute name="fax" type="xs:string"/>
+		<xs:attribute name="phone" type="xs:string"/>
+		<xs:attribute name="address" type="xs:string"/>
+		<xs:attribute name="function" type="enum_organisation_type" use="required">
+			<xs:annotation>
+				<xs:documentation>In diesem Attribut wird aus einer Enum ausgewählt, welche die
+					Funktion im QS-Datenfluss beschreibt</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="registration" type="registration_type" use="required">
+			<xs:annotation>
+				<xs:documentation>(1) Leistungserbringer -> DAS: Registriernummer des Dokumentationssystems (Länderkode + Registrierkode) vergeben durch die Datenannahmestelle (2) Leistungserbringer -> BAS: Registriernummer des Dokumentationssystems (BQ + Registrierkode) vergeben durch die Bundesauswertestelle</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+				</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="organisation_without_cp_type">
+		<xs:complexContent>
+			<xs:restriction base="organisation_base_type">
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="email" type="emailAddress_type" use="optional"/>
+				<xs:attribute name="fax" type="xs:string"/>
+				<xs:attribute name="phone" type="xs:string"/>
+				<xs:attribute name="address" type="xs:string"/>
+				<xs:attribute name="function" type="enum_validation_provider_type" use="required">
+					<xs:annotation>
+						<xs:documentation>In diesem Attribut wird aus einer Enum ausgewählt, welche
+							die Funktion im QS-Datenfluss beschreibt</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="registration" type="registration_type" use="optional">
+					<xs:annotation>
+						<xs:documentation>nur Dem Attribut registration kann die vom IQTIG ehemals vergebene Registriernummer für die eingesetzte QS-Software zugewiesen werden. (Hinweis: registration hier ist nicht identisch mit dem QSDOK.Zusatzfeld 'RegistrierNr' (provider/@registration)).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="organisation_without_cp_doku_vali_provider_type">
+		<xs:complexContent>
+			<xs:restriction base="organisation_without_cp_type">
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="email" type="emailAddress_type" use="optional"/>
+				<xs:attribute name="fax" type="xs:string"/>
+				<xs:attribute name="phone" type="xs:string"/>
+				<xs:attribute name="address" type="xs:string"/>
+				<xs:attribute name="function" type="enum_validation_provider_type" use="required">
+					<xs:annotation>
+						<xs:documentation>In diesem Attribut wird aus einer Enum ausgewählt, welche
+							die Funktion im QS-Datenfluss beschreibt</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="registration" type="registration_type" use="required">
+					<xs:annotation>
+						<xs:documentation>Wenn '@function' dem Wert 'Softwareanbieter' entspricht, dann sind hier mögliche Werte: (1) die vom IQTIG ehemals vergebene Registriernummer für die eingesetzte QS-Software/Softwareanbieter (2) KBV-Prüfnummer der eingesetzten Software oder der Dummy-Wert '000'</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+		<xs:complexType name="organisation_type_kv">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="email" type="emailAddress_type" use="optional"/>
+		<xs:attribute name="fax" type="xs:string"/>
+		<xs:attribute name="phone" type="xs:string"/>
+		<xs:attribute name="address" type="xs:string"/>
+		<xs:attribute name="function" type="enum_organisation_type" use="required">
+			<xs:annotation>
+				<xs:documentation>In diesem Attribut wird aus einer Enum ausgewählt, welche die
+					Funktion im QS-Datenfluss beschreibt</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="registration" type="registration_type" use="optional">
+			<xs:annotation>
+				<xs:documentation>Registriernummer. Sollte für die Datenübertragung (an die
+					KV) keine Registriernummer erforderlich sein, ist hier keine Angabe erforderlich.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="enum_organisation_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Bundesauswertestelle"/>
+			<xs:enumeration value="Datenannahmestelle"/>
+			<xs:enumeration value="Vertrauensstelle"/>
+			<xs:enumeration value="Leistungserbringer"/>
+			<xs:enumeration value="Softwarehersteller"/>
+			<xs:enumeration value="Versendestelle"/>
+			<xs:enumeration value="undefined"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_validation_provider_type">
+		<xs:restriction base="enum_organisation_type">
+			<xs:enumeration value="Bundesauswertestelle"/>
+			<xs:enumeration value="Datenannahmestelle"/>
+			<xs:enumeration value="Vertrauensstelle"/>
+			<xs:enumeration value="Softwarehersteller"/>
+			<xs:enumeration value="Versendestelle"/>
+			<xs:enumeration value="undefined"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="information_system_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Name der eingesetztenSoftware</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="vendor" type="vendor_type">
+				<xs:annotation>
+					<xs:documentation>Name des KIS- bzw. AIS-Herstellers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" type="softwareName_type">
+				<xs:annotation>
+					<xs:documentation>Name des KIS bzw. des AIS </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="vendor_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Version der eingesetzten Software</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="softwareName_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Name der eingesetztenSoftware</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="softwareVersion_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Release der eingesetzten Software</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="softwareRelease_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Release der eingesetzten Software</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="specificationVersion_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Version der Spezifikation</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="specificationRelease_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Release-Version der Spezifikation</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="specification_type">
+		<xs:annotation>
+			<xs:documentation xml:lang="de">Infos über die Spezifikation</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="enum_spez_type" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="enum_flow_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="QS-Bundesbezogen"/>
+			<xs:enumeration value="QS-Laenderbezogen"/>
+			<xs:enumeration value="QS-Kollektivvertraglich"/>
+			<xs:enumeration value="QS-Selektivvertraglich"/>
+			<xs:enumeration value="Strukturierter Dialog"/>
+			<xs:enumeration value="Datenvalidierung"/>
+			<xs:enumeration value="Protokoll"/>
+			<xs:enumeration value="Sollstatistik"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="soll_statistic_type">
+		<xs:sequence>
+			<xs:element name="expected" type="soll_statistic_data_type">
+				<xs:annotation>
+					<xs:documentation>erwartete Fälle</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="soll_statistic_s_type">
+		<xs:sequence>
+			<xs:element name="expected" type="soll_statistic_data_s_type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>erwartete Fälle</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="soll_statistic_data_s_type">
+		<xs:attribute name="date_from" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>Beginn Erfassungszeitraum</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date_to" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>Ende Erfassungszeitraum</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="count" type="xs:nonNegativeInteger" use="required">
+			<xs:annotation>
+				<xs:documentation>Anzahl der aufgetretenen Auslösungen im jeweiligen Modul im
+					Zeitraum </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date_admission_from" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>Beginn Aufnahmezeitraum</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date_admission_to" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>Ende Aufnahmezeitraum</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="relation" type="enum_relation_soll_type" use="optional">
+			<xs:annotation>
+				<xs:documentation>Bezugsbereich der Zählungen</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="region" type="enum_region_type" use="optional">
+			<xs:annotation>
+				<xs:documentation>Schlüsselcode der gültigen Region</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="submodule" type="enum_submodule_type" use="optional">
+			<xs:annotation>
+				<xs:documentation>Name des inneren Moduls (Zielleistungsbereich) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="count_drg" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Anzahl der aufgetretenen DRG-Auslösungen im jeweiligen Modul im
+					Zeitraum </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="count_iv" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Anzahl der aufgetretenen IV-Auslösungen im jeweiligen Modul im
+					Zeitraum </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="count_dmp" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Anzahl der aufgetretenen DMP-Auslösungen im jeweiligen Modul im
+					Zeitraum </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="count_other" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Anzahl der aufgetretenen anderen Auslösungen im jeweiligen Modul
+					im Zeitraum </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:simpleType name="enum_submodule_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AORT"/>
+			<xs:enumeration value="AORT_KATH_ENDO"/>
+			<xs:enumeration value="AORT_KATH_TRAPI"/>
+			<xs:enumeration value="KORO"/>
+			<xs:enumeration value="KOMB"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_relation_soll_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation> Bundesbezogen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation> Landesbezogen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K">
+				<xs:annotation>
+					<xs:documentation> Krankenhausbezogen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Z">
+				<xs:annotation>
+					<xs:documentation> Zählleistungsbereich </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_region_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DE">
+				<xs:annotation>
+					<xs:documentation> Deutschlandweit </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BA">
+				<xs:annotation>
+					<xs:documentation> Bayern </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BB">
+				<xs:annotation>
+					<xs:documentation> Brandenburg </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BE">
+				<xs:annotation>
+					<xs:documentation> Berlin </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BW">
+				<xs:annotation>
+					<xs:documentation> Baden-Württemberg </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HB">
+				<xs:annotation>
+					<xs:documentation> Bremen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HE">
+				<xs:annotation>
+					<xs:documentation> Hessen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HH">
+				<xs:annotation>
+					<xs:documentation> Hamburg </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MV">
+				<xs:annotation>
+					<xs:documentation> Mecklenburg-Vorpommern </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NI">
+				<xs:annotation>
+					<xs:documentation> Niedersachsen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BE">
+				<xs:annotation>
+					<xs:documentation> Berlin </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NW">
+				<xs:annotation>
+					<xs:documentation> Nordrhein-Westfalen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RP">
+				<xs:annotation>
+					<xs:documentation> Rheinland-Pfalz </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SH">
+				<xs:annotation>
+					<xs:documentation> Schleswig-Holstein </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BE">
+				<xs:annotation>
+					<xs:documentation> Berlin </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SL">
+				<xs:annotation>
+					<xs:documentation> Saarland </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SN">
+				<xs:annotation>
+					<xs:documentation> Sachsen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ST">
+				<xs:annotation>
+					<xs:documentation> Sachsen-Anhalt </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TH">
+				<xs:annotation>
+					<xs:documentation> Thüringen </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="soll_statistic_data_type">
+		<xs:attribute name="date_from" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>Gültigkeitszeitraum der Sollstatistik (Anfang) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="date_to" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>Gültigkeitszeitraum der Sollstatistik (Ende) </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="count" type="xs:nonNegativeInteger" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="statistic_data_type">
+		<xs:sequence>
+			<xs:element name="create">
+				<xs:annotation>
+					<xs:documentation>Attribut V enthält Anzahl der anzulegenden
+						Datensätze</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="V" type="non_negative_integer_type" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="update">
+				<xs:annotation>
+					<xs:documentation>Attribut V enthält Anzahl der zu aktualisierenden
+						Datensätze</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="V" type="non_negative_integer_type" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="delete">
+				<xs:annotation>
+					<xs:documentation>Attribut V enthält Anzahl der zu löschenden
+						Datensätze</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="V" type="non_negative_integer_type" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="corrupted">
+				<xs:annotation>
+					<xs:documentation>Attribut V enthält Anzahl der fehlerhaften
+						Datensätze.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="V" type="non_negative_integer_type" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="count" type="non_negative_integer_type" use="required">
+			<xs:annotation>
+				<xs:documentation>Gesamtzahl von Vorgängen</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="enum_target_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Probedatenpool"/>
+			<xs:enumeration value="Echtdatenpool"/>
+			<xs:enumeration value="Testdatenpool"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="bsnr_type">
+		<xs:attribute name="V" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="1"/>
+					<xs:totalDigits value="2"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="iknr_type">
+		<xs:attribute name="V" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9]{9}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="kasse_iknr_type">
+		<xs:attribute name="V" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:pattern value="(10)?[0-9]{7}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="pseudonym_type">
+		<xs:attribute name="V"  use="required">
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="((LQS)|(SV)|(KV))[$]{2}((BW)|(BA)|(BE)|(BB)|(HB)|(HH)|(HE)|(MV)|(NI)|(NO)|(NW)|(RP)|(SL)|(SN)|(ST)|(SH)|(TH)|(WL))[#]{2}[0-9a-zA-Z+/=]{344}"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="registration" type="registration_type" use="optional">
+			<xs:annotation>
+				<xs:documentation> Die Registriernummer der Datenannahmestelle, die für die
+					Vertrauensstelle als Datenannahmestelle (Selektivverträge) das
+					Leistungserbringer-Pseudonym erstellt hat. In der Annahme, dass nur die VST-DAS
+					Pseudonyme von anderen Stellen einholen wird nur von VST-DAS auszufüllen.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="kvregion" type="enum_kvregion_type" use="optional">
+			<xs:annotation>
+				<xs:documentation> KV-Region des LE: Nur für die VST-PSN Relevant Referenz:
+					http://applications.kbv.de/keytabs/ita/schluesseltabellen.asp?page=S_KBV_KV_V1.06.htm
+					OID: 1.2.276.0.76.5.233 </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="pseudonym_bsnr_type">
+		<xs:attribute name="V"  use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="((SV)|(KV))[$]{2}((BW)|(BA)|(BE)|(BB)|(HB)|(HH)|(HE)|(MV)|(NI)|(NO)|(NW)|(RP)|(SL)|(SN)|(ST)|(SH)|(TH)|(WL))[#]{2}[A-Za-z0-9+/]*={0,3}"/>
+					<xs:maxLength value="352" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="registration" type="registration_type" use="optional">
+			<xs:annotation>
+				<xs:documentation> Die Registriernummer der Datenannahmestelle, die für die
+					Vertrauensstelle als Datenannahmestelle (Selektivverträge) das
+					Leistungserbringer-Pseudonym erstellt hat. In der Annahme, dass nur die VST-DAS
+					Pseudonyme von anderen Stellen einholen wird nur von VST-DAS auszufüllen.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="kvregion" type="enum_kvregion_type" use="optional">
+			<xs:annotation>
+				<xs:documentation> KV-Region des LE: Nur für die VST-PSN Relevant Referenz:
+					http://applications.kbv.de/keytabs/ita/schluesseltabellen.asp?page=S_KBV_KV_V1.06.htm
+					OID: 1.2.276.0.76.5.233 </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+		<xs:complexType name="pseudonym_standorte_type">
+			<xs:attribute name="V"  use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="LQS[*]{2}((BW)|(BA)|(BE)|(BB)|(HB)|(HH)|(HE)|(MV)|(NI)|(NO)|(NW)|(RP)|(SL)|(SN)|(ST)|(SH)|(TH)|(WL))[#]{2}[A-Za-z0-9+/]*={0,3}"/>
+							<xs:maxLength value="353" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	<xs:complexType name="pseudonym_iknr_type">
+		<xs:attribute name="V"  use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="LQS[$]{2}((BW)|(BA)|(BE)|(BB)|(HB)|(HH)|(HE)|(MV)|(NI)|(NO)|(NW)|(RP)|(SL)|(SN)|(ST)|(SH)|(TH)|(WL))[#]{2}[A-Za-z0-9+/]*={0,3}"/>
+					<xs:maxLength value="353" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="patient_pseudonym_type">
+		<xs:attribute name="alg" type="xs:int" use="optional"/>
+		<xs:attribute name="oldik" type="int_based_boolean" use="optional"/>
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="encryption_type">
+		<xs:sequence>
+			<xs:element ref="xenc:EncryptedData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="registration_type">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+	<xs:complexType name="boolean_type">
+		<xs:annotation>
+			<xs:documentation>Ja/Nein</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="V" type="enum_jn_type" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="int_based_boolean">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>nein</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>ja</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="version_type">
+		<xs:attribute name="V" type="positive_integer_type" use="required"/>
+	</xs:complexType>
+	<xs:attributeGroup name="root_attr">
+		<xs:attribute name="container_version" type="xs:string" use="required" fixed="2.0"/>
+		<xs:attribute name="content_version" type="content_version_type" use="required"/>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="non_negative_integer_type">
+		<xs:annotation>
+			<xs:documentation> Ganze Zahl &gt;= 0 (0,1,2,..) </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger"/>
+	</xs:simpleType>
+	<xs:simpleType name="positive_integer_type">
+		<xs:annotation>
+			<xs:documentation> positive ganze Zahl &gt; 0 ohne null (1,2,..) </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enum_kvregion_type">
+		<xs:annotation>
+			<xs:documentation>Codierung der Landesgeschäftsstellen der KVen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Schleswig-Holstein</xs:documentation>
+					<xs:documentation>BSNR: 01</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Hamburg</xs:documentation>
+					<xs:documentation>BSNR: 02</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Bremen</xs:documentation>
+					<xs:documentation>BSNR: 03</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>Niedersachsen</xs:documentation>
+					<xs:documentation>BSNR: 06-17</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>Westfalen-Lippe</xs:documentation>
+					<xs:documentation>BSNR: 18-20</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38">
+				<xs:annotation>
+					<xs:documentation>Nordrhein</xs:documentation>
+					<xs:documentation>BSNR: 21,24,25,27,28,31,37,38</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46">
+				<xs:annotation>
+					<xs:documentation>Hessen</xs:documentation>
+					<xs:documentation>BSNR: 39-46</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="51">
+				<xs:annotation>
+					<xs:documentation>Rheinland-Pfalz</xs:documentation>
+					<xs:documentation>BSNR: 47-51</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="52">
+				<xs:annotation>
+					<xs:documentation>Baden-Württemberg</xs:documentation>
+					<xs:documentation>BSNR: 52-62</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71">
+				<xs:annotation>
+					<xs:documentation>Bayerns</xs:documentation>
+					<xs:documentation>BSNR: 63-71</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72">
+				<xs:annotation>
+					<xs:documentation>Berlin</xs:documentation>
+					<xs:documentation>BSNR: 72</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73">
+				<xs:annotation>
+					<xs:documentation>Saarland</xs:documentation>
+					<xs:documentation>BSNR: 73</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="78">
+				<xs:annotation>
+					<xs:documentation>Mecklenburg-Vorpommern</xs:documentation>
+					<xs:documentation>BSNR: 78</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="83">
+				<xs:annotation>
+					<xs:documentation>Brandenburg</xs:documentation>
+					<xs:documentation>BSNR: 79,80,81,83</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="88">
+				<xs:annotation>
+					<xs:documentation>Sachsen-Anhalt</xs:documentation>
+					<xs:documentation>BSNR: 85-88</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="93">
+				<xs:annotation>
+					<xs:documentation>Thüringen</xs:documentation>
+					<xs:documentation>BSNR: 89,90,91,93</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="98">
+				<xs:annotation>
+					<xs:documentation>Sachsen</xs:documentation>
+					<xs:documentation>BSNR: 94,95,96,98</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

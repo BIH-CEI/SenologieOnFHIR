@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+<!--
+=========================================================================================================
+Dieses Schema ist Bestandteil der XML-Spezifikation für Datenübermittelung in der Externen Qualitätssicherung und wurde vom
+Institut für Qualitätssicherung und Transparenz im Gesundheitswesen im Rahmen seiner Aufgaben als Institution nach § 137a SGB V erstellt.
+Die Nutzungsbedingungen entnehmen Sie bitte dem Dokument unter:
+https://iqtig.org/impressum/
+=========================================================================================================
+-->
+	<!-- 
+========================================================================================================= 
+Schema für:
+Datei-Art: Emfangsbestätigung
+Schnittstelle: die Schnittstelle zwischen der Datenannahmestelle und dem Leistungserbringer 
+=========================================================================================================
+-->
+	<xs:include schemaLocation="../sqg_datatypes.xsd"/>
+	<xs:include schemaLocation="../sqg_admin_datatypes.xsd"/>
+	<!-- Schema für die Emfangsbestätigung -->
+	<xs:complexType name="sqg_root_type">
+		<xs:sequence>
+			<xs:element name="header">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="document">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="id" type="guid_type"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="provider" type="organisation_type"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="body">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nachricht" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="root_attr"/>
+	</xs:complexType>
+	<xs:element name="root" type="sqg_root_type"/>
+</xs:schema>

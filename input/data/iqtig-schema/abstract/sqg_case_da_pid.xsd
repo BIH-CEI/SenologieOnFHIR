@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="./sqg_case_base.xsd"/>
+	<xs:complexType name="case_type">
+		<xs:complexContent>
+			<xs:restriction base="case_base_type">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="patient" type="patient_type" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Daten liegen je nach Position im Datenfluss entweder
+									als pid/verschlüsselte pid oder als Pseudonym vor</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="patient_ngkv" type="patient_ngkv_type" minOccurs="0"/>
+					</xs:choice>
+					<xs:element name="patient_tx" type="patient_tx_type" minOccurs="0"/>
+					<xs:element name="case_admin" type="case_admin_type"/>
+					<xs:element name="qs_data" type="qs_data_type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Daten liegen je nach Position im Datenfluss
+								verschlüsselt oder Modulspezifisch entsprechend der Spezifikation
+								vor</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

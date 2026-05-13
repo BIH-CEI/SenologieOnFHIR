@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="./sqg_patient_base.xsd"/>
+	<xs:include schemaLocation="./sqg_patient_tx_base.xsd"/>
+	<xs:complexType name="patient_type">
+		<xs:complexContent>
+			<xs:extension base="patient_base_type">
+				<xs:choice>
+					<xs:element name="pid" type="pid_data_type">
+						<xs:annotation>
+							<xs:documentation>PID, die verschlüsselt werden
+								müssen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="perineo_pid" type="perineo_le_data_type" minOccurs="1"
+						maxOccurs="1">
+						<xs:annotation>
+							<xs:documentation/>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="adresse" type="pb_data_type">
+						<xs:annotation>
+							<xs:documentation>Adresse des Patienten (nur im Rahmen der Patientenbefragung)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+				<xs:attribute name="twodigitik" type="twodigitik_type" use="required" fixed="10"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="patient_ngkv_type">
+		<xs:complexContent>
+			<xs:extension base="patient_ngkv_base_type">
+				<xs:sequence>
+					<xs:element name="et_pid" type="patient_tx_type" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="patient_tx_type">
+		<xs:complexContent>
+			<xs:restriction base="patient_tx_base_type">
+				<xs:sequence>
+					<xs:element name="et_nummer" minOccurs="1" maxOccurs="1" type="et_nummer_type">
+						<xs:annotation>
+							<xs:documentation>ET Nummer</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

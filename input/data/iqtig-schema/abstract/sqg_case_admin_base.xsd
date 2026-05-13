@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:complexType name="case_admin_base_type" abstract = "true">
+		<xs:sequence>
+			<xs:element name="id" type="case_id_type">
+				<xs:annotation>
+					<xs:documentation>Vorgangsnummer - eindeutig innerhalb eines
+						Dokumentationssystems</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="guid" type="guid_type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>technische Vorgangsnummer - global eindeutig über die Grenzen
+						des Dokumentationssystems hinaus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="version" type="version_type">
+				<xs:annotation>
+					<xs:documentation>enthält eine Versionsnummer des Datensatzes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="action" type="crud_type">
+				<xs:annotation>
+					<xs:documentation>definiert die gewünschte Aktion, kann "create", "update" und
+						"delete" sein</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="module" type="module_type">
+				<xs:annotation>
+					<xs:documentation>zeigt die Zugehörigkeit des Datensatzes zu einem
+						Exportmodul</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quarter" type="quarter_type" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>enthält eine fallbezogene Quartalsangabe (OPDATUM)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="entlquarter" type="quarter_type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>enthält eine fallbezogene Quartalsangabe (ENTLDATUM)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="protocol" type="case_protocol_type">
+				<xs:annotation>
+					<xs:documentation>Aufnahme von Prüfungen, die auf Datensatzebene individuelle
+						Ergebnisse bringen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

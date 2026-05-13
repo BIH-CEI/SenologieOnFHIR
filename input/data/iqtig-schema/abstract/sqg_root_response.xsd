@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="sqg_body.xsd"/>
+	<xs:include schemaLocation="../sqg_datatypes.xsd"/>
+	<xs:include schemaLocation="../sqg_admin_datatypes.xsd"/>
+
+	<xs:complexType name="sqg_root_type">
+		<xs:choice>
+			<xs:annotation>
+				<xs:documentation>Umschlagselement für alle XML-Typen in den
+					QS-Verfahren</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element name="protocol" type="protocol_header_type"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="header" type="sqg_header_type"/>
+				<xs:element name="body" type="sqg_body_type"/>
+			</xs:sequence>
+		</xs:choice>
+		<xs:attributeGroup ref="root_attr"/>
+	</xs:complexType>
+</xs:schema>

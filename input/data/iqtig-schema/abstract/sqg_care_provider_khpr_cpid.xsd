@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <xs:include schemaLocation="./sqg_care_provider_base.xsd"/>
+    <xs:complexType name="care_provider_type">
+        <xs:annotation>
+            <xs:documentation>Diese Ableitung schränkt ein auf Echtkennungen sowohl im
+                Krankenhaus-Bereich als auch im vertragsärztlichen Bereich.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="care_provider_base_type">
+                <xs:choice>
+                    <xs:sequence>
+                        <!-- KH-Bereich -->
+                        <xs:element ref="IKNR"/>
+                    	<xs:element ref="standortID" minOccurs="0"/>
+                        <xs:element ref="standortIDaufn" minOccurs="0"/>
+                        <xs:element ref="standortIDicd" minOccurs="0"/>
+                        <xs:element ref="standortIDops" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:sequence>
+                        <!-- vertragsärztlicher Bereich -->
+                        <xs:element ref="BSNRAMBULANT"/>
+                        <xs:element ref="NBSNRAMBULANT" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:choice>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="protocol_header_base_type">
+		<xs:sequence>
+			<xs:element name="validation_provider" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Hier gibt sich die durchführende Stelle einer oder mehrerer Prüfungsschritte zu erkennen. Die Ergebnisse der Prüfung werden in diesem Container abgelegt und werden Teil der Rückprotokollierung.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="organisation_without_cp_doku_vali_provider_type">
+							<xs:sequence>
+								<xs:element name="validation_item" type="validation_item_type" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="status_document">
+				<xs:annotation>
+					<xs:documentation>Hier wird der Gesamtstatus des Dokuments angegeben, das Attribut V kann also auf OK, WARNING oder ERROR stehen. Dieser Status kann nur verschlechternd geändert werden, oder gleich bleiben, ERROR bedeutet, dass das Dokument komplett zurückgewiesen werden muss. Für die letzte Rückprotokollierung gibt es noch den Status OK-FINAL und WARNINGS-FINAL, ERROR ist immer final, da ERROR immer bedeutet, dass eine Weiterverarbeitung nicht möglich ist. Dieses Element soll von Anfang an vorhanden sein und mit OK belegt sein.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="V" type="status_type" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="validation_item_type">
+		<xs:complexContent>
+			<xs:extension base="protocol_type">
+				<xs:attribute name="id" type="xs:int">
+					<xs:annotation>
+						<xs:documentation>Diese ID ist dokumentweit gültig und darf im Header nur einmal vorkommen. Prüfungen auf Datensatzebene (Element "case"), die zu dieser Prüfung gehören werden über diese ID zugeordnet. Die ID muss nur dann vergeben werden, wenn eine Prüfung auf Vorgangsebene stattfindet</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="V" type="enum_validation_type" use="required">
+					<xs:annotation>
+						<xs:documentation>dieser Wert bezeichnet die durchgeführte Prüfung anhand der enumeration enum_validation_type</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="c_date" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>hier kann ein Zeitstempel für die Verarbeitung angegeben werden</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="description" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>hier kann bei erklärungsbedürftigen Items eine Beschreibung hinterlassen werden (auf Dokumentebene)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="check_tool" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>Hier kann beim Einsatz eines Tools für die Prüfung der XML-Dateien der Name und die Versionsnummer des Tools hinterlassen werden (bein Einsatz des Datenprüfprogramms wird die Versionsnummer des XSLT-Skripts eingetragen)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:simpleType name="status_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="WARNING"/>
+			<xs:enumeration value="ERROR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attribute name="feedback_range" type="enum_feedback_type">
+		<xs:annotation>
+			<xs:documentation>Für die Rückprotokollierung muss hier angegeben werden, ob nur eine Transaktion (dann jeweils die Letzte) betroffen ist, oder ob es sich um eine Rückprotokollierung zum gesamten Datenfluss handelt (enum:transcation, dataflow)</xs:documentation>
+		</xs:annotation>
+	</xs:attribute>
+	<xs:simpleType name="enum_feedback_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="dataflow"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_errortype_type">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation>STEUER=Formatfehler der Steuerdatei, EXPORT=Formatfehler der Exportdatei DOPPELT=bereits vorhandener Datensatz wird erneut übermittelt TDS=Vollständigkeit und Version der Teildatensätze?? WERT=Wertebereichsverletzung REGEL=Plausibilitätsverletzung</xs:documentation>
+			</xs:annotation>
+			<xs:enumeration value="STEUER"/>
+			<xs:enumeration value="EXPORT"/>
+			<xs:enumeration value="DOPPELT"/>
+			<xs:enumeration value="TDS"/>
+			<xs:enumeration value="WERT"/>
+			<xs:enumeration value="REGEL"/>
+			<xs:enumeration value="KOLLISION"/>
+			<xs:enumeration value="PID"/>
+			<xs:enumeration value="QS"/>
+			<xs:enumeration value="LE"/>
+			<xs:enumeration value="FEHLT"/>
+			<xs:enumeration value="IST_Statistik"/>
+			<xs:enumeration value="SOLL_Statistik"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_ruletype_type">
+		<xs:restriction base="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="de">H=Hart, W=Weich, D=Weich, eigentlich hart</xs:documentation>
+			</xs:annotation>
+			<xs:enumeration value="H"/>
+			<xs:enumeration value="W"/>
+			<xs:enumeration value="D"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="enum_validation_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Spezifikation">
+				<xs:annotation>
+					<xs:documentation>Plausibilitätsprüfung QS gegen Spezifikation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PID_Pseudonym">
+				<xs:annotation>
+					<xs:documentation>Patientenpseudonym</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LE_Pseudonym">
+				<xs:annotation>
+					<xs:documentation>Leistungserbringer-Pseudonym</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Schema">
+				<xs:annotation>
+					<xs:documentation>Schema-Komformität</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Dechiffrierung">
+				<xs:annotation>
+					<xs:documentation>Entschlüsselung Leistungserbringer, QS-Daten oder LE</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Protokoll">
+				<xs:annotation>
+					<xs:documentation>Vollständigkeit Prüfprotokoll</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="sonstige Prüfung der XML-Transaktionsdatei">
+				<xs:annotation>
+					<xs:documentation>zur freien Verwendung, im optionalen Attribut description auf Dokumentenebene sollte eine Beschreibung eingetragen werden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="sonstige Prüfung">
+				<xs:annotation>
+					<xs:documentation>zur freien Verwendung, im optionalen Attribut description auf Dokumentenebene sollte eine Beschreibung eingetragen werden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Transaktion">
+				<xs:annotation>
+					<xs:documentation>Fehler in der Transaktion, wenn  z.B. die Registriernummer unbekannt ist.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="all_data_type" abstract="true"/>
+	<xs:complexType name="error_message_type">
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="errortype_type">
+		<xs:attribute name="V" type="enum_errortype_type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="list_type">
+		<xs:attribute name="V" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="protocol_type">
+		<xs:sequence>
+			<xs:element name="status">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="all_data_type">
+							<xs:sequence>
+								<xs:element name="error" type="validation_error_type" minOccurs="0" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Ein Error Element nimmt Fehlerdaten auf. Als einzig verpflichtendes Unterelement gilt die error_message. Die übrigen Elemente sind spezifisch für die Anwendung von Plausibilitätsregeln für die Spezifikation.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="V" type="status_type" use="required">
+								<xs:annotation>
+									<xs:documentation>gibt an, ob die betroffene Testeinheit ohne Fehler -> OK, mit Fehlern -> WARNING oder mit fatalem Fehler -> ERROR abgeschlossen wurde. Der Gesamtstatus des Dokuments orientiert sich jeweils am schlechtesten Test. Beim ersten Test mit dem Ergebnis ERROR muss die Weiterverarbeitung abgebrochen werden.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="rule_id_type">
+		<xs:attribute name="V" type="xs:int" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ruletype_type">
+		<xs:attribute name="V" type="enum_ruletype_type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="validation_error_type">
+		<xs:sequence>
+			<xs:element ref="error_type" minOccurs="0"/>
+			<xs:element ref="rule_id" minOccurs="0"/>
+			<xs:element ref="rule_type" minOccurs="0"/>
+			<xs:element ref="list" minOccurs="0"/>
+			<xs:element ref="error_message"/>
+		</xs:sequence>
+		<xs:attribute name="originator" type="enum_organisation_type" use="optional"/>
+	</xs:complexType>
+	<xs:element name="error_type" type="errortype_type"/>
+	<xs:element name="rule_id" type="rule_id_type"/>
+	<xs:element name="rule_type" type="ruletype_type"/>
+	<xs:element name="list" type="list_type"/>
+	<xs:element name="error_message" type="error_message_type"/>
+</xs:schema>
