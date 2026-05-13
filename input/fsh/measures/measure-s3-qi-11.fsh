@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-11  Trastuzumab bei HER2-positiven Patientinnen
+// FHIR Measure: S3-QI-11  R0-Resektion bei invasivem Mammakarzinom
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-11
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-11: Trastuzumab bei HER2-positiven Patientinnen"
-Description: "Trastuzumab bei HER2-positiven Patientinnen (S3-Leitlinie Mammakarzinom Kapitel 8, QI-11)"
+Title: "Senologie Measure S3-QI-11: R0-Resektion bei invasivem Mammakarzinom"
+Description: "R0-Resektion bei invasivem Mammakarzinom (S3-Leitlinie Mammakarzinom Kapitel 8, QI-11)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-11"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "Trastuzumab bei HER2-positiven Patientinnen — S3 Mammakarzinom QI-11"
+* description = "R0-Resektion bei invasivem Mammakarzinom — S3 Mammakarzinom QI-11"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion

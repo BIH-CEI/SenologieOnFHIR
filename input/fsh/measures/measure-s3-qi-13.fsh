@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-13  Adjuvante Chemotherapie
+// FHIR Measure: S3-QI-13  HER2 Score nach ASCO/CAP
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-13
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-13: Adjuvante Chemotherapie"
-Description: "Adjuvante Chemotherapie (S3-Leitlinie Mammakarzinom Kapitel 8, QI-13)"
+Title: "Senologie Measure S3-QI-13: HER2 Score nach ASCO/CAP"
+Description: "HER2 Score nach ASCO/CAP (S3-Leitlinie Mammakarzinom Kapitel 8, QI-13)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-13"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "Adjuvante Chemotherapie — S3 Mammakarzinom QI-13"
+* description = "HER2 Score nach ASCO/CAP — S3 Mammakarzinom QI-13"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion

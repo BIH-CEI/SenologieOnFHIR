@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-08  BET bei pT1
+// FHIR Measure: S3-QI-08  Strahlentherapie nach BET
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-08
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-08: BET bei pT1"
-Description: "BET bei pT1 (S3-Leitlinie Mammakarzinom Kapitel 8, QI-08)"
+Title: "Senologie Measure S3-QI-08: Strahlentherapie nach BET"
+Description: "Strahlentherapie nach BET (S3-Leitlinie Mammakarzinom Kapitel 8, QI-08)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-08"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "BET bei pT1 — S3 Mammakarzinom QI-08"
+* description = "Strahlentherapie nach BET — S3 Mammakarzinom QI-08"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion

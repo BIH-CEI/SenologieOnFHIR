@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-06  BET bei invasivem Mammakarzinom
+// FHIR Measure: S3-QI-06  Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-06
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-06: BET bei invasivem Mammakarzinom"
-Description: "BET bei invasivem Mammakarzinom (S3-Leitlinie Mammakarzinom Kapitel 8, QI-06)"
+Title: "Senologie Measure S3-QI-06: Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz"
+Description: "Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz (S3-Leitlinie Mammakarzinom Kapitel 8, QI-06)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-06"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "BET bei invasivem Mammakarzinom — S3 Mammakarzinom QI-06"
+* description = "Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz — S3 Mammakarzinom QI-06"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion

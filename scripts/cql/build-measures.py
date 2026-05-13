@@ -10,15 +10,17 @@ REPO = Path(__file__).resolve().parents[2]
 OUT_DIR = REPO / "input/fsh/measures"
 
 # (QI-Nummer, Bezeichnung, Has-Define-Numerator, Has-Define-Denominator)
+# Hinweis: Die CQL-Library hat in ihrer Historie zwei verschiedene QI-Sets.
+# Diese Liste folgt dem AKTUELL implementierten Set (untere Kommentar-Block in der CQL).
 S3_QIs = [
-    ("02", "Prätherapeutische histologische Sicherung",  "HasQI02Zaehler",  "HasQI02Nenner"),
-    ("04", "BET bei DCIS",                                "HasQI04Zaehler",  "HasQI04Nenner"),
-    ("06", "BET bei invasivem Mammakarzinom",             "HasQI06Zaehler",  "HasQI06Nenner"),
-    ("08", "BET bei pT1",                                 "HasQI08Zaehler",  "HasQI08Nenner"),
-    ("09", "Adjuvante endokrine Therapie bei HR+",        "HasQI09Zaehler",  "HasQI09Nenner"),
-    ("11", "Trastuzumab bei HER2-positiven Patientinnen", "HasQI11Zaehler",  "HasQI11Nenner"),
-    ("12", "Adjuvante Strahlentherapie",                  "HasQI12Zaehler",  "HasQI12Nenner"),
-    ("13", "Adjuvante Chemotherapie",                     "HasQI13Zaehler",  "HasQI13Nenner"),
+    ("02", "Prätherapeutische histologische Sicherung",         "HasQI02Zaehler", "HasQI02Nenner"),
+    ("04", "Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut)", "HasQI04Zaehler", "HasQI04Nenner"),
+    ("06", "Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz", "HasQI06Zaehler", "HasQI06Nenner"),
+    ("08", "Strahlentherapie nach BET",                            "HasQI08Zaehler", "HasQI08Nenner"),
+    ("09", "Endokrine Therapie bei rezeptorpositivem Befund",      "HasQI09Zaehler", "HasQI09Nenner"),
+    ("11", "R0-Resektion bei invasivem Mammakarzinom",             "HasQI11Zaehler", "HasQI11Nenner"),
+    ("12", "ER/PR-Bestimmung mit % und Intensität",                "HasQI12Zaehler", "HasQI12Nenner"),
+    ("13", "HER2 Score nach ASCO/CAP",                             "HasQI13Zaehler", "HasQI13Nenner"),
 ]
 
 TEMPLATE = """// FHIR Measure: S3-QI-{nr}  {desc}

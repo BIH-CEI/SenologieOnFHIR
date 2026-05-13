@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-09  Adjuvante endokrine Therapie bei HR+
+// FHIR Measure: S3-QI-09  Endokrine Therapie bei rezeptorpositivem Befund
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-09
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-09: Adjuvante endokrine Therapie bei HR+"
-Description: "Adjuvante endokrine Therapie bei HR+ (S3-Leitlinie Mammakarzinom Kapitel 8, QI-09)"
+Title: "Senologie Measure S3-QI-09: Endokrine Therapie bei rezeptorpositivem Befund"
+Description: "Endokrine Therapie bei rezeptorpositivem Befund (S3-Leitlinie Mammakarzinom Kapitel 8, QI-09)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-09"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "Adjuvante endokrine Therapie bei HR+ — S3 Mammakarzinom QI-09"
+* description = "Endokrine Therapie bei rezeptorpositivem Befund — S3 Mammakarzinom QI-09"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion

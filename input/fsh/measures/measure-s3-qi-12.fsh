@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-12  Adjuvante Strahlentherapie
+// FHIR Measure: S3-QI-12  ER/PR-Bestimmung mit % und Intensität
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-12
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-12: Adjuvante Strahlentherapie"
-Description: "Adjuvante Strahlentherapie (S3-Leitlinie Mammakarzinom Kapitel 8, QI-12)"
+Title: "Senologie Measure S3-QI-12: ER/PR-Bestimmung mit % und Intensität"
+Description: "ER/PR-Bestimmung mit % und Intensität (S3-Leitlinie Mammakarzinom Kapitel 8, QI-12)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-12"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "Adjuvante Strahlentherapie — S3 Mammakarzinom QI-12"
+* description = "ER/PR-Bestimmung mit % und Intensität — S3 Mammakarzinom QI-12"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion

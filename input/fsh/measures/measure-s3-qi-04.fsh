@@ -1,10 +1,10 @@
-// FHIR Measure: S3-QI-04  BET bei DCIS
+// FHIR Measure: S3-QI-04  Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut)
 // Auto-generiert von scripts/cql/build-measures.py — bitte dort editieren.
 
 Instance: senologie-measure-s3-qi-04
 InstanceOf: Measure
-Title: "Senologie Measure S3-QI-04: BET bei DCIS"
-Description: "BET bei DCIS (S3-Leitlinie Mammakarzinom Kapitel 8, QI-04)"
+Title: "Senologie Measure S3-QI-04: Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut)"
+Description: "Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut) (S3-Leitlinie Mammakarzinom Kapitel 8, QI-04)"
 Usage: #definition
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-04"
@@ -14,7 +14,7 @@ Usage: #definition
 * experimental = false
 * date = "2026-05-13"
 * publisher = "BIH at Charité — Universitätsmedizin Berlin"
-* description = "BET bei DCIS — S3 Mammakarzinom QI-04"
+* description = "Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut) — S3 Mammakarzinom QI-04"
 
 * library = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * scoring = http://terminology.hl7.org/CodeSystem/measure-scoring#proportion
