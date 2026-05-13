@@ -228,9 +228,25 @@ Usage: #definition
 
 // ER IRS Score
 * item[=].item[+].linkId = "ihc-er-irs"
-* item[=].item[=].text = "ER IRS Score (0–12)"
+* item[=].item[=].text = "ER IRS Score (0–12, Remmele-Stegner, DE-Standard)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
+
+// ER Allred Score (Senologie-Erweiterung — nicht in dotbase v1)
+* item[=].item[+].linkId = "ihc-er-allred"
+* item[=].item[=].text = "ER Allred Score (0–8, international)"
+* item[=].item[=].type = #integer
+* item[=].item[=].required = false
+
+// ER Färbeintensität (LOINC LL4358-9)
+* item[=].item[+].linkId = "ihc-er-intensitaet"
+* item[=].item[=].text = "ER Färbeintensität"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerOption[+].valueString = "negative"
+* item[=].item[=].answerOption[+].valueString = "weak"
+* item[=].item[=].answerOption[+].valueString = "moderate"
+* item[=].item[=].answerOption[+].valueString = "strong"
 
 // PR Prozent positiv
 * item[=].item[+].linkId = "ihc-pr-prozent"
@@ -245,6 +261,22 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
+// PR Allred Score (Senologie-Erweiterung)
+* item[=].item[+].linkId = "ihc-pr-allred"
+* item[=].item[=].text = "PR Allred Score (0–8)"
+* item[=].item[=].type = #integer
+* item[=].item[=].required = false
+
+// PR Färbeintensität
+* item[=].item[+].linkId = "ihc-pr-intensitaet"
+* item[=].item[=].text = "PR Färbeintensität"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerOption[+].valueString = "negative"
+* item[=].item[=].answerOption[+].valueString = "weak"
+* item[=].item[=].answerOption[+].valueString = "moderate"
+* item[=].item[=].answerOption[+].valueString = "strong"
+
 // HER2 IHC Score
 * item[=].item[+].linkId = "ihc-her2-score"
 * item[=].item[=].text = "HER2 IHC Score"
@@ -255,6 +287,17 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueString = "1+"
 * item[=].item[=].answerOption[+].valueString = "2+"
 * item[=].item[=].answerOption[+].valueString = "3+"
+
+// HER2-Gesamtstatus nach Leitlinie (Senologie-Erweiterung; HER2-low, HER2-ultralow)
+* item[=].item[+].linkId = "ihc-her2-gesamt"
+* item[=].item[=].text = "HER2-Gesamtstatus (Leitlinie, inkl. HER2-low / HER2-ultralow)"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerOption[+].valueString = "positiv"
+* item[=].item[=].answerOption[+].valueString = "low"
+* item[=].item[=].answerOption[+].valueString = "ultralow"
+* item[=].item[=].answerOption[+].valueString = "negativ"
+* item[=].item[=].answerOption[+].valueString = "equivocal"
 
 // HER2 ISH/FISH (bei HER2 IHC = 2+)
 * item[=].item[+].linkId = "ihc-her2-fish"
@@ -268,6 +311,37 @@ Usage: #definition
 * item[=].item[=].answerOption[+].valueString = "positiv"
 * item[=].item[=].answerOption[+].valueString = "negativ"
 * item[=].item[=].answerOption[+].valueString = "nicht durchgeführt"
+
+// HER2 ISH-Methode (FISH/CISH/DISH/SISH) — Senologie-Erweiterung
+* item[=].item[+].linkId = "ihc-her2-ish-methode"
+* item[=].item[=].text = "HER2 ISH-Methode"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
+* item[=].item[=].enableWhen[=].operator = #exists
+* item[=].item[=].enableWhen[=].answerBoolean = true
+* item[=].item[=].answerOption[+].valueString = "FISH"
+* item[=].item[=].answerOption[+].valueString = "CISH"
+* item[=].item[=].answerOption[+].valueString = "DISH"
+* item[=].item[=].answerOption[+].valueString = "SISH"
+
+// HER2/CEP17 Ratio (quantitativ aus ISH) — Senologie-Erweiterung, im MII MTB modelliert
+* item[=].item[+].linkId = "ihc-her2-ratio"
+* item[=].item[=].text = "HER2/CEP17 Ratio (FISH/CISH, Cutoff ≥ 2.0 = amplifiziert)"
+* item[=].item[=].type = #decimal
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
+* item[=].item[=].enableWhen[=].operator = #exists
+* item[=].item[=].enableWhen[=].answerBoolean = true
+
+// HER2 Kopienzahl pro Zelle — Senologie-Erweiterung
+* item[=].item[+].linkId = "ihc-her2-kopienzahl"
+* item[=].item[=].text = "HER2-Kopienzahl pro Zelle (Cutoff ≥ 6 = amplifiziert)"
+* item[=].item[=].type = #decimal
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
+* item[=].item[=].enableWhen[=].operator = #exists
+* item[=].item[=].enableWhen[=].answerBoolean = true
 
 // Ki-67 Index %
 * item[=].item[+].linkId = "ihc-ki67"
