@@ -22,6 +22,8 @@ OUT_DIR = REPO / "input/fsh/measures"
 BASE_URL = "https://www.senologie.org/fhir"
 
 CQL_FILES = [
+    ("MinimalMeasureLib.cql", "MinimalMeasureLib",
+     "Minimale Debug-Library mit drei konstanten true-Defines"),
     ("QualitaetsindikatorenLeitlinie.cql", "QualitaetsindikatorenLeitlinie",
      "S3-Leitlinien-Qualitätsindikatoren (17 QIs aus S3 Mammakarzinom v5.0, Kapitel 8)"),
     ("OncoBoxBrustKennzahlen.cql", "OncoBoxBrustKennzahlen",

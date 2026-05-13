@@ -346,6 +346,7 @@
 [IQTIGMammachirurgie181]: StructureDefinition-iqtig-mammachirurgie-181.html
 [IRegBrustimplantatMeldung]: StructureDefinition-ireg-brustimplantat-meldung.html
 [EX_Senologie_Studienkontakt]: StructureDefinition-ex-senologie-studienkontakt.html
+[MinimalMeasureLib]: Library-MinimalMeasureLib.html
 [OncoBoxBrustKennzahlen]: Library-OncoBoxBrustKennzahlen.html
 [QualitaetsindikatorenLeitlinie]: Library-QualitaetsindikatorenLeitlinie.html
 [cm-oncobox-verlauf-gesamtbeurteilung-ereignis]: ConceptMap-cm-oncobox-verlauf-gesamtbeurteilung-ereignis.html
@@ -359,6 +360,7 @@
 [EX_Senologie_PreOpMarkierung]: StructureDefinition-ex-senologie-pre-op-markierung.html
 [EX_Senologie_Studienscreening]: StructureDefinition-ex-senologie-studienscreening.html
 [EX_Senologie_Screeningstatus]: StructureDefinition-ex-senologie-screeningstatus.html
+[senologie-measure-minimal]: Measure-senologie-measure-minimal.html
 [senologie-measure-oncobox-kb-12]: Measure-senologie-measure-oncobox-kb-12.html
 [senologie-measure-s3-qi-02]: Measure-senologie-measure-s3-qi-02.html
 [EX_Senologie_SimultaneRadiochemotherapie]: StructureDefinition-ex-senologie-simultane-radiochemotherapie.html
