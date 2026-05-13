@@ -18,36 +18,192 @@ uses "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung" 
 // ============================================================================
 // Master Orchestrator: Bundle -> OncoBox Brust 2.0 Meldung
 //
-// MIGRATION-STATUS (2026-05-13):
-//   LM wurde auf OncoBox Brust 2.0 (XSD aus xml-oncobox.de/de/Home/FuerHersteller)
-//   umgestellt. Die 1.0-Sub-Maps (Zentrum/Primaerfall/Operation/Therapie/
-//   Verlauf/Kennzahlen) sind STRUKTURELL INKOMPATIBEL mit 2.0 (Wurzel ist
-//   <Patienten><Patient><Fall> statt <primaerfall>; Felder umbenannt;
-//   Histologie/Biomarker als eigener Block; ER/PR separat als Anteil_positiv_*
-//   und IRS_*; BRCA Keimbahn/somatisch getrennt).
+// Struktur in 2.0:
+//   OncoBoxBrust
+//     ├─ ImportInfo (DatumXML, NameTudokusys, VersionTudokusys)
+//     └─ Patienten
+//          └─ Patient[]
+//               ├─ Stammdaten (OncoBoxID, Geburtsjahr, Geschlecht, …)
+//               └─ Fall[]
+//                    ├─ Fallinformation (FallID, Falldokumentation)
+//                    ├─ Anamnese (BRCA Keimbahn, RaucherStatus)
+//                    ├─ Diagnose (ICD, Seitenlokalisation, cTNM, pTNM)
+//                    ├─ Tumorkonferenz[]
+//                    ├─ Histologie[] (Tumortyp, Grading, ER/PR/HER2/Ki67/PD-L1)
+//                    ├─ Operation[]
+//                    ├─ Strahlentherapie[]
+//                    ├─ Systemtherapie[]
+//                    ├─ Fernmetastase[]
+//                    ├─ Studie[]
+//                    ├─ Psychosozial
+//                    └─ Follow_Up[]
 //
-//   Aktueller Stand: nur ImportInfo + Patient-Skelett werden befuellt.
-//   Vollstaendige Sub-Map-Migration siehe Issue / TODO.
+// Codes-Conventions:
+//   Geschlecht: FHIR female=W, male=M, other=D, unknown=X
+//   Versicherungsform: gesetzlich=G, privat=P
+//   Seitenlokalisation: L|R|B|S (links|rechts|beidseits|ohne Seitenang.)
+//   Diagnosesicherheit: 0–7 (oBDS-konform); Histo=H/X (post-OP)
 // ============================================================================
 
 group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
 
-  // ImportInfo: Pflicht-Metadaten der Meldung
+  // === ImportInfo (Meldungs-Metadaten) ===
   src -> tgt.ImportInfo as ii then {
     src -> ii.DatumXML = '2026-05-13' "SetDatumXML";
     src -> ii.NameTudokusys = 'Senologie-KDS FHIR IG' "SetNameTudokusys";
     src -> ii.VersionTudokusys = '0.9.0' "SetVersionTudokusys";
   } "MapImportInfo";
 
-  // Patienten-Container mit mindestens einem Patienten-Skelett
+  // === Patienten-Container ===
   src -> tgt.Patienten as ps then {
     src.entry as patEntry where resource.is(Patient) then {
       patEntry.resource as pat -> ps.Patient as p then {
+
+        // --- Stammdaten ---
         pat -> p.Stammdaten as sd then {
           pat.id as pid -> sd.OncoBoxID = pid "SetOncoBoxID";
           pat.birthDate as bd -> sd.Geburtsjahr = bd "SetGeburtsjahr";
+          pat.gender as g then {
+            g where $this = 'female' -> sd.Geschlecht = 'W' "SetGeschlechtW";
+            g where $this = 'male'   -> sd.Geschlecht = 'M' "SetGeschlechtM";
+            g where $this = 'other'  -> sd.Geschlecht = 'D' "SetGeschlechtD";
+            g where $this = 'unknown'-> sd.Geschlecht = 'X' "SetGeschlechtX";
+          } "MapGender";
+          pat.deceased as dec where $this.is(dateTime) -> sd.Sterbedatum = dec "SetSterbedatum";
         } "MapStammdaten";
+
+        // --- Fall: pro Condition (Brust-Diagnose) ein Fall-Block ---
+        src.entry as condEntry where resource.is(Condition) and resource.meta.profile.exists($this.contains('senologie-diagnose-maligne')) then {
+          condEntry.resource as cond -> p.Fall as f then {
+
+            // -- Fallinformation --
+            cond -> f.Fallinformation as fi then {
+              cond.id as cid -> fi.FallID = cid "SetFallID";
+              cond -> fi.Falldokumentation = 'A' "SetFalldokA";
+            } "MapFallinfo";
+
+            // -- Diagnose --
+            cond -> f.Diagnose as d then {
+              // ICD-10 / ICD-11 aus Condition.code Slices
+              cond.code as code then {
+                code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then { c.code as cd -> d.ICD_10 = cd "SetICD10"; } "MapICD10";
+                code.coding as c where system = 'http://id.who.int/icd/release/11/mms' then { c.code as cd -> d.ICD_11 = cd "SetICD11"; } "MapICD11";
+              } "MapCondCode";
+              // Seitenlokalisation aus bodySite
+              cond.bodySite as bs then {
+                bs.coding as c then {
+                  c.code as cd where $this = '7771000' -> d.Seitenlokalisation = 'L' "SetSeiteL";
+                  c.code as cd where $this = '24028007' -> d.Seitenlokalisation = 'R' "SetSeiteR";
+                  c.code as cd where $this = '51440002' -> d.Seitenlokalisation = 'B' "SetSeiteB";
+                } "MapSeiteCoding";
+              } "MapSeite";
+              // Diagnosedatum aus extension[Feststellungsdatum]
+              cond.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-feststellungsdatum' then {
+                ext.value as v -> d.Diagnosedatum = v "SetDiagnosedatum";
+              } "MapDiagnoseDatum";
+              // Diagnosesicherheit: TODO — VerificationStatus hat mehrere Codings; muss
+              // gezielt nach oBDS-Mapping-System gefiltert werden (z.B. mii-vs-onko-primaertumor-diagnosesicherung).
+
+              // -- cTNM aus klinischer TNM-Observation (LOINC 21908-9) --
+              src.entry as ctnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
+                ctnmEntry.resource as ctnm then {
+                  ctnm.component as comp where code.coding.exists(code = '21905-5') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Praeth_T = cd "SetPraethT"; } "MapPraethTCode"; } "MapPraethTVal"; } "PraethT";
+                  ctnm.component as comp where code.coding.exists(code = '21906-3') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Praeth_N = cd "SetPraethN"; } "MapPraethNCode"; } "MapPraethNVal"; } "PraethN";
+                  ctnm.component as comp where code.coding.exists(code = '21907-1') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Praeth_M = cd "SetPraethM"; } "MapPraethMCode"; } "MapPraethMVal"; } "PraethM";
+                } "MapCTNM";
+              } "EntryCTNM";
+
+              // -- pTNM aus pathologischer TNM-Observation (LOINC 21902-2) --
+              src.entry as ptnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
+                ptnmEntry.resource as ptnm then {
+                  ptnm.component as comp where code.coding.exists(code = '21899-0') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Postop_T = cd "SetPostopT"; } "MapPostopTCode"; } "MapPostopTVal"; } "PostopT";
+                  ptnm.component as comp where code.coding.exists(code = '21900-6') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Postop_N = cd "SetPostopN"; } "MapPostopNCode"; } "MapPostopNVal"; } "PostopN";
+                  ptnm.component as comp where code.coding.exists(code = '21901-4') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Postop_M = cd "SetPostopM"; } "MapPostopMCode"; } "MapPostopMVal"; } "PostopM";
+                } "MapPTNM";
+              } "EntryPTNM";
+            } "MapDiagnose";
+
+            // -- Histologie: pro Pathologie-Befund ein Histologie-Block --
+            src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
+              histEntry.resource as histObs -> f.Histologie as h then {
+                histObs.effective as eff where $this.is(dateTime) -> h.Tumor_Histologiedatum = eff "SetHistDatum";
+                histObs.value as val then { val.coding as c where system = 'urn:oid:2.16.840.1.113883.6.43.1' then { c.code as cd -> h.Tumortyp = cd "SetTumortyp"; } "MapTumortypCoding"; } "MapTumortyp";
+              } "MapHistEntry";
+            } "EntryHist";
+
+            // -- Biomarker (ER/PR/HER2) als separate Histologie-Eintraege --
+            //    OncoBox 2.0: Anteil_positiv_Oestrogen, IRS_Oestrogen,
+            //    HormonrezeptorStatus_Oestrogen sind SEPARATE Felder
+            src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '40556-3') then {
+              erEntry.resource as erObs -> f.Histologie as h then {
+                erObs.value as val then { val.coding as c then { c.code as cd where $this = 'LA6576-8' -> h.HormonrezeptorStatus_Oestrogen = 'P' "SetERPos"; c.code as cd where $this = 'LA6577-6' -> h.HormonrezeptorStatus_Oestrogen = 'N' "SetERNeg"; c.code as cd where $this = 'LA4489-6' -> h.HormonrezeptorStatus_Oestrogen = 'U' "SetERUnb"; } "MapERStatusCode"; } "MapERValue";
+                erObs.component as comp where code.coding.exists(code = '1234804006') then { comp.value as val then { val.value as v -> h.Anteil_positiv_Oestrogen = v "SetERAnteil"; } "MapERAnteilVal"; } "ERAnteil";
+              } "MapEREntry";
+            } "EntryER";
+
+            src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
+              prEntry.resource as prObs -> f.Histologie as h then {
+                prObs.value as val then { val.coding as c then { c.code as cd where $this = 'LA6576-8' -> h.HormonrezeptorStatus_Progesteron = 'P' "SetPRPos"; c.code as cd where $this = 'LA6577-6' -> h.HormonrezeptorStatus_Progesteron = 'N' "SetPRNeg"; c.code as cd where $this = 'LA4489-6' -> h.HormonrezeptorStatus_Progesteron = 'U' "SetPRUnb"; } "MapPRStatusCode"; } "MapPRValue";
+                prObs.component as comp where code.coding.exists(code = '1234803000') then { comp.value as val then { val.value as v -> h.Anteil_positiv_Progesteron = v "SetPRAnteil"; } "MapPRAnteilVal"; } "PRAnteil";
+              } "MapPREntry";
+            } "EntryPR";
+
+            src.entry as her2Entry where resource.is(Observation) and resource.code.coding.exists(code = '48676-1') then {
+              her2Entry.resource as her2Obs -> f.Histologie as h then {
+                her2Obs.value as val then { val.coding as c then { c.code as cd where $this = 'P' -> h.Her2neuStatus = 'P' "SetHER2Pos"; c.code as cd where $this = 'N' -> h.Her2neuStatus = 'N' "SetHER2Neg"; c.code as cd where $this = 'low' -> h.Her2neuStatus = 'N' "SetHER2LowToN"; c.code as cd where $this = 'ultralow' -> h.Her2neuStatus = 'N' "SetHER2UltraLowToN"; c.code as cd where $this = 'U' -> h.Her2neuStatus = 'U' "SetHER2Unb"; } "MapHER2StatusCode"; } "MapHER2Value";
+              } "MapHER2Entry";
+            } "EntryHER2";
+
+            // -- Ki-67 (LOINC 85318-4) --
+            src.entry as ki67Entry where resource.is(Observation) and resource.code.coding.exists(code = '85318-4') then {
+              ki67Entry.resource as ki67Obs -> f.Histologie as h then {
+                ki67Obs.value as val then { val.value as v -> h.Ki_67 = v "SetKi67"; } "MapKi67Val";
+              } "MapKi67Entry";
+            } "EntryKi67";
+
+            // -- Operation[] aus Procedure (Senologie_Operation) --
+            src.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+              opEntry.resource as opProc -> f.Operation as op then {
+                opProc.performed as perf where $this.is(dateTime) -> op.OP_Datum = perf "SetOpDatum";
+                opProc.code as opCode then { opCode.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' then { c.code as cd -> op.OPS = cd "SetOPS"; } "MapOPSCoding"; } "MapOPS";
+                opProc.extension as ext where url = 'https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention' then {
+                  ext.value as v then { v.coding as c then { c.code as cd -> op.OP_Intention = cd "SetOpIntention"; } "MapOpIntCoding"; } "MapOpIntVal";
+                } "MapOpIntExt";
+              } "MapOpEntry";
+            } "EntryOp";
+
+            // -- Strahlentherapie[] aus Procedure --
+            src.entry as rtEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-strahlentherapie') or $this.contains('strahlentherapie')) then {
+              rtEntry.resource as rtProc -> f.Strahlentherapie as rt then {
+                rtProc.performed as perf where $this.is(Period) then {
+                  perf.start as st -> rt.Strahlentherapie_Beginn = st "SetRTBeginn";
+                  perf.end as en -> rt.Strahlentherapie_Ende = en "SetRTEnde";
+                } "MapRTPeriod";
+              } "MapRTEntry";
+            } "EntryRT";
+
+            // -- Systemtherapie[] aus Procedure --
+            src.entry as stEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-systemtherapie')) then {
+              stEntry.resource as stProc -> f.Systemtherapie as syst then {
+                stProc.performed as perf where $this.is(Period) then {
+                  perf.start as st -> syst.Systemtherapie_Beginn = st "SetSTBeginn";
+                  perf.end as en -> syst.Systemtherapie_Ende = en "SetSTEnde";
+                } "MapSTPeriod";
+              } "MapSTEntry";
+            } "EntryST";
+
+            // -- Follow_Up[] aus Verlauf-Observation --
+            src.entry as fuEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-follow-up')) then {
+              fuEntry.resource as fuObs -> f.Follow_Up as fu then {
+                fuObs.effective as eff where $this.is(dateTime) -> fu.Untersuchungsdatum_Verlauf = eff "SetFUDatum";
+                fuObs.value as val then { val.coding as c then { c.code as cd -> fu.Gesamtbeurteilung_Tumorstatus = cd "SetFUGesamt"; } "MapFUGesamtCoding"; } "MapFUValue";
+              } "MapFUEntry";
+            } "EntryFU";
+
+          } "MapFall";
+        } "EntryCond";
+
       } "MapPatient";
-    } "EntryPatient";
+    } "EntryPat";
   } "MapPatienten";
 }
