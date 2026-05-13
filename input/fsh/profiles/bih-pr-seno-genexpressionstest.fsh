@@ -14,10 +14,7 @@ Description: "RiskAssessment für genomische Risikoscores bei Mammakarzinom (Onc
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Genetik.Genexpressionstest"
-* ^mapping[=].name = "LM-Element: Genetik.Genexpressionstest"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Genetik.Genexpressionstest"
 
 * status MS
 * status = #final (exactly)

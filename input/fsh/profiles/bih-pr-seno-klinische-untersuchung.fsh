@@ -11,10 +11,7 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#KlinischeUntersuchung"
-* ^mapping[=].name = "LM-Element: KlinischeUntersuchung"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: KlinischeUntersuchung"
 
 * status MS
 * status = #final (exactly)

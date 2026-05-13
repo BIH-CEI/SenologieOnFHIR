@@ -11,10 +11,7 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Tumorkonferenz"
-* ^mapping[=].name = "LM-Element: Tumorkonferenz"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Tumorkonferenz"
 
 // Basis Mapping aus dotbase
 * status MS

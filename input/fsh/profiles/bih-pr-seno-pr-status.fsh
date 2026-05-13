@@ -13,10 +13,7 @@ Description: "Progesteronrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus 
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.PR"
-* ^mapping[=].name = "LM-Element: Pathologie.BefundInvasiv.Biomarker.PR"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie.BefundInvasiv.Biomarker.PR"
 
 * value[x].coding[DefinitionLeitlinie] MS
 * value[x].coding[DefinitionLeitlinie] ^short = "Leitlinien-Klassifikation (positiv / gering-positiv / negativ) — empfohlen für PR-low-Analysen"

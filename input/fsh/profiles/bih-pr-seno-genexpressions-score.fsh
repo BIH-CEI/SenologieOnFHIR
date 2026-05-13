@@ -15,10 +15,7 @@ Description: "Observation für den numerischen Score-Wert eines Genexpressionste
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Genetik.Genexpressionstest.Score"
-* ^mapping[=].name = "LM-Element: Genetik.Genexpressionstest.Score"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Genetik.Genexpressionstest.Score"
 
 * status MS
 * status = #final (exactly)

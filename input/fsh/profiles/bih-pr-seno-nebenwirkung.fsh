@@ -11,10 +11,7 @@ Description: "AdverseEvent für CTCAE-Nebenwirkungsgrading unter Systemtherapie.
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Nebenwirkung"
-* ^mapping[=].name = "LM-Element: Nebenwirkung"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Nebenwirkung"
 
 // Inherited from MII parent (MS flags for Senologie):
 * actuality MS

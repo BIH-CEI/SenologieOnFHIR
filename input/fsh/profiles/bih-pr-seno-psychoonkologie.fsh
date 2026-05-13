@@ -11,10 +11,7 @@ Description: "Procedure fuer psychoonkologische Mitbetreuung (OncoBox KB-9). sta
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Psychoonkologie"
-* ^mapping[=].name = "LM-Element: Psychoonkologie"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Psychoonkologie"
 
 * status MS
 * status ^short = "Durchfuehrungsstatus"

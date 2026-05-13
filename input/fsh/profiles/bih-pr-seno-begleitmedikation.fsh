@@ -11,10 +11,7 @@ Description: "Begleitmedikation der Patientin – aktuelle Dauermedikation und s
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Begleitmedikation"
-* ^mapping[=].name = "LM-Element: Begleitmedikation"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Begleitmedikation"
 
 // Status
 * status MS

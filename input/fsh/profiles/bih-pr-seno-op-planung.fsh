@@ -11,10 +11,7 @@ Description: "ServiceRequest für OP Planung aus dotbase Questionnaire 'OP Planu
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Operationsplanung"
-* ^mapping[=].name = "LM-Element: Operationsplanung"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Operationsplanung"
 
 // Basis-Mapping aus dotbase "OP Planung ärztlich V1.0"
 * status MS

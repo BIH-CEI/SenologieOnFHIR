@@ -11,10 +11,7 @@ Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt I
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#SystemischeTherapie"
-* ^mapping[=].name = "LM-Element: SystemischeTherapie"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: SystemischeTherapie"
 
 * status MS
 * status = #completed (exactly)

@@ -11,10 +11,7 @@ Description: "ResearchSubject für klinische Studienteilnahme in der Senologie a
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Studienteilnahme"
-* ^mapping[=].name = "LM-Element: Studienteilnahme"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Studienteilnahme"
 
 // --- Teilnahmestatus → ResearchSubject.status ---
 * status MS

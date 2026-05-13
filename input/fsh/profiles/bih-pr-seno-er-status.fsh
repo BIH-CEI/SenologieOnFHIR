@@ -15,10 +15,7 @@ Description: "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Es
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.ER"
-* ^mapping[=].name = "LM-Element: Pathologie.BefundInvasiv.Biomarker.ER"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie.BefundInvasiv.Biomarker.ER"
 
 // Leitlinien-Slice als MS markieren (positiv/gering-positiv/negativ — ermöglicht ER-low-Erfassung)
 * value[x].coding[DefinitionLeitlinie] MS

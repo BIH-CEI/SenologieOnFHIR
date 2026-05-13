@@ -11,10 +11,7 @@ Description: "Somatischer Mutationsstatus für BRCA1, BRCA2 und PALB2 im Tumorge
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Genetik.SomatischeMutation"
-* ^mapping[=].name = "LM-Element: Genetik.SomatischeMutation"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Genetik.SomatischeMutation"
 
 * status MS
 * status ^short = "Untersuchungsstatus"

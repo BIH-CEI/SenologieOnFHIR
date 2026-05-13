@@ -11,10 +11,7 @@ Description: "Procedure für Sozialdienst-Kontakt (OncoBox 2.0 L02, DKG OF-14). 
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Sozialdienst"
-* ^mapping[=].name = "LM-Element: Sozialdienst"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Sozialdienst"
 
 * status MS
 * status ^short = "Durchgeführt oder nicht durchgeführt"

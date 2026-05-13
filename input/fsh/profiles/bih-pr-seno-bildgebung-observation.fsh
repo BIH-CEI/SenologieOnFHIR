@@ -11,10 +11,7 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#BildgebungMamma"
-* ^mapping[=].name = "LM-Element: BildgebungMamma"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: BildgebungMamma"
 
 // Basis
 * status MS

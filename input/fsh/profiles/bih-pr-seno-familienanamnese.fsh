@@ -11,10 +11,7 @@ Description: "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovari
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Familienanamnese"
-* ^mapping[=].name = "LM-Element: Familienanamnese"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Familienanamnese"
 
 * status MS
 

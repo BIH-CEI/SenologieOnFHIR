@@ -11,10 +11,7 @@ Description: "DiagnosticReport für pathologische Befunde aus dotbase Questionna
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie"
-* ^mapping[=].name = "LM-Element: Pathologie"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie"
 
 // Basis Mapping aus dotbase
 * status MS

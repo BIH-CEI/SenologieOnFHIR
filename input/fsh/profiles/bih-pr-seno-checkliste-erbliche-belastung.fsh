@@ -11,10 +11,7 @@ Description: "Observation für die DKG-Checkliste zur Identifikation erblicher T
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#ChecklisteErblicheBelastung"
-* ^mapping[=].name = "LM-Element: ChecklisteErblicheBelastung"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: ChecklisteErblicheBelastung"
 
 * status MS
 * status = #final (exactly)

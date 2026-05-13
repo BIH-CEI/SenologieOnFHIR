@@ -11,10 +11,7 @@ Description: "Procedure für Strahlentherapie aus dotbase Questionnaire 'Strahle
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Strahlentherapie"
-* ^mapping[=].name = "LM-Element: Strahlentherapie"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Strahlentherapie"
 
 * status MS
 * status = #completed (exactly)

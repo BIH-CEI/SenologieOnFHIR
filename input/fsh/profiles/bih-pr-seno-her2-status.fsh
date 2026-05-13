@@ -20,10 +20,7 @@ Description: "HER2-Status aus Immunhistochemie — erbt MII Onko Mamma Her2neu S
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker.HER2"
-* ^mapping[=].name = "LM-Element: Pathologie.BefundInvasiv.Biomarker.HER2 (IHC-Anteil)"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie.BefundInvasiv.Biomarker.HER2"
 
 // Leitlinien-Slice (inkl. HER2-low/HER2-ultralow) als MS markieren
 * value[x].coding[DefinitionLeitlinie] MS

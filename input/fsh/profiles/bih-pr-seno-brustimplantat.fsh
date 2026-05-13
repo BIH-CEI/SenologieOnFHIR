@@ -12,10 +12,7 @@ Description: "Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senolog
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Operation.Implantat"
-* ^mapping[=].name = "LM-Element: Operation.Implantat"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Operation.Implantat"
 
 
 

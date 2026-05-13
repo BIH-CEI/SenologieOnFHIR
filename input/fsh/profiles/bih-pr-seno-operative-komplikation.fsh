@@ -11,10 +11,7 @@ Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Kl
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Operation.Komplikation"
-* ^mapping[=].name = "LM-Element: Operation.Komplikation"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Operation.Komplikation"
 
 // Status
 * status MS

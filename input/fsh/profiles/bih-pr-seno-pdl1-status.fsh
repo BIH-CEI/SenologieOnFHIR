@@ -13,10 +13,7 @@ Description: "PD-L1 Immunhistochemie-Befund für Mamma-Karzinom. Erbt TPS, CPS, 
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Pathologie.BefundInvasiv.Biomarker"
-* ^mapping[=].name = "LM-Element: Pathologie.BefundInvasiv.Biomarker (PDL1 CPS/TPS/IC)"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie.BefundInvasiv.Biomarker"
 
 * status MS
 

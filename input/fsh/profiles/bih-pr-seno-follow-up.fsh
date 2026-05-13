@@ -21,10 +21,7 @@ Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art 
 * ^mapping[+].identity = "lm"
 * ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie"
 * ^mapping[=].name = "BIH LM Senologie"
-* ^mapping[=].comment = "Logisches Modell der Senologie-Spezifikation"
-* ^mapping[+].identity = "lm-element"
-* ^mapping[=].uri = "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie#Verlauf"
-* ^mapping[=].name = "LM-Element: Verlauf"
+* ^mapping[=].comment = "Bezugselement im Logischen Modell: Verlauf"
 
 // Subject: Patientin
 * subject MS
