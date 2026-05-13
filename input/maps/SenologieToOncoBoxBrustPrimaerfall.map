@@ -161,14 +161,20 @@ group MapPrimaerfall(source bundle : Bundle, target tgt : BackboneElement) {
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '92833-3') then {
     entry.resource as obs -> tgt.diagnose as diag, diag.lymphknoten as lk then { obs.value as val then { val.value as v -> lk.sentinelBefallen = truncate(v) "SetSLKBef"; } "MapSLKBefVal"; } "MapSLKBef";
   } "EntrySLKBef";
-  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.rezeptorstatus as rez then { obs.value as val then { val.coding as c where code = '10828004' -> rez.erStatus = 'P' "SetERPositiv"; val.coding as c where code = '260385009' -> rez.erStatus = 'N' "SetERNegativ"; val.coding as c where code = '261665006' -> rez.erStatus = 'U' "SetERUnbekannt"; } "MapER"; } "MapERObs";
+  // ER-Status — MII Onko LOINC 40556-3; value: LOINC LA6576-8/LA6577-6/LA4489-6
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '40556-3') then {
+    entry.resource as obs -> tgt.diagnose as diag, diag.rezeptorstatus as rez then { obs.value as val then { val.coding as c where code = 'LA6576-8' -> rez.erStatus = 'P' "SetERPositiv"; val.coding as c where code = 'LA6577-6' -> rez.erStatus = 'N' "SetERNegativ"; val.coding as c where code = 'LA4489-6' -> rez.erStatus = 'U' "SetERUnbekannt"; } "MapER"; } "MapERObs";
   } "EntryER";
+  // PR-Status — MII Onko LOINC 85339-0
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.rezeptorstatus as rez then { obs.value as val then { val.coding as c where code = '10828004' -> rez.prStatus = 'P' "SetPRPositiv"; val.coding as c where code = '260385009' -> rez.prStatus = 'N' "SetPRNegativ"; val.coding as c where code = '261665006' -> rez.prStatus = 'U' "SetPRUnbekannt"; } "MapPR"; } "MapPRObs";
+    entry.resource as obs -> tgt.diagnose as diag, diag.rezeptorstatus as rez then { obs.value as val then { val.coding as c where code = 'LA6576-8' -> rez.prStatus = 'P' "SetPRPositiv"; val.coding as c where code = 'LA6577-6' -> rez.prStatus = 'N' "SetPRNegativ"; val.coding as c where code = 'LA4489-6' -> rez.prStatus = 'U' "SetPRUnbekannt"; } "MapPR"; } "MapPRObs";
   } "EntryPR";
-  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.rezeptorstatus as rez then { obs.value as val then { val.coding as c where code = '10828004' -> rez.her2Status = 'P' "SetHER2Positiv"; val.coding as c where code = '260385009' -> rez.her2Status = 'N' "SetHER2Negativ"; val.coding as c where code = '261665006' -> rez.her2Status = 'U' "SetHER2Unbekannt"; } "MapHER2"; } "MapHER2Obs";
+  // HER2-Status — MII Onko LOINC 48676-1
+  // Hinweis: OncoBox-Datenmodell kennt nur P/N/U. HER2-low und HER2-ultralow
+  // (Leitlinien-Slice) werden auf N gemappt; die HER2-low-Information geht
+  // im OncoBox-Output verloren (Limitation der DKG-Spec).
+  bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '48676-1') then {
+    entry.resource as obs -> tgt.diagnose as diag, diag.rezeptorstatus as rez then { obs.value as val then { val.coding as c where code = 'P' -> rez.her2Status = 'P' "SetHER2Positiv"; val.coding as c where code = 'N' -> rez.her2Status = 'N' "SetHER2Negativ"; val.coding as c where code = 'low' -> rez.her2Status = 'N' "SetHER2LowToN"; val.coding as c where code = 'ultralow' -> rez.her2Status = 'N' "SetHER2UltraLowToN"; val.coding as c where code = 'U' -> rez.her2Status = 'U' "SetHER2Unbekannt"; } "MapHER2"; } "MapHER2Obs";
   } "EntryHER2";
 
   // --- Operationen ---

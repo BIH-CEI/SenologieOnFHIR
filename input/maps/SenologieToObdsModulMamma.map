@@ -45,35 +45,38 @@ uses "https://www.senologie.org/fhir/StructureDefinition/obds-meldung" alias OBD
 
 group MapModulMamma(source src : Bundle, target tgt : BackboneElement) {
 
-  // Oestrogenrezeptor (LOINC 85337-4 = Estrogen receptor Ag [Presence])
-  src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '85337-4') then {
+  // Oestrogenrezeptor — MII Onko nutzt LOINC 40556-3 (Estrogen receptor Ag [Presence])
+  // value: LA6576-8 (Positive), LA6577-6 (Negative), LA4489-6 (Unknown) im oBDS-Slice
+  src.entry as erEntry where resource.is(Observation) and resource.code.coding.exists(code = '40556-3') then {
     erEntry.resource as erObs then {
       erObs.value as val then {
-        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusOestrogen = 'P' "SetERPositiv";
-        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusOestrogen = 'N' "SetERNegativ";
-        val.coding as c where code = '261665006' -> tgt.hormonrezeptorStatusOestrogen = 'U' "SetERUnbekannt";
+        val.coding as c where code = 'LA6576-8' -> tgt.hormonrezeptorStatusOestrogen = 'P' "SetERPositiv";
+        val.coding as c where code = 'LA6577-6' -> tgt.hormonrezeptorStatusOestrogen = 'N' "SetERNegativ";
+        val.coding as c where code = 'LA4489-6' -> tgt.hormonrezeptorStatusOestrogen = 'U' "SetERUnbekannt";
       } "MapERValue";
     } "MapERObs";
   } "EntryER";
 
-  // Progesteronrezeptor (LOINC 85339-0 = Progesterone receptor Ag [Presence])
+  // Progesteronrezeptor — MII Onko LOINC 85339-0 (Progesterone receptor [Interpretation])
+  // value: LA6576-8 (Positive), LA6577-6 (Negative), LA4489-6 (Unknown) im oBDS-Slice
   src.entry as prEntry where resource.is(Observation) and resource.code.coding.exists(code = '85339-0') then {
     prEntry.resource as prObs then {
       prObs.value as val then {
-        val.coding as c where code = '10828004' -> tgt.hormonrezeptorStatusProgesteron = 'P' "SetPRPositiv";
-        val.coding as c where code = '260385009' -> tgt.hormonrezeptorStatusProgesteron = 'N' "SetPRNegativ";
-        val.coding as c where code = '261665006' -> tgt.hormonrezeptorStatusProgesteron = 'U' "SetPRUnbekannt";
+        val.coding as c where code = 'LA6576-8' -> tgt.hormonrezeptorStatusProgesteron = 'P' "SetPRPositiv";
+        val.coding as c where code = 'LA6577-6' -> tgt.hormonrezeptorStatusProgesteron = 'N' "SetPRNegativ";
+        val.coding as c where code = 'LA4489-6' -> tgt.hormonrezeptorStatusProgesteron = 'U' "SetPRUnbekannt";
       } "MapPRValue";
     } "MapPRObs";
   } "EntryPR";
 
-  // HER2-Status (LOINC 85319-2 = HER2 [Presence] in Breast cancer specimen)
-  src.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '85319-2') then {
+  // HER2-Status — MII Onko LOINC 48676-1 (HER2 [Interpretation] in Tissue)
+  // oBDS-Slice nutzt MII CS mit Codes P / N / U
+  src.entry as herEntry where resource.is(Observation) and resource.code.coding.exists(code = '48676-1') then {
     herEntry.resource as herObs then {
       herObs.value as val then {
-        val.coding as c where code = '10828004' -> tgt.her2neuStatus = 'P' "SetHER2Positiv";
-        val.coding as c where code = '260385009' -> tgt.her2neuStatus = 'N' "SetHER2Negativ";
-        val.coding as c where code = '261665006' -> tgt.her2neuStatus = 'U' "SetHER2Unbekannt";
+        val.coding as c where code = 'P' -> tgt.her2neuStatus = 'P' "SetHER2Positiv";
+        val.coding as c where code = 'N' -> tgt.her2neuStatus = 'N' "SetHER2Negativ";
+        val.coding as c where code = 'U' -> tgt.her2neuStatus = 'U' "SetHER2Unbekannt";
       } "MapHER2Value";
     } "MapHER2Obs";
   } "EntryHER2";
