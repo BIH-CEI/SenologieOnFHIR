@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="ArtikelbeschreibungBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente des Bausteins ArtikelbeschreibungBasis.
+			Es handelt sich um beschreibende Daten zum Artikel. 
+			Elemente:
+			- ARB_LotNummer:Chargen-/LOT-Nummer
+			- ARB_LotNummerUnbekannt:Chargen-/LOT-Nummer ist unbekannt
+			- ARB_SerienNummer: Seriennummer
+			- ARB_SerienNummerUnbekannt: Seriennummer ist unbekannt
+			- ARB_DatumVerfall: Verfalldatum
+			- ARB_DatumVerfallUnbekannt: Verfalldatum ist unbekannt
+			- ARB_Artikelbezeichnung: Artikelbezeichnung
+			- ARB_Barcode: Barcode
+			- ARB_DatumImplantierungExplantat: Datum der Implantation des vorherigen Implantats
+			- ARB_DatumImplantierungExplantatUnbekannt: Datum der Implantation des vorherigen Implantats unbekannt
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ArtikelbeschreibungBasis">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="ARB_LotNummer" type="String20"/>
+				<xs:element name="ARB_LotNummerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="ARB_SerienNummer" type="String20"/>
+				<xs:element name="ARB_SerienNummerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="ARB_DatumVerfall" type="String20"/>
+				<xs:element name="ARB_DatumVerfallUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="ARB_Artikelbezeichnung" type="Freitext250" minOccurs="0"/>
+			<xs:element name="ARB_Barcode" type="Freitext250" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="ARB_DatumImplantierungExplantat" type="DatumText"/>
+				<xs:element name="ARB_DatumImplantierungExplantatUnbekannt" type="JaLeer"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

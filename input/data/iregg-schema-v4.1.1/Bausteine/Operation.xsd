@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="Operation">
+	<xs:include schemaLocation="./OperationBasis.xsd"/>
+	<xs:include schemaLocation="./OperationBrustimplantat.xsd"/>
+	<xs:include schemaLocation="./OperationEndoprothese.xsd"/>
+	<xs:include schemaLocation="./OperationAortenklappe.xsd"/>
+	<xs:include schemaLocation="./Artikelidentifikation.xsd"/>
+	<xs:include schemaLocation="./Zubehoer.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente einer Operation, welche aus den Schemas "OperationBasis", "OperationBrustimplantat", "OperationEndoprothese", "OperationAortenklappe", "Artikelidentifikation" und "Zubehoer" besteht. 
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="Operation">
+		<xs:complexContent>
+			<xs:extension base="OperationBasis">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="operationBrustimplantat" type="OperationBrustimplantat"/>
+						<xs:element name="operationEndoprothese" type="OperationEndoprothese"/>
+						<xs:element name="operationAortenklappe" type="OperationAortenklappe"/>
+					</xs:choice>
+					<xs:element name="artikelidentifikation" type="Artikelidentifikation" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="zubehoer" type="Zubehoer" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

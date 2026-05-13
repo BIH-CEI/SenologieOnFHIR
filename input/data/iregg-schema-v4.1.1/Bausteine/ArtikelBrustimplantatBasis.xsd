@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="ArtikelBrustimplantatBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente eines ArtikelBrustimplantatBasis. 
+			Es handelt sich um Brustimplantat-spezifische Angaben zum jeweiligen Artikel.
+			Elemente:
+			- ABI_HerstellerSchluessel: Hersteller
+			- ABI_HerstellerUnbekannt: Hersteller ist unbekannt
+			- ABI_HerstellerSonstiger: Sonstiger Hersteller (Freitextangabe)
+			- ABI_ArtikelTypSchluessel: Artikeltyp
+			- ABI_FormSchluessel: Form
+			- ABI_FormUnbekannt: Form ist unbekannt  
+			- ABI_OberflaecheSchluessel: Oberfläche
+			- ABI_OberflaecheUnbekannt: Oberfläche ist unbekannt
+			- ABI_FuellungSchluessel: Füllung
+			- ABI_FuellungUnbekannt: Füllung ist unbekannt
+			- ABI_Volumen: Volumen
+			- ABI_VolumenUnbekannt: Volumen ist unbekannt
+			- ABI_IntraoperativesVolumen: Intraoperatives Volumen
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ArtikelBrustimplantatBasis">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ABI_HerstellerSchluessel" type="String7"/>
+				<xs:element name="ABI_HerstellerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="ABI_HerstellerSonstiger" type="Freitext250" minOccurs="0"/>
+			<xs:element name="ABI_ArtikelTypSchluessel" type="enum_0190"/>
+			<xs:choice>
+				<xs:element name="ABI_FormSchluessel" type="enum_0126"/>
+				<xs:element name="ABI_FormUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="ABI_OberflaecheSchluessel" type="enum_0128"/>
+				<xs:element name="ABI_OberflaecheUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="ABI_FuellungSchluessel" type="enum_0124"/>
+				<xs:element name="ABI_FuellungUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="ABI_Volumen" type="Zahl5"/>
+				<xs:element name="ABI_VolumenUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="ABI_IntraoperativesVolumen" type="Zahl5mitNull" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

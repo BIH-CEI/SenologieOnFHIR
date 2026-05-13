@@ -1,0 +1,2075 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IRD_Regeln>
+	<IRD_Regel>
+		<ID>B001</ID>
+		<Meldung>Bei diesem Implantattyp muss eine Lokalisation für die Operation angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND OPE_SeitenLokalisationSchluessel == LEER)</Regel>
+		<Feldreferenz>OPE_SeitenLokalisationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B002</ID>
+		<Meldung>Bei diesem Implantattyp muss eine Lokalisation für die Operation angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND OPE_SeitenLokalisationSchluessel == LEER)</Regel>
+		<Feldreferenz>OPE_SeitenLokalisationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B003</ID>
+		<Meldung>Bei diesem Gelenk muss ein Operationszugang angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND operationEndoprothese(OEP_GelenkSchluessel == &apos;0212001&apos; AND OEP_ZugangHuefteSchluessel == LEER))</Regel>
+		<Feldreferenz>OEP_ZugangHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B008</ID>
+		<Meldung>Bitte geben Sie eine Erläuterung für die Vorbehandlung ein.</Meldung>
+		<Level>warning</Level>
+		<Regel>vorbehandlungEndoprothese((VEP_VorOpKnieSchluessel == &apos;0211042&apos; OR VEP_VorOpHuefteSchluessel == &apos;0210042&apos;) AND VEP_VorOpErlaeuterung == LEER)</Regel>
+		<Feldreferenz>VEP_VorOpErlaeuterung</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B013</ID>
+		<Meldung>Sie haben angegeben, dass es sich um ein spezialangefertigtes Implantat oder ein Implantat mit Sonderzulassung handelt. Bitte geben Sie ein Artikelkennzeichen oder eine Seriennummer ein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_SonderstatusJNSchluessel == &apos;0060001&apos; AND (ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND ARI_Artikelkennzeichen == LEER AND artikelbeschreibung(ARB_SerienNummer == LEER))</Regel>
+		<Feldreferenz>ARI_Artikelkennzeichen</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B014</ID>
+		<Meldung>Bitte geben Sie ein Artikelkennzeichen ein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_SonderstatusJNSchluessel == &apos;0060002&apos; AND (ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND ARI_Artikelkennzeichen == LEER)</Regel>
+		<Feldreferenz>ARI_Artikelkennzeichen</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B015</ID>
+		<Meldung>Bitte geben Sie eine Serien- oder Chargen-/LOT-Nummer oder ein Verfalldatum an.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_SonderstatusJNSchluessel == &apos;0060002&apos; AND (ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND artikelbeschreibung(ARB_LotNummer == LEER AND ARB_SerienNummer == LEER AND ARB_DatumVerfall == LEER))</Regel>
+		<Feldreferenz>ARB_LotNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B019</ID>
+		<Meldung>Bitte geben Sie die Form des Implantats an.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_FormSchluessel == LEER))))</Regel>
+		<Feldreferenz>ABI_FormSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B020</ID>
+		<Meldung>Bitte geben Sie die Oberfläche des Implantats an.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_OberflaecheSchluessel == LEER))))</Regel>
+		<Feldreferenz>ABI_OberflaecheSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B021</ID>
+		<Meldung>Bitte geben Sie die Füllung des Implantats an.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_FuellungSchluessel == LEER))))</Regel>
+		<Feldreferenz>ABI_FuellungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B022</ID>
+		<Meldung>Bitte geben Sie das Volumen des Implantats an.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_Volumen == LEER))))</Regel>
+		<Feldreferenz>ABI_Volumen</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B024</ID>
+		<Meldung>Bitte geben Sie entweder das Implantationsdatum für das Explantat an oder markieren Sie es als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067002&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071002&apos;) AND artikelbeschreibung(ARB_DatumImplantierungExplantat == LEER AND ARB_DatumImplantierungExplantatUnbekannt == LEER))</Regel>
+		<Feldreferenz>ARB_DatumImplantierungExplantat</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B026</ID>
+		<Meldung>Sie haben als Wechselgrund &apos;andere Gründe&apos; ausgewählt, aber keine Erläuterung angegeben.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel == &apos;0204042&apos; AND OEP_GrundWechselErlaeuterung == LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B038</ID>
+		<Meldung>Bitte geben Sie an, ob seit der Implantation eine Autoimmunerkrankung neu aufgetreten ist oder sich verschlechtert hat.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeBrustimplantat(PAB_AutoimmunerkrankungSchluessel == &apos;0122001&apos; AND PAB_VerlaufAutoimmunerkrankungSchluessel == LEER)</Regel>
+		<Feldreferenz>PAB_VerlaufAutoimmunerkrankungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B056</ID>
+		<Meldung>Bei diesem Implantattyp muss das Gewicht bei Aufnahme angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080002&apos;) AND patientenaufnahme(PAT_Gewicht == LEER))</Regel>
+		<Feldreferenz>PAT_Gewicht</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B057</ID>
+		<Meldung>Bei diesem Implantattyp muss die Größe bei Aufnahme angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080002&apos;) AND patientenaufnahme(PAT_Groesse == LEER))</Regel>
+		<Feldreferenz>PAT_Groesse</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B063</ID>
+		<Meldung>Bei dieser Art des Eingriffs muss ein Operationszugang angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND operationBrustimplantat(OBI_ArtEingriffSchluessel != &apos;0100004&apos; AND OBI_ZugangSchluessel == LEER))</Regel>
+		<Feldreferenz>OBI_ZugangSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B068</ID>
+		<Meldung>Bitte geben Sie an, ob es sich um ein Implantat mit Sonderzulassung oder ein spezialangefertigtes Implantat handelt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND ARI_SonderstatusJNSchluessel == LEER)</Regel>
+		<Feldreferenz>ARI_SonderstatusJNSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B078</ID>
+		<Meldung>Bitte wählen Sie den Entlassungsgrund aus.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080001&apos;) AND entlassung(ENT_GrundSchluessel == LEER))</Regel>
+		<Feldreferenz>ENT_GrundSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B086</ID>
+		<Meldung>Bei diesem Implantattyp muss die Größe bei Aufnahme angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080001&apos;) AND patientenaufnahme(PAT_Groesse == LEER))</Regel>
+		<Feldreferenz>PAT_Groesse</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B087</ID>
+		<Meldung>Bei diesem Implantattyp muss das Gewicht bei Aufnahme angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080001&apos;) AND patientenaufnahme(PAT_Gewicht == LEER))</Regel>
+		<Feldreferenz>PAT_Gewicht</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B088</ID>
+		<Meldung>Der Meldedatensatz enthält ICD-Kodes, die nicht an das IRD gemeldet werden dürfen.</Meldung>
+		<Level>error</Level>
+		<Regel>diagnoseBrustimplantat(fn:getSubstrTillChar(DBI_IcdSchluessel, &apos;:&apos;) NOTIN (Liste: ICD_Positivliste_Brustimplantat))</Regel>
+		<Feldreferenz>DBI_IcdSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B089</ID>
+		<Meldung>Bei einem Ersteingriff/einer zweizeitigen Implantation darf kein Befund gemeldet werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100005&apos;, &apos;0100006&apos;) AND befundBrustimplantat != NULL)</Regel>
+		<Feldreferenz>OBI_ArtEingriffSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B090</ID>
+		<Meldung>Bitte geben Sie eine Chargen-/LOT-Nummer oder eine Seriennummer an.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoer(ZUB_LotNummer == LEER AND ZUB_SerienNummer == LEER AND ZUB_LotNummerUnbekannt == LEER AND ZUB_SerienNummerUnbekannt == LEER)</Regel>
+		<Feldreferenz>ZUB_SerienNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B091</ID>
+		<Meldung>Bitte geben Sie den Grund für den Ersteingriff/die zweizeitige Implantation an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100005&apos;,  &apos;0100006&apos;) AND OBI_GrundPrimaerEingriffSchluessel == LEER)</Regel>
+		<Feldreferenz>OBI_GrundPrimaerEingriffSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B093</ID>
+		<Meldung>Bitte geben Sie den Grund für Wechsel oder Explantation an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100003&apos;, &apos;0100004&apos;) AND OBI_GrundRevisionExplantationSchluessel == LEER)</Regel>
+		<Feldreferenz>OBI_GrundRevisionExplantationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B095</ID>
+		<Meldung>Sie haben als Grund dieses Wechsels/dieser Explantation &apos;Komplikation&apos; ausgewählt. Bitte geben Sie mindestens einen Befund an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100003&apos;, &apos;0100004&apos;) AND OBI_GrundRevisionExplantationSchluessel == &apos;0106003&apos; AND befundBrustimplantat == NULL)</Regel>
+		<Feldreferenz>OBI_GrundRevisionExplantationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B096</ID>
+		<Meldung>Bitte geben Sie die Operationsdetails für den Ersteingriff/die zweizeitige Implantation an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100005&apos;, &apos;0100006&apos;) AND operationsdetailBrustimplantat != NULL AND operationsdetailBrustimplantat(ODB_OperationsdetailPrimaerEingriffSchluessel == LEER))</Regel>
+		<Feldreferenz>ODB_OperationsdetailPrimaerEingriffSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B097</ID>
+		<Meldung>Bitte geben Sie die Operationsdetails für den Wechsel an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel == &apos;0100003&apos; AND operationsdetailBrustimplantat != NULL AND operationsdetailBrustimplantat(ODB_OperationsdetailRevisionSchluessel == LEER))</Regel>
+		<Feldreferenz>ODB_OperationsdetailRevisionSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B098</ID>
+		<Meldung>Bitte geben Sie einen Befund für den Austausch an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel == &apos;0100002&apos; AND befundBrustimplantat != NULL AND befundBrustimplantat(BEB_BefundAustauschSchluessel == LEER))</Regel>
+		<Feldreferenz>BEB_BefundAustauschSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B100</ID>
+		<Meldung>Bitte geben Sie die Befunde für Wechsel oder Explantation an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100003&apos;, &apos;0100004&apos;) AND befundBrustimplantat != NULL AND befundBrustimplantat(BEB_BefundSchluessel == LEER))</Regel>
+		<Feldreferenz>BEB_BefundSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B102</ID>
+		<Meldung>Der Meldedatensatz enthält OPS-Kodes, die nicht an das IRD gemeldet werden dürfen.</Meldung>
+		<Level>error</Level>
+		<Regel>prozedurenSchluesselBrustimplantat(fn:getSubstrTillChar(PBI_ProzedurenSchluessel, &apos;:&apos;) NOTIN (Liste: OPS_Positivliste_Brustimplantat))</Regel>
+		<Feldreferenz>PBI_ProzedurenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B103</ID>
+		<Meldung>Für Explantationen dürfen keine Operationsdetails angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel == &apos;0100004&apos; AND operationsdetailBrustimplantat != NULL)</Regel>
+		<Feldreferenz>OBI_ArtEingriffSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B107</ID>
+		<Meldung>Bei Expandern muss das intraoperative Volumen angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_ArtikelTypSchluessel == &apos;0190003&apos; AND ABI_IntraoperativesVolumen == LEER)))</Regel>
+		<Feldreferenz>ABI_IntraoperativesVolumen</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B108</ID>
+		<Meldung>Sie haben keine intraoperativen oder OP-begleitenden Maßnahmen angegeben.</Meldung>
+		<Level>warning</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND operationBrustimplantat(OBI_ArtEingriffSchluessel != &apos;0100004&apos; AND massnahmeBrustimplantat == NULL))</Regel>
+		<Feldreferenz>OBI_ArtEingriffSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B109</ID>
+		<Meldung>Bitte geben Sie die Lage des Implantats an.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND operationBrustimplantat(OBI_ArtEingriffSchluessel != &apos;0100004&apos; AND OBI_LageSchluessel == LEER))</Regel>
+		<Feldreferenz>OBI_LageSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B110</ID>
+		<Meldung>Bitte geben Sie an, ob bei der Explantation eine ADM oder ein Netz entfernt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel IN (&apos;0100003&apos;, &apos;0100004&apos;) AND OBI_EntfernungAdmNetzSchluessel == LEER)</Regel>
+		<Feldreferenz>OBI_EntfernungAdmNetzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B112</ID>
+		<Meldung>Bitte geben Sie an, ob das Verfahren nach der Explantation gewechselt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel == &apos;0100004&apos; AND OBI_VerfahrenswechselSchluessel == LEER)</Regel>
+		<Feldreferenz>OBI_VerfahrenswechselSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B113</ID>
+		<Meldung>Sie haben als Hersteller &apos;sonstiger&apos; ausgewählt. Bitte geben Sie den Herstellernamen im Freitextfeld ein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelBrustimplantat(ABI_HerstellerSchluessel == &apos;0130042&apos; AND ABI_HerstellerSonstiger == LEER)</Regel>
+		<Feldreferenz>ABI_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B114</ID>
+		<Meldung>Sie haben als Hersteller &apos;sonstiger&apos; ausgewählt. Bitte geben Sie den Herstellernamen im Freitextfeld ein.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoerBrustimplantat(ZBI_HerstellerSchluessel == &apos;0131042&apos; AND ZBI_HerstellerSonstiger == LEER)</Regel>
+		<Feldreferenz>ZBI_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B119</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Hersteller &apos;Sonstiger&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelBrustimplantat(ABI_HerstellerSchluessel != &apos;0130042&apos; AND ABI_HerstellerSonstiger != LEER)</Regel>
+		<Feldreferenz>ABI_HerstellerSonstiger</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B120</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Hersteller &apos;Sonstiger&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoerBrustimplantat(ZBI_HerstellerSchluessel != &apos;0131042&apos; AND ZBI_HerstellerSonstiger != LEER)</Regel>
+		<Feldreferenz>ZBI_HerstellerSonstiger</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B129</ID>
+		<Meldung>Sie haben keine OPS-Kodes angegeben. Wenn Sie die Meldebestätigung zur Abrechnung mit einer gesetzlichen Krankenkasse verwenden wollen, ergänzen Sie bitte die OPS-Kodes, die Sie in der Abrechnung verwenden und die der implantatbezogenen Maßnahme zugeordnet werden können.</Meldung>
+		<Level>warning</Level>
+		<Regel>fall(ausloeser == NULL)</Regel>
+		<Feldreferenz>FAL_Aufnahmedatum</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B132</ID>
+		<Meldung>Bitte geben Sie den Grund für den Austausch an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel == &apos;0100002&apos; AND OBI_GrundAustauschSchluessel == LEER)</Regel>
+		<Feldreferenz>OBI_GrundAustauschSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B133</ID>
+		<Meldung>Bitte geben Sie den Typ des Artikelkennzeichens an.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_Artikelkennzeichen != LEER AND ARI_KennzeichenTypSchluessel == LEER)</Regel>
+		<Feldreferenz>ARI_KennzeichenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B134</ID>
+		<Meldung>Im Meldedatensatz fehlen die Brustimplantat-spezifischen Angaben zur Operation.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND operationBrustimplantat == NULL)</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B135</ID>
+		<Meldung>Im Meldedatensatz fehlen die Brustimplantat-spezifischen Angaben zum Artikel.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND artikelidentifikation(artikelbeschreibung(artikelBrustimplantat == NULL)))</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B136</ID>
+		<Meldung>Im Meldedatensatz fehlen die Brustimplantat-spezifischen Angaben zur Patientenaufnahme.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080002&apos;) AND patientenaufnahme(patientenaufnahmeBrustimplantat == NULL))</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B137</ID>
+		<Meldung>Bitte geben Sie die Operationsdetails für den Austausch an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationBrustimplantat(OBI_ArtEingriffSchluessel == &apos;0100002&apos; AND operationsdetailBrustimplantat != NULL AND operationsdetailBrustimplantat(ODB_OperationsdetailAustauschSchluessel == LEER))</Regel>
+		<Feldreferenz>ODB_OperationsdetailAustauschSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B140</ID>
+		<Meldung>Sie haben als Wechselgrund &apos;andere Gründe&apos; ausgewählt, aber keine Erläuterung angegeben.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselHuefteSchluessel == &apos;0202042&apos; AND OEP_GrundWechselErlaeuterung == LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B141</ID>
+		<Meldung>Sie haben als Wechselgrund &apos;andere Gründe&apos; ausgewählt, aber keine Erläuterung angegeben.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselTfeSchluessel == &apos;0206042&apos; AND OEP_GrundWechselErlaeuterung == LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B142</ID>
+		<Meldung>Der Meldedatensatz enthält ICD-Kodes, die nicht an das IRD gemeldet werden dürfen.</Meldung>
+		<Level>error</Level>
+		<Regel>diagnoseEndoprothese(fn:getSubstrTillChar(DEP_IcdSchluessel, &apos;:&apos;) NOTIN (Liste: ICD_Positivliste_Endoprothese))</Regel>
+		<Feldreferenz>DEP_IcdSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B143</ID>
+		<Meldung>Im Meldedatensatz fehlen die Endoprothesen-spezifischen Angaben zur Operation.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND operationEndoprothese == NULL)</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B144</ID>
+		<Meldung>Im Meldedatensatz fehlen die Endoprothesen-spezifischen Angaben zum Artikel.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND artikelidentifikation(artikelbeschreibung(artikelEndoprothese == NULL)))</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B146</ID>
+		<Meldung>Im Meldedatensatz fehlen die Brustimplantat-spezifischen Angaben zum Zubehör.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND zubehoer != NULL AND zubehoer(zubehoerBrustimplantat == NULL))</Regel>
+		<Feldreferenz>ZUB_LaufendeNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B147</ID>
+		<Meldung>Bitte geben Sie an, ob eine Fraktur vorlag.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200001&apos; AND OEP_FrakturJNSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_FrakturJNSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B148</ID>
+		<Meldung>Bitte machen Sie eine Angabe zur Voroperation an diesem Gelenk.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200001&apos; AND OEP_GelenkSchluessel == &apos;0212002&apos; AND vorbehandlungEndoprothese(VEP_VorOpKnieSchluessel == LEER))</Regel>
+		<Feldreferenz>VEP_VorOpKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B149</ID>
+		<Meldung>Bitte geben Sie den Wechselgrund an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200002&apos; AND OEP_GelenkSchluessel == &apos;0212001&apos; AND OEP_ZweizeitwechselSchluessel != &apos;0222003&apos; AND OEP_GrundWechselHuefteSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B150</ID>
+		<Meldung>Bitte geben Sie den Wechselgrund an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200002&apos; AND OEP_GelenkSchluessel == &apos;0212002&apos; AND OEP_ZweizeitwechselSchluessel != &apos;0222003&apos; AND OEP_GrundWechselKnieSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B151</ID>
+		<Meldung>Bitte geben Sie an, ob es sich um einen Zweizeitwechsel handelt</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200002&apos; AND OEP_ZweizeitwechselSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_ZweizeitwechselSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B152</ID>
+		<Meldung>Bitte geben Sie die betroffene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel IN (&apos;0204001&apos;, &apos;0204010&apos;) AND OEP_KomponenteKnieSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_KomponenteKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B153</ID>
+		<Meldung>Bitte geben Sie die betroffene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselHuefteSchluessel IN (&apos;0202001&apos;, &apos;0202010&apos;) AND OEP_KomponenteHuefteSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_KomponenteHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B154</ID>
+		<Meldung>Bitte geben Sie die betroffene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselTfeSchluessel IN (&apos;0206001&apos;, &apos;0206010&apos;) AND OEP_KomponenteTfeSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_KomponenteTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B155</ID>
+		<Meldung>Bitte geben Sie die gebrochene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel == &apos;0204008&apos; AND OEP_ImplantatbruchKnieSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_ImplantatbruchKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B156</ID>
+		<Meldung>Bitte geben Sie die gebrochene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselHuefteSchluessel == &apos;0202008&apos; AND OEP_ImplantatbruchHuefteSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_ImplantatbruchHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B157</ID>
+		<Meldung>Bitte geben Sie die gebrochene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselTfeSchluessel == &apos;0206008&apos; AND OEP_ImplantatbruchTfeSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_ImplantatbruchTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B158</ID>
+		<Meldung>Bitte geben Sie die migrierte/dislozierte Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel == &apos;0204014&apos; AND OEP_MigrationKnieSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_MigrationKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B159</ID>
+		<Meldung>Bitte geben Sie die verschlissene Komponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel == &apos;0204007&apos; AND OEP_VerschleissKnieSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_VerschleissKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B160</ID>
+		<Meldung>Sie haben als Hersteller &apos;sonstiger&apos; ausgewählt. Bitte geben Sie den Herstellernamen im Freitextfeld ein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_HerstellerSchluessel == &apos;0230042&apos; AND AEP_HerstellerSonstiger == LEER)</Regel>
+		<Feldreferenz>AEP_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B162</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Hersteller &apos;sonstiger&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_HerstellerSchluessel != &apos;0230042&apos; AND AEP_HerstellerSonstiger != LEER)</Regel>
+		<Feldreferenz>AEP_HerstellerSonstiger</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B164</ID>
+		<Meldung>Bitte geben Sie den Wechselgrund an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200002&apos; AND OEP_GelenkSchluessel == &apos;0212003&apos; AND OEP_ZweizeitwechselSchluessel != &apos;0222003&apos; AND OEP_GrundWechselTfeSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B165</ID>
+		<Meldung>Bitte machen Sie eine Angabe zur Voroperation an diesem Gelenk.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ArtEingriffSchluessel == &apos;0200001&apos; AND OEP_GelenkSchluessel == &apos;0212001&apos; AND vorbehandlungEndoprothese(VEP_VorOpHuefteSchluessel == LEER))</Regel>
+		<Feldreferenz>VEP_VorOpHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B166</ID>
+		<Meldung>Bei einer Implantation (Einbau) im Rahmen eines zweizeitigen Wechsels kann kein Wechselgrund angegeben werden. Der Wechselgrund muss bei einem zweizeitigen Wechsel bei der Explantation (Ausbau) angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ZweizeitwechselSchluessel == &apos;0222003&apos; AND OEP_GelenkSchluessel == &apos;0212001&apos; AND OEP_GrundWechselHuefteSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B167</ID>
+		<Meldung>Bei einer Implantation (Einbau) im Rahmen eines zweizeitigen Wechsels kann kein Wechselgrund angegeben werden. Der Wechselgrund muss bei einem zweizeitigen Wechsel bei der Explantation (Ausbau) angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ZweizeitwechselSchluessel == &apos;0222003&apos; AND OEP_GelenkSchluessel == &apos;0212002&apos; AND OEP_GrundWechselKnieSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B168</ID>
+		<Meldung>Bei einer Implantation (Einbau) im Rahmen eines zweizeitigen Wechsels kann kein Wechselgrund angegeben werden. Der Wechselgrund muss bei einem zweizeitigen Wechsel bei der Explantation (Ausbau) angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_ZweizeitwechselSchluessel == &apos;0222003&apos; AND OEP_GelenkSchluessel == &apos;0212003&apos; AND OEP_GrundWechselTfeSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B172</ID>
+		<Meldung>Bei einer Hüft-Operation darf keine Knie-Komponente angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(operationEndoprothese(OEP_GelenkSchluessel == &apos;0212001&apos;) AND artikelidentifikation(artikelbeschreibung(artikelEndoprothese(AEP_ArtikelTypSchluessel == &apos;0290002&apos;))))</Regel>
+		<Feldreferenz>AEP_ArtikelTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B173</ID>
+		<Meldung>Bei einer Knie-Operation darf keine Hüft-Komponente angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(operationEndoprothese(OEP_GelenkSchluessel == &apos;0212002&apos;) AND artikelidentifikation(artikelbeschreibung(artikelEndoprothese(AEP_ArtikelTypSchluessel == &apos;0290001&apos;))))</Regel>
+		<Feldreferenz>AEP_ArtikelTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B174</ID>
+		<Meldung>Sie haben einen OPS-Kode mit Gewebeverstärkung angeben, aber kein ADM/Netz erfasst.</Meldung>
+		<Level>warning</Level>
+		<Regel>operation(operationBrustimplantat(prozedurenSchluesselBrustimplantat(fn:getSubstrTillChar(PBI_ProzedurenSchluessel, &apos;:&apos;) IN (&apos;5-883.01&apos;, &apos;5-883.11&apos;, &apos;5-883.21&apos;, &apos;5-886.31&apos;, &apos;5-886.41&apos;, &apos;5-886.51&apos;, &apos;5-886.61&apos;, &apos;5-886.71&apos;, &apos;5-886.81&apos;, &apos;5-889.21&apos;, &apos;5-889.31&apos;, &apos;5-889.41&apos;, &apos;5-889.51&apos;))) AND zubehoer == NULL)</Regel>
+		<Feldreferenz>PBI_ProzedurenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B175</ID>
+		<Meldung>Bei diesem Gelenk darf kein Operationszugang angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND operationEndoprothese(OEP_GelenkSchluessel == &apos;0212002&apos; AND OEP_ZugangHuefteSchluessel != LEER))</Regel>
+		<Feldreferenz>OEP_ZugangHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B176</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Vorbehandlung &apos;andere&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>vorbehandlungEndoprothese(VEP_VorOpKnieSchluessel != &apos;0211042&apos; AND VEP_VorOpHuefteSchluessel != &apos;0210042&apos; AND VEP_VorOpErlaeuterung != LEER)</Regel>
+		<Feldreferenz>VEP_VorOpErlaeuterung</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B177</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Wechselgrund &apos;andere Gründe&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GelenkSchluessel == &apos;0212002&apos; AND OEP_GrundWechselKnieSchluessel != &apos;0204042&apos; AND OEP_GrundWechselErlaeuterung != LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselErlaeuterung</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B178</ID>
+		<Meldung>Der Verlauf der Autoimmunerkrankung kann nur befüllt sein, wenn bei Autoimmunerkrankung &apos;ja, ärztlich nachgewiesen&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeBrustimplantat(PAB_AutoimmunerkrankungSchluessel != &apos;0122001&apos; AND PAB_VerlaufAutoimmunerkrankungSchluessel != LEER)</Regel>
+		<Feldreferenz>PAB_VerlaufAutoimmunerkrankungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B179</ID>
+		<Meldung>Das intraoperative Volumen kann nur befüllt sein, wenn als Artikeltyp &apos;Expander&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelBrustimplantat(ABI_ArtikelTypSchluessel != &apos;0190003&apos; AND ABI_IntraoperativesVolumen != LEER)</Regel>
+		<Feldreferenz>ABI_IntraoperativesVolumen</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B180</ID>
+		<Meldung>Der Typ des Artikelkennzeichens kann nur befüllt sein, wenn ein Artikelkennzeichen angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_Artikelkennzeichen == LEER AND ARI_KennzeichenTypSchluessel != LEER)</Regel>
+		<Feldreferenz>ARI_KennzeichenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B181</ID>
+		<Meldung>Eine Voroperation Knie kann nur angegeben werden, wenn als Art des Eingriff &apos;Erst-OP&apos; und als Gelenk &apos;Knie&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese((OEP_ArtEingriffSchluessel != &apos;0200001&apos; OR OEP_GelenkSchluessel != &apos;0212002&apos;) AND vorbehandlungEndoprothese(VEP_VorOpKnieSchluessel != LEER))</Regel>
+		<Feldreferenz>VEP_VorOpKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B182</ID>
+		<Meldung>Eine Voroperation Hüfte kann nur angegeben werden, wenn als Art des Eingriff &apos;Erst-OP&apos; und als Gelenk &apos;Hüfte&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese((OEP_ArtEingriffSchluessel != &apos;0200001&apos; OR OEP_GelenkSchluessel != &apos;0212001&apos;) AND vorbehandlungEndoprothese(VEP_VorOpHuefteSchluessel != LEER))</Regel>
+		<Feldreferenz>VEP_VorOpHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B183</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Wechselgrund &apos;andere Gründe&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GelenkSchluessel == &apos;0212001&apos; AND OEP_GrundWechselHuefteSchluessel != &apos;0202042&apos; AND OEP_GrundWechselErlaeuterung != LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselErlaeuterung</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B184</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Wechselgrund &apos;andere Gründe&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GelenkSchluessel == &apos;0212003&apos; AND OEP_GrundWechselTfeSchluessel != &apos;0206042&apos; AND OEP_GrundWechselErlaeuterung != LEER)</Regel>
+		<Feldreferenz>OEP_GrundWechselErlaeuterung</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B185</ID>
+		<Meldung>Eine betroffene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Lockerung&apos; oder &apos;Osteolyse&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel NOTIN (&apos;0204001&apos;, &apos;0204010&apos;) AND OEP_KomponenteKnieSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_KomponenteKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B186</ID>
+		<Meldung>Eine betroffene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Lockerung&apos; oder &apos;Osteolyse&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselHuefteSchluessel NOTIN (&apos;0202001&apos;, &apos;0202010&apos;) AND OEP_KomponenteHuefteSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_KomponenteHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B187</ID>
+		<Meldung>Eine betroffene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Lockerung&apos; oder &apos;Osteolyse&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselTfeSchluessel NOTIN (&apos;0206001&apos;, &apos;0206010&apos;) AND OEP_KomponenteTfeSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_KomponenteTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B188</ID>
+		<Meldung>Eine gebrochene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Implantatbruch&apos; wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel != &apos;0204008&apos; AND OEP_ImplantatbruchKnieSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_ImplantatbruchKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B189</ID>
+		<Meldung>Eine gebrochene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Implantatbruch&apos; wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselHuefteSchluessel != &apos;0202008&apos; AND OEP_ImplantatbruchHuefteSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_ImplantatbruchHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B190</ID>
+		<Meldung>Eine gebrochene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Implantatbruch&apos; wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselTfeSchluessel != &apos;0206008&apos; AND OEP_ImplantatbruchTfeSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_ImplantatbruchTfeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B191</ID>
+		<Meldung>Eine migrierte/dislozierte Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Dislokation/Migration von Komponenten&apos; wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel != &apos;0204014&apos; AND OEP_MigrationKnieSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_MigrationKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B192</ID>
+		<Meldung>Eine verschlissene Komponente kann nur angegeben werden, wenn als Wechselgrund &apos;Verschleiß&apos; wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_GrundWechselKnieSchluessel != &apos;0204007&apos; AND OEP_VerschleissKnieSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_VerschleissKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B193</ID>
+		<Meldung>Bitte geben Sie eine Serien- oder Chargen-/LOT-Nummer oder ein Verfalldatum an oder markieren Sie sie als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067002&apos; OR ARI_ArtikelArtFunktionSchluessel IN (&apos;0071002&apos;, &apos;0071003&apos;)) AND artikelbeschreibung(ARB_LotNummer == LEER AND ARB_SerienNummer == LEER AND ARB_DatumVerfall == LEER AND ARB_LotNummerUnbekannt == LEER AND ARB_SerienNummerUnbekannt == LEER AND ARB_DatumVerfallUnbekannt == LEER))</Regel>
+		<Feldreferenz>ARB_LotNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B194</ID>
+		<Meldung>Der Meldedatensatz enthält OPS-Kodes, die nicht an das IRD gemeldet werden dürfen.</Meldung>
+		<Level>error</Level>
+		<Regel>prozedurenSchluesselEndoprothese(fn:getSubstrTillChar(PEP_ProzedurenSchluessel, &apos;:&apos;) NOTIN (Liste: OPS_Positivliste_Endoprothese))</Regel>
+		<Feldreferenz>PEP_ProzedurenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B195</ID>
+		<Meldung>Der Meldedatensatz enthält auslösende OPS-Kodes, die nicht Teil der Auslöserliste sind.</Meldung>
+		<Level>error</Level>
+		<Regel>ausloeser(fn:getSubstrTillChar(ALR_ProzedurenSchluessel, &apos;:&apos;) NOTIN (Liste: OPS_Ausloeserlisten))</Regel>
+		<Feldreferenz>ALR_ProzedurenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B196</ID>
+		<Meldung>Sie haben als Hersteller &apos;sonstiger&apos; ausgewählt. Bitte geben Sie den Herstellernamen im Freitextfeld ein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelAortenklappe(AAK_HerstellerSchluessel == &apos;0330042&apos; AND AAK_HerstellerSonstiger == LEER)</Regel>
+		<Feldreferenz>AAK_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B197</ID>
+		<Meldung>Das Freitextfeld kann nur befüllt sein, wenn als Hersteller &apos;sonstiger&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelAortenklappe(AAK_HerstellerSchluessel != &apos;0330042&apos; AND AAK_HerstellerSonstiger != LEER)</Regel>
+		<Feldreferenz>AAK_HerstellerSonstiger</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B198</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, welches Anästhesieverfahren angewendet wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_AnaesthesieSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_AnaesthesieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B199</ID>
+		<Meldung>Das Feld &apos;Anästhesieverfahren&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_AnaesthesieSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_AnaesthesieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B200</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss der Aortenklappenannulus angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_Aortenklappenannulus == LEER)</Regel>
+		<Feldreferenz>OAK_Aortenklappenannulus</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B201</ID>
+		<Meldung>Das Feld &apos;Aortenklappenannulus&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_Aortenklappenannulus != LEER)</Regel>
+		<Feldreferenz>OAK_Aortenklappenannulus</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B202</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss der Zugangsgefäß-Diameter angegeben oder als unbekannt markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ZugangsGefaessdiameter == LEER AND OAK_ZugangsGefaessUnbekannt == LEER)</Regel>
+		<Feldreferenz>OAK_ZugangsGefaessdiameter</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B203</ID>
+		<Meldung>Der Zugangsgefäß-Diameter kann nur bei einem kathetergestützen Eingriff angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND (OAK_ZugangsGefaessdiameter != LEER OR OAK_ZugangsGefaessUnbekannt == 1))</Regel>
+		<Feldreferenz>OAK_ZugangsGefaessdiameter</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B204</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob die Zugangsgefäße verkalkt sind.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ZugangVerkalkungSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ZugangVerkalkungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B205</ID>
+		<Meldung>Das Feld &apos;Verkalkung der Zugangsgefäße&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_ZugangVerkalkungSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_ZugangVerkalkungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B206</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss Device Delta Pmean nach Prozedur angegeben oder als unbekannt markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_DeltaPmeanNachOp == LEER AND OAK_DeltaPmeanNachOpUnbekannt == 0)</Regel>
+		<Feldreferenz>OAK_DeltaPmeanNachOp</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B207</ID>
+		<Meldung>Device Delta Pmean nach Prozedur kann nur bei einem kathetergestützen Eingriff angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND (OAK_DeltaPmeanNachOp != LEER OR OAK_DeltaPmeanNachOpUnbekannt == 1))</Regel>
+		<Feldreferenz>OAK_DeltaPmeanNachOp</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B208</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss die Distanz der Aortenklappe zur RCA angegeben oder als unbekannt markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_DistanzRca == LEER AND OAK_DistanzRcaUnbekannt == 0)</Regel>
+		<Feldreferenz>OAK_DistanzRca</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B209</ID>
+		<Meldung>Die Distanz der Aortenklappe zur RCA kann nur bei einem kathetergestützen Eingriff angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND (OAK_DistanzRca != LEER OR OAK_DistanzRcaUnbekannt == 1))</Regel>
+		<Feldreferenz>OAK_DistanzRca</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B210</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss die Distanz der Aortenklappe zur LCA angegeben oder als unbekannt markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_DistanzLca == LEER AND OAK_DistanzLcaUnbekannt == 0)</Regel>
+		<Feldreferenz>OAK_DistanzLca</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B211</ID>
+		<Meldung>Die Distanz der Aortenklappe zur LCA kann nur bei einem kathetergestützen Eingriff angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND (OAK_DistanzLca != LEER OR OAK_DistanzLcaUnbekannt == 1))</Regel>
+		<Feldreferenz>OAK_DistanzLca</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B212</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss die Durchleuchtungszeit angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_Durchleuchtungszeit == LEER)</Regel>
+		<Feldreferenz>OAK_Durchleuchtungszeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B213</ID>
+		<Meldung>Das Feld &apos;Durchleuchtungszeit&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_Durchleuchtungszeit != LEER)</Regel>
+		<Feldreferenz>OAK_Durchleuchtungszeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B214</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob eine Konversion stattgefunden hat.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_KonversionSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_KonversionSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B215</ID>
+		<Meldung>Das Feld &apos;Konversion&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_KonversionSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_KonversionSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B216</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, mit welcher Methode der Aortenklappenannulus vermessen wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_MessmethodeSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_MessmethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B217</ID>
+		<Meldung>Das Feld &apos;Annulus-Messmethode&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_MessmethodeSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_MessmethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B218</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob eine Ballondilatation unmittelbar nach der Implantation stattgefunden hat.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_PtcaNachSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_PtcaNachSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B219</ID>
+		<Meldung>Das Feld &apos;Ballondilatation unmittelbar nach der Implantation&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_PtcaNachSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_PtcaNachSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B220</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob eine Ballondilatation unmittelbar vor der Implantation stattgefunden hat.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_PtcaVorSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_PtcaVorSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B221</ID>
+		<Meldung>Das Feld &apos;Ballondilatation unmittelbar vor der Implantation&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_PtcaVorSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_PtcaVorSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B222</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob rapid pacing zur Prothesenimplantation eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_RapidPacingIntraSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_RapidPacingIntraSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B223</ID>
+		<Meldung>Das Feld &apos;rapid pacing zur Prothesenimplantation&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_RapidPacingIntraSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_RapidPacingIntraSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B224</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob eine residuale Aorteninsuffizienz besteht.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ResidualeInsuffizienzSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ResidualeInsuffizienzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B225</ID>
+		<Meldung>Das Feld &apos;residuale Aorteninsuffizienz&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_ResidualeInsuffizienzSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_ResidualeInsuffizienzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B226</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob die Prozedur ein technischer Erfolg nach VARC-3 war.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_SuccessSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_SuccessSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B227</ID>
+		<Meldung>Das Feld &apos;Technical success (nach VARC-3)&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_SuccessSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_SuccessSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B228</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob es sich einen geplanten Valve-in-Valve-Eingriff handelt.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ValveInValveSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ValveInValveSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B229</ID>
+		<Meldung>Das Feld &apos;Geplante Valve-in-Valve&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_ValveInValveSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_ValveInValveSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B230</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss der Zugangsweg (kathetergestützt) angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ZugangKatheterSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ZugangKatheterSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B231</ID>
+		<Meldung>Bei einem konventionellen Eingriff muss der Zugangsweg (konventionell) angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300001&apos; AND OAK_ZugangKonventionellSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ZugangKonventionellSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B232</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, wie der Zugangsweg verschlossen wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ZugangVerschlussSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ZugangVerschlussSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B233</ID>
+		<Meldung>Das Feld &apos;Verschluss des Zugangsweges&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_ZugangVerschlussSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_ZugangVerschlussSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B234</ID>
+		<Meldung>Bei einem kathetergestützen Eingriff muss angegeben werden, ob eine zusätzliche PCI durchgeführt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ZusaetzlichePciSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ZusaetzlichePciSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B235</ID>
+		<Meldung>Das Feld &apos;zusätzliche PCI&apos; kann nur bei einem kathetergestützen Eingriff befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel != &apos;0300002&apos; AND OAK_ZusaetzlichePciSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_ZusaetzlichePciSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B236</ID>
+		<Meldung>Bitte geben Sie an, wie viele Ballondilatationen vor der Implantation durchgeführt wurden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaVorSchluessel == &apos;0060001&apos; AND OAK_PtcaVorAnzahl == LEER)</Regel>
+		<Feldreferenz>OAK_PtcaVorAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B237</ID>
+		<Meldung>Die Anzahl der Ballondilatationen kann nur angegeben werden, wenn bei &apos;Ballondilatation unmittelbar nach Implantation&apos; ja angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaNachSchluessel == &apos;0060002&apos; AND OAK_PtcaNachAnzahl != LEER)</Regel>
+		<Feldreferenz>OAK_PtcaNachAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B238</ID>
+		<Meldung>Bitte geben Sie den maximalen Ballondurchmesser nach der Implantation an oder markieren Sie ihn als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaNachSchluessel == &apos;0060001&apos; AND OAK_PtcaNachDurchmesser == LEER AND OAK_PtcaNachDurchmesserUnbekannt == LEER)</Regel>
+		<Feldreferenz>OAK_PtcaNachDurchmesser</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B239</ID>
+		<Meldung>Der maximale Ballondurchmesser kann nur angegeben werden, wenn bei &apos;Ballondilatation unmittelbar nach Implantation&apos; ja angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaNachSchluessel == &apos;0060002&apos; AND (OAK_PtcaNachDurchmesser != LEER OR OAK_PtcaNachDurchmesserUnbekannt == 1))</Regel>
+		<Feldreferenz>OAK_PtcaNachDurchmesser</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B240</ID>
+		<Meldung>Bitte geben Sie an, ob unmittelbar nach der Implantation rapid pacing angewendet wurden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaNachSchluessel == &apos;0060001&apos; AND OAK_RapidPacingNachSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_RapidPacingNachSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B241</ID>
+		<Meldung>Rapid pacing kann nur angegeben werden, wenn bei &apos;Ballondilatation unmittelbar nach Implantation&apos; ja angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaNachSchluessel == &apos;0060002&apos; AND OAK_RapidPacingNachSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_RapidPacingNachSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B242</ID>
+		<Meldung>Bitte geben Sie an, wie viele Ballondilatationen nach der Implantation durchgeführt wurden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaNachSchluessel == &apos;0060001&apos; AND OAK_PtcaNachAnzahl == LEER)</Regel>
+		<Feldreferenz>OAK_PtcaNachAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B243</ID>
+		<Meldung>Das Feld &apos;Aortenaneurysma&apos; kann nur befüllt werden, wenn bei Gefäßerkrankung &apos;ja&apos; ausgewählt ist.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel != &apos;0061001&apos; AND PAA_AortenaneurysmaSchluessel != LEER)</Regel>
+		<Feldreferenz>PAA_AortenaneurysmaSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B244</ID>
+		<Meldung>Sie haben angegeben, dass eine Gefäßerkrankung vorliegt. Bitte geben Sie an, ob eine AVK in der Arteria Carotis vorliegt.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel == &apos;0061001&apos; AND PAA_ArteriaCarotisSchluessel == LEER)</Regel>
+		<Feldreferenz>PAA_ArteriaCarotisSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B245</ID>
+		<Meldung>Das Feld &apos;AVK in der Arteria Carotis&apos; kann nur befüllt werden, wenn bei Gefäßerkrankung &apos;ja&apos; ausgewählt ist.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel != &apos;0061001&apos; AND PAA_ArteriaCarotisSchluessel != LEER)</Regel>
+		<Feldreferenz>PAA_ArteriaCarotisSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B246</ID>
+		<Meldung>Sie haben angegeben, dass eine Gefäßerkrankung vorliegt. Bitte geben Sie an, ob eine periphere AVK vorliegt.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel == &apos;0061001&apos; AND PAA_PavkSchluessel == LEER)</Regel>
+		<Feldreferenz>PAA_PavkSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B247</ID>
+		<Meldung>Das Feld &apos;periphere AVK&apos; kann nur befüllt werden, wenn bei Gefäßerkrankung &apos;ja&apos; ausgewählt ist.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel != &apos;0061001&apos; AND PAA_PavkSchluessel != LEER)</Regel>
+		<Feldreferenz>PAA_PavkSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B248</ID>
+		<Meldung>Sie haben angegeben, dass eine Gefäßerkrankung vorliegt. Bitte geben Sie an, ob eine sonstige arterielle Gefäßerkrankung vorliegt.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel == &apos;0061001&apos; AND PAA_SonstigeAvkSchluessel == LEER)</Regel>
+		<Feldreferenz>PAA_SonstigeAvkSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B249</ID>
+		<Meldung>Das Feld &apos;sonstige arterielle Gefäßerkrankung(en)&apos; kann nur befüllt werden, wenn bei Gefäßerkrankung &apos;ja&apos; ausgewählt ist.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel != &apos;0061001&apos; AND PAA_SonstigeAvkSchluessel != LEER)</Regel>
+		<Feldreferenz>PAA_SonstigeAvkSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B250</ID>
+		<Meldung>Bitte geben Sie an, mit welcher Methode die AKÖF gemessen wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_Akoef != LEER AND PAA_AkoefMethodeSchluessel == LEER)</Regel>
+		<Feldreferenz>PAA_AkoefMethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B251</ID>
+		<Meldung>Das Feld &apos;AKÖF Messmethode&apos; kann nur befüllt werden, wenn ein Wert für AKÖF angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_Akoef == LEER AND PAA_AkoefMethodeSchluessel != LEER)</Regel>
+		<Feldreferenz>PAA_AkoefMethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B252</ID>
+		<Meldung>Sie haben angeben, dass eine Aortenklappenverkalkung vorliegt. Bitte geben Sie den CT Calcium Score an oder markieren Sie ihn als nicht gemessen.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_VerkalkungsgradSchluessel NOTIN (&apos;0371001&apos;, &apos;0371099&apos;) AND PAA_CtCalcium == LEER AND PAA_CtCalciumUnbekannt == LEER)</Regel>
+		<Feldreferenz>PAA_CtCalcium</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B253</ID>
+		<Meldung>CT Calcium Score kann nur angegeben werden, wenn angegeben wurde, dass eine Aortenklappenverkalkung vorliegt.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_VerkalkungsgradSchluessel IN (&apos;0371001&apos;, &apos;0371099&apos;) AND (PAA_CtCalcium != LEER OR PAA_CtCalciumUnbekannt != LEER))</Regel>
+		<Feldreferenz>PAA_CtCalcium</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B254</ID>
+		<Meldung>Sie haben angeben, dass die Bildgebung eine Gefäßerkrankung ergeben hat. Bitte geben Sie an, ob eine Myokard-Revaskularisation indiziert ist.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_BefundSchluessel IN (&apos;0357002&apos;, &apos;0357003&apos;, &apos;0357004&apos;) AND PAA_RevaskularisationSchluessel == LEER)</Regel>
+		<Feldreferenz>PAA_RevaskularisationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B255</ID>
+		<Meldung>Das Feld &apos;Myokard-Revaskularisation indiziert&apos; kann nur befüllt sein, wenn die Bildgebung eine Gefäßerkrankung ergeben hat.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_BefundSchluessel NOTIN (&apos;0357002&apos;, &apos;0357003&apos;, &apos;0357004&apos;) AND PAA_RevaskularisationSchluessel != LEER)</Regel>
+		<Feldreferenz>PAA_RevaskularisationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B256</ID>
+		<Meldung>Der präprozedurale Kreatininwert kann nur angegeben, wenn keine präprozedurale Nierenersatztherapie durchgeführt wird.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeKardiologie(PKA_NierenersatzSchluessel != &apos;0369001&apos; AND (PKA_KreatininwertMgdl != LEER OR PKA_KreatininwertMikromol != LEER OR PKA_KreatininwertUnbekannt != LEER))</Regel>
+		<Feldreferenz>PKA_NierenersatzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B257</ID>
+		<Meldung>Sie haben angegeben, dass eine zusätzliche PCI durchgeführt wurde. Bitte geben Sie an, ob diese wegen KHK durchgeführt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060001&apos; AND OAK_PciWegenKhkSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_PciWegenKhkSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B258</ID>
+		<Meldung>Das Feld &apos;wegen KHK&apos; kann nur befüllt sein, wenn bei &apos;zusätzliche PCI&apos; ja ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060002&apos; AND OAK_PciWegenKhkSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_PciWegenKhkSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B259</ID>
+		<Meldung>Sie haben angegeben, dass eine zusätzliche PCI durchgeführt wurde. Bitte geben Sie an, ob diese zur Behandlung von Komplikationen der Intervention durchgeführt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060001&apos; AND OAK_PciWegenKomplikationSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_PciWegenKomplikationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B260</ID>
+		<Meldung>Das Feld &apos;zur Behandlung von Komplikationen der Intervention&apos; kann nur befüllt sein, wenn bei &apos;zusätzliche PCI&apos; ja ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060002&apos; AND OAK_PciWegenKomplikationSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_PciWegenKomplikationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B261</ID>
+		<Meldung>Bitte geben Sie an, ob die mechanische Kreislaufunterstützung intraprozedural eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_KreislaufunterstuetzungSchluessel == &apos;0060001&apos; AND OAK_IntraOpUnterstuetzungSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_IntraOpUnterstuetzungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B262</ID>
+		<Meldung>Das Feld &apos;intraprozedural&apos; kann nur befüllt sein, wenn bei &apos;mechanische Kreislaufunterstützung&apos; ja ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_KreislaufunterstuetzungSchluessel == &apos;0060002&apos; AND OAK_IntraOpUnterstuetzungSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_IntraOpUnterstuetzungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B263</ID>
+		<Meldung>Bitte geben Sie an, welche Methode der mechanischen Kreislaufunterstützung intraprozedural eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_IntraOpUnterstuetzungSchluessel == &apos;0060001&apos; AND OAK_IntraOpMethodeSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_IntraOpMethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B265</ID>
+		<Meldung>Bitte geben Sie an, ob die mechanische Kreislaufunterstützung präprozedural eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_KreislaufunterstuetzungSchluessel == &apos;0060001&apos; AND OAK_PraeOpUnterstuetzungSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_PraeOpUnterstuetzungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B266</ID>
+		<Meldung>Das Feld &apos;präprozedural&apos; kann nur befüllt sein, wenn bei &apos;mechanische Kreislaufunterstützung&apos; ja ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_KreislaufunterstuetzungSchluessel == &apos;0060002&apos; AND OAK_PraeOpUnterstuetzungSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_PraeOpUnterstuetzungSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B267</ID>
+		<Meldung>Bitte geben Sie an, welche Methode der mechanischen Kreislaufunterstützung präprozedural eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PraeOpUnterstuetzungSchluessel == &apos;0060001&apos; AND OAK_PraeOpMethodeSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_PraeOpMethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B268</ID>
+		<Meldung>Das Feld &apos;Methode&apos; kann nur befüllt sein, wenn bei &apos;präprozedural&apos; ja ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PraeOpUnterstuetzungSchluessel == &apos;0060002&apos; AND OAK_PraeOpMethodeSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_PraeOpMethodeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B269</ID>
+		<Meldung>Sie haben als intraprozedurale Komplikation &apos;Low Cardiac Output&apos; angegeben. Bitte geben Sie an, ob/wie dieser therapiert wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_TherapieLcoSchluessel == LEER AND komplikationAortenklappe(KAK_KomplikationTypSchluessel == &apos;0343014&apos;))</Regel>
+		<Feldreferenz>OAK_TherapieLcoSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B270</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Plättchenaggregationshemmer&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_AggregationshemmerSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_AggregationshemmerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B271</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Antikoagulation&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND antikoagulansAortenklappe == NULL)</Regel>
+		<Feldreferenz>POA_IntraOpVerstorbenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B272</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Aortenregurgitation (Aorteninsuffizienz)&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_AorteninsuffizienzSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_AorteninsuffizienzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B273</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;respiratorische Insuffizienz&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_AtemInsuffizienzSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_AtemInsuffizienzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B274</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;permanenter neuer AV-Block oder Schenkelblock&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_AvBlockSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_AvBlockSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B275</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Endokarditis (postprozedural)&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_EndokarditisSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_EndokarditisSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B276</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Herzrhythmus bei Entlassung&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_HerzrhythmusSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_HerzrhythmusSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B277</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Aufenthalt Intermediate und High Care Bereich&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_IntensivDauer == LEER)</Regel>
+		<Feldreferenz>POA_IntensivDauer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B278</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Mitralinsuffizienz (postprozedural)&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_MitralinsuffizienzSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_MitralinsuffizienzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B279</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Nierenersatztherapie neu aufgetreten innerhalb der ersten 7 Tage nach Prozedur&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_NierenersatzSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_NierenersatzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B280</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Patient trägt Schrittmacher / Defibrillator&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_SchrittmacherSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_SchrittmacherSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B281</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Sepsis (postprozedural)&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_SepsisSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_SepsisSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B282</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss das Feld &apos;Trikuspidalinsuffizienz (postprozedural)&apos; befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_TrikuspidalinsuffizienzSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_TrikuspidalinsuffizienzSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B283</ID>
+		<Meldung>Sie haben angegeben, dass während des Aufenthalts ein Myokardinfarkt neu aufgetreten ist. Bitte geben Sie das Datum an.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_MyokardinfarktSchluessel IN (&apos;0378002&apos;, &apos;0378003&apos;, &apos;0378004&apos;) AND POA_DatumMyokardinfarkt == LEER)</Regel>
+		<Feldreferenz>POA_DatumMyokardinfarkt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B284</ID>
+		<Meldung>Das Datum des Myokardinfarkts kann nur angegeben werden, wenn ein Myokardinfarkt während des Aufenthalts neu aufgetreten ist.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_MyokardinfarktSchluessel == &apos;0378001&apos; AND POA_DatumMyokardinfarkt != LEER)</Regel>
+		<Feldreferenz>POA_DatumMyokardinfarkt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B285</ID>
+		<Meldung>Sie haben angegeben, dass während des Aufenthalts ein zerebrales/zerebrovaskuläres Ereignis neu aufgetreten ist. Bitte geben Sie das Datum an.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_SchlaganfallSchluessel IN (&apos;0376002&apos;, &apos;0376003&apos;, &apos;0376004&apos;) AND POA_DatumSchlaganfall == LEER)</Regel>
+		<Feldreferenz>POA_DatumSchlaganfall</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B286</ID>
+		<Meldung>Datum zerebrales/zerebrovaskuläres Ereignis kann nur angegeben werden, wenn ein zerebrales/zerebrovaskuläres Ereignis während des Aufenthalts neu aufgetreten ist.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_SchlaganfallSchluessel == &apos;0376001&apos; AND POA_DatumSchlaganfall != LEER)</Regel>
+		<Feldreferenz>POA_DatumSchlaganfall</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B287</ID>
+		<Meldung>Sie haben angegeben, dass während des Aufenthalts ein zerebrales/zerebrovaskuläres Ereignis neu aufgetreten ist. Bitte geben Sie den Schweregrad an.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_SchlaganfallSchluessel IN (&apos;0376002&apos;, &apos;0376003&apos;, &apos;0376004&apos;) AND POA_NihssSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_NihssSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B288</ID>
+		<Meldung>Schweregrad zerebrales/zerebrovaskuläres Ereignis kann nur angegeben werden, wenn ein zerebrales/zerebrovaskuläres Ereignis während des Aufenthalts neu aufgetreten ist.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_SchlaganfallSchluessel == &apos;0376001&apos; AND POA_NihssSchluessel != LEER)</Regel>
+		<Feldreferenz>POA_NihssSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B289</ID>
+		<Meldung>Sie haben angegeben, dass der Patient im Krankenhaus verstorben ist. Bitte geben Sie die Todesursache an.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_VitalstatusSchluessel == &apos;0399002&apos; AND POA_TodesursacheSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_TodesursacheSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B290</ID>
+		<Meldung>Eine Todesursache kann nur angegeben werden, wenn der Patient im Krankenhaus verstorben ist.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_VitalstatusSchluessel == &apos;0399001&apos; AND POA_TodesursacheSchluessel != LEER)</Regel>
+		<Feldreferenz>POA_TodesursacheSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B291</ID>
+		<Meldung>Sie haben Sinusrhythmus bei Entlassung angegeben. Bitte geben Sie, ob im stationären Aufenthalt Vorhofflimmern neu aufgetreten ist.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_HerzrhythmusSchluessel == &apos;0385001&apos; AND POA_VorhofflimmernSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_VorhofflimmernSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B292</ID>
+		<Meldung>Das Feld &apos;Im stationären Aufenthalt neu aufgetretenes Vorhofflimmern?&apos; kann nur befüllt sein, wenn bei &apos;Herzrhythmus bei Entlassung&apos; Sinusrhythmus ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_HerzrhythmusSchluessel != &apos;0385001&apos; AND POA_VorhofflimmernSchluessel != LEER)</Regel>
+		<Feldreferenz>POA_VorhofflimmernSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B293</ID>
+		<Meldung>Sie haben angegeben, dass Maßnahmen wegen Komplikationen erforderlich waren. Bitte geben Sie den Grund für die Intervention an.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_MassnahmenSchluessel != &apos;0381001&apos; AND POA_GrundMassnahmeSchluessel == LEER)</Regel>
+		<Feldreferenz>POA_GrundMassnahmeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B294</ID>
+		<Meldung>Das Feld &apos;Grund für die Intervention&apos; kann nur befüllt sein, wenn Maßnahmen wegen Komplikationen erforderlich waren.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_MassnahmenSchluessel == &apos;0381001&apos; AND POA_GrundMassnahmeSchluessel != LEER)</Regel>
+		<Feldreferenz>POA_GrundMassnahmeSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B295</ID>
+		<Meldung>Bei kathetergestützten Eingriffen muss mindestens ein Grund für die kathetergeführte Intervention angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND taviAortenklappe == NULL)</Regel>
+		<Feldreferenz>OAK_ArtEingriffSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B296</ID>
+		<Meldung>Bei einer zusätzlichen PCI muss mindestens eine versorgte Arterie angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060001&apos; AND pciAortenklappe == NULL)</Regel>
+		<Feldreferenz>OAK_ZusaetzlichePciSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B297</ID>
+		<Meldung>Sie haben angegeben, dass die Intervention kein technischer Erfolg war. Bitte geben Sie mindestens einen Grund dafür an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_SuccessSchluessel == &apos;0060002&apos; AND failureGrundAortenklappe == NULL)</Regel>
+		<Feldreferenz>OAK_SuccessSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B298</ID>
+		<Meldung>Im Meldedatensatz fehlen die Aortenklappenprothesen-spezifischen Angaben zur Patientenaufnahme.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080003&apos;) AND patientenaufnahme(patientenaufnahmeKardiologie == NULL))</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B299</ID>
+		<Meldung>Im Meldedatensatz fehlen die Aortenklappenprothesen-spezifischen Angaben zur Operation.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080003&apos; AND operationAortenklappe == NULL)</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B300</ID>
+		<Meldung>Im Meldedatensatz fehlen die Aortenklappenprothesen-spezifischen Angaben zum postprozeduralen Verlauf.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(OPE_ImplantattypSchluessel == &apos;0080003&apos;) AND postoperationAortenklappe == NULL)</Regel>
+		<Feldreferenz>OPE_ImplantattypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B301</ID>
+		<Meldung>Sie haben angegeben, dass eine zusätzliche PCI durchgeführt wurde. Bitte geben Sie die Anzahl der dilatierten Läsionen an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060001&apos; AND OAK_LaesionenAnzahl == LEER)</Regel>
+		<Feldreferenz>OAK_LaesionenAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B302</ID>
+		<Meldung>Das Feld &apos;Anzahl dilatierter Läsionen&apos; kann nur befüllt sein, wenn bei &apos;zusätzliche PCI&apos; ja ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ZusaetzlichePciSchluessel == &apos;0060002&apos; AND OAK_LaesionenAnzahl != LEER)</Regel>
+		<Feldreferenz>OAK_LaesionenAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B303</ID>
+		<Meldung>Bitte geben Sie an, ob es sich um ein Implantat oder ein Explantat handelt.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel IN (&apos;0080001&apos;, &apos;0080002&apos;) AND artikelidentifikation(ARI_ArtikelArtSchluessel == LEER))</Regel>
+		<Feldreferenz>ARI_ArtikelArtSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B304</ID>
+		<Meldung>Bitte geben Sie an, ob es sich um ein Implantat, ein Explantat oder ein degeneriertes Produkt, das im Körper verbleibt, handelt.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080003&apos; AND artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == LEER))</Regel>
+		<Feldreferenz>ARI_ArtikelArtFunktionSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B305</ID>
+		<Meldung>Die Anzahl der Ballondilatationen kann nur angegeben werden, wenn bei &apos;Ballondilatation unmittelbar vor Implantation&apos; ja angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaVorSchluessel == &apos;0060002&apos; AND OAK_PtcaVorAnzahl != LEER)</Regel>
+		<Feldreferenz>OAK_PtcaVorAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B306</ID>
+		<Meldung>Bitte geben Sie den maximalen Ballondurchmesser vor der Implantation an oder markieren Sie ihn als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaVorSchluessel == &apos;0060001&apos; AND OAK_PtcaVorDurchmesser == LEER AND OAK_PtcaVorDurchmesserUnbekannt == LEER)</Regel>
+		<Feldreferenz>OAK_PtcaVorDurchmesser</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B307</ID>
+		<Meldung>Der maximale Ballondurchmesser kann nur angegeben werden, wenn bei &apos;Ballondilatation unmittelbar vor Implantation&apos; ja angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaVorSchluessel == &apos;0060002&apos; AND (OAK_PtcaVorDurchmesser != LEER OR OAK_PtcaVorDurchmesserUnbekannt == 1))</Regel>
+		<Feldreferenz>OAK_PtcaVorDurchmesser</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B308</ID>
+		<Meldung>Bitte geben Sie an, ob unmittelbar vor der Implantation rapid pacing angewendet wurden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaVorSchluessel == &apos;0060001&apos; AND OAK_RapidPacingVorSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_RapidPacingVorSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B309</ID>
+		<Meldung>Rapid pacing kann nur angegeben werden, wenn bei &apos;Ballondilatation unmittelbar vor Implantation&apos; ja angegeben wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_PtcaVorSchluessel == &apos;0060002&apos; AND OAK_RapidPacingVorSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_RapidPacingVorSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B310</ID>
+		<Meldung>Sie haben angegeben, dass eine Gefäßerkrankung vorliegt. Bitte geben Sie an, ob ein Aortenaneurysma vorliegt.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeAortenklappe(PAA_AvkSchluessel == &apos;0061001&apos; AND PAA_AortenaneurysmaSchluessel == LEER)</Regel>
+		<Feldreferenz>PAA_AortenaneurysmaSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B311</ID>
+		<Meldung>Sie haben angeben, dass keine präprozedurale Nierenersatztherapie durchgeführt wird. Bitte geben Sie einen präprozeduralen Kreatininwert an oder markieren Sie ihn als nicht gemessen.</Meldung>
+		<Level>error</Level>
+		<Regel>patientenaufnahmeKardiologie(PKA_NierenersatzSchluessel == &apos;0369001&apos; AND PKA_KreatininwertMgdl == LEER AND PKA_KreatininwertMikromol == LEER AND PKA_KreatininwertUnbekannt == LEER)</Regel>
+		<Feldreferenz>PKA_KreatininwertMgdl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B312</ID>
+		<Meldung>Der Meldedatensatz enthält ICD-Kodes, die nicht an das IRD gemeldet werden dürfen.</Meldung>
+		<Level>error</Level>
+		<Regel>diagnoseAortenklappe(fn:getSubstrTillChar(DAK_IcdSchluessel, &apos;:&apos;) NOTIN (Liste: ICD_Positivliste_Aortenklappenprothese))</Regel>
+		<Feldreferenz>DAK_IcdSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B313</ID>
+		<Meldung>Der Meldedatensatz enthält OPS-Kodes, die nicht an das IRD gemeldet werden dürfen.</Meldung>
+		<Level>error</Level>
+		<Regel>prozedurenSchluesselAortenklappe(fn:getSubstrTillChar(PAK_ProzedurenSchluessel, &apos;:&apos;) NOTIN (Liste: OPS_Positivliste_Aortenklappenprothese))</Regel>
+		<Feldreferenz>PAK_ProzedurenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B314</ID>
+		<Meldung>Bei chirurgischen Klappen muss angegeben werden, ob es sich um ein biologisches oder ein mechanisches Klappenmodell handelt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelAortenklappe(AAK_KlappenTypSchluessel == &apos;0391001&apos; AND AAK_ArtikelTypSchluessel == LEER)</Regel>
+		<Feldreferenz>AAK_ArtikelTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B315</ID>
+		<Meldung>Das Feld Artikeltyp kann nur bei chirurgischen Klappen befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelAortenklappe(AAK_KlappenTypSchluessel == &apos;0391002&apos; AND AAK_ArtikelTypSchluessel != LEER)</Regel>
+		<Feldreferenz>AAK_ArtikelTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B316</ID>
+		<Meldung>Bitte geben Sie entweder das Implantationsdatum für das degenierte Produkt an oder markieren Sie es als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071003&apos; AND artikelbeschreibung(ARB_DatumImplantierungExplantat == LEER AND ARB_DatumImplantierungExplantatUnbekannt == LEER))</Regel>
+		<Feldreferenz>ARB_DatumImplantierungExplantat</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B317</ID>
+		<Meldung>Im Meldedatensatz fehlen die Daten zum Artikel.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(artikelidentifikation == NULL)</Regel>
+		<Feldreferenz>OPE_Datum</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B318</ID>
+		<Meldung>Bei einem konventionellen Eingriff muss angegeben werden, ob eine frühere Aortenklappenprothese explantiert wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300001&apos; AND OAK_ExplantationSchluessel == LEER)</Regel>
+		<Feldreferenz>OAK_ExplantationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B319</ID>
+		<Meldung>Bei einem kathetergestützten Eingriff darf das Feld &apos;Wurde während dieses Eingriffs eine frühere Aortenklappenprothese explantiert?&apos; nicht befüllt werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos; AND OAK_ExplantationSchluessel != LEER)</Regel>
+		<Feldreferenz>OAK_ExplantationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B320</ID>
+		<Meldung>Bei einem Kombinationseingriff muss die Anzahl der Prozeduren angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_EingriffsumfangSchluessel == &apos;0347002&apos; AND OAK_ProzedurenAnzahl == LEER)</Regel>
+		<Feldreferenz>OAK_ProzedurenAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B321</ID>
+		<Meldung>Bei einem Einzeleingriff darf das Feld &apos;Anzahl der Prozeduren angegeben&apos; nicht befüllt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_EingriffsumfangSchluessel == &apos;0347001&apos; AND OAK_ProzedurenAnzahl != LEER)</Regel>
+		<Feldreferenz>OAK_ProzedurenAnzahl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B322</ID>
+		<Meldung>Der angegebene Artikel ist kein Brustimplantat.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080002&apos; AND artikelidentifikation(ARI_IrdNummer != LEER AND (fn:getSubstrTillChar(ARI_IrdNummer, &apos;-&apos;) != &apos;BI&apos;)))</Regel>
+		<Feldreferenz>ARI_IrdNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B323</ID>
+		<Meldung>Der angegebene Artikel ist keine Endoprothese.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND artikelidentifikation(ARI_IrdNummer != LEER AND (fn:getSubstrTillChar(ARI_IrdNummer, &apos;-&apos;) != &apos;EP&apos;)))</Regel>
+		<Feldreferenz>ARI_IrdNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B324</ID>
+		<Meldung>Der angegebene Artikel ist keine Aortenklappenprothese.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080003&apos; AND artikelidentifikation(ARI_IrdNummer != LEER AND (fn:getSubstrTillChar(ARI_IrdNummer, &apos;-&apos;) != &apos;AK&apos;)))</Regel>
+		<Feldreferenz>ARI_IrdNummer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B325</ID>
+		<Meldung>Sie haben angegeben, dass eine Herz-Lungen-Maschine / extrakorporale Zirkulation eingesetzt wurde. Bitte geben Sie die Bypasszeit an oder markieren Sie sie als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_VorgehenSchluessel IN (&apos;0348001&apos;, &apos;0348003&apos;) AND OAK_Bypasszeit == LEER AND OAK_BypasszeitUnbekannt == LEER)</Regel>
+		<Feldreferenz>OAK_Bypasszeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B326</ID>
+		<Meldung>Sie haben angegeben, dass eine Herz-Lungen-Maschine / extrakorporale Zirkulation eingesetzt wurde. Bitte geben Sie die Abklemmzeit an oder markieren Sie sie als unbekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_VorgehenSchluessel IN (&apos;0348001&apos;, &apos;0348003&apos;) AND OAK_Abklemmzeit == LEER AND OAK_AbklemmzeitUnbekannt == LEER)</Regel>
+		<Feldreferenz>OAK_Abklemmzeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B327</ID>
+		<Meldung>Die Abklemmzeit kann nur angegeben werden, wenn eine Herz-Lungen-Maschine / extrakorporale Zirkulation eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_VorgehenSchluessel NOTIN (&apos;0348001&apos;, &apos;0348003&apos;) AND (OAK_Abklemmzeit != LEER OR OAK_AbklemmzeitUnbekannt != LEER))</Regel>
+		<Feldreferenz>OAK_Abklemmzeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B328</ID>
+		<Meldung>Die Bypasszeit kann nur angegeben werden, wenn eine Herz-Lungen-Maschine / extrakorporale Zirkulation eingesetzt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_VorgehenSchluessel NOTIN (&apos;0348001&apos;, &apos;0348003&apos;) AND (OAK_Bypasszeit != LEER OR OAK_BypasszeitUnbekannt != LEER))</Regel>
+		<Feldreferenz>OAK_Bypasszeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B329</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss Delta Pmax angegeben oder als nicht gemessen markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_DeltaPmax == LEER AND POA_DeltaPmaxUnbekannt == LEER)</Regel>
+		<Feldreferenz>POA_DeltaPmax</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B330</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss Delta Pmean angegeben oder als nicht gemessen markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_DeltaPmean == LEER AND POA_DeltaPmeanUnbekannt == LEER)</Regel>
+		<Feldreferenz>POA_DeltaPmean</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B331</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss die AKÖF angegeben oder als nicht gemessen markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_Akoef == LEER AND POA_AkoefUnbekannt == LEER)</Regel>
+		<Feldreferenz>POA_Akoef</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B332</ID>
+		<Meldung>Wenn der Patient nicht intraprozedural gestorben ist, muss die LVEF angegeben oder als nicht gemessen markiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060002&apos; AND POA_Lvef == LEER AND POA_LvefUnbekannt == LEER)</Regel>
+		<Feldreferenz>POA_Lvef</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B333</ID>
+		<Meldung>Sie haben angegeben, dass es zu intraprozeduralen Komplikationen kam. Bitte geben Sie mindestens einen Typ einer intraprozeduralen Komplikation an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_KomplikationenSchluessel == &apos;0060001&apos; AND komplikationAortenklappe == NULL)</Regel>
+		<Feldreferenz>OAK_KomplikationenSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B334</ID>
+		<Meldung>Gründe für Technical Success = nein können nur angegeben werden, wenn die Intervention kein technischer Erfolg war.</Meldung>
+		<Level>error</Level>
+		<Regel>operationAortenklappe(OAK_SuccessSchluessel == &apos;0060001&apos; AND failureGrundAortenklappe != NULL)</Regel>
+		<Feldreferenz>OAK_SuccessSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B335</ID>
+		<Meldung>Bitte geben Sie das verwendete Navigationssystem an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_AssistiveTechnologieSchluessel == &apos;0280003&apos; AND OEP_NavigationSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_NavigationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B336</ID>
+		<Meldung>Das Feld &apos;Navigation&apos; kann nur befüllt sein, wenn als Assistive Technologie &apos;Navigation&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_AssistiveTechnologieSchluessel != &apos;0280003&apos; AND OEP_NavigationSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_NavigationSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B337</ID>
+		<Meldung>Bitte geben Sie das verwendete Robotiksystem an.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_AssistiveTechnologieSchluessel == &apos;0280004&apos; AND OEP_RobotikSchluessel == LEER)</Regel>
+		<Feldreferenz>OEP_RobotikSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B338</ID>
+		<Meldung>Das Feld &apos;Robotik&apos; kann nur befüllt sein, wenn als Assistive Technologie &apos;Robotik&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>operationEndoprothese(OEP_AssistiveTechnologieSchluessel != &apos;0280004&apos; AND OEP_RobotikSchluessel != LEER)</Regel>
+		<Feldreferenz>OEP_RobotikSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B339</ID>
+		<Meldung>Bitte geben Sie den genaueren Typ der Hüftkomponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_ArtikelTypSchluessel == &apos;0290001&apos; AND AEP_ArtikelTypHuefteSchluessel == LEER)</Regel>
+		<Feldreferenz>AEP_ArtikelTypHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B340</ID>
+		<Meldung>Bitte geben Sie den genaueren Typ der Kniekomponente an.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_ArtikelTypSchluessel == &apos;0290002&apos; AND AEP_ArtikelTypKnieSchluessel == LEER)</Regel>
+		<Feldreferenz>AEP_ArtikelTypKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B341</ID>
+		<Meldung>Ein genauerer Typ für eine Hüftkomponente kann nur angegeben werden, wenn im Feld &apos;Artikeltyp&apos; der Wert &apos;Hüft-Komponente&apos; ausgewählt ist.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_ArtikelTypSchluessel != &apos;0290001&apos; AND AEP_ArtikelTypHuefteSchluessel != LEER)</Regel>
+		<Feldreferenz>AEP_ArtikelTypHuefteSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B342</ID>
+		<Meldung>Ein genauerer Typ für eine Kniekomponente kann nur angegeben werden, wenn im Feld &apos;Artikeltyp&apos; der Wert &apos;Knie-Komponente&apos; ausgewählt ist.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_ArtikelTypSchluessel != &apos;0290002&apos; AND AEP_ArtikelTypKnieSchluessel != LEER)</Regel>
+		<Feldreferenz>AEP_ArtikelTypKnieSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B343</ID>
+		<Meldung>Bitte geben Sie die Menge des Artikels an.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_ArtikelTypSchluessel IN (&apos;0290004&apos;,&apos;0290042&apos;) AND AEP_Menge == LEER)</Regel>
+		<Feldreferenz>AEP_Menge</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B344</ID>
+		<Meldung>Bitte geben Sie die Einheit zur Menge an.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_Menge != LEER AND AEP_EinheitSchluessel == LEER)</Regel>
+		<Feldreferenz>AEP_EinheitSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B345</ID>
+		<Meldung>Eine Menge kann nur bei angegeben werden, wenn unter &apos;Artikeltyp&apos; die Werte &apos;Knochenzement&apos; oder &apos;sonstiger&apos; ausgewählt wurde.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_ArtikelTypSchluessel NOTIN (&apos;0290004&apos;,&apos;0290042&apos;) AND AEP_Menge != LEER)</Regel>
+		<Feldreferenz>AEP_Menge</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B346</ID>
+		<Meldung>Eine Einheit kann nur zusammen mit einer Menge angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_Menge == LEER AND AEP_EinheitSchluessel != LEER)</Regel>
+		<Feldreferenz>AEP_EinheitSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B347</ID>
+		<Meldung>Bei Implantaten muss ein Klappentyp angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_KlappenTypSchluessel == LEER)))</Regel>
+		<Feldreferenz>AAK_KlappenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B348</ID>
+		<Meldung>Bei Explantaten muss ein Klappentyp angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071002&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_KlappenTypSchluessel == LEER)))</Regel>
+		<Feldreferenz>AAK_KlappenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>B349</ID>
+		<Meldung>Bei degenerierten Klappen kann kein Klappentyp angegeben werden.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071003&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_KlappenTypSchluessel != LEER)))</Regel>
+		<Feldreferenz>AAK_KlappenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P006</ID>
+		<Meldung>Bitte überprüfen Sie das Alter.</Meldung>
+		<Level>warning</Level>
+		<Regel>patientenaufnahme(PAT_Alter &lt;= 0 OR PAT_Alter &gt;= 150)</Regel>
+		<Feldreferenz>PAT_Alter</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P007</ID>
+		<Meldung>Bitte überprüfen Sie die Größe.</Meldung>
+		<Level>warning</Level>
+		<Regel>patientenaufnahme(PAT_Groesse &lt;= 0 OR PAT_Groesse &gt;= 300)</Regel>
+		<Feldreferenz>PAT_Groesse</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P008</ID>
+		<Meldung>Bitte überprüfen Sie das Gewicht.</Meldung>
+		<Level>warning</Level>
+		<Regel>patientenaufnahme(PAT_Gewicht &lt;= 0 OR PAT_Gewicht &gt;= 650)</Regel>
+		<Feldreferenz>PAT_Gewicht</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P010</ID>
+		<Meldung>Das Aufnahmedatum ist später als das Operationsdatum. Bitte korrigieren Sie Ihre Angaben.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(operation(fall.FAL_Aufnahmedatum &gt; OPE_Datum))</Regel>
+		<Feldreferenz>FAL_Aufnahmedatum</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P011</ID>
+		<Meldung>Das Aufnahmedatum ist später als das Entlassungsdatum. Bitte korrigieren Sie Ihre Angaben.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(entlassung(fall.FAL_Aufnahmedatum &gt; ENT_Datum))</Regel>
+		<Feldreferenz>FAL_Aufnahmedatum</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P030</ID>
+		<Meldung>Der Hersteller kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_HerstellerUnbekannt == 1)))</Regel>
+		<Feldreferenz>ABI_HerstellerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P032</ID>
+		<Meldung>Das Artikelkennzeichen kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND ARI_ArtikelkennzeichenUnbekannt == 1)</Regel>
+		<Feldreferenz>ARI_ArtikelkennzeichenUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P033</ID>
+		<Meldung>Die Seriennummer kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND artikelbeschreibung(ARB_SerienNummerUnbekannt == 1))</Regel>
+		<Feldreferenz>ARB_SerienNummerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P034</ID>
+		<Meldung>Die Chargen-/LOT-Nummer kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND artikelbeschreibung(ARB_LotNummerUnbekannt == 1))</Regel>
+		<Feldreferenz>ARB_LotNummerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P038</ID>
+		<Meldung>Die Form kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_FormUnbekannt == 1)))</Regel>
+		<Feldreferenz>ABI_FormUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P039</ID>
+		<Meldung>Die Oberfläche kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_OberflaecheUnbekannt == 1)))</Regel>
+		<Feldreferenz>ABI_OberflaecheUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P040</ID>
+		<Meldung>Die Füllung kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_FuellungUnbekannt == 1)))</Regel>
+		<Feldreferenz>ABI_FuellungUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P046</ID>
+		<Meldung>Das Implantationsdatum des vorherigen Implantats liegt nach dem Operationsdatum. Bitte korrigieren Sie Ihre Angaben.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(artikelidentifikation(artikelbeschreibung(operation.OPE_Datum &lt; fn:asDate(ARB_DatumImplantierungExplantat) AND ARB_DatumImplantierungExplantatUnbekannt == LEER)))</Regel>
+		<Feldreferenz>ARB_DatumImplantierungExplantat</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P056</ID>
+		<Meldung>Das Entlassungsdatum liegt vor dem Operationsdatum. Bitte korrigieren Sie Ihre Angaben.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(entlassung(ENT_Datum) &lt; operation(OPE_Datum))</Regel>
+		<Feldreferenz>ENT_Datum</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P063</ID>
+		<Meldung>Ein Fall mit diesem Aufnahmedatum kann nicht mit dieser Spezifikationsversion gemeldet werden.</Meldung>
+		<Level>error</Level>
+		<Regel>fall(FAL_Aufnahmedatum &lt; &apos;2026-01-01&apos; OR FAL_Aufnahmedatum &gt; &apos;2026-12-31&apos;)</Regel>
+		<Feldreferenz>FAL_Aufnahmedatum</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P088</ID>
+		<Meldung>Das Volumen kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelBrustimplantat(ABI_VolumenUnbekannt == 1)))</Regel>
+		<Feldreferenz>ABI_VolumenUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P111</ID>
+		<Meldung>Die Seriennummer kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoer(ZUB_ZubehoerArtSchluessel == &apos;0069001&apos; AND ZUB_SerienNummerUnbekannt == 1)</Regel>
+		<Feldreferenz>ZUB_SerienNummerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P112</ID>
+		<Meldung>Die Chargen-/LOT-Nummer kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoer(ZUB_ZubehoerArtSchluessel == &apos;0069001&apos; AND ZUB_LotNummerUnbekannt == 1)</Regel>
+		<Feldreferenz>ZUB_LotNummerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P115</ID>
+		<Meldung>Die Artikelnummer kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoer(ZUB_ZubehoerArtSchluessel == &apos;0069001&apos; AND ZUB_ArtikelNummerUnbekannt == 1)</Regel>
+		<Feldreferenz>ZUB_ArtikelNummerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P136</ID>
+		<Meldung>Der Hersteller kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>zubehoer(ZUB_ZubehoerArtSchluessel == &apos;0069001&apos; AND zubehoerBrustimplantat(ZBI_HerstellerUnbekannt == 1))</Regel>
+		<Feldreferenz>ZBI_HerstellerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P138</ID>
+		<Meldung>Der Hersteller kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtSchluessel == &apos;0067001&apos; AND artikelbeschreibung(artikelEndoprothese(AEP_HerstellerUnbekannt == 1)))</Regel>
+		<Feldreferenz>AEP_HerstellerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P139</ID>
+		<Meldung>Das Verfalldatum kann nur bei Explantaten unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation((ARI_ArtikelArtSchluessel == &apos;0067001&apos; OR ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos;) AND artikelbeschreibung(ARB_DatumVerfallUnbekannt == 1))</Regel>
+		<Feldreferenz>ARB_DatumVerfallUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P140</ID>
+		<Meldung>Explantiertes Operationszubehör muss bei Endoprothesen nicht erfasst werden.</Meldung>
+		<Level>warning</Level>
+		<Regel>operation(OPE_ImplantattypSchluessel == &apos;0080001&apos; AND zubehoer(ZUB_ZubehoerArtSchluessel == &apos;0069002&apos;))</Regel>
+		<Feldreferenz>ZUB_ZubehoerArtSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P141</ID>
+		<Meldung>Der Hersteller kann bei Implantaten nicht unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_HerstellerUnbekannt == 1)))</Regel>
+		<Feldreferenz>AAK_HerstellerUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P142</ID>
+		<Meldung>Die Prothesengröße kann bei Implantaten nicht unbekannt sein.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_ProthesenGroesseUnbekannt == 1)))</Regel>
+		<Feldreferenz>AAK_ProthesenGroesseUnbekannt</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P143</ID>
+		<Meldung>Bitte überprüfen Sie den präprozeduralen Kreatininwert.</Meldung>
+		<Level>warning</Level>
+		<Regel>patientenaufnahmeKardiologie(PKA_KreatininwertMgdl &lt; 0.2 OR PKA_KreatininwertMgdl &gt; 10)</Regel>
+		<Feldreferenz>PKA_KreatininwertMgdl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P144</ID>
+		<Meldung>Bitte überprüfen Sie den präprozeduralen Kreatininwert.</Meldung>
+		<Level>warning</Level>
+		<Regel>patientenaufnahmeKardiologie(PKA_KreatininwertMikromol &lt; 18 OR PKA_KreatininwertMikromol &gt; 880)</Regel>
+		<Feldreferenz>PKA_KreatininwertMikromol</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P145</ID>
+		<Meldung>Bitte überprüfen Sie die Eingriffsdauer.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationAortenklappe(OAK_Eingriffsdauer &lt; 20 OR OAK_Eingriffsdauer &gt; 480)</Regel>
+		<Feldreferenz>OAK_Eingriffsdauer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P146</ID>
+		<Meldung>Bitte überprüfen Sie die Aortenabklemmzeit.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationAortenklappe(OAK_Abklemmzeit &gt; 250)</Regel>
+		<Feldreferenz>OAK_Abklemmzeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P147</ID>
+		<Meldung>Bitte überprüfen Sie die Bypasszeit.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationAortenklappe(OAK_Bypasszeit &gt; 300)</Regel>
+		<Feldreferenz>OAK_Bypasszeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P148</ID>
+		<Meldung>Bitte überprüfen Sie die Durchleuchtungszeit.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationAortenklappe(OAK_Durchleuchtungszeit &gt; 100)</Regel>
+		<Feldreferenz>OAK_Durchleuchtungszeit</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P149</ID>
+		<Meldung>Bitte überprüfen Sie die Dauer des Aufenthaltes Intermediate und High Care Bereich.</Meldung>
+		<Level>warning</Level>
+		<Regel>postoperationAortenklappe(POA_IntensivDauer &gt; 89)</Regel>
+		<Feldreferenz>POA_IntensivDauer</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P150</ID>
+		<Meldung>Bitte überprüfen Sie den postprozeduralen Kreatininwert.</Meldung>
+		<Level>warning</Level>
+		<Regel>postoperationAortenklappe(POA_MaxKreatininMgDl &lt; 0.2 OR POA_MaxKreatininMgDl &gt; 12)</Regel>
+		<Feldreferenz>POA_MaxKreatininMgDl</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P151</ID>
+		<Meldung>Bitte überprüfen Sie den postprozeduralen Kreatininwert.</Meldung>
+		<Level>warning</Level>
+		<Regel>postoperationAortenklappe(POA_MaxKreatininMikromol &lt; 18 OR POA_MaxKreatininMikromol &gt; 1060)</Regel>
+		<Feldreferenz>POA_MaxKreatininMikromol</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P152</ID>
+		<Meldung>Bitte überprüfen Sie Ihre Angaben im Feld &apos;Wievielter Aortenklappeneingriff während dieses Aufenthaltes?&apos;.</Meldung>
+		<Level>warning</Level>
+		<Regel>operationAortenklappe(OAK_NummerEingriff &gt; 10)</Regel>
+		<Feldreferenz>OAK_NummerEingriff</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P153</ID>
+		<Meldung>Sie haben widersprüchliche Angaben zur Antikoagulation bei Entlassung gemacht. Bitte überprüfen Sie Ihre Angaben.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(antikoagulansAortenklappe(AKA_AntikoagulansSchluessel == &apos;0389001&apos;) AND antikoagulansAortenklappe(AKA_AntikoagulansSchluessel != &apos;0389001&apos;))</Regel>
+		<Feldreferenz>AKA_AntikoagulansSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P154</ID>
+		<Meldung>Der ausgewählte Brustimplantat-Hersteller ist nicht bekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelBrustimplantat(ABI_HerstellerSchluessel NOTIN (Liste: Herstellerliste_Brustimplantat))</Regel>
+		<Feldreferenz>ABI_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P155</ID>
+		<Meldung>Der ausgewählte Endoprothesen-Hersteller ist nicht bekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelEndoprothese(AEP_HerstellerSchluessel NOTIN (Liste: Herstellerliste_Endoprothese))</Regel>
+		<Feldreferenz>AEP_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P156</ID>
+		<Meldung>Der ausgewählte Aortenklappenprothesen-Hersteller ist nicht bekannt.</Meldung>
+		<Level>error</Level>
+		<Regel>artikelAortenklappe(AAK_HerstellerSchluessel NOTIN (Liste: Herstellerliste_Aortenklappenprothese))</Regel>
+		<Feldreferenz>AAK_HerstellerSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P157</ID>
+		<Meldung>Bei konventionellen Eingriffen kann keine TAVI-Klappe implantiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300001&apos;) AND artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_KlappenTypSchluessel == &apos;0391002&apos;))))</Regel>
+		<Feldreferenz>AAK_KlappenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P158</ID>
+		<Meldung>Bei kathetergestützten Eingriffen kann keine chirurgische Klappe implantiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos;) AND artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071001&apos; AND artikelbeschreibung(artikelAortenklappe(AAK_KlappenTypSchluessel == &apos;0391001&apos;))))</Regel>
+		<Feldreferenz>AAK_KlappenTypSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P159</ID>
+		<Meldung>Ein intraoperativ verstorbener Patient kann nicht lebend entlassen werden.</Meldung>
+		<Level>error</Level>
+		<Regel>postoperationAortenklappe(POA_IntraOpVerstorbenSchluessel == &apos;0060001&apos; AND POA_VitalstatusSchluessel == &apos;0399001&apos;)</Regel>
+		<Feldreferenz>POA_VitalstatusSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P160</ID>
+		<Meldung>Bei kathetergestützten Eingriffen kann keine Klappe explantiert werden.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300002&apos;) AND artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071002&apos;))</Regel>
+		<Feldreferenz>ARI_ArtikelArtFunktionSchluessel</Feldreferenz>
+	</IRD_Regel>
+	<IRD_Regel>
+		<ID>P161</ID>
+		<Meldung>Bei konventionellen Eingriffen kann keine Klappe funktionslos im Körper verbleiben.</Meldung>
+		<Level>error</Level>
+		<Regel>operation(operationAortenklappe(OAK_ArtEingriffSchluessel == &apos;0300001&apos;) AND artikelidentifikation(ARI_ArtikelArtFunktionSchluessel == &apos;0071003&apos;))</Regel>
+		<Feldreferenz>ARI_ArtikelArtFunktionSchluessel</Feldreferenz>
+	</IRD_Regel>
+</IRD_Regeln>

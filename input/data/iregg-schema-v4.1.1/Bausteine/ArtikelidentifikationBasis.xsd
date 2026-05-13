@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="ArtikelidentifikationBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente des Bausteins ArtikelidentifikationBasis. 
+			Es handelt sich um Daten, die den Artikel eindeutig identifizieren. Diese werden dem jeweiligen operativen Eingriff zugeordnet.
+			Elemente:
+			- ARI_LaufendeNummer: Sequenz des Artikels
+			- ARI_IrdNummer: IRD-eigene Artikel-Identifikationsnummer in der Produktdatenbank. Die ID wird von dem Artikelservice des IRD zurückgeliefert.
+			- ARI_Artikelkennzeichen: Artikelkennzeichen (UDI oder herstellerspezifische REF oder Katalognummer)
+			- ARI_ArtikelkennzeichenUnbekannt: Artikelkennzeichen ist unbekannt
+			- ARI_KennzeichenTypSchluessel: Typ des Artikelkennzeichens
+			- ARI_SonderstatusJNSchluessel: Sonderzulassung / Spezialangefertigtes Implantat
+			- ARI_ArtikelArtSchluessel: Implantat/Explantat
+			- ARI_ArtikelArtFunktionSchluessel: Implantat/Explantat
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ArtikelidentifikationBasis">
+		<xs:sequence>
+			<xs:element name="ARI_LaufendeNummer" type="Zahl3"/>
+			<xs:element name="ARI_IrdNummer" type="IrdArtikelId" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="ARI_Artikelkennzeichen" type="String20"/>
+				<xs:element name="ARI_ArtikelkennzeichenUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="ARI_KennzeichenTypSchluessel" type="enum_0068" minOccurs="0"/>
+			<xs:element name="ARI_SonderstatusJNSchluessel" type="enum_0060" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="ARI_ArtikelArtSchluessel" type="enum_0067"/>
+				<xs:element name="ARI_ArtikelArtFunktionSchluessel" type="enum_0071"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="ArtikelEndoprotheseBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente eines ArtikelEndoprotheseBasis. 
+			Es handelt sich um Endoprothesen-spezifische Angaben zum jeweiligen Artikel.
+			Elemente:
+			- AEP_HerstellerSchluessel: Hersteller
+			- AEP_HerstellerUnbekannt: Hersteller ist unbekannt
+			- AEP_HerstellerSonstiger: Sonstiger Hersteller (Freitextangabe)
+			- AEP_LieferantSchluessel: Lieferant
+			- AEP_ArtikelTypSchluessel: Artikeltyp
+			- AEP_ArtikelTypHuefteSchluessel: Artikeltyp Hüfte
+			- AEP_ArtikelTypKnieSchluessel: Artikeltyp Knie
+			- AEP_Menge: Menge
+			- AEP_EinheitSchluessel: Einheit der Menge
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ArtikelEndoprotheseBasis">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="AEP_HerstellerSchluessel" type="String7"/>
+				<xs:element name="AEP_HerstellerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="AEP_HerstellerSonstiger" type="Freitext250" minOccurs="0"/>
+			<xs:element name="AEP_LieferantSchluessel" type="String7" minOccurs="0"/>
+			<xs:element name="AEP_ArtikelTypSchluessel" type="enum_0290"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="AEP_ArtikelTypHuefteSchluessel" type="enum_0292"/>
+				<xs:element name="AEP_ArtikelTypKnieSchluessel" type="enum_0293"/>
+			</xs:choice>
+			<xs:element name="AEP_Menge" type="Zahl5" minOccurs="0"/>
+			<xs:element name="AEP_EinheitSchluessel" type="enum_0062" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

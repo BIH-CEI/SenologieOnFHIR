@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="ZubehoerBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente des Bausteins ZubehoerBasis.
+			Es handelt sich um Daten zur Identifkation und Beschreibung des verwendeten Zubehörs. Bei dem Implantattyp Brustimplantate gilt Material für Gewebeersatz und Gewebeverstärkung als Zubehör. Die Daten werden dem jeweiligen operativen Eingriff zugeordnet.
+			Elemente:
+			- ZUB_LaufendeNummer: Sequenz des Artikels
+			- ZUB_ZubehoerArtSchluessel: Implantat/Explantat
+			- ZUB_ArtikelNummer: Artikelnummer
+			- ZUB_ArtikelNummerUnbekannt: Artikelnummer ist unbekannt
+			- ZUB_LotNummer: Chargen-/LOT-Nummer
+			- ZUB_LotNummerUnbekannt: Chargen-/LOT-Nummer ist unbekannt
+			- ZUB_SerienNummer: Seriennummer
+			- ZUB_SerienNummerUnbekannt: Seriennummer ist unbekannt
+			- ZUB_Artikelbezeichnung: Artikelbezeichnung
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ZubehoerBasis">
+		<xs:sequence>
+			<xs:element name="ZUB_LaufendeNummer" type="Zahl3"/>
+			<xs:element name="ZUB_ZubehoerArtSchluessel" type="enum_0069"/>
+			<xs:choice>
+				<xs:element name="ZUB_ArtikelNummer" type="String20"/>
+				<xs:element name="ZUB_ArtikelNummerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="ZUB_LotNummer" type="String20"/>
+				<xs:element name="ZUB_LotNummerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:choice minOccurs="0">
+				<xs:element name="ZUB_SerienNummer" type="String20"/>
+				<xs:element name="ZUB_SerienNummerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="ZUB_Artikelbezeichnung" type="Freitext250" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

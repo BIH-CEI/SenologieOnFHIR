@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="BestaetigungBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente des Bausteins BestaetigungBasis. 
+			Elemente:
+			- BEG_Meldebestaetigung_ID: ID der Meldebestätigung
+			- BEG_DatumZeitMeldebestaetigung: Zeitstempel der Erstellung der Meldebestaetigung
+			- BEG_AusloesendeOpsListe: Kommaseparierte Liste der gemeldeten auslösespezifischen OPS-Kodes
+			- BEG_Produktzuordnung: Angabe zur Produktzuordnung, d.h. ob mindestens ein spezialangefertigtes Implantat oder ein Implantat mit Sonderzulassung gemeldet wurde
+			- BEG_Hash_String: Konkatenierter String verschiedener Elemente des Bausteins BestaetigungBasis
+			- BEG_Hash_Wert: Aus Hashstring gebildeter Hashwert zur nachtraeglichen Verifizierung
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="BestaetigungBasis">
+		<xs:sequence>
+			<xs:element name="BEG_Meldebestaetigung_ID" type="Meldebestaetigung"/>
+			<xs:element name="BEG_DatumZeitMeldebestaetigung" type="xs:dateTime"/>
+			<xs:element name="BEG_AusloesendeOpsListe" type="Freitext250" minOccurs="0"/>
+			<xs:element name="BEG_Produktzuordnung" type="xs:boolean"/>
+			<xs:element name="BEG_Hash_String" type="HashString"/>
+			<xs:element name="BEG_Hash_Wert" type="HashWert"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

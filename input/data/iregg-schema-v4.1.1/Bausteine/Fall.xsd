@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="Fall">
+	<xs:include schemaLocation="./FallBasis.xsd"/>
+	<xs:include schemaLocation="./AusloeserBasis.xsd"/>
+	<xs:include schemaLocation="./Patientenaufnahme.xsd"/>
+	<xs:include schemaLocation="./Operation.xsd"/>
+	<xs:include schemaLocation="./Entlassung.xsd"/>
+	<xs:include schemaLocation="./PostoperationAortenklappe.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt den Aufbau des Bausteins Fall, welcher aus Schemas "FallBasis", "Ausloeser", "Patientenaufnahme", "Operation", "PostoperationAortenklappe" und "Entlassung" besteht.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="Fall">
+		<xs:complexContent>
+			<xs:extension base="FallBasis">
+				<xs:sequence>
+					<xs:element name="ausloeser" type="AusloeserBasis" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="patientenaufnahme" type="Patientenaufnahme"/>
+					<xs:element name="operation" type="Operation" maxOccurs="unbounded"/>
+					<xs:element name="postoperationAortenklappe" type="PostoperationAortenklappe" minOccurs="0"/>
+					<xs:element name="entlassung" type="Entlassung"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

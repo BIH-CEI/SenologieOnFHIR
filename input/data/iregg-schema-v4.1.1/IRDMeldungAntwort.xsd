@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:irdma="http://xml.ir-d.de/irdma" targetNamespace="http://xml.ir-d.de/irdma" elementFormDefault="unqualified" id="MeldungAntwort">
+
+	<xs:include schemaLocation="./Bausteine/MeldungIrd.xsd"/>
+	<xs:include schemaLocation="./Bausteine/EmpfangsbestaetigungBasis.xsd"/>
+	<xs:include schemaLocation="./Bausteine/HinweisBasis.xsd"/>
+	<xs:include schemaLocation="./Bausteine/Warnung.xsd"/>
+	<xs:include schemaLocation="./Bausteine/BestaetigungBasis.xsd"/>
+	
+	<xs:complexType name="meldungAntwort">
+		<xs:sequence>
+			<xs:element name="meldung" type="irdma:MeldungIrd"/>
+			<xs:element name="empfangsbestaetigung" type="irdma:EmpfangsbestaetigungBasis"/>
+			<xs:choice>
+				<xs:element name="fehler" type="irdma:HinweisBasis" maxOccurs="unbounded"/>
+				<xs:element name="warnung" type="irdma:Warnung"/>
+				<xs:element name="bestaetigung" type="irdma:BestaetigungBasis"/>
+			</xs:choice>
+		</xs:sequence> 
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="Entlassung">
+	<xs:include schemaLocation="./EntlassungBasis.xsd"/>
+	<xs:include schemaLocation="./DiagnoseBrustimplantatBasis.xsd"/>
+	<xs:include schemaLocation="./DiagnoseEndoprotheseBasis.xsd"/>
+	<xs:include schemaLocation="./DiagnoseAortenklappeBasis.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt den Aufbau des Bausteins Entlassung, welcher aus den Schemas "EntlassungBasis", "DiagnoseBrustimplantatBasis",  "DiagnoseEndoprotheseBasis" und "DiagnoseAortenklappeBasis"besteht. 
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="Entlassung">
+		<xs:complexContent>
+			<xs:extension base="EntlassungBasis">
+				<xs:sequence>
+					<xs:element name="diagnoseBrustimplantat" type="DiagnoseBrustimplantatBasis" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="diagnoseEndoprothese" type="DiagnoseEndoprotheseBasis" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="diagnoseAortenklappe" type="DiagnoseAortenklappeBasis" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

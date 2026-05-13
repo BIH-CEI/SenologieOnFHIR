@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="ArtikelAortenklappeBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente eines ArtikelAortenklappeBasis. 
+			Es handelt sich um Aortenklappen-spezifische Angaben zum jeweiligen Artikel.
+			Elemente:
+			- AAK_HerstellerSchluessel: Hersteller	
+			- AAK_HerstellerUnbekannt: Hersteller ist unbekannt
+			- AAK_HerstellerSonstiger: Sonstiger Hersteller (Freitextangabe)
+			- AAK_KlappenTypSchluessel: Klappentyp Aortenklappenprothese
+			- AAK_ArtikelTypSchluessel: Artikeltyp
+			- AAK_ProthesenGroesse: Groesse der Herzklappenprothese
+			- AAK_ProthesenGroesseUnbekannt: Groesse der Herzklappenprothese ist unbekannt
+			- AAK_Dislokation: Klappe disloziert?
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ArtikelAortenklappeBasis">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="AAK_HerstellerSchluessel" type="String7"/>
+				<xs:element name="AAK_HerstellerUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="AAK_HerstellerSonstiger" type="Freitext250" minOccurs="0"/>
+			<xs:element name="AAK_KlappenTypSchluessel" type="enum_0391" minOccurs="0"/>
+			<xs:element name="AAK_ArtikelTypSchluessel" type="enum_0390" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="AAK_ProthesenGroesse" type="Zahl2"/>
+				<xs:element name="AAK_ProthesenGroesseUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="AAK_Dislokation" type="JaLeer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

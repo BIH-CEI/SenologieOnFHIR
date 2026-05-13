@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="Patientenaufnahme">
+
+	<xs:include schemaLocation="./PatientenaufnahmeBasis.xsd"/>
+	<xs:include schemaLocation="./PatientenaufnahmeBrustimplantatBasis.xsd"/>
+	<xs:include schemaLocation="./PatientenaufnahmeKardiologie.xsd"/>
+
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt den Aufbau des Bausteins Patientenaufnahme, welche aus den Schemas "PatientenaufnahmeBasis", "PatientenaufnahmeBrustimplantatBasis" und  "PatientenaufnahmeKardiologie" besteht.
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:complexType name="Patientenaufnahme">
+		<xs:complexContent>
+			<xs:extension base="PatientenaufnahmeBasis">
+				<xs:sequence>
+					<xs:element name="patientenaufnahmeBrustimplantat" type="PatientenaufnahmeBrustimplantatBasis" minOccurs="0"/>
+					<xs:element name="patientenaufnahmeKardiologie" type="PatientenaufnahmeKardiologie" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

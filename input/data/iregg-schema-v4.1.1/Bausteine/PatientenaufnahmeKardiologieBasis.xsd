@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Mit XMLSpy v2021 rel. 3 (x64) (http://www.altova.com) von  (Bundesministerium für Gesundheit) bearbeitet -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" id="PatientenaufnahmeKardiologieBasis">
+	<xs:include schemaLocation="../Datentypen/IRD_DatenTypen.xsd"/>
+	<xs:annotation>
+		<xs:documentation>
+			Dieses Schema beschreibt die Elemente des Bausteins PatientenaufnahmeKardiologieBasis. 
+			Es handelt sich um eine Kardiologie-spezifische Ergänzung, in der medizinische Daten zur Patientin bzw. zum Patienten angegeben werden, die bei der Aufnahme erhoben wurden.
+			Elemente:
+			- PKA_NyhaSchluessel: klinischer Schweregrad der Herzinsuffizienz (NYHA-Klassifikation)
+			- PKA_Lvef: LVEF
+			- PKA_LvefUnbekannt: LVEF unbekannt
+			- PKA_DiabetesSchluessel: Diabetes mellitus
+			- PKA_NierenersatzSchluessel: präprozedurale Nierenersatztherapie
+			- PKA_KreatininwertMgdl: Kreatininwert i.S. in mg/dl (präprozedural)
+			- PKA_KreatininwertMikromol: Kreatininwert i.S. in µmol/l (präprozedural)
+			- PKA_KreatininwertUnbekannt: Kreatinin Wert nicht gemessen
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="PatientenaufnahmeKardiologieBasis">
+		<xs:sequence>
+			<xs:element name="PKA_NyhaSchluessel" type="enum_0324"/>
+			<xs:choice>
+				<xs:element name="PKA_Lvef" type="Zahl3"/>
+				<xs:element name="PKA_LvefUnbekannt" type="JaLeer"/>
+			</xs:choice>
+			<xs:element name="PKA_DiabetesSchluessel" type="enum_0322"/>
+			<xs:element name="PKA_NierenersatzSchluessel" type="enum_0369"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="PKA_KreatininwertMgdl" type="Zahl2_1"/>
+				<xs:element name="PKA_KreatininwertMikromol" type="Zahl4"/>
+				<xs:element name="PKA_KreatininwertUnbekannt" type="JaLeer"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
