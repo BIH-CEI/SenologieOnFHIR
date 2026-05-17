@@ -32,14 +32,14 @@ Usage: #definition
 * group[=].population[+].id = "kb-12-initial-population"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#initial-population
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "Invasive oder DCIS"
+* group[=].population[=].criteria.expression = "HasKB12InitialPop"
 
 * group[=].population[+].id = "kb-12-denominator"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#denominator
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "KB_12_Nenner"
+* group[=].population[=].criteria.expression = "HasKB12Nenner"
 
 * group[=].population[+].id = "kb-12-numerator"
 * group[=].population[=].code = http://terminology.hl7.org/CodeSystem/measure-population#numerator
 * group[=].population[=].criteria.language = #text/cql-identifier
-* group[=].population[=].criteria.expression = "KB_12_Zaehler"
+* group[=].population[=].criteria.expression = "HasKB12Zaehler"
