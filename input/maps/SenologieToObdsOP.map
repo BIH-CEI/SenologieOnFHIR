@@ -35,9 +35,23 @@ group SenologieToObdsOP(source src : Bundle, target tgt : OBDSMeldung) {
     } "ConditionContext";
   } "EntryConditionTZ";
 
-  // OP: aus der Procedure-Ressource im Bundle
-  src.entry as entry where resource.is(Procedure) then {
+  // OP: aus der Procedure-Ressource im Bundle (nur Hauptprozedur, kein partOf).
+  // Subprozeduren (partOf gesetzt) sind keine eigene OP-Meldung — ihre OPS-Codes
+  // werden unten unter "EntrySubProcOPS" in dieselbe Meldung eingesammelt.
+  src.entry as entry where resource.is(Procedure) and resource.partOf.exists().not() then {
     entry.resource as procedure -> tgt.op as op then MapOP(procedure, op) "CallMapOP";
+
+    // Sub-Procedures: OPS-Codes von Procedure.partOf=Hauptprozedur einsammeln
+    src.entry as subEntry where resource.is(Procedure) and resource.partOf.reference.endsWith(entry.resource.id) then {
+      subEntry.resource as subProc then {
+        subProc.code as subCode then {
+          subCode.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' -> op.opsKodes as ops then {
+            c.code as cd -> ops.code = cd "SetSubOPSCode";
+            c.version as v -> ops.version = v "SetSubOPSVersion";
+          } "MapSubOPSCoding";
+        } "MapSubProcedureCode";
+      } "SubProcContext";
+    } "EntrySubProcOPS";
 
     // Bundle lookups moved from MapOP
     src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {

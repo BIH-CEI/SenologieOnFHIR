@@ -88,11 +88,27 @@ group SenologieToObdsMeldung(source src : Bundle, target tgt : OBDSMeldung) {
     } "VerlaufConditionContext";
   } "EntryVerlauf";
 
-  // --- OP: Procedure mit Senologie-Operation-Profil ---
-  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
+  // --- OP: Procedure mit Senologie-Operation-Profil (nur Hauptprozeduren, kein partOf) ---
+  // Subprozeduren (Procedure.partOf gesetzt) sind keine eigene OP-Meldung — ihre OPS-Codes
+  // werden in die OP-Meldung der Hauptprozedur eingesammelt (siehe "OPEntrySubProc" unten).
+  src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) and resource.partOf.exists().not() then {
     entry.resource as procedure then {
       procedure -> tgt.op as op then MapOP(procedure, op) "OPMap";
     } "OPProcedureContext";
+
+    // Sub-Prozeduren: alle Procedures im Bundle, deren partOf auf diese Hauptprozedur zeigt.
+    // Ihre OPS-Codes werden in tgt.op.opsKodes mit eingesammelt (oBDS hat 1 Meldung mit
+    // 1..n OPS-Codes, nicht n Meldungen).
+    src.entry as subEntry where resource.is(Procedure) and resource.partOf.reference.endsWith(entry.resource.id) then {
+      subEntry.resource as subProc then {
+        subProc.code as subCode then {
+          subCode.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/ops' -> tgt.op as op, op.opsKodes as ops then {
+            c.code as cd -> ops.code = cd "SetSubOPSCode";
+            c.version as v -> ops.version = v "SetSubOPSVersion";
+          } "MapSubOPSCoding";
+        } "MapSubProcedureCode";
+      } "SubProcContext";
+    } "OPEntrySubProc";
 
     // Bundle-Lookups fuer OP (Histologie, pTNM, ModulMamma)
     src.entry as histEntry where resource.is(Observation) and resource.code.coding.exists(code = '59847-4') then {
