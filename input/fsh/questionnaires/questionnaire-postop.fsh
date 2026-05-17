@@ -29,12 +29,36 @@ Usage: #inline
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
-// OPS-Hauptprozedur als zweites coding (BfArM OPS-Katalog).
-// Quelle ist typischerweise KIS / Medizincontrolling, nicht der Chirurg im Form.
-// Wenn leer bleibt → spaeter via Kodierfachkraft nachgereicht.
+// --- Contained template: OPS-Subprozedur (partOf Hauptprozedur) ---
+// Pattern aus MII Onko: SNOMED-Hauptprozedur traegt die klinische Semantik,
+// OPS-Subprozeduren haengen via partOf darunter. Mehrere Subprozeduren pro
+// OP-Sitzung moeglich (BET + SLNB + Markierung etc.).
+// Quelle: typischerweise KIS / Kodierfachkraft, asynchron — Form akzeptiert
+// 0..n Subprozeduren, leer-default ist OK.
+Instance: postop-ops-subprocedure-template
+InstanceOf: Procedure
+Usage: #inline
+
+* id = "postop-ops-subprocedure-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+* status = #completed
+
+// Patient ← QR.subject
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
+
+// partOf ← Hauptprozedur (via SDC fullUrl-Pattern; aufgeloest in Extract-Bundle)
+* partOf.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* partOf.reference.extension.valueString = "Procedure/postop-procedure-template"
+
+// code.coding = OPS aus dem Subprozedur-Item
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding[=].code.extension.valueString = "%resource.item.where(linkId='op-ops-code').answer.valueString"
+* code.coding[=].code.extension.valueString = "%context.item.where(linkId='ops-code').answer.valueString"
+
+// Freitext-Beschreibung optional
+* code.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.text.extension.valueString = "%context.item.where(linkId='ops-beschreibung').answer.valueString"
 
 // --- Contained template: Observation (Senologie_Operative_Komplikation) ---
 Instance: postop-komplikation-template
@@ -67,6 +91,7 @@ Usage: #definition
 
 // Contained templates
 * contained[+] = postop-procedure-template
+* contained[+] = postop-ops-subprocedure-template
 * contained[+] = postop-komplikation-template
 
 // Launch Context
@@ -161,21 +186,37 @@ Usage: #definition
 * item[=].item[=].required = true
 * item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.performedDateTime"
 
-// OPS-Hauptprozedur (BfArM-Katalog) — wird im Template als 2. coding neben SCT geschrieben.
-// Vermutlich vom Medizincontroller / Kodierfachkraft, nicht vom Chirurgen.
-// Form bleibt offen wenn unbekannt; Kodierung kann in 2. Workflow-Pass nachgereicht werden.
-* item[=].item[+].linkId = "op-ops-code"
-* item[=].item[=].text = "OPS-Hauptprozedur (BfArM, z.B. 5-870.21)"
-* item[=].item[=].type = #string
-* item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.coding"
-
 // OP-Beschreibung als Freitext (klinische Notiz)
 * item[=].item[+].linkId = "op-code-text"
 * item[=].item[=].text = "Beschreibung der OP (Freitext, z.B. \"BET links, Sentinel-LK-Biopsie\")"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 * item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.text"
+
+// OPS-Subprozeduren (repeating) — eine OP-Sitzung hat oft mehrere OPS-Codes
+// (BET 5-870.21 + SLNB 5-401.10 + Markierung 5-996.x). Quelle ist meist
+// das KIS / Medizincontrolling, asynchron befuellt. Form akzeptiert 0..n,
+// jede Subprozedur wird als eigene Procedure mit partOf=Hauptprozedur extrahiert.
+* item[=].item[+].linkId = "ops-subprozeduren"
+* item[=].item[=].text = "OPS-Subprozeduren (BfArM-Katalog, optional, vom Kodierer)"
+* item[=].item[=].type = #group
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+
+// Per Subprozedur: eigene Procedure via templateExtract → partOf=Hauptprozedur
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].item[=].extension[=].extension[+].url = "template"
+* item[=].item[=].extension[=].extension[=].valueReference = Reference(postop-ops-subprocedure-template)
+
+* item[=].item[=].item[+].linkId = "ops-code"
+* item[=].item[=].item[=].text = "OPS-Code (z.B. 5-870.21)"
+* item[=].item[=].item[=].type = #string
+* item[=].item[=].item[=].required = true
+
+* item[=].item[=].item[+].linkId = "ops-beschreibung"
+* item[=].item[=].item[=].text = "Beschreibung (optional, z.B. \"BET mit Drahtmarkierung\")"
+* item[=].item[=].item[=].type = #string
+* item[=].item[=].item[=].required = false
 
 // Intention
 * item[=].item[+].linkId = "op-intention"

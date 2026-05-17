@@ -38,6 +38,38 @@
           }
         }
       ],
+      "status": "completed"
+    },
+    {
+      "resourceType": "Procedure",
+      "id": "postop-ops-subprocedure-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+        ]
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "partOf": [
+        {
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "Procedure/postop-procedure-template"
+              }
+            ]
+          }
+        }
+      ],
       "code": {
         "coding": [
           {
@@ -46,12 +78,20 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='op-ops-code').answer.valueString"
+                  "valueString": "%context.item.where(linkId='ops-code').answer.valueString"
                 }
               ]
             }
           }
-        ]
+        ],
+        "_text": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%context.item.where(linkId='ops-beschreibung').answer.valueString"
+            }
+          ]
+        }
       },
       "status": "completed"
     },
@@ -229,18 +269,45 @@
           "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.performedDateTime"
         },
         {
-          "linkId": "op-ops-code",
-          "text": "OPS-Hauptprozedur (BfArM, z.B. 5-870.21)",
-          "type": "string",
-          "required": false,
-          "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.coding"
-        },
-        {
           "linkId": "op-code-text",
           "text": "Beschreibung der OP (Freitext, z.B. \"BET links, Sentinel-LK-Biopsie\")",
           "type": "string",
           "required": false,
           "definition": "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.text"
+        },
+        {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "template",
+                  "valueReference": {
+                    "reference": "#postop-ops-subprocedure-template"
+                  }
+                }
+              ],
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+            }
+          ],
+          "item": [
+            {
+              "linkId": "ops-code",
+              "text": "OPS-Code (z.B. 5-870.21)",
+              "type": "string",
+              "required": true
+            },
+            {
+              "linkId": "ops-beschreibung",
+              "text": "Beschreibung (optional, z.B. \"BET mit Drahtmarkierung\")",
+              "type": "string",
+              "required": false
+            }
+          ],
+          "linkId": "ops-subprozeduren",
+          "text": "OPS-Subprozeduren (BfArM-Katalog, optional, vom Kodierer)",
+          "type": "group",
+          "repeats": true,
+          "required": false
         },
         {
           "linkId": "op-intention",
