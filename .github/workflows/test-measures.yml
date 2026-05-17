@@ -1,0 +1,124 @@
+name: Test CQL Measures
+
+on:
+  push:
+    paths:
+      - 'input/cql/**'
+      - 'input/fsh/measures/**'
+      - 'input/fsh/profiles/**'
+      - 'input/fsh/examples/**'
+      - 'validation/extractions/expected/measures/**'
+      - 'scripts/cql/**'
+      - 'scripts/extractions/test-measure-snapshot.sh'
+      - '.github/workflows/test-measures.yml'
+  pull_request:
+    paths:
+      - 'input/cql/**'
+      - 'input/fsh/measures/**'
+      - 'input/fsh/profiles/**'
+      - 'input/fsh/examples/**'
+      - 'validation/extractions/expected/measures/**'
+      - 'scripts/cql/**'
+      - 'scripts/extractions/test-measure-snapshot.sh'
+  workflow_dispatch:
+
+jobs:
+  measure-snapshots:
+    name: Measure Snapshot Tests (CQL → $evaluate-measure auf Beispielpatienten)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node (for SUSHI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install SUSHI
+        run: npm install -g fsh-sushi
+
+      - name: Start CQL translation service
+        run: |
+          docker run -d --name cql-trans -p 18180:8080 cqframework/cql-translation-service
+          for i in {1..60}; do
+            if curl -sf http://localhost:18180/cql/translator -X POST \
+                -H "Content-Type: application/cql" \
+                --data 'library T version "1.0"' > /dev/null 2>&1; then
+              echo "Translator ready after ${i}s"; break
+            fi
+            sleep 1
+          done
+
+      - name: Build CQL Libraries (CQL + ELM embed)
+        run: python3 scripts/cql/build-libraries.py
+
+      - name: Build IG with SUSHI
+        run: sushi .
+
+      - name: Start HAPI with Clinical Reasoning
+        run: |
+          docker compose -f docker-compose.hapi.yaml up -d hapi
+          for i in {1..90}; do
+            if curl -sf http://localhost:8095/fhir/metadata > /dev/null 2>&1; then
+              echo "HAPI ready after ${i}s"; break
+            fi
+            sleep 2
+          done
+
+      - name: Load IG + Beispielpatienten in HAPI
+        run: |
+          FHIR=http://localhost:8095/fhir
+          for prefix in CodeSystem ValueSet ConceptMap StructureDefinition Library Measure; do
+            for f in fsh-generated/resources/${prefix}-*.json; do
+              [ -f "$f" ] || continue
+              rid=$(python3 -c "import json; print(json.load(open('$f'))['id'])" 2>/dev/null) || continue
+              curl -sf -o /dev/null -X PUT "$FHIR/$prefix/$rid" \
+                -H "Content-Type: application/fhir+json" --data-binary "@$f" 2>/dev/null || true
+            done
+          done
+
+          # Klinische Instanzen (Patient, Condition, Procedure, …)
+          for f in fsh-generated/resources/*.json; do
+            rtype=$(python3 -c "import json; print(json.load(open('$f')).get('resourceType',''))" 2>/dev/null)
+            case "$rtype" in
+              Patient|Condition|Observation|Procedure|MedicationStatement|MedicationAdministration|MedicationRequest|DiagnosticReport|Specimen|BodyStructure|FamilyMemberHistory|CarePlan|ServiceRequest|AdverseEvent|Encounter|Organization|Practitioner|PractitionerRole|RiskAssessment)
+                rid=$(python3 -c "import json; print(json.load(open('$f'))['id'])" 2>/dev/null) || continue
+                curl -sf -o /dev/null -X PUT "$FHIR/$rtype/$rid" \
+                  -H "Content-Type: application/fhir+json" --data-binary "@$f" 2>/dev/null || true
+                ;;
+            esac
+          done
+
+          # Indexing settle
+          sleep 10
+
+      - name: Verify HAPI has data
+        run: |
+          P=$(curl -sf "http://localhost:8095/fhir/Patient?_count=1" | python3 -c "import json,sys; print(len(json.load(sys.stdin).get('entry',[])))")
+          C=$(curl -sf "http://localhost:8095/fhir/Condition?_count=1" | python3 -c "import json,sys; print(len(json.load(sys.stdin).get('entry',[])))")
+          echo "Patient bundle entries: $P"
+          echo "Condition bundle entries: $C"
+          if [ "$P" = "0" ] || [ "$C" = "0" ]; then
+            echo "::error::HAPI hat keine Daten zum Auswerten"
+            exit 1
+          fi
+
+      - name: Run Measure snapshot tests
+        run: ./scripts/extractions/test-measure-snapshot.sh
+
+      - name: Upload diffs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: measure-snapshot-diffs
+          path: |
+            validation/extractions/actual/measures/
+            validation/extractions/expected/measures/
+          retention-days: 14
