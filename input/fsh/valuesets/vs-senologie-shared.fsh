@@ -942,9 +942,11 @@ Description: "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#385432009 "Nie"
-* $SCT#410516002 "Frueher"
-* $SCT#15240007 "Aktuell"
+// Lokale Codes — SCT hat kein passendes Tripel (473387004 'Never used
+// contraception' deckt nur "nie" ab, "frueher" und "aktuell" fehlen.)
+* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-nie "Nie"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-frueher "Frueher"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-aktuell "Aktuell"
 
 // ============================================================
 // Komplikations-Zeitpunkt (Intraoperativ / Postoperativ / Stationaer)
@@ -957,9 +959,11 @@ Description: "Phase der OP-Komplikation (intraoperativ / postoperativ direkt / s
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#262068006 "Intraoperativ"
-* $SCT#262061001 "Postoperativ"
-* $SCT#394656005 "Stationaer (Inpatient)"
+// SCT-Codes Ontoserver-verifiziert (vorher waren 262068006 'Preoperative'
+// und 262061001 ein Tippfehler — korrekt ist 262061000 'Postoperative period').
+* $SCT#277671009 "Intraoperative"
+* $SCT#262061000 "Postoperative period"
+* $SCT#394656005 "Inpatient care"
 
 // ============================================================
 // Dosis-Einheit (mg / mg/m2 / mg/kg) — UCUM-basiert
@@ -987,10 +991,11 @@ Description: "Applikationsroute der Medikation (intravenoes / subkutan / oral / 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-applikationsart"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#47625008 "Intravenoes (i.v.)"
-* $SCT#34206005 "Subkutan (s.c.)"
-* $SCT#26643006 "Oral (p.o.)"
-* $SCT#78421000 "Intramuskulaer (i.m.)"
+// SCT-Codes Ontoserver-verifiziert: Standard-Route-of-Administration-Codes.
+* $SCT#47625008 "Intravenous route"
+* $SCT#34206005 "Subcutaneous route"
+* $SCT#26643006 "Oral route"
+* $SCT#78421000 "Intramuscular route"
 
 // ============================================================
 // Nachsorge-Modus (Aktiv vs Passiv)
@@ -1003,8 +1008,9 @@ Description: "Nachsorge-Erhebung aktiv (persoenlich) vs passiv (Aktenlage/Regist
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#410546004 "Aktiv (persoenlich untersucht)"
-* $SCT#410547008 "Passiv (Aktenlage/Register)"
+// Lokale Codes — SCT 410546004/410547008 sind 'Discontinued' bzw. unrelated.
+* https://www.senologie.org/fhir/CodeSystem/form-helper#nachsorge-aktiv "Aktiv (persoenlich untersucht)"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#nachsorge-passiv "Passiv (Aktenlage/Register)"
 
 // ============================================================
 // Allgemeinzustand (Gut / Eingeschraenkt / Schlecht) — vereinfacht
@@ -1017,9 +1023,12 @@ Description: "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht)
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#102499006 "Gut"
-* $SCT#102500002 "Eingeschraenkt"
-* $SCT#162653009 "Schlecht"
+// Lokale Codes — die SCT-Picks waren falsch (102500002 = 'Good neonatal
+// condition', 162653009 = ungueltig). Fuer praezise Allgemeinzustands-
+// Erfassung ECOG verwenden (vs-senologie-ecog).
+* https://www.senologie.org/fhir/CodeSystem/form-helper#ag-gut "Gut"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#ag-eingeschraenkt "Eingeschraenkt"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#ag-schlecht "Schlecht"
 
 // ============================================================
 // Lymphoedem-Grad (Kein / I / II / III)
@@ -1032,7 +1041,10 @@ Description: "Schweregrad eines Lymphoedems (kein / Grad I / II / III) nach ISL-
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#260413007 "Kein Lymphoedem"
-* $SCT#260415000 "Grad I (latent/reversibel)"
-* $SCT#1140000 "Grad II (spontan irreversibel)"
-* $SCT#260416004 "Grad III (Elephantiasis)"
+// Lokale Codes nach ISL — SCT hat keine ISL-spezifischen Lymphoedem-Stages.
+// (Vorherige Picks 260413007/260415000/1140000/260416004 waren generische
+// Qualifier oder ungueltig — 1140000 ist kein valider SCT-Code.)
+* https://www.senologie.org/fhir/CodeSystem/form-helper#lymphoedem-0 "Kein Lymphoedem (ISL Stage 0)"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#lymphoedem-1 "Grad I (reversibel)"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#lymphoedem-2 "Grad II (spontan irreversibel)"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#lymphoedem-3 "Grad III (Elephantiasis)"
