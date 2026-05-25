@@ -1,0 +1,216 @@
+#!/usr/bin/env python3
+"""Audit SCT/LOINC codes in all Senologie ValueSets against Ontoserver.
+
+Reads ValueSet-vs-senologie-*.json from fsh-generated/resources/, extracts
+every (system, code, claimed-display) triple, and looks up the official
+display via Ontoserver $lookup. Reports:
+
+  - INVALID codes (HTTP 404 from Ontoserver — code does not exist)
+  - CRITICAL mismatches (display refers to a completely different concept,
+    e.g. "Drahtmarkierung" → "Prosthetic arthroplasty of the hip")
+  - TRANSLATION mismatches (display is a clean German translation of the
+    official English label — these are usually OK, just flagged)
+
+Exit codes:
+  0  no invalid codes, no critical mismatches
+  1  invalid codes OR critical mismatches present
+  2  Ontoserver unreachable
+
+Usage:
+  python3 scripts/audit-valueset-codes.py [--report PATH]
+
+Env:
+  ONTOSERVER_URL  default: https://r4.ontoserver.csiro.au/fhir
+"""
+from __future__ import annotations
+import argparse
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+RESOURCES = ROOT / "fsh-generated" / "resources"
+ONTO = os.environ.get("ONTOSERVER_URL", "https://r4.ontoserver.csiro.au/fhir")
+LOOKUP_URL = f"{ONTO}/CodeSystem/$lookup"
+
+# We only verify code-systems Ontoserver knows about
+SUPPORTED_SYSTEMS = {
+    "http://snomed.info/sct": "SCT",
+    "http://loinc.org": "LOINC",
+}
+
+# Heuristic for "is this just a translation?" — strip diacritics, punctuation,
+# loose contains-match. If the claimed-display loosely matches the actual, OR
+# is a known German translation, we treat it as translation-mismatch (warning,
+# not critical).
+def _norm(s: str) -> str:
+    s = (s or "").lower()
+    s = (s.replace("ä", "a").replace("ö", "o").replace("ü", "u").replace("ß", "ss"))
+    s = re.sub(r"[()/.,\-_:\s]", "", s)
+    return s
+
+
+# Known German↔English clinical synonyms (extend as we find more)
+GERMAN_SYNONYMS = {
+    "lunge": "lung", "leber": "liver", "knochen": "bone", "hirn": "brain",
+    "ja": "yes", "nein": "no", "mamma": "breast", "mammakarzinom": "malignantneoplasmofbreast",
+    "links": "left", "rechts": "right", "beidseits": "rightandleft",
+    "stanzbiopsie": "coreneedlebiopsy", "vakuumbiopsie": "vacuumassistedbiopsy",
+    "feinnadelaspiration": "needleaspiration", "fna": "needleaspiration",
+    "zytologie": "cytologicmaterial",
+    "kurativ": "curative", "intravenoes": "intravenous", "intravenos": "intravenous",
+    "intramuskulaer": "intramuscular", "intramuskular": "intramuscular",
+    "subkutan": "subcutaneous", "oral": "oral",
+    "gynäkomastie": "gynaecomastia", "gynakomastie": "gynaecomastia",
+}
+
+CRITICAL_KEYWORDS_OK_OVERLAP = [
+    "lung", "liver", "bone", "brain", "breast", "ductal", "lobular",
+    "fibroadenoma", "cyst", "mastitis", "abscess", "carcinoma", "lymphedema",
+    "operative", "surgical", "biopsy", "needle", "core", "specimen",
+    "intraductal", "yes", "no", "left", "right", "lateral", "outer", "inner",
+    "upper", "lower", "central", "intravenous", "intramuscular", "oral",
+    "subcutaneous", "inpatient", "preoperative", "postoperative",
+]
+
+
+def lookup(system: str, code: str) -> tuple[str, str]:
+    url = f"{LOOKUP_URL}?system={urllib.parse.quote(system, safe='')}&code={urllib.parse.quote(code, safe='')}"
+    try:
+        with urllib.request.urlopen(url, timeout=20) as r:
+            data = json.loads(r.read())
+        if data.get("resourceType") == "Parameters":
+            for p in data.get("parameter", []):
+                if p.get("name") == "display":
+                    return ("ok", p.get("valueString", ""))
+        return ("not_found", "")
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return ("invalid", "")
+        return ("http_err", str(e.code))
+    except Exception as e:
+        return ("err", f"{type(e).__name__}: {str(e)[:60]}")
+
+
+def classify(claimed: str, actual: str) -> str:
+    """Decide if a mismatch is critical, translation, or OK."""
+    cn, an = _norm(claimed), _norm(actual)
+    if not cn or not an:
+        return "ok"
+    if cn == an or cn in an or an in cn:
+        return "ok"
+    # German synonym substitution
+    for de, en in GERMAN_SYNONYMS.items():
+        if de in cn and en in an:
+            return "translation"
+    # Heuristic: shared anatomy/procedure keywords → likely translation
+    for kw in CRITICAL_KEYWORDS_OK_OVERLAP:
+        if kw in cn and kw in an:
+            return "translation"
+    # Loose prefix overlap (e.g. "Stanzbiopsie" vs "Stanzbiopsy")
+    if cn[:5] == an[:5] and len(cn) >= 5:
+        return "translation"
+    # Otherwise: critical — claimed and actual seem unrelated
+    return "critical"
+
+
+def collect_records() -> list[tuple[str, str, str, str]]:
+    records = []
+    for f in sorted(RESOURCES.glob("ValueSet-vs-senologie-*.json")):
+        vs = json.loads(f.read_text())
+        vs_id = vs.get("id", "?")
+        for inc in (vs.get("compose", {}) or {}).get("include", []):
+            sys = inc.get("system", "")
+            if sys not in SUPPORTED_SYSTEMS:
+                continue
+            for c in inc.get("concept", []) or []:
+                records.append((vs_id, sys, c.get("code", ""), c.get("display", "")))
+    return records
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--report", default=None, help="Write full report markdown to this path")
+    ap.add_argument("--rate-limit", type=float, default=0.3, help="Seconds between Ontoserver requests")
+    args = ap.parse_args()
+
+    # Sanity-ping Ontoserver
+    try:
+        with urllib.request.urlopen(f"{ONTO}/metadata", timeout=10) as r:
+            r.read(50)
+    except Exception as e:
+        print(f"ERROR: Ontoserver not reachable at {ONTO}: {e}", file=sys.stderr)
+        return 2
+
+    records = collect_records()
+    print(f"Checking {len(records)} SCT/LOINC codes against Ontoserver...", file=sys.stderr)
+
+    invalid, critical, translation = [], [], []
+    for i, (vs_id, sys_url, code, claimed) in enumerate(records):
+        status, actual = lookup(sys_url, code)
+        time.sleep(args.rate_limit)
+        if status in ("invalid", "not_found"):
+            invalid.append((vs_id, sys_url, code, claimed))
+        elif status == "ok":
+            cls = classify(claimed, actual)
+            if cls == "critical":
+                critical.append((vs_id, sys_url, code, claimed, actual))
+            elif cls == "translation":
+                translation.append((vs_id, sys_url, code, claimed, actual))
+
+    lines = []
+    lines.append(f"# ValueSet Code Audit Report")
+    lines.append("")
+    lines.append(f"Codes checked: **{len(records)}** | Invalid: **{len(invalid)}** | Critical mismatches: **{len(critical)}** | Translations: **{len(translation)}**")
+    lines.append("")
+
+    if invalid:
+        lines.append("## ❌ INVALID — code does not exist in CodeSystem")
+        lines.append("| VS | System | Code | Claimed display |")
+        lines.append("|---|---|---|---|")
+        for vs_id, sys_url, code, claimed in invalid:
+            short = SUPPORTED_SYSTEMS[sys_url]
+            lines.append(f"| `{vs_id}` | {short} | `{code}` | {claimed} |")
+        lines.append("")
+
+    if critical:
+        lines.append("## ⚠️ CRITICAL — code resolves to a completely different concept")
+        lines.append("| VS | System | Code | Claimed | Actual SCT/LOINC display |")
+        lines.append("|---|---|---|---|---|")
+        for vs_id, sys_url, code, claimed, actual in critical:
+            short = SUPPORTED_SYSTEMS[sys_url]
+            lines.append(f"| `{vs_id}` | {short} | `{code}` | {claimed} | **{actual}** |")
+        lines.append("")
+
+    if translation:
+        lines.append("## 💬 Translation/label difference (likely OK — manual verification)")
+        lines.append("| VS | System | Code | Claimed (DE/label) | Official (EN) |")
+        lines.append("|---|---|---|---|---|")
+        for vs_id, sys_url, code, claimed, actual in translation:
+            short = SUPPORTED_SYSTEMS[sys_url]
+            lines.append(f"| `{vs_id}` | {short} | `{code}` | {claimed} | {actual} |")
+        lines.append("")
+
+    report = "\n".join(lines)
+    if args.report:
+        Path(args.report).write_text(report)
+        print(f"Wrote report → {args.report}", file=sys.stderr)
+    else:
+        print(report)
+
+    print("", file=sys.stderr)
+    print(f"Summary: {len(invalid)} invalid, {len(critical)} critical, {len(translation)} translation", file=sys.stderr)
+
+    if invalid or critical:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,70 @@
+name: Audit ValueSet Codes (Ontoserver)
+
+on:
+  push:
+    paths:
+      - 'input/fsh/valuesets/**'
+      - 'input/fsh/terminology/**'
+      - 'scripts/audit-valueset-codes.py'
+      - '.github/workflows/audit-valuesets.yml'
+  pull_request:
+    paths:
+      - 'input/fsh/valuesets/**'
+      - 'input/fsh/terminology/**'
+      - 'scripts/audit-valueset-codes.py'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    name: SCT/LOINC codes verifizieren
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Nicht-blockierend, solange wir die Code-Sanierung noch in Arbeit haben
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node (for SUSHI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install SUSHI
+        run: npm install -g fsh-sushi
+
+      - name: Build IG
+        run: sushi .
+
+      - name: Audit ValueSet codes
+        run: |
+          mkdir -p validation/audit
+          python3 scripts/audit-valueset-codes.py --report validation/audit/valueset-codes-ci-report.md || true
+          # Print summary to job log
+          head -3 validation/audit/valueset-codes-ci-report.md
+          echo "---"
+          grep "^##" validation/audit/valueset-codes-ci-report.md || echo "(no sections — all clean!)"
+
+      - name: Diff against baseline
+        run: |
+          if [ -f validation/audit/valueset-codes-baseline.md ]; then
+            if ! diff -q validation/audit/valueset-codes-baseline.md validation/audit/valueset-codes-ci-report.md > /dev/null; then
+              echo "::warning::ValueSet audit deviates from baseline"
+              diff -u validation/audit/valueset-codes-baseline.md validation/audit/valueset-codes-ci-report.md | head -80
+            else
+              echo "Audit matches baseline."
+            fi
+          fi
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: valueset-audit-report
+          path: validation/audit/valueset-codes-ci-report.md
+          retention-days: 30
