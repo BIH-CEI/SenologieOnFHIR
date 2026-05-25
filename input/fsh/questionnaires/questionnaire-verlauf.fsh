@@ -84,17 +84,13 @@ Usage: #definition
 * item[=].item[=].text = "Art der Kontrolle"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueString = "6-Monats-Kontrolle"
-* item[=].item[=].answerOption[+].valueString = "12-Monats-Kontrolle"
-* item[=].item[=].answerOption[+].valueString = "Außerplanmäßig"
-* item[=].item[=].answerOption[+].valueString = "Abschlusskontrolle"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrolltermin-art"
 
 * item[=].item[+].linkId = "kontrolltermin-art-nachsorge"
 * item[=].item[=].text = "Art der Nachsorge"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].answerOption[+].valueString = "Aktiv (persönlich untersucht)"
-* item[=].item[=].answerOption[+].valueString = "Passiv (aus Akten/Registern)"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
 
 * item[=].item[+].linkId = "kontrolltermin-monate-seit-ed"
 * item[=].item[=].text = "Monate seit Erstdiagnose"
@@ -119,17 +115,14 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#365275006 "General well-being finding"
-* item[=].item[=].answerOption[+].valueString = "Gut"
-* item[=].item[=].answerOption[+].valueString = "Eingeschränkt"
-* item[=].item[=].answerOption[+].valueString = "Schlecht"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
 
 * item[=].item[+].linkId = "klinisch-lokalbefund"
 * item[=].item[=].text = "Lokalbefund Brust"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#116339002 "Breast finding"
-* item[=].item[=].answerOption[+].valueString = "Unauffällig"
-* item[=].item[=].answerOption[+].valueString = "Auffällig"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
 * item[=].item[+].linkId = "klinisch-lokalbefund-beschreibung"
 * item[=].item[=].text = "Lokalbefund Beschreibung"
@@ -137,17 +130,14 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "klinisch-lokalbefund"
 * item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerString = "Auffällig"
+* item[=].item[=].enableWhen[=].answerCoding.code = #25719005
 
 * item[=].item[+].linkId = "klinisch-lymphoedem"
 * item[=].item[=].text = "Lymphödem"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#449620005 "Lymphedema of upper limb"
-* item[=].item[=].answerOption[+].valueString = "Kein"
-* item[=].item[=].answerOption[+].valueString = "Grad I"
-* item[=].item[=].answerOption[+].valueString = "Grad II"
-* item[=].item[=].answerOption[+].valueString = "Grad III"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
 
 * item[=].item[+].linkId = "klinisch-armumfangsdifferenz"
 * item[=].item[=].text = "Armumfangsdifferenz (cm)"
@@ -221,11 +211,7 @@ Usage: #definition
 * item[=].item[=].enableWhen[+].question = "tumorstatus-fernmetastasen"
 * item[=].item[=].enableWhen[=].operator = #=
 * item[=].item[=].enableWhen[=].answerBoolean = true
-* item[=].item[=].answerOption[+].valueString = "Lunge"
-* item[=].item[=].answerOption[+].valueString = "Leber"
-* item[=].item[=].answerOption[+].valueString = "Knochen"
-* item[=].item[=].answerOption[+].valueString = "Hirn"
-* item[=].item[=].answerOption[+].valueString = "Sonstige"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-fernmetastasen-lokalisation"
 
 // ============================================================
 // Group 4: Weiteres Vorgehen

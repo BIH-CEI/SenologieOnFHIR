@@ -155,18 +155,16 @@ Usage: #definition
 * item[=].item[=].text = "Therapiestatus"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "Abgeschlossen"
-* item[=].item[=].answerOption[+].valueString = "Abgebrochen"
-* item[=].item[=].answerOption[+].valueString = "Laufend"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 
-// Abbruchgrund (conditional)
+// Abbruchgrund (conditional — enableWhen prueft Status-Code "abgebrochen")
 * item[=].item[+].linkId = "abbruchgrund"
 * item[=].item[=].text = "Abbruchgrund"
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "therapiestatus"
 * item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerString = "Abgebrochen"
+* item[=].item[=].enableWhen[=].answerCoding.code = #abgebrochen
 
 // ============================================================
 // Group 2: Medikamentengabe → MedicationStatement (repeating)
@@ -200,9 +198,7 @@ Usage: #definition
 * item[=].item[=].text = "Dosis-Einheit"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "mg"
-* item[=].item[=].answerOption[+].valueString = "mg/m²"
-* item[=].item[=].answerOption[+].valueString = "mg/kg"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-dosis-einheit"
 
 // Zyklus
 * item[=].item[+].linkId = "zyklus-nummer"
@@ -227,9 +223,7 @@ Usage: #definition
 * item[=].item[=].text = "Applikationsart"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "i.v."
-* item[=].item[=].answerOption[+].valueString = "s.c."
-* item[=].item[=].answerOption[+].valueString = "p.o."
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-applikationsart"
 
 // ============================================================
 // Anmerkungen

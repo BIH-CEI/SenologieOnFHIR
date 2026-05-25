@@ -212,9 +212,7 @@ Usage: #definition
 * item[=].item[=].text = "Therapiestatus"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "Abgeschlossen"
-* item[=].item[=].answerOption[+].valueString = "Abgebrochen"
-* item[=].item[=].answerOption[+].valueString = "Laufend"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 
 * item[=].item[+].linkId = "rt-abbruchgrund"
 * item[=].item[=].text = "Abbruchgrund"

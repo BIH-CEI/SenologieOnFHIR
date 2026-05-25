@@ -97,14 +97,12 @@ Usage: #definition
 * item[=].text = "Art der geplanten Operation"
 * item[=].type = #string
 * item[=].required = true
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.code.text"
 
 // Seite (korrigierte SCT-Codes)
 * item[+].linkId = "seitenlokalisation"
 * item[=].text = "Seite"
 * item[=].type = #choice
 * item[=].required = true
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.bodySite"
 * item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
 // Tumor-Entität(en) — User picked die zu operierenden BodyStructures
@@ -122,28 +120,24 @@ Usage: #definition
 * item[=].text = "Intention / Grund der OP"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.reasonCode.text"
 
 // OP-Dauer (Minuten)
 * item[+].linkId = "op-dauer-min"
 * item[=].text = "Geplante OP-Dauer (Minuten)"
 * item[=].type = #integer
 * item[=].required = false
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:operationsDuration.valueDuration.value"
 
 // CA-Behandlung / Tumorkonferenz-Zustimmung
 * item[+].linkId = "tumor-conference-consent"
 * item[=].text = "CA-Behandlung / Tumorkonferenz-Zustimmung erteilt"
 * item[=].type = #boolean
 * item[=].required = false
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:tumorConferenceConsent.valueCodeableConcept"
 
 // Präoperative Markierung
 * item[+].linkId = "pre-op-markierung"
 * item[=].text = "Präoperative Markierung geplant"
 * item[=].type = #choice
 * item[=].required = false
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpMarkierung.valueCodeableConcept"
 * item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 
 // Planungsdetails / Notes
@@ -152,18 +146,15 @@ Usage: #definition
 * item[=].type = #text
 * item[=].required = false
 * item[=].repeats = true
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.note.text"
 
 // Präoperative Blutabnahme
 * item[+].linkId = "pre-op-blutabnahme"
 * item[=].text = "Präoperative Blutabnahme geplant"
 * item[=].type = #boolean
 * item[=].required = false
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpBlutabnahme.valueCodeableConcept"
 
 // Präoperative Antibiotikatherapie
 * item[+].linkId = "pre-op-antibiotika"
 * item[=].text = "Präoperative Antibiotikatherapie"
 * item[=].type = #string
 * item[=].required = false
-* item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung#ServiceRequest.extension:preOpAntibiotikatherapie.valueString"

@@ -112,11 +112,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#89247-1 "ECOG Performance Status"
-* item[=].item[=].answerOption[+].valueString = "0 — Normale Aktivität"
-* item[=].item[=].answerOption[+].valueString = "1 — Einschränkung bei Anstrengung"
-* item[=].item[=].answerOption[+].valueString = "2 — Gehfähig, nicht arbeitsfähig"
-* item[=].item[=].answerOption[+].valueString = "3 — Begrenzte Selbstversorgung"
-* item[=].item[=].answerOption[+].valueString = "4 — Völlig pflegebedürftig"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ecog"
 
 // ============================================================
 // Group 2: Raucherstatus → Observation (ISiK-kompatibel)
@@ -157,14 +153,12 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#42798-9 "Age at menarche"
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueQuantity"
 
 * item[=].item[+].linkId = "menopausenstatus"
 * item[=].item[=].text = "Menopausenstatus"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#42802-9 "Age at menopause"
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueCodeableConcept"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus-erweitert"
 
 * item[=].item[+].linkId = "gravida"
@@ -172,14 +166,12 @@ Usage: #definition
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#11996-6 "Pregnancies"
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueQuantity"
 
 * item[=].item[+].linkId = "para"
 * item[=].item[=].text = "Para (Geburten)"
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#11977-6 "Parity"
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese#Observation.component.valueQuantity"
 
 * item[=].item[+].linkId = "hormonersatztherapie"
 * item[=].item[=].text = "Hormonersatztherapie (HRT)"
@@ -192,9 +184,7 @@ Usage: #definition
 * item[=].item[=].text = "Hormonelle Verhütung"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].answerOption[+].valueString = "Nie"
-* item[=].item[=].answerOption[+].valueString = "Früher"
-* item[=].item[=].answerOption[+].valueString = "Aktuell"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
 
 * item[=].item[+].linkId = "stilldauer"
 * item[=].item[=].text = "Stilldauer (Monate)"

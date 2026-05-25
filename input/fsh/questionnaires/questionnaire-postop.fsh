@@ -157,7 +157,6 @@ Usage: #definition
 * item[=].item[=].text = "Art der Operation"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.category"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
 
 // Seite (korrigierte SCT-Codes)
@@ -165,7 +164,6 @@ Usage: #definition
 * item[=].item[=].text = "Seite"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.bodySite"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
 // Tumor-Entität(en) — User picked die operierten BodyStructures aus Bildgebung
@@ -184,14 +182,12 @@ Usage: #definition
 * item[=].item[=].text = "OP-Datum"
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.performedDateTime"
 
 // OP-Beschreibung als Freitext (klinische Notiz)
 * item[=].item[+].linkId = "op-code-text"
 * item[=].item[=].text = "Beschreibung der OP (Freitext, z.B. \"BET links, Sentinel-LK-Biopsie\")"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.code.text"
 
 // OPS-Subprozeduren (repeating) — eine OP-Sitzung hat oft mehrere OPS-Codes
 // (BET 5-870.21 + SLNB 5-401.10 + Markierung 5-996.x). Quelle ist meist
@@ -223,7 +219,6 @@ Usage: #definition
 * item[=].item[=].text = "OP-Intention"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.extension:Intention.valueCodeableConcept"
 * item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-operation-intention"
 
 // Outcome / R-Status (strukturiert mit SCT-Codes)
@@ -233,7 +228,6 @@ Usage: #definition
 * item[=].item[=].text = "Resektionsstatus (R)"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.outcome"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 
 // Sentinel-LK-Status (separat, Freitext oder strukturiert)
@@ -247,7 +241,6 @@ Usage: #definition
 * item[=].item[=].text = "Drainage"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operation#Procedure.note.text"
 
 * item[=].item[+].linkId = "followup-verband"
 * item[=].item[=].text = "Verband"
@@ -287,7 +280,6 @@ Usage: #definition
 * item[=].item[=].text = "Clavien-Dindo-Grad"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.valueCodeableConcept"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clavien-dindo"
 
 // Datum der Komplikation
@@ -295,29 +287,22 @@ Usage: #definition
 * item[=].item[=].text = "Datum der Komplikation"
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.effectiveDateTime"
 
 // Zeitpunkt (method)
 * item[=].item[+].linkId = "komplikation-zeitpunkt"
 * item[=].item[=].text = "Zeitpunkt"
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.method"
-* item[=].item[=].answerOption[+].valueString = "Intraoperativ"
-* item[=].item[=].answerOption[+].valueString = "Postoperativ"
-* item[=].item[=].answerOption[+].valueString = "Stationaer"
-* item[=].item[=].answerOption[+].valueString = "Ambulant"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
 
 // Art der Komplikation (Freitext)
 * item[=].item[+].linkId = "komplikation-art"
 * item[=].item[=].text = "Art der Komplikation (Freitext)"
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.component.valueCodeableConcept.text"
 
 // Konsequenz / Kommentar
 * item[=].item[+].linkId = "komplikation-kommentar"
 * item[=].item[=].text = "Konsequenz / Kommentar"
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
-* item[=].item[=].definition = "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation#Observation.note.text"

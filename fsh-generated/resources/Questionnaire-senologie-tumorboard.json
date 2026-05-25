@@ -3,7 +3,7 @@
   "id": "senologie-tumorboard",
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard",
   "title": "Fragebogen: Tumorboard Empfehlung",
-  "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinären Tumorkonferenz. Nutzt SDC Template-based Extraction mit contained CarePlan und templateExtractValue-Annotationen.",
+  "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinaeren Tumorkonferenz. Pro Therapie-Empfehlung mit Beschluss-Status (empfohlen/bedingt/nicht/nicht diskutiert) und Begruendung. SDC Template-based Extraction zu CarePlan.",
   "subjectType": [
     "Patient"
   ],
@@ -53,6 +53,28 @@
       "activity": [
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-op-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-op-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "ServiceRequest",
             "code": {
               "coding": [
@@ -68,7 +90,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-op').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-op-begruendung').answer.valueString"
                 }
               ]
             },
@@ -77,6 +99,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "ServiceRequest",
             "code": {
               "coding": [
@@ -92,7 +136,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-strahlentherapie').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-begruendung').answer.valueString"
                 }
               ]
             },
@@ -101,6 +145,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-endokrin-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-endokrin-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "MedicationRequest",
             "code": {
               "coding": [
@@ -116,7 +182,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-endokrin').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-endokrin-begruendung').answer.valueString"
                 }
               ]
             },
@@ -125,6 +191,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "MedicationRequest",
             "code": {
               "coding": [
@@ -140,7 +228,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-chemotherapie').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-begruendung').answer.valueString"
                 }
               ]
             },
@@ -149,6 +237,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "MedicationRequest",
             "code": {
               "coding": [
@@ -164,7 +274,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-zielgerichtet').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-begruendung').answer.valueString"
                 }
               ]
             },
@@ -173,6 +283,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "MedicationRequest",
             "code": {
               "coding": [
@@ -188,7 +320,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-immuntherapie').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-begruendung').answer.valueString"
                 }
               ]
             },
@@ -197,6 +329,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-diagnostik-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-diagnostik-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "ServiceRequest",
             "code": {
               "coding": [
@@ -212,7 +366,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-diagnostik').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-diagnostik-begruendung').answer.valueString"
                 }
               ]
             },
@@ -221,6 +375,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-studie-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-studie-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "ServiceRequest",
             "code": {
               "coding": [
@@ -236,7 +412,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-studie').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-studie-begruendung').answer.valueString"
                 }
               ]
             },
@@ -245,6 +421,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-genetik-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-genetik-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "ServiceRequest",
             "code": {
               "coding": [
@@ -260,7 +458,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-genetik').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-genetik-begruendung').answer.valueString"
                 }
               ]
             },
@@ -269,6 +467,28 @@
         },
         {
           "detail": {
+            "statusReason": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-nachsorge-status').answer.valueCoding.system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "%resource.item.descendants().where(linkId='empfehlung-nachsorge-status').answer.valueCoding.code"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
             "kind": "Appointment",
             "code": {
               "coding": [
@@ -284,7 +504,7 @@
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                  "valueString": "%resource.item.where(linkId='empfehlung-nachsorge').answer.valueString"
+                  "valueString": "%resource.item.descendants().where(linkId='empfehlung-nachsorge-begruendung').answer.valueString"
                 }
               ]
             },
@@ -357,10 +577,6 @@
         {
           "url": "type",
           "valueCode": "Condition"
-        },
-        {
-          "url": "description",
-          "valueString": "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -446,71 +662,210 @@
       "required": false
     },
     {
-      "linkId": "empfehlung-op",
-      "text": "Operative Therapie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-op-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-op-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-op-group",
+      "text": "Operative Therapie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-strahlentherapie",
-      "text": "Strahlentherapie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-strahlentherapie-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-strahlentherapie-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-strahlentherapie-group",
+      "text": "Strahlentherapie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-endokrin",
-      "text": "Endokrine Therapie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-endokrin-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-endokrin-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-endokrin-group",
+      "text": "Endokrine Therapie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-chemotherapie",
-      "text": "Chemotherapie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-chemotherapie-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-chemotherapie-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-chemotherapie-group",
+      "text": "Chemotherapie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-zielgerichtet",
-      "text": "Zielgerichtete Therapie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-zielgerichtet-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-zielgerichtet-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-zielgerichtet-group",
+      "text": "Zielgerichtete Therapie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-immuntherapie",
-      "text": "Immuntherapie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-immuntherapie-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-immuntherapie-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-immuntherapie-group",
+      "text": "Immuntherapie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-diagnostik",
-      "text": "Weitere Diagnostik empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-diagnostik-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-diagnostik-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-diagnostik-group",
+      "text": "Weitere Diagnostik",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-studie",
-      "text": "Klinische Studie empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-studie-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-studie-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-studie-group",
+      "text": "Klinische Studie",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-genetik",
-      "text": "Genetische Untersuchung empfohlen",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-genetik-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-genetik-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-genetik-group",
+      "text": "Genetische Untersuchung",
+      "type": "group"
     },
     {
-      "linkId": "empfehlung-nachsorge",
-      "text": "Nachsorge-Empfehlung",
-      "type": "string",
-      "required": false
+      "item": [
+        {
+          "linkId": "empfehlung-nachsorge-status",
+          "text": "Status der Empfehlung",
+          "type": "choice",
+          "required": false,
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+        },
+        {
+          "linkId": "empfehlung-nachsorge-begruendung",
+          "text": "Begruendung / Details (optional)",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "linkId": "empfehlung-nachsorge-group",
+      "text": "Nachsorge",
+      "type": "group"
     },
     {
       "linkId": "empfehlung-sonstiges",
       "text": "Sonstige Anmerkungen",
       "type": "text",
-      "required": false,
-      "repeats": true
+      "required": false
     }
   ],
   "name": "QuestTumorboard",

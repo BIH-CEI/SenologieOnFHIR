@@ -914,3 +914,125 @@ Description: "Histopathologische B-Klassifikation der Mamma-Biopsie nach NHSBSP 
 * $SCT#1145403004 "B4 — Malignitätsverdächtig"
 * $SCT#109889007 "B5a — Maligne in-situ-Karzinome"
 * $SCT#254837009 "B5b — Maligne invasiv"
+
+// ============================================================
+// Tumorboard-Empfehlung Status (Beschlusszustand pro Therapieoption)
+// ============================================================
+ValueSet: VS_Senologie_Tumorboard_Empfehlung_Status
+Id: vs-senologie-tumorboard-empfehlung-status
+Title: "VS Senologie Tumorboard Empfehlung Status"
+Description: "Beschlusszustand pro Therapie-Empfehlung im Tumorboard (empfohlen / bedingt empfohlen / nicht empfohlen / nicht diskutiert)."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen "Empfohlen"
+* https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen "Bedingt empfohlen"
+* https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#nicht-empfohlen "Nicht empfohlen"
+* https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#nicht-diskutiert "Nicht diskutiert"
+
+// ============================================================
+// Hormonelle Kontrazeption Status (Nie / Frueher / Aktuell)
+// ============================================================
+ValueSet: VS_Senologie_Kontrazeption_Status
+Id: vs-senologie-kontrazeption-status
+Title: "VS Senologie Kontrazeption Status"
+Description: "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell)."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* $SCT#385432009 "Nie"
+* $SCT#410516002 "Frueher"
+* $SCT#15240007 "Aktuell"
+
+// ============================================================
+// Komplikations-Zeitpunkt (Intraoperativ / Postoperativ / Stationaer)
+// ============================================================
+ValueSet: VS_Senologie_Komplikation_Zeitpunkt
+Id: vs-senologie-komplikation-zeitpunkt
+Title: "VS Senologie Komplikations-Zeitpunkt"
+Description: "Phase der OP-Komplikation (intraoperativ / postoperativ direkt / stationaerer Aufenthalt)."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* $SCT#262068006 "Intraoperativ"
+* $SCT#262061001 "Postoperativ"
+* $SCT#394656005 "Stationaer (Inpatient)"
+
+// ============================================================
+// Dosis-Einheit (mg / mg/m2 / mg/kg) — UCUM-basiert
+// ============================================================
+ValueSet: VS_Senologie_Dosis_Einheit
+Id: vs-senologie-dosis-einheit
+Title: "VS Senologie Dosis-Einheit"
+Description: "Standard-Dosis-Einheiten fuer Onkologie-Medikation (UCUM)."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-dosis-einheit"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* http://unitsofmeasure.org#mg "mg"
+* http://unitsofmeasure.org#mg/m2 "mg/m2"
+* http://unitsofmeasure.org#mg/kg "mg/kg"
+
+// ============================================================
+// Applikationsart (i.v. / s.c. / p.o.)
+// ============================================================
+ValueSet: VS_Senologie_Applikationsart
+Id: vs-senologie-applikationsart
+Title: "VS Senologie Applikationsart"
+Description: "Applikationsroute der Medikation (intravenoes / subkutan / oral / intramuskulaer)."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-applikationsart"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* $SCT#47625008 "Intravenoes (i.v.)"
+* $SCT#34206005 "Subkutan (s.c.)"
+* $SCT#26643006 "Oral (p.o.)"
+* $SCT#78421000 "Intramuskulaer (i.m.)"
+
+// ============================================================
+// Nachsorge-Modus (Aktiv vs Passiv)
+// ============================================================
+ValueSet: VS_Senologie_Nachsorge_Modus
+Id: vs-senologie-nachsorge-modus
+Title: "VS Senologie Nachsorge-Modus"
+Description: "Nachsorge-Erhebung aktiv (persoenlich) vs passiv (Aktenlage/Register)."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* $SCT#410546004 "Aktiv (persoenlich untersucht)"
+* $SCT#410547008 "Passiv (Aktenlage/Register)"
+
+// ============================================================
+// Allgemeinzustand (Gut / Eingeschraenkt / Schlecht) — vereinfacht
+// ============================================================
+ValueSet: VS_Senologie_Allgemeinzustand
+Id: vs-senologie-allgemeinzustand
+Title: "VS Senologie Allgemeinzustand"
+Description: "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht). Fuer detaillierte Erfassung ECOG verwenden."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* $SCT#102499006 "Gut"
+* $SCT#102500002 "Eingeschraenkt"
+* $SCT#162653009 "Schlecht"
+
+// ============================================================
+// Lymphoedem-Grad (Kein / I / II / III)
+// ============================================================
+ValueSet: VS_Senologie_Lymphoedem_Grad
+Id: vs-senologie-lymphoedem-grad
+Title: "VS Senologie Lymphoedem Grad"
+Description: "Schweregrad eines Lymphoedems (kein / Grad I / II / III) nach ISL-Kriterien."
+
+* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
+* ^status = #draft
+* insert PR_CS_VS_Version
+* $SCT#260413007 "Kein Lymphoedem"
+* $SCT#260415000 "Grad I (latent/reversibel)"
+* $SCT#1140000 "Grad II (spontan irreversibel)"
+* $SCT#260416004 "Grad III (Elephantiasis)"

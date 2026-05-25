@@ -75,6 +75,7 @@
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html
 [CS_Senologie_Metastasierung]: CodeSystem-cs-senologie-metastasierung.html
 [CS_Senologie_LaunchContext]: CodeSystem-cs-senologie-launchcontext.html
+[CS_Senologie_Tumorboard_Empfehlung]: CodeSystem-cs-senologie-tumorboard-empfehlung.html
 [CS_Senologie_Tumormanifestation]: CodeSystem-cs-senologie-tumormanifestation.html
 [EX_Senologie_Einzeldosis]: StructureDefinition-ex-senologie-einzeldosis.html
 [ExtractSenologieDiagnose]: StructureMap-extract-diagnose.html
@@ -402,6 +403,8 @@
 [VSSenologieICD10]: ValueSet-vs-senologie-icd10.html
 [VS_OncoBox_Primaerfallart]: ValueSet-vs-oncobox-primaerfallart.html
 [VS_Senologie_ACR_Brustdichte]: ValueSet-vs-senologie-acr-brustdichte.html
+[VS_Senologie_Allgemeinzustand]: ValueSet-vs-senologie-allgemeinzustand.html
+[VS_Senologie_Applikationsart]: ValueSet-vs-senologie-applikationsart.html
 [VS_Senologie_Auffaellig_Unauffaellig]: ValueSet-vs-senologie-auffaellig-unauffaellig.html
 [VS_Senologie_B_Klassifikation]: ValueSet-vs-senologie-b-klassifikation.html
 [VS_Senologie_Diagnose_B3]: ValueSet-vs-senologie-diagnose-b3.html
@@ -416,6 +419,7 @@
 [VS_Senologie_Diagnose_Mamma]: ValueSet-vs-senologie-diagnose-mamma-24.html
 [VS_Senologie_Diagnose_SCT]: ValueSet-vs-senologie-diagnose-sct.html
 [VS_Senologie_Diagnose_Sicherheit]: ValueSet-vs-senologie-diagnose-sicherheit.html
+[VS_Senologie_Dosis_Einheit]: ValueSet-vs-senologie-dosis-einheit.html
 [VS_Senologie_ECOG]: ValueSet-vs-senologie-ecog.html
 [VS_Senologie_Familien_Erkrankung]: ValueSet-vs-senologie-familien-erkrankung.html
 [VS_Senologie_Fernmetastasen_Lokalisation]: ValueSet-vs-senologie-fernmetastasen-lokalisation.html
@@ -428,14 +432,18 @@
 [VS_Senologie_IHC_Intensitaet]: ValueSet-vs-senologie-ihc-intensitaet.html
 [VS_Senologie_ISH_Methode]: ValueSet-vs-senologie-ish-methode.html
 [VS_Senologie_JaNein]: ValueSet-vs-senologie-ja-nein.html
+[VS_Senologie_Komplikation_Zeitpunkt]: ValueSet-vs-senologie-komplikation-zeitpunkt.html
+[VS_Senologie_Kontrazeption_Status]: ValueSet-vs-senologie-kontrazeption-status.html
 [VS_Senologie_Kontrolltermin_Art]: ValueSet-vs-senologie-kontrolltermin-art.html
 [VS_Senologie_L_Kategorie]: ValueSet-vs-senologie-l-kategorie.html
 [VS_Senologie_LK_Status_Bildgebung]: ValueSet-vs-senologie-lk-status-bildgebung.html
+[VS_Senologie_Lymphoedem_Grad]: ValueSet-vs-senologie-lymphoedem-grad.html
 [VS_Senologie_Menopausenstatus]: ValueSet-vs-senologie-menopausenstatus.html
 [VS_Senologie_Menopausenstatus_Erweitert]: ValueSet-vs-senologie-menopausenstatus-erweitert.html
 [VS_Senologie_Metastasierung]: ValueSet-vs-senologie-metastasierung.html
 [VS_Senologie_Mikrokalk_Triage]: ValueSet-vs-senologie-mikrokalk-triage.html
 [VS_Senologie_Nachsorge_Art]: ValueSet-vs-senologie-nachsorge-art.html
+[VS_Senologie_Nachsorge_Modus]: ValueSet-vs-senologie-nachsorge-modus.html
 [VS_Senologie_Pn_Kategorie]: ValueSet-vs-senologie-pn-kategorie.html
 [VS_Senologie_PreOp_Markierung]: ValueSet-vs-senologie-preop-markierung.html
 [VS_Senologie_Praeparat_Art]: ValueSet-vs-senologie-praeparat-art.html
@@ -460,6 +468,7 @@
 [VS_Senologie_TNM_M_Kategorie_Mamma]: ValueSet-vs-senologie-tnm-m-kategorie-mamma.html
 [VS_Senologie_TNM_N_Kategorie_Mamma]: ValueSet-vs-senologie-tnm-n-kategorie-mamma.html
 [VS_Senologie_TNM_T_Kategorie_Mamma]: ValueSet-vs-senologie-tnm-t-kategorie-mamma.html
+[VS_Senologie_Tumorboard_Empfehlung_Status]: ValueSet-vs-senologie-tumorboard-empfehlung-status.html
 [VS_Senologie_Tumormanifestation]: ValueSet-vs-senologie-tumormanifestation.html
 [VS_Senologie_Tumornachweis_Status]: ValueSet-vs-senologie-tumornachweis-status.html
 [VS_Senologie_UICC_Stadium_Mamma]: ValueSet-vs-senologie-uicc-stadium-mamma.html
