@@ -42,6 +42,9 @@ jobs:
         run: sushi .
 
       - name: Audit ValueSet codes
+        env:
+          # Public Ontoserver in CI; lokal nutzt das Script Snowstorm via Default-Env
+          TERMINOLOGY_SERVER: https://r4.ontoserver.csiro.au/fhir
         run: |
           mkdir -p validation/audit
           python3 scripts/audit-valueset-codes.py --report validation/audit/valueset-codes-ci-report.md || true

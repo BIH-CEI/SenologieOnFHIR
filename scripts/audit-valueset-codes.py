@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
-"""Audit SCT/LOINC codes in all Senologie ValueSets against Ontoserver.
+"""Audit SCT/LOINC codes in all Senologie ValueSets against a terminology server.
 
 Reads ValueSet-vs-senologie-*.json from fsh-generated/resources/, extracts
 every (system, code, claimed-display) triple, and looks up the official
-display via Ontoserver $lookup. Reports:
+display via `CodeSystem/$lookup`. Reports:
 
-  - INVALID codes (HTTP 404 from Ontoserver — code does not exist)
+  - INVALID codes (HTTP 404 — code does not exist)
   - CRITICAL mismatches (display refers to a completely different concept,
     e.g. "Drahtmarkierung" → "Prosthetic arthroplasty of the hip")
   - TRANSLATION mismatches (display is a clean German translation of the
     official English label — these are usually OK, just flagged)
 
+Default backend: local Snowstorm at http://localhost:8090/fhir (no rate limit,
+~20× faster than Ontoserver). Fallback: public Ontoserver.
+
 Exit codes:
   0  no invalid codes, no critical mismatches
   1  invalid codes OR critical mismatches present
-  2  Ontoserver unreachable
+  2  terminology server unreachable
 
 Usage:
-  python3 scripts/audit-valueset-codes.py [--report PATH]
+  python3 scripts/audit-valueset-codes.py [--report PATH] [--server URL]
 
 Env:
-  ONTOSERVER_URL  default: https://r4.ontoserver.csiro.au/fhir
+  TERMINOLOGY_SERVER  default: http://localhost:8090/fhir (Snowstorm)
 """
 from __future__ import annotations
 import argparse
@@ -36,8 +39,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RESOURCES = ROOT / "fsh-generated" / "resources"
-ONTO = os.environ.get("ONTOSERVER_URL", "https://r4.ontoserver.csiro.au/fhir")
-LOOKUP_URL = f"{ONTO}/CodeSystem/$lookup"
+DEFAULT_SERVER = os.environ.get("TERMINOLOGY_SERVER", "http://localhost:8090/fhir")
+FALLBACK_SERVER = "https://r4.ontoserver.csiro.au/fhir"
 
 # We only verify code-systems Ontoserver knows about
 SUPPORTED_SYSTEMS = {
@@ -80,8 +83,8 @@ CRITICAL_KEYWORDS_OK_OVERLAP = [
 ]
 
 
-def lookup(system: str, code: str) -> tuple[str, str]:
-    url = f"{LOOKUP_URL}?system={urllib.parse.quote(system, safe='')}&code={urllib.parse.quote(code, safe='')}"
+def lookup(server: str, system: str, code: str) -> tuple[str, str]:
+    url = f"{server}/CodeSystem/$lookup?system={urllib.parse.quote(system, safe='')}&code={urllib.parse.quote(code, safe='')}"
     try:
         with urllib.request.urlopen(url, timeout=20) as r:
             data = json.loads(r.read())
@@ -137,24 +140,40 @@ def collect_records() -> list[tuple[str, str, str, str]]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", default=None, help="Write full report markdown to this path")
-    ap.add_argument("--rate-limit", type=float, default=0.3, help="Seconds between Ontoserver requests")
+    ap.add_argument("--server", default=DEFAULT_SERVER, help=f"FHIR terminology server (default: {DEFAULT_SERVER})")
+    ap.add_argument("--rate-limit", type=float, default=0.0, help="Seconds between requests (default 0; 0.3 for public servers)")
+    ap.add_argument("--no-fallback", action="store_true", help="Don't fall back to Ontoserver if default server unreachable")
     args = ap.parse_args()
 
-    # Sanity-ping Ontoserver
+    # Try preferred server, fall back to Ontoserver
+    server = args.server
     try:
-        with urllib.request.urlopen(f"{ONTO}/metadata", timeout=10) as r:
+        with urllib.request.urlopen(f"{server}/metadata", timeout=10) as r:
             r.read(50)
     except Exception as e:
-        print(f"ERROR: Ontoserver not reachable at {ONTO}: {e}", file=sys.stderr)
-        return 2
+        if args.no_fallback:
+            print(f"ERROR: terminology server not reachable at {server}: {e}", file=sys.stderr)
+            return 2
+        print(f"WARN: {server} unreachable ({type(e).__name__}), falling back to {FALLBACK_SERVER}", file=sys.stderr)
+        server = FALLBACK_SERVER
+        try:
+            with urllib.request.urlopen(f"{server}/metadata", timeout=10) as r:
+                r.read(50)
+        except Exception as e2:
+            print(f"ERROR: fallback {server} also unreachable: {e2}", file=sys.stderr)
+            return 2
+        # Apply rate limit when using public fallback
+        if args.rate_limit == 0.0:
+            args.rate_limit = 0.3
 
     records = collect_records()
-    print(f"Checking {len(records)} SCT/LOINC codes against Ontoserver...", file=sys.stderr)
+    print(f"Checking {len(records)} SCT/LOINC codes against {server}...", file=sys.stderr)
 
     invalid, critical, translation = [], [], []
     for i, (vs_id, sys_url, code, claimed) in enumerate(records):
-        status, actual = lookup(sys_url, code)
-        time.sleep(args.rate_limit)
+        status, actual = lookup(server, sys_url, code)
+        if args.rate_limit > 0:
+            time.sleep(args.rate_limit)
         if status in ("invalid", "not_found"):
             invalid.append((vs_id, sys_url, code, claimed))
         elif status == "ok":
