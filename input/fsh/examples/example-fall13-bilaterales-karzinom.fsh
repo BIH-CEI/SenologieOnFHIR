@@ -227,10 +227,10 @@ Usage: #example
 * item[=].text = "Geplante Operation"
 * item[=].answer[+].valueString = "SSM rechts mit ALND Level I-II"
 
-* item[+].linkId = "op-seite"
+* item[+].linkId = "seitenlokalisation"
 * item[=].text = "Seite"
 * item[=].answer[+].valueCoding = $SCT#73056007 "Right breast structure"
 
-* item[+].linkId = "op-datum"
-* item[=].text = "Geplantes OP-Datum"
-* item[=].answer[+].valueDate = "2025-04-02"
+* item[+].linkId = "notes"
+* item[=].text = "Notizen"
+* item[=].answer[+].valueString = "Geplantes OP-Datum 2025-04-02"

@@ -36,6 +36,13 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * period.start ^short = "Datum des Tumorboard"
 * period.start ^comment = "'Datum'"
 
+// Art der Tumorkonferenz (praeth/postop/postth/ther) — gleiches VS wie MII Onko Tumorkonferenz
+* category MS
+* category 1..1
+* category from https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-therapieplanung-typ (required)
+* category ^short = "Art der Tumorkonferenz / Therapieplanung"
+* category ^comment = "Codiert nach MII Onko therapieplanung-typ (1:1 wiederverwendet — praeth/postop/postth/ther)"
+
 * careTeam ^short = "Beteiligte Fachgruppen"
 * careTeam ^comment = "References zu CareTeam mit verschiedenen Fachdisziplinen (Chirurgie, Onkologie, Radiologie, Pathologie, etc.)"
 

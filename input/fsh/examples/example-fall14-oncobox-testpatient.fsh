@@ -208,8 +208,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
-* category.coding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumorboard-typ"
-* category.coding.code = #praeth
+* category.coding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#praeth "prätherapeutische Tumorkonferenz"
 * subject = Reference(Fall14-Patient-OncoBox-Beispiel)
 * created = "2025-02-12"
 * activity.detail.code.text = "Synthetische Empfehlung (Quelle: OncoBox-Beispiel)"
@@ -223,8 +222,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
-* category.coding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumorboard-typ"
-* category.coding.code = #postop
+* category.coding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#postop "postoperative Tumorkonferenz"
 * subject = Reference(Fall14-Patient-OncoBox-Beispiel)
 * created = "2025-02-23"
 * activity.detail.code.text = "Synthetische Empfehlung (Quelle: OncoBox-Beispiel)"
@@ -257,8 +255,8 @@ Usage: #example
 * focus = Reference(Fall14-Diagnose-Mammakarzinom)
 * effectiveDateTime = "2025-03-17"
 * issued = "2025-03-17T12:00:00+01:00"
-* method.coding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-nachsorge-art"
-* method.coding.code = #A
+* method.coding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
+* method.coding.code = #aktiv
 * method.coding.display = "Aktive Nachsorge"
 * valueCodeableConcept.coding.system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-verlauf-gesamtbeurteilung"
 * valueCodeableConcept.coding.code = #P

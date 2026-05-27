@@ -594,7 +594,7 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#395536008 "Surgical margin finding"
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status-patho"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 
 // Sentinel-LK Anzahl
 * item[=].item[+].linkId = "histo-sentinel-anzahl"
