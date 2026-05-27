@@ -52,17 +52,18 @@ _Auto-generiert mit `scripts/generate-data-dictionary.py` aus ViewDefinitions + 
 
 - **View-ID:** `senologie-bodystructure-flat`
 - **Resource:** `BodyStructure`
-- **Beschreibung:** Tumor-Entitaeten als BodyStructures — der Senologie-Lifecycle-Anker. Eine Zeile pro BS mit Patient, Lokalisation, Morphologie (nach Histologie-Update), active-Flag. active=true=Tumor noch praesent; active=false=R0-reseziert oder geheilt.
+- **Beschreibung:** Tumor-Entitaeten als BodyStructures — der Senologie-Lifecycle-Anker. Eine Zeile pro BS mit Patient, Lokalisation (SCT + R5-Backport-Extension fuer Lateralitaet/Quadrant), Morphologie (nach Patho-Histo-Update), active-Flag.
 
 | Spalte | Typ | Card. | Bedeutung | Code-System / Binding | FHIRPath |
 |---|---|---|---|---|---|
 | `bs_id` | string |  |  |  | `id` |
 | `patient_id` | string |  |  |  | `patient.getReferenceKey(Patient)` |
 | `active` | string |  |  |  | `active` |
-| `tumor_entity_identifier` | string |  |  | CS: tumor-entity | `identifier.where(system='https://www.senologie.org/fhir/sid/tumor-entity').va…` |
-| `location_sct` | code |  |  | CS: SNOMED CT | `location.coding.where(system='http://snomed.info/sct').code.first()` |
-| `location_display` | string |  |  | CS: SNOMED CT | `location.coding.where(system='http://snomed.info/sct').display.first()` |
-| `morphology_sct` | code |  | Wird durch Pathologie-Form mit Histo-Code (8500/3 etc.) ueberschrieben. | CS: SNOMED CT | `morphology.coding.where(system='http://snomed.info/sct').code.first()` |
+| `tumor_entity_id` | string |  |  | CS: tumor-entity | `identifier.where(system='https://www.senologie.org/fhir/sid/tumor-entity').va…` |
+| `location_sct` | code |  | Generische Body-Region (z.B. 76752008 Brust). Detail in den Sub-Spalten. | CS: SNOMED CT | `location.coding.where(system='http://snomed.info/sct').code.first()` |
+| `laterality_sct` | code |  | R5-Backport: Rechts/Links/Beidseits (SCT). |  | `extension.where(url='http://hl7.org/fhir/5.0/StructureDefinition/extension-Bo…` |
+| `quadrant_sct` | code |  | R5-Backport: Quadrant (oben-aussen/innen/Mamille/etc., SCT). |  | `extension.where(url='http://hl7.org/fhir/5.0/StructureDefinition/extension-Bo…` |
+| `morphology_sct` | code |  | Wird durch Patho-Form mit Histo-Code ueberschrieben. | CS: SNOMED CT | `morphology.coding.where(system='http://snomed.info/sct').code.first()` |
 | `morphology_icdo3` | code |  |  | CS: ICD-O-3 | `morphology.coding.where(system='http://terminology.hl7.org/CodeSystem/icd-o-3…` |
 | `description` | string |  |  |  | `description` |
 
