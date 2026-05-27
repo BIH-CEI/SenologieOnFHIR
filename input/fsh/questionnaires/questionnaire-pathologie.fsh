@@ -296,6 +296,49 @@ Usage: #inline
 * valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='r-status').answer.valueCoding"
 * valueCodeableConcept.coding[=].system = $SCT
 
+// --- Contained template: pTNM-Aggregate-Klassifikation (MII Onko Pattern) ---
+// Container-Observation, die die einzelnen pT/pN/pM/L/V/Pn/R-Observations
+// als hasMember einbindet und UICC-Gesamtstadium als value traegt.
+// Code LOINC 21902-2 "Stage group.pathology Cancer"
+Instance: patho-ptnm-aggregate-template
+InstanceOf: Observation
+Usage: #inline
+* id = "patho-ptnm-aggregate-template"
+* meta.profile = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation"
+* status = #final
+* code = $LOINC#21902-2 "Stage group.pathology Cancer"
+* category = http://terminology.hl7.org/CodeSystem/observation-category#laboratory
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
+* focus.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* focus.reference.extension.valueString = "%resource.item.where(linkId='praeparat').item.where(linkId='praeparat-tumor-entitaet').answer.valueReference.reference"
+// valueCodeableConcept = UICC-Gesamtstadium
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='ptnm-uicc').answer.valueCoding"
+// Components: T/N/M/L/V/Pn/R-Kategorien duplizieren als Standalone-Datenpunkte
+// (parallel zu den hasMember-Refs, damit die View-Auswertung beides hat)
+* component[+].code = $LOINC#21905-5 "Primary tumor.pathology Cancer"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.valueCoding"
+* component[+].code = $LOINC#21906-3 "Regional lymph nodes.pathology Cancer"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.valueCoding"
+* component[+].code = $LOINC#21907-1 "Distant metastases.pathology Cancer"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pm').answer.valueCoding"
+* component[+].code = $LOINC#33739-4 "Lymphatic vessel invasion"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='l-kategorie').answer.valueCoding"
+* component[+].code = $LOINC#33740-2 "Venous vessel invasion"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='v-kategorie').answer.valueCoding"
+* component[+].code = $LOINC#92837-4 "Perineural invasion"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pn-perineural').answer.valueCoding"
+* component[+].code = $LOINC#101659-1 "Residual tumor"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='r-status').answer.valueCoding"
+
 // --- Contained template: B-Klassifikations-Observation ---
 // Discrete Observation pro Specimen mit Histo-Befund (B0..B5b)
 // focus → BodyStructure (Tumor-Entität die beurteilt wurde)
@@ -367,6 +410,7 @@ Usage: #definition
 * contained[+] = patho-v-template
 * contained[+] = patho-pn-perineural-template
 * contained[+] = patho-r-template
+* contained[+] = patho-ptnm-aggregate-template
 
 // Variable for cross-template Specimen-Reference
 * extension[+].url = "http://hl7.org/fhir/StructureDefinition/variable"
@@ -598,6 +642,9 @@ Usage: #definition
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
 * item[=].extension[=].extension[+].url = "template"
 * item[=].extension[=].extension[=].valueReference = Reference(patho-r-template)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(patho-ptnm-aggregate-template)
 
 // pT (postoperatives T)
 * item[=].item[+].linkId = "pt"
@@ -647,6 +694,13 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
+
+// UICC-Gesamtstadium (Aggregat aus pT+pN+pM)
+* item[=].item[+].linkId = "ptnm-uicc"
+* item[=].item[=].text = "UICC-Gesamtstadium (pathologisch)"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma"
 
 // ============================================================
 // Group 3: Immunhistochemie / Rezeptorstatus (Observation)

@@ -146,6 +146,38 @@ Usage: #inline
 * note.text.extension.valueString = "%resource.item.where(linkId='zusammenfassung').item.where(linkId='zusammenfassung-text').answer.valueString"
 
 
+// --- Contained template: cTNM-Aggregate (MII Onko TNM-Klassifikation) ---
+// Klinisches Staging als eigene Observation parallel zum klin-unt-obs-template.
+// Code LOINC 21908-9 "Stage group.clinical Cancer".
+Instance: klin-unt-ctnm-template
+InstanceOf: Observation
+Usage: #inline
+* id = "klin-unt-ctnm-template"
+* meta.profile = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation"
+* status = #final
+* code = $LOINC#21908-9 "Stage group.clinical Cancer"
+* category = http://terminology.hl7.org/CodeSystem/observation-category#exam
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
+* focus.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* focus.reference.extension.valueString = "%diagnosis.reference"
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "%resource.item.where(linkId='datum').answer.valueDate"
+// valueCodeableConcept = cUICC-Gesamtstadium
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ctnm-uicc').answer.valueCoding"
+// Components: cT, cN, cM
+* component[+].code = $LOINC#21905-5 "Primary tumor.pathology Cancer"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.valueCoding"
+* component[+].code = $LOINC#21906-3 "Regional lymph nodes.pathology Cancer"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.valueCoding"
+* component[+].code = $LOINC#21907-1 "Distant metastases.pathology Cancer"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answer.valueCoding"
+
+
 // --- Questionnaire ---
 Instance: senologie-klinische-untersuchung
 InstanceOf: Questionnaire
@@ -163,6 +195,7 @@ Usage: #definition
 
 // Contained template
 * contained[+] = klin-unt-obs-template
+* contained[+] = klin-unt-ctnm-template
 
 // Launch Context: Patient
 * extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
@@ -324,6 +357,11 @@ Usage: #definition
 * item[=].type = #group
 * item[=].required = false
 
+// templateExtract → cTNM-Aggregate-Observation (parallel zur klin-unt-obs)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(klin-unt-ctnm-template)
+
 * item[=].item[+].linkId = "ct"
 * item[=].item[=].text = "cT"
 * item[=].item[=].type = #choice
@@ -335,6 +373,18 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
+
+* item[=].item[+].linkId = "cm"
+* item[=].item[=].text = "cM"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-m-kategorie-mamma"
+
+* item[=].item[+].linkId = "ctnm-uicc"
+* item[=].item[=].text = "cUICC-Gesamtstadium (klinisch)"
+* item[=].item[=].type = #choice
+* item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma"
 
 // ============================================================
 // Group: Zusammenfassung + Tumornachweis-Status
