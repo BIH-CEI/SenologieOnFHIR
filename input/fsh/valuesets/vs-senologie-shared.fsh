@@ -437,7 +437,7 @@ Description: "Symmetrie-Bewertung: Symmetrisch / Asymmetrisch."
 * ^status = #draft
 * insert PR_CS_VS_Version
 * $SCT#290064007 "Symmetrisch (Symmetrical breasts)"
-* $SCT#31739005 "Asymmetrisch"
+* $SCT#129790003 "Asymmetrisch (Asymmetric breast tissue)"
 
 // ============================================================
 // Histologie-Typ Mamma (NST, lobulär, DCIS, etc.)
@@ -451,7 +451,8 @@ Description: "Histologische Subtypen des Mamma-Befunds (NST, lobulär, DCIS)."
 * ^status = #draft
 * insert PR_CS_VS_Version
 * $SCT#82711006 "Invasives Karzinom NST"
-* $SCT#443451005 "Invasives lobuläres Karzinom"
+// TODO: 443451005 invalid in SCT — kein eindeutiger ILC-Code vorhanden, vorerst auskommentiert
+// * $SCT#443451005 "Invasives lobuläres Karzinom"
 * $SCT#109889007 "DCIS"
 
 // ============================================================
@@ -531,7 +532,7 @@ Description: "Therapeutische Intention (Adjuvant/Neoadjuvant/Palliativ/Kurativ/R
 * $SCT#373847000 "Neoadjuvant"
 * $SCT#363676003 "Palliativ"
 * $SCT#103693007 "Diagnostisch"
-* $SCT#225298006 "Revision"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#intention-revision "Revision"
 
 // ============================================================
 // Therapiestatus (Abgeschlossen/Abgebrochen/Laufend)
@@ -737,7 +738,7 @@ Description: "Applikationsmodus der Strahlentherapie (3D-konformal/IMRT/Brachyth
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-applikationsart"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#1163834000 "3D-konformale Bestrahlung"
+* $SCT#441783000 "3D-konformale Bestrahlung (Conformal radiotherapy)"
 * $SCT#441799006 "IMRT (Intensity modulated radiation therapy)"
 * $SCT#152198000 "Brachytherapie"
 
@@ -754,7 +755,7 @@ Description: "Art der Systemtherapie (Chemo/Endokrin/Zielgerichtet/Immuntherapie
 * insert PR_CS_VS_Version
 * $SCT#385786002 "Chemotherapie"
 * $SCT#169413002 "Endokrine Therapie"
-* $SCT#432105003 "Zielgerichtete Therapie"
+* $SCT#413648008 "Zielgerichtete/Biologische Therapie (Biological treatment)"
 * $SCT#76334006 "Immuntherapie"
 
 // ============================================================
@@ -768,8 +769,8 @@ Description: "Methode der präoperativen Markierung der Mamma-Läsion."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#397956004 "Drahtmarkierung (Wire guided)"
-* $SCT#405815000 "Clip-Markierung"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#markierung-draht "Drahtmarkierung (Wire guided)"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#markierung-clip "Clip-Markierung"
 * $SCT#77343006 "Angiographische Markierung"
 
 // ============================================================
@@ -815,10 +816,10 @@ Description: "Grund der Erst- oder Folge-Vorstellung in der Senologie."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#185387006 "Erstvorstellung"
-* $SCT#726007 "Zweitmeinung"
-* $SCT#390906007 "Nachsorge"
-* $SCT#183620003 "Wiedervorstellung"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-erstvorstellung "Erstvorstellung"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-zweitmeinung "Zweitmeinung"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-nachsorge "Nachsorge"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-wiedervorstellung "Wiedervorstellung"
 
 // ============================================================
 // Screening-Status (Vorgeschichte)

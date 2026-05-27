@@ -1,14 +1,6 @@
 # ValueSet Code Audit Report
 
-Codes checked: **234** | Invalid: **4** | Critical mismatches: **55** | Translations: **65**
-
-## ❌ INVALID — code does not exist in CodeSystem
-| VS | System | Code | Claimed display |
-|---|---|---|---|
-| `vs-senologie-histologie-typ` | SCT | `443451005` | Invasives lobuläres Karzinom |
-| `vs-senologie-rt-applikationsart` | SCT | `1163834000` | 3D-konformale Bestrahlung |
-| `vs-senologie-therapie-intention` | SCT | `225298006` | Revision |
-| `vs-senologie-vorstellungsgrund` | SCT | `183620003` | Wiedervorstellung |
+Codes checked: **226** | Invalid: **0** | Critical mismatches: **48** | Translations: **65**
 
 ## ⚠️ CRITICAL — code resolves to a completely different concept
 | VS | System | Code | Claimed | Actual SCT/LOINC display |
@@ -44,8 +36,6 @@ Codes checked: **234** | Invalid: **4** | Critical mismatches: **55** | Translat
 | `vs-senologie-grading-mamma` | SCT | `61026006` | G3 — schlecht differenziert | **G3 grade** |
 | `vs-senologie-histologie-typ` | SCT | `109889007` | DCIS | **Ductal carcinoma in situ of breast** |
 | `vs-senologie-praeparat-art` | SCT | `439479000` | Resektat / OP-Präparat | **Tissue specimen obtained by excision** |
-| `vs-senologie-preop-markierung` | SCT | `397956004` | Drahtmarkierung (Wire guided) | **Prosthetic arthroplasty of the hip** |
-| `vs-senologie-preop-markierung` | SCT | `405815000` | Clip-Markierung | **Procedure device** |
 | `vs-senologie-quadrant-mamma` | SCT | `76365002` | Oberer äußerer Quadrant | **Structure of upper outer quadrant of breast** |
 | `vs-senologie-quadrant-mamma` | SCT | `33564002` | Unterer äußerer Quadrant | **Structure of lower outer quadrant of breast** |
 | `vs-senologie-quadrant-mamma` | SCT | `24142002` | Mamille | **Nipple structure** |
@@ -57,17 +47,12 @@ Codes checked: **234** | Invalid: **4** | Critical mismatches: **55** | Translat
 | `vs-senologie-rt-zielvolumen` | SCT | `78904004` | Brustwand | **Chest wall structure** |
 | `vs-senologie-screeningstatus` | SCT | `709491003` | Assessed (qualifier value) | **Enrollment in clinical trial** |
 | `vs-senologie-screeningstatus` | SCT | `385646003` | Not eligible (qualifier value) | **Schedule rejected** |
-| `vs-senologie-symmetrie` | SCT | `31739005` | Asymmetrisch | **Lateral abnormal curvature** |
 | `vs-senologie-systemtherapie-art` | SCT | `169413002` | Endokrine Therapie | **Hormone therapy** |
-| `vs-senologie-systemtherapie-art` | SCT | `432105003` | Zielgerichtete Therapie | **Insertion of drain into biliary tract using fluoroscopic guidance** |
 | `vs-senologie-tumornachweis-status` | SCT | `260388006` | Verlauf — Stable disease (SD) | **No status change** |
 | `vs-senologie-tumornachweis-status` | SCT | `551001000124108` | Verlauf — Partielle Remission (PR) | **Malignant neoplasm in partial remission** |
 | `vs-senologie-tumornachweis-status` | SCT | `550991000124107` | Verlauf — Komplettremission (CR) | **Malignant neoplasm in full remission** |
 | `vs-senologie-tumornachweis-status` | SCT | `419835002` | Verlauf — Progressive Disease (PD) | **Tumor progression** |
 | `vs-senologie-verlauf-tumorstatus-gesamt` | SCT | `271299001` | Tumor progression | **Patient's condition worsened** |
-| `vs-senologie-vorstellungsgrund` | SCT | `185387006` | Erstvorstellung | **New patient consultation** |
-| `vs-senologie-vorstellungsgrund` | SCT | `726007` | Zweitmeinung | **Pathology consultation, comprehensive, records and specimen with report** |
-| `vs-senologie-vorstellungsgrund` | SCT | `390906007` | Nachsorge | **Follow-up encounter** |
 
 ## 💬 Translation/label difference (likely OK — manual verification)
 | VS | System | Code | Claimed (DE/label) | Official (EN) |
