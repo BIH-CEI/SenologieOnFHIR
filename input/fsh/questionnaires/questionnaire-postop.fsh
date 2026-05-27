@@ -29,6 +29,36 @@ Usage: #inline
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
+// code.coding[sct] ← op-kategorie (SCT-Code aus vs-senologie-operation-art)
+* code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-kategorie').answer.valueCoding"
+
+// code.text ← op-code-text (klinische Freitext-Beschreibung)
+* code.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.text.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-code-text').answer.valueString"
+
+// performedDateTime ← op-datum
+* performedDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedDateTime.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-datum').answer.valueDate"
+
+// bodySite.coding[sct] ← op-seite (SCT 24028007 / 7771000 / 51440002)
+* bodySite.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding[=].extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding"
+
+// bodySite.coding[onko] ← MII Onko R/L/B (Mapping aus op-seite via iif)
+* bodySite.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding[=].code.extension.valueString = "iif(%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding.code = '24028007', 'R', iif(%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding.code = '7771000', 'L', 'B'))"
+* bodySite.coding[=].system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation"
+
+// extension[Intention] ← op-intention (MII Onko)
+* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention"
+* extension[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-intention').answer.valueCoding"
+
+// outcome ← op-r-status (R0/R1/R2/RX als SCT)
+* outcome.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* outcome.coding.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-r-status').answer.valueCoding"
+
 // --- Contained template: OPS-Subprozedur (partOf Hauptprozedur) ---
 // Pattern aus MII Onko: SNOMED-Hauptprozedur traegt die klinische Semantik,
 // OPS-Subprozeduren haengen via partOf darunter. Mehrere Subprozeduren pro

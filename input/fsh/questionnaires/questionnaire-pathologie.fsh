@@ -73,6 +73,19 @@ Usage: #inline
 * code = $LOINC#40556-3 "Estrogen receptor Ag [Presence] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+// Components: % positiv, IRS, Allred, Intensitaet
+* component[+].code = $SCT#1234806008 "Percent of cells with estrogen receptor"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-prozent').answer.valueInteger"
+* component[+].code = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-irs').answer.valueInteger"
+* component[+].code = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-allred').answer.valueInteger"
+* component[+].code = $SCT#1236874005 "Intensity of stain of estrogen receptor"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-intensitaet').answer.valueCoding"
 
 // PR-Status Template — erzeugt Senologie_PR_Status Observation
 Instance: patho-pr-template
@@ -84,6 +97,19 @@ Usage: #inline
 * code = $LOINC#85339-0 "Progesterone receptor [Interpretation] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+// Components: % positiv, IRS, Allred, Intensitaet
+* component[+].code = $SCT#1234803000 "Percent of cells with progesterone receptor"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-prozent').answer.valueInteger"
+* component[+].code = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-irs').answer.valueInteger"
+* component[+].code = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-allred').answer.valueInteger"
+* component[+].code = $SCT#1237278006 "Intensity of stain of progesterone receptor"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-intensitaet').answer.valueCoding"
 
 // HER2-Status Template — erzeugt Senologie_HER2_Status Observation
 Instance: patho-her2-template
@@ -95,6 +121,22 @@ Usage: #inline
 * code = $LOINC#48676-1 "HER2 [Interpretation] in Tissue"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+// HER2-Gesamtstatus nach Leitlinie (positiv/low/ultralow/negativ/equivocal)
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.valueCoding"
+// Components: IHC-Score, FISH/ISH, ISH-Methode, Ratio
+* component[+].code = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-score').answer.valueCoding"
+* component[+].code = $LOINC#85318-4 "ERBB2 gene duplication"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-fish').answer.valueCoding"
+* component[+].code = $CS_Senologie_Biomarker#ish-methode "ISH-Methode (FISH/CISH/DISH/SISH)"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ish-methode').answer.valueCoding"
+* component[+].code = $CS_Senologie_Biomarker#her2-ratio "HER2/CEP17 Ratio"
+* component[=].valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueQuantity.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ratio').answer.valueDecimal"
 
 // Ki-67 Template — erzeugt Senologie_Ki67_Proliferationsindex Observation
 Instance: patho-ki67-template
@@ -102,6 +144,9 @@ InstanceOf: Observation
 Usage: #inline
 * id = "patho-ki67-template"
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"
+// Ki67-Wert = Prozent positive Zellen
+* valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueQuantity.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
 * status = #final
 * code = $LOINC#29593-1 "Cells.Ki-67 nuclear Ag/cells in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"

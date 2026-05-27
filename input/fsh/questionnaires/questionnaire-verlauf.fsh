@@ -17,6 +17,18 @@ Usage: #inline
 * code.text = "Klinischer Status Verlauf"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "%resource.item.where(linkId='kontrolltermin').item.where(linkId='kontrolltermin-datum').answer.valueDate"
+// Components: Allgemeinzustand, Lokalbefund, Lymphoedem
+* component[+].code = $SCT#365275006 "General well-being finding"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-allgemeinzustand').answer.valueCoding"
+* component[+].code = $SCT#116339002 "Breast finding"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-lokalbefund').answer.valueCoding"
+* component[+].code = $SCT#449620005 "Lymphedema of upper limb"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-lymphoedem').answer.valueCoding"
 
 // --- Contained template: Observation (Tumorstatus / Follow-Up) ---
 Instance: verlauf-tumorstatus-template
@@ -28,6 +40,18 @@ Usage: #inline
 * code.text = "Tumorstatus Verlauf"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "%resource.item.where(linkId='kontrolltermin').item.where(linkId='kontrolltermin-datum').answer.valueDate"
+// Gesamtbeurteilung (RECIST)
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-gesamtbeurteilung').answer.valueCoding"
+// Komponenten: Lokalrezidiv, Fernmetastasen-Status
+* component[+].code = $SCT#395709001 "Locoregional recurrence"
+* component[=].valueBoolean.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueBoolean.extension.valueString = "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-lokalrezidiv').answer.valueBoolean"
+* component[+].code = $SCT#373572006 "Clinical state of distant metastases"
+* component[=].valueBoolean.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueBoolean.extension.valueString = "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-fernmetastasen').answer.valueBoolean"
 
 // --- Questionnaire ---
 Instance: senologie-verlauf

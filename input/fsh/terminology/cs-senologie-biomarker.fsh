@@ -39,3 +39,9 @@ Description: "Codes für zusätzliche IHC-Components am MII Onko Mamma Rezeptors
 * #intensity-weak "weak"
 * #intensity-moderate "moderate"
 * #intensity-strong "strong"
+
+// ISH-Methode / HER2-Ratio Marker (Component-Codes)
+* #ish-methode "ISH-Methode (FISH/CISH/DISH/SISH)"
+    "Methodencode fuer die durchgefuehrte In-situ-Hybridisierung beim HER2-Reflex-Test."
+* #her2-ratio "HER2/CEP17 Ratio"
+    "Quantitatives Verhaeltnis HER2-Genkopien zu Chromosom-17-Zentromer (Cutoff >=2.0 = amplifiziert)."
