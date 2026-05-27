@@ -17,6 +17,27 @@ Usage: #inline
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
+// performedPeriod (Start + Ende) — Placeholder noetig fuer FHIR-Constraint per-1
+* performedPeriod.start = "1900-01-01"
+* performedPeriod.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedPeriod.start.extension.valueString = "%resource.item.where(linkId='strahlentherapie').item.where(linkId='rt-startdatum').answer.valueDate"
+* performedPeriod.end = "1900-01-01"
+* performedPeriod.end.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedPeriod.end.extension.valueString = "%resource.item.where(linkId='strahlentherapie').item.where(linkId='rt-enddatum').answer.valueDate"
+
+// bodySite ← rt-seite (SCT)
+* bodySite.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding[=].extension.valueString = "%resource.item.where(linkId='strahlentherapie').item.where(linkId='rt-seite').answer.valueCoding"
+
+// extension[Intention] ← rt-intention (MII Onko Strahlentherapie-Intention)
+* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-strahlentherapie-intention"
+* extension[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='strahlentherapie').item.where(linkId='rt-intention').answer.valueCoding"
+
+// status (text-mapped — Code des therapie-status-VS landet als Procedure-Status)
+* statusReason.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* statusReason.coding.extension.valueString = "%resource.item.where(linkId='strahlentherapie').item.where(linkId='rt-therapiestatus').answer.valueCoding"
+
 // --- Questionnaire ---
 Instance: senologie-strahlentherapie-quest
 InstanceOf: Questionnaire
