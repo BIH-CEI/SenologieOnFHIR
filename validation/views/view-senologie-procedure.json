@@ -1,0 +1,82 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-procedure-flat",
+  "name": "senologie_procedure_flat",
+  "title": "Senologie Procedure Flat View",
+  "description": "Alle Senologie-Prozeduren (Operation, Strahlentherapie, Systemtherapie) als flache Tabelle. Eine Zeile pro Procedure mit Patient, Diagnose-Bezug, Code (SCT + OPS-Subprozeduren als zweites coding), Datum, Status, R-Status, Intention. Subprozeduren mit partOf.exists()=true sind enthalten — fuer OP-Meldungs-Aggregation siehe SQL nachgelagert.",
+  "status": "active",
+  "resource": "Procedure",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "procedure_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)"
+        },
+        {
+          "name": "diagnose_id",
+          "path": "reasonReference.first().id"
+        },
+        {
+          "name": "part_of_id",
+          "path": "partOf.first().id",
+          "description": "Wenn gesetzt = Subprozedur, sonst Hauptprozedur."
+        },
+        {
+          "name": "code_sct",
+          "path": "code.coding.where(system='http://snomed.info/sct').code.first()"
+        },
+        {
+          "name": "code_sct_display",
+          "path": "code.coding.where(system='http://snomed.info/sct').display.first()"
+        },
+        {
+          "name": "code_ops",
+          "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/ops').code.first()"
+        },
+        {
+          "name": "code_text",
+          "path": "code.text"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        },
+        {
+          "name": "performed_date",
+          "path": "performedDateTime"
+        },
+        {
+          "name": "performed_start",
+          "path": "performedPeriod.start"
+        },
+        {
+          "name": "performed_end",
+          "path": "performedPeriod.end"
+        },
+        {
+          "name": "outcome",
+          "path": "outcome.coding.code.first()",
+          "description": "R-Status oder anderer Outcome-Code (R0/R1/R2/RX)."
+        },
+        {
+          "name": "intention",
+          "path": "extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "category",
+          "path": "category.coding.code.first()"
+        },
+        {
+          "name": "profile",
+          "path": "meta.profile.first()",
+          "description": "Welches Senologie-Profil (operation/strahlentherapie/systemtherapie-procedure)."
+        }
+      ]
+    }
+  ]
+}

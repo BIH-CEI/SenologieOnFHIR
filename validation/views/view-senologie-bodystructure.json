@@ -1,0 +1,52 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-bodystructure-flat",
+  "name": "senologie_bodystructure_flat",
+  "title": "Senologie BodyStructure Flat View",
+  "description": "Tumor-Entitaeten als BodyStructures — der Senologie-Lifecycle-Anker. Eine Zeile pro BS mit Patient, Lokalisation, Morphologie (nach Histologie-Update), active-Flag. active=true=Tumor noch praesent; active=false=R0-reseziert oder geheilt.",
+  "status": "active",
+  "resource": "BodyStructure",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "bs_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "patient.getReferenceKey(Patient)"
+        },
+        {
+          "name": "active",
+          "path": "active"
+        },
+        {
+          "name": "tumor_entity_identifier",
+          "path": "identifier.where(system='https://www.senologie.org/fhir/sid/tumor-entity').value.first()"
+        },
+        {
+          "name": "location_sct",
+          "path": "location.coding.where(system='http://snomed.info/sct').code.first()"
+        },
+        {
+          "name": "location_display",
+          "path": "location.coding.where(system='http://snomed.info/sct').display.first()"
+        },
+        {
+          "name": "morphology_sct",
+          "path": "morphology.coding.where(system='http://snomed.info/sct').code.first()",
+          "description": "Wird durch Pathologie-Form mit Histo-Code (8500/3 etc.) ueberschrieben."
+        },
+        {
+          "name": "morphology_icdo3",
+          "path": "morphology.coding.where(system='http://terminology.hl7.org/CodeSystem/icd-o-3').code.first()"
+        },
+        {
+          "name": "description",
+          "path": "description"
+        }
+      ]
+    }
+  ]
+}

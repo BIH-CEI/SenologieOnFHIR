@@ -15,22 +15,86 @@
   "select": [
     {
       "column": [
-        { "name": "condition_id", "path": "id", "description": "Technische Condition-ID (FHIR `Condition.id`)." },
-        { "name": "patient_id", "path": "subject.getReferenceKey(Patient)", "description": "Patient-ID (SQL-on-FHIR `getReferenceKey`). Join-Key fuer andere Flat-Views. Aidbox speichert References als {id,resourceType} statt {reference}, daher klappt `subject.reference` nicht — `getReferenceKey` ist die SQL-on-FHIR-Standard-Funktion." },
-        { "name": "diagnose_sct", "path": "code.coding.where(system='http://snomed.info/sct').code.first()", "description": "SNOMED-CT Code der Diagnose. Gebunden an VS senologie-diagnose-mamma (24 Mamma-spezifische Codes, klinisch sortiert)." },
-        { "name": "diagnose_display", "path": "code.coding.where(system='http://snomed.info/sct').display.first()", "description": "Klartext zur SNOMED-CT Diagnose." },
-        { "name": "diagnose_icd10", "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').code.first()", "description": "ICD-10-GM Dual-Code (optional). Aus ConceptMap cm-senologie-diagnose-sct-to-icd10 abgeleitet." },
-        { "name": "diagnose_icd11", "path": "code.coding.where(system='http://id.who.int/icd11/mms').code.first()", "description": "ICD-11 Dual-Code (optional). WHO ICD-11 MMS." },
-        { "name": "tumormanifestation", "path": "category.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumormanifestation').code.first()", "description": "Tumormanifestation (Primärtumor/Rezidiv/LK-Metastase/Fernmetastase) aus category-Slice." },
-        { "name": "diagnose_custom_code", "path": "code.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom').code.first()", "description": "Senologie-spezifischer Code (z.B. mamillensekretion, bc-recurrence) wenn kein passender SCT-Code existiert." },
-        { "name": "seite_sct", "path": "bodySite.coding.where(system='http://snomed.info/sct').code.first()", "description": "Seitenlokalisation als SNOMED-CT (24028007=rechts, 7771000=links, 51440002=beidseits)." },
-        { "name": "seite_onko", "path": "bodySite.coding.where(system='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation').code.first()", "description": "Seitenlokalisation nach MII Onko (R/L/B/M/T/U). Für oBDS-Export." },
-        { "name": "clinical_status", "path": "clinicalStatus.coding.code.first()", "description": "Klinischer Status (active/recurrence/remission/resolved). `recurrence` = Rezidiv auf derselben Condition." },
-        { "name": "verification_status", "path": "verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status').code.first()", "description": "FHIR Verification-Status (confirmed/unconfirmed/provisional/differential)." },
-        { "name": "diagnosesicherung_obds", "path": "verificationStatus.coding.where(system='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung').code.first()", "description": "oBDS Diagnosesicherung 1-9 (1=klinisch, 2=Bildgebung, 5=Zytologie, 7=Histo-Primärtumor, …). MII Onko CodeSystem." },
-        { "name": "onset_date", "path": "onsetDateTime", "description": "Erstdiagnose-Datum (Onset). Wird bei Rezidiv NICHT überschrieben." },
-        { "name": "asserted_date", "path": "extension.where(url='http://hl7.org/fhir/StructureDefinition/condition-assertedDate').valueDateTime.first()", "description": "Feststellungsdatum (z.B. Rezidiv-Feststellung). Onko-konform via condition-assertedDate Extension." },
-        { "name": "recorded_date", "path": "recordedDate", "description": "Datum der Erfassung im System (Dokumentationszeitpunkt)." }
+        {
+          "name": "condition_id",
+          "path": "id",
+          "description": "Technische Condition-ID (FHIR `Condition.id`)."
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)",
+          "description": "Patient-ID (SQL-on-FHIR `getReferenceKey`). Join-Key fuer andere Flat-Views. Aidbox speichert References als {id,resourceType} statt {reference}, daher klappt `subject.reference` nicht — `getReferenceKey` ist die SQL-on-FHIR-Standard-Funktion."
+        },
+        {
+          "name": "diagnose_sct",
+          "path": "code.coding.where(system='http://snomed.info/sct').code.first()",
+          "description": "SNOMED-CT Code der Diagnose. Gebunden an VS senologie-diagnose-mamma (24 Mamma-spezifische Codes, klinisch sortiert)."
+        },
+        {
+          "name": "diagnose_display",
+          "path": "code.coding.where(system='http://snomed.info/sct').display.first()",
+          "description": "Klartext zur SNOMED-CT Diagnose."
+        },
+        {
+          "name": "diagnose_icd10",
+          "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').code.first()",
+          "description": "ICD-10-GM Dual-Code (optional). Aus ConceptMap cm-senologie-diagnose-sct-to-icd10 abgeleitet."
+        },
+        {
+          "name": "diagnose_icd11",
+          "path": "code.coding.where(system='http://id.who.int/icd11/mms').code.first()",
+          "description": "ICD-11 Dual-Code (optional). WHO ICD-11 MMS."
+        },
+        {
+          "name": "tumormanifestation",
+          "path": "category.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumormanifestation').code.first()",
+          "description": "Tumormanifestation (Primärtumor/Rezidiv/LK-Metastase/Fernmetastase) aus category-Slice."
+        },
+        {
+          "name": "diagnose_custom_code",
+          "path": "code.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom').code.first()",
+          "description": "Senologie-spezifischer Code (z.B. mamillensekretion, bc-recurrence) wenn kein passender SCT-Code existiert."
+        },
+        {
+          "name": "seite_sct",
+          "path": "bodySite.coding.where(system='http://snomed.info/sct').code.first()",
+          "description": "Seitenlokalisation als SNOMED-CT (24028007=rechts, 7771000=links, 51440002=beidseits)."
+        },
+        {
+          "name": "seite_onko",
+          "path": "bodySite.coding.where(system='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation').code.first()",
+          "description": "Seitenlokalisation nach MII Onko (R/L/B/M/T/U). Für oBDS-Export."
+        },
+        {
+          "name": "clinical_status",
+          "path": "clinicalStatus.coding.code.first()",
+          "description": "Klinischer Status (active/recurrence/remission/resolved). `recurrence` = Rezidiv auf derselben Condition."
+        },
+        {
+          "name": "verification_status",
+          "path": "verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status').code.first()",
+          "description": "FHIR Verification-Status (confirmed/unconfirmed/provisional/differential)."
+        },
+        {
+          "name": "diagnosesicherung_obds",
+          "path": "verificationStatus.coding.where(system='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung').code.first()",
+          "description": "oBDS Diagnosesicherung 1-9 (1=klinisch, 2=Bildgebung, 5=Zytologie, 7=Histo-Primärtumor, …). MII Onko CodeSystem."
+        },
+        {
+          "name": "onset_date",
+          "path": "onsetDateTime",
+          "description": "Erstdiagnose-Datum (Onset). Wird bei Rezidiv NICHT überschrieben."
+        },
+        {
+          "name": "asserted_date",
+          "path": "extension.where(url='http://hl7.org/fhir/StructureDefinition/condition-assertedDate').valueDateTime.first()",
+          "description": "Feststellungsdatum (z.B. Rezidiv-Feststellung). Onko-konform via condition-assertedDate Extension."
+        },
+        {
+          "name": "recorded_date",
+          "path": "recordedDate",
+          "description": "Datum der Erfassung im System (Dokumentationszeitpunkt)."
+        }
       ]
     }
   ]

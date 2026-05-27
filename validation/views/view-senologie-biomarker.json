@@ -1,0 +1,89 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-biomarker-flat",
+  "name": "senologie_biomarker_flat",
+  "title": "Senologie Biomarker Flat View",
+  "description": "Alle IHC-Biomarker-Observations (ER/PR/HER2/Ki67/PD-L1) als flache Tabelle. Filter auf die fuenf relevanten LOINC-Codes. Components mit Prozent/Score/Intensitaet werden als separate Spalten aufgeloest.",
+  "status": "active",
+  "resource": "Observation",
+  "where": [
+    {
+      "path": "code.coding.exists(system='http://loinc.org' and (code='40556-3' or code='85339-0' or code='48676-1' or code='29593-1' or code='96338-2'))",
+      "description": "Filter auf ER/PR/HER2/Ki67/PD-L1 LOINC-Codes. Tiefe OR-Listen brechen Aidbox jsonpath — single exists mit OR-Praedikat funktioniert."
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "name": "observation_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)"
+        },
+        {
+          "name": "diagnose_id",
+          "path": "focus.first().id"
+        },
+        {
+          "name": "biomarker_loinc",
+          "path": "code.coding.where(system='http://loinc.org').code.first()"
+        },
+        {
+          "name": "biomarker_name",
+          "path": "code.coding.where(system='http://loinc.org').display.first()"
+        },
+        {
+          "name": "interpretation",
+          "path": "valueCodeableConcept.coding.where(system='http://snomed.info/sct').code.first()",
+          "description": "Hauptinterpretation als SCT-Code (positiv/negativ/low/equivocal)."
+        },
+        {
+          "name": "interpretation_display",
+          "path": "valueCodeableConcept.coding.where(system='http://snomed.info/sct').display.first()"
+        },
+        {
+          "name": "her2_gesamt",
+          "path": "valueCodeableConcept.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker').code.first()",
+          "description": "HER2-Leitlinien-Gesamtstatus (positiv/low/ultralow/negativ/equivocal)."
+        },
+        {
+          "name": "value_prozent",
+          "path": "component.where(code.coding.where(code='1234803000' or code='85318-4' or code='95046-2').exists()).valueQuantity.value.first()",
+          "description": "Prozent positive Zellen (TPS bei PD-L1, %-positiv bei ER/PR/Ki67)."
+        },
+        {
+          "name": "value_irs",
+          "path": "component.where(code.coding.code='irs-score').valueQuantity.value.first()"
+        },
+        {
+          "name": "value_allred",
+          "path": "component.where(code.coding.code='allred-score').valueQuantity.value.first()"
+        },
+        {
+          "name": "intensitaet",
+          "path": "component.where(code.coding.where(code='1236874005' or code='1237278006').exists()).valueCodeableConcept.coding.code.first()",
+          "description": "Faerbeintensitaet (negative/weak/moderate/strong)."
+        },
+        {
+          "name": "ish_methode",
+          "path": "component.where(code.coding.code='ish-methode').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "her2_ratio",
+          "path": "component.where(code.coding.code='her2-ratio').valueQuantity.value.first()"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        },
+        {
+          "name": "effective_date",
+          "path": "effectiveDateTime"
+        }
+      ]
+    }
+  ]
+}

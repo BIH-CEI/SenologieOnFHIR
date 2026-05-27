@@ -1,0 +1,87 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-tumorboard-flat",
+  "name": "senologie_tumorboard_flat",
+  "title": "Senologie Tumorboard Flat View",
+  "description": "Tumorboard-Empfehlungen (CarePlan) als flache Tabelle. Pro CarePlan ist je activity eine eigene Zeile zu joinen — diese View ist die Header-Tabelle; Detail-Auswertung via SQL JOIN auf forEach activity.",
+  "status": "active",
+  "resource": "CarePlan",
+  "where": [
+    {
+      "path": "meta.profile.exists($this='https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung')"
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "name": "careplan_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)"
+        },
+        {
+          "name": "diagnose_id",
+          "path": "addresses.first().id"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        },
+        {
+          "name": "intent",
+          "path": "intent"
+        },
+        {
+          "name": "period_start",
+          "path": "period.start"
+        },
+        {
+          "name": "title",
+          "path": "title"
+        },
+        {
+          "name": "description",
+          "path": "description"
+        },
+        {
+          "name": "note_text",
+          "path": "note.text.first()"
+        }
+      ]
+    },
+    {
+      "forEach": "activity",
+      "column": [
+        {
+          "name": "activity_kind",
+          "path": "detail.kind"
+        },
+        {
+          "name": "activity_code_sct",
+          "path": "detail.code.coding.where(system='http://snomed.info/sct').code.first()"
+        },
+        {
+          "name": "activity_code_display",
+          "path": "detail.code.coding.where(system='http://snomed.info/sct').display.first()"
+        },
+        {
+          "name": "activity_status",
+          "path": "detail.status"
+        },
+        {
+          "name": "activity_empfehlung_status",
+          "path": "detail.statusReason.coding.where(system='https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung').code.first()",
+          "description": "Empfohlen / bedingt-empfohlen / nicht-empfohlen / nicht-diskutiert."
+        },
+        {
+          "name": "activity_description",
+          "path": "detail.description",
+          "description": "Begruendung des Tumorboards."
+        }
+      ]
+    }
+  ]
+}
