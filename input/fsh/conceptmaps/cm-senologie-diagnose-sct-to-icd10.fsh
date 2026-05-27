@@ -5,7 +5,7 @@
 
 Alias: $SCT = http://snomed.info/sct
 Alias: $ICD10GM = http://fhir.de/CodeSystem/bfarm/icd-10-gm
-Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom
+Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom
 
 Instance: cm-senologie-diagnose-sct-to-icd10
 InstanceOf: ConceptMap

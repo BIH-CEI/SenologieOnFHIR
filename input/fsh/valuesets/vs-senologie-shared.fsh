@@ -288,7 +288,7 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * ^status = #draft
 * insert PR_CS_VS_Version
 * $SCT#254837009 "Mammakarzinom"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#bc-recurrence "Mammakarzinom Rezidiv"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#bc-recurrence "Mammakarzinom Rezidiv"
 * $SCT#109889007 "Carcinoma in situ (DCIS)"
 * $SCT#269497004 "B3-Läsion (Neoplasm of uncertain behaviour of breast)"
 * $SCT#254845004 "Fibroadenom"
@@ -301,16 +301,16 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * $SCT#16698000 "Abszess non-puerperalis der Mamma"
 * $SCT#10745131000119107 "Abszess puerperalis der Mamma"
 * $SCT#237444008 "Granulomatöse Mastitis"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#mamillensekretion-blutig "Blutige Mamillensekretion"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#mamillensekretion-blutig "Blutige Mamillensekretion"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
 * $SCT#237474000 "Kapselfibrose"
 * $SCT#237473006 "Rupturiertes Mammaimplantat"
 * $SCT#4754008 "Gynäkomastie"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#anisomastie "Anisomastie"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#makromastie "Makromastie"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#anisomastie "Anisomastie"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#makromastie "Makromastie"
 * $SCT#718220008 "Genetische Hochrisikosituation"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#befund-unklarer-dignitaet "Befund unklarer Dignität"
-* https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom#sonstiges "Sonstiges"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#befund-unklarer-dignitaet "Befund unklarer Dignität"
+* https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#sonstiges "Sonstiges"
 
 // Pre-baked expansion (locks display order in clients that respect it)
 * ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-mamma-24-expansion"
@@ -319,7 +319,7 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * ^expansion.contains[+].system = $SCT
 * ^expansion.contains[=].code = #254837009
 * ^expansion.contains[=].display = "Mammakarzinom"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #bc-recurrence
 * ^expansion.contains[=].display = "Mammakarzinom Rezidiv"
 * ^expansion.contains[+].system = $SCT
@@ -358,10 +358,10 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * ^expansion.contains[+].system = $SCT
 * ^expansion.contains[=].code = #237444008
 * ^expansion.contains[=].display = "Granulomatöse Mastitis"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #mamillensekretion-blutig
 * ^expansion.contains[=].display = "Blutige Mamillensekretion"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #mamillensekretion-nicht-blutig
 * ^expansion.contains[=].display = "Nicht blutige Mamillensekretion"
 * ^expansion.contains[+].system = $SCT
@@ -373,19 +373,19 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * ^expansion.contains[+].system = $SCT
 * ^expansion.contains[=].code = #4754008
 * ^expansion.contains[=].display = "Gynäkomastie"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #anisomastie
 * ^expansion.contains[=].display = "Anisomastie"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #makromastie
 * ^expansion.contains[=].display = "Makromastie"
 * ^expansion.contains[+].system = $SCT
 * ^expansion.contains[=].code = #718220008
 * ^expansion.contains[=].display = "Genetische Hochrisikosituation"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #befund-unklarer-dignitaet
 * ^expansion.contains[=].display = "Befund unklarer Dignität"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^expansion.contains[=].code = #sonstiges
 * ^expansion.contains[=].display = "Sonstiges"
 

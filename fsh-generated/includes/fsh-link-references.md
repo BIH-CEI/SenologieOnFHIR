@@ -69,8 +69,7 @@
 [CS_Senologie_Bildgebung_Custom]: CodeSystem-cs-senologie-bildgebung-custom.html
 [CS_Senologie_Biomarker]: CodeSystem-cs-senologie-biomarker.html
 [CS_Senologie_Clinical_Findings_Custom]: CodeSystem-cs-senologie-clinical-findings-custom.html
-[CS_Senologie_Diagnose_Lokal]: CodeSystem-cs-senologie-diagnose-lokal.html
-[CS_Senologie_Diagnose_Mamma_Custom]: CodeSystem-cs-senologie-diagnose-mamma-custom.html
+[CS_Senologie_Diagnose_Custom]: CodeSystem-cs-senologie-diagnose-custom.html
 [CS_Senologie_FollowUp]: CodeSystem-cs-senologie-follow-up.html
 [CS_Senologie_Form_Helper]: CodeSystem-cs-senologie-form-helper.html
 [CS_Senologie_Genexpressionstest]: CodeSystem-cs-senologie-genexpressionstest.html

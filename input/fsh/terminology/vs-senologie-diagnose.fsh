@@ -1,4 +1,4 @@
-Alias: $CS_LOKAL = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal
+Alias: $CS_LOKAL = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom
 
 ValueSet: VS_Senologie_Diagnose
 Id: vs-senologie-diagnose
@@ -48,9 +48,9 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook -
 * $SCT#237474000 "Contracture of breast following insertion of breast implant"
 
 // === Lokale Codes (kein exaktes SNOMED Mapping) ===
-* $CS_LOKAL#bz-diagnose-sonstiges "Sonstiges"
-* $CS_LOKAL#bz-mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
-* $CS_LOKAL#bz-anisomastie "Anisomastie"
+* $CS_LOKAL#sonstiges "Sonstiges"
+* $CS_LOKAL#mamillensekretion-nicht-blutig "Nicht blutige Mamillensekretion"
+* $CS_LOKAL#anisomastie "Anisomastie"
 
 
 ValueSet: VS_Senologie_Diagnose_B3
@@ -104,7 +104,7 @@ Description: "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senolo
 * ^version = "0.1.0"
 * ^experimental = true
 
-* include codes from system https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal
+* include codes from system https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom
 
 
 * $SCT#24028007 "Right"

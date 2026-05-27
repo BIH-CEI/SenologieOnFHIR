@@ -7,7 +7,7 @@
 // Verlauf (Restaging).
 // ============================================================
 
-Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom
+Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom
 
 // --- Contained template: Condition (klinische Anker-Diagnose) ---
 Instance: diagnose-condition-template
@@ -41,8 +41,8 @@ Usage: #inline
 * code.coding[=].system = "http://snomed.info/sct"
 
 * code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.where(system='https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom')"
-* code.coding[=].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom')"
+* code.coding[=].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 
 // ICD-10-GM Slice — auskommentiert weil FormBox kein FHIRPath translate() unterstützt.
 // Stattdessen: Mapping via ConceptMap-Lookup server-seitig (Subscription/Webhook)

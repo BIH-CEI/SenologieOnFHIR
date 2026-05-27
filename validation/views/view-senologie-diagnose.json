@@ -8,7 +8,7 @@
   "resource": "Condition",
   "where": [
     {
-      "path": "code.coding.exists(system='http://snomed.info/sct' or system='https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom')",
+      "path": "code.coding.exists(system='http://snomed.info/sct' or system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom')",
       "description": "Filter auf Conditions mit SCT-Code oder Senologie-Custom-Code. Schliesst ICD-10-only-Komorbiditaeten aus. Einzelne where()-Ketten mit OR brechen Aidbox SQL-on-FHIR — single where mit OR-Praedikat funktioniert. Filtern auf die spezifischen Mamma-Diagnose-Codes via vs-senologie-diagnose-mamma-24 erfolgt in der nachgelagerten SQL-Query."
     }
   ],
@@ -22,7 +22,7 @@
         { "name": "diagnose_icd10", "path": "code.coding.where(system='http://fhir.de/CodeSystem/bfarm/icd-10-gm').code.first()", "description": "ICD-10-GM Dual-Code (optional). Aus ConceptMap cm-senologie-diagnose-sct-to-icd10 abgeleitet." },
         { "name": "diagnose_icd11", "path": "code.coding.where(system='http://id.who.int/icd11/mms').code.first()", "description": "ICD-11 Dual-Code (optional). WHO ICD-11 MMS." },
         { "name": "tumormanifestation", "path": "category.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-tumormanifestation').code.first()", "description": "Tumormanifestation (Primärtumor/Rezidiv/LK-Metastase/Fernmetastase) aus category-Slice." },
-        { "name": "diagnose_custom_code", "path": "code.coding.where(system='https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom').code.first()", "description": "Senologie-spezifischer Code (z.B. mamillensekretion, bc-recurrence) wenn kein passender SCT-Code existiert." },
+        { "name": "diagnose_custom_code", "path": "code.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom').code.first()", "description": "Senologie-spezifischer Code (z.B. mamillensekretion, bc-recurrence) wenn kein passender SCT-Code existiert." },
         { "name": "seite_sct", "path": "bodySite.coding.where(system='http://snomed.info/sct').code.first()", "description": "Seitenlokalisation als SNOMED-CT (24028007=rechts, 7771000=links, 51440002=beidseits)." },
         { "name": "seite_onko", "path": "bodySite.coding.where(system='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation').code.first()", "description": "Seitenlokalisation nach MII Onko (R/L/B/M/T/U). Für oBDS-Export." },
         { "name": "clinical_status", "path": "clinicalStatus.coding.code.first()", "description": "Klinischer Status (active/recurrence/remission/resolved). `recurrence` = Rezidiv auf derselben Condition." },
