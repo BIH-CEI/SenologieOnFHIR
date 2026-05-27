@@ -17,7 +17,12 @@ Usage: #inline
 
 // clinicalStatus: 'recurrence' wenn Diagnose = bc-recurrence, sonst 'active'
 // Konvention: status + assertedDate gehören gemeinsam kuratiert
-* clinicalStatus.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+// Placeholder-Code ('active') noetig, sonst lehnt strenge Server (dotbase Aidbox)
+// das contained Template ab — Coding mit system aber code=null verletzt die
+// VS-Bindung. Der Placeholder wird beim $extract durch templateExtractValue
+// ueberschrieben.
+* clinicalStatus.coding[+].code = #active
+* clinicalStatus.coding[=].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * clinicalStatus.coding[=].code.extension.valueString = "iif(%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.code = 'bc-recurrence', 'recurrence', 'active')"
 * clinicalStatus.coding[=].system = "http://terminology.hl7.org/CodeSystem/condition-clinical"
 
@@ -30,7 +35,10 @@ Usage: #inline
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
 // verificationStatus ← diagnose-sicherheit (FHIR ver-status CS)
-* verificationStatus.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+// Placeholder 'confirmed' damit Server-Validierung das contained Template
+// akzeptiert — wird beim Extract durch das gewaehlte Coding ueberschrieben.
+* verificationStatus.coding[+].code = #confirmed
+* verificationStatus.coding[=].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * verificationStatus.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherheit').answer.valueCoding"
 * verificationStatus.coding[=].system = "http://terminology.hl7.org/CodeSystem/condition-ver-status"
 
