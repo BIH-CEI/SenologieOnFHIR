@@ -1,18 +1,12 @@
 # ValueSet Code Audit Report
 
-Codes checked: **249** | Invalid: **10** | Critical mismatches: **69** | Translations: **66**
+Codes checked: **234** | Invalid: **4** | Critical mismatches: **55** | Translations: **65**
 
 ## ❌ INVALID — code does not exist in CodeSystem
 | VS | System | Code | Claimed display |
 |---|---|---|---|
-| `vs-senologie-b-klassifikation` | SCT | `53076004` | B2 — Benigne |
-| `vs-senologie-b-klassifikation` | SCT | `1145403004` | B4 — Malignitätsverdächtig |
-| `vs-senologie-detektion-modus` | SCT | `129434009` | Selbstuntersuchung |
 | `vs-senologie-histologie-typ` | SCT | `443451005` | Invasives lobuläres Karzinom |
-| `vs-senologie-menopausenstatus` | SCT | `87332000` | Perimenopausal |
 | `vs-senologie-rt-applikationsart` | SCT | `1163834000` | 3D-konformale Bestrahlung |
-| `vs-senologie-rt-applikationsart` | SCT | `1163833006` | IMRT (intensitätsmoduliert) |
-| `vs-senologie-symmetrie` | SCT | `82332009` | Symmetrisch |
 | `vs-senologie-therapie-intention` | SCT | `225298006` | Revision |
 | `vs-senologie-vorstellungsgrund` | SCT | `183620003` | Wiedervorstellung |
 
@@ -23,10 +17,6 @@ Codes checked: **249** | Invalid: **10** | Critical mismatches: **69** | Transla
 | `vs-senologie-acr-brustdichte` | SCT | `129717001` | B — Verstreute fibroglanduläre Verdichtungen | **Scattered fibroglandular densities** |
 | `vs-senologie-acr-brustdichte` | SCT | `129718006` | C — Heterogen dicht | **Heterogeneously dense breast composition** |
 | `vs-senologie-acr-brustdichte` | SCT | `129719003` | D — Extrem dicht | **Extremely dense breast composition** |
-| `vs-senologie-b-klassifikation` | SCT | `87100004` | B0 — Specimen unsatisfactory | **Topography unknown** |
-| `vs-senologie-b-klassifikation` | SCT | `76752008` | B1 — Normalgewebe | **Breast structure** |
-| `vs-senologie-b-klassifikation` | SCT | `269497004` | B3 — Unklares biologisches Potenzial | **Neoplasm of uncertain behavior of breast** |
-| `vs-senologie-b-klassifikation` | SCT | `254837009` | B5b — Maligne invasiv | **Malignant neoplasm of breast** |
 | `vs-senologie-b3-subtypen` | SCT | `427785007` | ADH — Atypische duktale Hyperplasie | **Atypical ductal hyperplasia of breast** |
 | `vs-senologie-b3-subtypen` | SCT | `860895001` | FEA — Flache epitheliale Atypie | **Flat epithelial atypia of breast** |
 | `vs-senologie-b3-subtypen` | SCT | `444739008` | LIN — klassisches LCIS | **Classic lobular carcinoma in situ** |
@@ -52,7 +42,6 @@ Codes checked: **249** | Invalid: **10** | Critical mismatches: **69** | Transla
 | `vs-senologie-grading-mamma` | SCT | `54102005` | G1 — gut differenziert | **G1 grade** |
 | `vs-senologie-grading-mamma` | SCT | `1663004` | G2 — mäßig differenziert | **G2 grade** |
 | `vs-senologie-grading-mamma` | SCT | `61026006` | G3 — schlecht differenziert | **G3 grade** |
-| `vs-senologie-her2-fish` | SCT | `385432009` | nicht durchgeführt | **Not applicable** |
 | `vs-senologie-histologie-typ` | SCT | `109889007` | DCIS | **Ductal carcinoma in situ of breast** |
 | `vs-senologie-praeparat-art` | SCT | `439479000` | Resektat / OP-Präparat | **Tissue specimen obtained by excision** |
 | `vs-senologie-preop-markierung` | SCT | `397956004` | Drahtmarkierung (Wire guided) | **Prosthetic arthroplasty of the hip** |
@@ -60,11 +49,6 @@ Codes checked: **249** | Invalid: **10** | Critical mismatches: **69** | Transla
 | `vs-senologie-quadrant-mamma` | SCT | `76365002` | Oberer äußerer Quadrant | **Structure of upper outer quadrant of breast** |
 | `vs-senologie-quadrant-mamma` | SCT | `33564002` | Unterer äußerer Quadrant | **Structure of lower outer quadrant of breast** |
 | `vs-senologie-quadrant-mamma` | SCT | `24142002` | Mamille | **Nipple structure** |
-| `vs-senologie-quadrant-mamma` | SCT | `70925003` | Zentral | **Bone structure of maxilla** |
-| `vs-senologie-r-status` | SCT | `395536008` | R0 — kein Residualtumor | **Surgical margin finding** |
-| `vs-senologie-r-status` | SCT | `395537004` | R1 — mikroskopischer Residualtumor | **Surgical margin involvement by tumor cannot be assessed** |
-| `vs-senologie-r-status` | SCT | `395538009` | R2 — makroskopischer Residualtumor | **Microscopic specimen observation** |
-| `vs-senologie-r-status` | SCT | `395539001` | RX — nicht beurteilbar | **Presence of neoplasm of colon at mucosal surgical margin in colectomy specimen** |
 | `vs-senologie-recist-response` | SCT | `260388006` | Stable disease (SD) | **No status change** |
 | `vs-senologie-recist-response` | SCT | `551001000124108` | Partielle Remission (PR) | **Malignant neoplasm in partial remission** |
 | `vs-senologie-recist-response` | SCT | `550991000124107` | Komplettremission (CR) | **Malignant neoplasm in full remission** |
@@ -76,10 +60,6 @@ Codes checked: **249** | Invalid: **10** | Critical mismatches: **69** | Transla
 | `vs-senologie-symmetrie` | SCT | `31739005` | Asymmetrisch | **Lateral abnormal curvature** |
 | `vs-senologie-systemtherapie-art` | SCT | `169413002` | Endokrine Therapie | **Hormone therapy** |
 | `vs-senologie-systemtherapie-art` | SCT | `432105003` | Zielgerichtete Therapie | **Insertion of drain into biliary tract using fluoroscopic guidance** |
-| `vs-senologie-therapie-status` | SCT | `385651009` | Laufend | **In progress** |
-| `vs-senologie-therapie-status` | SCT | `410546004` | Abgeschlossen | **Discontinued** |
-| `vs-senologie-therapie-status` | SCT | `410548003` | Abgebrochen | **Disorganized historian** |
-| `vs-senologie-tumornachweis-status` | SCT | `64957009` | Abklärungsbedürftiger Befund | **Uncertain** |
 | `vs-senologie-tumornachweis-status` | SCT | `260388006` | Verlauf — Stable disease (SD) | **No status change** |
 | `vs-senologie-tumornachweis-status` | SCT | `551001000124108` | Verlauf — Partielle Remission (PR) | **Malignant neoplasm in partial remission** |
 | `vs-senologie-tumornachweis-status` | SCT | `550991000124107` | Verlauf — Komplettremission (CR) | **Malignant neoplasm in full remission** |
@@ -92,7 +72,6 @@ Codes checked: **249** | Invalid: **10** | Critical mismatches: **69** | Transla
 ## 💬 Translation/label difference (likely OK — manual verification)
 | VS | System | Code | Claimed (DE/label) | Official (EN) |
 |---|---|---|---|---|
-| `vs-senologie-b-klassifikation` | SCT | `109889007` | B5a — Maligne in-situ-Karzinome | Ductal carcinoma in situ of breast |
 | `vs-senologie-b3-subtypen` | SCT | `99571000119102` | Papillom ohne Atypie | Papilloma of breast |
 | `vs-senologie-b3-subtypen` | SCT | `1144917006` | Atypisches Papillom | Atypical intraductal papilloma of breast |
 | `vs-senologie-b3-subtypen` | SCT | `390787006` | Radiäre Narbe / komplex sklerosierende Läsion | Radial scar of breast |

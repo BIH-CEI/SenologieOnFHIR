@@ -36,7 +36,7 @@ Description: "Quadranten-Lokalisation der Brust (oben-aussen/innen, unten-aussen
 * $SCT#33564002 "Unterer äußerer Quadrant"
 * $SCT#19100000 "Unterer innerer Quadrant"
 * $SCT#24142002 "Mamille"
-* $SCT#70925003 "Zentral"
+* $SCT#49058007 "Zentral (Structure of central portion of breast)"
 
 // ============================================================
 // auffällig / unauffällig (Inspektion + Palpation)
@@ -63,7 +63,7 @@ Description: "Diagnostische Stati + RECIST-Response-Assessment für die klinisch
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumornachweis-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#64957009 "Abklärungsbedürftiger Befund"
+* $SCT#134405005 "Abklärungsbedürftiger Befund (Malignant neoplasm of breast suspected)"
 * $CLIN_CUSTOM#tumornachweis-erstdiagnose-bc "Erstdiagnose Mammakarzinom"
 * $SCT#260388006 "Verlauf — Stable disease (SD)"
 * $SCT#551001000124108 "Verlauf — Partielle Remission (PR)"
@@ -99,10 +99,10 @@ Description: "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#395536008 "R0 — kein Residualtumor"
-* $SCT#395537004 "R1 — mikroskopischer Residualtumor"
-* $SCT#395538009 "R2 — makroskopischer Residualtumor"
-* $SCT#395539001 "RX — nicht beurteilbar"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#r-0 "R0 — kein Residualtumor"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#r-1 "R1 — mikroskopischer Residualtumor"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#r-2 "R2 — makroskopischer Residualtumor"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#r-x "RX — nicht beurteilbar"
 
 // ============================================================
 // Ptosis-Grad (Regnault-Klassifikation)
@@ -436,7 +436,7 @@ Description: "Symmetrie-Bewertung: Symmetrisch / Asymmetrisch."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-symmetrie"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#82332009 "Symmetrisch"
+* $SCT#290064007 "Symmetrisch (Symmetrical breasts)"
 * $SCT#31739005 "Asymmetrisch"
 
 // ============================================================
@@ -544,9 +544,9 @@ Description: "Status einer Therapieeinheit (Strahlen- oder Systemtherapie)."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#385651009 "Laufend"
-* $SCT#410546004 "Abgeschlossen"
-* $SCT#410548003 "Abgebrochen"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-laufend "Laufend"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-abgeschlossen "Abgeschlossen"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-abgebrochen "Abgebrochen"
 
 // ============================================================
 // HER2 IHC-Score (0/1+/2+/3+)
@@ -594,7 +594,7 @@ Description: "FISH-Ergebnis bei HER2-Amplifikationstestung."
 * insert PR_CS_VS_Version
 * $SCT#10828004 "positiv"
 * $SCT#260385009 "negativ"
-* $SCT#385432009 "nicht durchgeführt"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#her2-fish-nicht-durchgefuehrt "nicht durchgefuehrt"
 
 // ============================================================
 // ISH-Methode (FISH/CISH/DISH/SISH)
@@ -674,7 +674,7 @@ Description: "Menopausenstatus für Anamnese."
 * ^status = #draft
 * insert PR_CS_VS_Version
 * $SCT#289903006 "Prämenopausal"
-* $SCT#87332000 "Perimenopausal"
+* $SCT#198435007 "Perimenopausal (Female climacteric state)"
 * $SCT#76498008 "Postmenopausal"
 
 // ============================================================
@@ -738,7 +738,7 @@ Description: "Applikationsmodus der Strahlentherapie (3D-konformal/IMRT/Brachyth
 * ^status = #draft
 * insert PR_CS_VS_Version
 * $SCT#1163834000 "3D-konformale Bestrahlung"
-* $SCT#1163833006 "IMRT (intensitätsmoduliert)"
+* $SCT#441799006 "IMRT (Intensity modulated radiation therapy)"
 * $SCT#152198000 "Brachytherapie"
 
 // ============================================================
@@ -833,7 +833,7 @@ Description: "Art der Detektion (Screening-detektiert / Intervallkarzinom / Selb
 * insert PR_CS_VS_Version
 * $SCT#268547008 "Screening-detektiert"
 * $SCT#444589003 "Intervallkarzinom"
-* $SCT#129434009 "Selbstuntersuchung"
+* $SCT#409979009 "Selbstuntersuchung (Breast self-examination)"
 * $SCT#261087003 "Zufallsbefund"
 
 // ============================================================
@@ -907,13 +907,13 @@ Description: "Histopathologische B-Klassifikation der Mamma-Biopsie nach NHSBSP 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-b-klassifikation"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* $SCT#87100004 "B0 — Specimen unsatisfactory"
-* $SCT#76752008 "B1 — Normalgewebe"
-* $SCT#53076004 "B2 — Benigne"
-* $SCT#269497004 "B3 — Unklares biologisches Potenzial"
-* $SCT#1145403004 "B4 — Malignitätsverdächtig"
-* $SCT#109889007 "B5a — Maligne in-situ-Karzinome"
-* $SCT#254837009 "B5b — Maligne invasiv"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-0 "B0 — Specimen unsatisfactory"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-1 "B1 — Normalgewebe"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-2 "B2 — Benigne"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-3 "B3 — Unklares biologisches Potenzial"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-4 "B4 — Malignitaetsverdaechtig"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-5a "B5a — Maligne in-situ-Karzinome"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#b-5b "B5b — Maligne invasiv"
 
 // ============================================================
 // Tumorboard-Empfehlung Status (Beschlusszustand pro Therapieoption)
