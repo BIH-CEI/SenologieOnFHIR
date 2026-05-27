@@ -14,6 +14,12 @@
       "code": {
         "coding": [
           {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='systemtherapie').item.where(linkId='therapieart').answer.valueCoding"
+              }
+            ],
             "code": "367336001",
             "system": "http://snomed.info/sct",
             "display": "Chemotherapy"
@@ -43,12 +49,66 @@
           }
         }
       ],
+      "performedPeriod": {
+        "start": "1900-01-01",
+        "_start": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.item.where(linkId='systemtherapie').item.where(linkId='startdatum').answer.valueDate"
+            }
+          ]
+        },
+        "end": "1900-01-01",
+        "_end": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.item.where(linkId='systemtherapie').item.where(linkId='enddatum').answer.valueDate"
+            }
+          ]
+        }
+      },
+      "note": [
+        {
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='systemtherapie').item.where(linkId='protokoll').answer.valueString"
+              }
+            ]
+          }
+        }
+      ],
+      "statusReason": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='systemtherapie').item.where(linkId='therapiestatus').answer.valueCoding"
+              }
+            ]
+          }
+        ]
+      },
       "status": "completed"
     },
     {
       "resourceType": "MedicationStatement",
       "id": "syst-medikation-template",
       "medicationCodeableConcept": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%context.item.where(linkId='substanz').answer.valueCoding"
+              }
+            ]
+          }
+        ],
         "text": "Substanz"
       },
       "subject": {
@@ -61,7 +121,54 @@
           ]
         }
       },
-      "status": "active"
+      "dosage": [
+        {
+          "doseAndRate": [
+            {
+              "doseQuantity": {
+                "system": "http://unitsofmeasure.org",
+                "_value": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "%context.item.where(linkId='dosis').answer.valueDecimal"
+                    }
+                  ]
+                },
+                "_code": {
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                      "valueString": "%context.item.where(linkId='dosis-einheit').answer.valueCoding.code"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "route": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%context.item.where(linkId='applikationsart').answer.valueCoding"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "status": "active",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%context.item.where(linkId='gabe-datum').answer.valueDate"
+          }
+        ]
+      }
     }
   ],
   "extension": [

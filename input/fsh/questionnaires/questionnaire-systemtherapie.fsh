@@ -19,6 +19,26 @@ Usage: #inline
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
+// code.coding ← therapieart (Chemo / Endokrin / Antikoerper / Immun / Targeted)
+* code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='therapieart').answer.valueCoding"
+
+// performedPeriod ← startdatum / enddatum (Placeholder fuer per-1)
+* performedPeriod.start = "1900-01-01"
+* performedPeriod.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedPeriod.start.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='startdatum').answer.valueDate"
+* performedPeriod.end = "1900-01-01"
+* performedPeriod.end.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedPeriod.end.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='enddatum').answer.valueDate"
+
+// note.text ← protokoll (Therapie-Protokoll als Freitext)
+* note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* note.text.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='protokoll').answer.valueString"
+
+// statusReason ← therapiestatus (laufend/abgeschlossen/abgebrochen)
+* statusReason.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* statusReason.coding.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='therapiestatus').answer.valueCoding"
+
 // --- Contained template: MedicationStatement ---
 Instance: syst-medikation-template
 InstanceOf: MedicationStatement
@@ -28,6 +48,24 @@ Usage: #inline
 * medicationCodeableConcept.text = "Substanz"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+
+// medicationCodeableConcept.coding ← substanz (ATC oder SCT je nach VS)
+* medicationCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* medicationCodeableConcept.coding[=].extension.valueString = "%context.item.where(linkId='substanz').answer.valueCoding"
+
+// effectiveDateTime ← gabe-datum
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "%context.item.where(linkId='gabe-datum').answer.valueDate"
+
+// dosage[0].doseAndRate.doseQuantity ← dosis + dosis-einheit
+* dosage[+].doseAndRate.doseQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* dosage[=].doseAndRate.doseQuantity.value.extension.valueString = "%context.item.where(linkId='dosis').answer.valueDecimal"
+* dosage[=].doseAndRate.doseQuantity.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* dosage[=].doseAndRate.doseQuantity.code.extension.valueString = "%context.item.where(linkId='dosis-einheit').answer.valueCoding.code"
+* dosage[=].doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
+// dosage.route ← applikationsart (i.v./s.c./oral/i.m.)
+* dosage[=].route.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* dosage[=].route.coding.extension.valueString = "%context.item.where(linkId='applikationsart').answer.valueCoding"
 
 // --- Questionnaire ---
 Instance: senologie-systemtherapie
