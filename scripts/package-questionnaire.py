@@ -159,6 +159,43 @@ def build_bundle(q: dict, deps: dict[str, dict]) -> dict:
     }
 
 
+def build_combined_bundle(by_id, by_url, include_views: bool) -> dict:
+    """Combined mega-bundle: alle Senologie-Q + Dependencies + optional Views."""
+    all_deps = {}
+    questionnaires = []
+    for (rt, rid), r in by_id.items():
+        if rt == "Questionnaire" and rid.startswith("senologie-"):
+            questionnaires.append(r)
+            all_deps.update(collect_dependencies(r, by_url))
+
+    entries = []
+    order = {"CodeSystem": 0, "ValueSet": 1, "StructureDefinition": 2}
+    for r in sorted(all_deps.values(), key=lambda r: (order.get(r.get("resourceType", ""), 9), r.get("id", ""))):
+        rt = r["resourceType"]
+        rid = r["id"]
+        entries.append({
+            "fullUrl": f"urn:uuid:{rt}-{rid}",
+            "resource": r,
+            "request": {"method": "PUT", "url": f"{rt}/{rid}"},
+        })
+    for q in sorted(questionnaires, key=lambda q: q["id"]):
+        entries.append({
+            "fullUrl": f"urn:uuid:Questionnaire-{q['id']}",
+            "resource": q,
+            "request": {"method": "PUT", "url": f"Questionnaire/{q['id']}"},
+        })
+    if include_views:
+        import glob
+        for f in sorted(glob.glob(str(ROOT / "validation" / "views" / "view-senologie-*.json"))):
+            v = json.loads(open(f).read())
+            entries.append({
+                "fullUrl": f"urn:uuid:ViewDefinition-{v['id']}",
+                "resource": v,
+                "request": {"method": "PUT", "url": f"ViewDefinition/{v['id']}"},
+            })
+    return {"resourceType": "Bundle", "type": "transaction", "entry": entries}
+
+
 def main():
     by_id, by_url = index_resources()
     questionnaires = [r for (rt, _), r in by_id.items() if rt == "Questionnaire"]
@@ -174,6 +211,8 @@ def main():
             return 1
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Per-Q bundles
     for q in sorted(questionnaires, key=lambda x: x["id"]):
         deps = collect_dependencies(q, by_url)
         bundle = build_bundle(q, deps)
@@ -187,10 +226,26 @@ def main():
             f"total={len(deps)+1} entries  → {out.relative_to(ROOT)}"
         )
 
+    # Combined mega-bundles (alle Senologie-Forms in einem Rutsch)
+    if not sys.argv[1:]:  # nur bei full-build, nicht bei Filter-Aufruf
+        for include_views, suffix, label in [(False, "questionnaires", "HAPI-R4-kompatibel (ohne ViewDefinition)"),
+                                              (True, "all", "Aidbox/Server mit SQL-on-FHIR (mit ViewDefinitions)")]:
+            mega = build_combined_bundle(by_id, by_url, include_views=include_views)
+            out = OUT_DIR / f"senologie-{suffix}.bundle.json"
+            out.write_text(json.dumps(mega, indent=2, ensure_ascii=False))
+            counts = {}
+            for e in mega["entry"]:
+                rt = e["resource"]["resourceType"]
+                counts[rt] = counts.get(rt, 0) + 1
+            count_str = " ".join(f"{rt}={n}" for rt, n in sorted(counts.items()))
+            print(f"\n  → {out.relative_to(ROOT)} ({len(mega['entry'])} entries, {out.stat().st_size:,} bytes)")
+            print(f"    {label}")
+            print(f"    {count_str}")
+
     print(f"\nUpload via Transaction (eine Bundle = ein POST):")
     print(f"  curl -X POST <FHIR-BASE>/ -H 'Cookie: $DOTBASE_COOKIE' \\")
     print(f"    -H 'Content-Type: application/fhir+json' \\")
-    print(f"    --data-binary @dist/packages/<id>.bundle.json")
+    print(f"    --data-binary @dist/packages/<bundle>.json")
     return 0
 
 
