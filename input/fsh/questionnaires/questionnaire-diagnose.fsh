@@ -101,6 +101,7 @@ Usage: #definition
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose"
 * name = "QuestDiagnose"
 * title = "Fragebogen: Diagnose Mamma"
+* insert Translation(title, en, [[Form: Breast Diagnosis]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -140,6 +141,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "diagnose-gruppe"
 * item[=].text = "Diagnose Mamma"
+* insert Translation(item[=].text, en, [[Breast Diagnosis]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -147,6 +149,7 @@ Usage: #definition
 // (Maligne/Prämaligne zuerst, dann häufige benigne, dann seltene/Spezialfälle)
 * item[=].item[+].linkId = "diagnose-sct"
 * item[=].item[=].text = "Diagnose"
+* insert Translation(item[=].item[=].text, en, Diagnosis)
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-mamma-24"
@@ -154,6 +157,7 @@ Usage: #definition
 // Details B3-Läsion (enableWhen Diagnose = B3-Läsion)
 * item[=].item[+].linkId = "diagnose-b3-detail"
 * item[=].item[=].text = "Details B3-Läsion"
+* insert Translation(item[=].item[=].text, en, [[B3 Lesion Details]])
 * item[=].item[=].type = #choice
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "diagnose-sct"
@@ -164,6 +168,7 @@ Usage: #definition
 // Diagnostische Sicherheit (Werte des konsentierten Datensatzes)
 * item[=].item[+].linkId = "diagnose-sicherheit"
 * item[=].item[=].text = "Diagnostische Sicherheit"
+* insert Translation(item[=].item[=].text, en, [[Diagnostic Certainty]])
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sicherheit"
@@ -171,6 +176,7 @@ Usage: #definition
 // Details (Freitext)
 * item[=].item[+].linkId = "diagnose-details"
 * item[=].item[=].text = "Details"
+* insert Translation(item[=].item[=].text, en, Details)
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
@@ -179,12 +185,14 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "lokalisation-zeit"
 * item[=].text = "Lokalisation & Zeitpunkt"
+* insert Translation(item[=].text, en, [[Localisation & Date]])
 * item[=].type = #group
 * item[=].required = true
 
 // Seite
 * item[=].item[+].linkId = "diagnose-seite"
 * item[=].item[=].text = "Seitenlokalisation"
+* insert Translation(item[=].item[=].text, en, Laterality)
 * item[=].item[=].type = #choice
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
@@ -193,5 +201,6 @@ Usage: #definition
 // bei Rezidiv-Diagnose: Datum der Rezidiv-Feststellung)
 * item[=].item[+].linkId = "diagnose-datum"
 * item[=].item[=].text = "Datum"
+* insert Translation(item[=].item[=].text, en, Date)
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
