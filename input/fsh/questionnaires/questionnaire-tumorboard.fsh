@@ -22,6 +22,7 @@ Usage: #definition
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard"
 * name = "QuestTumorboard"
 * title = "Fragebogen: Tumorboard Empfehlung"
+* insert Translation(title, en, [[Form: Tumour Board Recommendation]])
 * status = #draft
 * experimental = true
 * subjectType = #Patient
@@ -55,6 +56,7 @@ Usage: #definition
 // Bezugsdiagnose
 * item[+].linkId = "bezugsdiagnose"
 * item[=].text = "Bezugsdiagnose (Seite)"
+* insert Translation(item[=].text, en, [[Reference Diagnosis (Laterality)]])
 * item[=].type = #reference
 * item[=].required = true
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -77,16 +79,19 @@ Usage: #definition
 
 * item[+].linkId = "tumorboard-datum"
 * item[=].text = "Datum des Tumorboards"
+* insert Translation(item[=].text, en, [[Tumour Board Date]])
 * item[=].type = #date
 * item[=].required = true
 
 * item[+].linkId = "tumorboard-titel"
 * item[=].text = "Titel der Empfehlung"
+* insert Translation(item[=].text, en, [[Recommendation Title]])
 * item[=].type = #string
 * item[=].required = false
 
 * item[+].linkId = "tumorboard-beschreibung"
 * item[=].text = "Zusammenfassung der Empfehlung"
+* insert Translation(item[=].text, en, [[Recommendation Summary]])
 * item[=].type = #text
 * item[=].required = false
 
@@ -95,9 +100,11 @@ Usage: #definition
 
 * item[+].linkId = "empfehlung-op-group"
 * item[=].text = "Operative Therapie"
+* insert Translation(item[=].text, en, [[Surgical Therapy]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-op-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -105,14 +112,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-op-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-strahlentherapie-group"
 * item[=].text = "Strahlentherapie"
+* insert Translation(item[=].text, en, [[Radiotherapy]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -120,14 +130,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-endokrin-group"
 * item[=].text = "Endokrine Therapie"
+* insert Translation(item[=].text, en, [[Endocrine Therapy]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-endokrin-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -135,14 +148,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-endokrin-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-chemotherapie-group"
 * item[=].text = "Chemotherapie"
+* insert Translation(item[=].text, en, [[Chemotherapy]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-chemotherapie-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -150,14 +166,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-chemotherapie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-zielgerichtet-group"
 * item[=].text = "Zielgerichtete Therapie"
+* insert Translation(item[=].text, en, [[Targeted Therapy]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-zielgerichtet-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -165,14 +184,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-zielgerichtet-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-immuntherapie-group"
 * item[=].text = "Immuntherapie"
+* insert Translation(item[=].text, en, [[Immunotherapy]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-immuntherapie-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -180,14 +202,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-immuntherapie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-diagnostik-group"
 * item[=].text = "Weitere Diagnostik"
+* insert Translation(item[=].text, en, [[Further Diagnostics]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-diagnostik-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -195,14 +220,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-diagnostik-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-studie-group"
 * item[=].text = "Klinische Studie"
+* insert Translation(item[=].text, en, [[Clinical Trial]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-studie-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -210,14 +238,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-studie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-genetik-group"
 * item[=].text = "Genetische Untersuchung"
+* insert Translation(item[=].text, en, [[Genetic Testing]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-genetik-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -225,14 +256,17 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-genetik-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-nachsorge-group"
 * item[=].text = "Nachsorge"
+* insert Translation(item[=].text, en, [[Follow-Up]])
 * item[=].type = #group
 * item[=].item[+].linkId = "empfehlung-nachsorge-status"
 * item[=].item[=].text = "Status der Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -240,11 +274,13 @@ Usage: #definition
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-nachsorge-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
+* insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[+].linkId = "empfehlung-sonstiges"
 * item[=].text = "Sonstige Anmerkungen"
+* insert Translation(item[=].text, en, [[Other Remarks]])
 * item[=].type = #text
 * item[=].required = false
 
@@ -267,6 +303,7 @@ Usage: #inline
 * addresses.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
 * title = "Tumorboard Empfehlung"
+* insert Translation(title, en, [[Tumour Board Recommendation]])
 * title.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * title.extension.valueString = "%resource.item.where(linkId='tumorboard-titel').answer.valueString"
 
@@ -403,5 +440,6 @@ Usage: #inline
 
 // --- Sonstiges ---
 * note.text = "Sonstige Anmerkungen"
+* insert Translation(note.text, en, [[Other Remarks]])
 * note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * note.text.extension.valueString = "%resource.item.where(linkId='empfehlung-sonstiges').answer.valueString"

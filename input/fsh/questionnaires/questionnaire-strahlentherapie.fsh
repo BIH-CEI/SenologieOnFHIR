@@ -48,6 +48,7 @@ Usage: #definition
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-strahlentherapie"
 * name = "QuestStrahlentherapie"
 * title = "Fragebogen: Strahlentherapie"
+* insert Translation(title, en, [[Form: Radiotherapy]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -79,6 +80,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "bezugsdiagnose"
 * item[=].text = "Bezugsdiagnose"
+* insert Translation(item[=].text, en, [[Reference Diagnosis]])
 * item[=].type = #reference
 * item[=].required = true
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -90,6 +92,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "therapie-rahmen"
 * item[=].text = "Therapie-Rahmen"
+* insert Translation(item[=].text, en, [[Treatment Framework]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -101,6 +104,7 @@ Usage: #definition
 // Intention
 * item[=].item[+].linkId = "rt-intention"
 * item[=].item[=].text = "Intention"
+* insert Translation(item[=].item[=].text, en, [[Intention]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -110,18 +114,21 @@ Usage: #definition
 // Startdatum
 * item[=].item[+].linkId = "rt-startdatum"
 * item[=].item[=].text = "Startdatum"
+* insert Translation(item[=].item[=].text, en, [[Start Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
 // Enddatum
 * item[=].item[+].linkId = "rt-enddatum"
 * item[=].item[=].text = "Enddatum"
+* insert Translation(item[=].item[=].text, en, [[End Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 
 // Seite (korrigierte SCT-Codes)
 * item[=].item[+].linkId = "rt-seite"
 * item[=].item[=].text = "Bestrahlte Seite"
+* insert Translation(item[=].item[=].text, en, [[Irradiated Side]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -131,6 +138,7 @@ Usage: #definition
 // Tumor-Entität(en) — User picked die bestrahlten BodyStructures
 * item[=].item[+].linkId = "rt-tumor-entitaet"
 * item[=].item[=].text = "Bestrahlte Tumor-Entität(en)"
+* insert Translation(item[=].item[=].text, en, [[Irradiated Tumour Entity/Entities]])
 * item[=].item[=].type = #reference
 * item[=].item[=].repeats = true
 * item[=].item[=].required = false
@@ -141,6 +149,7 @@ Usage: #definition
 // Simultane Radiochemotherapie
 * item[=].item[+].linkId = "rt-simultane-rct"
 * item[=].item[=].text = "Simultane Radiochemotherapie"
+* insert Translation(item[=].item[=].text, en, [[Concurrent Radiochemotherapy]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 
@@ -149,12 +158,14 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "bestrahlungsplan"
 * item[=].text = "Bestrahlungsplan"
+* insert Translation(item[=].text, en, [[Irradiation Plan]])
 * item[=].type = #group
 * item[=].required = false
 
 // Zielvolumen (repeats)
 * item[=].item[+].linkId = "rt-zielvolumen"
 * item[=].item[=].text = "Zielvolumen"
+* insert Translation(item[=].item[=].text, en, [[Target Volume]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -165,6 +176,7 @@ Usage: #definition
 // Applikationsart
 * item[=].item[+].linkId = "rt-applikationsart"
 * item[=].item[=].text = "Applikationsart"
+* insert Translation(item[=].item[=].text, en, [[Application Method]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -174,6 +186,7 @@ Usage: #definition
 // Gesamtdosis
 * item[=].item[+].linkId = "rt-gesamtdosis"
 * item[=].item[=].text = "Gesamtdosis (Gy)"
+* insert Translation(item[=].item[=].text, en, [[Total Dose (Gy)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
@@ -182,6 +195,7 @@ Usage: #definition
 // Einzeldosis pro Fraktion
 * item[=].item[+].linkId = "rt-einzeldosis"
 * item[=].item[=].text = "Einzeldosis pro Fraktion (Gy)"
+* insert Translation(item[=].item[=].text, en, [[Dose per Fraction (Gy)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/StructureDefinition/questionnaire-unit"
@@ -190,6 +204,7 @@ Usage: #definition
 // Anzahl Fraktionen
 * item[=].item[+].linkId = "rt-fraktionen"
 * item[=].item[=].text = "Anzahl Fraktionen"
+* insert Translation(item[=].item[=].text, en, [[Number of Fractions]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
@@ -198,16 +213,19 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "boost"
 * item[=].text = "Boost"
+* insert Translation(item[=].text, en, [[Boost]])
 * item[=].type = #group
 * item[=].required = false
 
 * item[=].item[+].linkId = "rt-boost"
 * item[=].item[=].text = "Boost durchgeführt"
+* insert Translation(item[=].item[=].text, en, [[Boost Performed]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "rt-boost-dosis"
 * item[=].item[=].text = "Boost-Dosis (Gy)"
+* insert Translation(item[=].item[=].text, en, [[Boost Dose (Gy)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "rt-boost"
@@ -218,6 +236,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "rt-boost-fraktionen"
 * item[=].item[=].text = "Boost-Fraktionen"
+* insert Translation(item[=].item[=].text, en, [[Boost Fractions]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "rt-boost"
@@ -229,16 +248,19 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "ergebnis"
 * item[=].text = "Ergebnis"
+* insert Translation(item[=].text, en, [[Outcome]])
 * item[=].type = #group
 * item[=].required = false
 
 * item[=].item[+].linkId = "rt-nebenwirkungen"
 * item[=].item[=].text = "Akute Nebenwirkungen"
+* insert Translation(item[=].item[=].text, en, [[Acute Side Effects]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "rt-therapiestatus"
 * item[=].item[=].text = "Therapiestatus"
+* insert Translation(item[=].item[=].text, en, [[Treatment Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -247,6 +269,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "rt-abbruchgrund"
 * item[=].item[=].text = "Abbruchgrund"
+* insert Translation(item[=].item[=].text, en, [[Reason for Discontinuation]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "rt-therapiestatus"

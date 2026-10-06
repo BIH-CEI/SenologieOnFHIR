@@ -188,6 +188,7 @@ Usage: #definition
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung"
 * name = "QuestKlinischeUntersuchung"
 * title = "Fragebogen: Klinische Untersuchung Mamma"
+* insert Translation(title, en, [[Form: Clinical Breast Examination]])
 * status = #draft
 * experimental = true
 * subjectType = #Patient
@@ -222,6 +223,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "patient-ref"
 * item[=].text = "Patient"
+* insert Translation(item[=].text, en, [[Patient]])
 * item[=].type = #reference
 * item[=].required = true
 * item[=].readOnly = true
@@ -234,12 +236,14 @@ Usage: #definition
 // Datum
 * item[+].linkId = "datum"
 * item[=].text = "Untersuchungsdatum"
+* insert Translation(item[=].text, en, [[Examination Date]])
 * item[=].type = #date
 * item[=].required = true
 
 // Toggle Detailliert
 * item[+].linkId = "detailliert"
 * item[=].text = "Detailliert anlegen?"
+* insert Translation(item[=].text, en, [[Create Detailed Entry?]])
 * item[=].type = #boolean
 * item[=].required = false
 
@@ -248,17 +252,20 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "inspektion"
 * item[=].text = "Inspektion"
+* insert Translation(item[=].text, en, [[Inspection]])
 * item[=].type = #group
 
 // Mamma rechts vorhanden
 * item[=].item[+].linkId = "inspektion-mamma-rechts-vorhanden"
 * item[=].item[=].text = "Mamma rechts vorhanden"
+* insert Translation(item[=].item[=].text, en, [[Right Breast Present]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 
 // Mamma rechts auffällig/unauffällig
 * item[=].item[+].linkId = "inspektion-mamma-rechts"
 * item[=].item[=].text = "Inspektion Mamma rechts"
+* insert Translation(item[=].item[=].text, en, [[Inspection Right Breast]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -268,12 +275,14 @@ Usage: #definition
 // Mamma links vorhanden
 * item[=].item[+].linkId = "inspektion-mamma-links-vorhanden"
 * item[=].item[=].text = "Mamma links vorhanden"
+* insert Translation(item[=].item[=].text, en, [[Left Breast Present]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 
 // Mamma links auffällig/unauffällig
 * item[=].item[+].linkId = "inspektion-mamma-links"
 * item[=].item[=].text = "Inspektion Mamma links"
+* insert Translation(item[=].item[=].text, en, [[Inspection Left Breast]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -283,6 +292,7 @@ Usage: #definition
 // Symmetrie
 * item[=].item[+].linkId = "symmetrie"
 * item[=].item[=].text = "Symmetrie Mammae"
+* insert Translation(item[=].item[=].text, en, [[Breast Symmetry]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -292,6 +302,7 @@ Usage: #definition
 // Asymmetrisch zugunsten (enableWhen=Asymmetrisch)
 * item[=].item[+].linkId = "asymmetrisch-zugunsten"
 * item[=].item[=].text = "Asymmetrisch zugunsten"
+* insert Translation(item[=].item[=].text, en, [[Asymmetric in Favour of]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -304,6 +315,7 @@ Usage: #definition
 // Ptosis rechts
 * item[=].item[+].linkId = "ptosis-rechts"
 * item[=].item[=].text = "Ptosis rechts (Regnault)"
+* insert Translation(item[=].item[=].text, en, [[Ptosis Right (Regnault)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -313,6 +325,7 @@ Usage: #definition
 // Ptosis links
 * item[=].item[+].linkId = "ptosis-links"
 * item[=].item[=].text = "Ptosis links (Regnault)"
+* insert Translation(item[=].item[=].text, en, [[Ptosis Left (Regnault)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -322,6 +335,7 @@ Usage: #definition
 // Inspektion Details (Freitext)
 * item[=].item[+].linkId = "inspektion-details"
 * item[=].item[=].text = "Details Inspektion"
+* insert Translation(item[=].item[=].text, en, [[Inspection Details]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
@@ -330,10 +344,12 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "palpation"
 * item[=].text = "Palpation"
+* insert Translation(item[=].text, en, [[Palpation]])
 * item[=].type = #group
 
 * item[=].item[+].linkId = "palpation-mamma-rechts"
 * item[=].item[=].text = "Palpation Mamma/Thoraxwand rechts"
+* insert Translation(item[=].item[=].text, en, [[Palpation Breast/Chest Wall Right]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -342,6 +358,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "palpation-mamma-links"
 * item[=].item[=].text = "Palpation Mamma/Thoraxwand links"
+* insert Translation(item[=].item[=].text, en, [[Palpation Breast/Chest Wall Left]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -350,6 +367,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "palpation-axilla-rechts"
 * item[=].item[=].text = "Palpation Axilla/LAW rechts"
+* insert Translation(item[=].item[=].text, en, [[Palpation Axilla/LAW Right]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -358,6 +376,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "palpation-axilla-links"
 * item[=].item[=].text = "Palpation Axilla/LAW links"
+* insert Translation(item[=].item[=].text, en, [[Palpation Axilla/LAW Left]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -366,6 +385,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "palpation-details"
 * item[=].item[=].text = "Details Palpation"
+* insert Translation(item[=].item[=].text, en, [[Palpation Details]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
@@ -374,6 +394,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "klinisches-tnm"
 * item[=].text = "Klinisches TNM (Einschätzung des Untersuchers)"
+* insert Translation(item[=].text, en, [[Clinical TNM (Examiner Assessment)]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -384,6 +405,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "ct"
 * item[=].item[=].text = "cT"
+* insert Translation(item[=].item[=].text, en, [[cT]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -392,6 +414,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "cn"
 * item[=].item[=].text = "cN"
+* insert Translation(item[=].item[=].text, en, [[cN]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -400,6 +423,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "cm"
 * item[=].item[=].text = "cM"
+* insert Translation(item[=].item[=].text, en, [[cM]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -408,6 +432,7 @@ Usage: #definition
 
 * item[=].item[+].linkId = "ctnm-uicc"
 * item[=].item[=].text = "cUICC-Gesamtstadium (klinisch)"
+* insert Translation(item[=].item[=].text, en, [[cUICC Overall Stage (Clinical)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -419,11 +444,13 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "zusammenfassung"
 * item[=].text = "Zusammenfassung"
+* insert Translation(item[=].text, en, [[Summary]])
 * item[=].type = #group
 * item[=].required = false
 
 * item[=].item[+].linkId = "tumornachweis"
 * item[=].item[=].text = "Tumornachweis"
+* insert Translation(item[=].item[=].text, en, [[Tumour Evidence]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -432,5 +459,6 @@ Usage: #definition
 
 * item[=].item[+].linkId = "zusammenfassung-text"
 * item[=].item[=].text = "Zusammenfassung (Freitext)"
+* insert Translation(item[=].item[=].text, en, [[Summary (Free Text)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false

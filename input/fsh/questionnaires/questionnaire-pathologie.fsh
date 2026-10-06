@@ -387,6 +387,7 @@ Usage: #definition
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-pathologie"
 * name = "QuestPathologieBefund"
 * title = "Fragebogen: Pathologie Befund"
+* insert Translation(title, en, [[Form: Pathology Report]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -441,6 +442,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "praeparat"
 * item[=].text = "Präparat"
+* insert Translation(item[=].text, en, [[Specimen]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -455,6 +457,7 @@ Usage: #definition
 // geschrieben werden soll (via Update auf launchContext.diagnosis).
 * item[=].item[+].linkId = "praeparat-art"
 * item[=].item[=].text = "Art des Präparats"
+* insert Translation(item[=].item[=].text, en, [[Specimen Type]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -464,12 +467,14 @@ Usage: #definition
 // Entnahmedatum
 * item[=].item[+].linkId = "praeparat-entnahmedatum"
 * item[=].item[=].text = "Entnahmedatum"
+* insert Translation(item[=].item[=].text, en, [[Date of Removal]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
 // Seite (korrigierte SCT-Codes)
 * item[=].item[+].linkId = "praeparat-seite"
 * item[=].item[=].text = "Seite"
+* insert Translation(item[=].item[=].text, en, [[Laterality]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -479,6 +484,7 @@ Usage: #definition
 // Lokalisation / Quadrant
 * item[=].item[+].linkId = "praeparat-quadrant"
 * item[=].item[=].text = "Lokalisation / Quadrant"
+* insert Translation(item[=].item[=].text, en, [[Location / Quadrant]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -490,6 +496,7 @@ Usage: #definition
 // Specimen.collection.bodySite.extension[R5-Ref] wird damit befüllt
 * item[=].item[+].linkId = "praeparat-tumor-entitaet"
 * item[=].item[=].text = "Tumor-Entität (aus Bildgebung)"
+* insert Translation(item[=].item[=].text, en, [[Tumour Entity (from Imaging)]])
 * item[=].item[=].type = #reference
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -522,6 +529,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "histologie"
 * item[=].text = "Histologie"
+* insert Translation(item[=].text, en, [[Histology]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -555,6 +563,7 @@ Usage: #definition
 //   B5b → 254837009 "Malignant tumor of breast"
 * item[=].item[+].linkId = "b-klassifikation"
 * item[=].item[=].text = "Histologie allgemein (NHSBSP B-Klassifikation)"
+* insert Translation(item[=].item[=].text, en, [[General Histology (NHSBSP B-Classification)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -564,6 +573,7 @@ Usage: #definition
 // Histologischer Typ
 * item[=].item[+].linkId = "histo-typ"
 * item[=].item[=].text = "Histologischer Typ"
+* insert Translation(item[=].item[=].text, en, [[Histological Type]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -573,6 +583,7 @@ Usage: #definition
 // Grading
 * item[=].item[+].linkId = "histo-grading"
 * item[=].item[=].text = "Grading (Elston-Ellis)"
+* insert Translation(item[=].item[=].text, en, [[Grading (Elston-Ellis)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -583,6 +594,7 @@ Usage: #definition
 // Tumorgröße in mm
 * item[=].item[+].linkId = "histo-tumorgroesse"
 * item[=].item[=].text = "Tumorgröße (mm)"
+* insert Translation(item[=].item[=].text, en, [[Tumour Size (mm)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#21889-1 "Size Tumor"
@@ -590,6 +602,7 @@ Usage: #definition
 // Invasive Tumorgröße in mm
 * item[=].item[+].linkId = "histo-invasive-groesse"
 * item[=].item[=].text = "Invasive Tumorgröße (mm)"
+* insert Translation(item[=].item[=].text, en, [[Invasive Tumour Size (mm)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#33728-7 "Size.maximum dimension in Tumor"
@@ -597,12 +610,14 @@ Usage: #definition
 // DCIS-Anteil
 * item[=].item[+].linkId = "histo-dcis-anteil"
 * item[=].item[=].text = "DCIS-Anteil"
+* insert Translation(item[=].item[=].text, en, [[DCIS Component]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // Resektionsrand
 * item[=].item[+].linkId = "histo-resektionsrand"
 * item[=].item[=].text = "Resektionsrand"
+* insert Translation(item[=].item[=].text, en, [[Resection Margin]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -613,6 +628,7 @@ Usage: #definition
 // Sentinel-LK Anzahl
 * item[=].item[+].linkId = "histo-sentinel-anzahl"
 * item[=].item[=].text = "Sentinel-LK untersucht"
+* insert Translation(item[=].item[=].text, en, [[Sentinel LN Examined]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85347-3 "Sentinel lymph nodes examined [#]"
@@ -620,6 +636,7 @@ Usage: #definition
 // Sentinel-LK befallen
 * item[=].item[+].linkId = "histo-sentinel-befallen"
 * item[=].item[=].text = "Sentinel-LK befallen"
+* insert Translation(item[=].item[=].text, en, [[Sentinel LN Positive]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#92832-5 "Sentinel lymph nodes with metastasis [#]"
@@ -631,6 +648,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "ptnm"
 * item[=].text = "pTNM + Invasion + Resektionsstatus"
+* insert Translation(item[=].text, en, [[pTNM + Invasion + Resection Status]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -663,6 +681,7 @@ Usage: #definition
 // pT (postoperatives T)
 * item[=].item[+].linkId = "pt"
 * item[=].item[=].text = "pT"
+* insert Translation(item[=].item[=].text, en, [[pT]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -672,6 +691,7 @@ Usage: #definition
 // pN (postoperatives N)
 * item[=].item[+].linkId = "pn"
 * item[=].item[=].text = "pN"
+* insert Translation(item[=].item[=].text, en, [[pN]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -681,6 +701,7 @@ Usage: #definition
 // pM (postoperatives M)
 * item[=].item[+].linkId = "pm"
 * item[=].item[=].text = "pM"
+* insert Translation(item[=].item[=].text, en, [[pM]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -690,6 +711,7 @@ Usage: #definition
 // L-Kategorie (Lymphangiosis)
 * item[=].item[+].linkId = "l-kategorie"
 * item[=].item[=].text = "L (Lymphangiosis carcinomatosa)"
+* insert Translation(item[=].item[=].text, en, [[L (Lymphovascular Invasion)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -699,6 +721,7 @@ Usage: #definition
 // V-Kategorie (Vasoinvasion)
 * item[=].item[+].linkId = "v-kategorie"
 * item[=].item[=].text = "V (Venöse Invasion)"
+* insert Translation(item[=].item[=].text, en, [[V (Venous Invasion)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -708,6 +731,7 @@ Usage: #definition
 // Pn-Kategorie (Perineuralinvasion)
 * item[=].item[+].linkId = "pn-perineural"
 * item[=].item[=].text = "Pn (Perineuralinvasion)"
+* insert Translation(item[=].item[=].text, en, [[Pn (Perineural Invasion)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -717,6 +741,7 @@ Usage: #definition
 // R-Status (Resektionsstatus, SCT-codiert)
 * item[=].item[+].linkId = "r-status"
 * item[=].item[=].text = "R-Status (Resektionsstatus)"
+* insert Translation(item[=].item[=].text, en, [[R Status (Resection Status)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -726,6 +751,7 @@ Usage: #definition
 // UICC-Gesamtstadium (Aggregat aus pT+pN+pM)
 * item[=].item[+].linkId = "ptnm-uicc"
 * item[=].item[=].text = "UICC-Gesamtstadium (pathologisch)"
+* insert Translation(item[=].item[=].text, en, [[UICC Overall Stage (Pathological)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -737,6 +763,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "ihc"
 * item[=].text = "Immunhistochemie / Rezeptorstatus"
+* insert Translation(item[=].text, en, [[Immunohistochemistry / Receptor Status]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -763,6 +790,7 @@ Usage: #definition
 // ER Prozent positiv → component[AnteilPositiveZellen].valueQuantity
 * item[=].item[+].linkId = "ihc-er-prozent"
 * item[=].item[=].text = "ER Prozent positiv (%)"
+* insert Translation(item[=].item[=].text, en, [[ER Percent Positive (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1234804006 "Percent of cells with estrogen receptor"
@@ -770,6 +798,7 @@ Usage: #definition
 // ER IRS Score → component[irsScore].valueQuantity
 * item[=].item[+].linkId = "ihc-er-irs"
 * item[=].item[=].text = "ER IRS Score (0–12, Remmele-Stegner, DE-Standard)"
+* insert Translation(item[=].item[=].text, en, [[ER IRS Score (0-12, Remmele-Stegner)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
@@ -777,6 +806,7 @@ Usage: #definition
 // ER Allred Score → component[allredScore].valueQuantity
 * item[=].item[+].linkId = "ihc-er-allred"
 * item[=].item[=].text = "ER Allred Score (0–8, international)"
+* insert Translation(item[=].item[=].text, en, [[ER Allred Score (0-8)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
@@ -784,6 +814,7 @@ Usage: #definition
 // ER Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-er-intensitaet"
 * item[=].item[=].text = "ER Färbeintensität"
+* insert Translation(item[=].item[=].text, en, [[ER Staining Intensity]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -794,6 +825,7 @@ Usage: #definition
 // PR Prozent positiv → component[AnteilPositiveZellen].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-prozent"
 * item[=].item[=].text = "PR Prozent positiv (%)"
+* insert Translation(item[=].item[=].text, en, [[PR Percent Positive (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1234803000 "Percent of cells with progesterone receptor"
@@ -801,6 +833,7 @@ Usage: #definition
 // PR IRS Score → component[irsScore].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-irs"
 * item[=].item[=].text = "PR IRS Score (0–12)"
+* insert Translation(item[=].item[=].text, en, [[PR IRS Score (0-12)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
@@ -808,6 +841,7 @@ Usage: #definition
 // PR Allred Score → component[allredScore].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-allred"
 * item[=].item[=].text = "PR Allred Score (0–8)"
+* insert Translation(item[=].item[=].text, en, [[PR Allred Score (0-8)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
@@ -815,6 +849,7 @@ Usage: #definition
 // PR Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-pr-intensitaet"
 * item[=].item[=].text = "PR Färbeintensität"
+* insert Translation(item[=].item[=].text, en, [[PR Staining Intensity]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -825,6 +860,7 @@ Usage: #definition
 // HER2 IHC Score → component[IHCScore].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-score"
 * item[=].item[=].text = "HER2 IHC Score"
+* insert Translation(item[=].item[=].text, en, [[HER2 IHC Score]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -835,6 +871,7 @@ Usage: #definition
 // HER2-Gesamtstatus nach Leitlinie → value[x].coding[DefinitionLeitlinie]
 * item[=].item[+].linkId = "ihc-her2-gesamt"
 * item[=].item[=].text = "HER2-Gesamtstatus (Leitlinie, inkl. HER2-low / HER2-ultralow)"
+* insert Translation(item[=].item[=].text, en, [[HER2 Overall Status (Guideline)]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -844,6 +881,7 @@ Usage: #definition
 // HER2 ISH/FISH (bei HER2 IHC = 2+) → component[ISHResult].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-fish"
 * item[=].item[=].text = "HER2 ISH/FISH"
+* insert Translation(item[=].item[=].text, en, [[HER2 ISH/FISH]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -857,6 +895,7 @@ Usage: #definition
 // HER2 ISH-Methode (FISH/CISH/DISH/SISH) — Senologie-Erweiterung
 * item[=].item[+].linkId = "ihc-her2-ish-methode"
 * item[=].item[=].text = "HER2 ISH-Methode"
+* insert Translation(item[=].item[=].text, en, [[HER2 ISH Method]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -869,6 +908,7 @@ Usage: #definition
 // HER2/CEP17 Ratio (quantitativ aus ISH) — Senologie-Erweiterung, im MII MTB modelliert
 * item[=].item[+].linkId = "ihc-her2-ratio"
 * item[=].item[=].text = "HER2/CEP17 Ratio (FISH/CISH, Cutoff ≥ 2.0 = amplifiziert)"
+* insert Translation(item[=].item[=].text, en, [[HER2/CEP17 Ratio (FISH/CISH)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
@@ -878,6 +918,7 @@ Usage: #definition
 // HER2 Kopienzahl pro Zelle — Senologie-Erweiterung
 * item[=].item[+].linkId = "ihc-her2-kopienzahl"
 * item[=].item[=].text = "HER2-Kopienzahl pro Zelle (Cutoff ≥ 6 = amplifiziert)"
+* insert Translation(item[=].item[=].text, en, [[HER2 Copy Number per Cell (Cutoff >= 6)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
@@ -887,6 +928,7 @@ Usage: #definition
 // Ki-67 Index % → valueQuantity
 * item[=].item[+].linkId = "ihc-ki67"
 * item[=].item[=].text = "Ki-67 Index (%)"
+* insert Translation(item[=].item[=].text, en, [[Ki-67 Index (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#29593-1 "Ki-67 [Percentile] in Tissue"
@@ -894,18 +936,21 @@ Usage: #definition
 // PD-L1 TPS (Tumor Proportion Score)
 * item[=].item[+].linkId = "ihc-pdl1-tps"
 * item[=].item[=].text = "PD-L1 TPS (Tumor Proportion Score, %)"
+* insert Translation(item[=].item[=].text, en, [[PD-L1 TPS (Tumour Proportion Score, %)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // PD-L1 CPS (Combined Positive Score)
 * item[=].item[+].linkId = "ihc-pdl1-cps"
 * item[=].item[=].text = "PD-L1 CPS (Combined Positive Score)"
+* insert Translation(item[=].item[=].text, en, [[PD-L1 CPS (Combined Positive Score)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // PD-L1 IC (Immune Cell Score)
 * item[=].item[+].linkId = "ihc-pdl1-ic"
 * item[=].item[=].text = "PD-L1 IC (Immune Cell Score, %)"
+* insert Translation(item[=].item[=].text, en, [[PD-L1 IC (Immune Cell Score, %)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
@@ -914,6 +959,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "beurteilung"
 * item[=].text = "Gesamtbeurteilung"
+* insert Translation(item[=].text, en, [[Overall Assessment]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -925,11 +971,13 @@ Usage: #definition
 // pTNM Staging
 * item[=].item[+].linkId = "beurteilung-ptnm"
 * item[=].item[=].text = "pTNM"
+* insert Translation(item[=].item[=].text, en, [[pTNM]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // Gesamtbeurteilung Freitext
 * item[=].item[+].linkId = "beurteilung-freitext"
 * item[=].item[=].text = "Gesamtbeurteilung (Freitext)"
+* insert Translation(item[=].item[=].text, en, [[Overall Assessment (Free Text)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false

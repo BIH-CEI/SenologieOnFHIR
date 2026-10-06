@@ -46,6 +46,7 @@ Usage: #inline
 * id = "syst-medikation-template"
 * status = #active
 * medicationCodeableConcept.text = "Substanz"
+* insert Translation(medicationCodeableConcept.text, en, [[Substance]])
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
@@ -77,6 +78,7 @@ Usage: #definition
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie"
 * name = "QuestSystemtherapie"
 * title = "Fragebogen: Systemische Therapie"
+* insert Translation(title, en, [[Form: Systemic Therapy]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -109,6 +111,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "bezugsdiagnose"
 * item[=].text = "Bezugsdiagnose"
+* insert Translation(item[=].text, en, [[Reference Diagnosis]])
 * item[=].type = #reference
 * item[=].required = true
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -127,6 +130,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "therapie-rahmen"
 * item[=].text = "Therapie-Rahmen"
+* insert Translation(item[=].text, en, [[Treatment Framework]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -138,6 +142,7 @@ Usage: #definition
 // Therapieart
 * item[=].item[+].linkId = "therapieart"
 * item[=].item[=].text = "Therapieart"
+* insert Translation(item[=].item[=].text, en, [[Therapy Type]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -147,6 +152,7 @@ Usage: #definition
 // Intention
 * item[=].item[+].linkId = "intention"
 * item[=].item[=].text = "Intention"
+* insert Translation(item[=].item[=].text, en, [[Intention]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -156,6 +162,7 @@ Usage: #definition
 // First-Line bei Metastasierung (conditional)
 * item[=].item[+].linkId = "first-line"
 * item[=].item[=].text = "First-Line-Therapie bei Metastasierung"
+* insert Translation(item[=].item[=].text, en, [[First-Line Therapy for Metastatic Disease]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "intention"
@@ -165,36 +172,42 @@ Usage: #definition
 // Protokoll/Schema
 * item[=].item[+].linkId = "protokoll"
 * item[=].item[=].text = "Protokoll/Schema (z.B. EC-Pac, TCbHP)"
+* insert Translation(item[=].item[=].text, en, [[Protocol/Regimen]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // Startdatum
 * item[=].item[+].linkId = "startdatum"
 * item[=].item[=].text = "Startdatum"
+* insert Translation(item[=].item[=].text, en, [[Start Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
 // Enddatum
 * item[=].item[+].linkId = "enddatum"
 * item[=].item[=].text = "Enddatum"
+* insert Translation(item[=].item[=].text, en, [[End Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 
 // Geplante Zyklen
 * item[=].item[+].linkId = "geplante-zyklen"
 * item[=].item[=].text = "Geplante Zyklen"
+* insert Translation(item[=].item[=].text, en, [[Planned Cycles]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // Durchgeführte Zyklen
 * item[=].item[+].linkId = "durchgefuehrte-zyklen"
 * item[=].item[=].text = "Durchgeführte Zyklen"
+* insert Translation(item[=].item[=].text, en, [[Completed Cycles]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // Therapiestatus
 * item[=].item[+].linkId = "therapiestatus"
 * item[=].item[=].text = "Therapiestatus"
+* insert Translation(item[=].item[=].text, en, [[Treatment Status]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -204,6 +217,7 @@ Usage: #definition
 // Abbruchgrund (conditional — enableWhen prueft Status-Code "abgebrochen")
 * item[=].item[+].linkId = "abbruchgrund"
 * item[=].item[=].text = "Abbruchgrund"
+* insert Translation(item[=].item[=].text, en, [[Reason for Discontinuation]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "therapiestatus"
@@ -215,6 +229,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "medikamentengabe"
 * item[=].text = "Medikamentengabe"
+* insert Translation(item[=].text, en, [[Medication Administration]])
 * item[=].type = #group
 * item[=].required = false
 * item[=].repeats = true
@@ -227,6 +242,7 @@ Usage: #definition
 // Substanz
 * item[=].item[+].linkId = "substanz"
 * item[=].item[=].text = "Substanz"
+* insert Translation(item[=].item[=].text, en, [[Substance]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -236,12 +252,14 @@ Usage: #definition
 // Dosis
 * item[=].item[+].linkId = "dosis"
 * item[=].item[=].text = "Dosis"
+* insert Translation(item[=].item[=].text, en, [[Dose]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 
 // Dosis-Einheit
 * item[=].item[+].linkId = "dosis-einheit"
 * item[=].item[=].text = "Dosis-Einheit"
+* insert Translation(item[=].item[=].text, en, [[Dose Unit]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -251,24 +269,28 @@ Usage: #definition
 // Zyklus
 * item[=].item[+].linkId = "zyklus-nummer"
 * item[=].item[=].text = "Zyklus"
+* insert Translation(item[=].item[=].text, en, [[Cycle]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // Tag im Zyklus
 * item[=].item[+].linkId = "tag-im-zyklus"
 * item[=].item[=].text = "Tag im Zyklus"
+* insert Translation(item[=].item[=].text, en, [[Day in Cycle]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // Gabe-Datum
 * item[=].item[+].linkId = "gabe-datum"
 * item[=].item[=].text = "Gabe-Datum"
+* insert Translation(item[=].item[=].text, en, [[Administration Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 
 // Applikationsart
 * item[=].item[+].linkId = "applikationsart"
 * item[=].item[=].text = "Applikationsart"
+* insert Translation(item[=].item[=].text, en, [[Application Method]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -280,5 +302,6 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "syst-anmerkungen"
 * item[=].text = "Anmerkungen"
+* insert Translation(item[=].text, en, [[Remarks]])
 * item[=].type = #text
 * item[=].required = false

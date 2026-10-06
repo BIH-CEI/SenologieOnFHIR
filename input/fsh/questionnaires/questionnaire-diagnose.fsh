@@ -149,7 +149,7 @@ Usage: #definition
 // (Maligne/Prämaligne zuerst, dann häufige benigne, dann seltene/Spezialfälle)
 * item[=].item[+].linkId = "diagnose-sct"
 * item[=].item[=].text = "Diagnose"
-* insert Translation(item[=].item[=].text, en, Diagnosis)
+* insert Translation(item[=].item[=].text, en, [[Diagnosis]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -182,7 +182,7 @@ Usage: #definition
 // Details (Freitext)
 * item[=].item[+].linkId = "diagnose-details"
 * item[=].item[=].text = "Details"
-* insert Translation(item[=].item[=].text, en, Details)
+* insert Translation(item[=].item[=].text, en, [[Details]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
@@ -198,7 +198,7 @@ Usage: #definition
 // Seite
 * item[=].item[+].linkId = "diagnose-seite"
 * item[=].item[=].text = "Seitenlokalisation"
-* insert Translation(item[=].item[=].text, en, Laterality)
+* insert Translation(item[=].item[=].text, en, [[Laterality]])
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
@@ -209,6 +209,6 @@ Usage: #definition
 // bei Rezidiv-Diagnose: Datum der Rezidiv-Feststellung)
 * item[=].item[+].linkId = "diagnose-datum"
 * item[=].item[=].text = "Datum"
-* insert Translation(item[=].item[=].text, en, Date)
+* insert Translation(item[=].item[=].text, en, [[Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
