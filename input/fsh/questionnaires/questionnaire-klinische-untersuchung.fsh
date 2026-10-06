@@ -260,6 +260,8 @@ Usage: #definition
 * item[=].item[+].linkId = "inspektion-mamma-rechts"
 * item[=].item[=].text = "Inspektion Mamma rechts"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
@@ -273,6 +275,8 @@ Usage: #definition
 * item[=].item[+].linkId = "inspektion-mamma-links"
 * item[=].item[=].text = "Inspektion Mamma links"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
@@ -280,6 +284,8 @@ Usage: #definition
 * item[=].item[+].linkId = "symmetrie"
 * item[=].item[=].text = "Symmetrie Mammae"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-symmetrie"
 
@@ -287,6 +293,8 @@ Usage: #definition
 * item[=].item[+].linkId = "asymmetrisch-zugunsten"
 * item[=].item[=].text = "Asymmetrisch zugunsten"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "symmetrie"
 * item[=].item[=].enableWhen[=].operator = #=
@@ -297,6 +305,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ptosis-rechts"
 * item[=].item[=].text = "Ptosis rechts (Regnault)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
 
@@ -304,6 +314,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ptosis-links"
 * item[=].item[=].text = "Ptosis links (Regnault)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
 
@@ -323,24 +335,32 @@ Usage: #definition
 * item[=].item[+].linkId = "palpation-mamma-rechts"
 * item[=].item[=].text = "Palpation Mamma/Thoraxwand rechts"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
 * item[=].item[+].linkId = "palpation-mamma-links"
 * item[=].item[=].text = "Palpation Mamma/Thoraxwand links"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
 * item[=].item[+].linkId = "palpation-axilla-rechts"
 * item[=].item[=].text = "Palpation Axilla/LAW rechts"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
 * item[=].item[+].linkId = "palpation-axilla-links"
 * item[=].item[=].text = "Palpation Axilla/LAW links"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
@@ -365,24 +385,32 @@ Usage: #definition
 * item[=].item[+].linkId = "ct"
 * item[=].item[=].text = "cT"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-t-kategorie-mamma"
 
 * item[=].item[+].linkId = "cn"
 * item[=].item[=].text = "cN"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
 
 * item[=].item[+].linkId = "cm"
 * item[=].item[=].text = "cM"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-m-kategorie-mamma"
 
 * item[=].item[+].linkId = "ctnm-uicc"
 * item[=].item[=].text = "cUICC-Gesamtstadium (klinisch)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma"
 
@@ -397,6 +425,8 @@ Usage: #definition
 * item[=].item[+].linkId = "tumornachweis"
 * item[=].item[=].text = "Tumornachweis"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumornachweis-status"
 

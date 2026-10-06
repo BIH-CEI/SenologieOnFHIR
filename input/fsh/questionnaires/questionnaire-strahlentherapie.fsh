@@ -102,6 +102,8 @@ Usage: #definition
 * item[=].item[+].linkId = "rt-intention"
 * item[=].item[=].text = "Intention"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
 
@@ -121,6 +123,8 @@ Usage: #definition
 * item[=].item[+].linkId = "rt-seite"
 * item[=].item[=].text = "Bestrahlte Seite"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -152,6 +156,8 @@ Usage: #definition
 * item[=].item[+].linkId = "rt-zielvolumen"
 * item[=].item[=].text = "Zielvolumen"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].repeats = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-zielvolumen"
@@ -160,6 +166,8 @@ Usage: #definition
 * item[=].item[+].linkId = "rt-applikationsart"
 * item[=].item[=].text = "Applikationsart"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-applikationsart"
 
@@ -232,6 +240,8 @@ Usage: #definition
 * item[=].item[+].linkId = "rt-therapiestatus"
 * item[=].item[=].text = "Therapiestatus"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 

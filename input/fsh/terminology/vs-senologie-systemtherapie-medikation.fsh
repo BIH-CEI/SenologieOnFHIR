@@ -39,3 +39,65 @@ Description: "Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validier
 // Sonstige Antineoplastika
 * $SCT#387331000 "Mitomycin"
 * $SCT#708166000 "Eribulin"
+
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
+* ^expansion.identifier = "urn:uuid:vs-senologie-systemtherapie-medikation-expansion"
+* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+* ^expansion.total = 19
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #715958001
+* ^expansion.contains[=].display = "Palbociclib"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #732257004
+* ^expansion.contains[=].display = "Ribociclib"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #761851004
+* ^expansion.contains[=].display = "Abemaciclib"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #387381009
+* ^expansion.contains[=].display = "Methotrexate"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #387172005
+* ^expansion.contains[=].display = "Fluorouracil"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #386920008
+* ^expansion.contains[=].display = "Gemcitabine"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #386906001
+* ^expansion.contains[=].display = "Capecitabine"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #372817009
+* ^expansion.contains[=].display = "Doxorubicin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #772118008
+* ^expansion.contains[=].display = "Doxorubicin hydrochloride pegylated liposome"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #372715008
+* ^expansion.contains[=].display = "Daunorubicin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #417916005
+* ^expansion.contains[=].display = "Epirubicin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #372539000
+* ^expansion.contains[=].display = "Idarubicin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #386913001
+* ^expansion.contains[=].display = "Mitoxantrone"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #386918005
+* ^expansion.contains[=].display = "Docetaxel"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #387318005
+* ^expansion.contains[=].display = "Cisplatin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #386905002
+* ^expansion.contains[=].display = "Carboplatin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #387420009
+* ^expansion.contains[=].display = "Cyclophosphamide"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #387331000
+* ^expansion.contains[=].display = "Mitomycin"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #708166000
+* ^expansion.contains[=].display = "Eribulin"

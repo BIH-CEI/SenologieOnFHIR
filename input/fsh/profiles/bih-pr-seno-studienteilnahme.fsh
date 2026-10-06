@@ -115,3 +115,23 @@ Description: "Screeningstatus einer klinischen Studienteilnahme"
 
 // Studiennamen werden über ResearchStudy.title als Freitext erfasst,
 // nicht als kodiertes CodeSystem — Studienlisten sind dynamisch.
+
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
+* ^expansion.identifier = "urn:uuid:vs-senologie-screeningstatus-expansion"
+* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+* ^expansion.total = 5
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #385432009
+* ^expansion.contains[=].display = "Not applicable (qualifier value)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #709491003
+* ^expansion.contains[=].display = "Assessed (qualifier value)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1304144001
+* ^expansion.contains[=].display = "Eligible for clinical trial"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #385646003
+* ^expansion.contains[=].display = "Not eligible (qualifier value)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #260385009
+* ^expansion.contains[=].display = "Negative (qualifier value)"

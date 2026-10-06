@@ -43,3 +43,44 @@ Description: "Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen
 * ^status = #draft
 
 * include codes from system CSSenologieDiagnosesicherung
+
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
+* ^expansion.identifier = "urn:uuid:vs-senologie-diagnosesicherung-expansion"
+* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+* ^expansion.total = 12
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #1
+* ^expansion.contains[=].display = "Klinisch ohne weitere Spezifizierung"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #2
+* ^expansion.contains[=].display = "Klinische Diagnostik"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #3
+* ^expansion.contains[=].display = "Chirurgisch/Autopsie ohne Histologie"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #4
+* ^expansion.contains[=].display = "Spezifische Tumormarker"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #5
+* ^expansion.contains[=].display = "Zytologie"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #6
+* ^expansion.contains[=].display = "Histologie einer Metastase"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #7
+* ^expansion.contains[=].display = "Histologie Primärtumor"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #7.1
+* ^expansion.contains[=].display = "Histologie nach Operation"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #7.2
+* ^expansion.contains[=].display = "Histologie nach Biopsie"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #7.3
+* ^expansion.contains[=].display = "Histologie nach Autopsie"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #8
+* ^expansion.contains[=].display = "Genetisch/Molekularbiologisch"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
+* ^expansion.contains[=].code = #9
+* ^expansion.contains[=].display = "Unbekannt"

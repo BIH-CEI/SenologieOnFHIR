@@ -252,6 +252,8 @@ Usage: #definition
 * item[=].item[+].linkId = "bildgebungsart"
 * item[=].item[=].text = "Bildgebungsart"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-bildgebung-modalitaet"
 
@@ -259,6 +261,8 @@ Usage: #definition
 * item[=].item[+].linkId = "untersuchung-standort"
 * item[=].item[=].text = "Standort"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-standort"
 
@@ -302,6 +306,8 @@ Usage: #definition
 * item[=].item[+].linkId = "lokalisation-seite"
 * item[=].item[=].text = "Seite"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -309,6 +315,8 @@ Usage: #definition
 * item[=].item[+].linkId = "lokalisation-quadrant"
 * item[=].item[=].text = "Quadrant"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-quadrant-mamma"
 
@@ -316,6 +324,8 @@ Usage: #definition
 * item[=].item[+].linkId = "lokalisation-uhrzeit"
 * item[=].item[=].text = "Uhrzeitposition"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clockface-position"
 
@@ -345,6 +355,8 @@ Usage: #definition
 * item[=].item[+].linkId = "birads-kategorie"
 * item[=].item[=].text = "BI-RADS Kategorie"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#72018-2 "BI-RADS"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-birads"
@@ -353,6 +365,8 @@ Usage: #definition
 * item[=].item[+].linkId = "acr-brustdichte"
 * item[=].item[=].text = "ACR Brustdichte"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#89180-4 "Breast density"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-acr-brustdichte"
@@ -373,6 +387,8 @@ Usage: #definition
 * item[=].item[+].linkId = "mikrokalk"
 * item[=].item[=].text = "Mikrokalkifikationen"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-mikrokalk-triage"
 
@@ -389,6 +405,8 @@ Usage: #definition
 * item[=].item[+].linkId = "lk-status"
 * item[=].item[=].text = "Axilläre Lymphknoten"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lk-status-bildgebung"
 
@@ -405,6 +423,8 @@ Usage: #definition
 * item[=].item[+].linkId = "us-degum"
 * item[=].item[=].text = "US-DEGUM Klassifikation"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-us-degum"
 
@@ -412,6 +432,8 @@ Usage: #definition
 * item[=].item[+].linkId = "beurteilbarkeit"
 * item[=].item[=].text = "Beurteilbarkeit"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-beurteilbarkeit"
 

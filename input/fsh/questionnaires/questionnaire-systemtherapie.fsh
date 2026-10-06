@@ -139,6 +139,8 @@ Usage: #definition
 * item[=].item[+].linkId = "therapieart"
 * item[=].item[=].text = "Therapieart"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-art"
 
@@ -146,6 +148,8 @@ Usage: #definition
 * item[=].item[+].linkId = "intention"
 * item[=].item[=].text = "Intention"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
 
@@ -192,6 +196,8 @@ Usage: #definition
 * item[=].item[+].linkId = "therapiestatus"
 * item[=].item[=].text = "Therapiestatus"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 
@@ -222,6 +228,8 @@ Usage: #definition
 * item[=].item[+].linkId = "substanz"
 * item[=].item[=].text = "Substanz"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation"
 
@@ -235,6 +243,8 @@ Usage: #definition
 * item[=].item[+].linkId = "dosis-einheit"
 * item[=].item[=].text = "Dosis-Einheit"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-dosis-einheit"
 
@@ -260,6 +270,8 @@ Usage: #definition
 * item[=].item[+].linkId = "applikationsart"
 * item[=].item[=].text = "Applikationsart"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-applikationsart"
 

@@ -61,3 +61,110 @@ Description: "ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basi
 
 // === T85.4 - Komplikationen durch Mammaprothese/Implantat ===
 * $ICD10GM#T85.4 "Mechanische Komplikation durch Mammaprothese oder -implantat"
+
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
+* ^expansion.identifier = "urn:uuid:vs-senologie-icd10-expansion"
+* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+* ^expansion.total = 34
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.0
+* ^expansion.contains[=].display = "Brustwarze und Warzenhof"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.1
+* ^expansion.contains[=].display = "Zentraler Drüsenkörper der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.2
+* ^expansion.contains[=].display = "Oberer innerer Quadrant der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.3
+* ^expansion.contains[=].display = "Unterer innerer Quadrant der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.4
+* ^expansion.contains[=].display = "Oberer äußerer Quadrant der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.5
+* ^expansion.contains[=].display = "Unterer äußerer Quadrant der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.6
+* ^expansion.contains[=].display = "Recessus axillaris der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.8
+* ^expansion.contains[=].display = "Brustdrüse, mehrere Teilbereiche überlappend"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #C50.9
+* ^expansion.contains[=].display = "Brustdrüse, nicht näher bezeichnet"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #D05.0
+* ^expansion.contains[=].display = "Lobuläres Carcinoma in situ der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #D05.1
+* ^expansion.contains[=].display = "Intraduktales Carcinoma in situ der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #D05.7
+* ^expansion.contains[=].display = "Sonstiges Carcinoma in situ der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #D05.9
+* ^expansion.contains[=].display = "Carcinoma in situ der Brustdrüse, nicht näher bezeichnet"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #D24
+* ^expansion.contains[=].display = "Gutartige Neubildung der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #D48.6
+* ^expansion.contains[=].display = "Neubildung unsicheren oder unbekannten Verhaltens der Brustdrüse"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.0
+* ^expansion.contains[=].display = "Solitäre Zyste der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.1
+* ^expansion.contains[=].display = "Diffuse zystische Mastopathie"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.2
+* ^expansion.contains[=].display = "Fibroadenose der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.3
+* ^expansion.contains[=].display = "Fibrosklerose der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.4
+* ^expansion.contains[=].display = "Mammäre Duktektasie"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.8
+* ^expansion.contains[=].display = "Sonstige gutartige Mammadysplasien"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N60.9
+* ^expansion.contains[=].display = "Gutartige Mammadysplasie, nicht näher bezeichnet"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N61
+* ^expansion.contains[=].display = "Entzündliche Krankheiten der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N62
+* ^expansion.contains[=].display = "Hypertrophie der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N63
+* ^expansion.contains[=].display = "Nicht näher bezeichnete Knoten in der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.0
+* ^expansion.contains[=].display = "Fissur und Fistel der Brustwarze"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.1
+* ^expansion.contains[=].display = "Fettgewebsnekrose der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.2
+* ^expansion.contains[=].display = "Atrophie der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.3
+* ^expansion.contains[=].display = "Galaktorrhoe, nicht im Zusammenhang mit der Geburt"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.4
+* ^expansion.contains[=].display = "Mastodynie"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.5
+* ^expansion.contains[=].display = "Sonstige Symptome, die die Mamma betreffen"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.8
+* ^expansion.contains[=].display = "Sonstige näher bezeichnete Krankheiten der Mamma"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #N64.9
+* ^expansion.contains[=].display = "Krankheit der Mamma, nicht näher bezeichnet"
+* ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+* ^expansion.contains[=].code = #T85.4
+* ^expansion.contains[=].display = "Mechanische Komplikation durch Mammaprothese oder -implantat"

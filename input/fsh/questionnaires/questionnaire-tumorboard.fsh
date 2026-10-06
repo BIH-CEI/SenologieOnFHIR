@@ -99,6 +99,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-op-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-op-begruendung"
@@ -112,6 +114,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-begruendung"
@@ -125,6 +129,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-endokrin-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-endokrin-begruendung"
@@ -138,6 +144,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-chemotherapie-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-chemotherapie-begruendung"
@@ -151,6 +159,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-zielgerichtet-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-zielgerichtet-begruendung"
@@ -164,6 +174,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-immuntherapie-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-immuntherapie-begruendung"
@@ -177,6 +189,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-diagnostik-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-diagnostik-begruendung"
@@ -190,6 +204,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-studie-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-studie-begruendung"
@@ -203,6 +219,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-genetik-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-genetik-begruendung"
@@ -216,6 +234,8 @@ Usage: #definition
 * item[=].item[+].linkId = "empfehlung-nachsorge-status"
 * item[=].item[=].text = "Status der Empfehlung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * item[=].item[+].linkId = "empfehlung-nachsorge-begruendung"

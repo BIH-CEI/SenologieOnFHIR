@@ -13,3 +13,20 @@ Description: "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammak
 * $CS_GENEXPR#mammaprint "MammaPrint"
 * $CS_GENEXPR#prosigna "Prosigna (PAM50)"
 * $CS_GENEXPR#endopredict "EndoPredict"
+
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
+* ^expansion.identifier = "urn:uuid:vs-senologie-genexpressionstest-expansion"
+* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+* ^expansion.total = 4
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest"
+* ^expansion.contains[=].code = #oncotype-dx
+* ^expansion.contains[=].display = "Oncotype DX"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest"
+* ^expansion.contains[=].code = #mammaprint
+* ^expansion.contains[=].display = "MammaPrint"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest"
+* ^expansion.contains[=].code = #prosigna
+* ^expansion.contains[=].display = "Prosigna (PAM50)"
+* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest"
+* ^expansion.contains[=].code = #endopredict
+* ^expansion.contains[=].display = "EndoPredict"

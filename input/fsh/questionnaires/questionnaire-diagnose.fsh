@@ -151,6 +151,8 @@ Usage: #definition
 * item[=].item[=].text = "Diagnose"
 * insert Translation(item[=].item[=].text, en, Diagnosis)
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-mamma-24"
 
@@ -159,6 +161,8 @@ Usage: #definition
 * item[=].item[=].text = "Details B3-Läsion"
 * insert Translation(item[=].item[=].text, en, [[B3 Lesion Details]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "diagnose-sct"
 * item[=].item[=].enableWhen[=].operator = #=
@@ -170,6 +174,8 @@ Usage: #definition
 * item[=].item[=].text = "Diagnostische Sicherheit"
 * insert Translation(item[=].item[=].text, en, [[Diagnostic Certainty]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sicherheit"
 
@@ -194,6 +200,8 @@ Usage: #definition
 * item[=].item[=].text = "Seitenlokalisation"
 * insert Translation(item[=].item[=].text, en, Laterality)
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 

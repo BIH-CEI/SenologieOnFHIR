@@ -456,6 +456,8 @@ Usage: #definition
 * item[=].item[+].linkId = "praeparat-art"
 * item[=].item[=].text = "Art des Präparats"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-praeparat-art"
 
@@ -469,6 +471,8 @@ Usage: #definition
 * item[=].item[+].linkId = "praeparat-seite"
 * item[=].item[=].text = "Seite"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -476,6 +480,8 @@ Usage: #definition
 * item[=].item[+].linkId = "praeparat-quadrant"
 * item[=].item[=].text = "Lokalisation / Quadrant"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-quadrant-mamma"
 
@@ -550,6 +556,8 @@ Usage: #definition
 * item[=].item[+].linkId = "b-klassifikation"
 * item[=].item[=].text = "Histologie allgemein (NHSBSP B-Klassifikation)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-b-klassifikation"
 
@@ -557,6 +565,8 @@ Usage: #definition
 * item[=].item[+].linkId = "histo-typ"
 * item[=].item[=].text = "Histologischer Typ"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-histologie-typ"
 
@@ -564,6 +574,8 @@ Usage: #definition
 * item[=].item[+].linkId = "histo-grading"
 * item[=].item[=].text = "Grading (Elston-Ellis)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#371469007 "Histologic grade"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-grading-mamma"
@@ -592,6 +604,8 @@ Usage: #definition
 * item[=].item[+].linkId = "histo-resektionsrand"
 * item[=].item[=].text = "Resektionsrand"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#395536008 "Surgical margin finding"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
@@ -650,6 +664,8 @@ Usage: #definition
 * item[=].item[+].linkId = "pt"
 * item[=].item[=].text = "pT"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-t-kategorie-mamma"
 
@@ -657,6 +673,8 @@ Usage: #definition
 * item[=].item[+].linkId = "pn"
 * item[=].item[=].text = "pN"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
 
@@ -664,6 +682,8 @@ Usage: #definition
 * item[=].item[+].linkId = "pm"
 * item[=].item[=].text = "pM"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-m-kategorie-mamma"
 
@@ -671,6 +691,8 @@ Usage: #definition
 * item[=].item[+].linkId = "l-kategorie"
 * item[=].item[=].text = "L (Lymphangiosis carcinomatosa)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-l-kategorie"
 
@@ -678,6 +700,8 @@ Usage: #definition
 * item[=].item[+].linkId = "v-kategorie"
 * item[=].item[=].text = "V (Venöse Invasion)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-v-kategorie"
 
@@ -685,6 +709,8 @@ Usage: #definition
 * item[=].item[+].linkId = "pn-perineural"
 * item[=].item[=].text = "Pn (Perineuralinvasion)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-pn-kategorie"
 
@@ -692,6 +718,8 @@ Usage: #definition
 * item[=].item[+].linkId = "r-status"
 * item[=].item[=].text = "R-Status (Resektionsstatus)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 
@@ -699,6 +727,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ptnm-uicc"
 * item[=].item[=].text = "UICC-Gesamtstadium (pathologisch)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma"
 
@@ -755,6 +785,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ihc-er-intensitaet"
 * item[=].item[=].text = "ER Färbeintensität"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1236874005 "Intensity of stain of estrogen receptor"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ihc-intensitaet"
@@ -784,6 +816,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ihc-pr-intensitaet"
 * item[=].item[=].text = "PR Färbeintensität"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1237278006 "Intensity of stain of progesterone receptor"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ihc-intensitaet"
@@ -792,6 +826,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ihc-her2-score"
 * item[=].item[=].text = "HER2 IHC Score"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-ihc-score"
@@ -800,6 +836,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ihc-her2-gesamt"
 * item[=].item[=].text = "HER2-Gesamtstatus (Leitlinie, inkl. HER2-low / HER2-ultralow)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-gesamt"
 
@@ -807,6 +845,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ihc-her2-fish"
 * item[=].item[=].text = "HER2 ISH/FISH"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85318-4 "ERBB2 gene duplication"
 * item[=].item[=].enableWhen[+].question = "ihc-her2-score"
@@ -818,6 +858,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ihc-her2-ish-methode"
 * item[=].item[=].text = "HER2 ISH-Methode"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
 * item[=].item[=].enableWhen[=].operator = #exists

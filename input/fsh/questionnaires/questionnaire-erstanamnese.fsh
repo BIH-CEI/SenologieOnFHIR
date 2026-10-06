@@ -83,12 +83,16 @@ Usage: #definition
 * item[=].item[+].linkId = "vorstellungsgrund"
 * item[=].item[=].text = "Vorstellungsgrund"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
 
 * item[=].item[+].linkId = "screeningstatus"
 * item[=].item[=].text = "Screeningstatus"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-detektion-modus"
 
@@ -110,6 +114,8 @@ Usage: #definition
 * item[=].item[+].linkId = "ecog"
 * item[=].item[=].text = "ECOG Leistungsstatus"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#89247-1 "ECOG Performance Status"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ecog"
@@ -130,6 +136,8 @@ Usage: #definition
 * item[=].item[+].linkId = "raucherstatus-wert"
 * item[=].item[=].text = "Raucherstatus"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#72166-2 "Tobacco smoking status"
 * item[=].item[=].definition = "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus#Observation.valueCodeableConcept"
@@ -157,6 +165,8 @@ Usage: #definition
 * item[=].item[+].linkId = "menopausenstatus"
 * item[=].item[=].text = "Menopausenstatus"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#42802-9 "Age at menopause"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus-erweitert"
@@ -176,6 +186,8 @@ Usage: #definition
 * item[=].item[+].linkId = "hormonersatztherapie"
 * item[=].item[=].text = "Hormonersatztherapie (HRT)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#266717002 "Hormone replacement therapy"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ja-nein"
@@ -183,6 +195,8 @@ Usage: #definition
 * item[=].item[+].linkId = "orale-kontrazeption"
 * item[=].item[=].text = "Hormonelle Verhütung"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
 
@@ -213,12 +227,16 @@ Usage: #definition
 * item[=].item[=].item[+].linkId = "verwandtschaftsgrad"
 * item[=].item[=].item[=].text = "Verwandtschaftsgrad"
 * item[=].item[=].item[=].type = #choice
+* item[=].item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].item[=].required = true
 * item[=].item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verwandtschaftsgrad"
 
 * item[=].item[=].item[+].linkId = "erkrankung"
 * item[=].item[=].item[=].text = "Erkrankung"
 * item[=].item[=].item[=].type = #choice
+* item[=].item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].item[=].required = true
 * item[=].item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
 

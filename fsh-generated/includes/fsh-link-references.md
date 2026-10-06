@@ -385,6 +385,7 @@
 [senologie-measure-s3-qi-11]: Measure-senologie-measure-s3-qi-11.html
 [senologie-measure-s3-qi-12]: Measure-senologie-measure-s3-qi-12.html
 [senologie-measure-s3-qi-13]: Measure-senologie-measure-s3-qi-13.html
+[Senologie_Meldungs_Bundle]: StructureDefinition-senologie-meldungs-bundle.html
 [EX_Senologie_SimultaneRadiochemotherapie]: StructureDefinition-ex-senologie-simultane-radiochemotherapie.html
 [cm-sct-to-obds-diagnosesicherung]: ConceptMap-cm-sct-to-obds-diagnosesicherung.html
 [cm-sct-to-obds-fm-lokalisation]: ConceptMap-cm-sct-to-obds-fm-lokalisation.html

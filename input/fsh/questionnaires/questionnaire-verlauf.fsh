@@ -107,12 +107,16 @@ Usage: #definition
 * item[=].item[+].linkId = "kontrolltermin-art"
 * item[=].item[=].text = "Art der Kontrolle"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrolltermin-art"
 
 * item[=].item[+].linkId = "kontrolltermin-art-nachsorge"
 * item[=].item[=].text = "Art der Nachsorge"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
 
@@ -137,6 +141,8 @@ Usage: #definition
 * item[=].item[+].linkId = "klinisch-allgemeinzustand"
 * item[=].item[=].text = "Allgemeinzustand"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#365275006 "General well-being finding"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
@@ -144,6 +150,8 @@ Usage: #definition
 * item[=].item[+].linkId = "klinisch-lokalbefund"
 * item[=].item[=].text = "Lokalbefund Brust"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#116339002 "Breast finding"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
@@ -159,6 +167,8 @@ Usage: #definition
 * item[=].item[+].linkId = "klinisch-lymphoedem"
 * item[=].item[=].text = "Lymphödem"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#449620005 "Lymphedema of upper limb"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
@@ -202,6 +212,8 @@ Usage: #definition
 * item[=].item[+].linkId = "tumorstatus-gesamtbeurteilung"
 * item[=].item[=].text = "Gesamtbeurteilung Verlauf"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
 
@@ -229,6 +241,8 @@ Usage: #definition
 * item[=].item[+].linkId = "tumorstatus-metastasen-lokalisation"
 * item[=].item[=].text = "Metastasenlokalisation"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].repeats = true
 * item[=].item[=].code[+] = $SCT#385421009 "Site of distant metastasis"

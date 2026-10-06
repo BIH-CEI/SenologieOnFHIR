@@ -102,6 +102,8 @@ Usage: #definition
 * item[+].linkId = "seitenlokalisation"
 * item[=].text = "Seite"
 * item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
 * item[=].required = true
 * item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -137,6 +139,8 @@ Usage: #definition
 * item[+].linkId = "pre-op-markierung"
 * item[=].text = "Präoperative Markierung geplant"
 * item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
 * item[=].required = false
 * item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 

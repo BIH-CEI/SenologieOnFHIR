@@ -186,6 +186,8 @@ Usage: #definition
 * item[=].item[+].linkId = "op-kategorie"
 * item[=].item[=].text = "Art der Operation"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
 
@@ -193,6 +195,8 @@ Usage: #definition
 * item[=].item[+].linkId = "op-seite"
 * item[=].item[=].text = "Seite"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -248,6 +252,8 @@ Usage: #definition
 * item[=].item[+].linkId = "op-intention"
 * item[=].item[=].text = "OP-Intention"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-operation-intention"
 
@@ -257,6 +263,8 @@ Usage: #definition
 * item[=].item[+].linkId = "op-r-status"
 * item[=].item[=].text = "Resektionsstatus (R)"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 
@@ -309,6 +317,8 @@ Usage: #definition
 * item[=].item[+].linkId = "clavien-dindo"
 * item[=].item[=].text = "Clavien-Dindo-Grad"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clavien-dindo"
 
@@ -322,6 +332,8 @@ Usage: #definition
 * item[=].item[+].linkId = "komplikation-zeitpunkt"
 * item[=].item[=].text = "Zeitpunkt"
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
 
