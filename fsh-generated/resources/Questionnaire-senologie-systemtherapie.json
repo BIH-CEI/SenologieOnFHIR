@@ -299,6 +299,27 @@
         }
       ],
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "carePlan",
+            "display": "Tumorboard CarePlan"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "CarePlan"
+        },
+        {
+          "url": "description",
+          "valueString": "Optional: TB-Beschluss (CarePlan) für Pre-Population bei Therapieanlage (Protokoll, Intention, geplanter Zeitraum)."
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
     }
   ],
   "item": [
@@ -487,7 +508,7 @@
             {
               "valueExpression": {
                 "language": "text/fhirpath",
-                "expression": "%procedure.note.text.first()"
+                "expression": "iif(%procedure.exists(), %procedure.note.text.first(), %carePlan.activity.detail.code.text.first())"
               },
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
             }
@@ -519,7 +540,7 @@
             {
               "valueExpression": {
                 "language": "text/fhirpath",
-                "expression": "%procedure.performedPeriod.start.substring(0,10)"
+                "expression": "iif(%procedure.exists(), %procedure.performedPeriod.start.substring(0,10), %carePlan.activity.detail.scheduledPeriod.start.first().substring(0,10))"
               },
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
             }
@@ -551,7 +572,7 @@
             {
               "valueExpression": {
                 "language": "text/fhirpath",
-                "expression": "%procedure.performedPeriod.end.substring(0,10)"
+                "expression": "iif(%procedure.exists(), %procedure.performedPeriod.end.substring(0,10), %carePlan.activity.detail.scheduledPeriod.end.first().substring(0,10))"
               },
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
             }
@@ -579,6 +600,15 @@
           "required": false
         },
         {
+          "extension": [
+            {
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "%carePlan.activity.detail.quantity.value"
+              },
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+            }
+          ],
           "linkId": "geplante-zyklen",
           "text": "Geplante Zyklen",
           "_text": {

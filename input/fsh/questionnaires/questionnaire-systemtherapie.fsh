@@ -133,6 +133,20 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Procedure
 * extension[=].extension[+].url = "description"
 * extension[=].extension[=].valueString = "Optional: Extern/bereits dokumentierte Systemtherapie für Prepopulation (z.B. Fremdtherapie bei Erstvorstellung)."
+
+// Launch Context: Tumorboard-CarePlan (optional — Pre-Population aus TB-Beschluss)
+// Wenn mitgegeben: befüllt Therapie-Rahmen aus der CarePlan-Aktivität (geplante Therapie).
+// Vorteil: Formular öffnen direkt nach TB, Intention/Protokoll/Planung schon vorausgefüllt.
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+* extension[=].extension[+].url = "name"
+* extension[=].extension[=].valueCoding.system = "https://www.senologie.org/fhir/CodeSystem/launchContext"
+* extension[=].extension[=].valueCoding.code = #carePlan
+* extension[=].extension[=].valueCoding.display = "Tumorboard CarePlan"
+* extension[=].extension[+].url = "type"
+* extension[=].extension[=].valueCode = #CarePlan
+* extension[=].extension[+].url = "description"
+* extension[=].extension[=].valueString = "Optional: TB-Beschluss (CarePlan) für Pre-Population bei Therapieanlage (Protokoll, Intention, geplanter Zeitraum)."
+
 // ============================================================
 // Bezugsdiagnose
 // ============================================================
@@ -213,7 +227,7 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
 * item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
-* item[=].item[=].extension[=].valueExpression.expression = "%procedure.note.text.first()"
+* item[=].item[=].extension[=].valueExpression.expression = "iif(%procedure.exists(), %procedure.note.text.first(), %carePlan.activity.detail.code.text.first())"
 
 // Startdatum
 * item[=].item[+].linkId = "startdatum"
@@ -223,7 +237,7 @@ Usage: #definition
 * item[=].item[=].required = true
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
 * item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
-* item[=].item[=].extension[=].valueExpression.expression = "%procedure.performedPeriod.start.substring(0,10)"
+* item[=].item[=].extension[=].valueExpression.expression = "iif(%procedure.exists(), %procedure.performedPeriod.start.substring(0,10), %carePlan.activity.detail.scheduledPeriod.start.first().substring(0,10))"
 
 // Enddatum
 * item[=].item[+].linkId = "enddatum"
@@ -233,7 +247,7 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
 * item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
-* item[=].item[=].extension[=].valueExpression.expression = "%procedure.performedPeriod.end.substring(0,10)"
+* item[=].item[=].extension[=].valueExpression.expression = "iif(%procedure.exists(), %procedure.performedPeriod.end.substring(0,10), %carePlan.activity.detail.scheduledPeriod.end.first().substring(0,10))"
 
 // Geplante Zyklen
 * item[=].item[+].linkId = "geplante-zyklen"
@@ -241,6 +255,9 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[Planned Cycles]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%carePlan.activity.detail.quantity.value"
 
 // Durchgeführte Zyklen
 * item[=].item[+].linkId = "durchgefuehrte-zyklen"
