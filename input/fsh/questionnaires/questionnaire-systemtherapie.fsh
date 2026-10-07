@@ -50,13 +50,27 @@ Usage: #inline
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
-// medicationCodeableConcept.coding ← substanz (ATC oder SCT je nach VS)
+// reasonReference ← bezugsdiagnose (Condition-Referenz aus dem QR)
+* reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+
+// medicationCodeableConcept.coding ← substanz (SCT aus VS Medikation)
 * medicationCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * medicationCodeableConcept.coding[=].extension.valueString = "%context.item.where(linkId='substanz').answer.valueCoding"
 
 // effectiveDateTime ← gabe-datum
 * effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * effectiveDateTime.extension.valueString = "%context.item.where(linkId='gabe-datum').answer.valueDate"
+
+// extension[therapyCycle] ← zyklus-nummer (EX_Senologie_TherapyCycle)
+* extension[+].url = "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapy-cycle"
+* extension[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueInteger.extension.valueString = "%context.item.where(linkId='zyklus-nummer').answer.valueInteger"
+
+// extension[dayInCycle] ← tag-im-zyklus (EX_Senologie_DayInCycle)
+* extension[+].url = "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-day-in-cycle"
+* extension[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueInteger.extension.valueString = "%context.item.where(linkId='tag-im-zyklus').answer.valueInteger"
 
 // dosage[0].doseAndRate.doseQuantity ← dosis + dosis-einheit
 * dosage[+].doseAndRate.doseQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -106,6 +120,19 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Condition
 * extension[=].extension[+].url = "description"
 * extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
+
+// Launch Context: Bestehende Procedure (optional — für Pre-Population aus Fremdtherapie)
+// Wenn mitgegeben: befüllt Therapie-Rahmen-Felder aus der bestehenden Procedure.
+// Medikamentengabe-Gruppe bleibt leer (keine MedicationStatement-Daten von extern erwartet).
+* extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+* extension[=].extension[+].url = "name"
+* extension[=].extension[=].valueCoding.system = "https://www.senologie.org/fhir/CodeSystem/launchContext"
+* extension[=].extension[=].valueCoding.code = #procedure
+* extension[=].extension[=].valueCoding.display = "Bestehende Systemtherapie-Procedure"
+* extension[=].extension[+].url = "type"
+* extension[=].extension[=].valueCode = #Procedure
+* extension[=].extension[+].url = "description"
+* extension[=].extension[=].valueString = "Optional: Extern/bereits dokumentierte Systemtherapie für Prepopulation (z.B. Fremdtherapie bei Erstvorstellung)."
 // ============================================================
 // Bezugsdiagnose
 // ============================================================
@@ -146,6 +173,9 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.code.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-form-helper').first()"
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-art"
 
@@ -156,6 +186,9 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention').valueCoding.first()"
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
 
@@ -168,6 +201,9 @@ Usage: #definition
 * item[=].item[=].enableWhen[+].question = "intention"
 * item[=].item[=].enableWhen[=].operator = #=
 * item[=].item[=].enableWhen[=].answerCoding = $SCT#363676003
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.extension.where(url='https://www.senologie.org/fhir/StructureDefinition/ex-senologie-first-line-therapy').valueBoolean"
 
 // Protokoll/Schema
 * item[=].item[+].linkId = "protokoll"
@@ -175,6 +211,9 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[Protocol/Regimen]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.note.text.first()"
 
 // Startdatum
 * item[=].item[+].linkId = "startdatum"
@@ -182,6 +221,9 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[Start Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.performedPeriod.start.substring(0,10)"
 
 // Enddatum
 * item[=].item[+].linkId = "enddatum"
@@ -189,6 +231,9 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[End Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.performedPeriod.end.substring(0,10)"
 
 // Geplante Zyklen
 * item[=].item[+].linkId = "geplante-zyklen"
@@ -211,6 +256,9 @@ Usage: #definition
 * item[=].item[=].type = #choice
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"
+* item[=].item[=].extension[=].valueExpression.language = #text/fhirpath
+* item[=].item[=].extension[=].valueExpression.expression = "%procedure.statusReason.coding.first()"
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 
