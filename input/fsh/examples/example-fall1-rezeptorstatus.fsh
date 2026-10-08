@@ -85,7 +85,7 @@ Description: "HER2 IHC 1+. Im oBDS-Slice 'negativ', aber im Leitlinien-Slice kor
 Usage: #example
 
 * status = #final
-* code = $LOINC#48676-1 "HER2 [Interpretation] in Tissue"
+* code = $LOINC#48676-1 "HER2 Ag [Interpretation] in Tissue"
 * subject = Reference(Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2025-01-23"
 

@@ -106,7 +106,7 @@ Title: "Fall 14: HER2 IHC 2+ (equivocal)"
 Usage: #example
 
 * status = #final
-* code = $LOINC#48676-1 "HER2 [Interpretation] in Tissue"
+* code = $LOINC#48676-1 "HER2 Ag [Interpretation] in Tissue"
 * subject = Reference(Fall14-Patient-OncoBox-Beispiel)
 * effectiveDateTime = "2025-01-15"
 * valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
