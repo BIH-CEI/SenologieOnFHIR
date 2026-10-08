@@ -15,6 +15,8 @@ InstanceOf: DiagnosticReport
 Usage: #inline
 * id = "patho-report-template"
 * status = #final
+* status.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* status.extension.valueString = "%resource.item.where(linkId='befund-status').answer.valueCoding.code"
 * code = $LOINC#60568-3 "Pathology synoptic report"
 * category = http://terminology.hl7.org/CodeSystem/v2-0074#SP "Surgical Pathology"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -437,6 +439,22 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Condition
 * extension[=].extension[+].url = "description"
 * extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
+// Befundstatus (DiagnosticReport.status)
+// preliminary = Schnellschnitt/vorläufig; final = abgeschlossener Befund;
+// amended/corrected = nachträgliche Korrektur nach Zusatzbefund
+* item[+].linkId = "befund-status"
+* item[=].text = "Befundstatus"
+* insert Translation(item[=].text, en, [[Report Status]])
+* item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
+* item[=].required = true
+* item[=].initial[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#final "Abgeschlossen"
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#preliminary "Vorläufig (Schnellschnitt)"
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#final "Abgeschlossen"
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#amended "Ergänzt"
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#corrected "Korrigiert"
+
 // ============================================================
 // Group 1: Präparat (Specimen)
 // ============================================================

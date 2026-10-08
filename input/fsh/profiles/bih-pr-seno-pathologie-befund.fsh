@@ -14,8 +14,11 @@ Description: "DiagnosticReport für pathologische Befunde. Basiert auf MII Patho
 * ^mapping[=].comment = "Bezugselement im Logischen Modell: Pathologie"
 
 // Basis-Mapping
-* status = #final (exactly)
-* status ^short = "Abgeschlossener Pathologie-Bericht"
+// status bleibt offen: eingehende externe DRs können preliminary/amended/corrected sein.
+// Finale Freigabe wird im empfangenden System geprüft (vgl. HDB-869).
+* status MS
+* status ^short = "Befundstatus (preliminary | final | amended | corrected)"
+* status ^comment = "final ist der Regelfall. preliminary bei Schnellschnitt, amended/corrected bei nachträglicher Korrektur."
 
 * category MS
 * category ^short = "Pathologie / Histopathologie"
