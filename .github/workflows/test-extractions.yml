@@ -49,13 +49,15 @@ jobs:
 
       - name: Start Matchbox
         run: |
+          docker compose -f docker-compose.matchbox.yaml pull
           docker compose -f docker-compose.matchbox.yaml up -d
-          for i in {1..60}; do
+          for i in {1..120}; do
             if curl -sf http://localhost:8080/matchboxv3/fhir/metadata > /dev/null; then
               echo "Matchbox ready after ${i}s"; break
             fi
             sleep 1
           done
+          curl -sf http://localhost:8080/matchboxv3/fhir/metadata > /dev/null || { echo "Matchbox did not start in time"; exit 1; }
 
       - name: Load IG into Matchbox
         run: |
