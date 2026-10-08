@@ -201,11 +201,12 @@ Description: "M-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). MX wurd
 ValueSet: VS_Senologie_UICC_Stadium_Mamma
 Id: vs-senologie-uicc-stadium-mamma
 Title: "VS Senologie UICC-Stadium (Mamma)"
-Description: "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Substadien IA1/2/3, IIA1/2, IIB1/2 sind nicht Mamma-relevant und werden ausgeschlossen."
+Description: "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Primärkodierung über https://www.uicc.org/resources/tnm (MII_CS_Onko_TNM_UICC, auf MII-OntoServer verfügbar); alternativ SCT-Qualifier-Values (HDB-866). Binding: extensible."
 
 * ^status = #draft
 * insert PR_CS_VS_Version
 
+// Primär: MII UICC-CS (https://www.uicc.org/resources/tnm, OntoServer: MII_CS_Onko_TNM_UICC 2025.1.0)
 * $UICC#0     "Stadium 0 — Tis N0 M0"
 * $UICC#IA    "Stadium IA — T1 N0 M0"
 * $UICC#IB    "Stadium IB — T0/1 N1mi M0"
@@ -216,10 +217,21 @@ Description: "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Substadien IA
 * $UICC#IIIC  "Stadium IIIC — Jedes T N3 M0"
 * $UICC#IV    "Stadium IV — Jedes T, jedes N, M1"
 
-// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
+// Alternativ: SCT UICC-Qualifier-Values (HDB-866, Haroske)
+* $SCT#1352916008 "0 (UICC)"
+* $SCT#1352843004 "IA (UICC)"
+* $SCT#1352911003 "IB (UICC)"
+* $SCT#1352856006 "IIA (UICC)"
+* $SCT#1352861008 "IIB (UICC)"
+* $SCT#1352915007 "IIIA (UICC)"
+* $SCT#1352896008 "IIIB (UICC)"
+* $SCT#1352848008 "IIIC (UICC)"
+* $SCT#1352913000 "IV (UICC)"
+
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-08
 * ^expansion.identifier = "urn:uuid:vs-senologie-uicc-stadium-mamma-expansion"
-* ^expansion.timestamp = "2026-10-06T00:00:00Z"
-* ^expansion.total = 9
+* ^expansion.timestamp = "2026-10-08T00:00:00Z"
+* ^expansion.total = 18
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
 * ^expansion.contains[=].code = #0
 * ^expansion.contains[=].display = "Stadium 0 — Tis N0 M0"
@@ -247,3 +259,30 @@ Description: "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Substadien IA
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
 * ^expansion.contains[=].code = #IV
 * ^expansion.contains[=].display = "Stadium IV — Jedes T, jedes N, M1"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352916008
+* ^expansion.contains[=].display = "0 (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352843004
+* ^expansion.contains[=].display = "IA (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352911003
+* ^expansion.contains[=].display = "IB (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352856006
+* ^expansion.contains[=].display = "IIA (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352861008
+* ^expansion.contains[=].display = "IIB (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352915007
+* ^expansion.contains[=].display = "IIIA (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352896008
+* ^expansion.contains[=].display = "IIIB (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352848008
+* ^expansion.contains[=].display = "IIIC (UICC)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352913000
+* ^expansion.contains[=].display = "IV (UICC)"
