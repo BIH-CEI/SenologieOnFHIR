@@ -150,7 +150,7 @@ Usage: #inline
 * valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * valueQuantity.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
 * status = #final
-* code = $LOINC#29593-1 "Cells.Ki-67 nuclear Ag/cells in Tissue by Immune stain"
+* code = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
@@ -949,7 +949,7 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[Ki-67 Index (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#29593-1 "Ki-67 [Percentile] in Tissue"
+* item[=].item[=].code[+] = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 
 // PD-L1 TPS (Tumor Proportion Score)
 * item[=].item[+].linkId = "ihc-pdl1-tps"

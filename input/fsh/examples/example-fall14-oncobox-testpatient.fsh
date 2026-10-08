@@ -121,7 +121,7 @@ Title: "Fall 14: Ki-67 10 %"
 Usage: #example
 
 * status = #final
-* code.coding = $LOINC#29593-1 "Cells.Ki-67 nuclear Ag/cells in Tissue by Immune stain"
+* code.coding = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 * subject = Reference(Fall14-Patient-OncoBox-Beispiel)
 * effectiveDateTime = "2025-01-15"
 * valueQuantity.value = 10
