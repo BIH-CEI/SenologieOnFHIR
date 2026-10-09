@@ -213,21 +213,20 @@
           ]
         }
       },
-      "status": "final",
-      "_status": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%resource.item.where(linkId='befund-status').answer.valueCoding.code"
-          }
-        ]
-      },
       "code": {
         "coding": [
           {
             "code": "60568-3",
             "system": "http://loinc.org",
             "display": "Pathology synoptic report"
+          }
+        ]
+      },
+      "_status": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "iif(%resource.item.where(linkId='befund-status').answer.exists(), %resource.item.where(linkId='befund-status').answer.valueCoding.code, 'final')"
           }
         ]
       }
@@ -651,12 +650,14 @@
         },
         {
           "valueQuantity": {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-                "valueString": "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ratio').answer.valueDecimal"
-              }
-            ]
+            "_value": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ratio').answer.valueDecimal"
+                }
+              ]
+            }
           },
           "code": {
             "coding": [
@@ -689,12 +690,14 @@
         ]
       },
       "valueQuantity": {
-        "extension": [
-          {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-            "valueString": "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
-          }
-        ]
+        "_value": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
+            }
+          ]
+        }
       },
       "subject": {
         "_reference": {

@@ -102,8 +102,8 @@ Usage: #inline
 
 // component[herdbefund-groesse] in mm
 * component[+].code = $LOINC#33728-7 "Size of mass"
-* component[=].valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* component[=].valueQuantity.extension.valueString = "%resource.item.where(linkId='befund').item.where(linkId='herdbefund-groesse').answer.valueInteger"
+* component[=].valueQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueQuantity.value.extension.valueString = "%resource.item.where(linkId='befund').item.where(linkId='herdbefund-groesse').answer.valueInteger"
 * component[=].valueQuantity.unit = "mm"
 * component[=].valueQuantity.system = "http://unitsofmeasure.org"
 * component[=].valueQuantity.code = #mm
@@ -127,7 +127,7 @@ Usage: #inline
 // Stabile Tumor-Entitäts-Identifier
 * identifier[+].system = "https://www.senologie.org/fhir/sid/tumor-entity"
 * identifier[=].value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* identifier[=].value.extension.valueString = "iif(%NewBildgebungBsId.exists(), %NewBildgebungBsId.substring(9), '')"
+* identifier[=].value.extension.valueString = "iif(%NewBildgebungBsId.exists(), %NewBildgebungBsId.substring(9))"
 
 * patient.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * patient.reference.extension.valueString = "%resource.subject.reference"

@@ -84,6 +84,20 @@ Usage: #definition
 * item[=].type = #date
 * item[=].required = true
 
+* item[+].linkId = "tumorboard-typ"
+* item[=].text = "Art der Tumorkonferenz"
+* insert Translation(item[=].text, en, [[Type of Tumour Board]])
+* item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
+* item[=].required = true
+// Die vier Codes des MII-Onko-ValueSets mii-vs-onko-therapieplanung-typ, als
+// answerOption ausgeschrieben (kein $expand eines fremden ValueSets noetig).
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#praeth "prätherapeutische Tumorkonferenz (Festlegung der Therapiestrategie)"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#postop "postoperative Tumorkonferenz (Planung der postoperativen Therapie, z. B. zur Frage adjuvante Therapie)"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#postth "posttherapeutische Tumorkonferenz (manche Tumore werden nicht operiert)"
+* item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#ther "Therapieplanung ohne Tumorkonferenz"
+
 * item[+].linkId = "tumorboard-titel"
 * item[=].text = "Titel der Empfehlung"
 * insert Translation(item[=].text, en, [[Recommendation Title]])
@@ -299,25 +313,24 @@ Usage: #inline
 * intent = #plan
 
 // addresses -> Bezugsdiagnose (Condition) aus SDC Choice Selection
-* addresses.reference = "placeholder"
+// Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
+// und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul).
 * addresses.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * addresses.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
-* title = "Tumorboard Empfehlung"
-* insert Translation(title, en, [[Tumour Board Recommendation]])
-// [+]/[=] statt Index 0: dort steht bereits die Translation-Extension; ohne
-// eigenen Eintrag wurden beide zu einer ungueltigen Extension verschmolzen (ext-1).
+// category -> Art der Tumorkonferenz (Pflichtfeld im Profil, 1..1)
+* category.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* category.coding.extension.valueString = "%resource.item.where(linkId='tumorboard-typ').answer.valueCoding"
+
 * title.extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * title.extension[=].valueString = "%resource.item.where(linkId='tumorboard-titel').answer.valueString"
 
-* description = "Zusammenfassung"
 * description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * description.extension.valueString = "%resource.item.where(linkId='tumorboard-beschreibung').answer.valueString"
 
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
-* period.start = "2024-01-01"
 * period.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * period.start.extension.valueString = "%resource.item.where(linkId='tumorboard-datum').answer.valueDate"
 
@@ -328,7 +341,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-op-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-op-status').answer.valueCoding.code"
-* activity[=].detail.description = "Operative Therapie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-op-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -340,7 +352,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-status').answer.valueCoding.code"
-* activity[=].detail.description = "Strahlentherapie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -352,7 +363,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-endokrin-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-endokrin-status').answer.valueCoding.code"
-* activity[=].detail.description = "Endokrine Therapie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-endokrin-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -364,7 +374,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-status').answer.valueCoding.code"
-* activity[=].detail.description = "Chemotherapie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -376,7 +385,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-status').answer.valueCoding.code"
-* activity[=].detail.description = "Zielgerichtete Therapie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -388,7 +396,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-status').answer.valueCoding.code"
-* activity[=].detail.description = "Immuntherapie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -400,7 +407,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-diagnostik-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-diagnostik-status').answer.valueCoding.code"
-* activity[=].detail.description = "Weitere Diagnostik"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-diagnostik-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -412,7 +418,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-studie-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-studie-status').answer.valueCoding.code"
-* activity[=].detail.description = "Klinische Studie"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-studie-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -424,7 +429,6 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-genetik-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-genetik-status').answer.valueCoding.code"
-* activity[=].detail.description = "Genetische Untersuchung"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-genetik-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
@@ -436,15 +440,10 @@ Usage: #inline
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-nachsorge-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.code.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-nachsorge-status').answer.valueCoding.code"
-* activity[=].detail.description = "Nachsorge"
 * activity[=].detail.description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.description.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-nachsorge-begruendung').answer.valueString"
 * activity[=].detail.status = #not-started
 
 // --- Sonstiges ---
-* note.text = "Sonstige Anmerkungen"
-* insert Translation(note.text, en, [[Other Remarks]])
-// [+]/[=] statt Index 0: dort steht bereits die Translation-Extension; ohne
-// eigenen Eintrag wurden beide zu einer ungueltigen Extension verschmolzen (ext-1).
 * note.text.extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * note.text.extension[=].valueString = "%resource.item.where(linkId='empfehlung-sonstiges').answer.valueString"

@@ -411,6 +411,8 @@ Usage: #example
 * item[=].answer.valueReference = Reference(Condition/Fall1-Diagnose-Mammakarzinom)
 * item[+].linkId = "tumorboard-datum"
 * item[=].answer.valueDate = "2025-01-28"
+* item[+].linkId = "tumorboard-typ"
+* item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#praeth "prätherapeutische Tumorkonferenz (Festlegung der Therapiestrategie)"
 * item[+].linkId = "tumorboard-titel"
 * item[=].answer.valueString = "Praetherapeutisches Tumorboard - Erika Neumann"
 * item[+].linkId = "tumorboard-beschreibung"

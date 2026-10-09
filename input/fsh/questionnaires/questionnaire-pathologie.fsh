@@ -14,9 +14,10 @@ Instance: patho-report-template
 InstanceOf: DiagnosticReport
 Usage: #inline
 * id = "patho-report-template"
-* status = #final
 * status.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* status.extension.valueString = "%resource.item.where(linkId='befund-status').answer.valueCoding.code"
+// Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
+// und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul). Der Rueckfall auf 'final' steht deshalb im Ausdruck.
+* status.extension.valueString = "iif(%resource.item.where(linkId='befund-status').answer.exists(), %resource.item.where(linkId='befund-status').answer.valueCoding.code, 'final')"
 * code = $LOINC#60568-3 "Pathology synoptic report"
 * category = http://terminology.hl7.org/CodeSystem/v2-0074#SP "Surgical Pathology"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -137,8 +138,8 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ish-methode').answer.valueCoding"
 * component[+].code = $CS_Senologie_Biomarker#her2-ratio "HER2/CEP17 Ratio"
-* component[=].valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* component[=].valueQuantity.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ratio').answer.valueDecimal"
+* component[=].valueQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueQuantity.value.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ratio').answer.valueDecimal"
 
 // Ki-67 Template — erzeugt Senologie_Ki67_Proliferationsindex Observation
 Instance: patho-ki67-template
@@ -147,8 +148,10 @@ Usage: #inline
 * id = "patho-ki67-template"
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"
 // Ki67-Wert = Prozent positive Zellen
-* valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* valueQuantity.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
+// Ausdruck an valueQuantity.value, nicht an valueQuantity: sonst ersetzt die Zahl
+// das ganze Quantity-Objekt.
+* valueQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueQuantity.value.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
 * status = #final
 * code = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"

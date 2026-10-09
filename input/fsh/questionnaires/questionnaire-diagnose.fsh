@@ -21,8 +21,9 @@ Usage: #inline
 // das contained Template ab — Coding mit system aber code=null verletzt die
 // VS-Bindung. Der Placeholder wird beim $extract durch templateExtractValue
 // ueberschrieben.
-* clinicalStatus.coding[+].code = #active
-* clinicalStatus.coding[=].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+// Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
+// und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul).
+* clinicalStatus.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * clinicalStatus.coding[=].code.extension.valueString = "iif(%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.code = 'bc-recurrence', 'recurrence', 'active')"
 * clinicalStatus.coding[=].system = "http://terminology.hl7.org/CodeSystem/condition-clinical"
 

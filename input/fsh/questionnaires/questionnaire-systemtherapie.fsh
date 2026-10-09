@@ -21,23 +21,25 @@ Usage: #inline
 
 // code.coding ← therapieart (Chemo / Endokrin / Antikoerper / Immun / Targeted)
 * code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding[=].extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='therapieart').answer.valueCoding"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='therapieart').answer.valueCoding"
 
-// performedPeriod ← startdatum / enddatum (Placeholder fuer per-1)
-* performedPeriod.start = "1900-01-01"
+// performedPeriod (Start + Ende) OHNE Platzhalter: mit Platzhalter schreibt Aidbox
+// die extrahierten Daten in ungueltige _start/_end-Felder und laesst 1900-01-01
+// stehen. Folge: Aidbox lehnt diesen Questionnaire beim Speichern ab (seine
+// per-1-Pruefung scheitert an Start/Ende ohne Wert) — er muss bei $extract als
+// Parameter 'questionnaire' mitgegeben werden (siehe se-3ul).
 * performedPeriod.start.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* performedPeriod.start.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='startdatum').answer.valueDate"
-* performedPeriod.end = "1900-01-01"
+* performedPeriod.start.extension.valueString = "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='startdatum').answer.valueDate"
 * performedPeriod.end.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* performedPeriod.end.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='enddatum').answer.valueDate"
+* performedPeriod.end.extension.valueString = "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='enddatum').answer.valueDate"
 
 // note.text ← protokoll (Therapie-Protokoll als Freitext)
 * note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* note.text.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='protokoll').answer.valueString"
+* note.text.extension.valueString = "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='protokoll').answer.valueString"
 
 // statusReason ← therapiestatus (laufend/abgeschlossen/abgebrochen)
 * statusReason.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* statusReason.coding.extension.valueString = "%resource.item.where(linkId='systemtherapie').item.where(linkId='therapiestatus').answer.valueCoding"
+* statusReason.coding.extension.valueString = "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='therapiestatus').answer.valueCoding"
 
 // --- Contained template: MedicationStatement ---
 Instance: syst-medikation-template
