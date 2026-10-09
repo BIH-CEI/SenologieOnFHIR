@@ -8,6 +8,7 @@ Instance: strahlentherapie-procedure-template
 InstanceOf: Procedure
 Usage: #inline
 * id = "strahlentherapie-procedure-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
 * status = #completed
 * code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy"
 * code.text = "Strahlentherapie"

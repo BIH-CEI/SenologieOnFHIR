@@ -11,6 +11,7 @@ Instance: syst-procedure-template
 InstanceOf: Procedure
 Usage: #inline
 * id = "syst-procedure-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
 * status = #completed
 * code = $SCT#367336001 "Chemotherapy"
 * code.text = "Systemtherapie"
@@ -46,7 +47,8 @@ Instance: syst-medikation-template
 InstanceOf: MedicationStatement
 Usage: #inline
 * id = "syst-medikation-template"
-* status = #active
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+* status = #completed   // Profil verlangt completed (dokumentierte Gabe)
 * medicationCodeableConcept.text = "Substanz"
 * insert Translation(medicationCodeableConcept.text, en, [[Substance]])
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"

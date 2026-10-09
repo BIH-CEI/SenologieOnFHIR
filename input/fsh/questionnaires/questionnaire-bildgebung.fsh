@@ -42,6 +42,7 @@ Instance: bildgebung-befund-template
 InstanceOf: Observation
 Usage: #inline
 * id = "bildgebung-befund-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
 * status = #final
 * code = $LOINC#72018-2 "Breast Imaging-Reporting and Data System"
 * category = http://terminology.hl7.org/CodeSystem/observation-category#imaging

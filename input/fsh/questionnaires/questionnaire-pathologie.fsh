@@ -14,6 +14,7 @@ Instance: patho-report-template
 InstanceOf: DiagnosticReport
 Usage: #inline
 * id = "patho-report-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
 * status.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 // Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
 // und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul). Der Rueckfall auf 'final' steht deshalb im Ausdruck.
@@ -374,6 +375,7 @@ Instance: patho-bs-morphology-update-template
 InstanceOf: BodyStructure
 Usage: #inline
 * id = "patho-bs-morphology-update-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorlokalisation"
 * active = true
 * patient.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * patient.reference.extension.valueString = "%resource.subject.reference"

@@ -17,10 +17,11 @@ Usage: #inline
 
 // clinicalStatus: 'recurrence' wenn Diagnose = bc-recurrence, sonst 'active'
 // Konvention: status + assertedDate gehören gemeinsam kuratiert
-// Placeholder-Code ('active') noetig, sonst lehnt strenge Server (dotbase Aidbox)
-// das contained Template ab — Coding mit system aber code=null verletzt die
-// VS-Bindung. Der Placeholder wird beim $extract durch templateExtractValue
-// ueberschrieben.
+// ACHTUNG dotbase: hier stand ein Placeholder-Code ('active'), weil strenge
+// Server (dotbase Aidbox) das Template ohne code ablehnen. Er ist entfernt, weil
+// Aidbox (2605/stable/edge) ihn bei $extract NICHT ueberschreibt, sondern den
+// extrahierten Wert zusaetzlich in ein ungueltiges _code-Feld schreibt. Ob
+// dotbase das Template ohne Placeholder annimmt, ist nicht geprueft.
 // Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
 // und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul).
 * clinicalStatus.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"

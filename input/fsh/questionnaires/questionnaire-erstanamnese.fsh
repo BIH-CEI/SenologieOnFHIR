@@ -12,6 +12,7 @@ Instance: anamnese-gynaek-template
 InstanceOf: Observation
 Usage: #inline
 * id = "anamnese-gynaek-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
 * status = #final
 * code = $LOINC#89221-6 "Gynecology History and physical note"
 * code.text = "Gynäkologische Anamnese"
@@ -35,6 +36,7 @@ Instance: anamnese-familie-template
 InstanceOf: FamilyMemberHistory
 Usage: #inline
 * id = "anamnese-familie-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
 * status = #completed
 * relationship = http://terminology.hl7.org/CodeSystem/v3-RoleCode#FAMMEMB "family member"
 * patient.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
