@@ -44,7 +44,11 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
 
   // --- Teildatensatz Brust (BRUST): pro Condition mit Brust-Diagnose ---
   src.entry as entry where resource.is(Condition) and (resource.meta.profile.exists($this.contains('senologie-diagnose')) or resource.code.coding.exists(system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' and code.startsWith('C50'))) then {
-    entry.resource as condition -> tgt.teildatensatzBrust as brust then MapBrust(condition, brust) "CallMapBrust";
+    // Die Bundle-Lookups stehen INNERHALB der Regel, die `brust` anlegt: eine
+    // Zielvariable ist nur in den abhaengigen Regeln ihrer eigenen Regel sichtbar,
+    // nicht in Nachbarregeln (sonst: "target context not known: brust").
+    entry.resource as condition -> tgt.teildatensatzBrust as brust then {
+    condition then MapBrust(condition, brust) "CallMapBrust";
 
     // Bundle lookups for Brust (moved from MapBrust)
     src.entry as tEntry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
@@ -74,11 +78,14 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
     src.entry as srEntry where resource.is(ServiceRequest) and resource.meta.profile.exists($this.contains('senologie-op-planung')) then {
       srEntry.resource as sr then { sr.extension as ext where url = 'https://www.senologie.org/fhir/StructureDefinition/preOpMarkierung' then { ext.value as val then { val.coding as c then { c.code as cd where $this = 'M' -> brust.drahtmarkierung = '1' "SetDrahtMammo"; c.code as cd where $this = 'S' -> brust.drahtmarkierung = '2' "SetDrahtSono"; c.code as cd where $this = 'T' -> brust.drahtmarkierung = '3' "SetDrahtMRT"; c.code as cd where $this = 'N' -> brust.drahtmarkierung = '0' "SetDrahtKeine"; } "MapDrahtCoding"; } "MapDrahtValue"; } "MapDrahtExt"; } "SRContext";
     } "EntryDraht";
+    } "BrustMitLookups";
   } "EntryBrust";
 
   // --- Teildatensatz Operation (O): pro Procedure (Senologie_BrustOP / Senologie_Operation) ---
   src.entry as entry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-brustop') or $this.contains('senologie-operation')) then {
-    entry.resource as procedure -> tgt.teildatensatzOperation as op then MapOperation(procedure, op) "CallMapOperation";
+    // Lookups innerhalb der Regel, die `op` anlegt (siehe Hinweis bei `brust`).
+    entry.resource as procedure -> tgt.teildatensatzOperation as op then {
+    procedure then MapOperation(procedure, op) "CallMapOperation";
 
     // Bundle lookups for Operation (moved from MapOperation)
     src.entry as digEntry where resource.is(Observation) and resource.code.coding.exists(code = '22748-9') then {
@@ -147,5 +154,6 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
     src.entry as kcEntry where resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item') then {
       kcEntry.resource as kcCond -> op.komplikationen as kompItem then { kcCond.code as code then { code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then { c.code as cd -> kompItem.icdCode = cd "SetKomplICD"; } "MapKomplICDCoding"; } "MapKomplCondCode"; } "MapKomplCondItem";
     } "EntryKomplikationenCond";
+    } "OperationMitLookups";
   } "EntryOperation";
 }

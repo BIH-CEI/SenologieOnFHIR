@@ -76,27 +76,9 @@ jobs:
 
       - name: Load IG + Beispielpatienten in HAPI
         run: |
-          FHIR=http://localhost:8095/fhir
-          for prefix in CodeSystem ValueSet ConceptMap StructureDefinition Library Measure; do
-            for f in fsh-generated/resources/${prefix}-*.json; do
-              [ -f "$f" ] || continue
-              rid=$(python3 -c "import json; print(json.load(open('$f'))['id'])" 2>/dev/null) || continue
-              curl -sf -o /dev/null -X PUT "$FHIR/$prefix/$rid" \
-                -H "Content-Type: application/fhir+json" --data-binary "@$f" 2>/dev/null || true
-            done
-          done
-
-          # Klinische Instanzen (Patient, Condition, Procedure, …)
-          for f in fsh-generated/resources/*.json; do
-            rtype=$(python3 -c "import json; print(json.load(open('$f')).get('resourceType',''))" 2>/dev/null)
-            case "$rtype" in
-              Patient|Condition|Observation|Procedure|MedicationStatement|MedicationAdministration|MedicationRequest|DiagnosticReport|Specimen|BodyStructure|FamilyMemberHistory|CarePlan|ServiceRequest|AdverseEvent|Encounter|Organization|Practitioner|PractitionerRole|RiskAssessment)
-                rid=$(python3 -c "import json; print(json.load(open('$f'))['id'])" 2>/dev/null) || continue
-                curl -sf -o /dev/null -X PUT "$FHIR/$rtype/$rid" \
-                  -H "Content-Type: application/fhir+json" --data-binary "@$f" 2>/dev/null || true
-                ;;
-            esac
-          done
+          # Mehrere Durchlaeufe, weil HAPI Ressourcen mit noch fehlenden
+          # Referenzzielen ablehnt; bricht ab, wenn am Ende etwas fehlt.
+          python3 scripts/cql/load-hapi.py http://localhost:8095/fhir
 
           # Indexing settle
           sleep 10

@@ -6,7 +6,7 @@ Description: "Beispiel: Checkliste wurde durchgeführt mit Score 3"
 
 * status = #final
 * code = $SCT#445039002 "Assessment using risk assessment tool"
-* subject = Reference(Fall1-Patient-Erika-Gabler)
+* subject = Reference(Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2024-03-10"
 * valueBoolean = true
 * component[score].code = $SCT#246514001 "Score"
@@ -20,6 +20,6 @@ Description: "Beispiel: Checkliste wurde nicht durchgeführt"
 
 * status = #final
 * code = $SCT#445039002 "Assessment using risk assessment tool"
-* subject = Reference(Fall1-Patient-Erika-Gabler)
+* subject = Reference(Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2024-03-10"
 * valueBoolean = false
