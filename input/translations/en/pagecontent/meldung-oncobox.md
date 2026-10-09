@@ -1,6 +1,6 @@
-# OncoBox Breast Transformation (OnkoZert / DKG Breast Centre Certification)
+### OncoBox Breast Transformation (OnkoZert / DKG Breast Centre Certification)
 
-### Overview
+#### Overview
 
 Certified breast centres submit their case and quality indicator data annually in the form of an **OncoBox Breast XML report** to [OnkoZert](https://xml-oncobox.de/de/Zentren/BrustZentren), the certification body of the German Cancer Society (DKG). This transformation generates **OncoBox Breast-compliant reports from clinical FHIR data** based on the senology profiles of this IG.
 
@@ -10,7 +10,7 @@ Certified breast centres submit their case and quality indicator data annually i
 - **Execution**: [Matchbox](https://github.com/ahdis/matchbox) as local ETL pipeline
 - **Scope**: **OncoBox Brust N1.1.1** with **OncoBox 2.0 FM extension (J03-J05)** -- not OncoBox Colon/Prostate/Lung
 
-### Architecture
+#### Architecture
 
 The transformation follows the same pattern as the [oBDS](meldung-obds.html), [IRegG](meldung-ireg.html), and [IQTIG transformation](meldung-iqtig.html): FHIR resources are mapped to a Logical Model via StructureMaps, which is then serialised as XML (OncoBox export format).
 
@@ -45,7 +45,7 @@ The OncoBox Breast report consists of:
 - **Primaerfall** (Primary case) (1..*) -- one entry per patient/case with diagnosis, therapy, and follow-up
 - **Kennzahlen KB-1 to KB-20** -- aggregated DKG quality indicators (numerator/denominator)
 
-### StructureMap Overview
+#### StructureMap Overview
 
 | StructureMap | Task | Source Profiles | Target (Logical Model) |
 |---|---|---|---|
@@ -57,9 +57,9 @@ The OncoBox Breast report consists of:
 | **SenologieToOncoBoxBrustVerlauf** | Follow-up + OncoBox 2.0 FM fields (J03-J05) | Observation (FM), Condition (recurrence), Procedure (surgery/systemic/RT) | primaerfall.verlauf |
 | **SenologieToOncoBoxBrustKennzahlen** | Shell entries KB-1 to KB-20 | Bundle (aggregation) | kennzahl |
 
-### Mapping Tables
+#### Mapping Tables
 
-#### Centre (Report Metadata)
+##### Centre (Report Metadata)
 
 | OncoBox Field | FHIR Source | Note |
 |---|---|---|
@@ -71,7 +71,7 @@ The OncoBox Breast report consists of:
 | Berichtszeitraum | Transformation parameter | Typically 01 July of previous year -- 30 June of current year |
 | Meldungsdatum | Bundle.timestamp | Date/time of report generation |
 
-#### Primary Case -- Patient + Case
+##### Primary Case -- Patient + Case
 
 | OncoBox Field | FHIR Source | Note |
 |---|---|---|
@@ -85,7 +85,7 @@ The OncoBox Breast report consists of:
 | Fall_Typ | Encounter.class | 1=inpatient, 2=outpatient, 3=partial inpatient |
 | Fall_Aufnahmedatum / Fall_Entlassungsdatum | Encounter.period | |
 
-#### Primary Case -- Diagnosis
+##### Primary Case -- Diagnosis
 
 | OncoBox Field | FHIR Source | Note |
 |---|---|---|
@@ -102,7 +102,7 @@ The OncoBox Breast report consists of:
 | Rezeptorstatus ER/PR/HER2 | Observations (LOINC 85337-4 / 85339-0 / 85319-2) | P/N/U |
 | Diagnose_Histo_Präop | Specimen.type (SNOMED) | OncoBox 2.0: core needle=1, vacuum-assisted=2, FNA=3, open=4, none=0 |
 
-#### Primary Case -- Surgery
+##### Primary Case -- Surgery
 
 | OncoBox Field | FHIR Source | Note |
 |---|---|---|
@@ -120,7 +120,7 @@ The OncoBox Breast report consists of:
 | Op_Anzahl_bis_R0 | Procedure aggregation (CQL) | OncoBox 2.0: default 1 at R0, CQL aggregation for chain (KB-14) |
 | Op_Komplikation | Senologie_Operative_Komplikation | Abbreviation + ICD |
 
-#### Primary Case -- Therapy
+##### Primary Case -- Therapy
 
 | OncoBox Field | FHIR Source | Note |
 |---|---|---|
@@ -136,7 +136,7 @@ The OncoBox Breast report consists of:
 | Stud_Name_Code (K02) | ResearchSubject.extension[StudiennameCode] | OncoBox 2.0: study name from selection list |
 | Stud_Screening (K03) | ResearchSubject.extension[Studienscreening] | OncoBox 2.0: screening for study participation 0/1 |
 
-#### Primary Case -- Follow-up + OncoBox 2.0 FM Fields (J03-J05)
+##### Primary Case -- Follow-up + OncoBox 2.0 FM Fields (J03-J05)
 
 | OncoBox Field | FHIR Source | Note |
 |---|---|---|
@@ -154,7 +154,7 @@ The OncoBox Breast report consists of:
 {:.stu-note}
 The OncoBox 2.0 FM fields (J03-J05) extend the follow-up block with therapy-related details for distant metastases. FM-specific Procedures are identified by palliative therapy intent (`extension:Intention` = P). The fields are only relevant when `Verlauf_Ereignis = 3` (distant metastasis).
 
-### DKG Quality Indicators (KB-1 to KB-20)
+#### DKG Quality Indicators (KB-1 to KB-20)
 
 For each quality indicator (Kennzahl), OncoBox expects a **numerator/denominator block** according to the DKG data collection form. The 20 indicators are defined in the Excel specification (`OncoBoxBrust_N1.1.1_Spec.xlsx`) as individual sheets KB-1 to KB-20, each with inclusion criteria for the denominator, fulfilment criteria for the numerator, and a target value.
 
@@ -181,7 +181,7 @@ For each quality indicator (Kennzahl), OncoBox expects a **numerator/denominator
 | KB-19 | Revision surgery | Procedure.reasonCode "Revision" | No revision | All operated cases | >=95% |
 | KB-20 | Checklist | -- | Organisational | -- | -- |
 
-#### Aggregation Model
+##### Aggregation Model
 
 The 20 quality indicators are not produced by a 1:1 mapping but through **aggregation of all primary cases in the reporting period**. Two implementation options:
 
@@ -189,7 +189,7 @@ The 20 quality indicators are not produced by a 1:1 mapping but through **aggreg
 
 2. **Pre-aggregation by the centre**: The centre generates the indicator values prior to transformation (e.g. in the dashboard) and passes them as parameters or as pre-built FHIR MeasureReports. The StructureMap maps the MeasureReport values directly into the indicator block.
 
-### Crosswalk to Other Reporting Formats
+#### Crosswalk to Other Reporting Formats
 
 Many OncoBox data points conceptually overlap with oBDS, IQTIG, and S3 guideline quality indicators. The Senology FHIR profiles form the **shared clinical data basis**; each transformation pipeline extracts the fields required for the respective target format.
 
@@ -212,7 +212,7 @@ Many OncoBox data points conceptually overlap with oBDS, IQTIG, and S3 guideline
 
 For fields that are also included in the IQTIG report, the OncoBox maps use the same FHIR source as `SenologieToIqtigBrust` / `SenologieToIqtigOperation`. The code translation may differ due to different target key systems (IQTIG numeric vs. OncoBox mixed).
 
-### Code Translation
+#### Code Translation
 
 The OncoBox Breast report uses its own key systems, which are partly oriented towards oBDS and DKG conventions:
 
@@ -227,7 +227,7 @@ The OncoBox Breast report uses its own key systems, which are partly oriented to
 | Therapy intent | Senologie extension | N/A/P (neo/adj/pall) | Direct assignment in FML |
 | Receptor status | SNOMED CT (10828004/260385009/261665006) | P/N/U | Direct assignment in FML |
 
-### Data Availability and Open Gaps
+#### Data Availability and Open Gaps
 
 {:.stu-note}
 Not all OncoBox mandatory fields can be derived from the Senology profiles. In particular, the indicator aggregation requires a dedicated evaluation layer. The following table shows the status per data point.
@@ -266,7 +266,7 @@ Not all OncoBox mandatory fields can be derived from the Senology profiles. In p
 | Tumour board type (pre/post/recurrence) | CarePlan.category | **Partial** -- CodeSystem for type to be added |
 | Quality indicators KB-1 to KB-20 (numerator/denominator) | Aggregation layer | **External / CQL** -- see aggregation model |
 
-#### Recommended Actions
+##### Recommended Actions
 
 Analogous to the IQTIG transformation:
 
@@ -278,7 +278,7 @@ Analogous to the IQTIG transformation:
 
 **Recommendation**: Combination of option 1 (clinical profile extensions), option 2 (CQL aggregation layer), and option 3 (ETL for metadata). The StructureMaps provided here cover the **primary-case-related part**; the population of quality indicator values is a separate aggregation step.
 
-### OncoBox Specification
+#### OncoBox Specification
 
 The transformation is based on the **OncoBox Brust Specification N1.1.1**:
 
@@ -293,7 +293,7 @@ The transformation is based on the **OncoBox Brust Specification N1.1.1**:
 
 > **Note**: The OncoBox specification is regularly updated by OnkoZert/DKG. The structure reflected here corresponds to specification N1.1.1. When the specification is updated, the Logical Model and StructureMaps must be versioned accordingly. The source Excel file is located at `input/data/oncobox-brust/OncoBoxBrust_N1.1.1_Spec.xlsx`.
 
-### Demarcation from oBDS, IRegG, and IQTIG
+#### Demarcation from oBDS, IRegG, and IQTIG
 
 The four reporting formats serve different regulatory purposes and contain overlapping but non-identical data points:
 
@@ -306,7 +306,7 @@ The four reporting formats serve different regulatory purposes and contain overl
 
 The Senology FHIR profiles form the shared clinical data basis; the four transformation pipelines (StructureMaps) each extract the fields required for the target format. Where possible (e.g. TNM, receptor status, residual status, lymph nodes), the maps use identical source patterns -- with different output mappings only where target key systems differ.
 
-### Execution
+#### Execution
 
 The transformation is executed analogously to the oBDS, IRegG, and IQTIG transformations via [Matchbox](https://github.com/ahdis/matchbox) as a local ETL pipeline.
 
@@ -333,7 +333,7 @@ Content-Type: application/fhir+json
 
 The result is an instance of the OncoBox Logical Model. A downstream XML serialiser generates from it the OncoBox Breast XML file in format N1.1.1, which can be submitted to OnkoZert.
 
-### Validation of Transformation Results
+#### Validation of Transformation Results
 
 {:.stu-note}
 The following mandatory fields are not populated by the StructureMaps and must be supplemented by the local HIS or the ETL pipeline.

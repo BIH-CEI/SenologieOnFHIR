@@ -16,7 +16,7 @@ Description: "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammak
 * $CS_GENEXPR#endopredict "EndoPredict"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-genexpressionstest-expansion"
+* ^expansion.identifier = "urn:uuid:7ba19c33-7be8-552d-9508-495c86fdae01"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-genexpressionstest"

@@ -1,12 +1,12 @@
-# Use Case: Data Exchange
+### Use Case: Data Exchange
 
-### Overview
+#### Overview
 
 The Senology module enables interoperable data exchange between the systems involved in breast cancer care. The FHIR profiles define a common language for data transfer — regardless of which system originally captured the data.
 
-### Exchange Scenarios
+#### Exchange Scenarios
 
-#### 1. Clinical Information System ↔ Documentation System
+##### 1. Clinical Information System ↔ Documentation System
 
 Data exchange between the hospital information system (KIS) and the documentation system is **bidirectional**:
 
@@ -15,7 +15,7 @@ Data exchange between the hospital information system (KIS) and the documentatio
 
 The technical interfaces for this exchange are governed by **ISiK** — in particular the ISiK modules for the base module (Patient, Encounter, Condition), document exchange, and appointment scheduling. This module defines only the senology-specific content, not the transport mechanisms.
 
-#### 2. Clinical Information System ↔ Data Integration Centre (Datenintegrationszentrum)
+##### 2. Clinical Information System ↔ Data Integration Centre (Datenintegrationszentrum)
 
 The data integration centre (DIZ) receives the clinical data for preparation and research data provision. The senology profiles ensure that data are available in a uniform structure and coding.
 
@@ -23,7 +23,7 @@ The data integration centre (DIZ) receives the clinical data for preparation and
 - **Data**: Pseudonymised clinical data set
 - **Use**: Research data repository, feasibility queries
 
-#### 3. Cross-site Exchange (MII)
+##### 3. Cross-site Exchange (MII)
 
 Cross-site queries are enabled via the data integration centres. The Senology module uses MII core data set profiles as its technical foundation to ensure structural compatibility with the MII infrastructure — it is, however, an independent senology core data set, not an MII module.
 
@@ -31,11 +31,11 @@ Cross-site queries are enabled via the data integration centres. The Senology mo
 - **Data**: Aggregated or pseudonymised individual data
 - **Infrastructure**: MII research data portal
 
-#### 4. Clinic ↔ Cancer Registry
+##### 4. Clinic ↔ Cancer Registry
 
 Structured notifications to clinical cancer registries. See [Notification Data Sets](anwendungsfaelle-meldedatensaetze.html).
 
-### Compatibility
+#### Compatibility
 
 The profiles are designed to be compatible with the following standards:
 
@@ -46,14 +46,14 @@ The profiles are designed to be compatible with the following standards:
 | **oBDS** | Oncological Basic Data Set for cancer registry notifications |
 | **HL7 SDC** | Form-based capture and extraction |
 
-### Data Flow
+#### Data Flow
 
 <div>
 <img src="austausch-datenfluss.svg" alt="Datenaustausch im Kerndatensatz Senologie" style="width:100%"/>
 <p><em>Data exchange — from the documentation system via KIS and DIZ to notification pathways and MII</em></p>
 </div>
 
-### Terminology Mapping
+#### Terminology Mapping
 
 Consistent terminology is essential for data exchange. The module provides [ConceptMaps](terminologie-medikation.html) that enable translations between the coding systems used:
 

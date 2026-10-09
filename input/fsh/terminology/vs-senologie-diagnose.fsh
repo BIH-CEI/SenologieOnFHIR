@@ -54,7 +54,7 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook -
 * $CS_LOKAL#anisomastie "Anisomastie"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-expansion"
+* ^expansion.identifier = "urn:uuid:56306de4-16e3-59c7-b208-95068cb33bd5"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 23
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -146,7 +146,7 @@ Description: "B3 Läsionen der Mamma nach S3-Leitlinie"
 * $SCT#444591006 "Pleomorphic lobular carcinoma in situ of breast"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-b3-expansion"
+* ^expansion.identifier = "urn:uuid:f67e06ad-12e4-52c7-9d2f-edc247aa077e"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 8
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -202,7 +202,7 @@ Description: "SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für 
 // === Lokale Codes only (für code.coding[senologie] Binding) ===
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-sct-expansion"
+* ^expansion.identifier = "urn:uuid:9f4089fa-bdd6-59f8-9916-9c3b0c88190e"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -233,7 +233,7 @@ Description: "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senolo
 * $SCT#51440002 "Bilateral"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-lokal-expansion"
+* ^expansion.identifier = "urn:uuid:411183a2-c979-599c-8fad-d067dbc91180"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 10
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
@@ -283,7 +283,7 @@ Description: "Metastasierungsstatus - lokale Codes basierend auf Dotbase"
 * $CS_META#sekundaer-metastasiert "Sekundär metastasiert"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-metastasierung-expansion"
+* ^expansion.identifier = "urn:uuid:c46bebfb-322c-5abf-b2c9-2b1d40a24f04"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-metastasierung"

@@ -1,8 +1,8 @@
-# Datenbereitstellung und Testumgebungen
+### Datenbereitstellung und Testumgebungen
 
 Der Kerndatensatz Senologie stellt neben den Profilen und Terminologien eine vollständige Testinfrastruktur bereit.
 
-### Bereitgestellte Komponenten
+#### Bereitgestellte Komponenten
 
 | Komponente | Beschreibung | Zielgruppe |
 |-----------|-------------|------------|
@@ -17,7 +17,7 @@ Der Kerndatensatz Senologie stellt neben den Profilen und Terminologien eine vol
 
 Alle Docker-Compose-Dateien, Import-Skripte und Testdaten sind im [GitHub-Repository](https://github.com/BIH-CEI/SenologieOnFHIR) frei verfügbar.
 
-### Quickstart
+#### Quickstart
 
 ```bash
 # 1. Repository klonen
@@ -46,7 +46,7 @@ python3 scripts/load-to-pathling.py                     # → Pathling
 # Jupyter Notebook:        jupyter notebook notebooks/senologie-analyse.ipynb
 ```
 
-### Standardports
+#### Standardports
 
 | Service | Port | URL |
 |---------|------|-----|
@@ -57,13 +57,13 @@ python3 scripts/load-to-pathling.py                     # → Pathling
 
 Die Ports können über die `.env`-Datei oder die jeweiligen Docker-Compose-Dateien angepasst werden.
 
-### Synthetische Testdaten
+#### Synthetische Testdaten
 
 Die [12 synthetischen Testpatientinnen](testpatientinnen.html) (210+ FHIR-Instanzen) decken alle klinisch relevanten Szenarien ab: alle Brustkrebs-Subtypen, Stadien 0–IV, benigne und B3-Befunde, neoadjuvante und adjuvante Therapie, Komplikationen, Implantate, BRCA-Mutation, männliches Mammakarzinom. Jeder Fall enthält vollständig verknüpfte FHIR-Ressourcen (Patient → Diagnose → Bildgebung → Pathologie → Therapie → Verlauf).
 
 Die Testdaten sind als FSH-Beispiele im IG enthalten und können direkt in einen FHIR-Server geladen werden.
 
-### Verfügbare FHIR-Server
+#### Verfügbare FHIR-Server
 
 Für die Erprobung des Kerndatensatzes stehen drei Docker-basierte Testumgebungen bereit. Alle Docker-Compose-Dateien, Import-Skripte und Testdaten sind im [GitHub-Repository](https://github.com/BIH-CEI/SenologieOnFHIR) frei verfügbar.
 
@@ -76,7 +76,7 @@ Für die Erprobung des Kerndatensatzes stehen drei Docker-basierte Testumgebunge
 {:.stu-note}
 **HAPI FHIR** und **Pathling** können ohne Registrierung oder Lizenz direkt aus dem Repository gestartet werden. Für **Aidbox** ist eine individuelle (kostenlose) Lizenz erforderlich, die unter [aidbox.app](https://aidbox.app/) beantragt werden kann. Die Lizenzdatei (`.env`) ist nicht im Repository enthalten.
 
-#### HAPI FHIR (Open Source, empfohlen für CQL)
+##### HAPI FHIR (Open Source, empfohlen für CQL)
 
 ```bash
 git clone https://github.com/BIH-CEI/SenologieOnFHIR.git
@@ -96,14 +96,14 @@ for f in sorted(glob.glob('fsh-generated/resources/*.json')):
 "
 ```
 
-#### Pathling (Open Source, empfohlen für Analysen)
+##### Pathling (Open Source, empfohlen für Analysen)
 
 ```bash
 docker compose -f docker-compose.pathling.yaml up -d
 python3 scripts/load-to-pathling.py
 ```
 
-#### Aidbox (SQL on FHIR ViewDefinitions, kostenlose Lizenz nötig)
+##### Aidbox (SQL on FHIR ViewDefinitions, kostenlose Lizenz nötig)
 
 ```bash
 # 1. Lizenz beantragen unter https://aidbox.app/
@@ -117,7 +117,7 @@ Aidbox bietet nativen SQL-on-FHIR-Support: die ViewDefinitions aus `input/fsh/vi
 
 Zugang zur Admin-UI: [http://localhost:8888](http://localhost:8888) (Login: admin/admin)
 
-#### HAPI FHIR (empfohlen für CQL)
+##### HAPI FHIR (empfohlen für CQL)
 
 ```bash
 docker compose up -d hapi-fhir-server fhir-postgres
@@ -125,7 +125,7 @@ docker compose up -d hapi-fhir-server fhir-postgres
 
 HAPI unterstützt die Ausführung von CQL-Expressions (`$cql`) und FHIR Measures (`$evaluate-measure`). Die [CQL-Library](https://github.com/BIH-CEI/SenologieOnFHIR/blob/main/input/cql/QualitaetsindikatorenLeitlinie.cql) mit den S3-Qualitätsindikatoren kann direkt gegen die geladenen Testdaten ausgeführt werden.
 
-#### Pathling (empfohlen für analytische Abfragen)
+##### Pathling (empfohlen für analytische Abfragen)
 
 ```bash
 docker compose -f docker-compose.pathling.yaml up -d
@@ -139,7 +139,7 @@ Alternativ: Pathling als Python-Library ohne Docker:
 pip install pathling
 ```
 
-### Datenimport
+#### Datenimport
 
 Die Testdaten liegen als JSON-Ressourcen unter `fsh-generated/resources/`. Import-Skripte für die verschiedenen Server:
 
@@ -164,7 +164,7 @@ for f in sorted(glob.glob("fsh-generated/resources/*.json")):
         urllib.request.urlopen(req)
 ```
 
-### SQL on FHIR ViewDefinitions
+#### SQL on FHIR ViewDefinitions
 
 Sechs ViewDefinitions für tabellarische Analysen liegen unter `input/fsh/views/`:
 
@@ -185,7 +185,7 @@ curl -u root:secret -X POST "http://localhost:8888/fhir/ViewDefinition/\$run?_fo
   -d @input/fsh/views/ViewDefinition-PatientKohorte.json
 ```
 
-### Jupyter Notebook
+#### Jupyter Notebook
 
 Das Analyse-Notebook (`notebooks/senologie-analyse.ipynb`) verbindet sich mit einem der FHIR-Server und führt die ViewDefinitions aus. Es enthält 7 vordefinierte Analysen:
 
@@ -207,7 +207,7 @@ Drei Ausführungsmodi stehen zur Verfügung:
 
 Siehe `notebooks/README.md` für die vollständige Anleitung.
 
-### CQL-Auswertung
+#### CQL-Auswertung
 
 Die [CQL-Library](https://github.com/BIH-CEI/SenologieOnFHIR/blob/main/input/cql/QualitaetsindikatorenLeitlinie.cql) enthält S3-Qualitätsindikatoren (QI-2 bis QI-14) und deskriptive Statistiken. Ausführung gegen HAPI:
 
@@ -217,11 +217,11 @@ curl -X POST "http://localhost:8095/fhir/\$cql" \
   -d '{"resourceType":"Parameters","parameter":[{"name":"expression","valueString":"Count([Patient])"}]}'
 ```
 
-### Meldungs-Transformation (StructureMaps)
+#### Meldungs-Transformation (StructureMaps)
 
 Die [StructureMaps](anwendungsfaelle-meldedatensaetze.html) transformieren die FHIR-Daten in die vier Meldeformate. Für die Ausführung wird ein [Matchbox](https://github.com/ahdis/matchbox)-Container empfohlen, der die FML-Maps als `$transform`-Operation bereitstellt.
 
-### Weiterentwicklung
+#### Weiterentwicklung
 
 Geplant für kommende Versionen:
 

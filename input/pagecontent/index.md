@@ -1,4 +1,4 @@
-# Kerndatensatz Senologie
+### Kerndatensatz Senologie
 
 Der **Kerndatensatz Senologie** definiert FHIR-Profile für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus. Er umfasst den gesamten Versorgungspfad von der Erstvorstellung über Diagnostik, Therapie und Nachsorge bis zur Verlaufsdokumentation.
 
@@ -10,7 +10,7 @@ Der **Kerndatensatz Senologie** definiert FHIR-Profile für die strukturierte Do
 <a href="https://www.senologie.org/"><img src="dgs-logo.png" alt="Deutsche Gesellschaft für Senologie" style="height:60px"/></a>
 </div>
 
-### Für wen ist dieser IG?
+#### Für wen ist dieser IG?
 
 | Zielgruppe | Was finde ich hier? | Einstieg |
 |---|---|---|
@@ -19,7 +19,7 @@ Der **Kerndatensatz Senologie** definiert FHIR-Profile für die strukturierte Do
 | **Qualitätssicherung** | Ableitung von Meldedatensätzen (oBDS, IQTIG, OncoBox, IRegG) | [Anwendungsfälle](anwendungsfaelle-uebersicht.html) |
 | **Forschende** | Sekundärnutzung, Terminologien, Interoperabilität | [Terminologie](terminologie-uebersicht.html), [Datenmodell](datenmodell.html) |
 
-### Versorgungspfad
+#### Versorgungspfad
 
 Der Datensatz bildet den klinischen Workflow der Senologie in folgenden Bereichen ab:
 
@@ -33,21 +33,21 @@ Der Datensatz bildet den klinischen Workflow der Senologie in folgenden Bereiche
 
 Das detaillierte FHIR-Ressourcenmodell finden Sie unter [Datenmodell](datenmodell.html).
 
-### Zielsetzung
+#### Zielsetzung
 
 1. **Standardisierte Erfassung** klinischer Daten entlang des Versorgungspfads Mammakarzinom
 2. **Interoperabler Datenaustausch** zwischen klinischen Systemen, Krebsregistern und Forschungsdatenbanken auf Basis von HL7 FHIR
 3. **Sekundärnutzung** der Versorgungsdaten für Qualitätssicherung, Versorgungsforschung und klinische Studien
 
-### Einordnung
+#### Einordnung
 
 Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz -- kein MII-Modul. Die technische Umsetzung erfolgt durch das **Berlin Institute of Health at Charité (BIH)**, die inhaltliche Abstimmung mit der **[Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/)**, der **[Deutschen Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)](https://www.dggg.de/)** und der **[Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)](https://www.ago-online.de/)**.
 
-### Designprinzip: Formular-First
+#### Designprinzip: Formular-First
 
 Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen Workflow orientieren. Im Hintergrund werden die Formulardaten über Template-based Extraction in FHIR-Ressourcen überführt. Siehe [Erfassung](anwendungsfaelle-erfassung.html).
 
-### Abhängigkeiten
+#### Abhängigkeiten
 
 <table>
 <tr><th colspan="2">Technisch (FHIR-Pakete)</th></tr>
@@ -64,7 +64,7 @@ Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen 
 <tr><td><strong>IRegG</strong></td><td>Implantateregister-Meldepflicht</td></tr>
 </table>
 
-### Übersicht
+#### Übersicht
 
 - [Datenmodell](datenmodell.html) -- Logisches Modell, Ressourcenmodell und FHIR-Mapping
 - [Profile](profilbeschreibungen.html) -- Alle FHIR-Profile im Detail
@@ -74,7 +74,7 @@ Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen 
 - [Offene Fragen](offene-fragen.html) -- Ballot-Fragen zur Kommentierung
 - [Artifacts](artifacts.html) -- Alle FHIR-Artefakte
 
-### Geplante Weiterentwicklungen
+#### Geplante Weiterentwicklungen
 
 - **Implantateregister-Meldung (IRegG)** -- StructureMaps für automatische Ableitung von Implantateregisterdaten
 - **CQL-basierte Qualitätsindikatoren** -- Formale Definition der DKG-Kennzahlen als [CQL](http://cql.hl7.org/) Measures

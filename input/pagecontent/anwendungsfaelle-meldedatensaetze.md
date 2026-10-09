@@ -1,10 +1,10 @@
-# Anwendungsfall: Meldedatensätze
+### Anwendungsfall: Meldedatensätze
 
-### Überblick
+#### Überblick
 
 Ein zentraler Mehrwert der strukturierten FHIR-Dokumentation ist die automatisierte Ableitung regulatorischer Meldungen. Anstatt Daten mehrfach zu erfassen, werden die klinischen FHIR-Ressourcen als Single Source of Truth genutzt und die Meldedatensätze daraus generiert.
 
-### Meldepflichten
+#### Meldepflichten
 
 Zertifizierte Brustzentren unterliegen mehreren Meldepflichten:
 
@@ -15,11 +15,11 @@ Zertifizierte Brustzentren unterliegen mehreren Meldepflichten:
 | OncoBox Brust (N1.1.1) | OnkoZert (DKG) | DKG-Zertifizierungsordnung | Jährlich |
 | Qualitätssicherung (QS 18.1 Mammachirurgie) | IQTIG / G-BA | SGB V §136 | Fallbezogen |
 
-### Krebsregistermeldung (oBDS)
+#### Krebsregistermeldung (oBDS)
 
 Der Onkologische Basisdatensatz (oBDS) ist der Standard für Krebsregistermeldungen in Deutschland. Das Senologie-Modul bildet alle oBDS-relevanten Datenpunkte ab:
 
-#### Mapping: FHIR-Profile → oBDS-Meldeanlässe
+##### Mapping: FHIR-Profile → oBDS-Meldeanlässe
 
 | oBDS-Meldeanlass | FHIR-Profil | Relevante Elemente |
 |---|---|---|
@@ -31,7 +31,7 @@ Der Onkologische Basisdatensatz (oBDS) ist der Standard für Krebsregistermeldun
 | **Verlauf** | Senologie_Diagnose_Maligne (Rezidiv) | Rezidivdiagnose, Metastasierungsstadium |
 | **Tod** | *(MII Kerndatensatz Person)* | Sterbedatum, Todesursache |
 
-#### oBDS-Kompatibilität
+##### oBDS-Kompatibilität
 
 Die Profile stellen oBDS-Kompatibilität sicher durch:
 
@@ -41,11 +41,11 @@ Die Profile stellen oBDS-Kompatibilität sicher durch:
 - TNM-Staging über referenzierte MII-Onkologie-Profile
 - Residualklassifikation (R0/R1/R2) bei Operationen
 
-### Implantateregistermeldung
+#### Implantateregistermeldung
 
 Das Implantateregistergesetz (IRegG) verpflichtet zur Meldung bei Einsatz, Wechsel oder Entfernung von Brustimplantaten.
 
-#### Mapping: FHIR-Profile → Implantateregister
+##### Mapping: FHIR-Profile → Implantateregister
 
 | Meldedatum | FHIR-Profil | Element |
 |---|---|---|
@@ -58,11 +58,11 @@ Das Implantateregistergesetz (IRegG) verpflichtet zur Meldung bei Einsatz, Wechs
 | Eingriffsart | Senologie_Operation (Procedure) | `Procedure.code` |
 | Komplikationen | Senologie_Operative_Komplikation (Observation) | Clavien-Dindo, Typ |
 
-### DKG-Kennzahlenbogen / OncoBox Brust (OnkoZert)
+#### DKG-Kennzahlenbogen / OncoBox Brust (OnkoZert)
 
 Die jährliche Erhebung der DKG-Qualitätsindikatoren für die Brustzentrum-Zertifizierung erfolgt über das **OncoBox-Brust-XML-Format (Spezifikation N1.1.1)**, das an [OnkoZert](https://xml-oncobox.de/de/Zentren/BrustZentren) übermittelt wird. Die OncoBox-Meldung umfasst Primärfalldaten sowie 20 aggregierte Qualitätsindikatoren (KB-1 bis KB-20). Siehe [OncoBox-Brust-Transformation](meldung-oncobox.html) sowie [Auswertung: Qualitätsindikatoren](anwendungsfaelle-auswertung.html).
 
-### Architektur: Meldungsgenerierung
+#### Architektur: Meldungsgenerierung
 
 ```
 FHIR-Ressourcen          Transformator           Meldung
@@ -80,7 +80,7 @@ FHIR-Ressourcen          Transformator           Meldung
 
 Der Transformator ist **nicht** Teil dieses IGs, sondern wird als eigenständige Komponente implementiert. Der IG definiert die Quelldatenstruktur und stellt sicher, dass alle für die Meldungen erforderlichen Datenpunkte in den Profilen enthalten sind.
 
-### Vollständigkeitsprüfung
+#### Vollständigkeitsprüfung
 
 Für jede Meldepflicht kann geprüft werden, ob die erforderlichen Daten vollständig vorliegen:
 
@@ -93,7 +93,7 @@ Für jede Meldepflicht kann geprüft werden, ob die erforderlichen Daten vollst�
 
 Fehlende Daten werden durch die FHIR-Validierung erkannt und können vor der Meldung ergänzt werden.
 
-### Technische Umsetzung: XML-Meldungen und Zukunftsperspektive
+#### Technische Umsetzung: XML-Meldungen und Zukunftsperspektive
 
 Sowohl das Krebsregister (oBDS) als auch das Implantateregister (BfArM) empfangen Meldungen derzeit noch im **XML-Format**. Die FHIR-Ressourcen aus diesem IG müssen daher in die jeweiligen XML-Schemata transformiert werden.
 

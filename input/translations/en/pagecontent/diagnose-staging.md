@@ -1,8 +1,6 @@
-# Diagnosis & Staging
-
 <img src="senologie-diagnose.png" alt="UML Diagnosis & Staging" style="max-width:100%"/>
 
-## Spectrum of Senological Diagnoses
+### Spectrum of Senological Diagnoses
 
 A breast centre (Brustzentrum) does not exclusively treat cancer patients. The diagnostic spectrum includes:
 
@@ -18,7 +16,7 @@ A breast centre (Brustzentrum) does not exclusively treat cancer patients. The d
 
 Not all cases require a complete oncological staging workup or a cancer registry notification. The data model must be capable of representing the full spectrum while clearly distinguishing the level of documentation required for each diagnosis.
 
-## Diagnosis Modelling
+### Diagnosis Modelling
 
 Assignment of a definitive diagnosis is not always clear from the outset. A patient presents with a suspicious finding — whether it represents a benign change, a risk lesion, a carcinoma in situ, or an invasive carcinoma is often only established during the diagnostic process (imaging → biopsy → pathology → surgical specimen if applicable). DCIS, for example, is neither clearly benign nor invasively malignant, yet it is managed — for the purposes of reporting and treatment — like a malignancy. B3 lesions may prove harmless on excision or may turn out to be precursors of carcinoma.
 
@@ -29,7 +27,7 @@ The diagnosis is represented as a FHIR Condition. Two profiles cover the full sp
 - **Senologie_Diagnose_Maligne**: For invasive carcinomas, DCIS, and notifiable findings. Inherits from MII Onko Primärtumor. Mandatory: ICD-10-GM, SNOMED CT. Optional: ICD-11 (dual-coding for future-proofing). Includes the oncological staging fields.
 - **Senologie_Diagnose_Benigne**: For non-reportable diagnoses (fibroadenoma, cysts, mastitis, reconstruction). Same coding structure, but without mandatory oncological fields.
 
-## Staging
+### Staging
 
 Oncological staging is relevant only for malignant diagnoses and encompasses:
 
@@ -41,25 +39,25 @@ Oncological staging is relevant only for malignant diagnoses and encompasses:
 
 The TNM categories L, V, and Pn are represented as separate Observations following MII Onko profiles (mii-pr-onko-tnm-l-kategorie, -v-kategorie, -pn-kategorie).
 
-## Representation of Clinical Scenarios
+### Representation of Clinical Scenarios
 
-### Initial Diagnosis
+#### Initial Diagnosis
 
 The most common constellation: a patient is presented with a newly diagnosed tumour. A Condition with `clinicalStatus = active` is created and full staging is performed.
 
-### Recurrence
+#### Recurrence
 
 When the disease recurs after prior treatment, a new case is created. The recurrence Condition references the primary disease via `occurredFollowing`. The type of recurrence (local, regional, distant) is documented as staging information.
 
-### Bilateral Synchronous Tumours
+#### Bilateral Synchronous Tumours
 
 Two simultaneous primary tumours in both breasts are documented as separate Conditions with different laterality (`bodySite`). All subsequent resources (Procedures, Observations) must explicitly reference the applicable Condition — SDC Choice Selection with `candidateExpression` is used for this purpose.
 
-### Progression and Metastasis
+#### Progression and Metastasis
 
 A transition from a curative to a palliative situation is documented via a status update on the existing Condition, accompanied by a follow-up Observation (MII Onko Verlauf).
 
-## Related Resources
+### Related Resources
 
 | Type | Resource |
 |-----|-----------|

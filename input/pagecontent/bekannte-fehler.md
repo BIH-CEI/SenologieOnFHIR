@@ -1,4 +1,4 @@
-# Bekannte Fehler und Limitierungen
+### Bekannte Fehler und Limitierungen
 
 Diese Seite dokumentiert bekannte QA-Fehler und Validierungslimitierungen im aktuellen Build. Die aufgeführten Meldungen betreffen **Tooling- und Infrastruktur-Einschränkungen**, nicht inhaltliche Fehler in den Profilen oder Testdaten. Sie sind in der Datei `ignoreWarnings.txt` unterdrückt.
 
@@ -16,7 +16,7 @@ Die Fehlerquellen lassen sich in folgende Kategorien einteilen:
 
 ---
 
-## TX-Proxy Limitierungen
+#### TX-Proxy Limitierungen
 
 **Ursache:** Der Build nutzt den MII Ontoserver über einen lokalen TX-Proxy (`localhost:3000`). Einige Validierungsanfragen schlagen fehl, weil der Ontoserver bestimmte CodeSysteme oder ValueSets nicht vollständig geladen hat.
 
@@ -25,7 +25,7 @@ Die Fehlerquellen lassen sich in folgende Kategorien einteilen:
 {:.stu-note}
 Die folgenden Meldungen sind TX-Proxy-bedingt und stellen keine inhaltlichen Fehler dar.
 
-### Unbekannte Codes
+##### Unbekannte Codes
 
 SNOMED CT, LOINC und RadLex Codes, die der TX-Proxy nicht auflösen kann:
 
@@ -48,17 +48,17 @@ SNOMED CT, LOINC und RadLex Codes, die der TX-Proxy nicht auflösen kann:
 | `RID3933` | RadLex | Körperstruktur |
 | `RID58844` | RadLex | Körperstruktur |
 
-### DosageQuantity und UnitsOfTime
+##### DosageQuantity und UnitsOfTime
 
 Der TX-Proxy kann die ValueSets `Dosage DoseQuantity ValueSet` und `UnitsOfTime` nicht validieren. Die verwendeten Einheiten (`d`, `wk`) sind korrekte UCUM-Codes.
 
-### Senologie-Seite ValueSet
+##### Senologie-Seite ValueSet
 
 Die Codierung wird als nicht im ValueSet `VS Senologie Seite` befindlich gemeldet — ein TX-Proxy-Validierungsfehler.
 
 ---
 
-## StructureMap Validation
+#### StructureMap Validation
 
 **Ursache:** Der IG Publisher (v2.2.6) kann BackboneElement-Pfade in Logical Models nicht auflösen. Die betroffenen StructureMaps sind korrekt und funktionieren in [Matchbox](https://www.matchbox.health/).
 
@@ -71,7 +71,7 @@ Zusätzlich erkennt der Publisher `Bundle.entry.resource` nicht als konkreten Ty
 
 ---
 
-## SDC 4.0.0 Validierung
+#### SDC 4.0.0 Validierung
 
 **Ursache:** Das Upgrade auf SDC 4.0.0 führt zu strengerer Validierung von contained resources, Extensions und Template-Extraction-Mechanismen.
 
@@ -91,7 +91,7 @@ Diese Fehler werden voraussichtlich durch ein Update des IG Publishers oder SDC-
 
 ---
 
-## Extraktionsvorlagen (templateExtract)
+#### Extraktionsvorlagen (templateExtract)
 
 **Ursache:** Die Fragebögen erzeugen ihre FHIR-Ressourcen über SDC Template-based Extraction. Die Vorlagen (contained resources) sind absichtlich unvollständig: Werte, die aus Formularantworten stammen, entstehen erst bei der Extraktion. Der IG Publisher prüft jede Vorlage trotzdem gegen das Profil, das sie in `meta.profile` nennt.
 
@@ -99,7 +99,7 @@ Diese Fehler werden voraussichtlich durch ein Update des IG Publishers oder SDC-
 
 Die Vorlagen enthalten bewusst **keine statischen Platzhalter** neben einem `templateExtractValue`-Ausdruck. Mit Platzhalter wären diese Meldungen seltener, die Extraktion in Aidbox aber fehlerhaft: Der Platzhalter bleibt stehen und der extrahierte Wert landet in einem ungültigen `_`-Feld.
 
-### Hinweise für Implementierer
+##### Hinweise für Implementierer
 
 Getestet wurde die Extraktion mit Aidbox (Versionen 2605, stable und edge, Oktober 2026) an den Beispiel-QuestionnaireResponses dieses IG. Matchbox unterstützt nur die StructureMap-basierte Extraktion und kann diese Fragebögen nicht extrahieren.
 
@@ -109,7 +109,7 @@ Getestet wurde die Extraktion mit Aidbox (Versionen 2605, stable und edge, Oktob
 
 ---
 
-## BCP-47 Sprachvalidierung
+#### BCP-47 Sprachvalidierung
 
 **Ursache:** Der MII Ontoserver hat kein BCP-47 CodeSystem (`urn:ietf:bcp:47`) geladen. SDC 4.0.0 validiert `language`-Bindings strenger als frühere Versionen.
 
@@ -122,7 +122,7 @@ Meldungen: *"Der angegebene Wert ('de-DE') ist nicht im ValueSet 'All Languages'
 
 ---
 
-## OPS-Codes nicht im MII ValueSet
+#### OPS-Codes nicht im MII ValueSet
 
 **Ursache:** Das MII-Onkologie-ValueSet für Prozeduren enthält nicht alle OPS-Subkategorien, die in der senologischen Dokumentation benötigt werden.
 
@@ -146,7 +146,7 @@ Zusätzlich werden OPS-Displays als falsch gemeldet (*"Wrong Display Name"*), we
 
 ---
 
-## Questionnaire LinkId Mismatch
+#### Questionnaire LinkId Mismatch
 
 **Ursache:** Die QuestionnaireResponse-Beispiele referenzieren LinkIds aus dem FSH-generierten Questionnaire. Das Diagnose-Template (JSON) verwendet abweichende LinkIds.
 
@@ -164,28 +164,28 @@ Dieses Problem wird durch die Anpassung der QuestionnaireResponses an das Diagno
 
 ---
 
-## Sonstige Meldungen
+#### Sonstige Meldungen
 
-### FHIR-Version Mismatch (subscriptions-backport)
+##### FHIR-Version Mismatch (subscriptions-backport)
 
 Das Paket `hl7.fhir.uv.subscriptions-backport` ist für eine andere FHIR-Version deklariert als dieser IG (4.0.1). Dies ist ein transitives Dependency-Problem und hat keine funktionale Auswirkung.
 
-### IPS ValueSet Link
+##### IPS ValueSet Link
 
 Das IPS Target-Site ValueSet (`http://hl7.org/fhir/uv/ips/ValueSet/target-site-uv-ips`) wird transitiv über MII Pathologie/Bildgebung eingebunden. Der Link wird als ungültig gemeldet, da das IPS-Paket nicht direkt als Dependency deklariert ist.
 
-### Specimen Slicing (MII Patho)
+##### Specimen Slicing (MII Patho)
 
 Die Slice-Definition für `Specimen.processing:lagerprozess.extension` hat ein Minimum von 0, aber die Slices ergeben ein Minimum von 1. Dies ist ein Constraint-Problem im MII Pathologie-Profil.
 
-### Observation Slicing (MII Onko Verlauf)
+##### Observation Slicing (MII Onko Verlauf)
 
 Das MII Onko Verlauf-Profil erwartet einen `Observation.code.coding:snomed`-Slice. Das Senologie-Profil verwendet LOINC als primären Code, wodurch der SNOMED-Slice als fehlend gemeldet wird.
 
-### Observation Slicing (LOINC Discriminator)
+##### Observation Slicing (LOINC Discriminator)
 
 Allgemeine Slicing-Meldungen der Form *"Slicing kann nicht ausgewertet werden: Diskriminator …"*. Diese treten auf, wenn der Validator den Slicing-Discriminator nicht auflösen kann.
 
-### Condition.extension (Template-bedingt)
+##### Condition.extension (Template-bedingt)
 
 `Condition.extension: mindestens erforderlich = 1, aber nur gefunden 0` — entsteht durch die Template-basierte Extraction, bei der Extensions kontextabhängig gesetzt werden.

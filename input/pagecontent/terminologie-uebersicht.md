@@ -1,8 +1,6 @@
-# Terminologie
-
 Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Terminologien, ValueSets und CodeSystems.
 
-## Verwendete Kodiersysteme
+### Verwendete Kodiersysteme
 
 | System | OID / URL | Verwendung im Modul |
 |---|---|---|
@@ -15,9 +13,9 @@ Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Te
 | OPS | `http://fhir.de/CodeSystem/bfarm/ops` | Operationen- und Prozedurenschlüssel |
 | oBDS | diverse | Onkologischer Basisdatensatz (Diagnosesicherung, Therapieintention) |
 
-## ValueSets
+### ValueSets
 
-### Diagnose
+#### Diagnose
 
 | ValueSet | Kodiersysteme | Codes | Beschreibung |
 |---|---|---|---|
@@ -30,7 +28,7 @@ Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Te
 | [VS Senologie Metastasierung](ValueSet-vs-senologie-metastasierung.html) | Lokal | 3 | Metastasierungsstatus (nicht/primär/sekundär metastasiert) |
 | [VS Senologie Seite](ValueSet-vs-senologie-seite.html) | SNOMED CT | 3 | Lateralität (rechts, links, bilateral) |
 
-### Therapie
+#### Therapie
 
 **Hinweis zur Medikamenten-Kodierung:** In SDC-Questionnaires kann pro Formularfeld nur **ein Coding** hinterlegt werden. Die Medikation wird daher primär in **SNOMED CT** kodiert, da SNOMED CT als Referenzterminologie die breiteste Abdeckung bietet. Für die Krebsregistermeldung (oBDS) wird ATC benötigt — die Übersetzung erfolgt über die [ConceptMap SNOMED CT → ATC](ConceptMap-cm-senologie-medikation-sct-atc.html). So wird eine doppelte Kodierung im Formular vermieden und die Meldedaten werden automatisch abgeleitet.
 
@@ -39,7 +37,7 @@ Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Te
 | [VS Senologie Systemtherapie Medikation](ValueSet-vs-senologie-systemtherapie-medikation.html) | SNOMED CT | 19 | Antineoplastische Medikamente (CDK4/6-Inhibitoren, Anthrazykline, Taxane, Platinverbindungen etc.) |
 | [VS Senologie Operation Art](ValueSet-vs-senologie-operation-art.html) | SNOMED CT | 10 | Operationsarten (Mastektomie, BET, Axilladissektion, Rekonstruktion etc.) |
 
-### Risiko und Diagnostik
+#### Risiko und Diagnostik
 
 | ValueSet | Kodiersysteme | Codes | Beschreibung |
 |---|---|---|---|
@@ -48,7 +46,7 @@ Dieses Kapitel gibt eine Übersicht über alle im Senologie-Modul verwendeten Te
 | [VS Senologie Screeningstatus](ValueSet-vs-senologie-screeningstatus.html) | SNOMED CT | 5 | Screening-Status für Studienteilnahme |
 | [VS Senologie Studienname](ValueSet-vs-senologie-studienname.html) | Lokal | 9 | Auswahlliste klinischer Studien am Brustzentrum (OncoBox 2.0 K02) |
 
-### ConceptMaps
+#### ConceptMaps
 
 Für den Datenaustausch und die Krebsregistermeldung stehen Übersetzungstabellen bereit:
 
@@ -61,11 +59,11 @@ Siehe [Terminologie Medikation](terminologie-medikation.html) für Details zu de
 
 ---
 
-## Lokale CodeSystems
+### Lokale CodeSystems
 
 Das Modul definiert eigene CodeSystems für Konzepte, die nicht durch internationale Terminologien abgedeckt werden.
 
-### CS Senologie Diagnose Lokal
+#### CS Senologie Diagnose Lokal
 
 Lokale Diagnosecodes für Konzepte ohne SNOMED-CT-Entsprechung:
 
@@ -83,7 +81,7 @@ Für die folgenden Konzepte konnte kein passendes SNOMED-CT-Konzept identifizier
 | `bz-anisomastie` | Anisomastie | Kein exakter Match (nächster: `163438002 | O/E - breast asymmetry`, aber klinisches Finding, keine Diagnose) | Bleibt lokal |
 | `bz-kapselfibrose` | Kapselfibrose (Implantat) | `237474000 | Contracture of breast following insertion of breast implant` | **Migrationskandidat** |
 
-### CS Senologie Metastasierung
+#### CS Senologie Metastasierung
 
 | Code | Bedeutung | Anmerkung |
 |---|---|---|
@@ -91,11 +89,11 @@ Für die folgenden Konzepte konnte kein passendes SNOMED-CT-Konzept identifizier
 | `primaer-metastasiert` | M1 bei Erstdiagnose | oBDS-spezifische Unterscheidung |
 | `sekundaer-metastasiert` | M1 im Verlauf | oBDS-spezifische Unterscheidung |
 
-### CS Senologie Diagnosesicherung
+#### CS Senologie Diagnosesicherung
 
 12 Codes nach oBDS-Schlüssel (1–9 mit Subklassen). Diese sind oBDS-spezifisch und haben keine direkte SNOMED-Entsprechung, da sie den deutschen Krebsregistermeldungsprozess abbilden.
 
-### CS Senologie Genexpressionstest
+#### CS Senologie Genexpressionstest
 
 | Code | Bedeutung | Anmerkung |
 |---|---|---|
@@ -104,7 +102,7 @@ Für die folgenden Konzepte konnte kein passendes SNOMED-CT-Konzept identifizier
 | `prosigna` | Prosigna/PAM50 (ROR Score 0–100) | Kein SNOMED-Code — proprietärer Testname |
 | `endopredict` | EndoPredict (EPclin, kontinuierlich) | Kein SNOMED-Code — proprietärer Testname |
 
-### Zusammenfassung: Lokale Codes und SNOMED-Abdeckung
+#### Zusammenfassung: Lokale Codes und SNOMED-Abdeckung
 
 | Kategorie | Lokal | Davon migrationsfähig zu SNOMED | Verbleibend lokal |
 |---|---|---|---|

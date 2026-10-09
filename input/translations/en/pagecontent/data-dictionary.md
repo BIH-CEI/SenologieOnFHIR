@@ -1,9 +1,9 @@
-# Data Dictionary
+### Data Dictionary
 
 This page documents the flat tables extracted from the Senologie profiles via SQL-on-FHIR ViewDefinitions.
 Each table corresponds to a ViewDefinition under `validation/views/`. Columns are derived from the profiled resources via FHIRPath.
 
-## Export Paths
+#### Export Paths
 
 Three ways to produce the tables documented here:
 
@@ -23,7 +23,7 @@ Column semantics (meaning, code system, binding) are identical across all three 
 
 _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions + StructureDefinitions. Do not edit manually — sources are `validation/views/*.json` and the profiles in `fsh-generated/resources/StructureDefinition-*.json`._
 
-## Senologie Biomarker Flat View
+#### Senologie Biomarker Flat View
 
 - **View ID:** `senologie-biomarker-flat`
 - **Resource:** `Observation`
@@ -48,7 +48,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `status` | string |  |  |  | `status` |
 | `effective_date` | dateTime |  |  |  | `effectiveDateTime` |
 
-## Senologie BodyStructure Flat View
+#### Senologie BodyStructure Flat View
 
 - **View ID:** `senologie-bodystructure-flat`
 - **Resource:** `BodyStructure`
@@ -67,7 +67,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `morphology_icdo3` | code |  |  | CS: ICD-O-3 | `morphology.coding.where(system='http://terminology.hl7.org/CodeSystem/icd-o-3…` |
 | `description` | string |  |  |  | `description` |
 
-## Senologie Diagnosis Flat View
+#### Senologie Diagnosis Flat View
 
 - **View ID:** `senologie-diagnose-flat`
 - **Resource:** `Condition`
@@ -93,7 +93,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `asserted_date` | dateTime |  | Date of assertion (e.g. recurrence confirmation). Oncology-compliant via condition-assertedDate extension. |  | `extension.where(url='http://hl7.org/fhir/StructureDefinition/condition-assert…` |
 | `recorded_date` | dateTime |  | Date of entry into the system (documentation timestamp). |  | `recordedDate` |
 
-## Senologie Family History Flat View
+#### Senologie Family History Flat View
 
 - **View ID:** `senologie-familienanamnese-flat`
 - **Resource:** `FamilyMemberHistory`
@@ -113,7 +113,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `onset_age_value` | string |  |  |  | `onsetAge.value` |
 | `onset_string` | string |  |  |  | `onsetString` |
 
-## Senologie Pathology Report Flat View
+#### Senologie Pathology Report Flat View
 
 - **View ID:** `senologie-pathologie-report-flat`
 - **Resource:** `DiagnosticReport`
@@ -130,7 +130,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `specimen_id` | string |  |  |  | `specimen.first().id` |
 | `conclusion` | string |  |  |  | `conclusion` |
 
-## Senologie Patient Flat View
+#### Senologie Patient Flat View
 
 - **View ID:** `senologie-patient-flat`
 - **Resource:** `Patient`
@@ -151,7 +151,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `postal_code` | string |  | Postal code (first address). |  | `address.postalCode.first()` |
 | `country` | string |  | Country (ISO 3166). |  | `address.country.first()` |
 
-## Senologie Procedure Flat View
+#### Senologie Procedure Flat View
 
 - **View ID:** `senologie-procedure-flat`
 - **Resource:** `Procedure`
@@ -176,7 +176,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `category` | code |  |  |  | `category.coding.code.first()` |
 | `profile` | string |  | Which Senologie profile (operation/strahlentherapie/systemtherapie-procedure). |  | `meta.profile.first()` |
 
-## Senologie TNM Flat View
+#### Senologie TNM Flat View
 
 - **View ID:** `senologie-tnm-flat`
 - **Resource:** `Observation`
@@ -199,7 +199,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `effective_date` | dateTime |  |  |  | `effectiveDateTime` |
 | `status` | string |  |  |  | `status` |
 
-## Senologie Tumour Board Flat View
+#### Senologie Tumour Board Flat View
 
 - **View ID:** `senologie-tumorboard-flat`
 - **Resource:** `CarePlan`
@@ -223,7 +223,7 @@ _Auto-generated with `scripts/generate-data-dictionary.py` from ViewDefinitions 
 | `activity_empfehlung_status` | code |  | Recommended / conditionally recommended / not recommended / not discussed. | CS: tumorboard-empfehlung | `detail.statusReason.coding.where(system='https://www.senologie.org/fhir/CodeS…` |
 | `activity_description` | string |  | Rationale of the tumour board. |  | `detail.description` |
 
-## Senologie Follow-Up Flat View
+#### Senologie Follow-Up Flat View
 
 - **View ID:** `senologie-verlauf-flat`
 - **Resource:** `Observation`

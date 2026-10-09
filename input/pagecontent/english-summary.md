@@ -1,4 +1,4 @@
-# Senologie Core Dataset — English Summary
+### Senologie Core Dataset — English Summary
 
 > **Note:** The full Implementation Guide is published in German, reflecting its primary audience (German-certified breast cancer centres and their reporting context). This page summarises the specification for an international audience. All FHIR artefacts (profiles, ValueSets, examples) carry English titles and descriptions where applicable.
 
@@ -8,7 +8,7 @@ The **Senologie Core Dataset** defines FHIR R4 profiles for the structured docum
 <img src="versorgungspfad-uebersicht.svg" alt="Care pathway: Diagnosis ↔ Tumour Board ↔ Therapy → Follow-up" style="width:100%; max-width:900px;"/>
 </div>
 
-### Scope at a glance
+#### Scope at a glance
 
 | Domain | Description | Profile |
 |---|---|---|
@@ -18,14 +18,14 @@ The **Senologie Core Dataset** defines FHIR R4 profiles for the structured docum
 | **Tumour board** | Treatment recommendations, multidisciplinary review | [Tumorboard](StructureDefinition-senologie-tumorboard-empfehlung.html) |
 | **Follow-up** | Surveillance, vital status, recurrence monitoring | [Follow-Up](StructureDefinition-senologie-follow-up.html) |
 
-### Design principles
+#### Design principles
 
 - **Form-first capture.** Data is entered via SDC Questionnaires aligned with clinical workflow; FHIR resources are derived by SDC template-based extraction.
 - **Built on MII profiles.** The dataset reuses the Medical Informatics Initiative (MII) core modules (Onkologie, Pathologie, Bildgebung) as its technical base rather than redefining them. It is a stand-alone dataset, not an MII module.
 - **ISiK-compatible.** Profiles inherit from ISiK base profiles where applicable, so resources can flow into German hospital interoperability layers without rework.
 - **Secondary use.** Captured data feeds quality reporting, registry submissions, and research without re-entry.
 
-### German reporting datasets — context for international readers
+#### German reporting datasets — context for international readers
 
 A defining requirement for German breast centres is that the same clinical record must serve multiple mandatory reporting pipelines. The IG provides mappings from the FHIR resources to each of these. They are listed here so international readers understand the regulatory backdrop; full mapping details live on the [Meldedatensätze](anwendungsfaelle-meldedatensaetze.html) pages of the German IG.
 
@@ -38,11 +38,11 @@ A defining requirement for German breast centres is that the same clinical recor
 
 The relevant **logical-model mappings** to these datasets are published as `Mapping` blocks on the [Logical Model](StructureDefinition-LogicalModelSenologie-mappings.html).
 
-### Clinical guideline alignment
+#### Clinical guideline alignment
 
 Clinical content follows the **S3 guideline for breast cancer** (AWMF 032-045OL), maintained jointly by the German Cancer Society (DKG), German Cancer Aid (DKH), and AWMF. ValueSets and required elements reflect the recommendations of the current guideline version.
 
-### Where to look next
+#### Where to look next
 
 - **[Data model](datenmodell.html)** — Logical model and FHIR resource model
 - **[Profiles](profilbeschreibungen.html)** — All FHIR profiles
@@ -52,7 +52,7 @@ Clinical content follows the **S3 guideline for breast cancer** (AWMF 032-045OL)
 
 For interoperability questions or international collaboration, see [Interoperability](interoperabilitaet.html) (covers MII KDS, ISiK, IPS, EU-EHDS alignment).
 
-### Contact
+#### Contact
 
 - **Berlin Institute of Health at Charité (BIH)** — Core Unit eHealth & Interoperability
 - GitHub: [BIH-CEI/SenologieOnFHIR](https://github.com/BIH-CEI/SenologieOnFHIR)

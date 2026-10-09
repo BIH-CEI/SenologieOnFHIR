@@ -1,8 +1,6 @@
-# Diagnose & Staging
-
 <img src="senologie-diagnose.png" alt="UML Diagnose & Staging" style="max-width:100%"/>
 
-## Spektrum der senologischen Diagnosen
+### Spektrum der senologischen Diagnosen
 
 Ein Brustzentrum versorgt nicht ausschließlich Krebspatientinnen. Das Diagnose-Spektrum umfasst:
 
@@ -18,7 +16,7 @@ Ein Brustzentrum versorgt nicht ausschließlich Krebspatientinnen. Das Diagnose-
 
 Nicht alle Fälle erfordern ein vollständiges onkologisches Staging oder eine Krebsregistermeldung. Das Datenmodell muss das gesamte Spektrum abbilden können und dabei klar unterscheiden, welche Dokumentationstiefe für welche Diagnose erforderlich ist.
 
-## Diagnose-Modellierung
+### Diagnose-Modellierung
 
 Die Zuordnung einer Diagnose ist nicht immer von Beginn an eindeutig. Eine Patientin stellt sich mit einem auffälligen Befund vor — ob es sich um eine benigne Veränderung, eine Risikoläsion, ein Carcinoma in situ oder ein invasives Karzinom handelt, klärt sich oft erst im Verlauf des diagnostischen Prozesses (Bildgebung → Biopsie → Pathologie → ggf. OP-Präparat). DCIS etwa ist weder eindeutig benigne noch invasiv-maligne, wird aber für Meldung und Therapie wie ein Malignom behandelt. B3-Läsionen können sich nach Exzision als harmlos oder als Vorläufer eines Karzinoms herausstellen.
 
@@ -29,7 +27,7 @@ Die Diagnose wird als FHIR Condition abgebildet. Zwei Profile decken das Spektru
 - **Senologie_Diagnose_Maligne**: Für invasive Karzinome, DCIS und meldepflichtige Befunde. Erbt von MII Onko Primärtumor. Obligatorisch: ICD-10-GM, SNOMED CT. Optional: ICD-11 (Dual-Coding für Zukunftsvorsorge). Umfasst die onkologischen Staging-Felder.
 - **Senologie_Diagnose_Benigne**: Für nicht-meldepflichtige Diagnosen (Fibroadenom, Zysten, Mastitis, Rekonstruktion). Gleiche Kodierungsstruktur, aber ohne onkologische Pflichtfelder.
 
-## Staging
+### Staging
 
 Das onkologische Staging ist nur bei malignen Diagnosen relevant und umfasst:
 
@@ -41,25 +39,25 @@ Das onkologische Staging ist nur bei malignen Diagnosen relevant und umfasst:
 
 Die TNM-Kategorien L, V und Pn werden als separate Observations nach MII Onko Profilen abgebildet (mii-pr-onko-tnm-l-kategorie, -v-kategorie, -pn-kategorie).
 
-## Abbildung klinischer Szenarien
+### Abbildung klinischer Szenarien
 
-### Erstdiagnose
+#### Erstdiagnose
 
 Die häufigste Konstellation: Eine Patientin wird mit einem neu diagnostizierten Tumor vorgestellt. Eine Condition mit `clinicalStatus = active` wird angelegt, das vollständige Staging durchgeführt.
 
-### Rezidiv
+#### Rezidiv
 
 Bei einem erneuten Auftreten nach vorheriger Behandlung wird ein neuer Fall angelegt. Die Rezidiv-Condition verweist über `occurredFollowing` auf die Ersterkrankung. Der Rezidivtyp (lokal, regionär, fern) wird als Staging-Information dokumentiert.
 
-### Bilaterale synchrone Tumore
+#### Bilaterale synchrone Tumore
 
 Zwei gleichzeitige Primärtumoren in beiden Brüsten werden als separate Conditions mit unterschiedlicher Seitenlokalisation (`bodySite`) dokumentiert. Alle nachfolgenden Ressourcen (Procedures, Observations) müssen explizit auf die jeweils zutreffende Condition referenzieren — hierfür wird SDC Choice Selection mit `candidateExpression` eingesetzt.
 
-### Progression und Metastasierung
+#### Progression und Metastasierung
 
 Ein Übergang von der kurativen in die palliative Situation wird über ein Status-Update der bestehenden Condition dokumentiert, begleitet von einer Verlaufs-Observation (MII Onko Verlauf).
 
-## Zugehörige Ressourcen
+### Zugehörige Ressourcen
 
 | Typ | Ressource |
 |-----|-----------|

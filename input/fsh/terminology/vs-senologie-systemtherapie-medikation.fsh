@@ -42,7 +42,7 @@ Description: "Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validier
 * $SCT#708166000 "Eribulin"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-systemtherapie-medikation-expansion"
+* ^expansion.identifier = "urn:uuid:29347724-ccae-5d5d-8b5d-4cde5afc868b"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 19
 * ^expansion.contains[+].system = "http://snomed.info/sct"

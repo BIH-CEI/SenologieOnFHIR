@@ -1,8 +1,6 @@
-# Terminology
-
 This chapter provides an overview of all terminologies, ValueSets, and CodeSystems used in the Senology module.
 
-## Coding Systems Used
+### Coding Systems Used
 
 | System | OID / URL | Use in the module |
 |---|---|---|
@@ -15,9 +13,9 @@ This chapter provides an overview of all terminologies, ValueSets, and CodeSyste
 | OPS | `http://fhir.de/CodeSystem/bfarm/ops` | Operations and procedure key (Operationen- und Prozedurenschlüssel) |
 | oBDS | various | Oncological core dataset (Onkologischer Basisdatensatz) (diagnosis confirmation, therapy intent) |
 
-## ValueSets
+### ValueSets
 
-### Diagnosis
+#### Diagnosis
 
 | ValueSet | Coding Systems | Codes | Description |
 |---|---|---|---|
@@ -30,7 +28,7 @@ This chapter provides an overview of all terminologies, ValueSets, and CodeSyste
 | [VS Senologie Metastasierung](ValueSet-vs-senologie-metastasierung.html) | Local | 3 | Metastasis status (non-metastatic / primary metastatic / secondary metastatic) |
 | [VS Senologie Seite](ValueSet-vs-senologie-seite.html) | SNOMED CT | 3 | Laterality (right, left, bilateral) |
 
-### Therapy
+#### Therapy
 
 **Note on medication coding:** In SDC questionnaires, only **one coding** can be stored per form field. Medication is therefore coded primarily in **SNOMED CT**, as SNOMED CT offers the broadest coverage as a reference terminology. For cancer registry reporting (oBDS), ATC is required — the translation is performed via the [ConceptMap SNOMED CT → ATC](ConceptMap-cm-senologie-medikation-sct-atc.html). This avoids double coding in the form and the reporting data are derived automatically.
 
@@ -39,7 +37,7 @@ This chapter provides an overview of all terminologies, ValueSets, and CodeSyste
 | [VS Senologie Systemtherapie Medikation](ValueSet-vs-senologie-systemtherapie-medikation.html) | SNOMED CT | 19 | Antineoplastic drugs (CDK4/6 inhibitors, anthracyclines, taxanes, platinum compounds, etc.) |
 | [VS Senologie Operation Art](ValueSet-vs-senologie-operation-art.html) | SNOMED CT | 10 | Surgical procedure types (mastectomy, breast-conserving surgery, axillary dissection, reconstruction, etc.) |
 
-### Risk and Diagnostics
+#### Risk and Diagnostics
 
 | ValueSet | Coding Systems | Codes | Description |
 |---|---|---|---|
@@ -48,7 +46,7 @@ This chapter provides an overview of all terminologies, ValueSets, and CodeSyste
 | [VS Senologie Screeningstatus](ValueSet-vs-senologie-screeningstatus.html) | SNOMED CT | 5 | Screening status for study participation |
 | [VS Senologie Studienname](ValueSet-vs-senologie-studienname.html) | Local | 9 | Selection list of clinical trials at the breast centre (OncoBox 2.0 K02) |
 
-### ConceptMaps
+#### ConceptMaps
 
 Translation tables are available for data exchange and cancer registry reporting:
 
@@ -61,11 +59,11 @@ See [Terminology Medication](terminologie-medikation.html) for details on the me
 
 ---
 
-## Local CodeSystems
+### Local CodeSystems
 
 The module defines its own CodeSystems for concepts not covered by international terminologies.
 
-### CS Senologie Diagnose Lokal
+#### CS Senologie Diagnose Lokal
 
 Local diagnosis codes for concepts without a SNOMED CT equivalent:
 
@@ -83,7 +81,7 @@ No suitable SNOMED CT concept could be identified for the following concepts. It
 | `bz-anisomastie` | Anisomastia | No exact match (closest: `163438002 | O/E - breast asymmetry`, but a clinical finding, not a diagnosis) | Remains local |
 | `bz-kapselfibrose` | Capsular fibrosis (implant) | `237474000 | Contracture of breast following insertion of breast implant` | **Migration candidate** |
 
-### CS Senologie Metastasierung
+#### CS Senologie Metastasierung
 
 | Code | Meaning | Note |
 |---|---|---|
@@ -91,11 +89,11 @@ No suitable SNOMED CT concept could be identified for the following concepts. It
 | `primaer-metastasiert` | M1 at initial diagnosis | oBDS-specific distinction |
 | `sekundaer-metastasiert` | M1 during follow-up | oBDS-specific distinction |
 
-### CS Senologie Diagnosesicherung
+#### CS Senologie Diagnosesicherung
 
 12 codes per oBDS key (1–9 with subclasses). These are oBDS-specific and have no direct SNOMED equivalent, as they reflect the German cancer registry reporting process.
 
-### CS Senologie Genexpressionstest
+#### CS Senologie Genexpressionstest
 
 | Code | Meaning | Note |
 |---|---|---|
@@ -104,7 +102,7 @@ No suitable SNOMED CT concept could be identified for the following concepts. It
 | `prosigna` | Prosigna/PAM50 (ROR score 0–100) | No SNOMED code — proprietary test name |
 | `endopredict` | EndoPredict (EPclin, continuous) | No SNOMED code — proprietary test name |
 
-### Summary: Local Codes and SNOMED Coverage
+#### Summary: Local Codes and SNOMED Coverage
 
 | Category | Local | Of which migratable to SNOMED | Remaining local |
 |---|---|---|---|

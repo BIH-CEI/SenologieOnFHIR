@@ -15,7 +15,7 @@ Description: "Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (
 * $CS_FOLLOWUP_VS#passiv "Passive Nachsorge"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-nachsorge-art-expansion"
+* ^expansion.identifier = "urn:uuid:a452edf4-bc87-5385-91a7-2c085ce5b15d"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-follow-up"
@@ -39,7 +39,7 @@ Description: "Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08"
 * $SCT#261665006 "Unknown (qualifier value)"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-zweittumor-expansion"
+* ^expansion.identifier = "urn:uuid:0f35ff1f-b9d3-57bd-b367-58ee34730400"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"

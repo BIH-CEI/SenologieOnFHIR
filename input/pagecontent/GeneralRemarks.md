@@ -1,15 +1,15 @@
-# Senologie-KDS
+### Senologie-KDS
 
 Allgemeine Beschreibung
 Beginnend bei der Darstellung der Operation wollen wir gemeinsam mit dem Brustzentrum der Charité
 einen allgemeingültigen, öffentlich publizierten, abgestimmten, semantisch annotierten und operablen Datensatz erstellen.
 
-## Formular-First Darstellung
+#### Formular-First Darstellung
 
 Die Abbildung der Datenpunkte über Formulare orientiert sich am tatsächlichen klinischen Workflow.
 Die Formulare werden als solche gespeichert. Im Hintergrund werden die Ergebnisse jedoch in Domänenbasierte Ressourcen umgewandelt - aus einer Operationsdokumentation werden daher einzelne Prozeduren, Implantate etc. extrahiert.
 
-## Operationen als Unterprozeduren
+#### Operationen als Unterprozeduren
 Auch wenn im klinischen Alltag ein operativer Eingriff als eine Operation bezeichnet wird,
 ist zur datengenauen Darstellung die Unterscheidung in mehrere Sub-Eingriffe zwingend erforderlich.
 Dies umfasst bspw.:

@@ -1,4 +1,4 @@
-# Walkthrough: Tumour Formula and IHC
+### Walkthrough: Tumour Formula and IHC
 
 This page illustrates — using a concrete example, the **TNM classification with immunohistochemical receptor status (IHC)** — how data flows through all layers of the core dataset: from the clinical form to the various reporting channels.
 
@@ -6,11 +6,11 @@ The example uses Case 1 (Erika Neumann): invasive carcinoma NST left, G2, pT1c p
 
 ---
 
-## 1. Clinical Data Points
+#### 1. Clinical Data Points
 
 The following categories are required for a complete senological tumour finding (Tumorbefund):
 
-### TNM Classification
+##### TNM Classification
 
 | Category | Value | Meaning |
 |---|---|---|
@@ -25,7 +25,7 @@ The following categories are required for a complete senological tumour finding 
 | UICC stage | IA | Stage IA (pT1 pN0 M0) |
 | Grading | G2 | Moderately differentiated |
 
-### Immunohistochemistry (Modul Mamma)
+##### Immunohistochemistry (Modul Mamma)
 
 | Parameter | Value | Coding |
 |---|---|---|
@@ -36,7 +36,7 @@ The following categories are required for a complete senological tumour finding 
 
 ---
 
-## 2. Data Entry in the Questionnaire (SDC)
+#### 2. Data Entry in the Questionnaire (SDC)
 
 The clinician records these data via a structured questionnaire (excerpt):
 
@@ -105,11 +105,11 @@ The clinician records these data via a structured questionnaire (excerpt):
 
 ---
 
-## 3. Representation in the FHIR Data Model
+#### 3. Representation in the FHIR Data Model
 
 The QuestionnaireResponse is transformed via SDC `$extract` into multiple FHIR resources. The TNM and IHC data are stored as **separate Observations** (MII Oncology pattern):
 
-### TNM Classification (MII Onko Profiles)
+##### TNM Classification (MII Onko Profiles)
 
 ```
 Observation (mii-pr-onko-tnm-klassifikation)
@@ -142,7 +142,7 @@ Observation.code.extension[mii-ex-onko-tnm-cp-praefix]
   oder SCT#373809008 "pathological" (für p)
 ```
 
-### Immunohistochemistry (MII Onko Mamma Profiles)
+##### Immunohistochemistry (MII Onko Mamma Profiles)
 
 ```
 Observation (mii-pr-onko-mamma-rezeptorstatus-estrogen)
@@ -171,11 +171,11 @@ Observation (Ki-67)
 
 ---
 
-## 4. Output to oBDS XML (Cancer Registry Report)
+#### 4. Output to oBDS XML (Cancer Registry Report)
 
 The [StructureMaps](meldung-obds.html) transform the FHIR Observations into oBDS v3.0.5:
 
-### oBDS TNM Block
+##### oBDS TNM Block
 
 ```xml
 <TNM ID="fall1-tnm-op">
@@ -194,7 +194,7 @@ The [StructureMaps](meldung-obds.html) transform the FHIR Observations into oBDS
 </TNM>
 ```
 
-### oBDS Modul_Mamma
+##### oBDS Modul_Mamma
 
 ```xml
 <Modul_Mamma>
@@ -212,7 +212,7 @@ The transformation uses the [Reverse ConceptMaps](terminologie-uebersicht.html) 
 
 ---
 
-## 5. Output to IQTIG QS Dataset 18.1
+#### 5. Output to IQTIG QS Dataset 18.1
 
 The [IQTIG StructureMap](meldung-iqtig.html) transforms into the quality assurance dataset:
 
@@ -232,7 +232,7 @@ Teildatensatz Operation (O)
 
 ---
 
-## 6. Output to OncoBox Breast (DKG Certification)
+#### 6. Output to OncoBox Breast (DKG Certification)
 
 The [OncoBox StructureMap](meldung-oncobox.html) transforms into the OncoBox XML format:
 
@@ -259,7 +259,7 @@ The [OncoBox StructureMap](meldung-oncobox.html) transforms into the OncoBox XML
 
 ---
 
-## Summary of the Transformation
+#### Summary of the Transformation
 
 | Data point | FHIR field | oBDS | IQTIG | OncoBox |
 |---|---|---|---|---|
@@ -272,7 +272,7 @@ The [OncoBox StructureMap](meldung-oncobox.html) transforms into the OncoBox XML
 | PR status | Observation(PR).value | Modul_Mamma/`<HormonrezeptorStatus_Progesteron>` | O:PRSTATUS | Diagnose/PRStatus (+ IRS) |
 | HER2/neu | Observation(HER2).value | Modul_Mamma/`<Her2neuStatus>` | O:HER2STATUS | Diagnose/HER2IHC + HER2Ergebnis |
 
-### Where the reporting channels diverge
+##### Where the reporting channels diverge
 
 - **oBDS** reduces IHC details to P/N/U (status only); the detailed IRS values are not retained.
 - **IQTIG** is even more coarse-grained, expecting status only.
@@ -282,7 +282,7 @@ This means: **clinical data capture** must represent the highest level of granul
 
 ---
 
-## Design Principle
+#### Design Principle
 
 This walkthrough illustrates the central design principle of the core dataset:
 

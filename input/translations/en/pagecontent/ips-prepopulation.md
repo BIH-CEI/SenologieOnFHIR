@@ -1,8 +1,8 @@
-# IPS/EPS Pre-population
+### IPS/EPS Pre-population
 
 This chapter documents which data points of the senological documentation can potentially be pre-populated from an **International Patient Summary (IPS)** or **European Patient Summary (EPS)**.
 
-### Background
+#### Background
 
 The general medical history (Allgemeine Anamnese) collected at a breast centre encompasses extensive data on pre-existing conditions, medication, allergies, and social background. For patients who already have a digital health record, much of this information is available in structured form — in particular through the IPS, which is standardised as a FHIR document (Bundle).
 
@@ -11,7 +11,7 @@ Pre-populating (Prepopulation) these fields can:
 - **Improve data quality** (coded diagnoses instead of free text)
 - **Support international patients** whose prior findings are provided via the EPS
 
-### Pre-population Model
+#### Pre-population Model
 
 Pre-population is **non-deterministic** — it supplies suggestions that must be clinically confirmed or corrected:
 
@@ -21,9 +21,9 @@ Pre-population is **non-deterministic** — it supplies suggestions that must be
 
 Technically, pre-population can be implemented via `sdc-questionnaire-initialExpression` (FHIRPath) within an SDC Questionnaire.
 
-### Mapping: Anamnesis Fields → IPS Sections
+#### Mapping: Anamnesis Fields → IPS Sections
 
-#### Fully pre-populatable
+##### Fully pre-populatable
 
 | Anamnesis Data Point | IPS Section | IPS Resource | Note |
 |---|---|---|---|
@@ -37,7 +37,7 @@ Technically, pre-population can be implemented via `sdc-questionnaire-initialExp
 | Smoking status | Social History | Observation | IPS section. Level of detail (pack-years, cigarettes per day) varies. |
 | Advance directive / lasting power of attorney | Advance Directives | Consent | IPS section. Verify content and validity. |
 
-#### Partially pre-populatable
+##### Partially pre-populatable
 
 | Anamnesis Data Point | IPS Section | Limitation |
 |---|---|---|
@@ -47,7 +47,7 @@ Technically, pre-population can be implemented via `sdc-questionnaire-initialExp
 | Coagulation disorder | Past Illness History | Present as Condition, but detail questions (gum bleeding, post-procedural bleeding) are absent |
 | Sex at birth | Patient | `Patient.gender` or birth-sex extension — semantics may differ |
 
-#### Not pre-populatable (not in IPS)
+##### Not pre-populatable (not in IPS)
 
 | Anamnesis Data Point | Reason |
 |---|---|
@@ -61,7 +61,7 @@ Technically, pre-population can be implemented via `sdc-questionnaire-initialExp
 | Hearing/visual impairment | No dedicated IPS section |
 | Detail questions (e.g. NYHA severity in heart failure, diabetic end-organ damage) | IPS provides the diagnosis, but not the clinical level of detail |
 
-### Implications for the IG
+#### Implications for the IG
 
 {:.stu-note}
 The general medical history (Allgemeine Anamnese) is deliberately **out of scope** for profiling in this module. The data points are not senology-specific and should be sourced from overarching systems (IPS/EPS, HIS master data). The senology module defines only the **senology-specific** history profiles (gynaecological history, family history).
@@ -79,7 +79,7 @@ In the medium term, pre-population via IPS should be implemented as an SDC featu
     * expression = "%patient.reverseResolve(AllergyIntolerance.patient).exists()"
 ```
 
-### Relevant Standards
+#### Relevant Standards
 
 Several sources are relevant for pre-population:
 
@@ -95,7 +95,7 @@ The MIO PKA (Patientenkurzakte / emergency data record) is specified as the Germ
 
 In the long term, the **DE Base Profiles**, **ISiK**, and the **ePA specification** will standardise pre-population. This module does not define its own pre-population logic but merely documents which fields are in principle pre-populatable — the technical implementation is governed by the overarching standards.
 
-### References
+#### References
 
 - [HL7 IPS Implementation Guide](http://hl7.org/fhir/uv/ips/)
 - [European Patient Summary (EPS) — eHDSI](https://art-decor.ehdsi.eu/publication/epSOS/)

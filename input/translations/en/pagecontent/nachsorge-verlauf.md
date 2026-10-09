@@ -1,8 +1,6 @@
-# Follow-Up & Disease Course
-
 <img src="senologie-nachsorge.png" alt="UML Nachsorge & Verlauf" style="max-width:100%"/>
 
-## Clinical Follow-Up vs. Disease Course Report
+### Clinical Follow-Up vs. Disease Course Report
 
 In senology (Senologie), two distinct perspectives on disease course converge:
 
@@ -11,7 +9,7 @@ In senology (Senologie), two distinct perspectives on disease course converge:
 
 Both perspectives draw on partly overlapping information but serve different purposes and recipients.
 
-## Clinical Follow-Up
+### Clinical Follow-Up
 
 Follow-up care follows the S3 guideline recommendations and typically includes:
 
@@ -22,7 +20,7 @@ Follow-up care follows the S3 guideline recommendations and typically includes:
 
 The clinical findings from follow-up feed into the overall disease course assessment.
 
-## Disease Course Report
+### Disease Course Report
 
 A structured disease course report is required for cancer registries (oBDS) and DKG certification (OncoBox):
 
@@ -36,13 +34,13 @@ A structured disease course report is required for cancer registries (oBDS) and 
 
 This assessment is made by the treating physician on the basis of available clinical information.
 
-## Delineation and Open Questions
+### Delineation and Open Questions
 
 Some data points in the disease course report — such as the type of follow-up (active: patient examined in person vs. passive: information from records or registries) — sit between clinical documentation and reporting requirements. They are captured as a field in the follow-up questionnaire (Verlauf-Questionnaire), since the distinction is known at the time of documentation.
 
 The precise delineation of which follow-up information is documented clinically and which is added only when generating a report is subject to further development of this module.
 
-## Associated Resources
+### Associated Resources
 
 | Type | Resource |
 |-----|-----------|

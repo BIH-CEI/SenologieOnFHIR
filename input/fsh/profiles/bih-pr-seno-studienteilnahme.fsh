@@ -123,7 +123,7 @@ Description: "Screeningstatus einer klinischen Studienteilnahme"
 // nicht als kodiertes CodeSystem — Studienlisten sind dynamisch.
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-screeningstatus-expansion"
+* ^expansion.identifier = "urn:uuid:35ab71cb-acd5-579a-b8bd-079f44e1aa04"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "http://snomed.info/sct"

@@ -1,8 +1,8 @@
-# Example Case: Erika Neumann
+### Example Case: Erika Neumann
 
 > **[Download Bundle (JSON)](Bundle-Fall1-Erika-Neumann.json)** — All 22 resources as a FHIR Transaction Bundle. Can be visualised in the [clinFHIR Bundle Viewer](https://test.clinfhir.com/clinfhir/bundleViewer.html) or imported into a FHIR server.
 
-## At a Glance
+#### At a Glance
 
 | | |
 |---|---|
@@ -15,9 +15,9 @@
 | **Treatment** | BCS + SLNB → adjuvant RT → endocrine therapy |
 | **Outcome** | R0, pN0(sn), no recurrence at 6-month follow-up |
 
-## Clinical Course
+#### Clinical Course
 
-### Presentation and Diagnostics
+##### Presentation and Diagnostics
 
 Ms Neumann presents in January 2025 with a self-detected lump in the left breast. Clinical examination confirms a firm, mobile nodule in the upper outer quadrant.
 
@@ -31,11 +31,11 @@ Ms Neumann presents in January 2025 with a self-detected lump in the left breast
 
 **Staging:** cT1c cN0 cM0, UICC IA
 
-### Genetic Risk Assessment
+##### Genetic Risk Assessment
 
 Oncotype DX Recurrence Score: 18 (low risk). 10-year distant recurrence risk: 12%. On this basis, adjuvant chemotherapy is not recommended.
 
-### Tumour Board (Tumorboard)
+##### Tumour Board (Tumorboard)
 
 The multidisciplinary tumour board recommends:
 - Breast-conserving surgery (BCS) with sentinel lymph node biopsy (SLNB)
@@ -43,36 +43,36 @@ The multidisciplinary tumour board recommends:
 - Endocrine therapy (aromatase inhibitor) for 5–10 years
 - No chemotherapy
 
-### Surgical Treatment
+##### Surgical Treatment
 
 In February 2025, BCS of the left breast with sentinel lymph node biopsy is performed:
 - R0 resection
 - Sentinel lymph node negative: pN0(sn) (0/2)
 - Definitive pTNM: pT1c pN0(sn) cM0
 
-### Radiotherapy
+##### Radiotherapy
 
 Adjuvant whole-breast irradiation left (March–April 2025):
 - 50 Gy in 25 fractions
 - Boost 10 Gy in 5 fractions to the tumour bed
 - Total dose: 60 Gy, 30 sessions
 
-### Endocrine Therapy
+##### Endocrine Therapy
 
 Aromatase inhibitor (letrozole 2.5 mg daily) commenced following completion of radiotherapy, planned for at least 5 years.
 
-### Concomitant Medication
+##### Concomitant Medication
 
 - Metoprolol 47.5 mg (arterial hypertension, since 2020)
 - L-thyroxine 75 µg (hypothyroidism, since 2018)
 
-### Follow-up (6 months)
+##### Follow-up (6 months)
 
 - Clinically unremarkable, no evidence of recurrence
 - ECOG 0 (fully active)
 - Endocrine therapy compliance good
 
-## Data in This IG
+#### Data in This IG
 
 All FHIR resources for this case are included as examples in the IG. They demonstrate the interplay of profiles across the entire care pathway:
 

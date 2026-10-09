@@ -1,4 +1,4 @@
-# Walkthrough: Tumorformel und IHC
+### Walkthrough: Tumorformel und IHC
 
 Diese Seite zeigt an einem konkreten Beispiel — der **TNM-Klassifikation mit immunhistochemischem Rezeptorstatus (IHC)** — wie die Daten durch alle Ebenen des Kerndatensatzes fließen: vom klinischen Formular bis zu den verschiedenen Meldewegen.
 
@@ -6,11 +6,11 @@ Als Beispiel nutzen wir Fall 1 (Erika Neumann): invasives Karzinom NST links, G2
 
 ---
 
-## 1. Klinische Datenpunkte
+#### 1. Klinische Datenpunkte
 
 Für einen kompletten senologischen Tumorbefund sind folgende Kategorien erforderlich:
 
-### TNM-Klassifikation
+##### TNM-Klassifikation
 
 | Kategorie | Wert | Bedeutung |
 |---|---|---|
@@ -25,7 +25,7 @@ Für einen kompletten senologischen Tumorbefund sind folgende Kategorien erforde
 | UICC-Stadium | IA | Stadium IA (pT1 pN0 M0) |
 | Grading | G2 | Mäßig differenziert |
 
-### Immunhistochemie (Modul Mamma)
+##### Immunhistochemie (Modul Mamma)
 
 | Parameter | Wert | Kodierung |
 |---|---|---|
@@ -36,7 +36,7 @@ Für einen kompletten senologischen Tumorbefund sind folgende Kategorien erforde
 
 ---
 
-## 2. Erfassung im Questionnaire (SDC)
+#### 2. Erfassung im Questionnaire (SDC)
 
 Der Kliniker erfasst diese Daten über einen strukturierten Fragebogen (Ausschnitt):
 
@@ -105,11 +105,11 @@ Der Kliniker erfasst diese Daten über einen strukturierten Fragebogen (Ausschni
 
 ---
 
-## 3. Abbildung im FHIR-Datenmodell
+#### 3. Abbildung im FHIR-Datenmodell
 
 Die QuestionnaireResponse wird über SDC `$extract` in mehrere FHIR-Ressourcen transformiert. Die TNM + IHC-Daten werden als **separate Observations** gespeichert (MII Onkologie Pattern):
 
-### TNM-Klassifikation (MII Onko Profile)
+##### TNM-Klassifikation (MII Onko Profile)
 
 ```
 Observation (mii-pr-onko-tnm-klassifikation)
@@ -142,7 +142,7 @@ Observation.code.extension[mii-ex-onko-tnm-cp-praefix]
   oder SCT#373809008 "pathological" (für p)
 ```
 
-### Immunhistochemie (MII Onko Mamma-Profile)
+##### Immunhistochemie (MII Onko Mamma-Profile)
 
 ```
 Observation (mii-pr-onko-mamma-rezeptorstatus-estrogen)
@@ -171,11 +171,11 @@ Observation (Ki-67)
 
 ---
 
-## 4. Ausspielung oBDS-XML (Krebsregistermeldung)
+#### 4. Ausspielung oBDS-XML (Krebsregistermeldung)
 
 Die [StructureMaps](meldung-obds.html) transformieren die FHIR-Observations in oBDS v3.0.5:
 
-### oBDS TNM-Block
+##### oBDS TNM-Block
 
 ```xml
 <TNM ID="fall1-tnm-op">
@@ -194,7 +194,7 @@ Die [StructureMaps](meldung-obds.html) transformieren die FHIR-Observations in o
 </TNM>
 ```
 
-### oBDS Modul_Mamma
+##### oBDS Modul_Mamma
 
 ```xml
 <Modul_Mamma>
@@ -212,7 +212,7 @@ Die Transformation nutzt die [Reverse ConceptMaps](terminologie-uebersicht.html)
 
 ---
 
-## 5. Ausspielung IQTIG QS-Datensatz 18.1
+#### 5. Ausspielung IQTIG QS-Datensatz 18.1
 
 Die [IQTIG-StructureMap](meldung-iqtig.html) transformiert in den QS-Datensatz:
 
@@ -232,7 +232,7 @@ Teildatensatz Operation (O)
 
 ---
 
-## 6. Ausspielung OncoBox Brust (DKG-Zertifizierung)
+#### 6. Ausspielung OncoBox Brust (DKG-Zertifizierung)
 
 Die [OncoBox-StructureMap](meldung-oncobox.html) transformiert in das OncoBox-XML:
 
@@ -259,7 +259,7 @@ Die [OncoBox-StructureMap](meldung-oncobox.html) transformiert in das OncoBox-XM
 
 ---
 
-## Zusammenfassung der Transformation
+#### Zusammenfassung der Transformation
 
 | Datenpunkt | FHIR-Feld | oBDS | IQTIG | OncoBox |
 |---|---|---|---|---|
@@ -272,7 +272,7 @@ Die [OncoBox-StructureMap](meldung-oncobox.html) transformiert in das OncoBox-XM
 | PR-Status | Observation(PR).value | Modul_Mamma/`<HormonrezeptorStatus_Progesteron>` | O:PRSTATUS | Diagnose/PRStatus (+ IRS) |
 | HER2/neu | Observation(HER2).value | Modul_Mamma/`<Her2neuStatus>` | O:HER2STATUS | Diagnose/HER2IHC + HER2Ergebnis |
 
-### Wo die Meldewege unterscheiden
+##### Wo die Meldewege unterscheiden
 
 - **oBDS** reduziert die IHC-Details auf P/N/U (Status), die detaillierten IRS-Werte gehen verloren.
 - **IQTIG** ist noch gröber, erwartet nur Status.
@@ -282,7 +282,7 @@ Das heißt: Die **klinische Erfassung** muss die höchste Granularität abbilden
 
 ---
 
-## Design-Prinzip
+#### Design-Prinzip
 
 Dieser Walkthrough illustriert das zentrale Design-Prinzip des Kerndatensatzes:
 

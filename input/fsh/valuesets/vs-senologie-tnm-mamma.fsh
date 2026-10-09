@@ -44,7 +44,7 @@ Description: "T-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). Schlie�
 // ============================================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-tnm-t-kategorie-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:ca7dbdd6-a24c-590a-a5b9-559ff5459b2c"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 17
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
@@ -128,7 +128,7 @@ Description: "N-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). N2c ist
 // ============================================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-tnm-n-kategorie-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:000b64f1-52af-53d2-8703-9e249cdaaa81"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 14
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
@@ -191,7 +191,7 @@ Description: "M-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). MX wurd
 // ============================================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-tnm-m-kategorie-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:f5029eaa-58e8-5e17-afe5-c3b13a48a32f"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
@@ -233,7 +233,7 @@ Description: "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Primärkodier
 * $SCT#1352913000 "IV (UICC)"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-08
-* ^expansion.identifier = "urn:uuid:vs-senologie-uicc-stadium-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:ed83075e-402b-511b-8f0b-42480c8c7db8"
 * ^expansion.timestamp = "2026-10-08T00:00:00Z"
 * ^expansion.total = 18
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"

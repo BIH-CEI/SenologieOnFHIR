@@ -27,7 +27,7 @@ Description: "12 Uhrzeitpositionen (1-12 Uhr) als SNOMED CT Codes für die Mamma
 * $SCT#260326007 "12 o'clock position"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-clockface-position-expansion"
+* ^expansion.identifier = "urn:uuid:1ee01476-b3dc-5454-b129-22d6a97674c7"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 12
 * ^expansion.contains[+].system = "http://snomed.info/sct"

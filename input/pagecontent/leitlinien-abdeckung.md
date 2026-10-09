@@ -1,8 +1,8 @@
-# S3-Leitlinien-Abdeckung
+### S3-Leitlinien-Abdeckung
 
 Der Kerndatensatz Senologie orientiert sich inhaltlich an der **S3-Leitlinie Mammakarzinom** (AWMF 032-045OL, Langversion 5.0, Dezember 2025). Die Empfehlungen der Leitlinie wurden systematisch auf ihre Abbildbarkeit in FHIR-Datenobjekten analysiert.
 
-### Umfang der Analyse
+#### Umfang der Analyse
 
 | Kennzahl | Wert |
 |---|---|
@@ -13,7 +13,7 @@ Der Kerndatensatz Senologie orientiert sich inhaltlich an der **S3-Leitlinie Mam
 | Davon abgedeckt über MII-Profile (referenziert) | ~15% |
 | Noch nicht abgedeckt (Gaps) | ~15% |
 
-### Abdeckung pro Kapitel
+#### Abdeckung pro Kapitel
 
 | Kapitel | Thema | Empfehlungen | FHIR-Mappings | Abdeckung |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ Der Kerndatensatz Senologie orientiert sich inhaltlich an der **S3-Leitlinie Mam
 | 7 | Spezielle Situationen | 7 | 69 | Teilweise — Männliches Mammakarzinom (Fall 8) abgebildet; Schwangerschaft, ältere Patientinnen, hereditäres Karzinom teilweise über Familienanamnese/BRCA (Fall 10) |
 | 8 | Qualitätsindikatoren | 19 | 36 | Gut — 17 QIs als CQL-Measures, Kennzahlen via OncoBox-Mapping |
 
-### Gut abgedeckte Bereiche
+#### Gut abgedeckte Bereiche
 
 Die folgenden klinischen Domänen sind durch Senologie-Profile oder referenzierte MII-Profile vollständig oder weitgehend abgebildet:
 
@@ -43,7 +43,7 @@ Die folgenden klinischen Domänen sind durch Senologie-Profile oder referenziert
 - **Genexpressionstests**: Oncotype DX, MammaPrint, Prosigna, EndoPredict mit Score und Risikoklasse
 - **Qualitätsindikatoren**: 17 S3-QIs als CQL-Library, 20 DKG-Kennzahlen über OncoBox-Mapping
 
-### Bekannte Lücken
+#### Bekannte Lücken
 
 | Leitlinien-Bereich | Gap | Erläuterung |
 |---|---|---|
@@ -56,7 +56,7 @@ Die folgenden klinischen Domänen sind durch Senologie-Profile oder referenziert
 | Mamma-Ca im Alter | Teilweise | Geriatrisches Assessment nicht im Scope; Therapieentscheidungen über Tumorboard abbildbar |
 | Nachsorge-Schema | Teilweise | Verlaufs-Observations vorhanden, aber kein strukturiertes Nachsorge-Protokoll (PlanDefinition) |
 
-### Weiterentwicklung
+#### Weiterentwicklung
 
 Die Leitlinien-Annotation wird mit jeder Version des Kerndatensatzes aktualisiert. Rückmeldungen zur Abdeckung — insbesondere zu den identifizierten Lücken — sind ausdrücklich erwünscht (siehe [Offene Fragen](offene-fragen.html)).
 

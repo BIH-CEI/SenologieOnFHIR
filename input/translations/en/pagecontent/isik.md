@@ -1,10 +1,10 @@
-# ISiK Compatibility
+### ISiK Compatibility
 
-## Core Principle
+#### Core Principle
 
 The ISiK specification (Informationstechnische Systeme im Krankenhaus — IT Systems in Hospitals) published by gematik defines base profiles for the inpatient care context in Germany. ISiK is currently under public comment at Stage 6. The Senology IG uses ISiK-compatible profiles wherever they meet the clinical requirements. This covers both the exchange of patient master data and case assignment as well as the ISiK forms module for patient- and staff-completed questionnaires.
 
-## ISiK-Compatible Elements
+#### ISiK-Compatible Elements
 
 | Concept | ISiK Profile | Usage in the Senology IG |
 |---------|-------------|--------------------------|
@@ -14,7 +14,7 @@ The ISiK specification (Informationstechnische Systeme im Krankenhaus — IT Sys
 | Condition | ISiKDiagnose | ICD-10-GM coding compatible |
 | Procedure | ISiKProzedur | OPS coding compatible |
 
-## Demarcation
+#### Demarcation
 
 ISiK deliberately defines generic profiles for broad use in hospital information systems (Krankenhausinformationssysteme). The domain-specific depth of senology — such as TNM staging, receptor status, or tumour board (Tumorboard) recommendations — goes beyond the ISiK scope. This is where the MII KDS profiles serve as the subject-specific extension.
 

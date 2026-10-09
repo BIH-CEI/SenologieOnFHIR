@@ -1,12 +1,10 @@
-# Systemic Therapy & Medication
-
 <img src="senologie-systemtherapie.png" alt="UML Systemtherapie" style="max-width:100%"/>
 
-## Overview
+### Overview
 
 Systemic therapy encompasses all pharmacological treatments for breast cancer. The choice of treatment is guided by the molecular subtype (HR+/HER2-, HER2+, triple-negative), disease stage, and clinical setting (neoadjuvant, adjuvant, palliative). The complexity lies in the fact that multiple treatment modalities are often combined, extend over months, and require documentation that captures both the recommendation and the actual administration.
 
-## Therapy Types
+### Therapy Types
 
 | Type | Typical Agents | MII Onko Code | Indication |
 |------|----------------|---------------|------------|
@@ -16,7 +14,7 @@ Systemic therapy encompasses all pharmacological treatments for breast cancer. T
 | Immunotherapy | Pembrolizumab | IM | TNBC (PD-L1+) |
 | Combinations | Chemo + immuno, chemo + targeted | CI, CZ, CIZ | Protocol-dependent |
 
-## Recommendation and Administration
+### Recommendation and Administration
 
 Documentation of systemic therapy distinguishes between:
 
@@ -26,13 +24,13 @@ Documentation of systemic therapy distinguishes between:
 
 This three-tier structure reflects clinical practice: not every recommendation is acted upon, and not every prescription is carried out as planned (dose reductions, treatment discontinuation due to adverse effects).
 
-## Medication Coding
+### Medication Coding
 
 Agents are coded using ATC codes (BfArM ATC-DE). The MII Onko module provides a comprehensive value set containing more than 400 ATC codes for systemic tumour therapy, covering all relevant substance classes including endocrine therapy.
 
 Protocol names (e.g. EC-Pac, TCHP, FEC-D) are not yet fully structured in clinical documentation. Proposals for standardisation are being developed within the MII Oncology Module.
 
-## Endocrine Therapy — An Example of Classification Complexity
+### Endocrine Therapy — An Example of Classification Complexity
 
 Endocrine (anti-hormonal) therapy illustrates the challenges of achieving a uniform representation. Depending on the perspective, it is classified differently:
 
@@ -48,15 +46,15 @@ The same therapy — tamoxifen 20 mg daily for 5 years — is therefore classifi
 
 This complexity makes a unified representation all the more important: the data model captures endocrine therapy as part of systemic therapy (therapy type HO, agent coded via ATC) and uses ConceptMaps to ensure transformation into the respective target formats. The OncoBox-specific substance classification (1=tamoxifen, 2=aromatase inhibitor, 3=GnRH analogue, 4=fulvestrant, 5=CDK4/6 inhibitor) is mapped to the international ATC codes.
 
-## Line of Therapy and First-Line Treatment
+### Line of Therapy and First-Line Treatment
 
 In metastatic disease, the line of therapy (1st, 2nd, 3rd line) is clinically relevant and is documented as an attribute of the therapy. The first-line flag (KB-8) identifies the first systemic therapy at the time of metastasis — it is relevant only in the palliative setting.
 
-## Adverse Effects
+### Adverse Effects
 
 Undesirable effects of systemic therapy are classified according to NCI CTCAE (Common Terminology Criteria for Adverse Events) grades 1–5 and documented as separate resources. They are relevant both for clinical care and for reporting to the cancer registry (oBDS).
 
-## Associated Resources
+### Associated Resources
 
 | Type | Resource |
 |------|----------|

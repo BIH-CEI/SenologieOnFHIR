@@ -1,16 +1,14 @@
-# Imaging & Pathology
-
 <img src="senologie-bildgebung.png" alt="UML Imaging & Pathology" style="max-width:100%"/>
 
-## Structured Reports in Breast Cancer Care
+### Structured Reports in Breast Cancer Care
 
 Imaging and pathology provide the diagnostic foundation for staging and treatment decisions. Although both disciplines work with well-established classification systems (BI-RADS, TNM, Allred score), their results originate from specialised subsystems that have rarely delivered findings in a uniformly structured, machine-readable format. Looking ahead, technical standards such as the HL7 Europe Imaging Study Report or the MII Pathology specification can serve as a bridge — provided that the relevant professional societies endorse the required content definitions and terminologies.
 
 Until then, clinical documentation takes on the role of structuring: clinicians select standardised categories, capture defined data points, and thereby enable the transformation into an interoperable data model.
 
-## Imaging
+### Imaging
 
-### Modalities and Coding
+#### Modalities and Coding
 
 | Modality | Clinical question | LOINC Code | SNOMED CT |
 |----------|-------------------|------------|-----------|
@@ -20,7 +18,7 @@ Until then, clinical documentation takes on the role of structuring: clinicians 
 | Bone scintigraphy | Staging distant metastases | 39638-7 | 44491008 |
 | CT thorax/abdomen | Staging | 24627-2 | 77477000 |
 
-### Report Structure
+#### Report Structure
 
 Imaging findings are represented as a `DiagnosticReport` with associated `Observations`:
 
@@ -31,9 +29,9 @@ Imaging findings are represented as a `DiagnosticReport` with associated `Observ
 
 Laterality is represented via a `BodyStructure` resource encoding side (left/right), quadrant, and clock-face position where applicable. For bilateral examinations it must be unambiguously clear which finding relates to which breast.
 
-## Pathology
+### Pathology
 
-### Specimen Types
+#### Specimen Types
 
 | Type | Material | SNOMED CT | Context |
 |------|----------|-----------|---------|
@@ -42,7 +40,7 @@ Laterality is represented via a `BodyStructure` resource encoding side (left/rig
 | Surgical specimen | Excision / mastectomy | 122548005 | Post-operative, definitive histology |
 | Re-excision specimen | Re-excision | 122548005 | R1 margin situation |
 
-### Report Structure
+#### Report Structure
 
 The pathology report is represented as a `DiagnosticReport` (profile: MII Pathology Report):
 
@@ -56,11 +54,11 @@ The pathology report is represented as a `DiagnosticReport` (profile: MII Pathol
 | Ki-67 | Observation | LOINC 29593-1, percent |
 | Resection margin | Observation | R0/R1/R2/RX (MII Onko residual status) |
 
-### Further Reading: Pathology Report in the Breast Cancer Context
+#### Further Reading: Pathology Report in the Breast Cancer Context
 
 Although no normative standard for a structured pathology report in breast cancer care currently exists, the [Breast Cancer Pathology Specification](https://bih-cei.github.io/BreastCancerSpec/) demonstrates through concrete examples how a FHIR-based pathology report can look in the breast cancer context.
 
-### Diagnostic Pathway
+#### Diagnostic Pathway
 
 The typical workflow from imaging to treatment decision:
 
@@ -72,7 +70,7 @@ The typical workflow from imaging to treatment decision:
 
 Each step produces FHIR resources that reference one another: DiagnosticReport references Specimen and Observations, which in turn reference the Condition (diagnosis).
 
-## Related Resources
+### Related Resources
 
 | Type | Resource |
 |------|----------|

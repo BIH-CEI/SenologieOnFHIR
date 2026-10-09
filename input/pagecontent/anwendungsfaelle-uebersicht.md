@@ -1,5 +1,3 @@
-# Anwendungsfälle
-
 Das Senologie-Modul adressiert vier zentrale Anwendungsszenarien entlang der Wertschöpfungskette klinischer Daten:
 
 <div style="display: flex; gap: 1em; flex-wrap: wrap; margin: 1.5em 0;">

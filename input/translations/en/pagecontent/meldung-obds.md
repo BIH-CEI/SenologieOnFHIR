@@ -1,6 +1,6 @@
-# oBDS Reporting Transformation
+### oBDS Reporting Transformation
 
-### Overview
+#### Overview
 
 Cancer registry reporting under the Oncological Core Dataset (Onkologischer Basisdatensatz, oBDS) is a mandatory obligation for certified breast centres. The goal of this transformation is the **automatic derivation of oBDS-compliant XML reports from clinical FHIR data** based on the Senologie profiles of this IG.
 
@@ -9,7 +9,7 @@ Cancer registry reporting under the Oncological Core Dataset (Onkologischer Basi
 - **Method**: FHIR StructureMaps (FML) with oBDS Logical Model as target structure
 - **Execution**: [Matchbox](https://github.com/ahdis/matchbox) as local ETL pipeline
 
-### Architecture
+#### Architecture
 
 The transformation proceeds in several steps: the clinical FHIR resources are mapped via StructureMaps (FHIR Mapping Language) onto an oBDS Logical Model. Matchbox then serialises the Logical Model as oBDS-compliant XML.
 
@@ -38,7 +38,7 @@ The transformation proceeds in several steps: the clinical FHIR resources are ma
 └─────────────────────────────┘
 ```
 
-### Mapping Overview per Report Type
+#### Mapping Overview per Report Type
 
 Each oBDS report corresponds to a clinical event (diagnosis, therapy, follow-up, death). The table below shows the assignment of Senologie FHIR profiles to oBDS report types and their associated StructureMaps.
 
@@ -54,7 +54,7 @@ Each oBDS report corresponds to a clinical event (diagnosis, therapy, follow-up,
 
 Each report type is covered by a dedicated StructureMap. The tumour assignment (`<Tumorzuordnung>`) — comprising ICD-10-GM code, diagnosis date, laterality, and ICD-O-3 morphology — is common to all report types and is derived from `Senologie_Diagnose_Maligne`.
 
-### Mamma Module
+#### Mamma Module
 
 The oBDS includes a breast-specific module (`<Modul_Mamma>`) that is transmitted with diagnosis and follow-up reports. The following fields are derived from the Senologie Observations:
 
@@ -68,7 +68,7 @@ The oBDS includes a breast-specific module (`<Modul_Mamma>`) that is transmitted
 
 The values P (positive), N (negative), and U (unknown) correspond to the oBDS key and are translated from coded FHIR Observations with SNOMED CT coding.
 
-### Code Translation
+#### Code Translation
 
 The Senologie profiles use SNOMED CT as their primary coding system. The oBDS expects its own keys and coding systems. Translation is performed via ConceptMaps; the MII Oncology profiles already provide many of the relevant ConceptMaps.
 
@@ -84,7 +84,7 @@ The Senologie profiles use SNOMED CT as their primary coding system. The oBDS ex
 
 ConceptMaps for medication translation are already provided in this IG (see [Terminology: Medication](terminologie-medikation.html)). The remaining translations use ConceptMaps from the [MII Oncology Module](https://simplifier.net/medizininformatikinitiative-modulonkologie).
 
-### Data Availability and Open Gaps
+#### Data Availability and Open Gaps
 
 {:.stu-note}
 Not all mandatory oBDS fields can be fully derived from the Senologie profiles. Additional data sources must be integrated for a complete cancer registry report.
@@ -120,7 +120,7 @@ Not all mandatory oBDS fields can be fully derived from the Senologie profiles. 
 | Social work contact (Modul_Allgemein) | MII Onco (`mii-pr-onko-mamma-sozialdienst`) | **Partially mappable** — MII profile exists, but not documented in Senologie scope → see OF-14 |
 | Structured ycTNM / ypTNM for neoadjuvant therapy (cases 4, 5, 7) | MII Onco TNM profiles | **Gap in test data** — currently narrative only in Procedure.outcome.text; requires TNM Observations with y-prefix |
 
-#### Options for Action
+##### Options for Action
 
 1. **CTCAE adverse events** — Mappable via the existing MII Onco profile `mii-pr-onko-nebenwirkung-adverse-event` (AdverseEvent). CTCAE type, grade, and CTCAE version are defined as Must Support elements. The `suspectEntity` reference links the adverse event to the causative therapy. No dedicated Senologie profile required.
 
@@ -136,7 +136,7 @@ Not all mandatory oBDS fields can be fully derived from the Senologie profiles. 
 
 **Recommendation**: The remaining gaps (test data for ycTNM/ypTNM, prior malignancies, social work contact) are conceptually resolved but require supplementary test data and/or a decision during balloting (see OF-13, OF-14).
 
-### Test Data Reference
+#### Test Data Reference
 
 The test dataset of the [Plattform §65c](https://plattform65c.atlassian.net/wiki/spaces/UMK/pages/189530203) (test patient Mamma) serves as the reference for the oBDS structure.
 
@@ -152,7 +152,7 @@ The test dataset comprises **10 reports** (1 diagnosis, 2 surgeries, 2 systemic 
 
 > **Note**: The test data use oBDS schema v3.0.1. The target version of this transformation is v3.0.5. Differences between the versions (in particular new mandatory fields and extended modules) must be taken into account during StructureMap development.
 
-### Execution
+#### Execution
 
 The transformation is executed via a [Matchbox](https://github.com/ahdis/matchbox) Docker container as a local ETL pipeline.
 
@@ -187,7 +187,7 @@ The result is an instance of the oBDS Logical Model, which can be serialised as 
 
 **Outlook**: In the long term, a migration of cancer registries to FHIR-based reporting is likely. The StructureMap-based architecture enables a smooth transition: once cancer registries accept FHIR Bundles, the XML serialisation step becomes obsolete and the transformation reduces to a profile mapping.
 
-### Validation of Transformation Results
+#### Validation of Transformation Results
 
 The transformation was tested with Matchbox `$transform` against the Case-1 Bundle (Erika Neumann). The output was subsequently validated against the oBDS Logical Model.
 

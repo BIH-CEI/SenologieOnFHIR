@@ -1,8 +1,8 @@
-# Alignment with EU and International Standards
+### Alignment with EU and International Standards
 
 The Core Dataset Senology (Kerndatensatz Senologie) is designed as a national specification for breast cancer care, but deliberately situates itself within the European and international context. This page positions the Core Dataset within the relevant specification layers.
 
-### European Health Data Space (EHDS)
+#### European Health Data Space (EHDS)
 
 The [EHDS Regulation](https://health.ec.europa.eu/ehealth-digital-health-and-care/european-health-data-space-regulation-ehds_en) (in force since March 2025) defines priority categories of health data to be exchanged interoperably across the EU. [HL7 Europe](https://www.hl7europe.org/new-hl7-europe-fhir-implementation-guides-to-support-the-european-health-data-space/) is developing FHIR Implementation Guides for this purpose:
 
@@ -15,7 +15,7 @@ The [EHDS Regulation](https://health.ec.europa.eu/ehealth-digital-health-and-car
 | **ePrescription / eDispensation** | HL7 Europe eP/eD | STU | Outpatient prescriptions: endocrine therapy (tamoxifen, letrozole), oral chemotherapy (capecitabine), supportive medication. Not relevant for inpatient/day-clinic-administered i.v. chemotherapy. |
 | **Pathology Report** | *(no EU IG yet)* | — | Mapped nationally via MII Patho; EU IG expected in the medium term |
 
-### Relationship of the Core Dataset to EU Categories
+#### Relationship of the Core Dataset to EU Categories
 
 The Core Dataset covers content that touches multiple EU categories:
 
@@ -27,7 +27,7 @@ The Core Dataset covers content that touches multiple EU categories:
 
 **Patient Summary** — General medical history (pre-existing conditions, medication, allergies) is intentionally outside the Senology scope. It is intended to be sourced via [IPS-/EPS-based pre-population](ips-prepopulation.html) from the ePA or an EU Patient Summary.
 
-### National Specification Layers
+#### National Specification Layers
 
 The Core Dataset is positioned between the national base standards and the clinical domain:
 
@@ -50,7 +50,7 @@ The Core Dataset is positioned between the national base standards and the clini
 
 Each layer inherits from the one above and specialises it for its respective context. The Core Dataset Senology is the **lowest, most domain-specific layer** — it implements the S3 guideline and the requirements of breast centres (Brustzentren) technically, while consistently utilising the standards of the layers above.
 
-### Terminology Context
+#### Terminology Context
 
 | Terminology | Layer | Use in Senology Core Dataset |
 |---|---|---|
@@ -67,7 +67,7 @@ Each layer inherits from the one above and specialises it for its respective con
 
 Where international terminologies have gaps, [proposals for the BfArM](terminologie-uebersicht.html) (as the national SNOMED CT release centre) are documented.
 
-### Compatibility Goals
+#### Compatibility Goals
 
 | Standard | Compatibility Goal | Status |
 |---|---|---|
@@ -78,7 +78,7 @@ Where international terminologies have gaps, [proposals for the BfArM](terminolo
 | **EU Laboratory Report** | Laboratory values sourceable from EU Lab | Not yet integrated (MII Laboratory Module as intermediate step) |
 | **EHDS Secondary Use** | Data available for research via EHDS | Prepared (SQL on FHIR, CQL) |
 
-### Patient-Reported Outcomes (PROMs)
+#### Patient-Reported Outcomes (PROMs)
 
 The capture of patient-reported endpoints is gaining importance in oncological care and in EU-wide quality measurement. Relevant instruments for senology:
 
@@ -95,7 +95,7 @@ PROMs are **not profiled independently** in the Senology Core Dataset, but are r
 
 At the EU level, [PaRIS (OECD)](https://www.oecd.org/health/paris/) and the [EU-PROM Network](https://www.ciph.cam.ac.uk/research/eu-prom/) are working on the standardisation of PROMs for secondary use within the EHDS. A future integration of standardised PROM data via the EHDS is conceivable.
 
-### Further Development
+#### Further Development
 
 As the EU Implementing Acts progress (expected early 2027) and further EU FHIR IGs are published, the compatibility of the Core Dataset will be reviewed regularly. In particular:
 

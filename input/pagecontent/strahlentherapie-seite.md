@@ -1,12 +1,10 @@
-# Strahlentherapie
-
-## Überblick
+### Überblick
 
 Die Strahlentherapie ist ein zentraler Bestandteil der Behandlung des Mammakarzinoms und wird je nach klinischer Situation in unterschiedlichen Settings eingesetzt. Nach brusterhaltender Operation stellt sie einen Standardbestandteil der adjuvanten Therapie dar und wird bei definierten Risikokonstellationen auch nach Mastektomie durchgeführt. Darüber hinaus kann sie intraoperativ appliziert werden sowie im metastasierten Setting zur Symptomkontrolle beitragen.
 
 Die Durchführung erfolgt in der Regel durch eine eigenständige Strahlentherapie-Abteilung oder ein externes Zentrum mit eigenem Dokumentationssystem. Die entsprechenden Daten werden am Brustzentrum häufig nicht primär erfasst, sind jedoch für die Meldung an Krebsregister (oBDS), Zertifizierungsanforderungen (DKG/OncoBox) und Maßnahmen der Qualitätssicherung (IQTIG) erforderlich. Das Datenmodell definiert daher die Struktur, in der diese Informationen empfangen, vorgehalten und an die verschiedenen Meldewege weitergeleitet werden können.
 
-## Relevante Datenpunkte
+### Relevante Datenpunkte
 
 | Datenpunkt | Beschreibung | Meldeweg |
 |-----------|-------------|----------|
@@ -19,11 +17,11 @@ Die Durchführung erfolgt in der Regel durch eine eigenständige Strahlentherapi
 | Simultane Radiochemotherapie | Gleichzeitige Systemtherapie | OncoBox |
 | Intention | Kurativ, palliativ | oBDS |
 
-## Profil-Grundlage
+### Profil-Grundlage
 
 Das Strahlentherapie-Profil erbt vom MII Onko Modul und ergänzt senologie-spezifische Felder wie Einzeldosis pro Fraktion und das Flag für simultane Radiochemotherapie. Die Stellung zur Operation und die Therapieintention werden über MII Onko Extensions abgebildet.
 
-## Zugehörige Ressourcen
+### Zugehörige Ressourcen
 
 | Typ | Ressource |
 |-----|-----------|

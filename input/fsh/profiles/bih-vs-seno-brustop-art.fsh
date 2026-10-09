@@ -21,7 +21,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
 
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-operation-art-expansion"
+* ^expansion.identifier = "urn:uuid:95910f56-bec0-5a58-9a82-8df448ae701b"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 11
 * ^expansion.contains[+].system = "http://snomed.info/sct"

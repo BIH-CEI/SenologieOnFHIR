@@ -1,6 +1,6 @@
-# IQTIG-QS-Transformation (QS-Verfahren 18.1 Mammachirurgie)
+### IQTIG-QS-Transformation (QS-Verfahren 18.1 Mammachirurgie)
 
-### Überblick
+#### Überblick
 
 Zertifizierte Brustzentren und Krankenhaeuser mit mammachirurgischer Leistung unterliegen der externen stationaeren Qualitätssicherung nach SGB V Paragraph 136. Der für das Thema relevante Leistungsbereich ist **QS-Verfahren 18.1 Mammachirurgie** des IQTIG (Institut für Qualitätssicherung und Transparenz im Gesundheitswesen). Diese Transformation erzeugt **IQTIG-konforme QS-Datensätze aus klinischen FHIR-Daten**, die auf den Senologie-Profilen dieses IGs basieren.
 
@@ -10,7 +10,7 @@ Zertifizierte Brustzentren und Krankenhaeuser mit mammachirurgischer Leistung un
 - **Ausführung**: [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke
 - **Scope**: **Nur QS-Verfahren 18.1 Mammachirurgie** -- nicht 18.2 (Ovar), nicht weitere IQTIG-Leistungsbereiche
 
-### Architektur
+#### Architektur
 
 Die Transformation folgt dem gleichen Muster wie die [oBDS-](meldung-obds.html) und [IRegG-Transformation](meldung-ireg.html): FHIR-Ressourcen werden über StructureMaps auf ein Logical Model abgebildet, das anschliessend serialisiert werden kann (CSV/XML gemaess IQTIG-Datenprüfprogramm).
 
@@ -46,7 +46,7 @@ Der IQTIG-Datensatz besteht aus drei Teildatensätzen:
 - **Teildatensatz Brust (BRUST)** -- brustspezifische Diagnose- und Befunddaten (ein Eintrag je behandelter Seite)
 - **Teildatensatz Operation (O)** -- Operationsdaten, Histologie, R-Status (ein Eintrag je Eingriff)
 
-### StructureMap-Übersicht
+#### StructureMap-Übersicht
 
 | StructureMap | Aufgabe | Qüll-Profile | Ziel (Logical Model) |
 |---|---|---|---|
@@ -55,9 +55,9 @@ Der IQTIG-Datensatz besteht aus drei Teildatensätzen:
 | **SenologieToIqtigBrust** | Diagnose + Bildgebung + Präopbefund | Condition, Observation, ServiceRequest | teildatensatzBrust (BRUST:*) |
 | **SenologieToIqtigOperation** | OP + Specimen + Pathologie | Procedure, Specimen, Observation | teildatensatzOperation (O:*) |
 
-### Mapping-Tabellen
+#### Mapping-Tabellen
 
-#### Teildatensatz Basis (B)
+##### Teildatensatz Basis (B)
 
 | IQTIG-Feld | FHIR-Quelle | Anmerkung |
 |---|---|---|
@@ -76,7 +76,7 @@ Der IQTIG-Datensatz besteht aus drei Teildatensätzen:
 | B:AUFNANLASS | Encounter.extension (ISiKAufnahmeanlass) | Einweisung, Notfall, Verlegung |
 | B:ENTLGRUND | Encounter.hospitalization.dischargeDisposition | Paragraph 301 SGB V |
 
-#### Teildatensatz Brust (BRUST)
+##### Teildatensatz Brust (BRUST)
 
 | IQTIG-Feld | FHIR-Quelle | Anmerkung |
 |---|---|---|
@@ -96,7 +96,7 @@ Der IQTIG-Datensatz besteht aus drei Teildatensätzen:
 | BRUST:NEOADJ | Senologie_Systemtherapie_Procedure (stellungOP=N) | Neoadjuvante Therapie erhalten |
 | BRUST:TKPRAEOP | Senologie_Tumorboard_Empfehlung (Typ präth) | Prätherapeutische Tumorkonferenz |
 
-#### Teildatensatz Operation (O)
+##### Teildatensatz Operation (O)
 
 | IQTIG-Feld | FHIR-Quelle | Anmerkung |
 |---|---|---|
@@ -125,7 +125,7 @@ Der IQTIG-Datensatz besteht aus drei Teildatensätzen:
 | O:KOMPL | Senologie_Operative_Komplikation | Kürzel + ICD |
 | O:REVISION | Procedure (Revisionsart oder Seqünz) | 0/1 |
 
-### Code-Übersetzung
+#### Code-Übersetzung
 
 Die IQTIG-Datensätze verwenden eigene Schluessel (numerische Kodierungen, Buchstabenkürzel). Die Übersetzung erfolgt innerhalb der StructureMaps:
 
@@ -139,7 +139,7 @@ Die IQTIG-Datensätze verwenden eigene Schluessel (numerische Kodierungen, Buchs
 | Residualstatus | SNOMED (122538001 etc.) | R0/R1/R2/RX | Direkte Zuordnung in FML |
 | Bildgebende Methode | SNOMED (71651007/16310003/113091000) | 1/2/3/4 | Direkte Zuordnung in FML |
 
-### Datenverfuegbarkeit und offene Luecken
+#### Datenverfuegbarkeit und offene Luecken
 
 {:.stu-note}
 Nicht alle IQTIG-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet werden. Für eine vollständige QS-Meldung muessen zusätzliche Datenqüllen eingebunden werden (KIS, Verwaltung, Vertraünsstelle).
@@ -168,7 +168,7 @@ Nicht alle IQTIG-Pflichtfelder koennen aus den Senologie-Profilen abgeleitet wer
 | Revisionsoperation im selben Aufenthalt | Procedure (Seqünz + Art) | **Teilweise** -- aus OP-Reihenfolge ableitbar |
 | Perioperative Komplikationen mit IQTIG-Kürzel | Senologie_Operative_Komplikation | **Teilweise** -- IQTIG-Kürzel-Binding noch zu ergänzen |
 
-#### Handlungsoptionen
+##### Handlungsoptionen
 
 Analog zur IRegG-Transformation:
 
@@ -180,7 +180,7 @@ Analog zur IRegG-Transformation:
 
 **Empfehlung**: Kombination aus Option 1 (klinische Profil-Erweiterungen) und Option 3 (ETL für administrative Daten). Der QS-Datensatz 18.1 enthaelt ein hoeheres Mass an administrativen Pflichtfeldern als der oBDS, daher ist die ETL-Integration hier besonders wichtig.
 
-### IQTIG-Spezifikation
+#### IQTIG-Spezifikation
 
 Die Transformation basiert auf den **Ausfüllhinweisen des IQTIG für QS-Verfahren 18.1 Mammachirurgie**:
 
@@ -191,7 +191,7 @@ Die Transformation basiert auf den **Ausfüllhinweisen des IQTIG für QS-Verfahr
 
 > **Hinweis**: Die IQTIG-Spezifikation wird jaehrlich aktualisiert. Die hier abgebildete Struktur entspricht der Spezifikation 2024 V05. Bei Aktualisierung der Spezifikation sind das Logical Model und die StructureMaps entsprechend zu versionieren.
 
-### Abgrenzung zu oBDS und IRegG
+#### Abgrenzung zu oBDS und IRegG
 
 Die drei Meldeformate decken unterschiedliche regulatorische Zwecke ab und enthalten überlappende, aber nicht identische Datenpunkte:
 
@@ -203,7 +203,7 @@ Die drei Meldeformate decken unterschiedliche regulatorische Zwecke ab und entha
 
 Die Senologie-FHIR-Profile bilden die gemeinsame klinische Datenbasis; die drei Transformations-Pipelines (StructureMaps) ziehen daraus jeweils die für das Zielformat erforderlichen Felder.
 
-### Ausführung
+#### Ausführung
 
 Die Transformation wird analog zur oBDS- und IRegG-Transformation über [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke ausgeführt.
 
@@ -230,7 +230,7 @@ Content-Type: application/fhir+json
 
 Das Ergebnis ist eine Instanz des IQTIG Logical Models, die über das IQTIG-Datenprüfprogramm (DPP) in das offizielle QS-Format (CSV/XML) exportiert und an die Bundesauswertungsstelle (IQTIG) übermittelt werden kann.
 
-### Validierung der Transformationsergebnisse
+#### Validierung der Transformationsergebnisse
 
 {:.stu-note}
 Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.

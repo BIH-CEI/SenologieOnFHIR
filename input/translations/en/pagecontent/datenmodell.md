@@ -1,5 +1,3 @@
-# Data Model
-
 <img src="senologie-ressourcenmodell.png" alt="FHIR Resource Model Senology" style="max-width:100%"/>
 
 The Senology module is based on a logical model that structures the clinical data points of breast cancer care. This model is mapped to FHIR resources that are specified as profiles in this IG.

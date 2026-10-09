@@ -64,7 +64,7 @@ Description: "ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basi
 * $ICD10GM#T85.4 "Mechanische Komplikation durch Mammaprothese oder -implantat"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-icd10-expansion"
+* ^expansion.identifier = "urn:uuid:c65ca0f2-1bfc-5dc5-89d1-8dcd06d50c8a"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 34
 * ^expansion.contains[+].system = "http://fhir.de/CodeSystem/bfarm/icd-10-gm"

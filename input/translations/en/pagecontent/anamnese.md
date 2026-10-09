@@ -1,10 +1,8 @@
-# Medical History & Anamnesis
-
 <img src="senologie-anamnese.png" alt="UML Anamnese" style="max-width:100%"/>
 
 Content to follow.
 
-## Related Resources
+### Related Resources
 
 | Type | Resource |
 |------|----------|

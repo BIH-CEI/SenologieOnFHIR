@@ -1,6 +1,6 @@
-# Use Case: Analysis
+### Use Case: Analysis
 
-### Overview
+#### Overview
 
 The structured FHIR data of the Core Dataset Senology (Kerndatensatz Senologie) enables secondary use for health services research, quality assurance, and clinical trials. The standardised profiling ensures that data are comparable and analysable across sites.
 
@@ -9,9 +9,9 @@ The structured FHIR data of the Core Dataset Senology (Kerndatensatz Senologie) 
 <p><em>Analysis pipeline — cohort definition via inclusion/exclusion criteria, tabular projection through ViewDefinitions, calculation via CQL or SQL</em></p>
 </div>
 
-### Analysis Scenarios
+#### Analysis Scenarios
 
-#### 1. Quality Indicators (DKG Certification)
+##### 1. Quality Indicators (DKG Certification)
 
 Certified breast centres must collect quality indicators annually in accordance with DKG (German Cancer Society) specifications. The structured data enable automated calculation:
 
@@ -24,7 +24,7 @@ Certified breast centres must collect quality indicators annually in accordance 
 | Postoperative complication rate | Senologie_Operative_Komplikation (Observation) |
 | Systemic therapy adherence | Senologie_Systemtherapie_Procedure (Procedure) |
 
-#### 2. Health Services Research
+##### 2. Health Services Research
 
 The FHIR data can be made available via MII Data Integration Centres (Datenintegrationszentren) for cross-site health services research:
 
@@ -33,7 +33,7 @@ The FHIR data can be made available via MII Data Integration Centres (Dateninteg
 - **Risk stratification**: Correlation of gene expression test results with treatment decisions and outcomes
 - **Time analyses**: Time-to-treatment, diagnostic delays, therapy durations
 
-#### 3. Clinical Trials
+##### 3. Clinical Trials
 
 The module supports recruitment and data provision for clinical trials:
 
@@ -41,7 +41,7 @@ The module supports recruitment and data provision for clinical trials:
 - **Data export**: Provision of study-relevant data in FHIR format
 - **Study participation tracking**: Documentation via ResearchSubject *(planned)*
 
-#### 4. Guideline Compliance
+##### 4. Guideline Compliance
 
 By annotating the S3 guideline with FHIR data points, adherence to guidelines can be systematically assessed:
 
@@ -49,7 +49,7 @@ By annotating the S3 guideline with FHIR data points, adherence to guidelines ca
 - Does the tumour board treatment recommendation comply with the guidelines?
 - Are gene expression tests used in accordance with guideline recommendations?
 
-### Query Patterns
+#### Query Patterns
 
 Example FHIR queries for typical analyses:
 
@@ -66,13 +66,13 @@ GET Observation?code=clavien-dindo
   &_include=Observation:focus  # zugehörige Prozedur
 ```
 
-### Automation via CQL
+#### Automation via CQL
 
 The analyses (in particular quality indicators and guideline compliance) can be automated in future versions of this IG using the [Clinical Quality Language (CQL)](http://cql.hl7.org/). CQL enables the formal definition of quality measures and decision logic directly on FHIR resources, allowing key metrics to be calculated in a reproducible and machine-readable manner.
 
 A first CQL library containing the 17 quality indicators from the S3 guideline is available at [`input/cql/QualitaetsindikatorenLeitlinie.cql`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/input/cql/QualitaetsindikatorenLeitlinie.cql). It is executable against the synthetic 12-patient cohort (HAPI, port 8095, endpoint `POST /fhir/$cql`).
 
-### SQL on FHIR ViewDefinitions
+#### SQL on FHIR ViewDefinitions
 
 In addition to CQL, the IG provides six [SQL-on-FHIR v2](https://sql-on-fhir.org/) `ViewDefinition` resources. These define flat, tabular projections (columns, `where` filters, `forEach` expansion) on the core datasets and thus serve as the foundation for cohort construction, data lake persistence (Parquet/Delta), and BI analyses (Superset, Metabase, Tableau).
 
@@ -87,7 +87,7 @@ In addition to CQL, the IG provides six [SQL-on-FHIR v2](https://sql-on-fhir.org
 
 The canonical URLs follow the schema `https://www.senologie.org/fhir/ViewDefinition/{Name}`. Execution via e.g. [Pathling](https://pathling.csiro.au/), [sof-js](https://github.com/FHIR/sql-on-fhir-v2/tree/master/sof-js), or directly against a HAPI instance.
 
-### Execution with Pathling
+#### Execution with Pathling
 
 [Pathling](https://pathling.csiro.au/) is the SQL-on-FHIR engine developed by CSIRO as open source (Apache-2.0). It is supported in this IG as the **recommended** runtime for the six ViewDefinitions; no commercial licence is required. The repository provides two integration variants for this purpose:
 
@@ -121,7 +121,7 @@ for name, vd in VIEWS.items():
 
 Both variants execute the **six** ViewDefinitions identically; the analyses shown in the notebook (`notebooks/senologie-analyse.ipynb`) are therefore reproducible without modification, regardless of the chosen engine.
 
-### Interactive Analysis
+#### Interactive Analysis
 
 A runnable Jupyter notebook [`notebooks/senologie-analyse.ipynb`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/notebooks/senologie-analyse.ipynb) demonstrates the end-to-end analysis of the ViewDefinitions described above against a local HAPI instance (port 8095, 12 synthetic patients, 177 resources). It shows 7 example analyses:
 
@@ -152,7 +152,7 @@ The notebook offers three interchangeable execution modes, selected at the top v
 
 For production data volumes, the use of Pathling (mode 1 or 2) is recommended; the custom runner is intentionally retained as a lightweight alternative for demo and CI scenarios. The step-by-step guide for all three modes is available at [`notebooks/README.md`](https://github.com/bih-charite/SenologieOnFHIR/blob/main/notebooks/README.md).
 
-### Data Protection and Governance
+#### Data Protection and Governance
 
 Secondary use takes place exclusively via the established MII governance structures:
 

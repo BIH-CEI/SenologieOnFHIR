@@ -14,7 +14,7 @@ Description: "Risikokategorien für Genexpressionstests (low, intermediate, high
 * http://terminology.hl7.org/CodeSystem/risk-probability#high "High likelihood"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-risikoklasse-expansion"
+* ^expansion.identifier = "urn:uuid:bf3028c6-e8d9-5187-8047-a6761dc79b55"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://terminology.hl7.org/CodeSystem/risk-probability"

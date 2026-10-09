@@ -1,10 +1,8 @@
-# Interoperability
-
-## Context
+### Context
 
 This Implementation Guide does not exist in isolation; it builds upon existing national and international specifications and is compatible with them. The following sub-pages describe compatibility with MII KDS, ISiK, and European standards in detail.
 
-## Related Specifications
+### Related Specifications
 
 | Specification | Description |
 |--------------|-------------|

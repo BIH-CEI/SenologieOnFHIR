@@ -47,7 +47,7 @@ Description: "Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen
 * include codes from system CSSenologieDiagnosesicherung
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnosesicherung-expansion"
+* ^expansion.identifier = "urn:uuid:8979ecf0-abd4-5fe5-9ab0-cfa45312e5c2"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 12
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"

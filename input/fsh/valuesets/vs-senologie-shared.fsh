@@ -26,7 +26,7 @@ Description: "Brust-Seitenlokalisation (Rechts/Links/Beidseits) als SNOMED-CT-Co
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-seite-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:4529fbb9-fb5a-50b5-8c41-b311f5a8d1ea"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -60,7 +60,7 @@ Description: "Quadranten-Lokalisation der Brust (oben-aussen/innen, unten-aussen
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-quadrant-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:2e7a7291-b5b9-579b-97bc-4cf1c4895078"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 6
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -99,7 +99,7 @@ Description: "Klinischer Befundstatus 'auffällig' / 'unauffällig' für Inspekt
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-auffaellig-unauffaellig-expansion"
+* ^expansion.identifier = "urn:uuid:603220cc-9d2a-5ac3-aea2-6e9454aededf"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -131,7 +131,7 @@ Description: "Diagnostische Stati + RECIST-Response-Assessment für die klinisch
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-tumornachweis-status-expansion"
+* ^expansion.identifier = "urn:uuid:fc2bfddb-2d80-5e18-8575-84309abfc7ac"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 7
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -176,7 +176,7 @@ Description: "Reine Response-Assessment-Werte (SD/PR/CR/PD/Mixed) für die Verla
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-recist-response-expansion"
+* ^expansion.identifier = "urn:uuid:1c60942d-bbc8-5bc4-a503-19a7a794cfa7"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -214,7 +214,7 @@ Description: "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-r-status-expansion"
+* ^expansion.identifier = "urn:uuid:efe0a41a-7a30-5e66-9881-cd0ad3ba0ae4"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -249,7 +249,7 @@ Description: "Ptosis-Grad nach Regnault (0/I/II/III) für die Inspektion."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-ptosis-grad-expansion"
+* ^expansion.identifier = "urn:uuid:1ea1437d-c77f-5f1d-b771-e15f68320e02"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/clinical-findings-custom"
@@ -290,7 +290,7 @@ Description: "Bildgebende Verfahren (Mammographie/Sonographie/Tomosynthese/MRT) 
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-bildgebung-modalitaet-expansion"
+* ^expansion.identifier = "urn:uuid:e2f25db4-ad93-56bb-8a1b-b2a8e7a0f128"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 10
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -346,7 +346,7 @@ Description: "BI-RADS Mammographie-Assessment-Kategorien 0-6 als SNOMED-Codes."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-birads-expansion"
+* ^expansion.identifier = "urn:uuid:ba83f2aa-c3d4-594a-a709-a1b54215f7d6"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 7
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -390,7 +390,7 @@ Description: "ACR Brustdichte-Kategorien A-D als SNOMED-Codes."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-acr-brustdichte-expansion"
+* ^expansion.identifier = "urn:uuid:c48a5dd8-7469-5eb2-8e9a-1dd5e21708d7"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -424,7 +424,7 @@ Description: "Mikrokalk-Auswahl: Ja-suspekt / Ja-nicht-suspekt / Nein."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-mikrokalk-triage-expansion"
+* ^expansion.identifier = "urn:uuid:9920ec04-0a4e-50af-8f48-4f5394da4a12"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
@@ -456,7 +456,7 @@ Description: "Axillärer Lymphknoten-Status: unauffällig/unklar/suspekt/kein LK
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-lk-status-bildgebung-expansion"
+* ^expansion.identifier = "urn:uuid:a1bfd829-83aa-50f1-9ed7-34ddb213f8f6"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
@@ -494,7 +494,7 @@ Description: "DEGUM-Sonographie-Klassifikation 0-6 für Mamma-Sono."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-us-degum-expansion"
+* ^expansion.identifier = "urn:uuid:5fbeca13-fa88-59d3-8f6e-9bc47274554d"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 7
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
@@ -536,7 +536,7 @@ Description: "Beurteilbarkeit einer Bildgebung (gut / eingeschränkt)."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-beurteilbarkeit-expansion"
+* ^expansion.identifier = "urn:uuid:9833aba7-d7d9-5e1c-96f5-792b6034d029"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
@@ -563,7 +563,7 @@ Description: "Standort einer Untersuchung: intern (eigene Klinik) / extern (exte
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-standort-expansion"
+* ^expansion.identifier = "urn:uuid:d9ad030d-b828-5a01-9ab8-bff11fbecd24"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
@@ -597,7 +597,7 @@ Description: "Material-Art für Patho-Specimen (Stanze/Vakuum/Punch/Resektat/Zyt
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-praeparat-art-expansion"
+* ^expansion.identifier = "urn:uuid:c890336f-e2de-5dd3-aee7-42debe952f82"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 6
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -654,7 +654,7 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 * https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom#sonstiges "Sonstiges"
 
 // Pre-baked expansion (locks display order in clients that respect it)
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-mamma-24-expansion"
+* ^expansion.identifier = "urn:uuid:61122395-f8e6-5a75-af79-26286bda0af2"
 * ^expansion.timestamp = "2026-05-13T00:00:00Z"
 * ^expansion.total = 24
 * ^expansion.contains[+].system = $SCT
@@ -735,7 +735,7 @@ Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-mamma-24-expansion"
+* ^expansion.identifier = "urn:uuid:61122395-f8e6-5a75-af79-26286bda0af2"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 24
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -834,7 +834,7 @@ Description: "Sub-Klassifikation der B3-Läsion (ADH, FEA, Papillom, Radiäre Na
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-b3-subtypen-expansion"
+* ^expansion.identifier = "urn:uuid:b756fd9a-6723-5a89-b7c8-fa9480c5d9d2"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 8
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -881,7 +881,7 @@ Description: "Diagnostische Sicherheits-Stati: Verdacht auf / Gesichert / Aussch
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-diagnose-sicherheit-expansion"
+* ^expansion.identifier = "urn:uuid:4d792f26-927b-57fb-84a4-0899d1d97533"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://terminology.hl7.org/CodeSystem/condition-ver-status"
@@ -914,7 +914,7 @@ Description: "Symmetrie-Bewertung: Symmetrisch / Asymmetrisch."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-symmetrie-expansion"
+* ^expansion.identifier = "urn:uuid:b0269d5a-eedc-55af-b47f-a0ea58aca934"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -943,7 +943,7 @@ Description: "Histologische Subtypen des Mamma-Befunds (NST, lobulär, DCIS)."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-histologie-typ-expansion"
+* ^expansion.identifier = "urn:uuid:1bd75c9b-374c-5a20-904f-b047a161f1df"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -971,7 +971,7 @@ Description: "Histologic Grading nach Elston-Ellis (G1/G2/G3) als SNOMED-Codes."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-grading-mamma-expansion"
+* ^expansion.identifier = "urn:uuid:25a0a7b5-8692-5feb-a646-f688c8943d71"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1002,7 +1002,7 @@ Description: "L-Kategorie (Lymphangiosis carcinomatosa) nach UICC TNM (L0/L1/LX)
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-l-kategorie-expansion"
+* ^expansion.identifier = "urn:uuid:071d522f-72cb-5fdf-99c5-7cc06ed5daa6"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
@@ -1034,7 +1034,7 @@ Description: "V-Kategorie (Venöse Invasion) nach UICC TNM (V0/V1/V2/VX)."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-v-kategorie-expansion"
+* ^expansion.identifier = "urn:uuid:0660e927-2a3e-5dc1-81d6-161bfe13a45e"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
@@ -1068,7 +1068,7 @@ Description: "Pn-Kategorie (Perineuralinvasion) nach UICC TNM (Pn0/Pn1/PnX)."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-pn-kategorie-expansion"
+* ^expansion.identifier = "urn:uuid:270584cb-ded0-51fd-b7af-b502793b57d1"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.uicc.org/resources/tnm"
@@ -1102,7 +1102,7 @@ Description: "Therapeutische Intention (Adjuvant/Neoadjuvant/Palliativ/Kurativ/R
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-therapie-intention-expansion"
+* ^expansion.identifier = "urn:uuid:59d3f6ff-b05e-5c68-85d0-c4beb49df7e9"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 6
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1142,7 +1142,7 @@ Description: "Status einer Therapieeinheit (Strahlen- oder Systemtherapie)."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-therapie-status-expansion"
+* ^expansion.identifier = "urn:uuid:2080656d-6ab8-5000-8861-222df75b33ad"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -1174,7 +1174,7 @@ Description: "IHC-Score-Werte für HER2 (0/1+/2+/3+) nach Standardpathologie. Co
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-her2-ihc-score-expansion"
+* ^expansion.identifier = "urn:uuid:91baf32b-03af-5444-af12-21fdfc19b5c8"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-mtb/CodeSystem/mii-cs-mtb-her2-ihc-score"
@@ -1210,7 +1210,7 @@ Description: "HER2-Gesamtbewertung nach Leitlinie 2024 (positiv/low/ultralow/neg
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-her2-gesamt-expansion"
+* ^expansion.identifier = "urn:uuid:c8e3d1c9-34f7-5a8c-a843-e8655d2a22f3"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
@@ -1247,7 +1247,7 @@ Description: "FISH-Ergebnis bei HER2-Amplifikationstestung."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-her2-fish-expansion"
+* ^expansion.identifier = "urn:uuid:47082331-a5c5-54a3-960e-6febe6eb9420"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1279,7 +1279,7 @@ Description: "In-situ-Hybridisierungs-Methode für HER2."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-ish-methode-expansion"
+* ^expansion.identifier = "urn:uuid:ad4c4d49-116b-59b9-9601-e1af892d1065"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
@@ -1314,7 +1314,7 @@ Description: "IHC-Färbeintensität für ER/PR-Beurteilung (negative/weak/modera
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-ihc-intensitaet-expansion"
+* ^expansion.identifier = "urn:uuid:1dade356-875d-548c-8958-745a5c2b5e1f"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
@@ -1350,7 +1350,7 @@ Description: "Clavien-Dindo Klassifikation operativer Komplikationen (Grad I-V).
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-clavien-dindo-expansion"
+* ^expansion.identifier = "urn:uuid:d746eba2-d791-52db-ab24-db288d609335"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1389,7 +1389,7 @@ Description: "ECOG-Performance-Status 0-4."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-ecog-expansion"
+* ^expansion.identifier = "urn:uuid:1e4d9a07-e717-5de4-aec3-365420acc10b"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "http://loinc.org"
@@ -1426,7 +1426,7 @@ Description: "Menopausenstatus für Anamnese."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-menopausenstatus-expansion"
+* ^expansion.identifier = "urn:uuid:9326976b-906b-5658-bb42-87f03ead952d"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1457,7 +1457,7 @@ Description: "Tobacco smoking status (LOINC LA codes für Antworten zur Frage 72
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-raucherstatus-expansion"
+* ^expansion.identifier = "urn:uuid:f37b06e7-2d1c-5278-8d80-00bb2fee331c"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://loinc.org"
@@ -1490,7 +1490,7 @@ Description: "Verwandtschaftsgrad (mütterlicher-/väterlicher-Stamm) für Famil
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-verwandtschaftsgrad-expansion"
+* ^expansion.identifier = "urn:uuid:94259439-1956-54d3-9b83-a08d637a3fc8"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "http://terminology.hl7.org/CodeSystem/v3-RoleCode"
@@ -1529,7 +1529,7 @@ Description: "Zielvolumen der Mamma-Strahlentherapie."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-rt-zielvolumen-expansion"
+* ^expansion.identifier = "urn:uuid:51116ab8-f795-53e5-98a5-010b6b910a18"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 5
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1566,7 +1566,7 @@ Description: "Applikationsmodus der Strahlentherapie (3D-konformal/IMRT/Brachyth
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-rt-applikationsart-expansion"
+* ^expansion.identifier = "urn:uuid:87725dd7-f1e0-5a3c-8138-53d1c9328d74"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1598,7 +1598,7 @@ Description: "Art der Systemtherapie (Chemo/Endokrin/Zielgerichtet/Immuntherapie
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-systemtherapie-art-expansion"
+* ^expansion.identifier = "urn:uuid:422e2233-0d3c-5291-a709-ba20f7854a2b"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1632,7 +1632,7 @@ Description: "Methode der präoperativen Markierung der Mamma-Läsion."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-preop-markierung-expansion"
+* ^expansion.identifier = "urn:uuid:45087b90-9628-501e-9287-fd866381523d"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -1664,7 +1664,7 @@ Description: "Art einer Verlaufs-/Nachsorge-Kontrolle."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-kontrolltermin-art-expansion"
+* ^expansion.identifier = "urn:uuid:8785eaf2-7c86-5820-935e-8a92f229a5fa"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/clinical-findings-custom"
@@ -1699,7 +1699,7 @@ Description: "Gesamtbeurteilung des Tumorstatus im Verlauf (CR/PR/SD/Progression
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-verlauf-tumorstatus-gesamt-expansion"
+* ^expansion.identifier = "urn:uuid:2fa8230f-a7a7-533b-b02d-5d28cd98a019"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1734,7 +1734,7 @@ Description: "Grund der Erst- oder Folge-Vorstellung in der Senologie."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-vorstellungsgrund-expansion"
+* ^expansion.identifier = "urn:uuid:e4788881-8b16-5faf-b592-212948fb2b58"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -1769,7 +1769,7 @@ Description: "Art der Detektion (Screening-detektiert / Intervallkarzinom / Selb
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-detektion-modus-expansion"
+* ^expansion.identifier = "urn:uuid:1dd4b71e-95ec-5ad2-98b0-467f55372608"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1803,7 +1803,7 @@ Description: "Erkrankungen, die in der Familienanamnese erfasst werden (Mamma- u
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-familien-erkrankung-expansion"
+* ^expansion.identifier = "urn:uuid:f87df954-822a-5c9f-ac0f-49f97fcaf281"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1833,7 +1833,7 @@ Description: "Generisches Ja/Nein als SNOMED-Codes (Hormonersatztherapie, andere
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-ja-nein-expansion"
+* ^expansion.identifier = "urn:uuid:eb504eb5-c543-5e02-b247-17cb06f27eb0"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1861,7 +1861,7 @@ Description: "Menopausenstatus mit den im Form genutzten Codes (inkl. 309606002 
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-menopausenstatus-erweitert-expansion"
+* ^expansion.identifier = "urn:uuid:8127a37c-4df9-55e3-8673-509ae2278daf"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1893,7 +1893,7 @@ Description: "Häufige Fernmetastasen-Lokalisationen beim Mammakarzinom (Lunge/L
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-fernmetastasen-lokalisation-expansion"
+* ^expansion.identifier = "urn:uuid:b774723e-5c2b-5bf0-8e0f-a880e3cc4f68"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -1931,7 +1931,7 @@ Description: "Histopathologische B-Klassifikation der Mamma-Biopsie nach NHSBSP 
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-b-klassifikation-expansion"
+* ^expansion.identifier = "urn:uuid:55d5b421-7a44-541f-ab4b-e7244f61734e"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 7
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -1975,7 +1975,7 @@ Description: "Beschlusszustand pro Therapie-Empfehlung im Tumorboard (empfohlen 
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-tumorboard-empfehlung-status-expansion"
+* ^expansion.identifier = "urn:uuid:b13f4531-bb8a-57a4-a692-b166c7361fbc"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
@@ -2011,7 +2011,7 @@ Description: "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-kontrazeption-status-expansion"
+* ^expansion.identifier = "urn:uuid:5e19e10c-a250-54e4-b0c9-42c3d2bddf58"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -2044,7 +2044,7 @@ Description: "Phase der OP-Komplikation (intraoperativ / postoperativ direkt / s
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-komplikation-zeitpunkt-expansion"
+* ^expansion.identifier = "urn:uuid:fe4fef2f-88e5-5b54-b597-6e60f1e416c8"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -2075,7 +2075,7 @@ Description: "Standard-Dosis-Einheiten fuer Onkologie-Medikation (UCUM)."
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-dosis-einheit-expansion"
+* ^expansion.identifier = "urn:uuid:6fd11033-91a1-51a2-8971-1529daf8e775"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "http://unitsofmeasure.org"
@@ -2108,7 +2108,7 @@ Description: "Applikationsroute der Medikation (intravenoes / subkutan / oral / 
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-applikationsart-expansion"
+* ^expansion.identifier = "urn:uuid:9630b984-0b6f-50d9-8f06-6d3ff3c3ef3a"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "http://snomed.info/sct"
@@ -2142,7 +2142,7 @@ Description: "Nachsorge-Erhebung aktiv (persoenlich) vs passiv (Aktenlage/Regist
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-nachsorge-modus-expansion"
+* ^expansion.identifier = "urn:uuid:34261434-d313-564e-86fe-33ef84b993f4"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 2
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -2173,7 +2173,7 @@ Description: "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht)
 // ============================================================
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-allgemeinzustand-expansion"
+* ^expansion.identifier = "urn:uuid:288a5c4f-8bca-5eaf-a73f-2f4707a6564a"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
@@ -2204,7 +2204,7 @@ Description: "Schweregrad eines Lymphoedems (kein / Grad I / II / III) nach ISL-
 * https://www.senologie.org/fhir/CodeSystem/form-helper#lymphoedem-3 "Grad III (Elephantiasis)"
 
 // Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:vs-senologie-lymphoedem-grad-expansion"
+* ^expansion.identifier = "urn:uuid:ff6358c5-f325-51ed-92e3-bae4fdd005bc"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"

@@ -1,10 +1,10 @@
-# Use Case: Reporting Datasets (Meldedatensätze)
+### Use Case: Reporting Datasets (Meldedatensätze)
 
-### Overview
+#### Overview
 
 A key benefit of structured FHIR documentation is the automated derivation of regulatory reports. Instead of capturing data multiple times, the clinical FHIR resources are used as a single source of truth and the reporting datasets are generated from them.
 
-### Reporting Obligations
+#### Reporting Obligations
 
 Certified breast centres (Brustzentren) are subject to several mandatory reporting obligations:
 
@@ -15,11 +15,11 @@ Certified breast centres (Brustzentren) are subject to several mandatory reporti
 | OncoBox Brust (N1.1.1) | OnkoZert (DKG) | DKG certification regulations | Annually |
 | Quality assurance (QS 18.1 Mammachirurgie) | IQTIG / G-BA | SGB V §136 | Per case |
 
-### Cancer Registry Report (oBDS)
+#### Cancer Registry Report (oBDS)
 
 The Oncological Core Dataset (Onkologischer Basisdatensatz, oBDS) is the standard for cancer registry reports in Germany. The senology module maps all oBDS-relevant data points:
 
-#### Mapping: FHIR Profiles → oBDS Reporting Triggers
+##### Mapping: FHIR Profiles → oBDS Reporting Triggers
 
 | oBDS Reporting Trigger | FHIR Profile | Relevant Elements |
 |---|---|---|
@@ -31,7 +31,7 @@ The Oncological Core Dataset (Onkologischer Basisdatensatz, oBDS) is the standar
 | **Follow-up** | Senologie_Diagnose_Maligne (recurrence) | Recurrence diagnosis, metastasis stage |
 | **Death** | *(MII Kerndatensatz Person)* | Date of death, cause of death |
 
-#### oBDS Compatibility
+##### oBDS Compatibility
 
 The profiles ensure oBDS compatibility through:
 
@@ -41,11 +41,11 @@ The profiles ensure oBDS compatibility through:
 - TNM staging via referenced MII oncology profiles
 - Residual classification (R0/R1/R2) for surgical procedures
 
-### Implant Registry Report
+#### Implant Registry Report
 
 The Implant Registry Act (Implantateregistergesetz, IRegG) mandates reporting upon placement, exchange, or removal of breast implants.
 
-#### Mapping: FHIR Profiles → Implant Registry
+##### Mapping: FHIR Profiles → Implant Registry
 
 | Reporting Data Element | FHIR Profile | Element |
 |---|---|---|
@@ -58,11 +58,11 @@ The Implant Registry Act (Implantateregistergesetz, IRegG) mandates reporting up
 | Type of procedure | Senologie_Operation (Procedure) | `Procedure.code` |
 | Complications | Senologie_Operative_Komplikation (Observation) | Clavien-Dindo, type |
 
-### DKG Quality Indicators / OncoBox Brust (OnkoZert)
+#### DKG Quality Indicators / OncoBox Brust (OnkoZert)
 
 The annual collection of DKG quality indicators for breast centre certification is submitted via the **OncoBox Brust XML format (specification N1.1.1)** transmitted to [OnkoZert](https://xml-oncobox.de/de/Zentren/BrustZentren). The OncoBox report covers primary case data as well as 20 aggregated quality indicators (KB-1 to KB-20). See [OncoBox Brust Transformation](meldung-oncobox.html) and [Evaluation: Quality Indicators](anwendungsfaelle-auswertung.html).
 
-### Architecture: Report Generation
+#### Architecture: Report Generation
 
 ```
 FHIR Resources           Transformer             Report
@@ -80,7 +80,7 @@ FHIR Resources           Transformer             Report
 
 The transformer is **not** part of this IG but is implemented as a standalone component. The IG defines the source data structure and ensures that all data points required for the reports are contained within the profiles.
 
-### Completeness Check
+#### Completeness Check
 
 For each reporting obligation it can be verified whether the required data are complete:
 
@@ -93,7 +93,7 @@ For each reporting obligation it can be verified whether the required data are c
 
 Missing data are detected by FHIR validation and can be supplemented before submission.
 
-### Technical Implementation: XML Reports and Future Outlook
+#### Technical Implementation: XML Reports and Future Outlook
 
 Both the cancer registry (oBDS) and the implant registry (BfArM) currently still receive reports in **XML format**. The FHIR resources from this IG must therefore be transformed into the respective XML schemas.
 

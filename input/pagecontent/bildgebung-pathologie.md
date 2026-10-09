@@ -1,16 +1,14 @@
-# Bildgebung & Pathologie
-
 <img src="senologie-bildgebung.png" alt="UML Bildgebung & Pathologie" style="max-width:100%"/>
 
-## Strukturierte Befunde in der Senologie
+### Strukturierte Befunde in der Senologie
 
 Bildgebung und Pathologie liefern die diagnostischen Grundlagen für Staging und Therapieentscheidung. Obwohl beide Disziplinen mit etablierten Klassifikationssystemen arbeiten (BI-RADS, TNM, Allred-Score), kommen ihre Ergebnisse aus spezialisierten Subsystemen, die Befunde bislang selten in einem einheitlich strukturierten, maschinenlesbaren Format bereitstellen. Perspektivisch können technische Standards wie der HL7 Europe Imaging Study Report oder die MII Pathologie-Spezifikation hier eine Brücke schaffen — vorausgesetzt, die fachlichen Vorgaben zu Inhalten und Terminologien werden durch die Fachgesellschaften getragen.
 
 Bis dahin übernimmt die klinische Dokumentation die Aufgabe der Strukturierung: Kliniker wählen standardisierte Kategorien aus, erfassen definierte Datenpunkte und ermöglichen so die Überführung in ein interoperables Datenmodell.
 
-## Bildgebung
+### Bildgebung
 
-### Modalitäten und Kodierung
+#### Modalitäten und Kodierung
 
 | Modalität | Fragestellung | LOINC Code | SNOMED CT |
 |-----------|--------------|------------|-----------|
@@ -20,7 +18,7 @@ Bis dahin übernimmt die klinische Dokumentation die Aufgabe der Strukturierung:
 | Skelettszintigraphie | Staging Fernmetastasen | 39638-7 | 44491008 |
 | CT Thorax/Abdomen | Staging | 24627-2 | 77477000 |
 
-### Befundstruktur
+#### Befundstruktur
 
 Bildgebungsbefunde werden als `DiagnosticReport` mit zugehörigen `Observations` abgebildet:
 
@@ -31,9 +29,9 @@ Bildgebungsbefunde werden als `DiagnosticReport` mit zugehörigen `Observations`
 
 Die Lokalisation wird über eine `BodyStructure`-Ressource abgebildet, die Seite (links/rechts), Quadrant und ggf. Uhrzeigerposition kodiert. Bei bilateralen Untersuchungen muss eindeutig unterscheidbar sein, welcher Befund sich auf welche Brust bezieht.
 
-## Pathologie
+### Pathologie
 
-### Untersuchungstypen
+#### Untersuchungstypen
 
 | Typ | Material | SNOMED CT | Kontext |
 |-----|----------|-----------|---------|
@@ -42,7 +40,7 @@ Die Lokalisation wird über eine `BodyStructure`-Ressource abgebildet, die Seite
 | OP-Präparat | Exzidat / Mastektomie | 122548005 | Postoperativ, definitive Histologie |
 | Nachresektion | Nachresektat | 122548005 | Bei R1-Situation |
 
-### Befundstruktur
+#### Befundstruktur
 
 Der pathologische Befund wird als `DiagnosticReport` (Profil: MII Pathologie Report) abgebildet:
 
@@ -56,11 +54,11 @@ Der pathologische Befund wird als `DiagnosticReport` (Profil: MII Pathologie Rep
 | Ki-67 | Observation | LOINC 29593-1, Prozent |
 | Resektionsrand | Observation | R0/R1/R2/RX (MII Onko Residualstatus) |
 
-### Weiterführend: Pathologiebericht im Brustkrebskontext
+#### Weiterführend: Pathologiebericht im Brustkrebskontext
 
 Auch wenn derzeit kein normativer Standard für einen strukturierten Pathologiebericht in der Senologie vorliegt, demonstriert der [Breast Cancer Pathology Specification](https://bih-cei.github.io/BreastCancerSpec/) anhand konkreter Beispiele, wie ein FHIR-basierter Pathologiebericht im Brustkrebskontext aussehen kann.
 
-### Diagnostischer Pfad
+#### Diagnostischer Pfad
 
 Der typische Ablauf von der Bildgebung bis zur Therapieentscheidung:
 
@@ -72,7 +70,7 @@ Der typische Ablauf von der Bildgebung bis zur Therapieentscheidung:
 
 Jeder Schritt erzeugt FHIR-Ressourcen die aufeinander referenzieren: DiagnosticReport verweist auf Specimen und Observations, diese auf die Condition (Diagnose).
 
-## Zugehörige Ressourcen
+### Zugehörige Ressourcen
 
 | Typ | Ressource |
 |-----|-----------|

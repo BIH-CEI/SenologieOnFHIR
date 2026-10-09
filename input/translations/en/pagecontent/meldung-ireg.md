@@ -1,6 +1,6 @@
-# IRegG Report Transformation (Breast Implants)
+### IRegG Report Transformation (Breast Implants)
 
-### Overview
+#### Overview
 
 The Implant Register Act (Implantateregistergesetz, IRegG) requires healthcare facilities to report the insertion, exchange, or removal of breast implants to the German Institute for Medical Documentation and Information (Deutsches Institut für Medizinische Dokumentation und Information, DIMDI). This transformation produces **IRegG-compliant XML reports from clinical FHIR data** based on the Senologie profiles of this IG.
 
@@ -10,7 +10,7 @@ The Implant Register Act (Implantateregistergesetz, IRegG) requires healthcare f
 - **Execution**: [Matchbox](https://github.com/ahdis/matchbox) as local ETL pipeline
 - **Scope**: Breast implants only — no endoprostheses, no aortic valves
 
-### Architecture
+#### Architecture
 
 The transformation follows the same pattern as the [oBDS transformation](meldung-obds.html): FHIR resources are mapped via StructureMaps onto a Logical Model, which is subsequently serialised as XML.
 
@@ -41,7 +41,7 @@ The transformation follows the same pattern as the [oBDS transformation](meldung
 
 In contrast to the oBDS transformation, the IRegG report produces **a single GEMeldung per treatment episode** (rather than multiple reports per clinical event). All relevant information (patient, procedure, implant, discharge) is consolidated in one report.
 
-### StructureMap Overview
+#### StructureMap Overview
 
 | StructureMap | Purpose | Source Profiles | Target (Logical Model) |
 |---|---|---|---|
@@ -50,9 +50,9 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | **SenologieToIRegOperation** | Procedure data + article identification | Procedure + Device | Operation (OPE_* + OBI_*) + Article identification (ARI_* + ARB_* + ABI_*) |
 | **SenologieToIRegEntlassung** | Discharge + diagnoses | Encounter + Condition | Discharge (ENT_* + DBI_*) |
 
-### Mapping Table: FHIR Elements to IRegG XML
+#### Mapping Table: FHIR Elements to IRegG XML
 
-#### Report Header (MEL_*)
+##### Report Header (MEL_*)
 
 | IRegG Field | FHIR Source | Note |
 |---|---|---|
@@ -62,7 +62,7 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | MEL_IrdSpezVersion | fixed: 4.1.1 | Specification version |
 | MEL_SwName / SwHersteller / SwVersion | Bundle.meta / fixed | Software identification |
 
-#### Episode (FAL_*)
+##### Episode (FAL_*)
 
 | IRegG Field | FHIR Source | Note |
 |---|---|---|
@@ -72,7 +72,7 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | FAL_DatumZeitSatzErstellung | now() | Timestamp of transformation |
 | ALR_ProzedurenSchluessel | Procedure.code.coding (OPS) | Triggering OPS procedure |
 
-#### Patient Admission (PAT_* + PAB_*)
+##### Patient Admission (PAT_* + PAB_*)
 
 | IRegG Field | FHIR Source | Note |
 |---|---|---|
@@ -84,7 +84,7 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | PAB_VerlaufAutoimmunerkrankungSchluessel | Patient.extension (ireg-verlauf-autoimmunerkrankung) | enum_0123 |
 | PAB_GeschlechtGeburtSchluessel | Patient.extension (patient-birthsex) | enum_0170 |
 
-#### Procedure (OPE_* + OBI_*)
+##### Procedure (OPE_* + OBI_*)
 
 | IRegG Field | FHIR Source | Note |
 |---|---|---|
@@ -100,7 +100,7 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | OBI_ZugangSchluessel | Procedure.extension | enum_0118 |
 | PBI_ProzedurenSchluessel | Procedure.code.coding (OPS) | OPS codes |
 
-#### Article Identification (ARI_* + ARB_* + ABI_*)
+##### Article Identification (ARI_* + ARB_* + ABI_*)
 
 | IRegG Field | FHIR Source | Note |
 |---|---|---|
@@ -118,7 +118,7 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | ABI_FüllungSchluessel | Device.extension (ireg-implantat-füllung) | enum_0124 |
 | ABI_Volumen | Device.extension (ireg-implantat-volumen) | in ml |
 
-#### Discharge (ENT_* + DBI_*)
+##### Discharge (ENT_* + DBI_*)
 
 | IRegG Field | FHIR Source | Note |
 |---|---|---|
@@ -126,7 +126,7 @@ In contrast to the oBDS transformation, the IRegG report produces **a single GEM
 | ENT_GrundSchluessel | Encounter.hospitalization.dischargeDisposition | 2-digit code per § 301 SGB V |
 | DBI_IcdSchluessel | Condition.code.coding (ICD-10-GM) | With optional laterality suffix (:R/:L/:B) |
 
-### Code Translation
+#### Code Translation
 
 The IRegG report uses its own enumerations (enum_0044, enum_0050, enum_0065, etc.) rather than SNOMED CT or other standard terminologies. Translation is performed directly within the StructureMaps:
 
@@ -138,7 +138,7 @@ The IRegG report uses its own enumerations (enum_0044, enum_0050, enum_0065, etc
 | Type of procedure | Senologie CodeSystem | enum_0100 | CodeSystem binding |
 | Implant properties | Device extensions | enum_0124/0126/0128 | CodeSystem binding |
 
-### Data Availability and Open Gaps
+#### Data Availability and Open Gaps
 
 {:.stu-note}
 Not all mandatory IRegG fields can be derived from the Senologie profiles. Additional data sources must be integrated to produce a complete IRegG report.
@@ -162,7 +162,7 @@ The following table shows which IRegG data originate from which source:
 | Discharge date and reason | HIS / Encounter | **External source** — ISiK Encounter |
 | IRegG finding codes (infection, capsular contracture, BIA-ALCL etc.) | Senologie_Operative_Komplikation | **Partial** — mapping to enum_0121 required |
 
-#### Options for Action
+##### Options for Action
 
 Three approaches exist for the missing data:
 
@@ -174,7 +174,7 @@ Three approaches exist for the missing data:
 
 **Recommendation**: Combination of option 1 (profile extension for clinically relevant implant data) and option 3 (ETL for administrative data). Concrete requirements should be aligned with the facility's health IT department (GB IT).
 
-### IRegG Specification
+#### IRegG Specification
 
 The transformation is based on the IRegG specification V4.1.1 (XML schema):
 
@@ -184,7 +184,7 @@ The transformation is based on the IRegG specification V4.1.1 (XML schema):
 
 > **Note**: The IRegG specification covers three product groups: breast implants, endoprostheses, and aortic valves. This IG exclusively covers the **breast implant section**. The remaining product groups are addressed by other IGs or extensions.
 
-### Execution
+#### Execution
 
 The transformation is executed analogously to the oBDS transformation via [Matchbox](https://github.com/ahdis/matchbox) as a local ETL pipeline.
 
@@ -211,7 +211,7 @@ Content-Type: application/fhir+json
 
 The result is an instance of the IRegG Logical Model, which can be serialised as XML and submitted to DIMDI.
 
-### Validation of Transformation Results
+#### Validation of Transformation Results
 
 {:.stu-note}
 The following mandatory fields are not populated by the StructureMaps and must be supplemented by the local HIS or ETL pipeline.

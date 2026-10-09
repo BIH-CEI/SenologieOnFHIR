@@ -1,5 +1,3 @@
-# Use Cases
-
 The Senology module addresses four central application scenarios along the value chain of clinical data:
 
 <div style="display: flex; gap: 1em; flex-wrap: wrap; margin: 1.5em 0;">

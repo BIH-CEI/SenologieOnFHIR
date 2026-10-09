@@ -1,5 +1,3 @@
-# Open Questions
-
 This page documents open design and modelling questions on which feedback is sought during the balloting process.
 
 ### How can I provide feedback?
@@ -8,7 +6,7 @@ Feedback on the open questions can be submitted via [GitHub Issues](https://gith
 
 ---
 
-## OF-1: Encounter Model and EpisodeOfCare
+### OF-1: Encounter Model and EpisodeOfCare
 
 {:.stu-note}
 Should the Senology module define its own Encounter profile or reference ISiK (ISiKKontaktGesundheitseinrichtung)?
@@ -38,7 +36,7 @@ OnkoZert certification requires classification of the **index case** (primary ca
 
 ---
 
-## OF-2: Outpatient Clinic Type and Billing Context
+### OF-2: Outpatient Clinic Type and Billing Context
 
 {:.stu-note}
 Which billing context applies to breast outpatient clinics, and how does this affect Encounter modelling?
@@ -54,19 +52,19 @@ Each type has its own billing rules and influences which `Encounter.class` and A
 
 ---
 
-## OF-3: Medication Documentation — Profile Architecture and Scope Delimitation
+### OF-3: Medication Documentation — Profile Architecture and Scope Delimitation
 
 {:.stu-note}
 How should antineoplastic medication and concomitant medication be profiled, and which base profiles should they inherit from?
 
-### Clinical scope delimitation
+#### Clinical scope delimitation
 
 The correct distinction is not "systemic therapy vs. concomitant medication" but rather:
 
 - **Antineoplastic medication** — everything directed against the tumour: chemotherapy, endocrine therapy (tamoxifen, aromatase inhibitors), targeted therapy (trastuzumab), immunotherapy, antiresorptive therapy. This medication is **subject to oBDS reporting**, regardless of whether it is administered over months or years.
 - **Other medication** — pre-existing conditions (antihypertensives, thyroid hormones), supportive therapy (antiemetics, G-CSF), and other long-term medication. Not subject to reporting.
 
-### Inheritance question
+#### Inheritance question
 
 For antineoplastic medication, the current profile inherits from `MII_PR_Onko_Systemische_Therapie_Medikation` — this ensures oBDS conformance.
 
@@ -84,7 +82,7 @@ For other medication, the inheritance chain is unclear:
 
 ---
 
-## OF-4: Gene Expression Tests — Coding as DeviceDefinition?
+### OF-4: Gene Expression Tests — Coding as DeviceDefinition?
 
 {:.stu-note}
 Should gene expression tests (Oncotype DX, MammaPrint, Prosigna, EndoPredict) be modelled as DeviceDefinition rather than as a local CodeSystem?
@@ -101,7 +99,7 @@ These tests are **commercially regulated IVD medical devices** with a manufactur
 
 ---
 
-## OF-5: Drug Terminology and ASK Integration
+### OF-5: Drug Terminology and ASK Integration
 
 {:.stu-note}
 Is the ConceptMap SNOMED CT → ASK (Arzneistoffkatalog, German Drug Substance Catalogue) required?
@@ -114,7 +112,7 @@ The module contains ConceptMaps for SNOMED CT → ATC and SNOMED CT → ASK. The
 
 ---
 
-## OF-6: PRO-CTCAE and CTCAE — Scope Delimitation
+### OF-6: PRO-CTCAE and CTCAE — Scope Delimitation
 
 {:.stu-note}
 How does patient-reported adverse event capture (PRO-CTCAE) relate to clinician-reported CTCAE documentation?
@@ -123,7 +121,7 @@ There is **no official mapping** from PRO-CTCAE to CTCAE grade. Clinician-report
 
 ---
 
-## OF-7: Prior Tumour Diseases — Scope and Profile Selection
+### OF-7: Prior Tumour Diseases — Scope and Profile Selection
 
 {:.stu-note}
 Should prior tumour diseases within the senology scope be explicitly represented?
@@ -136,7 +134,7 @@ Anamnestically recorded prior conditions are typically sourced from the general 
 
 ---
 
-## OF-8: Neoadjuvant Therapy — Structured ycTNM and ypTNM
+### OF-8: Neoadjuvant Therapy — Structured ycTNM and ypTNM
 
 {:.stu-note}
 How is the follow-up TNM classification recorded in a structured manner in the neoadjuvant setting?
@@ -152,7 +150,7 @@ In neoadjuvant systemic therapy, TNM classification with the `y` prefix is subje
 
 ---
 
-## OF-9: Structuring Radiotherapy Documentation
+### OF-9: Structuring Radiotherapy Documentation
 
 {:.stu-note}
 Are there existing preparatory works for the structured representation of radiotherapy in the German context?

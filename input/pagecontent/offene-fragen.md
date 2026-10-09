@@ -1,5 +1,3 @@
-# Offene Fragen
-
 Diese Seite dokumentiert offene Design- und Modellierungsfragen, zu denen im Rahmen der Ballotierung Feedback erbeten wird.
 
 ### Wie kann ich Feedback geben?
@@ -8,7 +6,7 @@ Feedback zu den offenen Fragen kann über [GitHub Issues](https://github.com/BIH
 
 ---
 
-## OF-1: Encounter-Modell und EpisodeOfCare
+### OF-1: Encounter-Modell und EpisodeOfCare
 
 {:.stu-note}
 Soll das Senologie-Modul ein eigenes Encounter-Profil definieren oder auf ISiK (ISiKKontaktGesundheitseinrichtung) verweisen?
@@ -38,7 +36,7 @@ Die OnkoZert-Zertifizierung erfordert die Klassifikation des **Indexfalls** (Pri
 
 ---
 
-## OF-2: Ambulanztyp und Abrechnungskontext
+### OF-2: Ambulanztyp und Abrechnungskontext
 
 {:.stu-note}
 Welcher Abrechnungskontext gilt für Brustambulanzen und wie beeinflusst das die Encounter-Modellierung?
@@ -54,19 +52,19 @@ Jeder Typ hat eigene Abrechnungsregeln und beeinflusst, welcher `Encounter.class
 
 ---
 
-## OF-3: Medikationsdokumentation — Profilarchitektur und Abgrenzung
+### OF-3: Medikationsdokumentation — Profilarchitektur und Abgrenzung
 
 {:.stu-note}
 Wie sollen antineoplastische Medikation und Begleitmedikation profiliert werden, und von welchen Basisprofilen soll geerbt werden?
 
-### Fachliche Abgrenzung
+#### Fachliche Abgrenzung
 
 Die korrekte Unterscheidung ist nicht "Systemtherapie vs. Begleitmedikation", sondern:
 
 - **Antineoplastische Medikation** — alles, was gegen den Tumor gerichtet ist: Chemotherapie, endokrine Therapie (Tamoxifen, Aromataseinhibitoren), zielgerichtete Therapie (Trastuzumab), Immuntherapie, antiresorptive Therapie. Diese Medikation ist **oBDS-meldepflichtig**, unabhängig davon, ob sie über Monate oder Jahre verabreicht wird.
 - **Sonstige Medikation** — Vorerkrankungen (Antihypertensiva, Schilddrüsenhormone), supportive Therapie (Antiemetika, G-CSF) und sonstige Dauermedikation. Nicht meldepflichtig.
 
-### Vererbungsfrage
+#### Vererbungsfrage
 
 Für antineoplastische Medikation erbt das aktuelle Profil von `MII_PR_Onko_Systemische_Therapie_Medikation` — das stellt oBDS-Konformität sicher.
 
@@ -84,7 +82,7 @@ Für sonstige Medikation ist die Vererbungskette unklar:
 
 ---
 
-## OF-4: Genexpressionstests — Kodierung als DeviceDefinition?
+### OF-4: Genexpressionstests — Kodierung als DeviceDefinition?
 
 {:.stu-note}
 Sollen Genexpressionstests (Oncotype DX, MammaPrint, Prosigna, EndoPredict) als DeviceDefinition modelliert werden statt als lokales CodeSystem?
@@ -101,7 +99,7 @@ Diese Tests sind **kommerziell regulierte IVD-Medizinprodukte** mit Hersteller, 
 
 ---
 
-## OF-5: Arzneimittel-Terminologie und ASK-Integration
+### OF-5: Arzneimittel-Terminologie und ASK-Integration
 
 {:.stu-note}
 Wird die ConceptMap SNOMED CT → ASK (Arzneistoffkatalog) benötigt?
@@ -114,7 +112,7 @@ Das Modul enthält ConceptMaps für SNOMED CT → ATC und SNOMED CT → ASK. Die
 
 ---
 
-## OF-6: PRO-CTCAE und CTCAE — Abgrenzung
+### OF-6: PRO-CTCAE und CTCAE — Abgrenzung
 
 {:.stu-note}
 Wie verhält sich die patientenberichtete Nebenwirkungserfassung (PRO-CTCAE) zur ärztlichen CTCAE-Dokumentation?
@@ -123,7 +121,7 @@ Es gibt **kein offizielles Mapping** PRO-CTCAE → CTCAE Grad. Die ärztliche CT
 
 ---
 
-## OF-7: Frühere Tumorerkrankungen — Scope und Profilwahl
+### OF-7: Frühere Tumorerkrankungen — Scope und Profilwahl
 
 {:.stu-note}
 Sollen frühere Tumorerkrankungen im Senologie-Scope explizit abgebildet werden?
@@ -136,7 +134,7 @@ Anamnestisch erfasste Vorerkrankungen stammen üblicherweise aus der allgemeinen
 
 ---
 
-## OF-8: Neoadjuvante Therapie — strukturierte ycTNM und ypTNM
+### OF-8: Neoadjuvante Therapie — strukturierte ycTNM und ypTNM
 
 {:.stu-note}
 Wie wird im neoadjuvanten Setting die Verlaufs-TNM-Klassifikation strukturiert erfasst?
@@ -152,7 +150,7 @@ Bei neoadjuvanter Systemtherapie ist die TNM-Klassifikation mit `y`-Symbol melde
 
 ---
 
-## OF-9: Strukturierung der Strahlentherapie-Dokumentation
+### OF-9: Strukturierung der Strahlentherapie-Dokumentation
 
 {:.stu-note}
 Gibt es Vorarbeiten zur strukturierten Abbildung der Strahlentherapie im deutschen Kontext?

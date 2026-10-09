@@ -1,10 +1,8 @@
-# Interoperabilität
-
-## Einordnung
+### Einordnung
 
 Dieser Implementation Guide existiert nicht isoliert, sondern baut auf bestehenden nationalen und internationalen Spezifikationen auf und ist zu diesen kompatibel. Die nachfolgenden Unterseiten beschreiben die Kompatibilität mit MII KDS, ISiK und europäischen Standards im Detail.
 
-## Verwandte Spezifikationen
+### Verwandte Spezifikationen
 
 | Spezifikation | Beschreibung |
 |--------------|-------------|
