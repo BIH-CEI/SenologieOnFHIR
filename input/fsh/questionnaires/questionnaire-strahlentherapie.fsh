@@ -275,4 +275,7 @@ Usage: #definition
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "rt-therapiestatus"
 * item[=].item[=].enableWhen[=].operator = #=
-* item[=].item[=].enableWhen[=].answerString = "Abgebrochen"
+// answerCoding, nicht answerString: rt-therapiestatus ist eine choice-Frage. Mit
+// answerString bricht der Validator bei jeder QR mit beantwortetem Status ab
+// ("Expected answer and actual answer have incompatible types").
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-abgebrochen "Abgebrochen"

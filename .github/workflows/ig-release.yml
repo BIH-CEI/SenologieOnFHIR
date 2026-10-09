@@ -103,7 +103,11 @@ jobs:
       - name: Build IG
         run: |
           chmod +x _genonce.sh
-          ./_genonce.sh -tx http://localhost:8090/fhir
+          # Der IG Publisher lehnt seit 2.x Terminologieserver ueber http ab
+          # ("Refusing to fetch from non-https URL"). Der TX-Proxy laeuft lokal
+          # im Runner unter http://localhost:8090 — dafuer den Schutz abschalten.
+          echo '{ "ssrfProtectionEnabled": false }' > "$RUNNER_TEMP/fhir-settings.json"
+          ./_genonce.sh -tx http://localhost:8090/fhir -fhir-settings "$RUNNER_TEMP/fhir-settings.json"
 
       - name: Deploy Release to GitHub Pages
         run: |
