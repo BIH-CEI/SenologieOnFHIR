@@ -165,14 +165,16 @@ jobs:
         id: cache-publisher
         with:
           path: input-cache/publisher.jar
-          key: ig-publisher-latest
+          key: ig-publisher-${{ vars.IG_PUBLISHER_VERSION || '3.0.0' }}
 
+      # Version gepinnt (lokal mit diesem Stand getestet); Anheben ueber die
+      # Repo-Variable IG_PUBLISHER_VERSION oder den Default hier.
       - name: Download IG Publisher
         if: steps.cache-publisher.outputs.cache-hit != 'true'
         run: |
           mkdir -p input-cache
           curl -L -o input-cache/publisher.jar \
-            https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar
+            https://github.com/HL7/fhir-ig-publisher/releases/download/${{ vars.IG_PUBLISHER_VERSION || '3.0.0' }}/publisher.jar
 
       - name: Setup TX Proxy (MII Ontoserver)
         env:
