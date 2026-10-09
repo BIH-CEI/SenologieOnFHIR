@@ -151,7 +151,10 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
     src.entry as kompEntry where resource.is(Observation) and resource.meta.profile.exists($this.contains('senologie-operative-komplikation')) then {
       kompEntry.resource as kompObs -> op.komplikationen as kompItem then { kompObs.value as val then { val.coding as c then { c.code as cd -> kompItem.kuerzel = cd "SetKomplKuerzel"; } "MapKomplKuerzelCoding"; } "MapKomplValue"; } "MapKomplObs";
     } "EntryKomplikationen";
-    src.entry as kcEntry where resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item') then {
+    // Komplikations-Diagnosen: Conditions der Problemliste, ABER nicht die
+    // Tumordiagnose selbst — die traegt in manchen Faellen ebenfalls die
+    // Kategorie problem-list-item und landete sonst als Komplikation im Export.
+    src.entry as kcEntry where resource.is(Condition) and resource.category.coding.exists(code = 'problem-list-item') and resource.meta.profile.exists($this.contains('senologie-diagnose')).not() then {
       kcEntry.resource as kcCond -> op.komplikationen as kompItem then { kcCond.code as code then { code.coding as c where system = 'http://fhir.de/CodeSystem/bfarm/icd-10-gm' then { c.code as cd -> kompItem.icdCode = cd "SetKomplICD"; } "MapKomplICDCoding"; } "MapKomplCondCode"; } "MapKomplCondItem";
     } "EntryKomplikationenCond";
     } "OperationMitLookups";
