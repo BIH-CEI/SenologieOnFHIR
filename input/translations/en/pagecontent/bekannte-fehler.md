@@ -87,7 +87,25 @@ Affected areas:
 - **Condition.extension:Feststellungsdatum** — template-driven slice assignment fails
 
 {:.stu-note}
-These errors are expected to be resolved by an update to the IG Publisher or SDC tooling. The SDC extraction logic has been functionally tested in Matchbox.
+These errors are expected to be resolved by an update to the IG Publisher or SDC tooling. The SDC extraction logic has been functionally tested in Aidbox (see the following section).
+
+---
+
+## Extraction Templates (templateExtract)
+
+**Cause:** The questionnaires create their FHIR resources through SDC template-based extraction. The templates (contained resources) are incomplete by design: values that come from form answers only exist after extraction. The IG Publisher nevertheless validates every template against the profile named in its `meta.profile`.
+
+**Effect:** Messages on the templates such as *"No code provided, and a code is required from the value set …"*, *"minimum required = 1, but only found 0"* or *"a matching slice is required, but not found"*. They concern the template, not the extracted resource.
+
+The templates deliberately contain **no static placeholders** next to a `templateExtractValue` expression. Placeholders would reduce these messages but break extraction in Aidbox: the placeholder stays in place and the extracted value ends up in an invalid `_` field.
+
+### Notes for Implementers
+
+Extraction was tested with Aidbox (versions 2605, stable and edge, October 2026) using the example QuestionnaireResponses of this IG. Matchbox only supports StructureMap-based extraction and cannot extract these questionnaires.
+
+- **Pass the Questionnaire to `$extract`.** Aidbox refuses to store the radiotherapy and systemic therapy questionnaires because its evaluation of `per-1` fails on a period whose start and end are only filled during extraction. Extraction works when the Questionnaire is passed as the `questionnaire` parameter.
+- **Clean the result before storing it.** If an optional question whose value goes into an extension or a coding is left unanswered, Aidbox leaves an extension without a value or a coding without a code. Currently affected: the reference to the tumour entity on the specimen, cycle and day in cycle on the medication administration, the intention of the surgery, and codings with a fixed `system`. These elements must be removed before storing.
+- **Repeated extraction creates duplicates.** The templates set neither `resourceId` nor `ifNoneExist`.
 
 ---
 

@@ -30,8 +30,14 @@
 
 // ── Gemeinsamer Metadatenblock (Caret-Pfade: Profile, Extension, Logical, VS, CS)
 
+// versionPolicy-Coding MIT Version 3.0.0: dasselbe CodeSystem steckt zusaetzlich
+// in den transitiv geladenen Extensions-Packs 5.1.0/5.2.0 (dort als Version
+// 5.x, nur 'metadata' und 'strict'). Ohne Versionsangabe nimmt der Validator
+// die hoechste Versionsnummer und meldet 'package' als unbekannt. Die Fassung
+// mit 'package' kommt aus hl7.terminology (CodeSystem-Version 3.0.0).
+// Ein direkter Pin der Pakete in sushi-config.yaml allein behebt das nicht.
 RuleSet: SenoCRMIMetadata
-* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes#package "Package"
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes|3.0.0#package "Package"
 * ^extension[http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm].valueCoding = http://hl7.org/fhir/version-algorithm#semver "SemVer"
 // Topic feldweise auf coding[0]: eine Zuweisung des ganzen CodeableConcept haengt
 // bei MII-Parents ein zweites Coding neben das geerbte C3262 "Neoplasm".
@@ -131,7 +137,7 @@ RuleSet: SenoCRMIInstanceBase
 * insert CRMIDateInstance
 * extension[http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability][0].valueCode = #shareable
 * extension[http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability][1].valueCode = #publishable
-* extension[http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes#package "Package"
+* extension[http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes|3.0.0#package "Package"
 * extension[http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm].valueCoding = http://hl7.org/fhir/version-algorithm#semver "SemVer"
 
 // ConceptMap und Questionnaire haben in R4 keine nativen Felder fuer Topic und

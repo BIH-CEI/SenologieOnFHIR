@@ -87,7 +87,25 @@ Betroffene Bereiche:
 - **Condition.extension:Feststellungsdatum** — Template-bedingte Slice-Zuordnung schlägt fehl
 
 {:.stu-note}
-Diese Fehler werden voraussichtlich durch ein Update des IG Publishers oder SDC-Tooling behoben. Die SDC-Extraction-Logik wurde funktional in Matchbox getestet.
+Diese Fehler werden voraussichtlich durch ein Update des IG Publishers oder SDC-Tooling behoben. Die SDC-Extraction-Logik wurde funktional in Aidbox getestet (siehe folgender Abschnitt).
+
+---
+
+## Extraktionsvorlagen (templateExtract)
+
+**Ursache:** Die Fragebögen erzeugen ihre FHIR-Ressourcen über SDC Template-based Extraction. Die Vorlagen (contained resources) sind absichtlich unvollständig: Werte, die aus Formularantworten stammen, entstehen erst bei der Extraktion. Der IG Publisher prüft jede Vorlage trotzdem gegen das Profil, das sie in `meta.profile` nennt.
+
+**Auswirkung:** Meldungen an den Vorlagen der Form *„Es wird kein Code gesetzt, und es ist ein Code aus ValueSet … erforderlich“*, *„mindestens erforderlich = 1, aber nur gefunden 0“* oder *„a matching slice is required, but not found“*. Sie betreffen die Vorlage, nicht die extrahierte Ressource.
+
+Die Vorlagen enthalten bewusst **keine statischen Platzhalter** neben einem `templateExtractValue`-Ausdruck. Mit Platzhalter wären diese Meldungen seltener, die Extraktion in Aidbox aber fehlerhaft: Der Platzhalter bleibt stehen und der extrahierte Wert landet in einem ungültigen `_`-Feld.
+
+### Hinweise für Implementierer
+
+Getestet wurde die Extraktion mit Aidbox (Versionen 2605, stable und edge, Oktober 2026) an den Beispiel-QuestionnaireResponses dieses IG. Matchbox unterstützt nur die StructureMap-basierte Extraktion und kann diese Fragebögen nicht extrahieren.
+
+- **Questionnaire bei `$extract` mitgeben.** Aidbox lehnt das Speichern der Fragebögen Strahlentherapie und Systemtherapie ab, weil seine Prüfung von `per-1` an einem Zeitraum scheitert, dessen Start und Ende erst bei der Extraktion gefüllt werden. Wird der Questionnaire als Parameter `questionnaire` übergeben, funktioniert die Extraktion.
+- **Ergebnis vor dem Speichern bereinigen.** Bleibt eine optionale Frage unbeantwortet, deren Wert in eine Extension oder ein Coding geht, lässt Aidbox eine Extension ohne Wert bzw. ein Coding ohne Code stehen. Betroffen sind derzeit: Verweis auf die Tumor-Entität am Präparat, Zyklus und Tag im Zyklus an der Medikationsgabe, Intention der Operation, sowie Codings mit festem `system`. Diese Elemente sind vor dem Speichern zu entfernen.
+- **Wiederholte Extraktion erzeugt Dubletten.** Die Vorlagen setzen keine `resourceId` und kein `ifNoneExist`.
 
 ---
 

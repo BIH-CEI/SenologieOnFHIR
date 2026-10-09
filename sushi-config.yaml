@@ -41,6 +41,7 @@ extension:
     valueCodeableConcept:
       coding:
         - system: http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes
+          version: "3.0.0"   # siehe Kommentar in input/fsh/rulesets/crmi.fsh
           code: package
           display: Package
   - url: http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm
@@ -99,6 +100,13 @@ dependencies:
    de.medizininformatikinitiative.kerndatensatz.mtb: 2027.0.0-ballot.1
    de.gematik.isik: 6.0.0
    hl7.fhir.uv.crmi: 2.0.0
+   # HL7 Terminology und Extensions-Pack direkt gepinnt (wie die MII-Module):
+   # ohne direkten Pin zieht der IG Publisher bei jedem Build die jeweils neueste
+   # Fassung. Die aelteren Fassungen, die andere Pakete transitiv mitbringen,
+   # werden dadurch NICHT verdraengt (getestet 2026-10-09) — deshalb traegt das
+   # versionPolicy-Coding zusaetzlich seine CodeSystem-Version.
+   hl7.terminology.r4: 7.4.0
+   hl7.fhir.uv.extensions.r4: 5.3.0
    hl7.fhir.uv.sdc: 4.0.0
    hl7.fhir.uv.xver-r5.r4: 0.1.0
 #   hl7.fhir.us.mcode:
