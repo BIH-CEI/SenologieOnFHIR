@@ -450,9 +450,11 @@ Usage: #definition
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].extension[=].valueCode = #optionsOnly
 * item[=].required = true
-* item[=].initial[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#final "Abgeschlossen"
+// Vorbelegung ueber initialSelected, nicht ueber initial: que-11 verbietet
+// initial[x] zusammen mit answerOption (Aidbox lehnt den Questionnaire sonst ab).
 * item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#preliminary "Vorläufig (Schnellschnitt)"
 * item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#final "Abgeschlossen"
+* item[=].answerOption[=].initialSelected = true
 * item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#amended "Ergänzt"
 * item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#corrected "Korrigiert"
 

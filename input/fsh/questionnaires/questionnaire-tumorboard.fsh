@@ -305,8 +305,10 @@ Usage: #inline
 
 * title = "Tumorboard Empfehlung"
 * insert Translation(title, en, [[Tumour Board Recommendation]])
-* title.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* title.extension.valueString = "%resource.item.where(linkId='tumorboard-titel').answer.valueString"
+// [+]/[=] statt Index 0: dort steht bereits die Translation-Extension; ohne
+// eigenen Eintrag wurden beide zu einer ungueltigen Extension verschmolzen (ext-1).
+* title.extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* title.extension[=].valueString = "%resource.item.where(linkId='tumorboard-titel').answer.valueString"
 
 * description = "Zusammenfassung"
 * description.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -442,5 +444,7 @@ Usage: #inline
 // --- Sonstiges ---
 * note.text = "Sonstige Anmerkungen"
 * insert Translation(note.text, en, [[Other Remarks]])
-* note.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* note.text.extension.valueString = "%resource.item.where(linkId='empfehlung-sonstiges').answer.valueString"
+// [+]/[=] statt Index 0: dort steht bereits die Translation-Extension; ohne
+// eigenen Eintrag wurden beide zu einer ungueltigen Extension verschmolzen (ext-1).
+* note.text.extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* note.text.extension[=].valueString = "%resource.item.where(linkId='empfehlung-sonstiges').answer.valueString"
