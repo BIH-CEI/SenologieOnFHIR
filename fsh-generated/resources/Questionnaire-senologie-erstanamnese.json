@@ -210,6 +210,21 @@
     {
       "resourceType": "Observation",
       "id": "anamnese-raucher-template",
+      "meta": {
+        "profile": [
+          "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus"
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "code": "social-history",
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+            }
+          ]
+        }
+      ],
       "code": {
         "coding": [
           {
@@ -221,6 +236,18 @@
             "code": "77176002",
             "system": "http://snomed.info/sct",
             "display": "Smoker"
+          }
+        ]
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='raucherstatus').item.where(linkId='raucherstatus-wert').answer.valueCoding"
+              }
+            ]
           }
         ]
       },

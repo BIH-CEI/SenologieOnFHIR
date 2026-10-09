@@ -25,9 +25,15 @@ Instance: anamnese-raucher-template
 InstanceOf: Observation
 Usage: #inline
 * id = "anamnese-raucher-template"
+* meta.profile = "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus"
 * status = #final
+* category = http://terminology.hl7.org/CodeSystem/observation-category#social-history
 * code.coding[+] = $LOINC#72166-2 "Tobacco smoking status"
 * code.coding[+] = $SCT#77176002 "Smoker"
+// Der Wert fehlte in der Vorlage: die Antwort wurde nicht extrahiert, obwohl
+// ISiKRaucherStatus valueCodeableConcept verlangt (1..1).
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='raucherstatus').item.where(linkId='raucherstatus-wert').answer.valueCoding"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
