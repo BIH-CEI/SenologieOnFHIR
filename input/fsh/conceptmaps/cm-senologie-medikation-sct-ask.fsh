@@ -3,6 +3,7 @@ InstanceOf: ConceptMap
 Title: "ConceptMap: SNOMED CT → ASK (Senologie Systemtherapie)"
 Description: "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf Arzneistoffkatalog (ASK, BfArM 2026). Validiert über fhir-terminology MCP Server."
 Usage: #definition
+* insert SenoCRMIConceptMap
 
 * status = #draft
 * version = "0.1.0"

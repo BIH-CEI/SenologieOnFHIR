@@ -7,6 +7,7 @@ ValueSet: VS_Senologie_ClockFace_Position
 Id: vs-senologie-clockface-position
 Title: "VS Senologie Clock-Face Position (Uhrzeitposition)"
 Description: "12 Uhrzeitpositionen (1-12 Uhr) als SNOMED CT Codes für die Mamma-Lokalisation im Uhrzeitschema."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clockface-position"
 * ^status = #draft

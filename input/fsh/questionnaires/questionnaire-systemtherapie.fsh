@@ -88,6 +88,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Systemische Therapie"
 Description: "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie"
 * name = "QuestSystemtherapie"

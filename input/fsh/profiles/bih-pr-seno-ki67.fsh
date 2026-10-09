@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-ki67-proliferationsindex
 Title: "BIH Senologie Ki-67 Proliferationsindex"
 Description: "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchung. Kein MII-Onko-Profil vorhanden — senologiespezifisch, orientiert am MII ER/PR-Muster (LOINC-Code + valueQuantity %)."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

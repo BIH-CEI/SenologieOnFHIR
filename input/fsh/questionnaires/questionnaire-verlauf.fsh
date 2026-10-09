@@ -59,6 +59,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Verlaufsdokumentation / Nachsorge"
 Description: "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf"
 * name = "QuestVerlauf"

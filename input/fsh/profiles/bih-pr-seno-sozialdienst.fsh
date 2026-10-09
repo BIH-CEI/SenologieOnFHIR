@@ -3,6 +3,7 @@ Parent: Procedure
 Id: senologie-sozialdienst
 Title: "BIH Senologie Sozialdienst-Kontakt"
 Description: "Procedure für Sozialdienst-Kontakt (OncoBox 2.0 L02, DKG OF-14). Erfasst ob eine Sozialdienst-Beratung stattgefunden hat und wann."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

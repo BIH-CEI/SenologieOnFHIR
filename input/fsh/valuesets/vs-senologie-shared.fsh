@@ -12,6 +12,7 @@ ValueSet: VS_Senologie_Seite_Mamma
 Id: vs-senologie-seite-mamma
 Title: "VS Senologie Seitenlokalisation Mamma"
 Description: "Brust-Seitenlokalisation (Rechts/Links/Beidseits) als SNOMED-CT-Codes für alle Formulare der Senologie-IG."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 * ^status = #draft
@@ -42,6 +43,7 @@ ValueSet: VS_Senologie_Quadrant_Mamma
 Id: vs-senologie-quadrant-mamma
 Title: "VS Senologie Quadrant Mamma"
 Description: "Quadranten-Lokalisation der Brust (oben-aussen/innen, unten-aussen/innen, Mamille, Zentral)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-quadrant-mamma"
 * ^status = #draft
@@ -84,6 +86,7 @@ ValueSet: VS_Senologie_Auffaellig_Unauffaellig
 Id: vs-senologie-auffaellig-unauffaellig
 Title: "VS Senologie Auffällig/Unauffällig"
 Description: "Klinischer Befundstatus 'auffällig' / 'unauffällig' für Inspektion und Palpation."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 * ^status = #draft
@@ -110,6 +113,7 @@ ValueSet: VS_Senologie_Tumornachweis_Status
 Id: vs-senologie-tumornachweis-status
 Title: "VS Senologie Tumornachweis-Status"
 Description: "Diagnostische Stati + RECIST-Response-Assessment für die klinische Untersuchung. Mischung aus Diagnose-Stage (Abklärungsbedürftig, Erstdiagnose) und Verlaufs-Response-Werten (SD/PR/CR/PD/Mixed)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumornachweis-status"
 * ^status = #draft
@@ -156,6 +160,7 @@ ValueSet: VS_Senologie_RECIST_Response
 Id: vs-senologie-recist-response
 Title: "VS Senologie RECIST-Response"
 Description: "Reine Response-Assessment-Werte (SD/PR/CR/PD/Mixed) für die Verlaufs-Dokumentation, ohne Erst-Diagnose-Stati."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-recist-response"
 * ^status = #draft
@@ -194,6 +199,7 @@ ValueSet: VS_Senologie_R_Status
 Id: vs-senologie-r-status
 Title: "VS Senologie R-Status (Resektionsstatus)"
 Description: "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 * ^status = #draft
@@ -228,6 +234,7 @@ ValueSet: VS_Senologie_Ptosis_Grad
 Id: vs-senologie-ptosis-grad
 Title: "VS Senologie Ptosis-Grad (Regnault)"
 Description: "Ptosis-Grad nach Regnault (0/I/II/III) für die Inspektion."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
 * ^status = #draft
@@ -262,6 +269,7 @@ ValueSet: VS_Senologie_Bildgebung_Modalitaet
 Id: vs-senologie-bildgebung-modalitaet
 Title: "VS Senologie Bildgebungs-Modalität"
 Description: "Bildgebende Verfahren (Mammographie/Sonographie/Tomosynthese/MRT) mit Seitenlokalisation."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-bildgebung-modalitaet"
 * ^status = #draft
@@ -320,6 +328,7 @@ ValueSet: VS_Senologie_BIRADS
 Id: vs-senologie-birads
 Title: "VS Senologie BI-RADS Kategorie"
 Description: "BI-RADS Mammographie-Assessment-Kategorien 0-6 als SNOMED-Codes."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-birads"
 * ^status = #draft
@@ -366,6 +375,7 @@ ValueSet: VS_Senologie_ACR_Brustdichte
 Id: vs-senologie-acr-brustdichte
 Title: "VS Senologie ACR Brustdichte"
 Description: "ACR Brustdichte-Kategorien A-D als SNOMED-Codes."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-acr-brustdichte"
 * ^status = #draft
@@ -400,6 +410,7 @@ ValueSet: VS_Senologie_Mikrokalk_Triage
 Id: vs-senologie-mikrokalk-triage
 Title: "VS Senologie Mikrokalk-Triage"
 Description: "Mikrokalk-Auswahl: Ja-suspekt / Ja-nicht-suspekt / Nein."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-mikrokalk-triage"
 * ^status = #draft
@@ -430,6 +441,7 @@ ValueSet: VS_Senologie_LK_Status_Bildgebung
 Id: vs-senologie-lk-status-bildgebung
 Title: "VS Senologie LK-Status (Bildgebung)"
 Description: "Axillärer Lymphknoten-Status: unauffällig/unklar/suspekt/kein LK abgebildet."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lk-status-bildgebung"
 * ^status = #draft
@@ -464,6 +476,7 @@ ValueSet: VS_Senologie_US_DEGUM
 Id: vs-senologie-us-degum
 Title: "VS Senologie US-DEGUM Klassifikation"
 Description: "DEGUM-Sonographie-Klassifikation 0-6 für Mamma-Sono."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-us-degum"
 * ^status = #draft
@@ -510,6 +523,7 @@ ValueSet: VS_Senologie_Beurteilbarkeit
 Id: vs-senologie-beurteilbarkeit
 Title: "VS Senologie Beurteilbarkeit"
 Description: "Beurteilbarkeit einer Bildgebung (gut / eingeschränkt)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-beurteilbarkeit"
 * ^status = #draft
@@ -536,6 +550,7 @@ ValueSet: VS_Senologie_Standort
 Id: vs-senologie-standort
 Title: "VS Senologie Standort (intern / extern)"
 Description: "Standort einer Untersuchung: intern (eigene Klinik) / extern (externe Praxis/Klinik)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-standort"
 * ^status = #draft
@@ -562,6 +577,7 @@ ValueSet: VS_Senologie_Praeparat_Art
 Id: vs-senologie-praeparat-art
 Title: "VS Senologie Präparat-Art"
 Description: "Material-Art für Patho-Specimen (Stanze/Vakuum/Punch/Resektat/Zytologie/FNA). Treibt den oBDS-Diagnosesicherungs-Code."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-praeparat-art"
 * ^status = #draft
@@ -607,6 +623,7 @@ ValueSet: VS_Senologie_Diagnose_Mamma
 Id: vs-senologie-diagnose-mamma-24
 Title: "VS Senologie Diagnose Mamma (24 Choices)"
 Description: "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie-Datensatz (Mischung SNOMED + bz-* Custom-Codes), klinisch sortiert nach Häufigkeit."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-mamma-24"
 * ^status = #draft
@@ -798,6 +815,7 @@ ValueSet: VS_Senologie_B3_Subtypen
 Id: vs-senologie-b3-subtypen
 Title: "VS Senologie B3-Subtypen"
 Description: "Sub-Klassifikation der B3-Läsion (ADH, FEA, Papillom, Radiäre Narbe, LIN-ALH, LCIS klassisch/pleomorph)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-b3-subtypen"
 * ^status = #draft
@@ -848,6 +866,7 @@ ValueSet: VS_Senologie_Diagnose_Sicherheit
 Id: vs-senologie-diagnose-sicherheit
 Title: "VS Senologie Diagnostische Sicherheit"
 Description: "Diagnostische Sicherheits-Stati: Verdacht auf / Gesichert / Ausschluss / Z.n. (FHIR condition-ver-status)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sicherheit"
 * ^status = #draft
@@ -882,6 +901,7 @@ ValueSet: VS_Senologie_Symmetrie
 Id: vs-senologie-symmetrie
 Title: "VS Senologie Symmetrie der Brüste"
 Description: "Symmetrie-Bewertung: Symmetrisch / Asymmetrisch."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-symmetrie"
 * ^status = #draft
@@ -908,6 +928,7 @@ ValueSet: VS_Senologie_Histologie_Typ
 Id: vs-senologie-histologie-typ
 Title: "VS Senologie Histologie-Typ Mamma"
 Description: "Histologische Subtypen des Mamma-Befunds (NST, lobulär, DCIS)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-histologie-typ"
 * ^status = #draft
@@ -936,6 +957,7 @@ ValueSet: VS_Senologie_Grading_Mamma
 Id: vs-senologie-grading-mamma
 Title: "VS Senologie Grading Mamma (Elston-Ellis)"
 Description: "Histologic Grading nach Elston-Ellis (G1/G2/G3) als SNOMED-Codes."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-grading-mamma"
 * ^status = #draft
@@ -966,6 +988,7 @@ ValueSet: VS_Senologie_L_Kategorie
 Id: vs-senologie-l-kategorie
 Title: "VS Senologie L-Kategorie (Lymphangiosis)"
 Description: "L-Kategorie (Lymphangiosis carcinomatosa) nach UICC TNM (L0/L1/LX)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-l-kategorie"
 * ^status = #draft
@@ -996,6 +1019,7 @@ ValueSet: VS_Senologie_V_Kategorie
 Id: vs-senologie-v-kategorie
 Title: "VS Senologie V-Kategorie (Vasoinvasion)"
 Description: "V-Kategorie (Venöse Invasion) nach UICC TNM (V0/V1/V2/VX)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-v-kategorie"
 * ^status = #draft
@@ -1030,6 +1054,7 @@ ValueSet: VS_Senologie_Pn_Kategorie
 Id: vs-senologie-pn-kategorie
 Title: "VS Senologie Pn-Kategorie (Perineural)"
 Description: "Pn-Kategorie (Perineuralinvasion) nach UICC TNM (Pn0/Pn1/PnX)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-pn-kategorie"
 * ^status = #draft
@@ -1060,6 +1085,7 @@ ValueSet: VS_Senologie_Therapie_Intention
 Id: vs-senologie-therapie-intention
 Title: "VS Senologie Therapie-Intention"
 Description: "Therapeutische Intention (Adjuvant/Neoadjuvant/Palliativ/Kurativ/Revision/Diagnostisch). Verwendet für OP-Planung, Postop, Strahlen- und Systemtherapie."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
 * ^status = #draft
@@ -1102,6 +1128,7 @@ ValueSet: VS_Senologie_Therapie_Status
 Id: vs-senologie-therapie-status
 Title: "VS Senologie Therapie-Status"
 Description: "Status einer Therapieeinheit (Strahlen- oder Systemtherapie)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
 * ^status = #draft
@@ -1132,6 +1159,7 @@ ValueSet: VS_Senologie_HER2_IHC_Score
 Id: vs-senologie-her2-ihc-score
 Title: "VS Senologie HER2 IHC-Score"
 Description: "IHC-Score-Werte für HER2 (0/1+/2+/3+) nach Standardpathologie. Codes aus MII MTB INSITUHYBRIDIZATION."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-ihc-score"
 * ^status = #draft
@@ -1166,6 +1194,7 @@ ValueSet: VS_Senologie_HER2_Gesamt
 Id: vs-senologie-her2-gesamt
 Title: "VS Senologie HER2 Gesamtbewertung (Leitlinie)"
 Description: "HER2-Gesamtbewertung nach Leitlinie 2024 (positiv/low/ultralow/negativ/equivocal)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-gesamt"
 * ^status = #draft
@@ -1204,6 +1233,7 @@ ValueSet: VS_Senologie_HER2_FISH
 Id: vs-senologie-her2-fish
 Title: "VS Senologie HER2 FISH-Ergebnis"
 Description: "FISH-Ergebnis bei HER2-Amplifikationstestung."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-fish"
 * ^status = #draft
@@ -1234,6 +1264,7 @@ ValueSet: VS_Senologie_ISH_Methode
 Id: vs-senologie-ish-methode
 Title: "VS Senologie ISH-Methode"
 Description: "In-situ-Hybridisierungs-Methode für HER2."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ish-methode"
 * ^status = #draft
@@ -1268,6 +1299,7 @@ ValueSet: VS_Senologie_IHC_Intensitaet
 Id: vs-senologie-ihc-intensitaet
 Title: "VS Senologie IHC-Färbeintensität"
 Description: "IHC-Färbeintensität für ER/PR-Beurteilung (negative/weak/moderate/strong)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ihc-intensitaet"
 * ^status = #draft
@@ -1302,6 +1334,7 @@ ValueSet: VS_Senologie_Clavien_Dindo
 Id: vs-senologie-clavien-dindo
 Title: "VS Senologie Clavien-Dindo Grade"
 Description: "Clavien-Dindo Klassifikation operativer Komplikationen (Grad I-V)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clavien-dindo"
 * ^status = #draft
@@ -1340,6 +1373,7 @@ ValueSet: VS_Senologie_ECOG
 Id: vs-senologie-ecog
 Title: "VS Senologie ECOG-Performance-Status"
 Description: "ECOG-Performance-Status 0-4."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ecog"
 * ^status = #draft
@@ -1378,6 +1412,7 @@ ValueSet: VS_Senologie_Menopausenstatus
 Id: vs-senologie-menopausenstatus
 Title: "VS Senologie Menopausenstatus"
 Description: "Menopausenstatus für Anamnese."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus"
 * ^status = #draft
@@ -1408,6 +1443,7 @@ ValueSet: VS_Senologie_Raucherstatus
 Id: vs-senologie-raucherstatus
 Title: "VS Senologie Raucherstatus"
 Description: "Tobacco smoking status (LOINC LA codes für Antworten zur Frage 72166-2)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-raucherstatus"
 * ^status = #draft
@@ -1438,6 +1474,7 @@ ValueSet: VS_Senologie_Verwandtschaftsgrad
 Id: vs-senologie-verwandtschaftsgrad
 Title: "VS Senologie Verwandtschaftsgrad"
 Description: "Verwandtschaftsgrad (mütterlicher-/väterlicher-Stamm) für Familienanamnese."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verwandtschaftsgrad"
 * ^status = #draft
@@ -1476,6 +1513,7 @@ ValueSet: VS_Senologie_RT_Zielvolumen
 Id: vs-senologie-rt-zielvolumen
 Title: "VS Senologie Strahlentherapie-Zielvolumen"
 Description: "Zielvolumen der Mamma-Strahlentherapie."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-zielvolumen"
 * ^status = #draft
@@ -1514,6 +1552,7 @@ ValueSet: VS_Senologie_RT_Applikationsart
 Id: vs-senologie-rt-applikationsart
 Title: "VS Senologie Strahlentherapie-Applikationsart"
 Description: "Applikationsmodus der Strahlentherapie (3D-konformal/IMRT/Brachytherapie)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-rt-applikationsart"
 * ^status = #draft
@@ -1544,6 +1583,7 @@ ValueSet: VS_Senologie_Systemtherapie_Art
 Id: vs-senologie-systemtherapie-art
 Title: "VS Senologie Systemtherapie-Art"
 Description: "Art der Systemtherapie (Chemo/Endokrin/Zielgerichtet/Immuntherapie)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-art"
 * ^status = #draft
@@ -1578,6 +1618,7 @@ ValueSet: VS_Senologie_PreOp_Markierung
 Id: vs-senologie-preop-markierung
 Title: "VS Senologie Pre-OP-Markierung"
 Description: "Methode der präoperativen Markierung der Mamma-Läsion."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 * ^status = #draft
@@ -1608,6 +1649,7 @@ ValueSet: VS_Senologie_Kontrolltermin_Art
 Id: vs-senologie-kontrolltermin-art
 Title: "VS Senologie Kontrolltermin-Art"
 Description: "Art einer Verlaufs-/Nachsorge-Kontrolle."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrolltermin-art"
 * ^status = #draft
@@ -1642,6 +1684,7 @@ ValueSet: VS_Senologie_Verlauf_Tumorstatus_Gesamt
 Id: vs-senologie-verlauf-tumorstatus-gesamt
 Title: "VS Senologie Verlauf Tumorstatus Gesamtbeurteilung"
 Description: "Gesamtbeurteilung des Tumorstatus im Verlauf (CR/PR/SD/Progression). Unterscheidet sich von RECIST-Response durch Disease-State-Sicht (langfristig)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
 * ^status = #draft
@@ -1676,6 +1719,7 @@ ValueSet: VS_Senologie_Vorstellungsgrund
 Id: vs-senologie-vorstellungsgrund
 Title: "VS Senologie Vorstellungsgrund"
 Description: "Grund der Erst- oder Folge-Vorstellung in der Senologie."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
 * ^status = #draft
@@ -1710,6 +1754,7 @@ ValueSet: VS_Senologie_Detektion_Modus
 Id: vs-senologie-detektion-modus
 Title: "VS Senologie Screening-Status"
 Description: "Art der Detektion (Screening-detektiert / Intervallkarzinom / Selbstuntersuchung / Zufallsbefund)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-detektion-modus"
 * ^status = #draft
@@ -1744,6 +1789,7 @@ ValueSet: VS_Senologie_Familien_Erkrankung
 Id: vs-senologie-familien-erkrankung
 Title: "VS Senologie Familienanamnese-Erkrankung"
 Description: "Erkrankungen, die in der Familienanamnese erfasst werden (Mamma- und Ovarialkarzinom-Fokus)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
 * ^status = #draft
@@ -1774,6 +1820,7 @@ ValueSet: VS_Senologie_JaNein
 Id: vs-senologie-ja-nein
 Title: "VS Senologie Ja/Nein"
 Description: "Generisches Ja/Nein als SNOMED-Codes (Hormonersatztherapie, andere Boolean-Fragen)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ja-nein"
 * ^status = #draft
@@ -1800,6 +1847,7 @@ ValueSet: VS_Senologie_Menopausenstatus_Erweitert
 Id: vs-senologie-menopausenstatus-erweitert
 Title: "VS Senologie Menopausenstatus (mit ext. Codes)"
 Description: "Menopausenstatus mit den im Form genutzten Codes (inkl. 309606002 und 161541000119104)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus-erweitert"
 * ^status = #draft
@@ -1830,6 +1878,7 @@ ValueSet: VS_Senologie_Fernmetastasen_Lokalisation
 Id: vs-senologie-fernmetastasen-lokalisation
 Title: "VS Senologie Fernmetastasen-Lokalisation"
 Description: "Häufige Fernmetastasen-Lokalisationen beim Mammakarzinom (Lunge/Leber/Knochen/Hirn)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-fernmetastasen-lokalisation"
 * ^status = #draft
@@ -1864,6 +1913,7 @@ ValueSet: VS_Senologie_B_Klassifikation
 Id: vs-senologie-b-klassifikation
 Title: "VS Senologie B-Klassifikation (NHSBSP)"
 Description: "Histopathologische B-Klassifikation der Mamma-Biopsie nach NHSBSP (B0-B5b) als SNOMED-Codes."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-b-klassifikation"
 * ^status = #draft
@@ -1910,6 +1960,7 @@ ValueSet: VS_Senologie_Tumorboard_Empfehlung_Status
 Id: vs-senologie-tumorboard-empfehlung-status
 Title: "VS Senologie Tumorboard Empfehlung Status"
 Description: "Beschlusszustand pro Therapie-Empfehlung im Tumorboard (empfohlen / bedingt empfohlen / nicht empfohlen / nicht diskutiert)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
 * ^status = #draft
@@ -1944,6 +1995,7 @@ ValueSet: VS_Senologie_Kontrazeption_Status
 Id: vs-senologie-kontrazeption-status
 Title: "VS Senologie Kontrazeption Status"
 Description: "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
 * ^status = #draft
@@ -1976,6 +2028,7 @@ ValueSet: VS_Senologie_Komplikation_Zeitpunkt
 Id: vs-senologie-komplikation-zeitpunkt
 Title: "VS Senologie Komplikations-Zeitpunkt"
 Description: "Phase der OP-Komplikation (intraoperativ / postoperativ direkt / stationaerer Aufenthalt)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
 * ^status = #draft
@@ -2008,6 +2061,7 @@ ValueSet: VS_Senologie_Dosis_Einheit
 Id: vs-senologie-dosis-einheit
 Title: "VS Senologie Dosis-Einheit"
 Description: "Standard-Dosis-Einheiten fuer Onkologie-Medikation (UCUM)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-dosis-einheit"
 * ^status = #draft
@@ -2038,6 +2092,7 @@ ValueSet: VS_Senologie_Applikationsart
 Id: vs-senologie-applikationsart
 Title: "VS Senologie Applikationsart"
 Description: "Applikationsroute der Medikation (intravenoes / subkutan / oral / intramuskulaer)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-applikationsart"
 * ^status = #draft
@@ -2073,6 +2128,7 @@ ValueSet: VS_Senologie_Nachsorge_Modus
 Id: vs-senologie-nachsorge-modus
 Title: "VS Senologie Nachsorge-Modus"
 Description: "Nachsorge-Erhebung aktiv (persoenlich) vs passiv (Aktenlage/Register)."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
 * ^status = #draft
@@ -2100,6 +2156,7 @@ ValueSet: VS_Senologie_Allgemeinzustand
 Id: vs-senologie-allgemeinzustand
 Title: "VS Senologie Allgemeinzustand"
 Description: "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht). Fuer detaillierte Erfassung ECOG verwenden."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
 * ^status = #draft
@@ -2133,6 +2190,7 @@ ValueSet: VS_Senologie_Lymphoedem_Grad
 Id: vs-senologie-lymphoedem-grad
 Title: "VS Senologie Lymphoedem Grad"
 Description: "Schweregrad eines Lymphoedems (kein / Grad I / II / III) nach ISL-Kriterien."
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
 * ^status = #draft

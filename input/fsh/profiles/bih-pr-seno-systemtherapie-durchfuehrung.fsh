@@ -3,6 +3,12 @@ Parent: MII_PR_Onko_Systemische_Therapie_Medikation
 Id: senologie-systemtherapie-medikation
 Title: "BIH Senologie Systemtherapie Medikation (einzelne Gabe)"
 Description: "MedicationStatement für einzelne Medikamentengaben. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko."
+* insert SenoCRMIProfileDerived
+// Der MII-Parent traegt ZWEI artifact-editor-Eintraege; SUSHI kopiert beide, der
+// zweite laesst sich nur ueberschreiben (siehe rulesets/crmi.fsh).
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-editor][1].valueContactDetail.name = "Berlin Institute of Health at Charité (BIH)"
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-editor][1].valueContactDetail.telecom[0].system = #url
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-editor][1].valueContactDetail.telecom[0].value = "https://www.bihealth.org"
 
 * insert PR_CS_VS_Version
 * ^status = #draft

@@ -12,6 +12,7 @@ InstanceOf: Measure
 Title: "Senologie Measure OncoBox KB-12: Präoperative histologische Sicherung"
 Description: "Anteil mit präoperativer histologischer Sicherung (Stanze/Vakuum) vor Ersteingriff. OncoBox Brust 2.0 KB-12 (DKG-Audit-Kennzahl)."
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-oncobox-kb-12"
 * version = "0.1.0"

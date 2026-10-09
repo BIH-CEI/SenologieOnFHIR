@@ -3,6 +3,7 @@ Parent: MII_PR_Onko_Systemische_Therapie
 Id: senologie-systemtherapie-procedure
 Title: "BIH Senologie Systemtherapie (übergeordnet)"
 Description: "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt Intention, outcome und usedCode von MII Onko Systemtherapie."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

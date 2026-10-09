@@ -3,6 +3,7 @@ Parent: MedicationStatement
 Id: senologie-begleitmedikation
 Title: "BIH Senologie Begleitmedikation"
 Description: "Begleitmedikation der Patientin – aktuelle Dauermedikation und sonstige Medikamente, die nicht Teil der onkologischen Systemtherapie sind (z. B. Antihypertensiva, Schilddrüsenhormone, Antikoagulantien)."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

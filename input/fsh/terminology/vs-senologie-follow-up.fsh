@@ -6,6 +6,7 @@ ValueSet: VS_Senologie_Nachsorge_Art
 Id: vs-senologie-nachsorge-art
 Title: "VS Senologie Nachsorge Art"
 Description: "Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (Akten/Register) — OncoBox M03"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -28,6 +29,7 @@ ValueSet: VS_Senologie_Zweittumor
 Id: vs-senologie-zweittumor
 Title: "VS Senologie Zweittumor"
 Description: "Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"

@@ -3,6 +3,7 @@ Parent: MII_PR_Onko_Nebenwirkung_Adverse_Event
 Id: senologie-nebenwirkung
 Title: "BIH Senologie Nebenwirkung"
 Description: "AdverseEvent für CTCAE-Nebenwirkungsgrading unter Systemtherapie. Erbt MedDRA-Kodierung und CTCAE-Grad von MII Onko Nebenwirkung."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

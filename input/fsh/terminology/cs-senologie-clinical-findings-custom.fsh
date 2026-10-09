@@ -7,6 +7,7 @@ CodeSystem: CS_Senologie_Clinical_Findings_Custom
 Id: cs-senologie-clinical-findings-custom
 Title: "CS Senologie Clinical Findings Custom"
 Description: "Custom Codes für klinische Senologie-Befunde ohne direktes SNOMED-Mapping (Ptosis-Grad, Tumornachweis-Erstdiagnose-Mammakarzinom)."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/clinical-findings-custom"
 * ^status = #draft

@@ -170,6 +170,7 @@ def build_library(
         f'Title: "Library: {library_name}"',
         f'Description: "{description}"',
         "Usage: #definition",
+        "* insert SenoCRMILibrary",
         "",
         f'* url = "{BASE_URL}/Library/{instance_id}"',
         f'* name = "{library_name}"',

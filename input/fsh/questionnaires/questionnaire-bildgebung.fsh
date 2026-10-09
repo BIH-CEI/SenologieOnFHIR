@@ -180,6 +180,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Bildgebung Mamma"
 Description: "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-bildgebung"
 * name = "QuestBildgebung"

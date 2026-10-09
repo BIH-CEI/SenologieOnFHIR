@@ -46,6 +46,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Erstanamnese"
 Description: "Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese, Raucherstatus und Familienanamnese. Nutzt SDC Template-based Extraction."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese"
 * name = "QuestErstanamnese"

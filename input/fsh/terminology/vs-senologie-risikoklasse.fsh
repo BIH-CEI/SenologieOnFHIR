@@ -2,6 +2,7 @@ ValueSet: VS_Senologie_Risikoklasse
 Id: vs-senologie-risikoklasse
 Title: "VS Senologie Risikoklasse"
 Description: "Risikokategorien für Genexpressionstests (low, intermediate, high)"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"

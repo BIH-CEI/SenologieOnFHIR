@@ -5,6 +5,7 @@ Parent: Condition
 Id: senologie-diagnose-benigne
 Title: "BIH PR Seno Diagnose Benigne"
 Description: "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankungen. ISiK-kompatibel für Krankenhaus-Interoperabilität ohne Krebsregister-Anforderungen."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

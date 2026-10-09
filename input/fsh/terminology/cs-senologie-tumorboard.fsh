@@ -7,6 +7,7 @@ CodeSystem: CS_Senologie_Tumorboard_Empfehlung
 Id: cs-senologie-tumorboard-empfehlung
 Title: "CS Senologie Tumorboard Empfehlung"
 Description: "Beschlusszustand pro Therapie-Empfehlung im Tumorboard."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
 * ^status = #draft

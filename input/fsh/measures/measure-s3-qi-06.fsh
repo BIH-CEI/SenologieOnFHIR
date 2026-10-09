@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-06: Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz"
 Description: "Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz (S3-Leitlinie Mammakarzinom Kapitel 8, QI-06)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-06"
 * version = "0.1.0"

@@ -6,6 +6,7 @@ InstanceOf: Library
 Title: "Library: QualitaetsindikatorenLeitlinie"
 Description: "S3-Leitlinien-Qualitätsindikatoren (17 QIs aus S3 Mammakarzinom v5.0, Kapitel 8)"
 Usage: #definition
+* insert SenoCRMILibrary
 
 * url = "https://www.senologie.org/fhir/Library/QualitaetsindikatorenLeitlinie"
 * name = "QualitaetsindikatorenLeitlinie"

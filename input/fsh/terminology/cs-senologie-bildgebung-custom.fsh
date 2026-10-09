@@ -5,6 +5,7 @@ CodeSystem: CS_Senologie_Bildgebung_Custom
 Id: cs-senologie-bildgebung-custom
 Title: "CS Senologie Bildgebung Custom"
 Description: "Custom Codes für radiologische Befunde der Senologie (LK-Status, Standort, Beurteilbarkeit, US-DEGUM) ohne passendes SNOMED-Mapping."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/bildgebung-custom"
 * ^status = #draft

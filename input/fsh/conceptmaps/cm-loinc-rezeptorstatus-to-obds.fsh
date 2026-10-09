@@ -10,6 +10,7 @@ InstanceOf: ConceptMap
 Title: "LOINC Rezeptorstatus zu oBDS/OncoBox/IQTIG P/N/U"
 Description: "Mapping: LOINC Answer-Codes LA6576-8/LA6577-6/LA4489-6 (Positive/Negative/Unknown) → P/N/U Single-Code (oBDS, OncoBox, IQTIG)."
 Usage: #definition
+* insert SenoCRMIConceptMap
 
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-loinc-rezeptorstatus-to-obds"
 * name = "CmLoincRezeptorstatusToObds"

@@ -13,12 +13,80 @@ version: 0.9.3
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: ci-build
-# license: CC0-1.0 # https://www.hl7.org/fhir/valueset-spdx-license.html
+license: CC-BY-4.0 # https://www.hl7.org/fhir/valueset-spdx-license.html
+# crmi-publishableimplementationguide verlangt date 1..1 — bei jedem Release mitziehen
+# (zusammen mit CRMIDate in input/fsh/rulesets/version.fsh).
+date: "2026-10-09"
 # jurisdiction: urn:iso:std:iso:3166#US "United States of America" # https://www.hl7.org/fhir/valueset-jurisdiction.html
 publisher:
   name: Berlin Institute of Health at Charité (BIH)
   url: https://www.bihealth.org
   # email: test@example.org
+
+# CRMI-Konformitaet: die IG-Ressource claimt die CRMI-Profile shareable,
+# publishable und crmi-implementationguide (wie die MII-KDS-Module). Die
+# einzelnen Artefakte claimen ihre CRMI-Profile ueber input/fsh/rulesets/crmi.fsh.
+meta:
+  profile:
+    - http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareableimplementationguide
+    - http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishableimplementationguide
+    - http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-implementationguide
+experimental: false
+extension:
+  - url: http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability
+    valueCode: shareable
+  - url: http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability
+    valueCode: publishable
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy
+    valueCodeableConcept:
+      coding:
+        - system: http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes
+          code: package
+          display: Package
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm
+    valueCoding:
+      system: http://hl7.org/fhir/version-algorithm
+      code: semver
+      display: SemVer
+  # Paket-Herkunft: wiederholt id (= packageId), version und canonical.
+  - url: http://hl7.org/fhir/StructureDefinition/package-source
+    extension:
+      - url: packageId
+        valueId: kds-senologie
+      - url: version
+        valueString: "0.9.3"
+      - url: uri
+        valueUri: https://www.senologie.org/fhir
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-topic
+    valueCodeableConcept:
+      coding:
+        - system: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl
+          code: C4872
+          display: Breast Carcinoma
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-author
+    valueContactDetail:
+      name: Berlin Institute of Health at Charité (BIH)
+      telecom:
+        - system: email
+          value: thomas.debertshaeuser@charite.de
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-editor
+    valueContactDetail:
+      name: Berlin Institute of Health at Charité (BIH)
+      telecom:
+        - system: url
+          value: https://www.bihealth.org
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-reviewer
+    valueContactDetail:
+      name: Deutsche Gesellschaft für Senologie (DGS)
+      telecom:
+        - system: url
+          value: https://www.senologie.org
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-endorser
+    valueContactDetail:
+      name: Deutsche Gesellschaft für Senologie (DGS)
+      telecom:
+        - system: url
+          value: https://www.senologie.org
 
 # The dependencies property corresponds to IG.dependsOn. The key is the
 # package id and the value is the version (or dev/current). For advanced
@@ -30,6 +98,7 @@ dependencies:
    de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot.rc2
    de.medizininformatikinitiative.kerndatensatz.mtb: 2027.0.0-ballot.1
    de.gematik.isik: 5.1.1
+   hl7.fhir.uv.crmi: 2.0.0
    hl7.fhir.uv.sdc: 4.0.0
    hl7.fhir.uv.xver-r5.r4: 0.1.0
 #   hl7.fhir.us.mcode:

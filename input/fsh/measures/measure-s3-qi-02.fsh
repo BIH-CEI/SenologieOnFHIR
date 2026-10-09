@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-02: Prätherapeutische histologische Sicherung"
 Description: "Prätherapeutische histologische Sicherung (S3-Leitlinie Mammakarzinom Kapitel 8, QI-02)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-02"
 * version = "0.1.0"

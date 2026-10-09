@@ -3,6 +3,7 @@ Parent: DiagnosticReport
 Id: senologie-bildgebung-sonstige
 Title: "BIH Senologie Bildgebung Sonstige"
 Description: "DiagnosticReport für nicht-mammaspezifische Bildgebung im Rahmen des Stagings oder der Verlaufskontrolle (z.B. Skelettszintigraphie, CT, PET-CT, Röntgen Thorax, Lebersonographie)."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

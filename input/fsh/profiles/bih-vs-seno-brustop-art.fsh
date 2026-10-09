@@ -2,6 +2,7 @@ ValueSet: Senologie_Operation_Art
 Id: vs-senologie-operation-art
 Title: "BIH LM Senologie Operation"
 Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie"
+* insert SenoCRMIValueSet
 * insert PR_CS_VS_Version
 * ^status = #draft
 

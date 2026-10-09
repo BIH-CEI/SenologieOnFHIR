@@ -6,6 +6,7 @@ InstanceOf: Library
 Title: "Library: MinimalMeasureLib"
 Description: "Minimale Debug-Library mit drei konstanten true-Defines"
 Usage: #definition
+* insert SenoCRMILibrary
 
 * url = "https://www.senologie.org/fhir/Library/MinimalMeasureLib"
 * name = "MinimalMeasureLib"

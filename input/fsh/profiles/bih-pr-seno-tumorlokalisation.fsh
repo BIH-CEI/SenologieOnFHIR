@@ -3,6 +3,7 @@ Parent: MII_PR_Bildgebung_Koerperstruktur
 Id: senologie-tumorlokalisation
 Title: "BIH Senologie Tumorlokalisation"
 Description: "BodyStructure für die Tumorlokalisation in der Brust (Seite, Quadrant, Uhrzeitposition, Mamillenabstand)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

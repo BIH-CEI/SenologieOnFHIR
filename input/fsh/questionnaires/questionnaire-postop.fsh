@@ -110,6 +110,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Postoperative Dokumentation"
 Description: "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation)."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-postop"
 * name = "QuestPostOPDokumentation"

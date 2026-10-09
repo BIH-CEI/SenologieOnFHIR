@@ -3,6 +3,7 @@ Parent: ResearchSubject
 Id: senologie-studienteilnahme
 Title: "BIH Senologie Studienteilnahme"
 Description: "ResearchSubject für klinische Studienteilnahme in der Senologie. Bildet Studienname, Screeningstatus, Studienscreening, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -74,6 +75,7 @@ Extension: EX_Senologie_Screeningstatus
 Id: ex-senologie-screeningstatus
 Title: "Screeningstatus"
 Description: "Screeningstatus der Studienteilnahme — kein natives FHIR-Äquivalent in ResearchSubject"
+* insert SenoCRMIExtension
 * value[x] only CodeableConcept
 * value[x] from VS_Senologie_Screeningstatus (example)
 
@@ -81,18 +83,21 @@ Extension: EX_Senologie_Studienscreening
 Id: ex-senologie-studienscreening
 Title: "Screening zur Studienteilnahme"
 Description: "OncoBox 2.0 K03: Wurde ein Screening zur Studienteilnahme durchgeführt? Erfasst, ob die Patientin aktiv auf eine mögliche Studienteilnahme geprüft wurde — unabhängig vom Ergebnis (Screeningstatus)."
+* insert SenoCRMIExtension
 * value[x] only boolean
 
 Extension: EX_Senologie_Studienkontakt
 Id: ex-senologie-studienkontakt
 Title: "Kontaktperson Studie"
 Description: "Kontaktperson für die klinische Studie — kein natives FHIR-Äquivalent in ResearchSubject"
+* insert SenoCRMIExtension
 * value[x] only string
 
 Extension: EX_Senologie_Aufklaerungsdatum
 Id: ex-senologie-aufklaerungsdatum
 Title: "Aufklärungsdatum"
 Description: "Datum der Aufklärung der Patientin über die Studie"
+* insert SenoCRMIExtension
 * value[x] only date
 
 
@@ -104,6 +109,7 @@ ValueSet: VS_Senologie_Screeningstatus
 Id: vs-senologie-screeningstatus
 Title: "VS Senologie Screeningstatus"
 Description: "Screeningstatus einer klinischen Studienteilnahme"
+* insert SenoCRMIValueSet
 * ^status = #draft
 * insert PR_CS_VS_Version
 * $SCT#385432009 "Not applicable (qualifier value)"

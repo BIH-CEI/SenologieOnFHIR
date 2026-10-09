@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure Minimal (Debug)"
 Description: "Trivialste Measure — ip/denominator/numerator immer true. Erwartetes Ergebnis bei N Patienten: N/N (100 %). Nutzt MinimalMeasureLib."
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-minimal"
 * version = "0.1.0"

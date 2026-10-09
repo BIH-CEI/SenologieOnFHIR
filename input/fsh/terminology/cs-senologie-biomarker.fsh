@@ -10,6 +10,7 @@ CodeSystem: CS_Senologie_Biomarker
 Id: cs-senologie-biomarker
 Title: "CS Senologie Biomarker Erweiterungen"
 Description: "Codes für zusätzliche IHC-Components am MII Onko Mamma Rezeptorstatus (ER/PR): IRS (Remmele-Stegner) und Allred Score. Backport-Kandidaten für MII Onko."
+* insert SenoCRMICodeSystem
 
 * ^status = #draft
 * ^version = "0.1.0"

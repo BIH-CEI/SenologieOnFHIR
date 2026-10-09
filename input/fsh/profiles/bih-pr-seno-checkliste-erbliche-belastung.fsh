@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-checkliste-erbliche-belastung
 Title: "BIH Senologie Checkliste Erbliche Belastung"
 Description: "Observation für die DKG-Checkliste zur Identifikation erblicher Tumorbelastung (D24/D25). Erfasst ob die Checkliste durchgeführt wurde und ggf. den Score."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

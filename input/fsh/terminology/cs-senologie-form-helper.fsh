@@ -9,6 +9,7 @@ CodeSystem: CS_Senologie_Form_Helper
 Id: cs-senologie-form-helper
 Title: "CS Senologie Form-Helper-Codes"
 Description: "Lokale Codes für Form-Antworten ohne eindeutige SCT-Entsprechung (Kontrazeption-Status, Nachsorge-Modus, Allgemeinzustand-vereinfacht, Lymphödem-Grad nach ISL)."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^status = #draft

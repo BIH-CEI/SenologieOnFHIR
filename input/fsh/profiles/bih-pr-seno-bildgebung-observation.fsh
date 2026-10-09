@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-bildgebung-observation
 Title: "BIH Senologie Bildgebung Observation"
 Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

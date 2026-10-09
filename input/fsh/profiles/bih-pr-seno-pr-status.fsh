@@ -5,6 +5,7 @@ Parent: $MII_PR_Onko_Mamma_Rezeptorstatus_Progesteron
 Id: senologie-pr-status
 Title: "BIH Senologie PR-Status"
 Description: "Progesteronrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Progesteron (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS und Allred-Score als Senologie-Erweiterung."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

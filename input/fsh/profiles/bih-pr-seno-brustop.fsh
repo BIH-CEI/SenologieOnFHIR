@@ -3,6 +3,7 @@ Parent: MII_PR_Onko_Mamma_Operation
 Id: senologie-operation
 Title: "BIH LM Senologie Brustwand-Operation"
 Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

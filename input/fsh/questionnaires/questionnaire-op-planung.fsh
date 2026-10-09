@@ -30,6 +30,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: OP Planung"
 Description: "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-op-planung"
 * name = "QuestOPPlanung"

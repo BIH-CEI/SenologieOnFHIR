@@ -3,6 +3,7 @@ Parent: MII_PR_Patho_Report
 Id: senologie-pathologie-befund
 Title: "BIH Senologie Pathologie Befund"
 Description: "DiagnosticReport für pathologische Befunde. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

@@ -2,6 +2,7 @@ CodeSystem: CS_OncoBox_Primaerfallart
 Id: cs-oncobox-primaerfallart
 Title: "CS OncoBox Primaerfallart"
 Description: "Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01)"
+* insert SenoCRMICodeSystem
 
 * insert PR_CS_VS_Version
 * ^status = #draft

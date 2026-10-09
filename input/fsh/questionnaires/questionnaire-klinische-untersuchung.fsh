@@ -184,6 +184,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Klinische Untersuchung Mamma"
 Description: "Klinische Inspektion, Palpation und klinisches TNM-Staging der Senologie. Bewusst ohne Sonographie/Bildgebung (→ Bildgebung-Form) und Biopsie-Doku (→ Pathologie-Form)."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung"
 * name = "QuestKlinischeUntersuchung"

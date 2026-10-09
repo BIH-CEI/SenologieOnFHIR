@@ -5,6 +5,7 @@ CodeSystem: CS_Senologie_Metastasierung
 Id: cs-senologie-metastasierung
 Title: "CS Senologie Metastasierung"
 Description: "Metastasierungsstatus fuer Senologie (M0 / primaer / sekundaer metastasiert)."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-metastasierung"
 * ^status = #draft

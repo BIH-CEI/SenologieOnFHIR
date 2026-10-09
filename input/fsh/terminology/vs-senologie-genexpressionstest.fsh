@@ -4,6 +4,7 @@ ValueSet: VS_Senologie_Genexpressionstest
 Id: vs-senologie-genexpressionstest
 Title: "VS Senologie Genexpressionstest"
 Description: "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"

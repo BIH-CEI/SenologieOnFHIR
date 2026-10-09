@@ -18,6 +18,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Tumorboard Empfehlung"
 Description: "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinaeren Tumorkonferenz. Pro Therapie-Empfehlung mit Beschluss-Status (empfohlen/bedingt/nicht/nicht diskutiert) und Begruendung. SDC Template-based Extraction zu CarePlan."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard"
 * name = "QuestTumorboard"

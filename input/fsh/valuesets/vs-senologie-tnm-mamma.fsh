@@ -16,6 +16,7 @@ ValueSet: VS_Senologie_TNM_T_Kategorie_Mamma
 Id: vs-senologie-tnm-t-kategorie-mamma
 Title: "VS Senologie TNM T-Kategorie (Mamma)"
 Description: "T-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). Schließt T1c1-T1c3, T1d, Tis(LAMN/LCIS/pu/pd) und andere nicht-mammarelevante Codes der MII-Onko-Liste aus. Tis(LCIS) wird in TNM 8 für Mamma nicht mehr als Tis kodiert."
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * insert PR_CS_VS_Version
@@ -102,6 +103,7 @@ ValueSet: VS_Senologie_TNM_N_Kategorie_Mamma
 Id: vs-senologie-tnm-n-kategorie-mamma
 Title: "VS Senologie TNM N-Kategorie (Mamma)"
 Description: "N-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). N2c ist beim Mamma-Ca nicht vorgesehen und wurde ausgeschlossen."
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * insert PR_CS_VS_Version
@@ -176,6 +178,7 @@ ValueSet: VS_Senologie_TNM_M_Kategorie_Mamma
 Id: vs-senologie-tnm-m-kategorie-mamma
 Title: "VS Senologie TNM M-Kategorie (Mamma)"
 Description: "M-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). MX wurde mit TNM 8 abgeschafft, M1a/b/c/d sind keine Mamma-Differenzierung."
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * insert PR_CS_VS_Version
@@ -202,6 +205,7 @@ ValueSet: VS_Senologie_UICC_Stadium_Mamma
 Id: vs-senologie-uicc-stadium-mamma
 Title: "VS Senologie UICC-Stadium (Mamma)"
 Description: "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Primärkodierung über https://www.uicc.org/resources/tnm (MII_CS_Onko_TNM_UICC, auf MII-OntoServer verfügbar); alternativ SCT-Qualifier-Values (HDB-866). Binding: extensible."
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * insert PR_CS_VS_Version

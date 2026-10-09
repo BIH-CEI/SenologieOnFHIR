@@ -2,6 +2,7 @@ ValueSet: VS_Senologie_Systemtherapie_Medikation
 Id: vs-senologie-systemtherapie-medikation
 Title: "VS Senologie Systemtherapie Medikation"
 Description: "Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01)"
+* insert SenoCRMIValueSet
 
 * insert PR_CS_VS_Version
 * ^status = #draft

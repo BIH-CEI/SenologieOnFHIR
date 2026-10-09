@@ -2,6 +2,7 @@ CodeSystem: CS_Senologie_Genexpressionstest
 Id: cs-senologie-genexpressionstest
 Title: "CS Senologie Genexpressionstest"
 Description: "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom"
+* insert SenoCRMICodeSystem
 
 * ^status = #draft
 * ^version = "0.1.0"

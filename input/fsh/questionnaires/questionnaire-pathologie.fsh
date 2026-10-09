@@ -385,6 +385,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Pathologie Befund"
 Description: "Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-pathologie"
 * name = "QuestPathologieBefund"

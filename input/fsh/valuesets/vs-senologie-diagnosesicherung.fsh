@@ -3,6 +3,7 @@ CodeSystem: CSSenologieDiagnosesicherung
 Id: cs-senologie-diagnosesicherung
 Title: "CodeSystem Diagnosesicherung"
 Description: "Diagnosesicherung gemäß oBDS (Onkologischer Basisdatensatz)"
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnosesicherung"
 * ^status = #draft
@@ -38,6 +39,7 @@ ValueSet: VSSenologieDiagnosesicherung
 Id: vs-senologie-diagnosesicherung
 Title: "ValueSet Diagnosesicherung"
 Description: "Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen"
+* insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnosesicherung"
 * ^status = #draft

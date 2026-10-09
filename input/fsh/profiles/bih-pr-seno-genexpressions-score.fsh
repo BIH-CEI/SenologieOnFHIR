@@ -7,6 +7,7 @@ Parent: Observation
 Id: senologie-genexpressions-score
 Title: "BIH PR Seno Genexpressions-Score"
 Description: "Observation für den numerischen Score-Wert eines Genexpressionstests (Oncotype DX Recurrence Score, MammaPrint Index, Prosigna ROR Score, EndoPredict EPclin Score)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

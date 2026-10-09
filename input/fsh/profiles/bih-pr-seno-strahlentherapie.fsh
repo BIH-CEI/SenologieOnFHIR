@@ -3,6 +3,7 @@ Parent: MII_PR_Onko_Strahlentherapie_Bestrahlung_Strahlentherapie
 Id: senologie-strahlentherapie
 Title: "BIH Senologie Strahlentherapie"
 Description: "Procedure für Strahlentherapie. Erbt Gesamtdosis, Boost und Seitenlokalisation von MII Onko Bestrahlung."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

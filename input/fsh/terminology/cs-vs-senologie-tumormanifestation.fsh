@@ -2,6 +2,7 @@ CodeSystem: CS_Senologie_Tumormanifestation
 Id: cs-senologie-tumormanifestation
 Title: "CS Senologie Tumormanifestation"
 Description: "Klassifikation der Tumormanifestation bei Diagnosestellung"
+* insert SenoCRMICodeSystem
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -24,6 +25,7 @@ ValueSet: VS_Senologie_Tumormanifestation
 Id: vs-senologie-tumormanifestation
 Title: "VS Senologie Tumormanifestation"
 Description: "Tumormanifestation bei Diagnosestellung (Mehrfachauswahl möglich)"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"

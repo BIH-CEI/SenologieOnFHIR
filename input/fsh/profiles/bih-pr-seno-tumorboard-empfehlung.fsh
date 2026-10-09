@@ -3,6 +3,7 @@ Parent: CarePlan
 Id: senologie-tumorboard-empfehlung
 Title: "BIH Senologie Tumorboard Empfehlung"
 Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

@@ -3,6 +3,7 @@ Parent: Procedure
 Id: senologie-psychoonkologie
 Title: "BIH Senologie Psychoonkologische Mitbetreuung"
 Description: "Procedure fuer psychoonkologische Mitbetreuung (OncoBox KB-9). status=completed + performedDateTime zeigt 'erfolgt=ja' an, status=not-done zeigt 'erfolgt=nein' an."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

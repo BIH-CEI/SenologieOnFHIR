@@ -3,6 +3,7 @@ Parent: Element
 Id: LogicalModelSenologie
 Title: "BIH LM Senologie LogicalModel"
 Description: "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab."
+* insert SenoCRMILogicalModel
 * insert PR_CS_VS_Version
 * ^status = #draft
 

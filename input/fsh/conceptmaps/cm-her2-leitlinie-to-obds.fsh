@@ -15,6 +15,7 @@ InstanceOf: ConceptMap
 Title: "MII HER2 Leitlinien-Klassifikation zu oBDS/OncoBox/IQTIG P/N/U"
 Description: "Mapping: MII Her2neu-Leitlinien-Codes (positiv/low/ultralow/negativ/equivocal) → P/N/U. HER2-low und HER2-ultralow werden zu 'N' subsumiert (oBDS-Spec-Limitation)."
 Usage: #definition
+* insert SenoCRMIConceptMap
 
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-her2-leitlinie-to-obds"
 * name = "CmHer2LeitlinieToObds"

@@ -7,6 +7,7 @@ CodeSystem: CS_Senologie_FollowUp
 Id: cs-senologie-follow-up
 Title: "CS Senologie Follow-Up"
 Description: "Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes."
+* insert SenoCRMICodeSystem
 
 * ^status = #draft
 * ^version = "0.1.0"

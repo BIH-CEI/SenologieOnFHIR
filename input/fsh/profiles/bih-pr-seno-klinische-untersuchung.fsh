@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-klinische-untersuchung
 Title: "BIH Senologie Klinische Untersuchung"
 Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seite)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

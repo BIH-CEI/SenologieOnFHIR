@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-13: HER2 Score nach ASCO/CAP"
 Description: "HER2 Score nach ASCO/CAP (S3-Leitlinie Mammakarzinom Kapitel 8, QI-13)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-13"
 * version = "0.1.0"

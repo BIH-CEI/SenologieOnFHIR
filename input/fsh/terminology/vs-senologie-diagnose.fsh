@@ -4,6 +4,7 @@ ValueSet: VS_Senologie_Diagnose
 Id: vs-senologie-diagnose
 Title: "VS Senologie Diagnose"
 Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook - SNOMED CT und lokale Codes"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -130,6 +131,7 @@ ValueSet: VS_Senologie_Diagnose_B3
 Id: vs-senologie-diagnose-b3
 Title: "VS Senologie B3 Läsionen"
 Description: "B3 Läsionen der Mamma nach S3-Leitlinie"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -176,6 +178,7 @@ ValueSet: VS_Senologie_Seite
 Id: vs-senologie-seite
 Title: "VS Senologie Seite"
 Description: "Lateralität der Mamma-Erkrankung"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -185,6 +188,7 @@ ValueSet: VS_Senologie_Diagnose_SCT
 Id: vs-senologie-diagnose-sct
 Title: "VS Senologie Diagnose SNOMED CT"
 Description: "SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für sct-Slice)"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -215,6 +219,7 @@ ValueSet: VS_Senologie_Diagnose_Lokal
 Id: vs-senologie-diagnose-lokal
 Title: "VS Senologie Diagnose Lokal"
 Description: "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senologie-Slice)"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"
@@ -268,6 +273,7 @@ ValueSet: VS_Senologie_Metastasierung
 Id: vs-senologie-metastasierung
 Title: "VS Senologie Metastasierung"
 Description: "Metastasierungsstatus - lokale Codes basierend auf Dotbase"
+* insert SenoCRMIValueSet
 
 * ^status = #draft
 * ^version = "0.1.0"

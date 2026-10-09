@@ -7,6 +7,7 @@ Parent: $MII_PR_Onko_Mamma_Rezeptorstatus_Estrogen
 Id: senologie-er-status
 Title: "BIH Senologie ER-Status"
 Description: "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Estrogen (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS (Remmele-Stegner) und Allred-Score als Senologie-Erweiterung. Erlaubt ER-low-Analysen."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

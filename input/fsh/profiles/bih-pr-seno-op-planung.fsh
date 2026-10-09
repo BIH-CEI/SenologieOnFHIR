@@ -3,6 +3,7 @@ Parent: ServiceRequest
 Id: senologie-op-planung
 Title: "BIH Senologie OP Planung"
 Description: "ServiceRequest für OP Planung"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

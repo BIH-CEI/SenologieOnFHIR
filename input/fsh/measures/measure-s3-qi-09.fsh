@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-09: Endokrine Therapie bei rezeptorpositivem Befund"
 Description: "Endokrine Therapie bei rezeptorpositivem Befund (S3-Leitlinie Mammakarzinom Kapitel 8, QI-09)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-09"
 * version = "0.1.0"

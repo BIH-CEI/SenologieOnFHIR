@@ -44,6 +44,7 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Strahlentherapie"
 Description: "Fragebogen zur strukturierten Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit contained Procedure-Template."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-strahlentherapie"
 * name = "QuestStrahlentherapie"

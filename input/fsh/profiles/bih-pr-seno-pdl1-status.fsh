@@ -5,6 +5,7 @@ Parent: MII_PR_MTB_Immunohistochemistry_PDL1
 Id: senologie-pdl1-status
 Title: "BIH Senologie PD-L1 Status"
 Description: "PD-L1 Immunhistochemie-Befund für Mamma-Karzinom. Erbt TPS, CPS, ICS und TC-Score Slices vom MII MTB PD-L1 Profil. Klinisch relevant bei TNBC (Pembrolizumab-Indikation bei CPS >= 10, KEYNOTE-522)."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

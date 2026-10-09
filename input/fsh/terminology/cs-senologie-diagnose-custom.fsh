@@ -11,6 +11,7 @@ CodeSystem: CS_Senologie_Diagnose_Custom
 Id: cs-senologie-diagnose-custom
 Title: "CS Senologie Diagnose Custom"
 Description: "Senologie-spezifische Diagnose-Codes fuer Mamma-Konzepte ohne eindeutiges SNOMED-CT-Mapping (Rezidiv, Mamillensekretion, kosmetische/funktionelle Anomalien, Befund unklarer Dignitaet, Sonstiges)."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * ^status = #draft
