@@ -49,6 +49,8 @@ jobs:
 
       - name: Start Matchbox
         run: |
+          # Compose deklariert senologie-net als external (lokal legt scripts/start-stack.sh es an)
+          docker network inspect senologie-net >/dev/null 2>&1 || docker network create senologie-net
           docker compose -f docker-compose.matchbox.yaml pull
           docker compose -f docker-compose.matchbox.yaml up -d
           for i in {1..120}; do

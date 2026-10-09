@@ -64,6 +64,8 @@ jobs:
 
       - name: Start HAPI with Clinical Reasoning
         run: |
+          # Compose deklariert senologie-net als external (lokal legt scripts/start-stack.sh es an)
+          docker network inspect senologie-net >/dev/null 2>&1 || docker network create senologie-net
           docker compose -f docker-compose.hapi.yaml up -d hapi
           for i in {1..90}; do
             if curl -sf http://localhost:8095/fhir/metadata > /dev/null 2>&1; then
