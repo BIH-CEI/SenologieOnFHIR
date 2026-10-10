@@ -241,7 +241,7 @@ Usage: #example
 * collection.bodySite = $SCT#73056007 "Right breast structure"
 * collection.bodySite.text = "Rechte Brust, Mastektomie mit Axilladissektion"
 * collection.collectedDateTime = "2025-04-08"
-* collection.method = $SCT#1231734007 "Excision of breast"
+* collection.method = $SCT#406505007 "Modified radical mastectomy"
 
 
 // --- Operation ---
