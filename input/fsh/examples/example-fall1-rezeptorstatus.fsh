@@ -95,7 +95,7 @@ Usage: #example
 * valueCodeableConcept.coding[DefinitionOBDS] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds#N "negativ"
 
 // IHC-Score: 1+
-* component[IHCScore].valueCodeableConcept = $LOINC#LA26333-6 "1+"
+* component[IHCScore].valueCodeableConcept = $LOINC#LA11841-6 "1+"
 
 // Keine ISH-Reflextestung nötig, weil IHC 1+ direkt HER2-low klassifiziert.
 // Bei IHC 2+ wäre eine separate Observation nach MII_PR_MTB_INSITUHYBRIDIZATION_HER2

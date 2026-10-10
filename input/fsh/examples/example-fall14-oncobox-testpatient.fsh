@@ -111,7 +111,7 @@ Usage: #example
 * effectiveDateTime = "2025-01-15"
 * valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
 * valueCodeableConcept.coding[DefinitionOBDS] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds#N "negativ"
-* component[IHCScore].valueCodeableConcept = $LOINC#LA11841-6 "2+"
+* component[IHCScore].valueCodeableConcept = $LOINC#LA11842-4 "2+"
 
 
 // --- Ki-67 ---

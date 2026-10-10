@@ -212,9 +212,26 @@ def refs(o, out):
             refs(v, out)
 
 
-def graph(res, fall, title):
+# Die Knoten tragen die Instanz-Ids; mit --english werden deren deutsche
+# Bestandteile wortweise uebersetzt (fuer Vortraege vor internationalem Publikum).
+LABEL_EN = {
+    "Nebenwirkung": "Side effect", "Tumorboard": "Tumour board", "Diagnose": "Diagnosis", "Mammakarzinom": "breast cancer",
+    "Implantat": "Implant", "Links": "left", "Rechts": "right", "Bildgebung": "Imaging", "Mammographie": "mammography",
+    "Pathologie": "Pathology", "Patho": "Pathology", "Befund": "report", "Stationaer": "inpatient",
+    "Familienanamnese": "Family history", "Mutter": "mother", "Schwester": "sister", "Medikation": "Medication",
+    "BiRADS": "BI-RADS", "PostTherapie": "after therapy", "Status": "status", "Ki67": "Ki-67", "Keimbahn": "germline",
+    "Mutation": "mutation", "Conclusion": "conclusion", "Klassifikation": "classification", "Verlauf": "Follow-up",
+    "Vitalstatus": "Vital status", "Lebend": "alive", "Operation": "Surgery", "Mastektomie": "mastectomy",
+    "SLNB": "sentinel node", "Rekonstruktion": "Reconstruction", "Strahlentherapie": "Radiotherapy",
+    "Systemtherapie": "Systemic therapy", "Adjuvant": "adjuvant", "Praeparat": "specimen", "Tumorstatus": "Tumour status",
+    "Histologie": "Histology", "Grading": "Grading", "Nachsorge": "Follow-up", "Chemotherapie": "Chemotherapy",
+    "Stanzbiopsie": "core biopsy", "Sonographie": "ultrasound", "Genetik": "Genetics", "Erstanamnese": "History",
+}
+
+
+def graph(res, fall, title, english=False):
     ids = {r["id"]: r for r in res}
-    W, TOP, NW, NH, GAP = 1600, 116, 240, 38, 8
+    W, TOP, NW, NH, GAP = 1800, 116, 272, 38, 8
     colx = {}
     pos = {}
     cw = (W - 40) / len(COLS)
@@ -252,8 +269,10 @@ def graph(res, fall, title):
         r = ids[rid]
         col = TCOL.get(r["resourceType"], "#7A8B99")
         label = rid.replace(f"Fall{fall}-", "")
-        if len(label) > 23:
-            label = label[:22] + "…"
+        if english:
+            label = " ".join(LABEL_EN.get(t, t) for t in label.split("-"))
+        if len(label) > 27:
+            label = label[:26] + "…"
         o.append(f'<rect x="{x:.0f}" y="{y:.0f}" width="{NW}" height="{NH}" rx="6" fill="{col}"/>')
         o.append(f'<text x="{x+10:.0f}" y="{y+25:.0f}" font-size="18" fill="white">{esc(label)}</text>')
     o.append(f'<text x="20" y="{H-18}" font-size="19" fill="#7A8B99">{len(pos)} resources, {edges} references between them. '
@@ -268,6 +287,7 @@ def main():
     ap.add_argument("--out", type=Path, default=REPO / "temp" / "patient-journey")
     ap.add_argument("--name", default=None, help="Anzeigename fuer die Titel")
     ap.add_argument("--no-title", action="store_true", help="Bildtitel weglassen (z. B. fuer Folien mit eigenem Titel)")
+    ap.add_argument("--english", action="store_true", help="Knotenbeschriftungen im Graphen ins Englische uebersetzen")
     a = ap.parse_args()
     res = load(a.fall)
     if not res:
@@ -278,7 +298,7 @@ def main():
     t1 = "" if a.no_title else f"{name}: what was documented when"
     t2 = "" if a.no_title else f"{name}: the record as a graph of FHIR resources"
     (a.out / f"fall{a.fall}-timeline.svg").write_text(timeline(res, t1))
-    (a.out / f"fall{a.fall}-graph.svg").write_text(graph(res, a.fall, t2))
+    (a.out / f"fall{a.fall}-graph.svg").write_text(graph(res, a.fall, t2, a.english))
     print(f"{len(res)} Ressourcen → {a.out}/fall{a.fall}-timeline.svg, fall{a.fall}-graph.svg")
 
 
