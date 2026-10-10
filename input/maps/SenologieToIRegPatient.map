@@ -35,7 +35,10 @@ group MapPatientenaufnahme(source src : Patient, target tgt : BackboneElement) {
 
   // PAT_Alter: berechnet aus Patient.birthDate
   // FML truncate() berechnet Differenz in Jahren
-  src.birthDate as bd -> tgt.alter = truncate(evaluate(src, today().toString().substring(0, 4).toInteger() - birthDate.toString().substring(0, 4).toInteger())) "SetAlter";
+  // Ohne aeusseres truncate(): Matchbox akzeptiert keine verschachtelten
+  // Transformationen ("Found ( expecting ,") und lud diese Map deshalb nie.
+  // Der Ausdruck liefert bereits eine ganze Zahl.
+  src.birthDate as bd -> tgt.alter = evaluate(src, today().toString().substring(0, 4).toInteger() - birthDate.toString().substring(0, 4).toInteger()) "SetAlter";
 
   // PAT_Groesse and PAT_Gewicht bundle lookups moved to calling group.
 

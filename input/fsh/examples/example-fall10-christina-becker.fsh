@@ -1,8 +1,8 @@
 // ============================================================
-// Fall 10: Christina Becker — BRCA1-Trägerin, TNBC Stadium IA
+// Fall 10: Christina Becker — PALB2-Mutationsträgerin, TNBC Stadium IA
 // Invasives Karzinom NST rechts, G3, ER- PR- HER2-, Ki-67 55%
 // cT1c cN0 cM0, UICC IA
-// BRCA1-Mutation, Mutter Mamma-Ca 41 J., Schwester Ovarial-Ca 39 J.
+// PALB2-Keimbahnmutation, Mutter Mamma-Ca 41 J., Schwester Ovarial-Ca 39 J.
 // Bilaterale Mastektomie (therapeutisch re + prophylaktisch li)
 // Sofortrekonstruktion beidseits mit Brustimplantat
 // Adjuvant: Carboplatin + Paclitaxel
@@ -12,7 +12,7 @@
 Instance: Fall10-Patient-Christina-Becker
 InstanceOf: Patient
 Title: "Fall 10: Patientin Christina Becker"
-Description: "Synthetische Testpatientin — BRCA1-Trägerin, TNBC rechts, bilaterale Mastektomie mit Implantatrekonstruktion"
+Description: "Synthetische Testpatientin — PALB2-Mutationsträgerin, TNBC rechts, bilaterale Mastektomie mit Implantatrekonstruktion"
 Usage: #example
 
 * identifier.system = "http://fhir.bih-charite.de/sid/patient-id"
@@ -29,7 +29,7 @@ Usage: #example
 Instance: Fall10-Diagnose-Mammakarzinom
 InstanceOf: Senologie_Diagnose_Maligne
 Title: "Fall 10: TNBC rechts, cT1c cN0 cM0"
-Description: "Triple-negatives invasives Mammakarzinom NST rechts, G3, UICC IA, BRCA1-Trägerin"
+Description: "Triple-negatives invasives Mammakarzinom NST rechts, G3, UICC IA, PALB2-Mutationsträgerin"
 Usage: #example
 
 * clinicalStatus = http://terminology.hl7.org/CodeSystem/condition-clinical#active
@@ -42,7 +42,7 @@ Usage: #example
 * code.coding[icd10-gm].version = "2025"
 * code.coding[icd10-gm].code = #C50.4
 * code.coding[icd10-gm].display = "Bösartige Neubildung: Oberer äußerer Quadrant der Brustdrüse"
-* code.text = "Invasives Mammakarzinom NST rechts, triple-negativ, BRCA1-Mutation"
+* code.text = "Invasives Mammakarzinom NST rechts, triple-negativ, PALB2-Keimbahnmutation"
 
 // Seite
 * bodySite.coding = $SCT#73056007 "Right breast structure"
@@ -115,7 +115,7 @@ Usage: #example
 Instance: Fall10-Pathologie-Befund
 InstanceOf: Senologie_Pathologie_Befund
 Title: "Fall 10: Pathologie — Invasives Karzinom NST, G3, TNBC, Ki-67 55%"
-Description: "Pathologischer Befund: Invasives Karzinom NST, G3, ER- PR- HER2-, Ki-67 55%, BRCA1-positiv"
+Description: "Pathologischer Befund: Invasives Karzinom NST, G3, ER- PR- HER2-, Ki-67 55%, PALB2-Keimbahnmutation"
 Usage: #example
 
 * status = #final
@@ -142,7 +142,7 @@ Usage: #example
 
 * result[diagnostic-conclusion] = Reference(Observation/Fall10-Patho-Conclusion)
 
-* conclusion = "Invasives Karzinom NST, G3, ER negativ (IRS 0), PR negativ (IRS 0), HER2 negativ (Score 0), Ki-67 55%. BRCA1-Mutation bekannt."
+* conclusion = "Invasives Karzinom NST, G3, ER negativ (IRS 0), PR negativ (IRS 0), HER2 negativ (Score 1+, HER2-low), Ki-67 55%. PALB2-Keimbahnmutation bekannt."
 
 
 Instance: Fall10-Patho-Conclusion
@@ -155,7 +155,7 @@ Usage: #example
 * code = $LOINC#22637-3 "Pathology report final diagnosis Narrative"
 * subject = Reference(Patient/Fall10-Patient-Christina-Becker)
 * effectiveDateTime = "2025-05-28"
-* valueString = "Invasives Karzinom NST, G3, pT1c, ER- IRS 0, PR- IRS 0, HER2- Score 0, Ki-67 55%, triple-negativ"
+* valueString = "Invasives Karzinom NST, G3, pT1c, ER- IRS 0, PR- IRS 0, HER2- Score 1+ (HER2-low), Ki-67 55%, triple-negativ"
 
 
 // --- Pathologie Präparat ---
@@ -271,7 +271,7 @@ Usage: #example
 Instance: Fall10-Operation-Mastektomie-Links
 InstanceOf: Senologie_Operation
 Title: "Fall 10: Prophylaktische Mastektomie links (risikoreduktiv)"
-Description: "Prophylaktische kontralaterale Mastektomie links bei BRCA1-Mutation"
+Description: "Prophylaktische kontralaterale Mastektomie links bei PALB2-Keimbahnmutation"
 Usage: #example
 
 * status = #completed
@@ -287,7 +287,7 @@ Usage: #example
 * code.coding[=].version = "2025"
 * code.coding[=].code = #5-872
 * code.coding[=].display = "(Modifizierte radikale) Mastektomie"
-* code.text = "Prophylaktische Mastektomie links (risikoreduktiv bei BRCA1)"
+* code.text = "Prophylaktische Mastektomie links (risikoreduktiv bei PALB2)"
 
 // Lateralität
 * bodySite = $SCT#80248007 "Left breast structure"
@@ -442,7 +442,7 @@ Usage: #example
 Instance: Fall10-Systemtherapie-Adjuvant
 InstanceOf: Senologie_Systemtherapie_Procedure
 Title: "Fall 10: Adjuvante Chemotherapie Carboplatin + Paclitaxel"
-Description: "Adjuvante Chemotherapie mit Carboplatin + Paclitaxel bei TNBC + BRCA1"
+Description: "Adjuvante Chemotherapie mit Carboplatin + Paclitaxel bei TNBC + PALB2"
 Usage: #example
 
 * status = #completed
@@ -466,7 +466,7 @@ Usage: #example
 * reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
 
 * usedCode = $MII_CS_Onko_Protokolle#CarboTax "CarboTax"
-* usedCode.text = "Carboplatin AUC5 q3w + Paclitaxel 175 mg/m2 q3w x6 Zyklen (TNBC + BRCA1)"
+* usedCode.text = "Carboplatin AUC5 q3w + Paclitaxel 175 mg/m2 q3w x6 Zyklen (TNBC + PALB2)"
 
 
 // --- Medikation: Carboplatin ---
@@ -560,3 +560,256 @@ Usage: #example
 * reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
 
 * note.text = "Thoraxwand rechts 50 Gy in 25 Fraktionen. Nur therapeutische Seite bestrahlt."
+
+
+// ============================================================
+// Ergaenzungen 2026-10-10: Tumorboard, Nebenwirkung, Verlauf.
+// Macht Fall 10 zum durchgaengigen Beispiel fuer Chemotherapie + Implantat
+// (analog zu Fall 1 fuer BET + Strahlentherapie).
+// ============================================================
+
+// --- Tumorboard (praetherapeutisch) ---
+Instance: Fall10-Tumorboard
+InstanceOf: Senologie_Tumorboard_Empfehlung
+Title: "Fall 10: Tumorboard-Empfehlung"
+Description: "Empfehlung: Mastektomie rechts mit SLNB, risikoreduzierende Mastektomie links, Sofortrekonstruktion mit Implantaten, adjuvante Chemotherapie, keine endokrine Therapie"
+Usage: #example
+
+* status = #active
+* intent = #plan
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#praeth "prätherapeutische Tumorkonferenz (Festlegung der Therapiestrategie)"
+
+* title = "Tumorboard-Empfehlung Christina Becker"
+* description = "Triple-negatives Mammakarzinom rechts, cT1c cN0 cM0, G3, PALB2-Keimbahnmutation. Empfehlung: Mastektomie rechts mit Sentinel-LK-Biopsie, risikoreduzierende Mastektomie links, Sofortrekonstruktion mit Implantaten; adjuvante Chemotherapie Carboplatin + Paclitaxel. Keine endokrine Therapie (hormonrezeptor-negativ)."
+
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* period.start = "2025-06-03"
+
+* addresses = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
+
+// Operative Therapie
+* activity[operativeTherapy].detail.kind = #ServiceRequest
+* activity[operativeTherapy].detail.code = $SCT#387713003 "Surgical procedure (procedure)"
+* activity[operativeTherapy].detail.code.text = "Mastektomie rechts + SLNB, risikoreduzierende Mastektomie links, Sofortrekonstruktion mit Implantaten"
+* activity[operativeTherapy].detail.status = #scheduled
+
+// Chemotherapie
+* activity[chemotherapy].detail.kind = #MedicationRequest
+* activity[chemotherapy].detail.code = $SCT#385786002 "Chemotherapy care (regime/therapy)"
+* activity[chemotherapy].detail.code.text = "Adjuvant Carboplatin + Paclitaxel, 6 Zyklen"
+* activity[chemotherapy].detail.status = #scheduled
+
+// Strahlentherapie
+* activity[radiotherapy].detail.kind = #ServiceRequest
+* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code.text = "Bestrahlung der Thoraxwand nach Abschluss der Chemotherapie"
+* activity[radiotherapy].detail.status = #scheduled
+
+// Keine endokrine Therapie
+* activity[endocrineTherapy].detail.kind = #MedicationRequest
+* activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
+* activity[endocrineTherapy].detail.code.text = "Keine endokrine Therapie (hormonrezeptor-negativ)"
+* activity[endocrineTherapy].detail.status = #not-started
+* activity[endocrineTherapy].detail.doNotPerform = true
+
+
+// --- Nebenwirkung unter Chemotherapie ---
+Instance: Fall10-Nebenwirkung-Nausea
+InstanceOf: Senologie_Nebenwirkung
+Title: "Fall 10: Nausea CTCAE Grad 2 unter Carboplatin + Paclitaxel"
+Description: "Nausea Grad 2 (moderat) im zweiten Zyklus der adjuvanten Chemotherapie"
+Usage: #example
+
+* actuality = #actual
+
+* event.coding[+].system = "https://www.meddra.org"
+* event.coding[=].version = "Version 4"
+* event.coding[=].code = #10028813
+* event.coding[=].display = "Nausea"
+* event.text = "Nausea Grad 2 unter Carboplatin + Paclitaxel"
+
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* date = "2025-08-14"
+
+* seriousness.coding.system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-nebenwirkung-ctcae-grad"
+* seriousness.coding.code = #2
+* seriousness.coding.display = "Moderat"
+* seriousness.text = "CTCAE Grad 2 — Moderat"
+
+* suspectEntity[+].instance = Reference(Procedure/Fall10-Systemtherapie-Adjuvant)
+
+
+// --- Verlauf nach Abschluss der Therapie ---
+Instance: Fall10-Verlauf-PostTherapie
+InstanceOf: Senologie_FollowUp
+Title: "Fall 10: Verlaufskontrolle nach Abschluss der Therapie"
+Description: "Nachsorge-Untersuchung nach Mastektomie, Chemotherapie und Bestrahlung, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor."
+Usage: #example
+
+* status = #final
+
+* code.coding[+].system = "http://snomed.info/sct"
+* code.coding[=].code = #396432002
+* code.coding[=].display = "Status of regression of tumor (observable entity)"
+
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* focus = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
+* effectiveDateTime = "2026-04-14"
+
+* performer = Reference(Organization/Brustzentrum-Charite)
+
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Gesamt
+* valueCodeableConcept.coding[=].code = #K
+* valueCodeableConcept.coding[=].display = "keine Änderung (no change, NC) = stable disease"
+
+* component[+].code.coding = $SCT#445200009 "Status of residual neoplasm (observable entity)"
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Primaertumor
+* component[=].valueCodeableConcept.coding[=].code = #K
+* component[=].valueCodeableConcept.coding[=].display = "kein Tumor nachweisbar"
+
+* component[+].code.coding = $SCT#399656008 "Presence of metastatic neoplasm in regional lymph node (observable entity)"
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Lymphknoten
+* component[=].valueCodeableConcept.coding[=].code = #K
+* component[=].valueCodeableConcept.coding[=].display = "kein Lymphknotenbefall nachweisbar"
+
+* component[+].code.coding = $SCT#399608002 "Status of distant metastasis (observable entity)"
+* component[=].valueCodeableConcept.coding[+].system = $MII_CS_Onko_Verlauf_Fernmetastasen
+* component[=].valueCodeableConcept.coding[=].code = #K
+* component[=].valueCodeableConcept.coding[=].display = "keine Fernmetastasen nachweisbar"
+
+* method.coding[+].system = $CS_FU_EX
+* method.coding[=].code = #aktiv
+* method.coding[=].display = "Aktive Nachsorge"
+
+* component[+].code.coding[+].system = $CS_FU_EX
+* component[=].code.coding[=].code = #zweittumor
+* component[=].code.coding[=].display = "Zweittumor"
+* component[=].valueCodeableConcept.coding[+].system = "http://snomed.info/sct"
+* component[=].valueCodeableConcept.coding[=].code = #373067005
+* component[=].valueCodeableConcept.coding[=].display = "No (qualifier value)"
+
+
+Instance: Fall10-ECOG-PostTherapie
+InstanceOf: Observation
+Title: "Fall 10: ECOG-Leistungszustand nach Abschluss der Therapie"
+Description: "ECOG 0 — vollständig aktiv, keine Einschränkung"
+Usage: #example
+
+* meta.profile = $MII_PR_Onko_ECOG
+* status = #final
+* code.coding[+].system = "http://loinc.org"
+* code.coding[=].code = #89247-1
+* code.coding[=].display = "ECOG Performance Status score"
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* effectiveDateTime = "2026-04-14"
+* valueCodeableConcept.coding[+].system = $MII_CS_Onko_ECOG
+* valueCodeableConcept.coding[=].code = #0
+* valueCodeableConcept.coding[=].display = "Normale, uneingeschränkte Aktivität wie vor der Erkrankung (90 - 100 % nach Karnofsky)"
+
+
+Instance: Fall10-Vitalstatus-Lebend
+InstanceOf: Observation
+Title: "Fall 10: Vitalstatus — lebend"
+Description: "Vitalstatus-Observation gemäß MII Person-Modul: Patientin Christina Becker lebt zum Zeitpunkt der Nachsorge."
+Usage: #example
+
+* meta.profile = $MII_PR_Person_Vitalstatus
+* status = #final
+* category.coding = http://terminology.hl7.org/CodeSystem/observation-category#survey
+* code.coding = $LOINC#67162-8 "Patient Disposition"
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* effectiveDateTime = "2026-04-14"
+* valueCodeableConcept.coding = $MII_CS_Person_Vitalstatus#L "Patient lebt"
+
+
+// ============================================================
+// Kodierter Rezeptorstatus, Ki-67 und Grading (bisher nur im Befundtext).
+// HER2 IHC 1+: im oBDS-Slice 'negativ', im Leitlinien-Slice 'HER2-low'.
+// ============================================================
+
+Instance: Fall10-ER-Status
+InstanceOf: Senologie_ER_Status
+Title: "Fall 10: ER-Status — negativ, IRS 0"
+Description: "Östrogenrezeptor negativ (0 % positive Zellen)."
+Usage: #example
+
+* status = #final
+* code = $LOINC#40556-3 "Estrogen receptor Ag [Presence] in Tissue by Immune stain"
+* subject = Reference(Fall10-Patient-Christina-Becker)
+* effectiveDateTime = "2025-05-28"
+* valueCodeableConcept.coding[DefinitionOBDS] = $LOINC#LA6577-6 "Negative"
+* valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-rezeptorstatus-leitlinie#negativ "negativ"
+* component[AnteilPositiveZellen].valueQuantity.value = 0
+* component[AnteilPositiveZellen].valueQuantity.unit = "%"
+* component[AnteilPositiveZellen].valueQuantity.system = "http://unitsofmeasure.org"
+* component[AnteilPositiveZellen].valueQuantity.code = #%
+* component[irsScore].valueQuantity.value = 0
+* component[irsScore].valueQuantity.system = "http://unitsofmeasure.org"
+* component[irsScore].valueQuantity.code = #{score}
+
+
+Instance: Fall10-PR-Status
+InstanceOf: Senologie_PR_Status
+Title: "Fall 10: PR-Status — negativ, IRS 0"
+Description: "Progesteronrezeptor negativ (0 % positive Zellen)."
+Usage: #example
+
+* status = #final
+* code = $LOINC#85339-0 "Progesterone receptor [Interpretation] in Tissue by Immune stain"
+* subject = Reference(Fall10-Patient-Christina-Becker)
+* effectiveDateTime = "2025-05-28"
+* valueCodeableConcept.coding[DefinitionOBDS] = $LOINC#LA6577-6 "Negative"
+* valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-rezeptorstatus-leitlinie#negativ "negativ"
+* component[AnteilPositiveZellen].valueQuantity.value = 0
+* component[AnteilPositiveZellen].valueQuantity.unit = "%"
+* component[AnteilPositiveZellen].valueQuantity.system = "http://unitsofmeasure.org"
+* component[AnteilPositiveZellen].valueQuantity.code = #%
+* component[irsScore].valueQuantity.value = 0
+* component[irsScore].valueQuantity.system = "http://unitsofmeasure.org"
+* component[irsScore].valueQuantity.code = #{score}
+
+
+Instance: Fall10-HER2-Status
+InstanceOf: Senologie_HER2_Status
+Title: "Fall 10: HER2-Status — HER2-low (IHC 1+)"
+Description: "HER2 IHC 1+. Im oBDS-Slice 'negativ' (damit triple-negativ im Register), im Leitlinien-Slice 'HER2-low'."
+Usage: #example
+
+* status = #final
+* code = $LOINC#48676-1 "HER2 Ag [Interpretation] in Tissue"
+* subject = Reference(Fall10-Patient-Christina-Becker)
+* effectiveDateTime = "2025-05-28"
+* valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
+* valueCodeableConcept.coding[DefinitionOBDS] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds#N "negativ"
+* component[IHCScore].valueCodeableConcept = $LOINC#LA11841-6 "1+"
+
+
+Instance: Fall10-Ki67
+InstanceOf: Senologie_Ki67_Proliferationsindex
+Title: "Fall 10: Ki-67 55 %"
+Usage: #example
+
+* status = #final
+* code.coding = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
+* subject = Reference(Fall10-Patient-Christina-Becker)
+* effectiveDateTime = "2025-05-28"
+* valueQuantity.value = 55
+* valueQuantity.unit = "%"
+* valueQuantity.system = "http://unitsofmeasure.org"
+* valueQuantity.code = #%
+
+
+// --- Stationaerer Aufenthalt zur Operation (Ausloeser der Implantateregister-Meldung) ---
+Instance: Fall10-Encounter-Stationaer
+InstanceOf: Encounter
+Title: "Fall 10: Stationärer Aufenthalt (Mastektomie mit Implantatrekonstruktion)"
+Description: "Stationärer Aufenthalt für Mastektomie beidseits mit Sofortrekonstruktion durch Implantate"
+Usage: #example
+
+* status = #finished
+* class = http://terminology.hl7.org/CodeSystem/v3-ActCode#IMP "inpatient encounter"
+* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
+* period.start = "2025-06-17"
+* period.end = "2025-06-23"
+* reasonReference[+] = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
+

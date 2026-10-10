@@ -48,7 +48,11 @@ group SenologieToIRegMeldung(source src : Bundle, target tgt : IRegMeldung) {
 
   // --- Fall (FAL_*) ---
   src.entry as entry where resource.is(Encounter) then {
-    entry.resource as encounter -> tgt.fall as fall then MapFall(encounter, fall) "CallMapFall";
+    // Alle Lookups stehen INNERHALB der Regel, die `fall` anlegt: eine Zielvariable
+    // ist nur in den abhaengigen Regeln ihrer eigenen Regel sichtbar (sonst:
+    // "target context not known"). Gleiches gilt unten fuer `pat` und `op`.
+    entry.resource as encounter -> tgt.fall as fall then {
+    encounter then MapFall(encounter, fall) "CallMapFall";
 
     // Bundle lookups moved from MapFall
     // Ausloeser: OPS-Kodes
@@ -64,7 +68,8 @@ group SenologieToIRegMeldung(source src : Bundle, target tgt : IRegMeldung) {
 
     // Patientenaufnahme
     src.entry as patEntry where resource.is(Patient) then {
-      patEntry.resource as patient -> fall.patientenaufnahme as pat then MapPatientenaufnahme(patient, pat) "CallMapPatientenaufnahme";
+      patEntry.resource as patient -> fall.patientenaufnahme as pat then {
+      patient then MapPatientenaufnahme(patient, pat) "CallMapPatientenaufnahme";
 
       // PAT_Groesse (moved from MapPatientenaufnahme)
       src.entry as ghEntry where resource.is(Observation) and resource.code.coding.exists(code = '8302-2') then {
@@ -74,23 +79,29 @@ group SenologieToIRegMeldung(source src : Bundle, target tgt : IRegMeldung) {
       src.entry as gwEntry where resource.is(Observation) and resource.code.coding.exists(code = '29463-7') then {
         gwEntry.resource as obs then { obs.value as val then { val.value as v -> pat.gewicht = truncate(v) "SetGewicht"; } "MapGewichtValue"; } "GewichtObsContext";
       } "EntryGewicht";
+      } "PatientMitLookups";
     } "EntryPatient";
 
     // Operationen
     src.entry as opEntry where resource.is(Procedure) and resource.meta.profile.exists($this.contains('senologie-operation') or $this.contains('senologie-brustop')) then {
-      opEntry.resource as procedure -> fall.operation as op then MapOperation(procedure, op) "CallMapOperation";
+      opEntry.resource as procedure -> fall.operation as op then {
+      procedure then MapOperation(procedure, op) "CallMapOperation";
 
       // Artikelidentifikation via focalDevice
       opEntry.resource as procedure then {
         procedure.focalDevice as fd then {
           fd.manipulated as ref then {
-            src.entry as devEntry where resource.is(Device) and fullUrl = (%ref.reference) then {
+            // Referenz ueber die Ressourcen-ID aufloesen: fullUrl ist je nach Bundle
+            // 'urn:uuid:<id>' oder eine absolute URL, die Referenz lautet 'Device/<id>'.
+            src.entry as devEntry where resource.is(Device) and (%ref.reference).endsWith(resource.id) then {
               devEntry.resource as device -> op.artikelidentifikation as art then MapArtikelidentifikation(device, art) "CallMapArtikel";
             } "ResolveDeviceRef";
           } "MapDeviceRef";
         } "MapFocalDevice";
 
-        procedure where focalDevice.exists().not() then {
+        // Rueckfall nur, wenn im ganzen Bundle KEINE Prozedur ein Implantat nennt —
+        // sonst bekaeme jede Operation ohne focalDevice alle Implantate zugeordnet.
+        procedure where focalDevice.exists().not() and %src.entry.resource.ofType(Procedure).focalDevice.exists().not() then {
           src.entry as devEntry where resource.is(Device) and resource.meta.profile.exists($this.contains('senologie-implantat')) then {
             devEntry.resource as device -> op.artikelidentifikation as art then MapArtikelidentifikation(device, art) "CallMapArtikelFallback";
           } "EntryDeviceFallback";
@@ -101,6 +112,7 @@ group SenologieToIRegMeldung(source src : Bundle, target tgt : IRegMeldung) {
       src.entry as zubEntry where resource.is(Device) and resource.meta.profile.exists($this.contains('ireg-zubehoer') or $this.contains('senologie-zubehoer')) then {
         zubEntry.resource as device -> op.zubehoer as zub then MapZubehoer(device, zub) "CallMapZubehoer";
       } "EntryZubehoer";
+      } "OperationMitLookups";
     } "EntryOperation";
 
     // Entlassung
@@ -125,6 +137,7 @@ group SenologieToIRegMeldung(source src : Bundle, target tgt : IRegMeldung) {
         } "MapDbiCode";
       } "DbiConditionContext";
     } "EntryDbiCondition";
+    } "FallMitLookups";
   } "EntryEncounter";
 }
 
