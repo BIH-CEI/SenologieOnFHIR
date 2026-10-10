@@ -23,7 +23,7 @@ The following values are not currently provided in the MII Oncology receptor sta
 | Component code (`CS_Senologie_Biomarker`) | Data type | Profile | Purpose |
 |---|---|---|---|
 | `irs-score` | Quantity (0–12, `{score}`) | ER, PR | Immunoreactive score (Remmele-Stegner; German standard) |
-| `allred-score` | Quantity (0–8, `{score}`) | ER, PR | Allred score (international; S3 guideline) |
+| SNOMED CT `445104009` | Quantity (0–8, `{score}`) | ER, PR | Allred score (international; S3 guideline) |
 
 #### HER2 ISH Reflex Testing — Already Covered by MII MTB
 

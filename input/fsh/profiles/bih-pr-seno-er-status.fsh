@@ -37,7 +37,7 @@ Description: "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Es
 * component[irsScore] ^mapping[+].identity = "lm"
 * component[irsScore] ^mapping[=].map = "Pathologie.BefundInvasiv.Biomarker.ER.IRSScore"
 
-* component[allredScore].code = $CS_Senologie_Biomarker#allred-score
+* component[allredScore].code = $SCT#445104009 "Allred score for neoplasm"
 * component[allredScore] ^short = "Allred Score (0–8)"
 * component[allredScore] ^comment = "Allred Score (international). Summe aus Proportion (0–5) und Intensity (0–3). LOINC 85337-4 als alternative Kodierung möglich."
 * component[allredScore].value[x] only Quantity

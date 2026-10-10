@@ -23,7 +23,7 @@ Die folgenden Werte sind in MII Onko Rezeptorstatus aktuell nicht vorgesehen, kl
 | Component-Code (`CS_Senologie_Biomarker`) | Datentyp | Profil | Zweck |
 |---|---|---|---|
 | `irs-score` | Quantity (0–12, `{score}`) | ER, PR | Immunreaktiver Score nach Remmele-Stegner (DE-Standard) |
-| `allred-score` | Quantity (0–8, `{score}`) | ER, PR | Allred Score (international, S3-Leitlinie) |
+| SNOMED CT `445104009` | Quantity (0–8, `{score}`) | ER, PR | Allred Score (international, S3-Leitlinie) |
 
 #### HER2-ISH-Reflextestung — bereits in MII MTB abgebildet
 

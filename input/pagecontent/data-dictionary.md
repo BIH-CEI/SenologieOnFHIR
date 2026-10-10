@@ -41,7 +41,7 @@ _Auto-generiert mit `scripts/generate-data-dictionary.py` aus ViewDefinitions + 
 | `her2_gesamt` | code |  | HER2-Leitlinien-Gesamtstatus (positiv/low/ultralow/negativ/equivocal). | CS: cs-senologie-biomarker | `valueCodeableConcept.coding.where(system='https://www.senologie.org/fhir/Code…` |
 | `value_prozent` | string |  | Prozent positive Zellen (TPS bei PD-L1, %-positiv bei ER/PR/Ki67). |  | `component.where(code.coding.where(code='1234803000' or code='85318-4' or code…` |
 | `value_irs` | string |  |  |  | `component.where(code.coding.code='irs-score').valueQuantity.value.first()` |
-| `value_allred` | string |  |  |  | `component.where(code.coding.code='allred-score').valueQuantity.value.first()` |
+| `value_allred` | string |  |  |  | `component.where(code.coding.code='445104009').valueQuantity.value.first()` |
 | `intensitaet` | code |  | Faerbeintensitaet (negative/weak/moderate/strong). |  | `component.where(code.coding.where(code='1236874005' or code='1237278006').exi…` |
 | `ish_methode` | code |  |  |  | `component.where(code.coding.code='ish-methode').valueCodeableConcept.coding.c…` |
 | `her2_ratio` | string |  |  |  | `component.where(code.coding.code='her2-ratio').valueQuantity.value.first()` |

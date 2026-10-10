@@ -19,6 +19,7 @@ Description: "Codes für zusätzliche IHC-Components am MII Onko Mamma Rezeptors
 
 * #irs-score "IRS (Remmele-Stegner)"
     "Immunreaktiver Score nach Remmele-Stegner (0–12). Produkt aus Prozentscore (0–4) und Intensitätsscore (0–3). DE-Standard für ER/PR-Bewertung."
+// allred-score wird nicht mehr verwendet: SNOMED CT 445104009 "Allred score for neoplasm" deckt das ab.
 * #allred-score "Allred Score"
     "Allred Score (0–8). Summe aus Proportion Score (0–5) und Intensity Score (0–3). International gebräuchlich für ER/PR-Bewertung."
 

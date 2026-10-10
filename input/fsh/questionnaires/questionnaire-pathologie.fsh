@@ -84,7 +84,7 @@ Usage: #inline
 * component[+].code = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-irs').answer.valueInteger"
-* component[+].code = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* component[+].code = $SCT#445104009 "Allred score for neoplasm"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-allred').answer.valueInteger"
 * component[+].code = $SCT#1236874005 "Intensity of stain of estrogen receptor"
@@ -108,7 +108,7 @@ Usage: #inline
 * component[+].code = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-irs').answer.valueInteger"
-* component[+].code = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* component[+].code = $SCT#445104009 "Allred score for neoplasm"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-allred').answer.valueInteger"
 * component[+].code = $SCT#1237278006 "Intensity of stain of progesterone receptor"
@@ -884,7 +884,7 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[ER Allred Score (0-8)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* item[=].item[=].code[+] = $SCT#445104009 "Allred score for neoplasm"
 
 // ER Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-er-intensitaet"
@@ -919,7 +919,7 @@ Usage: #definition
 * insert Translation(item[=].item[=].text, en, [[PR Allred Score (0-8)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* item[=].item[=].code[+] = $SCT#445104009 "Allred score for neoplasm"
 
 // PR Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-pr-intensitaet"

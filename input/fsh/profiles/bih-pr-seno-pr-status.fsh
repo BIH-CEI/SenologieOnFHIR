@@ -32,7 +32,7 @@ Description: "Progesteronrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus 
 * component[irsScore] ^mapping[+].identity = "lm"
 * component[irsScore] ^mapping[=].map = "Pathologie.BefundInvasiv.Biomarker.PR.IRSScore"
 
-* component[allredScore].code = $CS_Senologie_Biomarker#allred-score
+* component[allredScore].code = $SCT#445104009 "Allred score for neoplasm"
 * component[allredScore] ^short = "Allred Score (0–8). LOINC 85339-0 als alternative Kodierung möglich."
 * component[allredScore].value[x] only Quantity
 * component[allredScore].valueQuantity.value 1..1
