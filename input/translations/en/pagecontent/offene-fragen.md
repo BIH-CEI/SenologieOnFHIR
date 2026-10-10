@@ -159,6 +159,10 @@ The current radiotherapy documentation in the Senology IG is limited to a simple
 
 For more detailed structuring, the [HL7 CodeX Radiation Therapy IG](https://build.fhir.org/ig/HL7/codex-radiation-therapy/branches/master/en/overview.html) could serve as a reference. This US IG maps radiation treatment plans, phases, fractionation schemes, and dose distributions in detail.
 
+We cannot derive from the CodeX RT IG because it builds on US Core; it remains relevant as a modelling reference.
+
+**Today's limit and the target picture:** Radiotherapy is planned, delivered, documented and reported by radiation oncology, not by the breast centre. As of now the breast centre's clinicians summarise the results once more, and the same applies to pathology and imaging findings. The dataset therefore holds this summary (dose, fractions, target volume), not the treatment plan. In the long run the results should arrive automatically from the source systems, first within the hospital, then across sectors, and be exchangeable in the same structure.
+
 **Open sub-questions:**
 - Are there German preparatory works on FHIR-based radiotherapy documentation (e.g. in the MII context)?
 - What level of detail is required for senology reporting vs. what is "nice to have"?

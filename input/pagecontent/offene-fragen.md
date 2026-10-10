@@ -159,6 +159,10 @@ Die aktuelle Strahlentherapie-Dokumentation im Senologie-IG beschränkt sich auf
 
 Für eine tiefere Strukturierung könnte der [HL7 CodeX Radiation Therapy IG](https://build.fhir.org/ig/HL7/codex-radiation-therapy/branches/master/en/overview.html) als Orientierung dienen. Dieser US-amerikanische IG bildet Bestrahlungspläne, Phasen, Fraktionierungsschemata und Dosisverteilungen detailliert ab.
 
+Ableiten lässt sich vom CodeX-RT-IG nicht, weil er auf US Core aufbaut; als Modellierungsreferenz bleibt er trotzdem relevant.
+
+**Grenze heute, Zielbild:** Geplant, durchgeführt, dokumentiert und gemeldet wird die Bestrahlung von der Strahlentherapie, nicht vom Brustzentrum. Stand jetzt fassen die Ärztinnen und Ärzte des Brustzentrums die Ergebnisse einmalig zusammen — das gilt ebenso für Pathologie- und Bildgebungsbefunde. Der Datensatz bildet deshalb diese Zusammenfassung ab (Dosis, Fraktionen, Zielvolumen), nicht den Bestrahlungsplan. Langfristig sollen die Ergebnisse automatisiert aus den Quellsystemen kommen, zunächst klinikintern, dann intersektoral, und in derselben Struktur austauschbar sein.
+
 **Offene Teilfragen:**
 - Gibt es deutsche Vorarbeiten zur FHIR-basierten Strahlentherapie-Dokumentation (z.B. im MII-Kontext)?
 - Welcher Detailgrad ist für die Senologie-Meldungen erforderlich vs. was ist "nice to have"?
