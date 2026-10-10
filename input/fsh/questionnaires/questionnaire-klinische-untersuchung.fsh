@@ -127,12 +127,16 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[=].system = "https://www.uicc.org/resources/tnm"
+* component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[=].extension.valueString = "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 
 // component[+]: cN
 * component[+].code = $SCT#399534004 "cN category (observable entity)"
 * component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[=].system = "https://www.uicc.org/resources/tnm"
+* component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[=].extension.valueString = "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 
 // ===== Tumornachweis-Status (Response Assessment) =====
 
@@ -168,14 +172,20 @@ Usage: #inline
 * valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ctnm-uicc').answer.valueCoding"
 // Components: cT, cN, cM
 * component[+].code = $LOINC#21905-5 "Primary tumor.pathology Cancer"
-* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 * component[+].code = $LOINC#21906-3 "Regional lymph nodes.pathology Cancer"
-* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 * component[+].code = $LOINC#21907-1 "Distant metastases.pathology Cancer"
-* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 
 
 // --- Questionnaire ---
@@ -411,7 +421,24 @@ Usage: #definition
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-t-kategorie-mamma"
+// Optionen = vs-senologie-tnm-t-kategorie-mamma, je mit SNOMED-CT-Äquivalent (alternate-codes)
+* insert TnmAnswerOption([[TX]], [[TX — Primärtumor kann nicht beurteilt werden]], 1352975000, [[cTX (UICC)]])
+* insert TnmAnswerOption([[T0]], [[T0 — Kein Anhalt für Primärtumor]], 1352986003, [[cT0 (UICC)]])
+* insert TnmAnswerOption([[Tis]], [[Tis — Carcinoma in situ]], 1352984000, [[cTis (UICC)]])
+* insert TnmAnswerOption([[Tis(DCIS)]], [[Tis (DCIS) — Ductales Carcinoma in situ]], 1352965003, [[cTis(DCIS) (UICC)]])
+* insert TnmAnswerOption([[Tis(Paget)]], [[Tis (Paget) — M. Paget der Mamille ohne nachweisbaren Tumor]], 1352987007, [[cTis(Paget) (UICC)]])
+* insert TnmAnswerOption([[T1]], [[T1 — Tumor ≤ 2 cm]], 1352996007, [[cT1 (UICC)]])
+* insert TnmAnswerOption([[T1mi]], [[T1mi — Mikroinvasion ≤ 0,1 cm]], 1352979006, [[cT1mi (UICC)]])
+* insert TnmAnswerOption([[T1a]], [[T1a — > 0,1 cm und ≤ 0,5 cm]], 1352983006, [[cT1a (UICC)]])
+* insert TnmAnswerOption([[T1b]], [[T1b — > 0,5 cm und ≤ 1 cm]], 1352968001, [[cT1b (UICC)]])
+* insert TnmAnswerOption([[T1c]], [[T1c — > 1 cm und ≤ 2 cm]], 1352973007, [[cT1c (UICC)]])
+* insert TnmAnswerOption([[T2]], [[T2 — > 2 cm und ≤ 5 cm]], 1352993004, [[cT2 (UICC)]])
+* insert TnmAnswerOption([[T3]], [[T3 — > 5 cm]], 1352966002, [[cT3 (UICC)]])
+* insert TnmAnswerOption([[T4]], [[T4 — jede Größe mit Ausdehnung auf Brustwand/Haut]], 1352997003, [[cT4 (UICC)]])
+* insert TnmAnswerOption([[T4a]], [[T4a — Ausdehnung auf Brustwand]], 1352982001, [[cT4a (UICC)]])
+* insert TnmAnswerOption([[T4b]], [[T4b — Hautulzeration / -ödem / Satellitenmetastasen]], 1352960008, [[cT4b (UICC)]])
+* insert TnmAnswerOption([[T4c]], [[T4c — T4a + T4b]], 1352980009, [[cT4c (UICC)]])
+* insert TnmAnswerOption([[T4d]], [[T4d — Inflammatorisches Karzinom]], 1352963005, [[cT4d (UICC)]])
 
 * item[=].item[+].linkId = "cn"
 * item[=].item[=].text = "cN"
@@ -420,7 +447,21 @@ Usage: #definition
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
+// Optionen = vs-senologie-tnm-n-kategorie-mamma, je mit SNOMED-CT-Äquivalent (alternate-codes)
+* insert TnmAnswerOption([[NX]], [[NX — Regionäre LK können nicht beurteilt werden]], 1353039008, [[cNX (UICC)]])
+* insert TnmAnswerOption([[N0]], [[N0 — Keine regionären LK-Metastasen]], 1353041009, [[cN0 (UICC)]])
+* insert TnmAnswerOption([[N1]], [[N1 — Bewegliche ipsilaterale axilläre LK Level I/II]], 1353043007, [[cN1 (UICC)]])
+* insert TnmAnswerOptionUiccOnly([[N1mi]], [[N1 (mi) — Mikrometastasen (> 0,2 mm und/oder > 200 Zellen, aber ≤ 2 mm)]])
+* insert TnmAnswerOption([[N1a]], [[N1a — 1–3 axilläre LK]], 1353046004, [[cN1a (UICC)]])
+* insert TnmAnswerOption([[N1b]], [[N1b — Mammaria-interna-LK ohne axilläre]], 1353048003, [[cN1b (UICC)]])
+* insert TnmAnswerOption([[N1c]], [[N1c — N1a + N1b]], 1353044001, [[cN1c (UICC)]])
+* insert TnmAnswerOption([[N2]], [[N2 — Fixierte/verbackene axilläre oder klinisch erkennbare A. mammaria interna]], 1353047008, [[cN2 (UICC)]])
+* insert TnmAnswerOption([[N2a]], [[N2a — 4–9 axilläre LK]], 1353050006, [[cN2a (UICC)]])
+* insert TnmAnswerOption([[N2b]], [[N2b — Klinisch erkennbare Mammaria-interna-LK ohne axilläre]], 1353055001, [[cN2b (UICC)]])
+* insert TnmAnswerOption([[N3]], [[N3 — Infraklavikuläre / supraklavikuläre / Kombinationen]], 1353053008, [[cN3 (UICC)]])
+* insert TnmAnswerOption([[N3a]], [[N3a — ≥ 10 axilläre LK oder infraklavikuläre LK]], 1353057009, [[cN3a (UICC)]])
+* insert TnmAnswerOption([[N3b]], [[N3b — Klinisch erkennbare A. mammaria interna + axilläre LK]], 1353054002, [[cN3b (UICC)]])
+* insert TnmAnswerOption([[N3c]], [[N3c — Supraklavikuläre LK]], 1353051005, [[cN3c (UICC)]])
 
 * item[=].item[+].linkId = "cm"
 * item[=].item[=].text = "cM"
@@ -429,7 +470,9 @@ Usage: #definition
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-m-kategorie-mamma"
+// Optionen = vs-senologie-tnm-m-kategorie-mamma, je mit SNOMED-CT-Äquivalent (alternate-codes)
+* insert TnmAnswerOption([[M0]], [[M0 — Keine Fernmetastasen]], 1352512001, [[cM0 (UICC)]])
+* insert TnmAnswerOption([[M1]], [[M1 — Fernmetastasen vorhanden]], 1352513006, [[cM1 (UICC)]])
 
 * item[=].item[+].linkId = "ctnm-uicc"
 * item[=].item[=].text = "cUICC-Gesamtstadium (klinisch)"
