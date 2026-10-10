@@ -318,7 +318,9 @@ Usage: #inline
 * id = "patho-ptnm-aggregate-template"
 * meta.profile = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation"
 * status = #final
-* code = $LOINC#21902-2 "Stage group.pathology Cancer"
+// SNOMED CT verlangt das MII-Onko-2027-Profil, LOINC lesen die Exportmaps
+* code.coding[0] = $SCT#399588009 "Pathologic TNM stage grouping"
+* code.coding[1] = $LOINC#21902-2 "Stage group.pathology Cancer"
 * category = http://terminology.hl7.org/CodeSystem/observation-category#laboratory
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
@@ -329,17 +331,17 @@ Usage: #inline
 * valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='ptnm-uicc').answer.valueCoding"
 // Components: T/N/M/L/V/Pn/R-Kategorien duplizieren als Standalone-Datenpunkte
 // (parallel zu den hasMember-Refs, damit die View-Auswertung beides hat)
-* component[+].code = $LOINC#21905-5 "Primary tumor.pathology Cancer"
+* component[+].code = $LOINC#21899-0 "Primary tumor.pathology Cancer"
 * component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pt').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
-* component[+].code = $LOINC#21906-3 "Regional lymph nodes.pathology Cancer"
+* component[+].code = $LOINC#21900-6 "Regional lymph nodes.pathology [Class] Cancer"
 * component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pn').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
-* component[+].code = $LOINC#21907-1 "Distant metastases.pathology Cancer"
+* component[+].code = $LOINC#21901-4 "Distant metastases.pathology [Class] Cancer"
 * component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pm').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
