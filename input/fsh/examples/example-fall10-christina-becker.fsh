@@ -240,8 +240,8 @@ Usage: #example
 // OPS-Code Mastektomie
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "Therapeutische Mastektomie rechts"
 
 // Lateralität
@@ -285,8 +285,8 @@ Usage: #example
 // OPS-Code Mastektomie
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "Prophylaktische Mastektomie links (risikoreduktiv bei PALB2)"
 
 // Lateralität
@@ -387,8 +387,8 @@ Usage: #example
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-886.17
-* code.coding[=].display = "Andere plastische Rekonstruktion der Mamma: Einsetzen eines Brustimplantates: nach Mastektomie"
+* code.coding[=].code = #5-886.40
+* code.coding[=].display = "Andere plastische Rekonstruktion der Mamma: Primäre Rekonstruktion mit Alloprothese, subpektoral: Ohne gewebeverstärkendes Material"
 * code.text = "Sofortrekonstruktion rechts mit Silikonimplantat"
 
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -420,8 +420,8 @@ Usage: #example
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-886.17
-* code.coding[=].display = "Andere plastische Rekonstruktion der Mamma: Einsetzen eines Brustimplantates: nach Mastektomie"
+* code.coding[=].code = #5-886.40
+* code.coding[=].display = "Andere plastische Rekonstruktion der Mamma: Primäre Rekonstruktion mit Alloprothese, subpektoral: Ohne gewebeverstärkendes Material"
 * code.text = "Sofortrekonstruktion links mit Silikonimplantat"
 
 * bodySite = $SCT#80248007 "Left breast structure"

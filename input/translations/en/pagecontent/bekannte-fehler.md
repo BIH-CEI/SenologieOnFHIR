@@ -130,7 +130,6 @@ Affected codes:
 | `5-401.11` | Axillary lymphadenectomy — level I |
 | `5-402.11` | Axillary lymphadenectomy — level I–II |
 | `5-402.12` | Axillary lymphadenectomy — level I–III |
-| `5-886.17` | Other plastic reconstruction of the breast |
 | `8-547.32` | Chemotherapy — regimen specified |
 
 Additionally, OPS displays are reported as incorrect (*"Wrong Display Name"*) because OPS has no English-language displays and the TX server expects `en-US`.

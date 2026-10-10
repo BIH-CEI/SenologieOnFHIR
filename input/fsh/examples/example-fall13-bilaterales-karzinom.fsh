@@ -138,8 +138,8 @@ Usage: #example
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie mit Entfernung von axillären Lymphknoten"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "SSM rechts mit ALND Level I-II"
 
 * subject = Reference(Patient/Fall13-Patient-Margarete-Schreiber)

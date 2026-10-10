@@ -15,7 +15,7 @@ Die Kodierung operativer Eingriffe erfolgt in Deutschland über den Operationen-
 | Eingriffstyp | OPS-Bereich | SNOMED CT (soweit eindeutig) |
 |-------------|-------------|------------------------------|
 | Brusterhaltende Exzision | 5-870 | 392021009 Lumpectomy |
-| Mastektomie | 5-872 | 172043006 Modified radical mastectomy |
+| Mastektomie | 5-872.0 / 5-872.1 | 172043006 Simple mastectomy |
 | Sentinel-LK-Biopsie | 5-401.11 | 396487001 Sentinel lymph node biopsy |
 | Axilla-Dissektion | 5-402 | 79544006 Axillary dissection |
 | Brustrekonstruktion (Implantat) | 5-886 | 33496007 Mammoplasty |

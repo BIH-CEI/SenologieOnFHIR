@@ -130,7 +130,6 @@ Betroffene Codes:
 | `5-401.11` | Axilläre Lymphadenektomie — Level I |
 | `5-402.11` | Axilläre Lymphadenektomie — Level I-II |
 | `5-402.12` | Axilläre Lymphadenektomie — Level I-III |
-| `5-886.17` | Andere plastische Rekonstruktion der Brust |
 | `8-547.32` | Chemotherapie — Schema angegeben |
 
 Zusätzlich werden OPS-Displays als falsch gemeldet (*"Wrong Display Name"*), weil OPS keine englischsprachigen Displays hat und der TX-Server `en-US` erwartet.

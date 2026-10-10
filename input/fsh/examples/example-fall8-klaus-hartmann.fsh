@@ -219,8 +219,8 @@ Usage: #example
 // OPS-Code Mastektomie
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "Mastektomie rechts"
 
 // Lateralität

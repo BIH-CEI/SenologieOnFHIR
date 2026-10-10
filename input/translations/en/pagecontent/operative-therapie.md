@@ -15,7 +15,7 @@ Surgical procedures in Germany are coded using the Operationen- und Prozedurensc
 | Procedure type | OPS range | SNOMED CT (where unambiguous) |
 |----------------|-----------|-------------------------------|
 | Breast-conserving excision | 5-870 | 392021009 Lumpectomy |
-| Mastectomy | 5-872 | 172043006 Modified radical mastectomy |
+| Mastectomy | 5-872.0 / 5-872.1 | 172043006 Simple mastectomy |
 | Sentinel lymph node biopsy (Sentinel-LK-Biopsie) | 5-401.11 | 396487001 Sentinel lymph node biopsy |
 | Axillary dissection (Axilla-Dissektion) | 5-402 | 79544006 Axillary dissection |
 | Breast reconstruction (implant) | 5-886 | 33496007 Mammoplasty |
