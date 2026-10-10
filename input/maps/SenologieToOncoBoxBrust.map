@@ -165,18 +165,18 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
               // -- cTNM aus klinischer TNM-Observation (LOINC 21908-9) --
               src.entry as ctnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
                 ctnmEntry.resource as ctnm then {
-                  ctnm.component as comp where code.coding.exists(code = '21905-5') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Praeth_T = cd "SetPraethT"; } "MapPraethTCode"; } "MapPraethTVal"; } "PraethT";
-                  ctnm.component as comp where code.coding.exists(code = '21906-3') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Praeth_N = cd "SetPraethN"; } "MapPraethNCode"; } "MapPraethNVal"; } "PraethN";
-                  ctnm.component as comp where code.coding.exists(code = '21907-1') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Praeth_M = cd "SetPraethM"; } "MapPraethMCode"; } "MapPraethMVal"; } "PraethM";
+                  ctnm.component as comp where code.coding.exists(code = '21905-5') then { comp.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> d.Praeth_T = cd "SetPraethT"; } "MapPraethTCode"; } "MapPraethTVal"; } "PraethT";
+                  ctnm.component as comp where code.coding.exists(code = '21906-3') then { comp.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> d.Praeth_N = cd "SetPraethN"; } "MapPraethNCode"; } "MapPraethNVal"; } "PraethN";
+                  ctnm.component as comp where code.coding.exists(code = '21907-1') then { comp.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> d.Praeth_M = cd "SetPraethM"; } "MapPraethMCode"; } "MapPraethMVal"; } "PraethM";
                 } "MapCTNM";
               } "EntryCTNM";
 
               // -- pTNM aus pathologischer TNM-Observation (LOINC 21902-2) --
               src.entry as ptnmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
                 ptnmEntry.resource as ptnm then {
-                  ptnm.component as comp where code.coding.exists(code = '21899-0') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Postop_T = cd "SetPostopT"; } "MapPostopTCode"; } "MapPostopTVal"; } "PostopT";
-                  ptnm.component as comp where code.coding.exists(code = '21900-6') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Postop_N = cd "SetPostopN"; } "MapPostopNCode"; } "MapPostopNVal"; } "PostopN";
-                  ptnm.component as comp where code.coding.exists(code = '21901-4') then { comp.value as val then { val.coding as c then { c.code as cd -> d.Postop_M = cd "SetPostopM"; } "MapPostopMCode"; } "MapPostopMVal"; } "PostopM";
+                  ptnm.component as comp where code.coding.exists(code = '21899-0') then { comp.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> d.Postop_T = cd "SetPostopT"; } "MapPostopTCode"; } "MapPostopTVal"; } "PostopT";
+                  ptnm.component as comp where code.coding.exists(code = '21900-6') then { comp.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> d.Postop_N = cd "SetPostopN"; } "MapPostopNCode"; } "MapPostopNVal"; } "PostopN";
+                  ptnm.component as comp where code.coding.exists(code = '21901-4') then { comp.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> d.Postop_M = cd "SetPostopM"; } "MapPostopMCode"; } "MapPostopMVal"; } "PostopM";
                 } "MapPTNM";
               } "EntryPTNM";
             } "MapDiagnose";

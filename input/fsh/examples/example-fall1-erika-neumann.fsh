@@ -586,3 +586,28 @@ Usage: #example
 * dosage.doseAndRate.doseQuantity.unit = "ug"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
 * dosage.doseAndRate.doseQuantity.code = #ug
+
+// --- TNM-Klassifikation (kodiert): UICC + SNOMED CT je Kategorie ---
+Instance: Fall1-TNM-Klassifikation
+InstanceOf: https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation
+Title: "Fall 1: TNM-Klassifikation cT1c cN0 cM0"
+Description: "TNM-Klassifikation cT1c cN0 cM0, UICC IA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent."
+Usage: #example
+
+* status = #final
+* code.coding[0] = $SCT#399537006 "Clinical TNM stage grouping"
+* code.coding[1] = $LOINC#21908-9 "Stage group.clinical Cancer"
+* subject = Reference(Patient/Fall1-Patient-Erika-Neumann)
+* focus = Reference(Fall1-Diagnose-Mammakarzinom)
+* effectiveDateTime = "2025-01-15"
+* method = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version#8 "8. Auflage"
+* valueCodeableConcept = https://www.uicc.org/resources/tnm#IA "Stadium IA — T1 N0 M0"
+* component[+].code = $LOINC#21905-5 "Primary tumor.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#T1c "T1c — > 1 cm und ≤ 2 cm"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352973007 "cT1c (UICC)"
+* component[+].code = $LOINC#21906-3 "Regional lymph nodes.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#N0 "N0 — Keine regionären LK-Metastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1353041009 "cN0 (UICC)"
+* component[+].code = $LOINC#21907-1 "Distant metastases.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#M0 "M0 — Keine Fernmetastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352512001 "cM0 (UICC)"

@@ -104,25 +104,25 @@ group MapPrimaerfall(source bundle : Bundle, target tgt : BackboneElement) {
   // cTNM, pTNM, Histologie, Grading, Lymphknoten, Rezeptorstatus
   // (bundle lookups target diagnose sub-elements via tgt.diagnose)
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.coding as c then { c.code as cd -> ctnm.cT = cd "SetCT"; } "MapCTCoding"; } "MapCTVal"; } "MapCT";
+    entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ctnm.cT = cd "SetCT"; } "MapCTCoding"; } "MapCTVal"; } "MapCT";
   } "EntryCT";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21906-3') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.coding as c then { c.code as cd -> ctnm.cN = cd "SetCN"; } "MapCNCoding"; } "MapCNVal"; } "MapCN";
+    entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ctnm.cN = cd "SetCN"; } "MapCNCoding"; } "MapCNVal"; } "MapCN";
   } "EntryCN";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.coding as c then { c.code as cd -> ctnm.cM = cd "SetCM"; } "MapCMCoding"; } "MapCMVal"; } "MapCM";
+    entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ctnm.cM = cd "SetCM"; } "MapCMCoding"; } "MapCMVal"; } "MapCM";
   } "EntryCM";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '44648-0') and resource.meta.profile.exists($this.contains('senologie-bildgebung') or $this.contains('senologie-tumorgroesse')).not() then {
     entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then { obs.value as val then { val.value as v -> ctnm.tumorgroesseKlinisch = truncate(v) "SetTGKlin"; } "MapTGKlinVal"; } "MapTGKlin";
   } "EntryTGKlin";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21899-0') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.coding as c then { c.code as cd -> ptnm.pT = cd "SetPT"; } "MapPTCoding"; } "MapPTVal"; } "MapPT";
+    entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ptnm.pT = cd "SetPT"; } "MapPTCoding"; } "MapPTVal"; } "MapPT";
   } "EntryPT";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21900-6') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.coding as c then { c.code as cd -> ptnm.pN = cd "SetPN"; } "MapPNCoding"; } "MapPNVal"; } "MapPN";
+    entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ptnm.pN = cd "SetPN"; } "MapPNCoding"; } "MapPNVal"; } "MapPN";
   } "EntryPN";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21901-4') then {
-    entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.coding as c then { c.code as cd -> ptnm.pM = cd "SetPM"; } "MapPMCoding"; } "MapPMVal"; } "MapPM";
+    entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ptnm.pM = cd "SetPM"; } "MapPMCoding"; } "MapPMVal"; } "MapPM";
   } "EntryPM";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '33728-7') then {
     entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then { obs.value as val then { val.value as v -> ptnm.tumorgroesseInvasiv = truncate(v) "SetTGInv"; } "MapTGInvVal"; } "MapTGInv";
@@ -130,13 +130,13 @@ group MapPrimaerfall(source bundle : Bundle, target tgt : BackboneElement) {
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21908-9') then {
     entry.resource as obs -> tgt.diagnose as diag, diag.cTNM as ctnm then {
       obs.method as method then { method.coding as c then { c.code as cd -> ctnm.tnmVersion = cd "SetCTNMVersion"; } "ExtractCTNMVersionCode"; } "MapCTNMVersion";
-      obs.value as val then { val.coding as c then { c.code as cd -> ctnm.uiccStadium = cd "SetCUICC"; } "ExtractCUICC"; } "MapCUICC";
+      obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ctnm.uiccStadium = cd "SetCUICC"; } "ExtractCUICC"; } "MapCUICC";
     } "MapCTNMDetail";
   } "EntryCTNMDetail";
   bundle.entry as entry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
     entry.resource as obs -> tgt.diagnose as diag, diag.pTNM as ptnm then {
       obs.method as method then { method.coding as c then { c.code as cd -> ptnm.tnmVersion = cd "SetPTNMVersion"; } "ExtractPTNMVersionCode"; } "MapPTNMVersion";
-      obs.value as val then { val.coding as c then { c.code as cd -> ptnm.uiccStadium = cd "SetPUICC"; } "ExtractPUICC"; } "MapPUICC";
+      obs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> ptnm.uiccStadium = cd "SetPUICC"; } "ExtractPUICC"; } "MapPUICC";
       obs.component as comp where code.coding.exists(code = '59479-6') then { comp.value as val then { val.coding as c then { c.code as cd -> ptnm.ySymbol = cd "SetYSymbol"; } "ExtractYCode"; } "MapYValue"; } "MapYSymbol";
       obs.component as comp where code.coding.exists(code = '33739-4') then { comp.value as val then { val.coding as c then { c.code as cd -> ptnm.l = cd "SetLKat"; } "ExtractLCode"; } "MapLValue"; } "MapLKat";
       obs.component as comp where code.coding.exists(code = '33740-2') then { comp.value as val then { val.coding as c then { c.code as cd -> ptnm.v = cd "SetVKat"; } "ExtractVCode"; } "MapVValue"; } "MapVKat";

@@ -455,3 +455,28 @@ Usage: #example
 * reasonReference = Reference(Condition/Fall7-Diagnose-Mammakarzinom)
 
 * note.text = "Ganzbrust rechts 50 Gy in 25 Fraktionen + Boost 16 Gy in 8 Fraktionen auf ehemaliges Tumorbett, Gesamtdosis 66 Gy"
+
+// --- TNM-Klassifikation (kodiert): UICC + SNOMED CT je Kategorie ---
+Instance: Fall7-TNM-Klassifikation
+InstanceOf: https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation
+Title: "Fall 7: TNM-Klassifikation cT2 cN0 cM0"
+Description: "TNM-Klassifikation cT2 cN0 cM0, UICC IIA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent."
+Usage: #example
+
+* status = #final
+* code.coding[0] = $SCT#399537006 "Clinical TNM stage grouping"
+* code.coding[1] = $LOINC#21908-9 "Stage group.clinical Cancer"
+* subject = Reference(Patient/Fall7-Patient-Kathrin-Mueller)
+* focus = Reference(Fall7-Diagnose-Mammakarzinom)
+* effectiveDateTime = "2025-03-05"
+* method = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version#8 "8. Auflage"
+* valueCodeableConcept = https://www.uicc.org/resources/tnm#IIA "Stadium IIA — T0/1 N1 M0 oder T2 N0 M0"
+* component[+].code = $LOINC#21905-5 "Primary tumor.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#T2 "T2 — > 2 cm und ≤ 5 cm"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352993004 "cT2 (UICC)"
+* component[+].code = $LOINC#21906-3 "Regional lymph nodes.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#N0 "N0 — Keine regionären LK-Metastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1353041009 "cN0 (UICC)"
+* component[+].code = $LOINC#21907-1 "Distant metastases.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#M0 "M0 — Keine Fernmetastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352512001 "cM0 (UICC)"

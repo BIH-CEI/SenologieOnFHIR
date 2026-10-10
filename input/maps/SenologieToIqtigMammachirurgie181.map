@@ -52,16 +52,16 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
 
     // Bundle lookups for Brust (moved from MapBrust)
     src.entry as tEntry where resource.is(Observation) and resource.code.coding.exists(code = '21905-5') then {
-      tEntry.resource as tObs then { tObs.value as val then { val.coding as c then { c.code as cd -> brust.cT = cd "SetCT"; } "MapCTCoding"; } "MapCTValue"; } "MapCTObs";
+      tEntry.resource as tObs then { tObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> brust.cT = cd "SetCT"; } "MapCTCoding"; } "MapCTValue"; } "MapCTObs";
     } "EntryCT";
     src.entry as nEntry where resource.is(Observation) and resource.code.coding.exists(code = '21906-3') then {
-      nEntry.resource as nObs then { nObs.value as val then { val.coding as c then { c.code as cd -> brust.cN = cd "SetCN"; } "MapCNCoding"; } "MapCNValue"; } "MapCNObs";
+      nEntry.resource as nObs then { nObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> brust.cN = cd "SetCN"; } "MapCNCoding"; } "MapCNValue"; } "MapCNObs";
     } "EntryCN";
     src.entry as mEntry where resource.is(Observation) and resource.code.coding.exists(code = '21907-1') then {
-      mEntry.resource as mObs then { mObs.value as val then { val.coding as c then { c.code as cd -> brust.cM = cd "SetCM"; } "MapCMCoding"; } "MapCMValue"; } "MapCMObs";
+      mEntry.resource as mObs then { mObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> brust.cM = cd "SetCM"; } "MapCMCoding"; } "MapCMValue"; } "MapCMObs";
     } "EntryCM";
     src.entry as uiccEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
-      uiccEntry.resource as uiccObs then { uiccObs.value as val then { val.coding as c then { c.code as cd -> brust.uiccStadiumKlinisch = cd "SetUICCKlin"; } "MapUICCKlinCoding"; } "MapUICCKlinValue"; } "MapUICCKlinObs";
+      uiccEntry.resource as uiccObs then { uiccObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> brust.uiccStadiumKlinisch = cd "SetUICCKlin"; } "MapUICCKlinCoding"; } "MapUICCKlinValue"; } "MapUICCKlinObs";
     } "EntryUICCKlin";
     src.entry as tgEntry where resource.is(Observation) and resource.code.coding.exists(code = '44648-0') then {
       tgEntry.resource as tgObs then { tgObs.value as val then { val.value as v -> brust.tumorgroesseKlinisch = truncate(v) "SetTGroesseKlin"; } "MapTGroesseKlinValue"; } "MapTGroesseKlinObs";
@@ -113,16 +113,16 @@ group SenologieToIqtigMammachirurgie181(source src : Bundle, target tgt : IQTIG1
       mfEntry.resource as mfObs then { mfObs.value as val then { val.coding as c then { c.code as cd where $this = '56061002' -> op.multifokalitaet = '0' "SetMFNein"; c.code as cd where $this = '399566009' -> op.multifokalitaet = '1' "SetMFJa"; c.code as cd where $this = '367651003' -> op.multifokalitaet = '2' "SetMFMZ"; } "MapMFCoding"; } "MapMFValue"; } "MapMFObs";
     } "EntryMultifokal";
     src.entry as ptEntry where resource.is(Observation) and resource.code.coding.exists(code = '21899-0') then {
-      ptEntry.resource as ptObs then { ptObs.value as val then { val.coding as c then { c.code as cd -> op.pT = cd "SetPT"; } "MapPTCoding"; } "MapPTValue"; } "MapPTObs";
+      ptEntry.resource as ptObs then { ptObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> op.pT = cd "SetPT"; } "MapPTCoding"; } "MapPTValue"; } "MapPTObs";
     } "EntryPT";
     src.entry as pnEntry where resource.is(Observation) and resource.code.coding.exists(code = '21900-6') then {
-      pnEntry.resource as pnObs then { pnObs.value as val then { val.coding as c then { c.code as cd -> op.pN = cd "SetPN"; } "MapPNCoding"; } "MapPNValue"; } "MapPNObs";
+      pnEntry.resource as pnObs then { pnObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> op.pN = cd "SetPN"; } "MapPNCoding"; } "MapPNValue"; } "MapPNObs";
     } "EntryPN";
     src.entry as pmEntry where resource.is(Observation) and resource.code.coding.exists(code = '21901-4') then {
-      pmEntry.resource as pmObs then { pmObs.value as val then { val.coding as c then { c.code as cd -> op.pM = cd "SetPM"; } "MapPMCoding"; } "MapPMValue"; } "MapPMObs";
+      pmEntry.resource as pmObs then { pmObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> op.pM = cd "SetPM"; } "MapPMCoding"; } "MapPMValue"; } "MapPMObs";
     } "EntryPM";
     src.entry as uiccEntry where resource.is(Observation) and resource.code.coding.exists(code = '21902-2') then {
-      uiccEntry.resource as uiccObs then { uiccObs.value as val then { val.coding as c then { c.code as cd -> op.uiccStadiumPatho = cd "SetUICCPatho"; } "MapUICCPathoCoding"; } "MapUICCPathoValue"; } "MapUICCPathoObs";
+      uiccEntry.resource as uiccObs then { uiccObs.value as val then { val.coding as c where system = 'https://www.uicc.org/resources/tnm' then { c.code as cd -> op.uiccStadiumPatho = cd "SetUICCPatho"; } "MapUICCPathoCoding"; } "MapUICCPathoValue"; } "MapUICCPathoObs";
     } "EntryUICCPatho";
     src.entry as lkuEntry where resource.is(Observation) and resource.code.coding.exists(code = '21894-1') then {
       lkuEntry.resource as lkuObs then { lkuObs.value as val then { val.value as v -> op.lkUntersucht = truncate(v) "SetLKUntersucht"; } "MapLKUntersuchtValue"; } "MapLKUntersuchtObs";

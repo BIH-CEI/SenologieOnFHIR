@@ -125,6 +125,7 @@
 [Fall10-Encounter-Stationaer]: Encounter-Fall10-Encounter-Stationaer.html
 [Fall10-Operation-Mastektomie-Rechts]: Procedure-Fall10-Operation-Mastektomie-Rechts.html
 [Fall10-Diagnose-Mammakarzinom]: Condition-Fall10-Diagnose-Mammakarzinom.html
+[Fall10-TNM-Klassifikation]: Observation-Fall10-TNM-Klassifikation.html
 [Fall10-Tumorboard]: CarePlan-Fall10-Tumorboard.html
 [Fall10-Verlauf-PostTherapie]: Observation-Fall10-Verlauf-PostTherapie.html
 [Fall10-Vitalstatus-Lebend]: Observation-Fall10-Vitalstatus-Lebend.html
@@ -157,6 +158,8 @@
 [Fall13-Patient-Margarete-Schreiber]: Patient-Fall13-Patient-Margarete-Schreiber.html
 [Fall13-QR-Bezugsdiagnose-Selection]: QuestionnaireResponse-Fall13-QR-Bezugsdiagnose-Selection.html
 [Fall13-Encounter-Stationaer]: Encounter-Fall13-Encounter-Stationaer.html
+[Fall13-TNM-Klassifikation-Links]: Observation-Fall13-TNM-Klassifikation-Links.html
+[Fall13-TNM-Klassifikation-Rechts]: Observation-Fall13-TNM-Klassifikation-Rechts.html
 [Fall14-Strahlentherapie]: Procedure-Fall14-Strahlentherapie.html
 [Fall14-Systemtherapie]: Procedure-Fall14-Systemtherapie.html
 [Fall14-Operation-BET]: Procedure-Fall14-Operation-BET.html
@@ -208,6 +211,7 @@
 [Fall1-Operation-SLNB]: Procedure-Fall1-Operation-SLNB.html
 [Fall1-Bildgebung-Skelettszintigraphie]: DiagnosticReport-Fall1-Bildgebung-Skelettszintigraphie.html
 [Fall1-Pathologie-Praeparat]: Specimen-Fall1-Pathologie-Praeparat.html
+[Fall1-TNM-Klassifikation]: Observation-Fall1-TNM-Klassifikation.html
 [Fall1-Tumorboard]: CarePlan-Fall1-Tumorboard.html
 [Fall1-Verlauf-6Monate]: Observation-Fall1-Verlauf-6Monate.html
 [Fall1-Vitalstatus-Lebend]: Observation-Fall1-Vitalstatus-Lebend.html
@@ -240,6 +244,7 @@
 [Fall2-Bildgebung-Sonographie]: DiagnosticReport-Fall2-Bildgebung-Sonographie.html
 [Fall2-Pathologie-Praeparat]: Specimen-Fall2-Pathologie-Praeparat.html
 [Fall2-Studienteilnahme]: ResearchSubject-Fall2-Studienteilnahme.html
+[Fall2-TNM-Klassifikation]: Observation-Fall2-TNM-Klassifikation.html
 [Fall2-Tod-Tumorbedingt]: Observation-Fall2-Tod-Tumorbedingt.html
 [Fall2-Todesursache]: Condition-Fall2-Todesursache.html
 [Fall2-Diagnose-Mammakarzinom]: Condition-Fall2-Diagnose-Mammakarzinom.html
@@ -261,6 +266,7 @@
 [Fall3-Patho-Conclusion]: Observation-Fall3-Patho-Conclusion.html
 [Fall3-Patient-Sabine-Weber]: Patient-Fall3-Patient-Sabine-Weber.html
 [Fall3-Pathologie-Praeparat-Stanze]: Specimen-Fall3-Pathologie-Praeparat-Stanze.html
+[Fall3-TNM-Klassifikation]: Observation-Fall3-TNM-Klassifikation.html
 [Fall4-Strahlentherapie]: Procedure-Fall4-Strahlentherapie.html
 [Fall4-Operation-BET]: Procedure-Fall4-Operation-BET.html
 [Fall4-BiRADS-Links]: Observation-Fall4-BiRADS-Links.html
@@ -278,6 +284,7 @@
 [Fall4-Operation-SLNB]: Procedure-Fall4-Operation-SLNB.html
 [Fall4-Bildgebung-Sonographie]: DiagnosticReport-Fall4-Bildgebung-Sonographie.html
 [Fall4-Pathologie-Praeparat]: Specimen-Fall4-Pathologie-Praeparat.html
+[Fall4-TNM-Klassifikation]: Observation-Fall4-TNM-Klassifikation.html
 [Fall4-Medikation-Trastuzumab]: MedicationStatement-Fall4-Medikation-Trastuzumab.html
 [Fall4-Tumorboard]: CarePlan-Fall4-Tumorboard.html
 [Fall5-Strahlentherapie]: Procedure-Fall5-Strahlentherapie.html
@@ -297,6 +304,7 @@
 [Fall5-Operation-SLNB]: Procedure-Fall5-Operation-SLNB.html
 [Fall5-Bildgebung-Sonographie]: DiagnosticReport-Fall5-Bildgebung-Sonographie.html
 [Fall5-Pathologie-Praeparat]: Specimen-Fall5-Pathologie-Praeparat.html
+[Fall5-TNM-Klassifikation]: Observation-Fall5-TNM-Klassifikation.html
 [Fall5-Tumorboard-Neoadjuvant]: CarePlan-Fall5-Tumorboard-Neoadjuvant.html
 [Fall5-Tumorboard-Postoperativ]: CarePlan-Fall5-Tumorboard-Postoperativ.html
 [Fall6-Strahlentherapie]: Procedure-Fall6-Strahlentherapie.html
@@ -324,6 +332,7 @@
 [Fall7-Bildgebung-Sonographie]: DiagnosticReport-Fall7-Bildgebung-Sonographie.html
 [Fall7-Pathologie-Praeparat]: Specimen-Fall7-Pathologie-Praeparat.html
 [Fall7-Diagnose-Mammakarzinom]: Condition-Fall7-Diagnose-Mammakarzinom.html
+[Fall7-TNM-Klassifikation]: Observation-Fall7-TNM-Klassifikation.html
 [Fall7-Tumorboard]: CarePlan-Fall7-Tumorboard.html
 [Fall8-Strahlentherapie]: Procedure-Fall8-Strahlentherapie.html
 [Fall8-BiRADS-Rechts]: Observation-Fall8-BiRADS-Rechts.html
@@ -337,6 +346,7 @@
 [Fall8-Operation-SLNB]: Procedure-Fall8-Operation-SLNB.html
 [Fall8-Bildgebung-Sonographie]: DiagnosticReport-Fall8-Bildgebung-Sonographie.html
 [Fall8-Pathologie-Praeparat]: Specimen-Fall8-Pathologie-Praeparat.html
+[Fall8-TNM-Klassifikation]: Observation-Fall8-TNM-Klassifikation.html
 [Fall9-Strahlentherapie]: Procedure-Fall9-Strahlentherapie.html
 [Fall9-Systemtherapie-Adjuvant]: Procedure-Fall9-Systemtherapie-Adjuvant.html
 [Fall9-Operation-Axilladissektion]: Procedure-Fall9-Operation-Axilladissektion.html
@@ -355,6 +365,7 @@
 [Fall9-Patient-Andrea-Wolf]: Patient-Fall9-Patient-Andrea-Wolf.html
 [Fall9-Komplikation-Lymphoedem]: Observation-Fall9-Komplikation-Lymphoedem.html
 [Fall9-Pathologie-Praeparat]: Specimen-Fall9-Pathologie-Praeparat.html
+[Fall9-TNM-Klassifikation]: Observation-Fall9-TNM-Klassifikation.html
 [Fall9-Tumorboard]: CarePlan-Fall9-Tumorboard.html
 [Fall9-Verlauf-12Monate]: Observation-Fall9-Verlauf-12Monate.html
 [EX_Senologie_FirstLineTherapy]: StructureDefinition-ex-senologie-first-line-therapy.html
