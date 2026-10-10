@@ -125,6 +125,42 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+// Kodierte Mehrfachauswahl der empfohlenen Optionen; jede Auswahl wird eine eigene CarePlan.activity
+* item[=].item[+].linkId = "empfehlung-op-optionen"
+* item[=].item[=].text = "Empfohlene Verfahren"
+* insert Translation(item[=].item[=].text, en, [[Recommended procedures]])
+* item[=].item[=].type = #choice
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "empfehlung-op-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen
+* item[=].item[=].enableWhen[+].question = "empfehlung-op-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen
+* item[=].item[=].enableBehavior = #any
+* item[=].item[=].answerOption[+].valueCoding = $SCT#392021009 "Brusterhaltende Operation (BET)"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Lumpectomy of breast]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#172043006 "Mastektomie"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Simple mastectomy]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#428564008 "Hautsparende Mastektomie"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Skin sparing mastectomy]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1380209001 "Nipple-sparing Mastektomie"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Nipple preserving subcutaneous mastectomy]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#406505007 "Modifiziert radikale Mastektomie"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Modified radical mastectomy]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#395165008 "Nachresektion"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Re-excision of breast for clearance of tumour margins]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#396487001 "Sentinel-Lymphknoten-Biopsie"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Sentinel lymph node biopsy]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#1396322000 "Targeted Axillary Dissection (TAD)"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Targeted axillary dissection]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#79544006 "Axilladissektion"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Complete axillary lymphadenectomy]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#302343007 "Rekonstruktion mit Implantat"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Insertion of prosthesis for breast]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#303445008 "Rekonstruktion mit Eigengewebe (Lappen)"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Reconstruction of breast with flap]])
 * item[=].item[+].linkId = "empfehlung-op-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
 * insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
@@ -143,6 +179,26 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+// Kodierte Mehrfachauswahl der empfohlenen Optionen; jede Auswahl wird eine eigene CarePlan.activity
+* item[=].item[+].linkId = "empfehlung-strahlentherapie-optionen"
+* item[=].item[=].text = "Zielvolumen"
+* insert Translation(item[=].item[=].text, en, [[Target volume]])
+* item[=].item[=].type = #choice
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "empfehlung-strahlentherapie-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen
+* item[=].item[=].enableWhen[+].question = "empfehlung-strahlentherapie-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen
+* item[=].item[=].enableBehavior = #any
+* item[=].item[=].answerOption[+].valueCoding = $SCT#428923005 "Ganze Brust"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Radiotherapy to breast]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#428624002 "Brustwand"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Radiotherapy to chest wall]])
+* item[=].item[=].answerOption[+].valueCoding = $SCT#429579007 "Axilla"
+* insert Translation(item[=].item[=].answerOption[=].valueCoding.display, en, [[Radiotherapy to axilla]])
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
 * insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
@@ -161,6 +217,27 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+// Kodierte Mehrfachauswahl der empfohlenen Optionen; jede Auswahl wird eine eigene CarePlan.activity
+* item[=].item[+].linkId = "empfehlung-endokrin-optionen"
+* item[=].item[=].text = "Empfohlene Substanzen"
+* insert Translation(item[=].item[=].text, en, [[Recommended agents]])
+* item[=].item[=].type = #choice
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "empfehlung-endokrin-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen
+* item[=].item[=].enableWhen[+].question = "empfehlung-endokrin-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen
+* item[=].item[=].enableBehavior = #any
+* item[=].item[=].answerOption[+].valueCoding = $SCT#373345002 "Tamoxifen"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#386911004 "Letrozole"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#386910003 "Anastrozole"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#387017005 "Exemestane"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#385519002 "Fulvestrant"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#108771008 "Goserelin"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#397198002 "Leuprorelin"
 * item[=].item[+].linkId = "empfehlung-endokrin-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
 * insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
@@ -179,6 +256,29 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+// Kodierte Mehrfachauswahl der empfohlenen Optionen; jede Auswahl wird eine eigene CarePlan.activity
+* item[=].item[+].linkId = "empfehlung-chemotherapie-optionen"
+* item[=].item[=].text = "Empfohlene Substanzen"
+* insert Translation(item[=].item[=].text, en, [[Recommended agents]])
+* item[=].item[=].type = #choice
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "empfehlung-chemotherapie-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen
+* item[=].item[=].enableWhen[+].question = "empfehlung-chemotherapie-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen
+* item[=].item[=].enableBehavior = #any
+* item[=].item[=].answerOption[+].valueCoding = $SCT#417916005 "Epirubicin"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#372817009 "Doxorubicin"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#387420009 "Cyclophosphamide"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#387374002 "Paclitaxel"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#426653008 "Albumin bound paclitaxel"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#386918005 "Docetaxel"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#386905002 "Carboplatin"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#386906001 "Capecitabine"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#708166000 "Eribulin"
 * item[=].item[+].linkId = "empfehlung-chemotherapie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
 * insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
@@ -197,6 +297,35 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+// Kodierte Mehrfachauswahl der empfohlenen Optionen; jede Auswahl wird eine eigene CarePlan.activity
+* item[=].item[+].linkId = "empfehlung-zielgerichtet-optionen"
+* item[=].item[=].text = "Empfohlene Substanzen"
+* insert Translation(item[=].item[=].text, en, [[Recommended agents]])
+* item[=].item[=].type = #choice
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "empfehlung-zielgerichtet-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen
+* item[=].item[=].enableWhen[+].question = "empfehlung-zielgerichtet-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen
+* item[=].item[=].enableBehavior = #any
+* item[=].item[=].answerOption[+].valueCoding = $SCT#387003001 "Trastuzumab"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#704226002 "Pertuzumab"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#702836004 "Trastuzumab emtansine"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#838469001 "Trastuzumab deruxtecan"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#715958001 "Palbociclib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#732257004 "Ribociclib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#761851004 "Abemaciclib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#432162002 "Olaparib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#782199007 "Talazoparib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#871701001 "Sacituzumab govitecan"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#871698009 "Tucatinib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#425820005 "Lapatinib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#736632003 "Neratinib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#788050002 "Alpelisib"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#428698007 "Everolimus"
 * item[=].item[+].linkId = "empfehlung-zielgerichtet-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
 * insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
@@ -215,6 +344,22 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
+// Kodierte Mehrfachauswahl der empfohlenen Optionen; jede Auswahl wird eine eigene CarePlan.activity
+* item[=].item[+].linkId = "empfehlung-immuntherapie-optionen"
+* item[=].item[=].text = "Empfohlene Substanzen"
+* insert Translation(item[=].item[=].text, en, [[Recommended agents]])
+* item[=].item[=].type = #choice
+* item[=].item[=].repeats = true
+* item[=].item[=].required = false
+* item[=].item[=].enableWhen[+].question = "empfehlung-immuntherapie-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#empfohlen
+* item[=].item[=].enableWhen[+].question = "empfehlung-immuntherapie-status"
+* item[=].item[=].enableWhen[=].operator = #=
+* item[=].item[=].enableWhen[=].answerCoding = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#bedingt-empfohlen
+* item[=].item[=].enableBehavior = #any
+* item[=].item[=].answerOption[+].valueCoding = $SCT#716125002 "Pembrolizumab"
+* item[=].item[=].answerOption[+].valueCoding = $SCT#719371003 "Atezolizumab"
 * item[=].item[+].linkId = "empfehlung-immuntherapie-begruendung"
 * item[=].item[=].text = "Begruendung / Details (optional)"
 * insert Translation(item[=].item[=].text, en, [[Rationale / Details (Optional)]])
@@ -447,3 +592,66 @@ Usage: #inline
 // --- Sonstiges ---
 * note.text.extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * note.text.extension[=].valueString = "%resource.item.where(linkId='empfehlung-sonstiges').answer.valueString"
+
+// --- Je ausgewaehlter Option eine eigene activity (templateExtractContext iteriert ueber die Antworten).
+// Die Therapieart-activities oben bleiben; Exporte lesen nur deren feste Codes.
+* activity[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext"
+* activity[=].extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-op-optionen').answer.value"
+* activity[=].detail.kind = #ServiceRequest
+* activity[=].detail.code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.system.extension.valueString = "system"
+* activity[=].detail.code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.code.extension.valueString = "code"
+* activity[=].detail.code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.display.extension.valueString = "display"
+* activity[=].detail.status = #not-started
+* activity[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext"
+* activity[=].extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-optionen').answer.value"
+* activity[=].detail.kind = #ServiceRequest
+* activity[=].detail.code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.system.extension.valueString = "system"
+* activity[=].detail.code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.code.extension.valueString = "code"
+* activity[=].detail.code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.display.extension.valueString = "display"
+* activity[=].detail.status = #not-started
+* activity[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext"
+* activity[=].extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-optionen').answer.value"
+* activity[=].detail.kind = #MedicationRequest
+* activity[=].detail.code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.system.extension.valueString = "system"
+* activity[=].detail.code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.code.extension.valueString = "code"
+* activity[=].detail.code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.display.extension.valueString = "display"
+* activity[=].detail.status = #not-started
+* activity[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext"
+* activity[=].extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-endokrin-optionen').answer.value"
+* activity[=].detail.kind = #MedicationRequest
+* activity[=].detail.code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.system.extension.valueString = "system"
+* activity[=].detail.code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.code.extension.valueString = "code"
+* activity[=].detail.code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.display.extension.valueString = "display"
+* activity[=].detail.status = #not-started
+* activity[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext"
+* activity[=].extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-optionen').answer.value"
+* activity[=].detail.kind = #MedicationRequest
+* activity[=].detail.code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.system.extension.valueString = "system"
+* activity[=].detail.code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.code.extension.valueString = "code"
+* activity[=].detail.code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.display.extension.valueString = "display"
+* activity[=].detail.status = #not-started
+* activity[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext"
+* activity[=].extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-optionen').answer.value"
+* activity[=].detail.kind = #MedicationRequest
+* activity[=].detail.code.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.system.extension.valueString = "system"
+* activity[=].detail.code.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.code.extension.valueString = "code"
+* activity[=].detail.code.coding.display.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* activity[=].detail.code.coding.display.extension.valueString = "display"
+* activity[=].detail.status = #not-started

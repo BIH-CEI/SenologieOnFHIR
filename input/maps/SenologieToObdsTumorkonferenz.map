@@ -76,23 +76,15 @@ group MapTumorkonferenz(source src : CarePlan, target tgt : BackboneElement) {
 
 group MapTherapieempfehlung(source src : CarePlan, target tgt : BackboneElement) {
 
-  // Operative Therapie -> OP
-  src.activity as act where detail.kind = 'ServiceRequest' and detail.code.exists() then {
-    act.detail as det where kind = 'ServiceRequest' then {
-      det.code as code where coding.exists() then {
-        code.coding as c -> tgt.typTherapieempfehlung = (c.code) "SetTypOpServiceRequest";
-      } "ExtractOpCode";
-    } "ExtractServiceRequestDetail";
-  } "MapServiceRequestActivities";
-
-  // Medikamentoese Therapien: Chemotherapie, Hormontherapie, Immuntherapie, etc.
-  src.activity as act where detail.kind = 'MedicationRequest' and detail.code.exists() then {
-    act.detail as det where kind = 'MedicationRequest' then {
-      det.code as code where coding.exists() then {
-        code.coding as c -> tgt.typTherapieempfehlung = (c.code) "SetTypMedicationRequest";
-      } "ExtractMedCode";
-    } "ExtractMedicationRequestDetail";
-  } "MapMedicationRequestActivities";
+  // Therapieart-activities -> oBDS-Typ. Nur die festen Therapieart-Codes werden uebersetzt;
+  // die activities je ausgewaehlter Option (OP-Verfahren, Substanzen) und nicht empfohlene
+  // Therapiearten bleiben unberuecksichtigt.
+  src.activity as act where detail.code.coding.exists(code = '387713003') and detail.statusReason.coding.exists(code = 'nicht-empfohlen' or code = 'nicht-diskutiert').not() -> tgt.typTherapieempfehlung = 'OP' "SetTypOp";
+  src.activity as act where detail.code.coding.exists(code = '1287742003') and detail.statusReason.coding.exists(code = 'nicht-empfohlen' or code = 'nicht-diskutiert').not() -> tgt.typTherapieempfehlung = 'ST' "SetTypSt";
+  src.activity as act where detail.code.coding.exists(code = '385786002') and detail.statusReason.coding.exists(code = 'nicht-empfohlen' or code = 'nicht-diskutiert').not() -> tgt.typTherapieempfehlung = 'CH' "SetTypCh";
+  src.activity as act where detail.code.coding.exists(code = '169413002') and detail.statusReason.coding.exists(code = 'nicht-empfohlen' or code = 'nicht-diskutiert').not() -> tgt.typTherapieempfehlung = 'HO' "SetTypHo";
+  src.activity as act where detail.code.coding.exists(code = '76334006') and detail.statusReason.coding.exists(code = 'nicht-empfohlen' or code = 'nicht-diskutiert').not() -> tgt.typTherapieempfehlung = 'IM' "SetTypIm";
+  src.activity as act where detail.code.coding.exists(code = '416608005') and detail.statusReason.coding.exists(code = 'nicht-empfohlen' or code = 'nicht-diskutiert').not() -> tgt.typTherapieempfehlung = 'ZS' "SetTypZs";
 
   // Fallback: Therapietypen direkt aus activity.detail.code.coding.code extrahieren
   // wenn die Codierung direkt oBDS-Therapietypen enthaelt (CH, ST, HO, IM, ZS, etc.)

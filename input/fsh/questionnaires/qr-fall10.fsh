@@ -91,12 +91,18 @@ Usage: #example
 * item[+].linkId = "empfehlung-op-group"
 * item[=].item[+].linkId = "empfehlung-op-status"
 * item[=].item[=].answer.valueCoding = $TBE#empfohlen "Empfohlen"
+* item[=].item[+].linkId = "empfehlung-op-optionen"
+* item[=].item[=].answer[+].valueCoding = $SCT#172043006 "Mastektomie"
+* item[=].item[=].answer[+].valueCoding = $SCT#396487001 "Sentinel-Lymphknoten-Biopsie"
+* item[=].item[=].answer[+].valueCoding = $SCT#302343007 "Rekonstruktion mit Implantat"
 * item[=].item[+].linkId = "empfehlung-op-begruendung"
 * item[=].item[=].answer.valueString = "Mastektomie rechts + SLNB, risikoreduzierende Mastektomie links, Sofortrekonstruktion mit Implantaten."
 
 * item[+].linkId = "empfehlung-strahlentherapie-group"
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-status"
 * item[=].item[=].answer.valueCoding = $TBE#empfohlen "Empfohlen"
+* item[=].item[+].linkId = "empfehlung-strahlentherapie-optionen"
+* item[=].item[=].answer[+].valueCoding = $SCT#428624002 "Brustwand"
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-begruendung"
 * item[=].item[=].answer.valueString = "Bestrahlung der Thoraxwand nach Abschluss der Chemotherapie."
 
@@ -109,6 +115,9 @@ Usage: #example
 * item[+].linkId = "empfehlung-chemotherapie-group"
 * item[=].item[+].linkId = "empfehlung-chemotherapie-status"
 * item[=].item[=].answer.valueCoding = $TBE#empfohlen "Empfohlen"
+* item[=].item[+].linkId = "empfehlung-chemotherapie-optionen"
+* item[=].item[=].answer[+].valueCoding = $SCT#386905002 "Carboplatin"
+* item[=].item[=].answer[+].valueCoding = $SCT#387374002 "Paclitaxel"
 * item[=].item[+].linkId = "empfehlung-chemotherapie-begruendung"
 * item[=].item[=].answer.valueString = "Adjuvant Carboplatin + Paclitaxel, 6 Zyklen (triple-negativ, G3, Ki-67 55 %)."
 
