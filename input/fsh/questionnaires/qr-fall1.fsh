@@ -305,7 +305,7 @@ Usage: #example
 * item[=].item[+].linkId = "ihc-her2-score"
 * item[=].item[=].answer.valueCoding = $MIIHER2#1 "1+"
 * item[=].item[+].linkId = "ihc-her2-gesamt"
-* item[=].item[=].answer.valueCoding = $BIOM#her2-negativ "HER2-negativ"
+* item[=].item[=].answer.valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
 * item[=].item[+].linkId = "ihc-ki67"
 * item[=].item[=].answer.valueInteger = 15
 

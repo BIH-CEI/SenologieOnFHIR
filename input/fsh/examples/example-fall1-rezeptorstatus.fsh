@@ -93,6 +93,7 @@ Usage: #example
 * valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
 // oBDS-Slice: 'negativ' (klassische Krebsregister-Sicht — verliert die HER2-low-Information!)
 * valueCodeableConcept.coding[DefinitionOBDS] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds#N "negativ"
+* valueCodeableConcept.coding[2] = $SCT#1381317004 "Human epidermal growth factor receptor 2 low"
 
 // IHC-Score: 1+
 * component[IHCScore].valueCodeableConcept = $LOINC#LA11841-6 "1+"

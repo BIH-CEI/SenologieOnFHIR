@@ -581,6 +581,14 @@
                 "valueString": "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.valueCoding"
               }
             ]
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%questionnaire.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answerOption.value.where(code = %resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+              }
+            ]
           }
         ]
       },
@@ -3697,6 +3705,71 @@
               "valueCode": "optionsOnly"
             }
           ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "positiv",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie",
+                "display": "HER2-positiv"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1381317004",
+                          "system": "http://snomed.info/sct",
+                          "display": "Human epidermal growth factor receptor 2 low"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "low",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie",
+                "display": "HER2-low"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1381318009",
+                          "system": "http://snomed.info/sct",
+                          "display": "Human epidermal growth factor receptor 2 ultralow"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "ultralow",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie",
+                "display": "HER2-ultralow"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "negativ",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie",
+                "display": "HER2-negativ"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "equivocal",
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie",
+                "display": "equivocal"
+              }
+            }
+          ],
           "linkId": "ihc-her2-gesamt",
           "text": "HER2-Gesamtstatus (Leitlinie, inkl. HER2-low / HER2-ultralow)",
           "_text": {
@@ -3717,8 +3790,7 @@
             ]
           },
           "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-gesamt"
+          "required": false
         },
         {
           "extension": [

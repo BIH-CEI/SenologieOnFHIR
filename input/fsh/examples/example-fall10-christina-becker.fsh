@@ -781,6 +781,7 @@ Usage: #example
 * effectiveDateTime = "2025-05-28"
 * valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
 * valueCodeableConcept.coding[DefinitionOBDS] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds#N "negativ"
+* valueCodeableConcept.coding[2] = $SCT#1381317004 "Human epidermal growth factor receptor 2 low"
 * component[IHCScore].valueCodeableConcept = $LOINC#LA11841-6 "1+"
 
 

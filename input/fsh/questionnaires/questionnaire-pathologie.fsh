@@ -126,8 +126,10 @@ Usage: #inline
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 // HER2-Gesamtstatus nach Leitlinie (positiv/low/ultralow/negativ/equivocal)
-* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.valueCoding"
+* valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.valueCoding"
+* valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answerOption.value.where(code = %resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 // Components: IHC-Score, FISH/ISH, ISH-Methode, Ratio
 * component[+].code = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen"
 * component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -949,7 +951,16 @@ Usage: #definition
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-gesamt"
+// Optionen = MII-Onko-Leitliniencodes; HER2-low und HER2-ultralow tragen das SNOMED-CT-Aequivalent (alternate-codes)
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#positiv "HER2-positiv"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
+* item[=].item[=].answerOption[=].valueCoding.extension.url = "http://hl7.org/fhir/StructureDefinition/alternate-codes"
+* item[=].item[=].answerOption[=].valueCoding.extension.valueCodeableConcept = $SCT#1381317004 "Human epidermal growth factor receptor 2 low"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#ultralow "HER2-ultralow"
+* item[=].item[=].answerOption[=].valueCoding.extension.url = "http://hl7.org/fhir/StructureDefinition/alternate-codes"
+* item[=].item[=].answerOption[=].valueCoding.extension.valueCodeableConcept = $SCT#1381318009 "Human epidermal growth factor receptor 2 ultralow"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#negativ "HER2-negativ"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#equivocal "equivocal"
 
 // HER2 ISH/FISH (bei HER2 IHC = 2+) → component[ISHResult].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-fish"
