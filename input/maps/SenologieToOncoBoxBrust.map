@@ -219,16 +219,18 @@ group SenologieToOncoBoxBrust(source src : Bundle, target tgt : OncoBoxBrust) {
             // HER2-Status → Histologie.Her2neuStatus
             // OncoBox 2.0 kennt keine P/N-Werte, sondern die IHC-Stufe (IHC0, IHC0-1, IHC1, IHC2-, IHC2+, IHC3);
             // HER2-low bleibt damit erhalten. Quelle ist der IHC-Score (LOINC 85319-2), bei 2+ zusaetzlich
+            // Der IHC-Score kommt als LOINC-Antwort (Profil) oder als MII-MTB-Code 0-3 (Pathologie-Formular),
+            // ultralow als MII-Leitliniencode oder lokaler Formularcode.
             // das ISH-Ergebnis (LOINC 96893-3, im Formular 85318-4; Werte als LOINC-Antwort oder SNOMED CT). 2+ ohne ISH-Ergebnis → 'U'.
             src.entry as her2Entry where resource.is(Observation) and resource.code.coding.exists(code = '48676-1') then {
               her2Entry.resource as her2Obs -> f.Histologie as h then {
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA6111-4') and value.coding.exists(code = 'ultralow').not() -> h.Her2neuStatus = 'IHC0' "SetHER2IHC0";
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA6111-4') and value.coding.exists(code = 'ultralow') -> h.Her2neuStatus = 'IHC0-1' "SetHER2IHC0plus";
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11841-6') -> h.Her2neuStatus = 'IHC1' "SetHER2IHC1";
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11842-4') and component.where(code.coding.exists(code = '96893-3' or code = '85318-4')).value.coding.exists(code = 'LA6577-6' or code = '260385009') -> h.Her2neuStatus = 'IHC2-' "SetHER2IHC2neg";
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11842-4') and component.where(code.coding.exists(code = '96893-3' or code = '85318-4')).value.coding.exists(code = 'LA6576-8' or code = '10828004') -> h.Her2neuStatus = 'IHC2+' "SetHER2IHC2pos";
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11842-4') and component.where(code.coding.exists(code = '96893-3' or code = '85318-4')).value.coding.exists(code = 'LA6577-6' or code = 'LA6576-8' or code = '260385009' or code = '10828004').not() -> h.Her2neuStatus = 'U' "SetHER2IHC2ohneISH";
-                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11843-2') -> h.Her2neuStatus = 'IHC3' "SetHER2IHC3";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA6111-4' or (system.endsWith('her2-ihc-score') and code = '0')) and value.coding.exists(code = 'ultralow' or code = 'her2-ultralow').not() -> h.Her2neuStatus = 'IHC0' "SetHER2IHC0";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA6111-4' or (system.endsWith('her2-ihc-score') and code = '0')) and value.coding.exists(code = 'ultralow' or code = 'her2-ultralow') -> h.Her2neuStatus = 'IHC0-1' "SetHER2IHC0plus";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11841-6' or (system.endsWith('her2-ihc-score') and code = '1')) -> h.Her2neuStatus = 'IHC1' "SetHER2IHC1";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11842-4' or (system.endsWith('her2-ihc-score') and code = '2')) and component.where(code.coding.exists(code = '96893-3' or code = '85318-4')).value.coding.exists(code = 'LA6577-6' or code = '260385009') -> h.Her2neuStatus = 'IHC2-' "SetHER2IHC2neg";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11842-4' or (system.endsWith('her2-ihc-score') and code = '2')) and component.where(code.coding.exists(code = '96893-3' or code = '85318-4')).value.coding.exists(code = 'LA6576-8' or code = '10828004') -> h.Her2neuStatus = 'IHC2+' "SetHER2IHC2pos";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11842-4' or (system.endsWith('her2-ihc-score') and code = '2')) and component.where(code.coding.exists(code = '96893-3' or code = '85318-4')).value.coding.exists(code = 'LA6577-6' or code = 'LA6576-8' or code = '260385009' or code = '10828004').not() -> h.Her2neuStatus = 'U' "SetHER2IHC2ohneISH";
+                her2Obs where component.where(code.coding.exists(code = '85319-2')).value.coding.exists(code = 'LA11843-2' or (system.endsWith('her2-ihc-score') and code = '3')) -> h.Her2neuStatus = 'IHC3' "SetHER2IHC3";
               } "MapHER2Entry";
             } "EntryHER2";
 
