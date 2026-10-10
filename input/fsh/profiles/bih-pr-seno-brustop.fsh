@@ -76,7 +76,7 @@ Description: "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. 
 * followUp[antibiotika].coding MS
 * followUp[antibiotika] ^mapping[+].identity = "lm"
 * followUp[antibiotika] ^mapping[=].map = "Operation.PostoperativeAnordnungen.Antibiotika"
-* followUp[mobilisation] = $SCT#183040004 "Mobilization (procedure)"
+* followUp[mobilisation] = $SCT#74923002 "Mobilization (procedure)"
 * followUp[mobilisation].coding MS
 * followUp[mobilisation] ^mapping[+].identity = "lm"
 * followUp[mobilisation] ^mapping[=].map = "Operation.PostoperativeAnordnungen.Mobilisation"

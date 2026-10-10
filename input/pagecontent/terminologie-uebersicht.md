@@ -74,7 +74,7 @@ Für die folgenden Konzepte konnte kein passendes SNOMED-CT-Konzept identifizier
 |---|---|---|---|
 | `bz-diagnose-bc-recurrence` | Mammakarzinom Rezidiv | `1306515008 | Recurrent primary malignant neoplasm of breast` | **Migrationskandidat** |
 | `bz-diagnose-sonstiges` | Sonstiges | — (generisch, kein SNOMED-Äquivalent sinnvoll) | Bleibt lokal |
-| `bz-makromastie` | Makromastie | `43336006 | Gigantomastia` | **Migrationskandidat** |
+| `bz-makromastie` | Makromastie | `372285001 | Gigantomastia` | **Migrationskandidat** |
 | `bz-mamillensekretion-nicht-blutig` | Nicht blutige Mamillensekretion | `54302000 | Discharge from nipple` (Spezifizierung "nicht blutig" fehlt in SNOMED) | Teilweise |
 | `bz-mamillensekretion-blutig` | Blutige Mamillensekretion | `290113009 | Bloody nipple discharge` | **Migrationskandidat** |
 | `bz-befund-unklarer-dignitaet` | Befund unklarer Dignität | `269497004 | Neoplasm of uncertain behavior of breast` | **Migrationskandidat** |

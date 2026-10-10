@@ -10,7 +10,7 @@ Usage: #inline
 * id = "strahlentherapie-procedure-template"
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
 * status = #completed
-* code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy"
+* code = $SCT#1287742003 "Radiotherapy"
 * code.text = "Strahlentherapie"
 * category = $SCT#1287742003 "Radiotherapy"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"

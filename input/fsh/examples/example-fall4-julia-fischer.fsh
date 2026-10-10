@@ -229,7 +229,7 @@ Usage: #example
 * activity[targetedTherapy].detail.status = #scheduled
 
 * activity[radiotherapy].detail.kind = #ServiceRequest
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Ganzbrustbestrahlung"
 * activity[radiotherapy].detail.status = #scheduled
 
@@ -334,7 +334,7 @@ Usage: #example
 
 * status = #completed
 
-* medicationCodeableConcept.coding[sct] = $SCT#784176009 "Trastuzumab-containing product"
+* medicationCodeableConcept.coding[sct] = $SCT#327397006 "Trastuzumab-containing product"
 * medicationCodeableConcept.text = "Trastuzumab"
 
 * subject = Reference(Patient/Fall4-Patient-Julia-Fischer)
@@ -366,7 +366,7 @@ Usage: #example
 
 * status = #completed
 
-* medicationCodeableConcept.coding[sct] = $SCT#784163009 "Pertuzumab-containing product"
+* medicationCodeableConcept.coding[sct] = $SCT#704227006 "Pertuzumab-containing product"
 * medicationCodeableConcept.text = "Pertuzumab"
 
 * subject = Reference(Patient/Fall4-Patient-Julia-Fischer)

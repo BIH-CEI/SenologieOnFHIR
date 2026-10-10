@@ -31,16 +31,7 @@ SNOMED CT, LOINC, and RadLex codes that the TX proxy cannot resolve:
 
 | Code | System | Clinical Meaning |
 |---|---|---|
-| `784163009` | SNOMED CT | Sentinel lymph node biopsy |
-| `784176009` | SNOMED CT | Sentinel lymph node |
-| `301782006` | SNOMED CT | Clinical staging |
-| `285345009` | SNOMED CT | Mammography finding |
 | `127465003` | SNOMED CT | Chemotherapy regimen |
-| `119380005` | SNOMED CT | Tissue specimen |
-| `241736003` | SNOMED CT | Imaging of the breast |
-| `300886002` | SNOMED CT | BI-RADS classification |
-| `373945005` | SNOMED CT | Radiation therapy |
-| `183040004` | SNOMED CT | Follow-up care |
 | `870370003` | SNOMED CT | Reference to another encounter |
 | `72018-2` | LOINC | TNM staging |
 | `39638-7` | LOINC | Histological grade |

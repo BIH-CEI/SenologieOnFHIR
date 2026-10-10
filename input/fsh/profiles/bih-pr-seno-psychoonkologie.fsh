@@ -19,7 +19,7 @@ Description: "Procedure fuer psychoonkologische Mitbetreuung (OncoBox KB-9). sta
 * status ^comment = "completed = psychoonkologische Anbindung erfolgt (KB-9: 1=ja), not-done = nicht erfolgt (KB-9: 0=nein)"
 
 * code MS
-* code = $SCT#160967006 "Psychotherapy (procedure)"
+* code = $SCT#75516001 "Psychotherapy (regime/therapy)"
 * code ^short = "Psychoonkologische Mitbetreuung"
 
 * subject MS

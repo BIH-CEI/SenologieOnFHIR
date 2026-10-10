@@ -216,5 +216,5 @@ Usage: #example
 * component[mamillenbefund].code = $SCT#248819006 "Nipple finding"
 * component[mamillenbefund].valueString = "Mamille unauffällig, keine Sekretion"
 
-* component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
+* component[lymphknotenstatus].code = $SCT#284429001 "Examination of axillary lymph nodes"
 * component[lymphknotenstatus].valueString = "Axilläre Lymphknoten beidseits unauffällig"

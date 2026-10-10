@@ -44,7 +44,7 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook -
 
 // Migriert von lokal zu SNOMED CT (validiert gegen Snowstorm 10.8.2, 2026-04-14)
 * $SCT#1306515008 "Recurrent primary malignant neoplasm of breast"
-* $SCT#43336006 "Gigantomastia"
+* $SCT#372285001 "Gigantomastia"
 * $SCT#290113009 "Bloody nipple discharge"
 * $SCT#237474000 "Contracture of breast following insertion of breast implant"
 
@@ -109,7 +109,7 @@ Description: "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook -
 * ^expansion.contains[=].code = #1306515008
 * ^expansion.contains[=].display = "Recurrent primary malignant neoplasm of breast"
 * ^expansion.contains[+].system = "http://snomed.info/sct"
-* ^expansion.contains[=].code = #43336006
+* ^expansion.contains[=].code = #372285001
 * ^expansion.contains[=].display = "Gigantomastia"
 * ^expansion.contains[+].system = "http://snomed.info/sct"
 * ^expansion.contains[=].code = #290113009

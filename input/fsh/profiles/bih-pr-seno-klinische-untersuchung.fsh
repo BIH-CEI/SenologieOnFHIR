@@ -54,7 +54,7 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
     klinisches-cn 0..1 MS and
     tumornachweis-status 0..1 MS
 
-* component[inspektion].code = $SCT#225289005 "Examination of breast"
+* component[inspektion].code = $SCT#46662001 "Examination of breast"
 * component[inspektion] ^short = "Inspektionsbefund Brust (per Seite via observation-bodyPosition)"
 * component[inspektion].value[x] only CodeableConcept or string
 
@@ -62,7 +62,7 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
 * component[symmetrie] ^short = "Symmetrie der Brüste"
 * component[symmetrie].value[x] only CodeableConcept
 
-* component[ptosis].code = $SCT#15955021000119100 "Ptosis of breast"
+* component[ptosis].code = $SCT#248804005 "Ptotic breast"
 * component[ptosis] ^short = "Ptosis-Grad (Regnault, pro Seite via observation-bodyPosition)"
 * component[ptosis].value[x] only CodeableConcept
 
@@ -99,7 +99,7 @@ Description: "Observation für klinische Brustuntersuchung (Mammabefund pro Seit
 * component[mamillenbefund] ^mapping[+].identity = "lm"
 * component[mamillenbefund] ^mapping[=].map = "KlinischeUntersuchung.Mamillenbefund"
 
-* component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
+* component[lymphknotenstatus].code = $SCT#284429001 "Examination of axillary lymph nodes"
 * component[lymphknotenstatus] ^short = "Klinischer Lymphknotenstatus"
 * component[lymphknotenstatus] ^comment = "Tastbare axilläre Lymphknoten"
 * component[lymphknotenstatus].value[x] only CodeableConcept or string

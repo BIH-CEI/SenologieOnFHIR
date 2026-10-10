@@ -31,16 +31,7 @@ SNOMED CT, LOINC und RadLex Codes, die der TX-Proxy nicht auflösen kann:
 
 | Code | System | Klinische Bedeutung |
 |---|---|---|
-| `784163009` | SNOMED CT | Sentinel-Lymphknoten-Biopsie |
-| `784176009` | SNOMED CT | Sentinel-Lymphknoten |
-| `301782006` | SNOMED CT | Klinisches Staging |
-| `285345009` | SNOMED CT | Mammographie-Befund |
 | `127465003` | SNOMED CT | Chemotherapie-Schema |
-| `119380005` | SNOMED CT | Gewebeprobe |
-| `241736003` | SNOMED CT | Bildgebung der Mamma |
-| `300886002` | SNOMED CT | BI-RADS Klassifikation |
-| `373945005` | SNOMED CT | Strahlentherapie |
-| `183040004` | SNOMED CT | Nachsorge |
 | `870370003` | SNOMED CT | Referenz zu anderem Encounter |
 | `72018-2` | LOINC | TNM-Staging |
 | `39638-7` | LOINC | Histologischer Grad |

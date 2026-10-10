@@ -87,7 +87,7 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * activity[chemotherapy].detail.kind = #MedicationRequest
 
 // Radiotherapie/Strahlentherapie
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code ^short = "Empfohlene Strahlentherapie"
 * activity[radiotherapy].detail.code ^comment = "Strahlentherapie: (choice)"
 * activity[radiotherapy].detail.kind = #ServiceRequest

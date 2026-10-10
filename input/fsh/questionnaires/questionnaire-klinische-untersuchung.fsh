@@ -43,7 +43,7 @@ Usage: #inline
 * component[=].valueBoolean.extension.valueString = "iif(%resource.item.where(linkId='inspektion').item.where(linkId='inspektion-mamma-rechts-vorhanden').answer.valueBoolean.exists(), %resource.item.where(linkId='inspektion').item.where(linkId='inspektion-mamma-rechts-vorhanden').answer.valueBoolean, true)"
 
 // component[+]: Mamma rechts Befund (normal/abnormal SCT)
-* component[+].code = $SCT#225289005 "Examination of breast"
+* component[+].code = $SCT#46662001 "Examination of breast"
 * component[=].code.coding[0].extension.url = "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition"
 * component[=].code.coding[0].extension.valueCodeableConcept = $SCT#24028007 "Right"
 * component[=].valueCodeableConcept.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -51,7 +51,7 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding[=].system = $SCT
 
 // component[+]: Mamma links Befund
-* component[+].code = $SCT#225289005 "Examination of breast"
+* component[+].code = $SCT#46662001 "Examination of breast"
 * component[=].code.coding[0].extension.url = "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition"
 * component[=].code.coding[0].extension.valueCodeableConcept = $SCT#7771000 "Left"
 * component[=].valueCodeableConcept.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -71,7 +71,7 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding[=].system = $SCT
 
 // component[+]: Ptosis rechts
-* component[+].code = $SCT#15955021000119100 "Ptosis of breast"
+* component[+].code = $SCT#248804005 "Ptotic breast"
 * component[=].code.coding[0].extension.url = "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition"
 * component[=].code.coding[0].extension.valueCodeableConcept = $SCT#24028007 "Right"
 * component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -79,7 +79,7 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding[=].system = $CLIN_CUSTOM
 
 // component[+]: Ptosis links
-* component[+].code = $SCT#15955021000119100 "Ptosis of breast"
+* component[+].code = $SCT#248804005 "Ptotic breast"
 * component[=].code.coding[0].extension.url = "http://hl7.org/fhir/StructureDefinition/observation-bodyPosition"
 * component[=].code.coding[0].extension.valueCodeableConcept = $SCT#7771000 "Left"
 * component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"

@@ -179,7 +179,7 @@ Usage: #inline
 * component[+].code = $LOINC#96337-4 "Combined positive score"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pdl1-cps').answer.valueInteger"
-* component[+].code = $SCT#737023007 "Tumor-infiltrating lymphocytes"
+* component[+].code = $SCT#396395003 "Status of tumor infiltration by lymphocytes"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pdl1-ic').answer.valueInteger"
 

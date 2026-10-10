@@ -226,7 +226,7 @@ Usage: #example
 * component[mamillenbefund].code = $SCT#248819006 "Nipple finding"
 * component[mamillenbefund].valueString = "Mamille unauffällig, keine Sekretion"
 
-* component[lymphknotenstatus].code = $SCT#301782006 "Finding of lymph node of axillary region"
+* component[lymphknotenstatus].code = $SCT#284429001 "Examination of axillary lymph nodes"
 * component[lymphknotenstatus].valueString = "Axilläre Lymphknoten beidseits klinisch unauffällig"
 
 
@@ -368,7 +368,7 @@ Usage: #example
 
 // Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 10 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 

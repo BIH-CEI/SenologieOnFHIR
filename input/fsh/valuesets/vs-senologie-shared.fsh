@@ -1094,7 +1094,7 @@ Description: "Therapeutische Intention (Adjuvant/Neoadjuvant/Palliativ/Kurativ/R
 * $SCT#373846009 "Adjuvant"
 * $SCT#373847000 "Neoadjuvant"
 * $SCT#363676003 "Palliativ"
-* $SCT#103693007 "Diagnostisch"
+* $SCT#261004008 "Diagnostisch"
 * https://www.senologie.org/fhir/CodeSystem/form-helper#intention-revision "Revision"
 
 // ============================================================
@@ -1118,7 +1118,7 @@ Description: "Therapeutische Intention (Adjuvant/Neoadjuvant/Palliativ/Kurativ/R
 * ^expansion.contains[=].code = #363676003
 * ^expansion.contains[=].display = "Palliativ"
 * ^expansion.contains[+].system = "http://snomed.info/sct"
-* ^expansion.contains[=].code = #103693007
+* ^expansion.contains[=].code = #261004008
 * ^expansion.contains[=].display = "Diagnostisch"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #intention-revision

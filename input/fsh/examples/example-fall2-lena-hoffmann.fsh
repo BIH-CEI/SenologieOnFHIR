@@ -301,7 +301,7 @@ Usage: #example
 
 // Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Bestrahlung Thoraxwand + supraklavikulär 50 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 
@@ -608,7 +608,7 @@ Usage: #example
 * focus = Reference(Procedure/Fall2-Operation-Mastektomie)
 
 * component[komplikationsart].code = $SCT#116224001 "Complication of procedure"
-* component[komplikationsart].valueCodeableConcept = $SCT#285345009 "Seroma"
+* component[komplikationsart].valueCodeableConcept = $SCT#715068009 "Seroma"
 * component[komplikationsart].valueCodeableConcept.text = "Serom"
 
 * note.text = "Serom axillär rechts, konservative Behandlung mit Punktion, kein operativer Eingriff erforderlich"

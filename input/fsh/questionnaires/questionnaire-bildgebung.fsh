@@ -79,7 +79,7 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding[=].system = $BG_CUSTOM
 
 // component[lk-status]
-* component[+].code = $SCT#82127004 "Axillary lymph node assessment"
+* component[+].code = $SCT#284429001 "Examination of axillary lymph nodes"
 * component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='befund').item.where(linkId='lk-status').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[=].system = $BG_CUSTOM

@@ -225,7 +225,7 @@ Usage: #example
 * activity[operativeTherapy].detail.status = #scheduled
 
 * activity[radiotherapy].detail.kind = #ServiceRequest
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 

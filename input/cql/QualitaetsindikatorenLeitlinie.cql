@@ -118,14 +118,14 @@ define "Alle Brustoperationen":
   "BET Operationen" union "Mastektomie Operationen"
 
 // Strahlentherapie
-// SNOMED 108290001  Radiation oncology AND/OR radiotherapy
+// SNOMED 1287742003  Radiation oncology AND/OR radiotherapy
 // SNOMED 33195004   Teleradiotherapy procedure
 // OPS    8-52*      Strahlentherapie (alle)
 define "Strahlentherapien":
   [Procedure] P
     where exists(P.code.coding c
       where (c.system = 'http://snomed.info/sct'
-        and (c.code = '108290001' or c.code = '33195004'))
+        and (c.code = '1287742003' or c.code = '33195004'))
       or (c.system = 'http://fhir.de/CodeSystem/bfarm/ops' and c.code.startsWith('8-52')))
     or P.meta.profile.value contains 'https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie'
 

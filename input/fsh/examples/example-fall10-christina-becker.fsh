@@ -601,7 +601,7 @@ Usage: #example
 
 // Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Bestrahlung der Thoraxwand nach Abschluss der Chemotherapie"
 * activity[radiotherapy].detail.status = #scheduled
 

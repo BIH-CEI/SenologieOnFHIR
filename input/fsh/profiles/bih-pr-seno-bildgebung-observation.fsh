@@ -74,7 +74,7 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 * code.coding[biRadsLoinc] = http://loinc.org#72018-2
 
 * code.coding[biRadsSnomed] ^short = "BI-RADS Kategorie (SNOMED)"
-* code.coding[biRadsSnomed] = http://snomed.info/sct#241736003
+* code.coding[biRadsSnomed] = http://snomed.info/sct#146611000146107
 
 * obeys biRads-value
 
@@ -87,21 +87,21 @@ Description: "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdb
 
 // Herdbefund (Mass, Läsion, Tumor)
 * code.coding[herdbefundSnomed] ^short = "Herdbefund/Läsion (SNOMED)"
-* code.coding[herdbefundSnomed] = http://snomed.info/sct#300886002
+* code.coding[herdbefundSnomed] = http://snomed.info/sct#290073004
 
 * code.coding[herdbefundRadlex] ^short = "Herdbefund/Läsion (RadLex)"
 * code.coding[herdbefundRadlex] = http://radlex.org#RID3933
 
 // Mikrokalk
 * code.coding[mikrokalkSnomed] ^short = "Mikrokalkifikation (SNOMED)"
-* code.coding[mikrokalkSnomed] = http://snomed.info/sct#373945005
+* code.coding[mikrokalkSnomed] = http://snomed.info/sct#44771000
 
 * code.coding[mikrokalkRadlex] ^short = "Mikrokalkifikation (RadLex)"
 * code.coding[mikrokalkRadlex] = http://radlex.org#RID4002
 
 // Lymphknoten Status
 * code.coding[lymphknotenSnomed] ^short = "Lymphknoten-Status (SNOMED)"
-* code.coding[lymphknotenSnomed] = http://snomed.info/sct#301782006
+* code.coding[lymphknotenSnomed] = http://snomed.info/sct#284429001
 
 * code.coding[lymphknotenRadlex] ^short = "Lymphknoten-Status (RadLex)"
 * code.coding[lymphknotenRadlex] = http://radlex.org#RID58844

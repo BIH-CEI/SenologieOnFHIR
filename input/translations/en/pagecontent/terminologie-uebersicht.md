@@ -74,7 +74,7 @@ No suitable SNOMED CT concept could be identified for the following concepts. It
 |---|---|---|---|
 | `bz-diagnose-bc-recurrence` | Breast carcinoma recurrence | `1306515008 | Recurrent primary malignant neoplasm of breast` | **Migration candidate** |
 | `bz-diagnose-sonstiges` | Other | — (generic, no meaningful SNOMED equivalent) | Remains local |
-| `bz-makromastie` | Macromastia | `43336006 | Gigantomastia` | **Migration candidate** |
+| `bz-makromastie` | Macromastia | `372285001 | Gigantomastia` | **Migration candidate** |
 | `bz-mamillensekretion-nicht-blutig` | Non-bloody nipple discharge | `54302000 | Discharge from nipple` (qualifier "non-bloody" not present in SNOMED) | Partial |
 | `bz-mamillensekretion-blutig` | Bloody nipple discharge | `290113009 | Bloody nipple discharge` | **Migration candidate** |
 | `bz-befund-unklarer-dignitaet` | Finding of uncertain dignity | `269497004 | Neoplasm of uncertain behavior of breast` | **Migration candidate** |

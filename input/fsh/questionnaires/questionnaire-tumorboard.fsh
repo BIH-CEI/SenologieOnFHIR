@@ -347,7 +347,7 @@ Usage: #inline
 
 // --- Strahlentherapie ---
 * activity[+].detail.kind = #ServiceRequest
-* activity[=].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[=].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[=].detail.statusReason.coding.system.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * activity[=].detail.statusReason.coding.system.extension.valueString = "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-status').answer.valueCoding.system"
 * activity[=].detail.statusReason.coding.code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
