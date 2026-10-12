@@ -26,7 +26,7 @@ title: Senologie TNM Observations to oBDS TNM BackboneElement status: draft
   "version" : "0.10.0",
   "name" : "SenologieToObdsTNM",
   "status" : "draft",
-  "date" : "2026-10-12T08:17:48+00:00",
+  "date" : "2026-10-12T09:27:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{
