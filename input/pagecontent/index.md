@@ -1,5 +1,7 @@
 ### Kerndatensatz Senologie
 
+> **English:** For international readers there is an [English summary](english-summary.html) of this guide.
+
 Der **Kerndatensatz Senologie** definiert FHIR-Profile für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus. Er umfasst den gesamten Versorgungspfad von der Erstvorstellung über Diagnostik, Therapie und Nachsorge bis zur Verlaufsdokumentation.
 
 <div style="margin: 1.5em 0;">

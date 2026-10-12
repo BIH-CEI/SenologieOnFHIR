@@ -1,5 +1,7 @@
 ### Senologie Core Dataset — English Summary
 
+> **Deutsch:** Der vollständige Leitfaden auf Deutsch beginnt auf der [Startseite](index.html).
+
 > **Note:** The full Implementation Guide is published in German, reflecting its primary audience (German-certified breast cancer centres and their reporting context). This page summarises the specification for an international audience. All FHIR artefacts (profiles, ValueSets, examples) carry English titles and descriptions where applicable.
 
 The **Senologie Core Dataset** defines FHIR R4 profiles for the structured documentation of breast cancer care at certified breast centres in Germany. It covers the entire care pathway — from initial presentation through diagnostics, therapy, and follow-up. The specification is developed by the **Berlin Institute of Health at Charité (BIH)** in coordination with the **German Society for Senology (DGS)**, **DGGG**, and **AGO**.
@@ -51,6 +53,10 @@ Clinical content follows the **S3 guideline for breast cancer** (AWMF 032-045OL)
 - **[Artifacts](artifacts.html)** — Full list of FHIR artefacts
 
 For interoperability questions or international collaboration, see [Interoperability](interoperabilitaet.html) (covers MII KDS, ISiK, IPS, EU-EHDS alignment).
+
+#### Rights and licence
+
+© Deutsche Gesellschaft für Senologie (DGS). The guide and its repository are provided by the Berlin Institute of Health at Charité (BIH) and licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Third-party terminologies (SNOMED CT, LOINC, UICC TNM, ICD-10-GM, OPS) remain under the terms of their owners.
 
 #### Contact
 
