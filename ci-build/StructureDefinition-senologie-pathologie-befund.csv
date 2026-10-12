@@ -1,10 +1,12 @@
-"Id","Path","Slice Name","Alias(s)","Label","Min","Max","Must Support?","Is Modifier?","Is Summary?","Type(s)","Short","Definition","Comments","Requirements","Default Value","Meaning When Missing","Fixed Value","Pattern","Example","Minimum Value","Maximum Value","Maximum Length","Binding Strength","Binding Description","Binding Value Set","Code","Slicing Discriminator","Slicing Description","Slicing Ordered","Slicing Rules","Base Path","Base Min","Base Max","Condition(s)","Constraint(s)","Mapping: BIH LM Senologie","Mapping: LM-Element: Pathologie"
+"Id","Path","Slice Name","Alias(s)","Label","Min","Max","Must Support?","Is Modifier?","Is Summary?","Type(s)","Short","Definition","Comments","Requirements","Default Value","Meaning When Missing","Fixed Value","Pattern","Example","Minimum Value","Maximum Value","Maximum Length","Binding Strength","Binding Description","Binding Value Set","Code","Slicing Discriminator","Slicing Description","Slicing Ordered","Slicing Rules","Base Path","Base Min","Base Max","Condition(s)","Constraint(s)","Mapping: BIH LM Senologie"
 "DiagnosticReport","DiagnosticReport","","Report
 TestResultResultsLabsLaboratory","",0,*,"","","","null {[]} {[]}
 ","A Diagnostic report - a combination of request information, atomic results, images, interpretation, as well as formatted reports","The findings and interpretation of diagnostic  tests performed on patients, groups of patients, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting and provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports.","This is intended to capture a single report and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing.","","","","","","","","",,,,,"",,,,"DiagnosticReport",0,*,"","dom-2:If the resource is contained in another resource, it SHALL NOT contain nested Resources {contained.contained.empty()}
 dom-4:If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated {contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()}dom-3:If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource {contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()}dom-6:A resource should have narrative for robust management {text.`div`.exists()}dom-5:If a resource is contained in another resource, it SHALL NOT have a security label {contained.meta.security.empty()}"
 "DiagnosticReport.id","DiagnosticReport.id","","","",0,1,"Y","","Y","id {[]} {[]}
-","Logical id of this artifact","The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.","The only time that a resource does not have an id is when it is being submitted to the server using a create operation.","","","","","","","","",,,,,"",,,,"Resource.id",0,1,"",""
+","Logical id of this artifact","The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.","The only time that a resource does not have an id is when it is being submitted to the server using a create operation.","","","","","","","","",,,,,"",,,,"Resource.id",0,1,"ele-1
+","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+"
 "DiagnosticReport.meta","DiagnosticReport.meta","","","",0,1,"","","Y","Meta {[]} {[]}
 ","Metadata about the resource","The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.","","","","","","","","","",,,,,"",,,,"Resource.meta",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
@@ -67,7 +69,14 @@ user content","",0,*,"","","","Extension {[]} {[]}
 ext-1:Must have either extensions or value[x], not both {extension.exists() != value.exists()}"
 "DiagnosticReport.extension:related-report","DiagnosticReport.extension","related-report","extensions
 user content","",0,*,"Y","","","Extension {[CanonicalType[http://hl7.org/fhir/StructureDefinition/workflow-relatedArtifact]]} {[]}
-","Verwandter Bericht","Verweis auf Vorbefunde","Note that in contrast this extension, the [supportingInfo extension](http://hl7.org/fhir/R4/extension-workflow-supportinginfo.html) references other resources *from the patient record* that were used in creating the resource.","","","","","","","","",,,,,"",,,,"DomainResource.extension",0,*,"ele-1
+","Verwandter Bericht","Verweis auf Vorbefunde","Verweist auf fachlich zusammenhaengende Vorbefunde desselben oder eines frueheren Falls. Unterstuetzende klinische Informationen zum Auftrag stehen dagegen im MII PR Patho Service Request unter .supportingInfo.","","","","","","","","",,,,,"",,,,"DomainResource.extension",0,*,"ele-1
+","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+ext-1:Must have either extensions or value[x], not both {extension.exists() != value.exists()}"
+"DiagnosticReport.extension:composition","DiagnosticReport.extension","composition","extensions
+user content","",0,1,"Y","","","Extension {[CanonicalType[http://hl7.org/fhir/5.0/StructureDefinition/extension-DiagnosticReport.composition]]} {[]}
+","Composition","Verweis auf die zugehoerige Composition","Element `DiagnosticReport.composition` has a context of DiagnosticReport based on following the parent source element upwards and mapping to `DiagnosticReport`.
+Element `DiagnosticReport.composition` has no mapping targets in FHIR R4. Typically, this is because the element has been added (is a new element).
+The Composition provides structure to the content of the DiagnosticReport (and only contains contents referenced in the DiagnosticReport) - e.g., to order the sections of an anatomic pathology structured report.","","","","","","","","",,,,,"",,,,"DomainResource.extension",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ext-1:Must have either extensions or value[x], not both {extension.exists() != value.exists()}"
 "DiagnosticReport.modifierExtension","DiagnosticReport.modifierExtension","","extensions
@@ -128,14 +137,14 @@ per-1:If present, start SHALL have a lower value than end {start.hasValue().not(
 "DiagnosticReport.identifier:Set-ID.assigner","DiagnosticReport.identifier.assigner","","","",0,1,"","","Y","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Organization]]}
 ","Organization that issued id (may be just text)","Organization that issued/manages the identifier.","The Identifier.assigner may omit the .reference element and only contain a .display element reflecting the name or other textual information about the assigning organization.","","","","","","","","",,,,,"",,,,"Identifier.assigner",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.basedOn","DiagnosticReport.basedOn","","Request
 ","",1,*,"Y","","","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-service-request]]}
 ","Reference to respective MII_PR_Patho_Service_Request","Verweis auf den zugehörigen Untersuchungsauftrag","Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports.","This allows tracing of authorization for the report and tracking whether proposals/recommendations were acted upon.","","","","","","","",,,,,"",,,,"DiagnosticReport.basedOn",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.status","DiagnosticReport.status","","","",1,1,"Y","Y","Y","code {[]} {[]}
-","Abgeschlossener Pathologie-Bericht","Status des Befundes","Note that FHIR strings SHALL NOT exceed 1MB in size","Diagnostic services routinely issue provisional/incomplete reports, and sometimes withdraw previously released reports.","","","<valueCode xmlns=""http://hl7.org/fhir"" value=""final""/>","","","","",,"required","The status of the diagnostic report.","http://hl7.org/fhir/ValueSet/diagnostic-report-status|4.0.1","",,,,"DiagnosticReport.status",1,1,"ele-1
+","Befundstatus (preliminary | final | amended | corrected)","Status des Befundes","final ist der Regelfall. preliminary bei Schnellschnitt, amended/corrected bei nachträglicher Korrektur.","Diagnostic services routinely issue provisional/incomplete reports, and sometimes withdraw previously released reports.","","","","","","","",,"required","The status of the diagnostic report.","http://hl7.org/fhir/ValueSet/diagnostic-report-status|4.0.1","",,,,"DiagnosticReport.status",1,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 "
 "DiagnosticReport.category","DiagnosticReport.category","","Department
@@ -157,15 +166,12 @@ user content","",0,*,"","","","Extension {[]} {[]}
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ext-1:Must have either extensions or value[x], not both {extension.exists() != value.exists()}"
 "DiagnosticReport.code.coding","DiagnosticReport.code.coding","","","",1,*,"","","Y","Coding {[]} {[]}
-","Art der pathologischen Untersuchung","A reference to a code defined by a terminology system.","Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.","Allows for alternative encodings within a code system, and translations to other code systems.","","","","","","","",,,,,"","pattern:$this}
+","Art der pathologischen Untersuchung","A reference to a code defined by a terminology system.","Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.","Allows for alternative encodings within a code system, and translations to other code systems.","","","","","","","",,,,,"","value:system}
 ","",,"open","CodeableConcept.coding",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 "
 "DiagnosticReport.code.coding:pathology-report","DiagnosticReport.code.coding","pathology-report","","",1,1,"Y","","Y","Coding {[]} {[]}
-","Pathologie-Befund Code","Spezifischer Code für Pathologie-Befunde","Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.","Allows for alternative encodings within a code system, and translations to other code systems.","","","","<valueCoding xmlns=""http://hl7.org/fhir"">
-  <system value=""http://loinc.org""/>
-  <code value=""60568-3""/>
-</valueCoding>","","","",,,,,"",,,,"CodeableConcept.coding",0,*,"ele-1
+","Pathologie-Befund Code","Spezifischer Code für Pathologie-Befunde","Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.","Allows for alternative encodings within a code system, and translations to other code systems.","","","","","","","",,"extensible","","https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/ValueSet/mii-vs-patho-report-code-loinc","",,,,"CodeableConcept.coding",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 "
 "DiagnosticReport.code.coding:pathology-report.id","DiagnosticReport.code.coding.id","","","",0,1,"","","","string {[]} {[]}
@@ -177,7 +183,7 @@ user content","",0,*,"","","","Extension {[]} {[]}
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ext-1:Must have either extensions or value[x], not both {extension.exists() != value.exists()}"
 "DiagnosticReport.code.coding:pathology-report.system","DiagnosticReport.code.coding.system","","","",1,1,"Y","","Y","uri {[]} {[]}
-","Identity of the terminology system","The identification of the code system that defines the meaning of the symbol in the code.","The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should reference to some definition that establishes the system clearly and unambiguously.","Need to be unambiguous about the source of the definition of the symbol.","","","","","","","",,,,,"",,,,"Coding.system",0,1,"ele-1
+","Identity of the terminology system","The identification of the code system that defines the meaning of the symbol in the code.","The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should reference to some definition that establishes the system clearly and unambiguously.","Need to be unambiguous about the source of the definition of the symbol.","","","<valueUri xmlns=""http://hl7.org/fhir"" value=""http://loinc.org""/>","","","","",,,,,"",,,,"Coding.system",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 "
 "DiagnosticReport.code.coding:pathology-report.version","DiagnosticReport.code.coding.version","","","",0,1,"","","Y","string {[]} {[]}
@@ -204,47 +210,47 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","",1,1,"Y","","Y","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Patient]]}
 ","Patient","Verweis auf den Patienten","References SHALL be a reference to an actual FHIR resource, and SHALL be resolveable (allowing for access control, temporary unavailability, etc.). Resolution can be either by retrieval from the URL, or, where applicable by resource type, by treating an absolute reference as a canonical URL and looking it up in a local registry/repository.","SHALL know the subject context.","","","","","","","",,,,,"",,,,"DiagnosticReport.subject",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.encounter","DiagnosticReport.encounter","","Context
 ","",0,1,"Y","","Y","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Encounter]]}
 ","Fall","Verweis auf den Fall","This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter  but still be tied to the context of the encounter  (e.g. pre-admission laboratory tests).","Links the request to the Encounter context.","","","","","","","",,,,,"",,,,"DiagnosticReport.encounter",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.effective[x]","DiagnosticReport.effective[x]","","Observation time
 Effective TimeOccurrence","",0,1,"Y","","Y","dateTime {[]} {[]}
-","Datum der Präparateentnahme","Zeitpunkt der Befunderstellung","Aus dotbase: 'Datum Präparateentnahme'","Need to know where in the patient history to file/present this report.","","","","","","","",,,,,"",,,,"DiagnosticReport.effective[x]",0,1,"ele-1
+","Datum der Präparateentnahme","Zeitpunkt der Befunderstellung","'Datum Präparateentnahme'","Need to know where in the patient history to file/present this report.","","","","","","","",,,,,"",,,,"DiagnosticReport.effective[x]",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-"
+","Pathologie.DatumEntnahme"
 "DiagnosticReport.issued","DiagnosticReport.issued","","Date published
 Date IssuedDate Verified","",0,1,"Y","","Y","instant {[]} {[]}
 ","Datum der Befunderstellung","The date and time that this version of the report was made available to providers, typically after the report was reviewed and verified.","May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report.","Clinicians need to be able to check the date that the report was released.","","","","","","","",,,,,"",,,,"DiagnosticReport.issued",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-"
+","Pathologie.Datum"
 "DiagnosticReport.performer","DiagnosticReport.performer","","Laboratory
 ServicePractitionerDepartmentCompanyAuthorized byDirector","",1,*,"Y","","Y","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Practitioner], CanonicalType[http://hl7.org/fhir/StructureDefinition/PractitionerRole], CanonicalType[http://hl7.org/fhir/StructureDefinition/Organization], CanonicalType[http://hl7.org/fhir/StructureDefinition/CareTeam]]}
-","Pathologisches Institut / befundender Pathologe","Ersteller des Befundes","Aus dotbase: 'Pathologisches Institut' (choice) — ersetzt ehemalige PathologyLab-Extension","Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.","","","","","","","",,,,,"",,,,"DiagnosticReport.performer",0,*,"ele-1
+","Pathologisches Institut / befundender Pathologe","Ersteller des Befundes","Pathologisches Institut: (choice) — ersetzt ehemalige PathologyLab-Extension","Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.","","","","","","","",,,,,"",,,,"DiagnosticReport.performer",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}","Pathologie.PathologischesInstitut"
 "DiagnosticReport.resultsInterpreter","DiagnosticReport.resultsInterpreter","","Analyzed by
 Reported by","",0,*,"","","Y","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Practitioner], CanonicalType[http://hl7.org/fhir/StructureDefinition/PractitionerRole], CanonicalType[http://hl7.org/fhir/StructureDefinition/Organization], CanonicalType[http://hl7.org/fhir/StructureDefinition/CareTeam]]}
 ","Befundender Pathologe","The practitioner or organization that is responsible for the report's conclusions and interpretations.","Might not be the same entity that takes responsibility for the clinical report.","Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.","","","","","","","",,,,,"",,,,"DiagnosticReport.resultsInterpreter",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.specimen","DiagnosticReport.specimen","","","",1,*,"Y","","","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Specimen]]}
 ","Pathologisches Präparat","Verweis auf die untersuchte Probe","Soll Senologie_Pathologie_Praeparat referenzieren — enthält Art, Lokalisation, Seite, Uhrzeitposition, Mamillenabstand und Entnahme-Zeitpunkt","Need to be able to report information about the collected specimens on which the report is based.","","","","","","","",,,,,"",,,,"DiagnosticReport.specimen",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}","Pathologie.Praeparat"
 "DiagnosticReport.result","DiagnosticReport.result","","Data
 Atomic ValueResultAtomic resultDataTestAnalyteBatteryOrganizer","",1,*,"Y","","","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Observation]]}
 ","Detaillierte Befund-Komponenten","Referenz auf Beobachtungsberichtsabschnitte mit Einzelbeobachtungen","Erbt MII Patho Grouper-Slices (intraoperative, macroscopic, microscopic) — ER, PR, HER2, Ki-67, Histologie, B3-Läsion als Observations","Need to support individual results, or  groups of results, where the result grouping is arbitrary, but meaningful.","","","","","","","",,,,,"","value:resolve().code}
 ","",Y,"closed","DiagnosticReport.result",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}","Pathologie.BefundInvasiv | Pathologie.BefundDCIS (je nach Observation-Code)"
 "DiagnosticReport.result:intraoperative-observations","DiagnosticReport.result","intraoperative-observations","Data
 Atomic ValueResultAtomic resultDataTestAnalyteBatteryOrganizer","",0,1,"Y","","","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-intraoperative-grouper]]}
 ","Reference to intraoperative Observation grouper(s)","Verweis auf intraoperative Beobachtungen","Observations can contain observations.","Need to support individual results, or  groups of results, where the result grouping is arbitrary, but meaningful.","","","","","","","",,,,,"",,,,"DiagnosticReport.result",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.result:intraoperative-observations.id","DiagnosticReport.result.id","","","",0,1,"","","","string {[]} {[]}
 ","Unique id for inter-element referencing","Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"",""
 "DiagnosticReport.result:intraoperative-observations.extension","DiagnosticReport.result.extension","","extensions
@@ -281,7 +287,7 @@ Reference is intended to point to a structure that can potentially be expressed 
 Atomic ValueResultAtomic resultDataTestAnalyteBatteryOrganizer","",0,1,"Y","","","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-macroscopic-grouper]]}
 ","Reference to macroscopic Observation grouper(s)","Verweis auf makroskopische Beobachtungen","Observations can contain observations.","Need to support individual results, or  groups of results, where the result grouping is arbitrary, but meaningful.","","","","","","","",,,,,"",,,,"DiagnosticReport.result",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.result:macroscopic-observations.id","DiagnosticReport.result.id","","","",0,1,"","","","string {[]} {[]}
 ","Unique id for inter-element referencing","Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"",""
 "DiagnosticReport.result:macroscopic-observations.extension","DiagnosticReport.result.extension","","extensions
@@ -318,7 +324,7 @@ Reference is intended to point to a structure that can potentially be expressed 
 Atomic ValueResultAtomic resultDataTestAnalyteBatteryOrganizer","",0,1,"Y","","","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-microscopic-grouper]]}
 ","Reference to microscopic Observation grouper(s)","Verweis auf mikroskopische Beobachtungen","Observations can contain observations.","Need to support individual results, or  groups of results, where the result grouping is arbitrary, but meaningful.","","","","","","","",,,,,"",,,,"DiagnosticReport.result",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.result:microscopic-observations.id","DiagnosticReport.result.id","","","",0,1,"","","","string {[]} {[]}
 ","Unique id for inter-element referencing","Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"",""
 "DiagnosticReport.result:microscopic-observations.extension","DiagnosticReport.result.extension","","extensions
@@ -355,7 +361,7 @@ Reference is intended to point to a structure that can potentially be expressed 
 Atomic ValueResultAtomic resultDataTestAnalyteBatteryOrganizer","",0,1,"Y","","","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-additional-specified-grouper]]}
 ","Reference to any additional Observation grouper(s)","Verweis auf zusätzliche Beobachtungen","Observations can contain observations.","Need to support individual results, or  groups of results, where the result grouping is arbitrary, but meaningful.","","","","","","","",,,,,"",,,,"DiagnosticReport.result",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.result:additional-observations.id","DiagnosticReport.result.id","","","",0,1,"","","","string {[]} {[]}
 ","Unique id for inter-element referencing","Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"",""
 "DiagnosticReport.result:additional-observations.extension","DiagnosticReport.result.extension","","extensions
@@ -392,7 +398,7 @@ Reference is intended to point to a structure that can potentially be expressed 
 Atomic ValueResultAtomic resultDataTestAnalyteBatteryOrganizer","",1,1,"Y","","","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-diagnostic-conclusion-grouper]]}
 ","Reference to the 'Diagnostic Conclusion' grouper(s)","Verweis auf die diagnostische Schlussfolgerung","Observations can contain observations.","Need to support individual results, or  groups of results, where the result grouping is arbitrary, but meaningful.","","","","","","","",,,,,"",,,,"DiagnosticReport.result",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.result:diagnostic-conclusion.id","DiagnosticReport.result.id","","","",0,1,"","","","string {[]} {[]}
 ","Unique id for inter-element referencing","Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"",""
 "DiagnosticReport.result:diagnostic-conclusion.extension","DiagnosticReport.result.extension","","extensions
@@ -428,7 +434,7 @@ Reference is intended to point to a structure that can potentially be expressed 
 "DiagnosticReport.imagingStudy","DiagnosticReport.imagingStudy","","","",0,*,"Y","","","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/ImagingStudy]]}
 ","Bildinformationen","Verweis auf Bildinformationen","ImagingStudy and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However, each caters to different types of displays for different types of purposes. Neither, either, or both may be provided.","","","","","","","","",,,,,"",,,,"DiagnosticReport.imagingStudy",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.media","DiagnosticReport.media","","DICOM
 SlidesScans","",0,*,"Y","","Y","BackboneElement {[]} {[]}
 ","Reference to single attached images","Verweis auf angehängte Bilder","","Many diagnostic services include images in the report as part of their service.","","","","","","","",,,,,"",,,,"DiagnosticReport.media",0,*,"ele-1
@@ -456,12 +462,12 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 "DiagnosticReport.media.link","DiagnosticReport.media.link","","","",1,1,"Y","","Y","Reference {[]} {[CanonicalType[https://www.medizininformatik-initiative.de/fhir/ext/modul-patho/StructureDefinition/mii-pr-patho-attached-image]]}
 ","Reference to the image source","Reference to the image source.","References SHALL be a reference to an actual FHIR resource, and SHALL be resolveable (allowing for access control, temporary unavailability, etc.). Resolution can be either by retrieval from the URL, or, where applicable by resource type, by treating an absolute reference as a canonical URL and looking it up in a local registry/repository.","","","","","","","","",,,,,"",,,,"DiagnosticReport.media.link",1,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-ref-1:SHALL have a contained resource if a local reference is provided {reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))}"
+ref-1:SHALL have a contained resource if a local reference is provided {reference.exists() implies (reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids')) or (reference='#' and %rootResource!=%resource))}"
 "DiagnosticReport.conclusion","DiagnosticReport.conclusion","","Report
 ","",0,1,"","","","string {[]} {[]}
-","Gesamtbeurteilung des Pathologen","Concise and clinically contextualized summary conclusion (interpretation/impression) of the diagnostic report.","Aus dotbase: 'Details' (text)","Need to be able to provide a conclusion that is not lost among the basic result data.","","","","","","","",,,,,"",,,,"DiagnosticReport.conclusion",0,1,"ele-1
+","Gesamtbeurteilung des Pathologen","Concise and clinically contextualized summary conclusion (interpretation/impression) of the diagnostic report.","Details: (text)","Need to be able to provide a conclusion that is not lost among the basic result data.","","","","","","","",,,,,"",,,,"DiagnosticReport.conclusion",0,1,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-"
+","Pathologie.Befundtext"
 "DiagnosticReport.conclusionCode","DiagnosticReport.conclusionCode","","","",0,*,"Y","","","CodeableConcept {[]} {[]}
 ","Schlussfolgerungscode","Kodierung für abschließende diagnostische Schlussfolgerung","Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination.","","","","","","","","",,"example","Diagnosis codes provided as adjuncts to the report.","http://hl7.org/fhir/ValueSet/clinical-findings","",,,,"DiagnosticReport.conclusionCode",0,*,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}

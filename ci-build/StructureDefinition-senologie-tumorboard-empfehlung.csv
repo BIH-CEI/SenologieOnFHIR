@@ -1,4 +1,4 @@
-"Id","Path","Slice Name","Alias(s)","Label","Min","Max","Must Support?","Is Modifier?","Is Summary?","Type(s)","Short","Definition","Comments","Requirements","Default Value","Meaning When Missing","Fixed Value","Pattern","Example","Minimum Value","Maximum Value","Maximum Length","Binding Strength","Binding Description","Binding Value Set","Code","Slicing Discriminator","Slicing Description","Slicing Ordered","Slicing Rules","Base Path","Base Min","Base Max","Condition(s)","Constraint(s)","Mapping: BIH LM Senologie","Mapping: LM-Element: Tumorkonferenz","Mapping: Workflow Pattern","Mapping: RIM Mapping","Mapping: FiveWs Pattern Mapping","Mapping: HL7 v2 Mapping"
+"Id","Path","Slice Name","Alias(s)","Label","Min","Max","Must Support?","Is Modifier?","Is Summary?","Type(s)","Short","Definition","Comments","Requirements","Default Value","Meaning When Missing","Fixed Value","Pattern","Example","Minimum Value","Maximum Value","Maximum Length","Binding Strength","Binding Description","Binding Value Set","Code","Slicing Discriminator","Slicing Description","Slicing Ordered","Slicing Rules","Base Path","Base Min","Base Max","Condition(s)","Constraint(s)","Mapping: BIH LM Senologie","Mapping: Workflow Pattern","Mapping: RIM Mapping","Mapping: FiveWs Pattern Mapping","Mapping: HL7 v2 Mapping"
 "CarePlan","CarePlan","","Care Team
 ","",0,*,"","","","null {[]} {[]}
 ","Healthcare plan for patient or group","Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.","","","","","","","","","",,,,,"",,,,"CarePlan",0,*,"","dom-2:If the resource is contained in another resource, it SHALL NOT contain nested Resources {contained.contained.empty()}
@@ -51,7 +51,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 "CarePlan.partOf","CarePlan.partOf","","","",0,*,"","","Y","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/CarePlan|4.0.1]]}
 ","Part of referenced CarePlan","A larger care plan of which this particular care plan is a component or step.","Each care plan is an independent request, such that having a care plan be part of another care plan can cause issues with cascading statuses.  As such, this element is still being discussed.","","","","","","","","",,,,,"",,,,"CarePlan.partOf",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 "
-"CarePlan.status","CarePlan.status","","","",1,1,"Y","Y","Y","code {[]} {[]}
+"CarePlan.status","CarePlan.status","","","",1,1,"","Y","Y","code {[]} {[]}
 ","Aktiver Care Plan","Indicates whether the plan is currently being acted upon, represents future intentions or is now a historical record.","The unknown code is not to be used to convey other statuses.  The unknown code should be used when one of the statuses applies, but the authoring system doesn't know the current state of the care plan.
 
 This element is labeled as a modifier because the status contains the code entered-in-error that marks the plan as not currently valid.","Allows clinicians to determine whether the plan is actionable or not.","","","<valueCode xmlns=""http://hl7.org/fhir"" value=""active""/>","","","","",,"required","Indicates whether the plan is currently being acted upon, represents future intentions or is now a historical record.","http://hl7.org/fhir/ValueSet/request-status|4.0.1","",,,,"CarePlan.status",1,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
@@ -59,8 +59,8 @@ This element is labeled as a modifier because the status contains the code enter
 "CarePlan.intent","CarePlan.intent","","","",1,1,"Y","Y","Y","code {[]} {[]}
 ","Tumorboard-Empfehlung als Planungsplan","Indicates the level of authority/intentionality associated with the care plan and where the care plan fits into the workflow chain.","This element is labeled as a modifier because the intent alters when and how the resource is actually applicable.","Proposals/recommendations, plans and orders all use the same structure and can exist in the same fulfillment chain.","","","<valueCode xmlns=""http://hl7.org/fhir"" value=""plan""/>","","","","",,"required","Codes indicating the degree of authority/intentionality associated with a care plan.","http://hl7.org/fhir/ValueSet/care-plan-intent|4.0.1","",,,,"CarePlan.intent",1,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.intent"
-"CarePlan.category","CarePlan.category","","","",0,*,"","","Y","CodeableConcept {[]} {[]}
-","Type of plan","Identifies what ""kind"" of plan this is to support differentiation between multiple co-existing plans; e.g. ""Home health"", ""psychiatric"", ""asthma"", ""disease management"", ""wellness plan"", etc.","There may be multiple axes of categorization and one plan may serve multiple purposes.  In some cases, this may be redundant with references to CarePlan.concern.","Used for filtering what plan(s) are retrieved and displayed to different types of users.","","","","","","","",,"example","Identifies what ""kind"" of plan this is to support differentiation between multiple co-existing plans; e.g. ""Home health"", ""psychiatric"", ""asthma"", ""disease management"", etc.","http://hl7.org/fhir/ValueSet/care-plan-category|4.0.1","",,,,"CarePlan.category",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+"CarePlan.category","CarePlan.category","","","",1,1,"Y","","Y","CodeableConcept {[]} {[]}
+","Art der Tumorkonferenz / Therapieplanung","Identifies what ""kind"" of plan this is to support differentiation between multiple co-existing plans; e.g. ""Home health"", ""psychiatric"", ""asthma"", ""disease management"", ""wellness plan"", etc.","Codiert nach MII Onko therapieplanung-typ (1:1 wiederverwendet — praeth/postop/postth/ther)","Used for filtering what plan(s) are retrieved and displayed to different types of users.","","","","","","","",,"required","","https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-therapieplanung-typ","",,,,"CarePlan.category",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","FiveWs.class"
 "CarePlan.title","CarePlan.title","","","",0,1,"Y","","Y","string {[]} {[]}
 ","Tumorboard Empfehlung","Human-friendly name for the care plan.","","","","","","","","","",,,,,"",,,,"CarePlan.title",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
@@ -87,7 +87,7 @@ user content","",0,*,"","","","Extension {[]} {[]}
 ","Extensions are always sliced by (at least) url",,"open","Element.extension",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ext-1:Must have either extensions or value[x], not both {extension.exists() != value.exists()}","n/a"
 "CarePlan.period.start","CarePlan.period.start","","","",0,1,"Y","","Y","dateTime {[]} {[]}
-","Datum des Tumorboard","The start of the period. The boundary is inclusive.","Aus dotbase: 'Datum'","","","","","","","","",,,,,"",,,,"Period.start",0,1,"per-1
+","Datum des Tumorboard","The start of the period. The boundary is inclusive.","'Datum'","","","","","","","","",,,,,"",,,,"Period.start",0,1,"per-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","./low","DR.1"
 "CarePlan.period.end","CarePlan.period.end","","","",0,1,"","","Y","dateTime {[]} {[]}
@@ -208,10 +208,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -270,7 +270,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:operativeTherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene operative Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Operative Therapie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene operative Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Operative Therapie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""387713003""/>
@@ -312,10 +312,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:operativeTherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:operativeTherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:operativeTherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -374,7 +374,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:chemotherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene Chemotherapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Chemotherapie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene Chemotherapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Chemotherapie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""385786002""/>
@@ -416,10 +416,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:chemotherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:chemotherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:chemotherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -478,11 +478,11 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:radiotherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene Strahlentherapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Strahlentherapie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene Strahlentherapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Strahlentherapie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
-    <code value=""108290001""/>
-    <display value=""Radiation oncology AND/OR radiotherapy (procedure)""/>
+    <code value=""1287742003""/>
+    <display value=""Radiotherapy (procedure)""/>
   </coding>
 </valueCodeableConcept>","","","",,"example","Detailed description of the type of activity; e.g. What lab test, what procedure, what kind of encounter.","http://hl7.org/fhir/ValueSet/procedure-code|4.0.1","",,,,"CarePlan.activity.detail.code",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.code",".code","OBR-4 / RXE-2 / RXO-1 / RXD-2"
@@ -520,10 +520,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:radiotherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:radiotherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:radiotherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -582,7 +582,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:endocrineTherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene endokrine Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Endokrine Therapie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene endokrine Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Endokrine Therapie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""169413002""/>
@@ -624,10 +624,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:endocrineTherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:endocrineTherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:endocrineTherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -686,7 +686,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:targetedTherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene zielgerichtete Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Zielgerichtete Therapie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene zielgerichtete Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Zielgerichtete Therapie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""416608005""/>
@@ -728,10 +728,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:targetedTherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:targetedTherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:targetedTherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -790,7 +790,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:immunotherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene Immuntherapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Immuntherapie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene Immuntherapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Immuntherapie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""76334006""/>
@@ -832,10 +832,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:immunotherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:immunotherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:immunotherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -894,7 +894,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:antiresorptiveTherapy.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene antiresorptive Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Antiresorptive Therapie' (choice, z.B. Bisphosphonate)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene antiresorptive Therapie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Antiresorptive Therapie: (choice, z.B. Bisphosphonate)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""870370003""/>
@@ -936,10 +936,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:antiresorptiveTherapy.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:antiresorptiveTherapy.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:antiresorptiveTherapy.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -998,7 +998,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:furtherDiagnostics.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene weitere Diagnostik","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Weitere Diagnostik' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene weitere Diagnostik","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Weitere Diagnostik: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""165197003""/>
@@ -1040,10 +1040,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:furtherDiagnostics.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:furtherDiagnostics.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:furtherDiagnostics.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -1102,7 +1102,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:furtherIntervention.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene weitere Intervention","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Weitere Intervention' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene weitere Intervention","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Weitere Intervention: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""71388002""/>
@@ -1144,10 +1144,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:furtherIntervention.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:furtherIntervention.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:furtherIntervention.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -1206,7 +1206,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:genetics.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene genetische Untersuchung","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Genetische Untersuchung' (choice, z.B. BRCA)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene genetische Untersuchung","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Genetische Untersuchung: (choice, z.B. BRCA)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""405825005""/>
@@ -1248,10 +1248,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:genetics.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:genetics.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:genetics.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -1310,7 +1310,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:clinicalTrial.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Empfohlene klinische Studie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Studie' (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Empfohlene klinische Studie","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Studie: (choice)","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""110465008""/>
@@ -1352,10 +1352,10 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:clinicalTrial.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:clinicalTrial.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:clinicalTrial.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","Optional 'Sonstige Studie' (Freitext)","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
@@ -1414,7 +1414,7 @@ ext-1:Must have either extensions or value[x], not both {extension.exists() != v
 ","Instantiates external protocol or definition","The URL pointing to an externally maintained protocol, guideline, questionnaire or other definition that is adhered to in whole or in part by this CarePlan activity.","This might be an HTML page, PDF, etc. or could just be a non-resolvable URI identifier.","Allows Questionnaires that the patient (or practitioner) should fill in to fulfill the care plan activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.instantiatesUri",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.instantiatesUri",".outboundRelationship[typeCode=DEFN].target"
 "CarePlan.activity:followUp.detail.code","CarePlan.activity.detail.code","","","",1,1,"","","","CodeableConcept {[]} {[]}
-","Follow-up / Nachsorge Plan","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","Aus dotbase: 'Vorsorge/Nachsorge', 'Wiedervorstellung'","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
+","Follow-up / Nachsorge Plan","Detailed description of the type of planned activity; e.g. what lab test, what procedure, what kind of encounter.","'Vorsorge/Nachsorge', 'Wiedervorstellung'","Allows matching performed to planned as well as validation against protocols.","","","","<valueCodeableConcept xmlns=""http://hl7.org/fhir"">
   <coding>
     <system value=""http://snomed.info/sct""/>
     <code value=""390906007""/>
@@ -1443,10 +1443,16 @@ The unknown code is not to be used to convey other statuses.  The unknown code s
 ","Request.doNotPerform","actionNegationInd"
 "CarePlan.activity:followUp.detail.scheduled[x]","CarePlan.activity.detail.scheduled[x]","","","",0,1,"","","","Timing {[]} {[]}
 Period {[]} {[]}string {[]} {[]}","When activity is to occur","The period, timing or frequency upon which the described activity is to occur.","","Allows prompting for activities and detection of missed planned activities.","","","","","","","",,,,,"","type:$this}
-","",,"open","CarePlan.activity.detail.scheduled[x]",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+","",,"closed","CarePlan.activity.detail.scheduled[x]",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.occurrence[x]",".effectiveTime","TQ1"
 "CarePlan.activity:followUp.detail.scheduled[x]:scheduledTiming","CarePlan.activity.detail.scheduled[x]","scheduledTiming","","",0,1,"","","","Timing {[]} {[]}
 ","Zeitplan für Nachsorge/Wiedervorstellung","The period, timing or frequency upon which the described activity is to occur.","","Allows prompting for activities and detection of missed planned activities.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.scheduled[x]",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+","Request.occurrence[x]",".effectiveTime","TQ1"
+"CarePlan.activity:followUp.detail.scheduled[x]:scheduledPeriod","CarePlan.activity.detail.scheduled[x]","scheduledPeriod","","",0,1,"","","","Period {[]} {[]}
+","When activity is to occur","The period, timing or frequency upon which the described activity is to occur.","","Allows prompting for activities and detection of missed planned activities.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.scheduled[x]",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+","Request.occurrence[x]",".effectiveTime","TQ1"
+"CarePlan.activity:followUp.detail.scheduled[x]:scheduledString","CarePlan.activity.detail.scheduled[x]","scheduledString","","",0,1,"","","","string {[]} {[]}
+","When activity is to occur","The period, timing or frequency upon which the described activity is to occur.","","Allows prompting for activities and detection of missed planned activities.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.scheduled[x]",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.occurrence[x]",".effectiveTime","TQ1"
 "CarePlan.activity:followUp.detail.location","CarePlan.activity.detail.location","","","",0,1,"","","","Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Location|4.0.1]]}
 ","Where it should happen","Identifies the facility where the activity will occur; e.g. home, hospital, specific clinic, etc.","May reference a specific clinical location or may identify a type of location.","Helps in planning of activity.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.location",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
@@ -1460,13 +1466,13 @@ Reference {[]} {[CanonicalType[http://hl7.org/fhir/StructureDefinition/Medicatio
 "CarePlan.activity:followUp.detail.dailyAmount","CarePlan.activity.detail.dailyAmount","","daily dose
 ","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How to consume/day?","Identifies the quantity expected to be consumed in a given day.","","Allows rough dose checking.","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.dailyAmount",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SBADM].doseQuantity","RXO-23 / RXE-19 / RXD-12"
 "CarePlan.activity:followUp.detail.quantity","CarePlan.activity.detail.quantity","","","",0,1,"","","","Quantity {[CanonicalType[http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1]]} {[]}
 ","How much to administer/supply/consume","Identifies the quantity expected to be supplied, administered or consumed by the subject.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.quantity",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
-",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
+sqty-1:The comparator is not used on a SimpleQuantity {comparator.empty()}",".outboundRelationship[typeCode=COMP][classCode=SPLY].quantity","RXO-11 / RXE-10 / RXD-4 / RXG-5 / RXA-6 /  TQ1-2.1  *and*  RXO-12 /  RXE-11 / RXD-5 / RXG-7 / RXA-7 / TQ1-2.2"
 "CarePlan.activity:followUp.detail.description","CarePlan.activity.detail.description","","","",0,1,"","","","string {[]} {[]}
 ","Extra info describing activity to perform","This provides a textual description of constraints on the intended activity occurrence, including relation to other activities.  It may also include objectives, pre-conditions and end-conditions.  Finally, it may convey specifics about the activity such as body site, method, route, etc.","","","","","","","","","",,,,,"",,,,"CarePlan.activity.detail.description",0,1,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ",".text","NTE?"
 "CarePlan.note","CarePlan.note","","","",0,*,"","","","Annotation {[]} {[]}
-","Allgemeine Anmerkungen des Tumorboards","General notes about the care plan not covered elsewhere.","Aus dotbase: 'Sonstiges' (choice)","Used to capture information that applies to the plan as a whole that doesn't fit into discrete elements.","","","","","","","",,,,,"",,,,"CarePlan.note",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
+","Allgemeine Anmerkungen des Tumorboards","General notes about the care plan not covered elsewhere.","Sonstiges: (choice)","Used to capture information that applies to the plan as a whole that doesn't fit into discrete elements.","","","","","","","",,,,,"",,,,"CarePlan.note",0,*,"","ele-1:All FHIR elements must have a @value or children {hasValue() or (children().count() > id.count())}
 ","Request.note",".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=""annotation""].value","NTE?"

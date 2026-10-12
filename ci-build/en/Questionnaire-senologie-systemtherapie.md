@@ -1,0 +1,956 @@
+# Fragebogen: Systemische Therapie - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Fragebogen: Systemische Therapie**
+
+## Questionnaire: Form: Systemic Therapy (Experimental) 
+
+| | |
+| :--- | :--- |
+| *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie | *Version*:0.10.0 |
+| Draft as of 2026-10-12 | *Computable Name*:QuestSystemtherapie |
+
+ 
+Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement. 
+
+*  [Tree view](#tabs-tree) 
+*  [Sample Rendering](#tabs-sample) 
+*  [Form Logic](#tabs-logic) 
+
+### Test this Questionnaire
+
+### Responses for this Questionnaire
+
+* [Endokrine adjuvante Therapie ab 2025-04-25: Letrozol 2,5 mg oral, laufend.](QuestionnaireResponse-QR-Systemtherapie-Fall1.md)
+* [Adjuvante Chemotherapie ab 2025-07-21: Carboplatin + Paclitaxel, 6 Zyklen, abgeschlossen 2025-11-10.](QuestionnaireResponse-QR-Systemtherapie-Fall10.md)
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Questionnaire",
+  "id" : "senologie-systemtherapie",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablequestionnaire",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablequestionnaire"]
+  },
+  "contained" : [{
+    "resourceType" : "Procedure",
+    "id" : "syst-procedure-template",
+    "meta" : {
+      "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"]
+    },
+    "status" : "completed",
+    "statusReason" : {
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='therapiestatus').answer.valueCoding"
+        }]
+      }]
+    },
+    "code" : {
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='therapieart').answer.valueCoding"
+        }],
+        "system" : "http://snomed.info/sct",
+        "code" : "367336001",
+        "display" : "Chemotherapy"
+      }],
+      "text" : "Systemtherapie"
+    },
+    "subject" : {
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.subject.reference"
+        }]
+      }
+    },
+    "performedPeriod" : {
+      "_start" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='startdatum').answer.valueDate"
+        }]
+      },
+      "_end" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='enddatum').answer.valueDate"
+        }]
+      }
+    },
+    "reasonReference" : [{
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+        }]
+      }
+    }],
+    "note" : [{
+      "_text" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='therapie-rahmen').item.where(linkId='protokoll').answer.valueString"
+        }]
+      }
+    }]
+  },
+  {
+    "resourceType" : "MedicationStatement",
+    "id" : "syst-medikation-template",
+    "meta" : {
+      "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"]
+    },
+    "extension" : [{
+      "url" : "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-therapy-cycle",
+      "_valueInteger" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%context.item.where(linkId='zyklus-nummer').answer.valueInteger"
+        }]
+      }
+    },
+    {
+      "url" : "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-day-in-cycle",
+      "_valueInteger" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%context.item.where(linkId='tag-im-zyklus').answer.valueInteger"
+        }]
+      }
+    }],
+    "status" : "completed",
+    "medicationCodeableConcept" : {
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%context.item.where(linkId='substanz').answer.valueCoding"
+        }]
+      }],
+      "text" : "Substanz",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Substance"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      }
+    },
+    "subject" : {
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.subject.reference"
+        }]
+      }
+    },
+    "_effectiveDateTime" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%context.item.where(linkId='gabe-datum').answer.valueDate"
+      }]
+    },
+    "reasonReference" : [{
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+        }]
+      }
+    }],
+    "dosage" : [{
+      "route" : {
+        "coding" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString" : "%context.item.where(linkId='applikationsart').answer.valueCoding"
+          }]
+        }]
+      },
+      "doseAndRate" : [{
+        "doseQuantity" : {
+          "_value" : {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString" : "%context.item.where(linkId='dosis').answer.valueDecimal"
+            }]
+          },
+          "system" : "http://unitsofmeasure.org",
+          "_code" : {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString" : "%context.item.where(linkId='dosis-einheit').answer.valueCoding.code"
+            }]
+          }
+        }
+      }]
+    }]
+  }],
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "name",
+      "valueCoding" : {
+        "system" : "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+        "code" : "patient"
+      }
+    },
+    {
+      "url" : "type",
+      "valueCode" : "Patient"
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+  },
+  {
+    "extension" : [{
+      "url" : "name",
+      "valueCoding" : {
+        "system" : "https://www.senologie.org/fhir/CodeSystem/launchContext",
+        "code" : "diagnosis",
+        "display" : "Diagnose (Anker-Condition)"
+      }
+    },
+    {
+      "url" : "type",
+      "valueCode" : "Condition"
+    },
+    {
+      "url" : "description",
+      "valueString" : "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+  },
+  {
+    "extension" : [{
+      "url" : "name",
+      "valueCoding" : {
+        "system" : "https://www.senologie.org/fhir/CodeSystem/launchContext",
+        "code" : "procedure",
+        "display" : "Bestehende Systemtherapie-Procedure"
+      }
+    },
+    {
+      "url" : "type",
+      "valueCode" : "Procedure"
+    },
+    {
+      "url" : "description",
+      "valueString" : "Optional: Extern/bereits dokumentierte Systemtherapie für Prepopulation (z.B. Fremdtherapie bei Erstvorstellung)."
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+  },
+  {
+    "extension" : [{
+      "url" : "name",
+      "valueCoding" : {
+        "system" : "https://www.senologie.org/fhir/CodeSystem/launchContext",
+        "code" : "carePlan",
+        "display" : "Tumorboard CarePlan"
+      }
+    },
+    {
+      "url" : "type",
+      "valueCode" : "CarePlan"
+    },
+    {
+      "url" : "description",
+      "valueString" : "Optional: TB-Beschluss (CarePlan) für Pre-Population bei Therapieanlage (Protokoll, Intention, geplanter Zeitraum)."
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+  }],
+  "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-systemtherapie",
+  "version" : "0.10.0",
+  "name" : "QuestSystemtherapie",
+  "title" : "Fragebogen: Systemische Therapie",
+  "_title" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Form: Systemic Therapy"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "status" : "draft",
+  "experimental" : true,
+  "subjectType" : ["Patient"],
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement.",
+  "item" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
+      "valueExpression" : {
+        "language" : "application/x-fhir-query",
+        "expression" : "Condition?patient={{%patient.id}}&clinical-status=active"
+      }
+    },
+    {
+      "extension" : [{
+        "url" : "path",
+        "valueString" : "bodySite.coding.first().display"
+      },
+      {
+        "url" : "label",
+        "valueString" : "Seite"
+      },
+      {
+        "url" : "forDisplay",
+        "valueBoolean" : true
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+    }],
+    "linkId" : "bezugsdiagnose",
+    "text" : "Bezugsdiagnose",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Reference Diagnosis"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "reference",
+    "required" : true
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#syst-procedure-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
+    "linkId" : "therapie-rahmen",
+    "text" : "Therapie-Rahmen",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Treatment Framework"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "group",
+    "required" : true,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      },
+      {
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%procedure.code.coding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-form-helper').first()"
+        }
+      }],
+      "linkId" : "therapieart",
+      "text" : "Therapieart",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Therapy Type"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : true,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-art"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      },
+      {
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%procedure.extension.where(url='https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-systemische-therapie-intention').valueCoding.first()"
+        }
+      }],
+      "linkId" : "intention",
+      "text" : "Intention",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Intention"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : true,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-intention"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%procedure.extension.where(url='https://www.senologie.org/fhir/StructureDefinition/ex-senologie-first-line-therapy').valueBoolean"
+        }
+      }],
+      "linkId" : "first-line",
+      "text" : "First-Line-Therapie bei Metastasierung",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "First-Line Therapy for Metastatic Disease"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "boolean",
+      "enableWhen" : [{
+        "question" : "intention",
+        "operator" : "=",
+        "answerCoding" : {
+          "system" : "http://snomed.info/sct",
+          "code" : "363676003"
+        }
+      }],
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "iif(%procedure.exists(), %procedure.note.text.first(), %carePlan.activity.detail.code.text.first())"
+        }
+      }],
+      "linkId" : "protokoll",
+      "text" : "Protokoll/Schema (z.B. EC-Pac, TCbHP)",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Protocol/Regimen"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "iif(%procedure.exists(), %procedure.performedPeriod.start.substring(0,10), %carePlan.activity.detail.scheduledPeriod.start.first().substring(0,10))"
+        }
+      }],
+      "linkId" : "startdatum",
+      "text" : "Startdatum",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Start Date"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "date",
+      "required" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "iif(%procedure.exists(), %procedure.performedPeriod.end.substring(0,10), %carePlan.activity.detail.scheduledPeriod.end.first().substring(0,10))"
+        }
+      }],
+      "linkId" : "enddatum",
+      "text" : "Enddatum",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "End Date"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "date",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%carePlan.activity.detail.quantity.value"
+        }
+      }],
+      "linkId" : "geplante-zyklen",
+      "text" : "Geplante Zyklen",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Planned Cycles"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "integer",
+      "required" : false
+    },
+    {
+      "linkId" : "durchgefuehrte-zyklen",
+      "text" : "Durchgeführte Zyklen",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Completed Cycles"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "integer",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      },
+      {
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%procedure.statusReason.coding.first()"
+        }
+      }],
+      "linkId" : "therapiestatus",
+      "text" : "Therapiestatus",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Treatment Status"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-therapie-status"
+    },
+    {
+      "linkId" : "abbruchgrund",
+      "text" : "Abbruchgrund",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Reason for Discontinuation"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "text",
+      "enableWhen" : [{
+        "question" : "therapiestatus",
+        "operator" : "=",
+        "answerCoding" : {
+          "code" : "abgebrochen"
+        }
+      }],
+      "required" : false
+    }]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#syst-medikation-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
+    "linkId" : "medikamentengabe",
+    "text" : "Medikamentengabe",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Medication Administration"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "group",
+    "required" : false,
+    "repeats" : true,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "substanz",
+      "text" : "Substanz",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Substance"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : true,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-systemtherapie-medikation"
+    },
+    {
+      "linkId" : "dosis",
+      "text" : "Dosis",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Dose"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "decimal",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "dosis-einheit",
+      "text" : "Dosis-Einheit",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Dose Unit"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-dosis-einheit"
+    },
+    {
+      "linkId" : "zyklus-nummer",
+      "text" : "Zyklus",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Cycle"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "integer",
+      "required" : false
+    },
+    {
+      "linkId" : "tag-im-zyklus",
+      "text" : "Tag im Zyklus",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Day in Cycle"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "integer",
+      "required" : false
+    },
+    {
+      "linkId" : "gabe-datum",
+      "text" : "Gabe-Datum",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Administration Date"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "date",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "applikationsart",
+      "text" : "Applikationsart",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Application Method"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-applikationsart"
+    }]
+  },
+  {
+    "linkId" : "syst-anmerkungen",
+    "text" : "Anmerkungen",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Remarks"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "text",
+    "required" : false
+  }]
+}
+
+```

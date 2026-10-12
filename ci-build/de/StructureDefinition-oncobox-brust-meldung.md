@@ -1,0 +1,1821 @@
+# OncoBox Brust 2.0 Meldung (Logical Model) - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **OncoBox Brust 2.0 Meldung (Logical Model)**
+
+## : OncoBox Brust 2.0 Meldung (Logical Model) 
+
+| | |
+| :--- | :--- |
+| **:https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung | **:0.10.0 |
+| Draft | **:OncoBoxBrustMeldung |
+
+ 
+OncoBox Brust 2.0 (Auditjahr 2026 v2.1.1) Meldungsstruktur — generiert aus dem offiziellen XSD. 
+
+**Usages:**
+
+* This Logical Model is not used by any profiles in this Specification
+
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/kds-senologie|current/StructureDefinition/StructureDefinition-oncobox-brust-meldung.json)
+
+### 
+
+ . 
+
+*   
+*   
+*   
+*   
+*   
+
+#### Constraints
+
+#### Constraints
+
+#### Constraints
+
+ **View** 
+
+#### Constraints
+
+ 
+
+ ,  
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "oncobox-brust-meldung",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablestructuredefinition"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-usage",
+    "valueMarkdown" : "Use this logical model as a domain-oriented information model for the documentation of breast cancer care. It describes the content of a dataset in clinical terms and bridges the conceptual specification and the corresponding technical FHIR profiles and mappings. It is not intended to be exchanged as a concrete FHIR resource instance."
+  }],
+  "url" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
+  "version" : "0.10.0",
+  "name" : "OncoBoxBrustMeldung",
+  "title" : "OncoBox Brust 2.0 Meldung (Logical Model)",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "OncoBox Brust 2.0 (Auditjahr 2026 v2.1.1) Meldungsstruktur — generiert aus dem offiziellen XSD.",
+  "fhirVersion" : "4.0.1",
+  "kind" : "logical",
+  "abstract" : false,
+  "type" : "https://www.senologie.org/fhir/StructureDefinition/oncobox-brust-meldung",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation" : "specialization",
+  "differential" : {
+    "element" : [{
+      "id" : "oncobox-brust-meldung",
+      "path" : "oncobox-brust-meldung",
+      "short" : "OncoBox Brust 2.0 Meldung (Logical Model)",
+      "definition" : "OncoBox Brust 2.0 (Auditjahr 2026 v2.1.1) Meldungsstruktur — generiert aus dem offiziellen XSD."
+    },
+    {
+      "id" : "oncobox-brust-meldung.ImportInfo",
+      "path" : "oncobox-brust-meldung.ImportInfo",
+      "short" : "ImportInfo",
+      "definition" : "ImportInfo",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.ImportInfo.DatumXML",
+      "path" : "oncobox-brust-meldung.ImportInfo.DatumXML",
+      "short" : "DatumXML",
+      "definition" : "DatumXML",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.ImportInfo.NameTudokusys",
+      "path" : "oncobox-brust-meldung.ImportInfo.NameTudokusys",
+      "short" : "NameTudokusys",
+      "definition" : "NameTudokusys",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.ImportInfo.VersionTudokusys",
+      "path" : "oncobox-brust-meldung.ImportInfo.VersionTudokusys",
+      "short" : "VersionTudokusys",
+      "definition" : "VersionTudokusys",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten",
+      "path" : "oncobox-brust-meldung.Patienten",
+      "short" : "Patienten",
+      "definition" : "Patienten",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient",
+      "path" : "oncobox-brust-meldung.Patienten.Patient",
+      "short" : "Patient",
+      "definition" : "Patient",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten",
+      "short" : "Stammdaten",
+      "definition" : "Stammdaten",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.OncoBoxID",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.OncoBoxID",
+      "short" : "OncoBoxID",
+      "definition" : "OncoBoxID",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Geburtsjahr",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Geburtsjahr",
+      "short" : "Geburtsjahr",
+      "definition" : "Geburtsjahr",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Geschlecht",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Geschlecht",
+      "short" : "Geschlecht",
+      "definition" : "Geschlecht",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Versicherungsform",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Versicherungsform",
+      "short" : "Versicherungsform",
+      "definition" : "Versicherungsform",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Sterbedatum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Sterbedatum",
+      "short" : "Sterbedatum",
+      "definition" : "Sterbedatum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Tod-tumorbedingt",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Tod_tumorbedingt",
+      "short" : "Tod tumorbedingt",
+      "definition" : "Tod tumorbedingt",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Todesursache-ICD",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Todesursache_ICD",
+      "short" : "Todesursache ICD",
+      "definition" : "Todesursache ICD",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Todesursache-ICD-Version",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Stammdaten.Todesursache_ICD_Version",
+      "short" : "Todesursache ICD Version",
+      "definition" : "Todesursache ICD Version",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall",
+      "short" : "Fall",
+      "definition" : "Fall",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation",
+      "short" : "Fallinformation",
+      "definition" : "Fallinformation",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation.FallID",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation.FallID",
+      "short" : "FallID",
+      "definition" : "FallID",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation.Falldokumentation",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation.Falldokumentation",
+      "short" : "Falldokumentation",
+      "definition" : "Falldokumentation",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation.KommentarFall",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fallinformation.KommentarFall",
+      "short" : "KommentarFall",
+      "definition" : "KommentarFall",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese",
+      "short" : "Anamnese",
+      "definition" : "Anamnese",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.Krebsvorerkrankungen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.Krebsvorerkrankungen",
+      "short" : "Krebsvorerkrankungen",
+      "definition" : "Krebsvorerkrankungen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.KomorbiditaetenVorDiagnose",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.KomorbiditaetenVorDiagnose",
+      "short" : "KomorbiditaetenVorDiagnose",
+      "definition" : "KomorbiditaetenVorDiagnose",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.RaucherStatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.RaucherStatus",
+      "short" : "RaucherStatus",
+      "definition" : "RaucherStatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.Praetherapeutischer-Menopausenstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.Praetherapeutischer_Menopausenstatus",
+      "short" : "Praetherapeutischer Menopausenstatus",
+      "definition" : "Praetherapeutischer Menopausenstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.BRCA1-Keimbahn",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.BRCA1_Keimbahn",
+      "short" : "BRCA1 Keimbahn",
+      "definition" : "BRCA1 Keimbahn",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.BRCA2-Keimbahn",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.BRCA2_Keimbahn",
+      "short" : "BRCA2 Keimbahn",
+      "definition" : "BRCA2 Keimbahn",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.PALB2-Keimbahn",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Anamnese.PALB2_Keimbahn",
+      "short" : "PALB2 Keimbahn",
+      "definition" : "PALB2 Keimbahn",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose",
+      "short" : "Diagnose",
+      "definition" : "Diagnose",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Zertifizierung",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Zertifizierung",
+      "short" : "Zertifizierung",
+      "definition" : "Zertifizierung",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Tumormanifestation",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Tumormanifestation",
+      "short" : "Tumormanifestation",
+      "definition" : "Tumormanifestation",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Seitenlokalisation",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Seitenlokalisation",
+      "short" : "Seitenlokalisation",
+      "definition" : "Seitenlokalisation",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Version",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Version",
+      "short" : "Version",
+      "definition" : "Version",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.ICD-10",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.ICD_10",
+      "short" : "ICD 10",
+      "definition" : "ICD 10",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.ICD-11",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.ICD_11",
+      "short" : "ICD 11",
+      "definition" : "ICD 11",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.SynchroneBehandlung",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.SynchroneBehandlung",
+      "short" : "SynchroneBehandlung",
+      "definition" : "SynchroneBehandlung",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Diagnosedatum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Diagnosedatum",
+      "short" : "Diagnosedatum",
+      "definition" : "Diagnosedatum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Alter",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Alter",
+      "short" : "Alter",
+      "definition" : "Alter",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Allgemeiner-Leistungszustand",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Allgemeiner_Leistungszustand",
+      "short" : "Allgemeiner Leistungszustand",
+      "definition" : "Allgemeiner Leistungszustand",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth-T-c-p",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth_T_c_p",
+      "short" : "Praeth T c p",
+      "definition" : "Praeth T c p",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth-T",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth_T",
+      "short" : "Praeth T",
+      "definition" : "Praeth T",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth-N-c-p",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth_N_c_p",
+      "short" : "Praeth N c p",
+      "definition" : "Praeth N c p",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth-N",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth_N",
+      "short" : "Praeth N",
+      "definition" : "Praeth N",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth-M-c-p",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth_M_c_p",
+      "short" : "Praeth M c p",
+      "definition" : "Praeth M c p",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth-M",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Praeth_M",
+      "short" : "Praeth M",
+      "definition" : "Praeth M",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.y-Symbol",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.y_Symbol",
+      "short" : "y Symbol",
+      "definition" : "y Symbol",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop-T-c-p",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop_T_c_p",
+      "short" : "Postop T c p",
+      "definition" : "Postop T c p",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop-T",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop_T",
+      "short" : "Postop T",
+      "definition" : "Postop T",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop-N-c-p",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop_N_c_p",
+      "short" : "Postop N c p",
+      "definition" : "Postop N c p",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop-N",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop_N",
+      "short" : "Postop N",
+      "definition" : "Postop N",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop-M-c-p",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop_M_c_p",
+      "short" : "Postop M c p",
+      "definition" : "Postop M c p",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop-M",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Postop_M",
+      "short" : "Postop M",
+      "definition" : "Postop M",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Checkliste",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Checkliste",
+      "short" : "Checkliste",
+      "definition" : "Checkliste",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Checkliste-Score",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Checkliste_Score",
+      "short" : "Checkliste Score",
+      "definition" : "Checkliste Score",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Gesamtbeurteilung-Residualstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Gesamtbeurteilung_Residualstatus",
+      "short" : "Gesamtbeurteilung Residualstatus",
+      "definition" : "Gesamtbeurteilung Residualstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Gesamtbeurteilung-Tumorstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Diagnose.Gesamtbeurteilung_Tumorstatus",
+      "short" : "Gesamtbeurteilung Tumorstatus",
+      "definition" : "Gesamtbeurteilung Tumorstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz",
+      "short" : "Tumorkonferenz",
+      "definition" : "Tumorkonferenz",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Tumorkonferenz-Datum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Tumorkonferenz_Datum",
+      "short" : "Tumorkonferenz Datum",
+      "definition" : "Tumorkonferenz Datum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Tumorkonferenz-Typ",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Tumorkonferenz_Typ",
+      "short" : "Tumorkonferenz Typ",
+      "definition" : "Tumorkonferenz Typ",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Empfehlung-Therapie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Empfehlung_Therapie",
+      "short" : "Empfehlung Therapie",
+      "definition" : "Empfehlung Therapie",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Empfehlung-Trastuzumab",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Tumorkonferenz.Empfehlung_Trastuzumab",
+      "short" : "Empfehlung Trastuzumab",
+      "definition" : "Empfehlung Trastuzumab",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie",
+      "short" : "Histologie",
+      "definition" : "Histologie",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Praeparat",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Praeparat",
+      "short" : "Praeparat",
+      "definition" : "Praeparat",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Biopsieart",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Biopsieart",
+      "short" : "Biopsieart",
+      "definition" : "Biopsieart",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Tumor-Histologiedatum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Tumor_Histologiedatum",
+      "short" : "Tumor Histologiedatum",
+      "definition" : "Tumor Histologiedatum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Tumortyp",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Tumortyp",
+      "short" : "Tumortyp",
+      "definition" : "Tumortyp",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Grading",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Grading",
+      "short" : "Grading",
+      "definition" : "Grading",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Lokale-Beurteilung-Residualstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Lokale_Beurteilung_Residualstatus",
+      "short" : "Lokale Beurteilung Residualstatus",
+      "definition" : "Lokale Beurteilung Residualstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.HormonrezeptorStatus-Oestrogen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.HormonrezeptorStatus_Oestrogen",
+      "short" : "HormonrezeptorStatus Oestrogen",
+      "definition" : "HormonrezeptorStatus Oestrogen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Anteil-positiv-Oestrogen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Anteil_positiv_Oestrogen",
+      "short" : "Anteil positiv Oestrogen",
+      "definition" : "Anteil positiv Oestrogen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.IRS-Oestrogen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.IRS_Oestrogen",
+      "short" : "IRS Oestrogen",
+      "definition" : "IRS Oestrogen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.HormonrezeptorStatus-Progesteron",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.HormonrezeptorStatus_Progesteron",
+      "short" : "HormonrezeptorStatus Progesteron",
+      "definition" : "HormonrezeptorStatus Progesteron",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Anteil-positiv-Progesteron",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Anteil_positiv_Progesteron",
+      "short" : "Anteil positiv Progesteron",
+      "definition" : "Anteil positiv Progesteron",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.IRS-Progesteron",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.IRS_Progesteron",
+      "short" : "IRS Progesteron",
+      "definition" : "IRS Progesteron",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Her2neuStatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Her2neuStatus",
+      "short" : "Her2neuStatus",
+      "definition" : "Her2neuStatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Ki-67",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Ki_67",
+      "short" : "Ki 67",
+      "definition" : "Ki 67",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.PD-L1",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.PD_L1",
+      "short" : "PD L1",
+      "definition" : "PD L1",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.BRCA1-somatisch",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.BRCA1_somatisch",
+      "short" : "BRCA1 somatisch",
+      "definition" : "BRCA1 somatisch",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.BRCA2-somatisch",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.BRCA2_somatisch",
+      "short" : "BRCA2 somatisch",
+      "definition" : "BRCA2 somatisch",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.PALB2-somatisch",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.PALB2_somatisch",
+      "short" : "PALB2 somatisch",
+      "definition" : "PALB2 somatisch",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.LK-untersucht",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.LK_untersucht",
+      "short" : "LK untersucht",
+      "definition" : "LK untersucht",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.LK-befallen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.LK_befallen",
+      "short" : "LK befallen",
+      "definition" : "LK befallen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Sentinel-LK-untersucht",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Sentinel_LK_untersucht",
+      "short" : "Sentinel LK untersucht",
+      "definition" : "Sentinel LK untersucht",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Sentinel-LK-befallen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Histologie.Sentinel_LK_befallen",
+      "short" : "Sentinel LK befallen",
+      "definition" : "Sentinel LK befallen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation",
+      "short" : "Operation",
+      "definition" : "Operation",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP-Datum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP_Datum",
+      "short" : "OP Datum",
+      "definition" : "OP Datum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP-Intention",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP_Intention",
+      "short" : "OP Intention",
+      "definition" : "OP Intention",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OPS",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OPS",
+      "short" : "OPS",
+      "definition" : "OPS",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.PraeopMarkierung",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.PraeopMarkierung",
+      "short" : "PraeopMarkierung",
+      "definition" : "PraeopMarkierung",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.IntraopPraeparatkontrolle",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.IntraopPraeparatkontrolle",
+      "short" : "IntraopPraeparatkontrolle",
+      "definition" : "IntraopPraeparatkontrolle",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP-Komplikationen-Art",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP_Komplikationen_Art",
+      "short" : "OP Komplikationen Art",
+      "definition" : "OP Komplikationen Art",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP-Komplikationen-Zeitpunkt",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.OP_Komplikationen_Zeitpunkt",
+      "short" : "OP Komplikationen Zeitpunkt",
+      "definition" : "OP Komplikationen Zeitpunkt",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.Erstoperateur",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.Erstoperateur",
+      "short" : "Erstoperateur",
+      "definition" : "Erstoperateur",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.Zweitoperateur",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Operation.Zweitoperateur",
+      "short" : "Zweitoperateur",
+      "definition" : "Zweitoperateur",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie",
+      "short" : "Strahlentherapie",
+      "definition" : "Strahlentherapie",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Beginn",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Beginn",
+      "short" : "Strahlentherapie Beginn",
+      "definition" : "Strahlentherapie Beginn",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Ende",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Ende",
+      "short" : "Strahlentherapie Ende",
+      "definition" : "Strahlentherapie Ende",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Radiochemotherapie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Radiochemotherapie",
+      "short" : "Radiochemotherapie",
+      "definition" : "Radiochemotherapie",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Applikationsart",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Applikationsart",
+      "short" : "Strahlentherapie Applikationsart",
+      "definition" : "Strahlentherapie Applikationsart",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Zielgebiet",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Zielgebiet",
+      "short" : "Strahlentherapie Zielgebiet",
+      "definition" : "Strahlentherapie Zielgebiet",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Seite-Zielgebiet",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Seite_Zielgebiet",
+      "short" : "Strahlentherapie Seite Zielgebiet",
+      "definition" : "Strahlentherapie Seite Zielgebiet",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Intention",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Intention",
+      "short" : "Strahlentherapie Intention",
+      "definition" : "Strahlentherapie Intention",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Stellung-OP",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Stellung_OP",
+      "short" : "Strahlentherapie Stellung OP",
+      "definition" : "Strahlentherapie Stellung OP",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Gesamtdosis",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Gesamtdosis",
+      "short" : "Strahlentherapie Gesamtdosis",
+      "definition" : "Strahlentherapie Gesamtdosis",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Einzeldosis",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Einzeldosis",
+      "short" : "Strahlentherapie Einzeldosis",
+      "definition" : "Strahlentherapie Einzeldosis",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie-Boost",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Strahlentherapie.Strahlentherapie_Boost",
+      "short" : "Strahlentherapie Boost",
+      "definition" : "Strahlentherapie Boost",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie",
+      "short" : "Systemtherapie",
+      "definition" : "Systemtherapie",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie-Therapieart",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie_Therapieart",
+      "short" : "Systemtherapie Therapieart",
+      "definition" : "Systemtherapie Therapieart",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Therapielinie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Therapielinie",
+      "short" : "Therapielinie",
+      "definition" : "Therapielinie",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie-Beginn",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie_Beginn",
+      "short" : "Systemtherapie Beginn",
+      "definition" : "Systemtherapie Beginn",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie-Ende",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie_Ende",
+      "short" : "Systemtherapie Ende",
+      "definition" : "Systemtherapie Ende",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie-Intention",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie_Intention",
+      "short" : "Systemtherapie Intention",
+      "definition" : "Systemtherapie Intention",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie-Stellung-OP",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Systemtherapie_Stellung_OP",
+      "short" : "Systemtherapie Stellung OP",
+      "definition" : "Systemtherapie Stellung OP",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.CHT-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.CHT_Substanzen",
+      "short" : "CHT Substanzen",
+      "definition" : "CHT Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige-CHT-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige_CHT_Substanzen",
+      "short" : "Sonstige CHT Substanzen",
+      "definition" : "Sonstige CHT Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.HO-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.HO_Substanzen",
+      "short" : "HO Substanzen",
+      "definition" : "HO Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige-HO-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige_HO_Substanzen",
+      "short" : "Sonstige HO Substanzen",
+      "definition" : "Sonstige HO Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.IM-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.IM_Substanzen",
+      "short" : "IM Substanzen",
+      "definition" : "IM Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige-IM-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige_IM_Substanzen",
+      "short" : "Sonstige IM Substanzen",
+      "definition" : "Sonstige IM Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Zielgerichtete-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Zielgerichtete_Substanzen",
+      "short" : "Zielgerichtete Substanzen",
+      "definition" : "Zielgerichtete Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige-Zielgerichtete-Substanzen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Sonstige_Zielgerichtete_Substanzen",
+      "short" : "Sonstige Zielgerichtete Substanzen",
+      "definition" : "Sonstige Zielgerichtete Substanzen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Nebenwirkung-Typ",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Systemtherapie.Nebenwirkung_Typ",
+      "short" : "Nebenwirkung Typ",
+      "definition" : "Nebenwirkung Typ",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase",
+      "short" : "Fernmetastase",
+      "definition" : "Fernmetastase",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase-Lokalisation",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase_Lokalisation",
+      "short" : "Fernmetastase Lokalisation",
+      "definition" : "Fernmetastase Lokalisation",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase-Diagnosedatum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase_Diagnosedatum",
+      "short" : "Fernmetastase Diagnosedatum",
+      "definition" : "Fernmetastase Diagnosedatum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase-OP-Datum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase_OP_Datum",
+      "short" : "Fernmetastase OP Datum",
+      "definition" : "Fernmetastase OP Datum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase-Therapie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase_Therapie",
+      "short" : "Fernmetastase Therapie",
+      "definition" : "Fernmetastase Therapie",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase-lokaler-Residualstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Fernmetastase.Fernmetastase_lokaler_Residualstatus",
+      "short" : "Fernmetastase lokaler Residualstatus",
+      "definition" : "Fernmetastase lokaler Residualstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie",
+      "short" : "Studie",
+      "definition" : "Studie",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.Studienname",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.Studienname",
+      "short" : "Studienname",
+      "definition" : "Studienname",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.Studienname-Selektiv",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.Studienname_Selektiv",
+      "short" : "Studienname Selektiv",
+      "definition" : "Studienname Selektiv",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.ScreeningStudienteilnahme",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.ScreeningStudienteilnahme",
+      "short" : "ScreeningStudienteilnahme",
+      "definition" : "ScreeningStudienteilnahme",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.Studienteilnahme",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Studie.Studienteilnahme",
+      "short" : "Studienteilnahme",
+      "definition" : "Studienteilnahme",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Psychosozial",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Psychosozial",
+      "short" : "Psychosozial",
+      "definition" : "Psychosozial",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Psychosozial.DistressScreening",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Psychosozial.DistressScreening",
+      "short" : "DistressScreening",
+      "definition" : "DistressScreening",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Psychosozial.Sozialdienstkontakt",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Psychosozial.Sozialdienstkontakt",
+      "short" : "Sozialdienstkontakt",
+      "definition" : "Sozialdienstkontakt",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up",
+      "short" : "Follow Up",
+      "definition" : "Follow Up",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "BackboneElement"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Meldedatum",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Meldedatum",
+      "short" : "Meldedatum",
+      "definition" : "Meldedatum",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Follow-Up-Melder",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Follow_Up_Melder",
+      "short" : "Follow Up Melder",
+      "definition" : "Follow Up Melder",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Untersuchungsdatum-Verlauf",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Untersuchungsdatum_Verlauf",
+      "short" : "Untersuchungsdatum Verlauf",
+      "definition" : "Untersuchungsdatum Verlauf",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Follow-Up-Aktiv-Passiv",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Follow_Up_Aktiv_Passiv",
+      "short" : "Follow Up Aktiv Passiv",
+      "definition" : "Follow Up Aktiv Passiv",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Vitalstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Vitalstatus",
+      "short" : "Vitalstatus",
+      "definition" : "Vitalstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Gesamtbeurteilung-Tumorstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Gesamtbeurteilung_Tumorstatus",
+      "short" : "Gesamtbeurteilung Tumorstatus",
+      "definition" : "Gesamtbeurteilung Tumorstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Verlauf-Lokaler-Tumorstatus",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Verlauf_Lokaler_Tumorstatus",
+      "short" : "Verlauf Lokaler Tumorstatus",
+      "definition" : "Verlauf Lokaler Tumorstatus",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Verlauf-Tumorstatus-Lymphknoten",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Verlauf_Tumorstatus_Lymphknoten",
+      "short" : "Verlauf Tumorstatus Lymphknoten",
+      "definition" : "Verlauf Tumorstatus Lymphknoten",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Verlauf-Tumorstatus-Fernmetastasen",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Verlauf_Tumorstatus_Fernmetastasen",
+      "short" : "Verlauf Tumorstatus Fernmetastasen",
+      "definition" : "Verlauf Tumorstatus Fernmetastasen",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow-Up.Zweittumor",
+      "path" : "oncobox-brust-meldung.Patienten.Patient.Fall.Follow_Up.Zweittumor",
+      "short" : "Zweittumor",
+      "definition" : "Zweittumor",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    }]
+  }
+}
+
+```
