@@ -5,11 +5,11 @@
 
 ## English Summary
 
- There is no translation page available for the current page, so it has been rendered in the default language 
+ This page includes translations from the original source language in which the guide was authored. Information on these translations and instructions on how to provide feedback on the translations can be found [here](translationinfo.html). 
 
 ### Senologie Core Dataset — English Summary
 
-> **Deutsch:** Der vollständige Leitfaden auf Deutsch beginnt auf der [Startseite](index.md).
+> The guide is available in German and English; use the language switch in the top right corner.
 
 > **Note:** The full Implementation Guide is published in German, reflecting its primary audience (German-certified breast cancer centres and their reporting context). This page summarises the specification for an international audience. All FHIR artefacts (profiles, ValueSets, examples) carry English titles and descriptions where applicable.
 

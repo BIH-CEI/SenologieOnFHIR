@@ -26,7 +26,7 @@ title: Senologie FHIR to oBDS Tumorkonferenz status: draft
   "version" : "0.10.0",
   "name" : "SenologieToObdsTumorkonferenz",
   "status" : "draft",
-  "date" : "2026-10-12T08:46:18+00:00",
+  "date" : "2026-10-12T09:54:17+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

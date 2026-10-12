@@ -10,91 +10,87 @@
 | *Official URL*:https://www.senologie.org/fhir/ImplementationGuide/kds-senologie | *Version*:0.10.0 |
 | Draft as of 2026-10-12 | *Computable Name*:SenologieKDS |
 
- There is no translation page available for the current page, so it has been rendered in the default language 
+### Core Dataset Senology (Kerndatensatz Senologie)
 
-### Kerndatensatz Senologie
-
-> **English:** For international readers there is an [English summary](english-summary.md) of this guide.
-
-Der **Kerndatensatz Senologie** definiert FHIR-Profile für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus. Er umfasst den gesamten Versorgungspfad von der Erstvorstellung über Diagnostik, Therapie und Nachsorge bis zur Verlaufsdokumentation.
+The **Core Dataset Senology** defines FHIR profiles for the structured documentation of breast cancer care at certified breast centres (Brustzentren) and beyond. It covers the entire care pathway from initial presentation through diagnostics, treatment, and follow-up to longitudinal documentation.
 
 ![](dgs-logo.png)
 
-#### Für wen ist dieser IG?
+### Who is this IG for?
 
 | | | |
 | :--- | :--- | :--- |
-| **Kliniker:innen** | Welche Daten werden erfasst, welche Terminologien werden verwendet | [Datenmodell](datenmodell.md),[Testpatientinnen](testpatientinnen.md) |
-| **IT / Entwickler:innen** | FHIR-Profile, Questionnaires, Extraktion, technische Schnittstellen | [Profile](profilbeschreibungen.md),[Artifacts](artifacts.md) |
-| **Qualitätssicherung** | Ableitung von Meldedatensätzen (oBDS, IQTIG, OncoBox, IRegG) | [Anwendungsfälle](anwendungsfaelle-uebersicht.md) |
-| **Forschende** | Sekundärnutzung, Terminologien, Interoperabilität | [Terminologie](terminologie-uebersicht.md),[Datenmodell](datenmodell.md) |
+| **Clinicians** | Which data are captured, which terminologies are used | [Data Model](datenmodell.md),[Test Patients](testpatientinnen.md) |
+| **IT / Developers** | FHIR profiles, questionnaires, extraction, technical interfaces | [Profiles](profilbeschreibungen.md),[Artifacts](artifacts.md) |
+| **Quality Assurance** | Derivation of reporting datasets (oBDS, IQTIG, OncoBox, IRegG) | [Use Cases](anwendungsfaelle-uebersicht.md) |
+| **Researchers** | Secondary use, terminologies, interoperability | [Terminology](terminologie-uebersicht.md),[Data Model](datenmodell.md) |
 
-#### Versorgungspfad
+### Care Pathway (Versorgungspfad)
 
-Der Datensatz bildet den klinischen Workflow der Senologie in folgenden Bereichen ab:
+The dataset maps the clinical workflow of senology across the following domains:
 
 | | | |
 | :--- | :--- | :--- |
-| **Diagnose** | Erstdiagnose, Rezidiv, Staging (cTNM), Seitenlokalisation | [Diagnose](StructureDefinition-senologie-diagnose-maligne.md) |
-| **Diagnostik** | Bildgebung (Mammografie, Sono, MRT), Pathologie, Biomarker | [Bildgebung](StructureDefinition-senologie-bildgebung-befund.md),[Pathologie](StructureDefinition-senologie-pathologie-befund.md) |
-| **Therapie** | Operation, Systemtherapie, Strahlentherapie | [Operation](StructureDefinition-senologie-operation.md),[Systemtherapie](StructureDefinition-senologie-systemtherapie-procedure.md) |
-| **Tumorkonferenz** | Therapieempfehlungen, Fachdisziplinen | [Tumorboard](StructureDefinition-senologie-tumorboard-empfehlung.md) |
-| **Nachsorge** | Verlauf, Vitalstatus, Rezidivmonitoring | [Follow-Up](StructureDefinition-senologie-follow-up.md) |
+| **Diagnosis** | Initial diagnosis, recurrence, staging (cTNM), laterality | [Diagnosis](StructureDefinition-senologie-diagnose-maligne.md) |
+| **Diagnostics** | Imaging (mammography, ultrasound, MRI), pathology, biomarkers | [Imaging](StructureDefinition-senologie-bildgebung-befund.md),[Pathology](StructureDefinition-senologie-pathologie-befund.md) |
+| **Therapy** | Surgery, systemic therapy, radiotherapy | [Surgery](StructureDefinition-senologie-operation.md),[Systemic Therapy](StructureDefinition-senologie-systemtherapie-procedure.md) |
+| **Tumour Board (Tumorkonferenz)** | Treatment recommendations, clinical disciplines | [Tumour Board](StructureDefinition-senologie-tumorboard-empfehlung.md) |
+| **Follow-up (Nachsorge)** | Disease course, vital status, recurrence monitoring | [Follow-Up](StructureDefinition-senologie-follow-up.md) |
 
-Das detaillierte FHIR-Ressourcenmodell finden Sie unter [Datenmodell](datenmodell.md).
+The detailed FHIR resource model is available under [Data Model](datenmodell.md).
 
-#### Zielsetzung
+### Objectives
 
-1. **Standardisierte Erfassung**klinischer Daten entlang des Versorgungspfads Mammakarzinom
-1. **Interoperabler Datenaustausch**zwischen klinischen Systemen, Krebsregistern und Forschungsdatenbanken auf Basis von HL7 FHIR
-1. **Sekundärnutzung**der Versorgungsdaten für Qualitätssicherung, Versorgungsforschung und klinische Studien
+1. **Standardised capture**of clinical data along the breast cancer (Mammakarzinom) care pathway
+1. **Interoperable data exchange**between clinical systems, cancer registries, and research databases based on HL7 FHIR
+1. **Secondary use**of care data for quality assurance, health services research, and clinical trials
 
-#### Einordnung
+### Classification
 
-Der Kerndatensatz nutzt bestehende MII-Kerndatensatzprofile als technische Basis, ist aber ein eigenständiger Datensatz – kein MII-Modul. Die technische Umsetzung erfolgt durch das **Berlin Institute of Health at Charité (BIH)**, die inhaltliche Abstimmung mit der **[Deutschen Gesellschaft für Senologie (DGS)](https://www.senologie.org/)**, der **[Deutschen Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)](https://www.dggg.de/)** und der **[Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)](https://www.ago-online.de/)**.
+The Core Dataset uses existing MII Core Dataset profiles as its technical foundation, but is an independent dataset — not an MII module. Technical implementation is carried out by the **Berlin Institute of Health at Charité (BIH)**; content alignment is coordinated with the **[Deutsche Gesellschaft für Senologie (DGS)](https://www.senologie.org/)**, the **[Deutsche Gesellschaft für Gynäkologie und Geburtshilfe (DGGG)](https://www.dggg.de/)**, and the **[Arbeitsgemeinschaft Gynäkologische Onkologie (AGO)](https://www.ago-online.de/)**.
 
-#### Designprinzip: Formular-First
+### Design Principle: Form-First (Formular-First)
 
-Die Datenerfassung erfolgt über **SDC-Questionnaires**, die sich am klinischen Workflow orientieren. Im Hintergrund werden die Formulardaten über Template-based Extraction in FHIR-Ressourcen überführt. Siehe [Erfassung](anwendungsfaelle-erfassung.md).
+Data capture is performed via **SDC Questionnaires** aligned with the clinical workflow. In the background, form data are transformed into FHIR resources via template-based extraction. See [Data Capture](anwendungsfaelle-erfassung.md).
 
-#### Abhängigkeiten
+### Dependencies
 
-* Technisch (FHIR-Pakete): [MII Onkologie](https://simplifier.net/medizininformatikinitiative-modulonkologie)
-  * ?: Diagnose, Operation, Systemtherapie, Strahlentherapie
-* Technisch (FHIR-Pakete): [MII Pathologie](https://simplifier.net/medizininformatikinitiative-modulpathologie)
-  * ?: Pathologiebefund, Präparat
-* Technisch (FHIR-Pakete): [MII Bildgebung](https://simplifier.net/medizininformatikinitiative-modulbildgebung)
-  * ?: Tumorlokalisation (BodyStructure)
-* Technisch (FHIR-Pakete): [ISiK](https://simplifier.net/isik)
-  * ?: Basisprofil-Kompatibilität
-* Technisch (FHIR-Pakete): [HL7 SDC](http://hl7.org/fhir/uv/sdc/)
-  * ?: Formularbasierte Datenerfassung
-* Technisch (FHIR-Pakete): Inhaltlich (Standards & Leitlinien)
-* Technisch (FHIR-Pakete): **S3-Leitlinie Mammakarzinom**
-  * ?: Klinische Empfehlungen (AWMF 032-045OL)
-* Technisch (FHIR-Pakete): **oBDS**
-  * ?: Onkologischer Basisdatensatz (Krebsregistermeldungen)
-* Technisch (FHIR-Pakete): **IQTIG QS 18/1**
-  * ?: Externe stationäre Qualitätssicherung Mammachirurgie
-* Technisch (FHIR-Pakete): **DKG-Zertifizierung**
-  * ?: Qualitätsindikatoren Brustzentren (OncoBox)
-* Technisch (FHIR-Pakete): **IRegG**
-  * ?: Implantateregister-Meldepflicht
+* Technical (FHIR packages): [MII Oncology](https://simplifier.net/medizininformatikinitiative-modulonkologie)
+  * ?: Diagnosis, surgery, systemic therapy, radiotherapy
+* Technical (FHIR packages): [MII Pathology](https://simplifier.net/medizininformatikinitiative-modulpathologie)
+  * ?: Pathology report, specimen
+* Technical (FHIR packages): [MII Imaging](https://simplifier.net/medizininformatikinitiative-modulbildgebung)
+  * ?: Tumour localisation (BodyStructure)
+* Technical (FHIR packages): [ISiK](https://simplifier.net/isik)
+  * ?: Base profile compatibility
+* Technical (FHIR packages): [HL7 SDC](http://hl7.org/fhir/uv/sdc/)
+  * ?: Form-based data capture
+* Technical (FHIR packages): Content (standards & guidelines)
+* Technical (FHIR packages): **S3 Guideline Breast Cancer (S3-Leitlinie Mammakarzinom)**
+  * ?: Clinical recommendations (AWMF 032-045OL)
+* Technical (FHIR packages): **oBDS**
+  * ?: Oncological Core Dataset (Onkologischer Basisdatensatz) — cancer registry reporting
+* Technical (FHIR packages): **IQTIG QS 18/1**
+  * ?: External inpatient quality assurance for breast surgery
+* Technical (FHIR packages): **DKG Certification**
+  * ?: Quality indicators for breast centres (OncoBox)
+* Technical (FHIR packages): **IRegG**
+  * ?: Implant register reporting obligation
 
-#### Übersicht
+### Overview
 
-* [Datenmodell](datenmodell.md) – Logisches Modell, Ressourcenmodell und FHIR-Mapping
-* [Profile](profilbeschreibungen.md) – Alle FHIR-Profile im Detail
-* [Testpatientinnen](testpatientinnen.md) – Zwei durchgängige Beispielfälle (kurativ + palliativ)
-* [Anwendungsfälle](anwendungsfaelle-uebersicht.md) – Erfassung, Austausch, Auswertung, Meldedatensätze
-* [Terminologie](terminologie-uebersicht.md) – ValueSets, CodeSystems, ConceptMaps
-* [Offene Fragen](offene-fragen.md) – Ballot-Fragen zur Kommentierung
-* [Artifacts](artifacts.md) – Alle FHIR-Artefakte
+* [Data Model](datenmodell.md) — Logical model, resource model, and FHIR mapping
+* [Profiles](profilbeschreibungen.md) — All FHIR profiles in detail
+* [Test Patients](testpatientinnen.md) — Two end-to-end example cases (curative + palliative)
+* [Use Cases](anwendungsfaelle-uebersicht.md) — Capture, exchange, analysis, reporting datasets
+* [Terminology](terminologie-uebersicht.md) — ValueSets, CodeSystems, ConceptMaps
+* [Open Questions](offene-fragen.md) — Ballot questions for comment
+* [Artifacts](artifacts.md) — All FHIR artifacts
 
-#### Geplante Weiterentwicklungen
+### Planned Future Developments
 
-* **Implantateregister-Meldung (IRegG)** – StructureMaps für automatische Ableitung von Implantateregisterdaten
-* **CQL-basierte Qualitätsindikatoren** – Formale Definition der DKG-Kennzahlen als [CQL](http://cql.hl7.org/) Measures
-* **Synthetische Testkohorte** – Regelbasiert generierte Testdaten (100 Patientinnen) für SQL on FHIR und CQL
-* **PRO-Integration** – PRO-CTCAE und EORTC QLQ-BR23/BR45/BR42 für Patientinnenbefragungen
+* **Implant Register Reporting (IRegG)** — StructureMaps for automatic derivation of implant register data
+* **CQL-based Quality Indicators** — Formal definition of DKG metrics as [CQL](http://cql.hl7.org/) Measures
+* **Synthetic Test Cohort** — Rule-based generated test data (100 patients) for SQL on FHIR and CQL
+* **PRO Integration** — PRO-CTCAE and EORTC QLQ-BR23/BR45/BR42 for patient-reported outcomes
 
