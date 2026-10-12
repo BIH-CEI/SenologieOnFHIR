@@ -1,0 +1,64 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-familienanamnese-flat",
+  "name": "senologie_familienanamnese_flat",
+  "title": "Senologie Familienanamnese Flat View",
+  "description": "FamilyMemberHistory-Eintraege fuer erbliche Belastung. Eine Zeile pro Familienmitglied mit Verwandtschaftsgrad + Erkrankung + Alter bei Diagnose.",
+  "status": "active",
+  "resource": "FamilyMemberHistory",
+  "select": [
+    {
+      "column": [
+        {
+          "name": "fmh_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "patient.getReferenceKey(Patient)"
+        },
+        {
+          "name": "relationship_code",
+          "path": "relationship.coding.code.first()"
+        },
+        {
+          "name": "relationship_display",
+          "path": "relationship.coding.display.first()"
+        },
+        {
+          "name": "sex_code",
+          "path": "sex.coding.code.first()"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        },
+        {
+          "name": "deceased_boolean",
+          "path": "deceasedBoolean"
+        }
+      ]
+    },
+    {
+      "forEach": "condition",
+      "column": [
+        {
+          "name": "condition_code_sct",
+          "path": "code.coding.where(system='http://snomed.info/sct').code.first()"
+        },
+        {
+          "name": "condition_display",
+          "path": "code.coding.where(system='http://snomed.info/sct').display.first()"
+        },
+        {
+          "name": "onset_age_value",
+          "path": "onsetAge.value"
+        },
+        {
+          "name": "onset_string",
+          "path": "onsetString"
+        }
+      ]
+    }
+  ]
+}

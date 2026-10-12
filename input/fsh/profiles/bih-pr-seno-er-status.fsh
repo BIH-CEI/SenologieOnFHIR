@@ -7,6 +7,7 @@ Parent: $MII_PR_Onko_Mamma_Rezeptorstatus_Estrogen
 Id: senologie-er-status
 Title: "BIH Senologie ER-Status"
 Description: "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Estrogen (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS (Remmele-Stegner) und Allred-Score als Senologie-Erweiterung. Erlaubt ER-low-Analysen."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -36,7 +37,7 @@ Description: "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Es
 * component[irsScore] ^mapping[+].identity = "lm"
 * component[irsScore] ^mapping[=].map = "Pathologie.BefundInvasiv.Biomarker.ER.IRSScore"
 
-* component[allredScore].code = $CS_Senologie_Biomarker#allred-score
+* component[allredScore].code = $SCT#445104009 "Allred score for neoplasm"
 * component[allredScore] ^short = "Allred Score (0–8)"
 * component[allredScore] ^comment = "Allred Score (international). Summe aus Proportion (0–5) und Intensity (0–3). LOINC 85337-4 als alternative Kodierung möglich."
 * component[allredScore].value[x] only Quantity

@@ -29,6 +29,36 @@ Usage: #inline
 * reasonReference.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * reasonReference.reference.extension.valueString = "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
 
+// code.coding[sct] ← op-kategorie (SCT-Code aus vs-senologie-operation-art)
+* code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-kategorie').answer.valueCoding"
+
+// code.text ← op-code-text (klinische Freitext-Beschreibung)
+* code.text.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* code.text.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-code-text').answer.valueString"
+
+// performedDateTime ← op-datum
+* performedDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* performedDateTime.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-datum').answer.valueDate"
+
+// bodySite.coding[sct] ← op-seite (SCT 24028007 / 7771000 / 51440002)
+* bodySite.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding[=].extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding"
+
+// bodySite.coding[onko] ← MII Onko R/L/B (Mapping aus op-seite via iif)
+* bodySite.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* bodySite.coding[=].code.extension.valueString = "iif(%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding.code = '24028007', 'R', iif(%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding.code = '7771000', 'L', 'B'))"
+* bodySite.coding[=].system = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation"
+
+// extension[Intention] ← op-intention (MII Onko)
+* extension[+].url = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention"
+* extension[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* extension[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-intention').answer.valueCoding"
+
+// outcome ← op-r-status (R0/R1/R2/RX als SCT)
+* outcome.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* outcome.coding.extension.valueString = "%resource.item.where(linkId='operation').item.where(linkId='op-r-status').answer.valueCoding"
+
 // --- Contained template: OPS-Subprozedur (partOf Hauptprozedur) ---
 // Pattern aus MII Onko: SNOMED-Hauptprozedur traegt die klinische Semantik,
 // OPS-Subprozeduren haengen via partOf darunter. Mehrere Subprozeduren pro
@@ -80,10 +110,12 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Postoperative Dokumentation"
 Description: "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation)."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-postop"
 * name = "QuestPostOPDokumentation"
 * title = "Fragebogen: Postoperative Dokumentation"
+* insert Translation(title, en, [[Form: Postoperative Documentation]])
 * status = #draft
 * experimental = true
 * subjectType = #Patient
@@ -119,6 +151,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "bezugsdiagnose"
 * item[=].text = "Bezugsdiagnose (Seite)"
+* insert Translation(item[=].text, en, [[Reference Diagnosis (Laterality)]])
 * item[=].type = #reference
 * item[=].required = true
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -144,6 +177,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "operation"
 * item[=].text = "Operative Therapie"
+* insert Translation(item[=].text, en, [[Surgical Therapy]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -155,14 +189,20 @@ Usage: #definition
 // Art der Operation (Kategorie)
 * item[=].item[+].linkId = "op-kategorie"
 * item[=].item[=].text = "Art der Operation"
+* insert Translation(item[=].item[=].text, en, [[Surgery Type]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
 
 // Seite (korrigierte SCT-Codes)
 * item[=].item[+].linkId = "op-seite"
 * item[=].item[=].text = "Seite"
+* insert Translation(item[=].item[=].text, en, [[Laterality]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -170,6 +210,7 @@ Usage: #definition
 // Bei R0-Resektion → BS später via BS-Lifecycle auf active=false setzen (TODO: PUT-Pfad im Template)
 * item[=].item[+].linkId = "op-tumor-entitaet"
 * item[=].item[=].text = "Operierte Tumor-Entität(en)"
+* insert Translation(item[=].item[=].text, en, [[Operated Tumour Entity/Entities]])
 * item[=].item[=].type = #reference
 * item[=].item[=].repeats = true
 * item[=].item[=].required = false
@@ -180,6 +221,7 @@ Usage: #definition
 // Performed Date
 * item[=].item[+].linkId = "op-datum"
 * item[=].item[=].text = "OP-Datum"
+* insert Translation(item[=].item[=].text, en, [[Surgery Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
@@ -195,6 +237,7 @@ Usage: #definition
 // jede Subprozedur wird als eigene Procedure mit partOf=Hauptprozedur extrahiert.
 * item[=].item[+].linkId = "ops-subprozeduren"
 * item[=].item[=].text = "OPS-Subprozeduren (BfArM-Katalog, optional, vom Kodierer)"
+* insert Translation(item[=].item[=].text, en, [[OPS Sub-Procedures (Optional)]])
 * item[=].item[=].type = #group
 * item[=].item[=].repeats = true
 * item[=].item[=].required = false
@@ -206,6 +249,7 @@ Usage: #definition
 
 * item[=].item[=].item[+].linkId = "ops-code"
 * item[=].item[=].item[=].text = "OPS-Code (z.B. 5-870.21)"
+* insert Translation(item[=].item[=].item[=].text, en, [[OPS Code]])
 * item[=].item[=].item[=].type = #string
 * item[=].item[=].item[=].required = true
 
@@ -217,7 +261,10 @@ Usage: #definition
 // Intention
 * item[=].item[+].linkId = "op-intention"
 * item[=].item[=].text = "OP-Intention"
+* insert Translation(item[=].item[=].text, en, [[Surgical Intention]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-operation-intention"
 
@@ -226,39 +273,48 @@ Usage: #definition
 // R1/R2/RX → BS bleibt active=true (Rest verblieben)
 * item[=].item[+].linkId = "op-r-status"
 * item[=].item[=].text = "Resektionsstatus (R)"
+* insert Translation(item[=].item[=].text, en, [[Resection Status (R)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 
 // Sentinel-LK-Status (separat, Freitext oder strukturiert)
 * item[=].item[+].linkId = "op-sentinel-anzahl-befallen"
 * item[=].item[=].text = "Sentinel-LK: Anzahl befallen (von Anzahl entnommen)"
+* insert Translation(item[=].item[=].text, en, [[Sentinel LN: Number Positive (of Number Removed)]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // --- Postoperative Anordnungen (als Procedure.note) ---
 * item[=].item[+].linkId = "followup-drainage"
 * item[=].item[=].text = "Drainage"
+* insert Translation(item[=].item[=].text, en, [[Drainage]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "followup-verband"
 * item[=].item[=].text = "Verband"
+* insert Translation(item[=].item[=].text, en, [[Wound Dressing]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "followup-antibiotika"
 * item[=].item[=].text = "Antibiotikatherapie"
+* insert Translation(item[=].item[=].text, en, [[Antibiotic Therapy]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "followup-mobilisation"
 * item[=].item[=].text = "Mobilisation"
+* insert Translation(item[=].item[=].text, en, [[Mobilisation]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "followup-labor"
 * item[=].item[=].text = "Laborkontrolle"
+* insert Translation(item[=].item[=].text, en, [[Laboratory Check]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
@@ -267,6 +323,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "komplikation"
 * item[=].text = "Operative Komplikation"
+* insert Translation(item[=].text, en, [[Surgical Complication]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -278,31 +335,40 @@ Usage: #definition
 // Clavien-Dindo Grad
 * item[=].item[+].linkId = "clavien-dindo"
 * item[=].item[=].text = "Clavien-Dindo-Grad"
+* insert Translation(item[=].item[=].text, en, [[Clavien-Dindo Grade]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clavien-dindo"
 
 // Datum der Komplikation
 * item[=].item[+].linkId = "komplikation-datum"
 * item[=].item[=].text = "Datum der Komplikation"
+* insert Translation(item[=].item[=].text, en, [[Date of Complication]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 
 // Zeitpunkt (method)
 * item[=].item[+].linkId = "komplikation-zeitpunkt"
 * item[=].item[=].text = "Zeitpunkt"
+* insert Translation(item[=].item[=].text, en, [[Timing]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
 
 // Art der Komplikation (Freitext)
 * item[=].item[+].linkId = "komplikation-art"
 * item[=].item[=].text = "Art der Komplikation (Freitext)"
+* insert Translation(item[=].item[=].text, en, [[Type of Complication (Free Text)]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // Konsequenz / Kommentar
 * item[=].item[+].linkId = "komplikation-kommentar"
 * item[=].item[=].text = "Konsequenz / Kommentar"
+* insert Translation(item[=].item[=].text, en, [[Consequence / Comment]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false

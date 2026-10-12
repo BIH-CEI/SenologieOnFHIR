@@ -10,6 +10,7 @@ InstanceOf: ConceptMap
 Title: "SNOMED CT Diagnostik-Procedure zu oBDS Diagnosesicherung"
 Description: "Mapping: SNOMED CT Biopsie-Codes → oBDS-Diagnosesicherungscode (5.7). Stützt CQL-QI-2 mit Datenquellen-Agnostik."
 Usage: #definition
+* insert SenoCRMIConceptMap
 
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-obds-diagnosesicherung"
 * name = "CmSctToObdsDiagnosesicherung"

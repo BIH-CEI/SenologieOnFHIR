@@ -149,7 +149,7 @@ for g in d.get('group', []):
     pass=$((pass + 1))
   else
     echo "  ✗ [measure] $short_id: diff to expected snapshot"
-    diff -u "$expected" "$actual" | head -30
+    diff -u "$expected" "$actual" | head -30 || true   # diff liefert 1 bei Abweichung — unter set -e/pipefail sonst Abbruch nach dem ersten Fall
     fail=$((fail + 1))
   fi
 done

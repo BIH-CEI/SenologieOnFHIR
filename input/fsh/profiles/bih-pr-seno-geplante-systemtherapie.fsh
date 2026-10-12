@@ -3,6 +3,7 @@ Parent: MedicationRequest
 Id: senologie-geplante-systemtherapie
 Title: "BIH Senologie Geplante Systemtherapie"
 Description: "MedicationRequest für geplante Systemtherapie"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

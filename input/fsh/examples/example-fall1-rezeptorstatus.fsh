@@ -85,7 +85,7 @@ Description: "HER2 IHC 1+. Im oBDS-Slice 'negativ', aber im Leitlinien-Slice kor
 Usage: #example
 
 * status = #final
-* code = $LOINC#48676-1 "HER2 [Interpretation] in Tissue"
+* code = $LOINC#48676-1 "HER2 Ag [Interpretation] in Tissue"
 * subject = Reference(Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2025-01-23"
 
@@ -93,9 +93,10 @@ Usage: #example
 * valueCodeableConcept.coding[DefinitionLeitlinie] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
 // oBDS-Slice: 'negativ' (klassische Krebsregister-Sicht — verliert die HER2-low-Information!)
 * valueCodeableConcept.coding[DefinitionOBDS] = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds#N "negativ"
+* valueCodeableConcept.coding[2] = $SCT#1381317004 "Human epidermal growth factor receptor 2 low"
 
 // IHC-Score: 1+
-* component[IHCScore].valueCodeableConcept = $LOINC#LA26333-6 "1+"
+* component[IHCScore].valueCodeableConcept = $LOINC#LA11841-6 "1+"
 
 // Keine ISH-Reflextestung nötig, weil IHC 1+ direkt HER2-low klassifiziert.
 // Bei IHC 2+ wäre eine separate Observation nach MII_PR_MTB_INSITUHYBRIDIZATION_HER2

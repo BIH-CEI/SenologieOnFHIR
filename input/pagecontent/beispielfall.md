@@ -1,8 +1,8 @@
-# Beispielfall: Erika Neumann
+### Beispielfall: Erika Neumann
 
 > **[Bundle herunterladen (JSON)](Bundle-Fall1-Erika-Neumann.json)** — Alle 22 Ressourcen als FHIR Transaction Bundle. Kann in [clinFHIR Bundle Viewer](https://test.clinfhir.com/clinfhir/bundleViewer.html) visualisiert oder in einen FHIR-Server importiert werden.
 
-## Auf einen Blick
+#### Auf einen Blick
 
 | | |
 |---|---|
@@ -15,9 +15,9 @@
 | **Therapie** | BET + SLNB → adjuvante RT → endokrine Therapie |
 | **Outcome** | R0, pN0(sn), kein Rezidiv bei 6-Monats-Follow-Up |
 
-## Klinischer Verlauf
+#### Klinischer Verlauf
 
-### Vorstellung und Diagnostik
+##### Vorstellung und Diagnostik
 
 Frau Neumann stellt sich im Januar 2025 mit einem selbst getasteten Knoten in der linken Brust vor. Die klinische Untersuchung bestätigt einen derben, verschieblichen Knoten im oberen äußeren Quadranten.
 
@@ -31,11 +31,11 @@ Frau Neumann stellt sich im Januar 2025 mit einem selbst getasteten Knoten in de
 
 **Staging:** cT1c cN0 cM0, UICC IA
 
-### Genetische Risikobewertung
+##### Genetische Risikobewertung
 
 Oncotype DX Recurrence Score: 18 (niedriges Risiko). 10-Jahres-Fernrezidivrisiko: 12%. Auf dieser Basis wird keine adjuvante Chemotherapie empfohlen.
 
-### Tumorboard
+##### Tumorboard
 
 Die interdisziplinäre Tumorkonferenz empfiehlt:
 - Brusterhaltende Therapie (BET) mit Sentinel-LK-Biopsie
@@ -43,36 +43,36 @@ Die interdisziplinäre Tumorkonferenz empfiehlt:
 - Endokrine Therapie (Aromatasehemmer) für 5–10 Jahre
 - Keine Chemotherapie
 
-### Operative Therapie
+##### Operative Therapie
 
 Im Februar 2025 erfolgt die BET links mit Sentinel-LK-Biopsie:
 - R0-Resektion
 - Sentinel-LK negativ: pN0(sn) (0/2)
 - Definitives pTNM: pT1c pN0(sn) cM0
 
-### Strahlentherapie
+##### Strahlentherapie
 
 Adjuvante Ganzbrustbestrahlung links (März–April 2025):
 - 50 Gy in 25 Fraktionen
 - Boost 10 Gy in 5 Fraktionen auf das Tumorbett
 - Gesamtdosis: 60 Gy, 30 Sitzungen
 
-### Endokrine Therapie
+##### Endokrine Therapie
 
 Beginn Aromatasehemmer (Letrozol 2,5 mg täglich) im Anschluss an die Strahlentherapie, geplant für mindestens 5 Jahre.
 
-### Begleitmedikation
+##### Begleitmedikation
 
 - Metoprolol 47,5 mg (arterielle Hypertonie, seit 2020)
 - L-Thyroxin 75 µg (Hypothyreose, seit 2018)
 
-### Nachsorge (6 Monate)
+##### Nachsorge (6 Monate)
 
 - Klinisch unauffällig, kein Anhalt für Rezidiv
 - ECOG 0 (voll leistungsfähig)
 - Compliance endokrine Therapie gut
 
-## Daten in diesem IG
+#### Daten in diesem IG
 
 Alle FHIR-Ressourcen für diesen Fall sind als Beispiele im IG enthalten. Sie demonstrieren das Zusammenspiel der Profile über den gesamten Versorgungspfad:
 

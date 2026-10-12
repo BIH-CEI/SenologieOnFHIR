@@ -5,13 +5,14 @@
 
 Alias: $SCT = http://snomed.info/sct
 Alias: $ICD10GM = http://fhir.de/CodeSystem/bfarm/icd-10-gm
-Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom
+Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom
 
 Instance: cm-senologie-diagnose-sct-to-icd10
 InstanceOf: ConceptMap
 Title: "CM Senologie Diagnose SCT → ICD-10-GM"
 Description: "Mapping der Mamma-Diagnose-Choices (SNOMED CT + Senologie-Custom) zu ICD-10-GM-Codes. Eingesetzt im Diagnose-Questionnaire-Extract zur automatischen Befüllung der ICD-10-Slice."
 Usage: #definition
+* insert SenoCRMIConceptMap
 
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-senologie-diagnose-sct-to-icd10"
 * version = "0.1.0"

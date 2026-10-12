@@ -3,6 +3,7 @@ Parent: FamilyMemberHistory
 Id: senologie-familienanamnese
 Title: "BIH Senologie Familienanamnese"
 Description: "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

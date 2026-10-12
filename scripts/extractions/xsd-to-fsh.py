@@ -104,6 +104,7 @@ Logical: OncoBoxBrust2Meldung
 Id: oncobox-brust-2-meldung
 Title: "OncoBox Brust 2.0 Meldung (Logical Model)"
 Description: "OncoBox Brust 2.0 (Auditjahr 2026 v2.1.1) Meldungsstruktur — generiert aus dem offiziellen XSD."
+* insert SenoCRMILogicalModel
 
 * ^status = #draft
 * ^version = "2.1.1"

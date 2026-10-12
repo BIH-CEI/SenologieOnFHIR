@@ -13,6 +13,7 @@ CodeSystem: CS_Senologie_LaunchContext
 Id: cs-senologie-launchcontext
 Title: "CS Senologie SDC LaunchContext"
 Description: "Senologie-spezifische SDC launchContext-Variablennamen. Ergänzt den SDC-Default-CS um 'diagnosis' (Condition als Anker für nachgelagerte Questionnaires)."
+* insert SenoCRMICodeSystem
 
 * ^url = "https://www.senologie.org/fhir/CodeSystem/launchContext"
 * ^status = #draft

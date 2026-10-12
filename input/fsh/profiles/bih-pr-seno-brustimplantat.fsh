@@ -5,6 +5,7 @@ Title: "BIH LM Senologie Brustimplantat"
 
 
 Description: "Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senologie"
+* insert SenoCRMIProfile
 * insert PR_CS_VS_Version
 * ^status = #draft
 

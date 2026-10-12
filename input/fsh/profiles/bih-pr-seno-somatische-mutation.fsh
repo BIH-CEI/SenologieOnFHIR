@@ -3,6 +3,12 @@ Parent: MII_PR_Onko_Genetische_Variante
 Id: senologie-somatische-mutation
 Title: "BIH Senologie Somatische Mutation"
 Description: "Somatischer Mutationsstatus für BRCA1, BRCA2 und PALB2 im Tumorgewebe. Erbt Gen-Kodierung und Ausprägung von MII Onko Genetische Variante."
+* insert SenoCRMIProfileDerived
+// Der MII-Parent traegt ZWEI artifact-topic-Eintraege; SUSHI kopiert beide, der
+// zweite laesst sich nur ueberschreiben (siehe rulesets/crmi.fsh).
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-topic][1].valueCodeableConcept.coding[0].system = "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl"
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-topic][1].valueCodeableConcept.coding[0].code = #C4872
+* ^extension[http://hl7.org/fhir/StructureDefinition/artifact-topic][1].valueCodeableConcept.coding[0].display = "Breast Carcinoma"
 
 * insert PR_CS_VS_Version
 * ^status = #draft

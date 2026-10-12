@@ -9,6 +9,7 @@ InstanceOf: ConceptMap
 Usage: #definition
 Title: "CM SNOMED CT Brustquadrant zu ICD-O-3 Topographie"
 Description: "Übersetzung der SNOMED-CT-kodierten Brustquadranten in ICD-O-3 Topographie-Codes (C50.0–C50.9) für die oBDS-Krebsregistermeldung. Quelle: BodyStructure.locationQualifier[quadrant]."
+* insert SenoCRMIConceptMap
 
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-sct-to-icdo3-mamma-topographie"
 * version = "0.1.0"

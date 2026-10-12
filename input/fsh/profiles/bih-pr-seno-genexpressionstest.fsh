@@ -6,6 +6,7 @@ Parent: RiskAssessment
 Id: senologie-genexpressionstest
 Title: "BIH PR Seno Genexpressionstest"
 Description: "RiskAssessment für genomische Risikoscores bei Mammakarzinom (Oncotype DX, MammaPrint, Prosigna, EndoPredict). Bildet die Risikoklassifikation ab und referenziert die Score-Observation."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

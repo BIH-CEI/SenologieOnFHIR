@@ -14,7 +14,11 @@ Instance: patho-report-template
 InstanceOf: DiagnosticReport
 Usage: #inline
 * id = "patho-report-template"
-* status = #final
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+* status.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+// Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
+// und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul). Der Rueckfall auf 'final' steht deshalb im Ausdruck.
+* status.extension.valueString = "iif(%resource.item.where(linkId='befund-status').answer.exists(), %resource.item.where(linkId='befund-status').answer.valueCoding.code, 'final')"
 * code = $LOINC#60568-3 "Pathology synoptic report"
 * category = http://terminology.hl7.org/CodeSystem/v2-0074#SP "Surgical Pathology"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
@@ -73,6 +77,19 @@ Usage: #inline
 * code = $LOINC#40556-3 "Estrogen receptor Ag [Presence] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+// Components: % positiv, IRS, Allred, Intensitaet
+* component[+].code = $SCT#1234806008 "Percent of cells with estrogen receptor"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-prozent').answer.valueInteger"
+* component[+].code = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-irs').answer.valueInteger"
+* component[+].code = $SCT#445104009 "Allred score for neoplasm"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-allred').answer.valueInteger"
+* component[+].code = $SCT#1236874005 "Intensity of stain of estrogen receptor"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-er-intensitaet').answer.valueCoding"
 
 // PR-Status Template — erzeugt Senologie_PR_Status Observation
 Instance: patho-pr-template
@@ -84,6 +101,19 @@ Usage: #inline
 * code = $LOINC#85339-0 "Progesterone receptor [Interpretation] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+// Components: % positiv, IRS, Allred, Intensitaet
+* component[+].code = $SCT#1234803000 "Percent of cells with progesterone receptor"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-prozent').answer.valueInteger"
+* component[+].code = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-irs').answer.valueInteger"
+* component[+].code = $SCT#445104009 "Allred score for neoplasm"
+* component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-allred').answer.valueInteger"
+* component[+].code = $SCT#1237278006 "Intensity of stain of progesterone receptor"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pr-intensitaet').answer.valueCoding"
 
 // HER2-Status Template — erzeugt Senologie_HER2_Status Observation
 Instance: patho-her2-template
@@ -95,6 +125,24 @@ Usage: #inline
 * code = $LOINC#48676-1 "HER2 [Interpretation] in Tissue"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+// HER2-Gesamtstatus nach Leitlinie (positiv/low/ultralow/negativ/equivocal)
+* valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.valueCoding"
+* valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answerOption.value.where(code = %resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-gesamt').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+// Components: IHC-Score, FISH/ISH, ISH-Methode, Ratio
+* component[+].code = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-score').answer.valueCoding"
+* component[+].code = $LOINC#85318-4 "ERBB2 gene duplication"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-fish').answer.valueCoding"
+* component[+].code = $CS_Senologie_Biomarker#ish-methode "ISH-Methode (FISH/CISH/DISH/SISH)"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ish-methode').answer.valueCoding"
+* component[+].code = $CS_Senologie_Biomarker#her2-ratio "HER2/CEP17 Ratio"
+* component[=].valueQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueQuantity.value.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-her2-ratio').answer.valueDecimal"
 
 // Ki-67 Template — erzeugt Senologie_Ki67_Proliferationsindex Observation
 Instance: patho-ki67-template
@@ -102,8 +150,13 @@ InstanceOf: Observation
 Usage: #inline
 * id = "patho-ki67-template"
 * meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"
+// Ki67-Wert = Prozent positive Zellen
+// Ausdruck an valueQuantity.value, nicht an valueQuantity: sonst ersetzt die Zahl
+// das ganze Quantity-Objekt.
+* valueQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueQuantity.value.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-ki67').answer.valueInteger"
 * status = #final
-* code = $LOINC#29593-1 "Cells.Ki-67 nuclear Ag/cells in Tissue by Immune stain"
+* code = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
@@ -128,7 +181,7 @@ Usage: #inline
 * component[+].code = $LOINC#96337-4 "Combined positive score"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pdl1-cps').answer.valueInteger"
-* component[+].code = $SCT#737023007 "Tumor-infiltrating lymphocytes"
+* component[+].code = $SCT#396395003 "Status of tumor infiltration by lymphocytes"
 * component[=].valueInteger.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueInteger.extension.valueString = "%resource.item.where(linkId='ihc').item.where(linkId='ihc-pdl1-ic').answer.valueInteger"
 
@@ -148,6 +201,8 @@ Usage: #inline
 * valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.valueCoding"
 * valueCodeableConcept.coding[=].system = "https://www.uicc.org/resources/tnm"
+* valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[=].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pt').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 
 // --- Contained template: pN-Kategorie Observation ---
 Instance: patho-pn-template
@@ -165,6 +220,8 @@ Usage: #inline
 * valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.valueCoding"
 * valueCodeableConcept.coding[=].system = "https://www.uicc.org/resources/tnm"
+* valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[=].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pn').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 
 // --- Contained template: pM-Kategorie Observation ---
 Instance: patho-pm-template
@@ -182,6 +239,8 @@ Usage: #inline
 * valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pm').answer.valueCoding"
 * valueCodeableConcept.coding[=].system = "https://www.uicc.org/resources/tnm"
+* valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding[=].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pm').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pm').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
 
 // --- Contained template: L-Kategorie Observation (Lymphangiosis) ---
 Instance: patho-l-template
@@ -251,6 +310,57 @@ Usage: #inline
 * valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='r-status').answer.valueCoding"
 * valueCodeableConcept.coding[=].system = $SCT
 
+// --- Contained template: pTNM-Aggregate-Klassifikation (MII Onko Pattern) ---
+// Container-Observation, die die einzelnen pT/pN/pM/L/V/Pn/R-Observations
+// als hasMember einbindet und UICC-Gesamtstadium als value traegt.
+// Code LOINC 21902-2 "Stage group.pathology Cancer"
+Instance: patho-ptnm-aggregate-template
+InstanceOf: Observation
+Usage: #inline
+* id = "patho-ptnm-aggregate-template"
+* meta.profile = "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation"
+* status = #final
+// SNOMED CT verlangt das MII-Onko-2027-Profil, LOINC lesen die Exportmaps
+* code.coding[0] = $SCT#399588009 "Pathologic TNM stage grouping"
+* code.coding[1] = $LOINC#21902-2 "Stage group.pathology Cancer"
+* category = http://terminology.hl7.org/CodeSystem/observation-category#laboratory
+* subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* subject.reference.extension.valueString = "%resource.subject.reference"
+* focus.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* focus.reference.extension.valueString = "%resource.item.where(linkId='praeparat').item.where(linkId='praeparat-tumor-entitaet').answer.valueReference.reference"
+// valueCodeableConcept = UICC-Gesamtstadium
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='ptnm-uicc').answer.valueCoding"
+// Components: T/N/M/L/V/Pn/R-Kategorien duplizieren als Standalone-Datenpunkte
+// (parallel zu den hasMember-Refs, damit die View-Auswertung beides hat)
+* component[+].code = $LOINC#21899-0 "Primary tumor.pathology Cancer"
+* component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pt').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pt').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+* component[+].code = $LOINC#21900-6 "Regional lymph nodes.pathology [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pn').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+* component[+].code = $LOINC#21901-4 "Distant metastases.pathology [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[0].extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pm').answer.valueCoding"
+* component[=].valueCodeableConcept.coding[1].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding[1].extension.valueString = "%questionnaire.item.where(linkId='ptnm').item.where(linkId='pm').answerOption.value.where(code = %resource.item.where(linkId='ptnm').item.where(linkId='pm').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+* component[+].code = $LOINC#33739-4 "Lymphatic vessel invasion"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='l-kategorie').answer.valueCoding"
+* component[+].code = $LOINC#33740-2 "Venous vessel invasion"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='v-kategorie').answer.valueCoding"
+* component[+].code = $LOINC#92837-4 "Perineural invasion"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='pn-perineural').answer.valueCoding"
+* component[+].code = $LOINC#101659-1 "Residual tumor"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='ptnm').item.where(linkId='r-status').answer.valueCoding"
+
 // --- Contained template: B-Klassifikations-Observation ---
 // Discrete Observation pro Specimen mit Histo-Befund (B0..B5b)
 // focus → BodyStructure (Tumor-Entität die beurteilt wurde)
@@ -281,6 +391,7 @@ Instance: patho-bs-morphology-update-template
 InstanceOf: BodyStructure
 Usage: #inline
 * id = "patho-bs-morphology-update-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorlokalisation"
 * active = true
 * patient.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * patient.reference.extension.valueString = "%resource.subject.reference"
@@ -295,10 +406,12 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Pathologie Befund"
 Description: "Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-pathologie"
 * name = "QuestPathologieBefund"
 * title = "Fragebogen: Pathologie Befund"
+* insert Translation(title, en, [[Form: Pathology Report]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -322,6 +435,7 @@ Usage: #definition
 * contained[+] = patho-v-template
 * contained[+] = patho-pn-perineural-template
 * contained[+] = patho-r-template
+* contained[+] = patho-ptnm-aggregate-template
 
 // Variable for cross-template Specimen-Reference
 * extension[+].url = "http://hl7.org/fhir/StructureDefinition/variable"
@@ -347,11 +461,30 @@ Usage: #definition
 * extension[=].extension[=].valueCode = #Condition
 * extension[=].extension[+].url = "description"
 * extension[=].extension[=].valueString = "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
+// Befundstatus (DiagnosticReport.status)
+// preliminary = Schnellschnitt/vorläufig; final = abgeschlossener Befund;
+// amended/corrected = nachträgliche Korrektur nach Zusatzbefund
+* item[+].linkId = "befund-status"
+* item[=].text = "Befundstatus"
+* insert Translation(item[=].text, en, [[Report Status]])
+* item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
+* item[=].required = true
+// Vorbelegung ueber initialSelected, nicht ueber initial: que-11 verbietet
+// initial[x] zusammen mit answerOption (Aidbox lehnt den Questionnaire sonst ab).
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#preliminary "Vorläufig (Schnellschnitt)"
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#final "Abgeschlossen"
+* item[=].answerOption[=].initialSelected = true
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#amended "Ergänzt"
+* item[=].answerOption[+].valueCoding = http://hl7.org/fhir/diagnostic-report-status#corrected "Korrigiert"
+
 // ============================================================
 // Group 1: Präparat (Specimen)
 // ============================================================
 * item[+].linkId = "praeparat"
 * item[=].text = "Präparat"
+* insert Translation(item[=].text, en, [[Specimen]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -366,27 +499,37 @@ Usage: #definition
 // geschrieben werden soll (via Update auf launchContext.diagnosis).
 * item[=].item[+].linkId = "praeparat-art"
 * item[=].item[=].text = "Art des Präparats"
+* insert Translation(item[=].item[=].text, en, [[Specimen Type]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-praeparat-art"
 
 // Entnahmedatum
 * item[=].item[+].linkId = "praeparat-entnahmedatum"
 * item[=].item[=].text = "Entnahmedatum"
+* insert Translation(item[=].item[=].text, en, [[Date of Removal]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
 // Seite (korrigierte SCT-Codes)
 * item[=].item[+].linkId = "praeparat-seite"
 * item[=].item[=].text = "Seite"
+* insert Translation(item[=].item[=].text, en, [[Laterality]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
 // Lokalisation / Quadrant
 * item[=].item[+].linkId = "praeparat-quadrant"
 * item[=].item[=].text = "Lokalisation / Quadrant"
+* insert Translation(item[=].item[=].text, en, [[Location / Quadrant]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-quadrant-mamma"
 
@@ -395,6 +538,7 @@ Usage: #definition
 // Specimen.collection.bodySite.extension[R5-Ref] wird damit befüllt
 * item[=].item[+].linkId = "praeparat-tumor-entitaet"
 * item[=].item[=].text = "Tumor-Entität (aus Bildgebung)"
+* insert Translation(item[=].item[=].text, en, [[Tumour Entity (from Imaging)]])
 * item[=].item[=].type = #reference
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -427,6 +571,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "histologie"
 * item[=].text = "Histologie"
+* insert Translation(item[=].text, en, [[Histology]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -460,21 +605,30 @@ Usage: #definition
 //   B5b → 254837009 "Malignant tumor of breast"
 * item[=].item[+].linkId = "b-klassifikation"
 * item[=].item[=].text = "Histologie allgemein (NHSBSP B-Klassifikation)"
+* insert Translation(item[=].item[=].text, en, [[General Histology (NHSBSP B-Classification)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-b-klassifikation"
 
 // Histologischer Typ
 * item[=].item[+].linkId = "histo-typ"
 * item[=].item[=].text = "Histologischer Typ"
+* insert Translation(item[=].item[=].text, en, [[Histological Type]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-histologie-typ"
 
 // Grading
 * item[=].item[+].linkId = "histo-grading"
 * item[=].item[=].text = "Grading (Elston-Ellis)"
+* insert Translation(item[=].item[=].text, en, [[Grading (Elston-Ellis)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#371469007 "Histologic grade"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-grading-mamma"
@@ -482,6 +636,7 @@ Usage: #definition
 // Tumorgröße in mm
 * item[=].item[+].linkId = "histo-tumorgroesse"
 * item[=].item[=].text = "Tumorgröße (mm)"
+* insert Translation(item[=].item[=].text, en, [[Tumour Size (mm)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#21889-1 "Size Tumor"
@@ -489,6 +644,7 @@ Usage: #definition
 // Invasive Tumorgröße in mm
 * item[=].item[+].linkId = "histo-invasive-groesse"
 * item[=].item[=].text = "Invasive Tumorgröße (mm)"
+* insert Translation(item[=].item[=].text, en, [[Invasive Tumour Size (mm)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#33728-7 "Size.maximum dimension in Tumor"
@@ -496,20 +652,25 @@ Usage: #definition
 // DCIS-Anteil
 * item[=].item[+].linkId = "histo-dcis-anteil"
 * item[=].item[=].text = "DCIS-Anteil"
+* insert Translation(item[=].item[=].text, en, [[DCIS Component]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // Resektionsrand
 * item[=].item[+].linkId = "histo-resektionsrand"
 * item[=].item[=].text = "Resektionsrand"
+* insert Translation(item[=].item[=].text, en, [[Resection Margin]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#395536008 "Surgical margin finding"
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status-patho"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 
 // Sentinel-LK Anzahl
 * item[=].item[+].linkId = "histo-sentinel-anzahl"
 * item[=].item[=].text = "Sentinel-LK untersucht"
+* insert Translation(item[=].item[=].text, en, [[Sentinel LN Examined]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85347-3 "Sentinel lymph nodes examined [#]"
@@ -517,6 +678,7 @@ Usage: #definition
 // Sentinel-LK befallen
 * item[=].item[+].linkId = "histo-sentinel-befallen"
 * item[=].item[=].text = "Sentinel-LK befallen"
+* insert Translation(item[=].item[=].text, en, [[Sentinel LN Positive]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#92832-5 "Sentinel lymph nodes with metastasis [#]"
@@ -528,6 +690,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "ptnm"
 * item[=].text = "pTNM + Invasion + Resektionsstatus"
+* insert Translation(item[=].text, en, [[pTNM + Invasion + Resection Status]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -553,61 +716,129 @@ Usage: #definition
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
 * item[=].extension[=].extension[+].url = "template"
 * item[=].extension[=].extension[=].valueReference = Reference(patho-r-template)
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+* item[=].extension[=].extension[+].url = "template"
+* item[=].extension[=].extension[=].valueReference = Reference(patho-ptnm-aggregate-template)
 
 // pT (postoperatives T)
 * item[=].item[+].linkId = "pt"
 * item[=].item[=].text = "pT"
+* insert Translation(item[=].item[=].text, en, [[pT]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-t-kategorie-mamma"
+// Optionen = vs-senologie-tnm-t-kategorie-mamma, je mit SNOMED-CT-Äquivalent (alternate-codes)
+* insert TnmAnswerOption([[TX]], [[TX — Primärtumor kann nicht beurteilt werden]], 1352532000, [[pTX (UICC)]])
+* insert TnmAnswerOption([[T0]], [[T0 — Kein Anhalt für Primärtumor]], 1352552004, [[pT0 (UICC)]])
+* insert TnmAnswerOption([[Tis]], [[Tis — Carcinoma in situ]], 1352558000, [[pTis (UICC)]])
+* insert TnmAnswerOption([[Tis(DCIS)]], [[Tis (DCIS) — Ductales Carcinoma in situ]], 1352535003, [[pTis(DCIS) (UICC)]])
+* insert TnmAnswerOption([[Tis(Paget)]], [[Tis (Paget) — M. Paget der Mamille ohne nachweisbaren Tumor]], 1352563001, [[pTis(Paget) (UICC)]])
+* insert TnmAnswerOption([[T1]], [[T1 — Tumor ≤ 2 cm]], 1352559008, [[pT1 (UICC)]])
+* insert TnmAnswerOption([[T1mi]], [[T1mi — Mikroinvasion ≤ 0,1 cm]], 1352562006, [[pT1mi (UICC)]])
+* insert TnmAnswerOption([[T1a]], [[T1a — > 0,1 cm und ≤ 0,5 cm]], 1352560003, [[pT1a (UICC)]])
+* insert TnmAnswerOption([[T1b]], [[T1b — > 0,5 cm und ≤ 1 cm]], 1352543008, [[pT1b (UICC)]])
+* insert TnmAnswerOption([[T1c]], [[T1c — > 1 cm und ≤ 2 cm]], 1352537006, [[pT1c (UICC)]])
+* insert TnmAnswerOption([[T2]], [[T2 — > 2 cm und ≤ 5 cm]], 1352545001, [[pT2 (UICC)]])
+* insert TnmAnswerOption([[T3]], [[T3 — > 5 cm]], 1352533005, [[pT3 (UICC)]])
+* insert TnmAnswerOption([[T4]], [[T4 — jede Größe mit Ausdehnung auf Brustwand/Haut]], 1352553009, [[pT4 (UICC)]])
+* insert TnmAnswerOption([[T4a]], [[T4a — Ausdehnung auf Brustwand]], 1352538001, [[pT4a (UICC)]])
+* insert TnmAnswerOption([[T4b]], [[T4b — Hautulzeration / -ödem / Satellitenmetastasen]], 1352561004, [[pT4b (UICC)]])
+* insert TnmAnswerOption([[T4c]], [[T4c — T4a + T4b]], 1352540006, [[pT4c (UICC)]])
+* insert TnmAnswerOption([[T4d]], [[T4d — Inflammatorisches Karzinom]], 1352557005, [[pT4d (UICC)]])
 
 // pN (postoperatives N)
 * item[=].item[+].linkId = "pn"
 * item[=].item[=].text = "pN"
+* insert Translation(item[=].item[=].text, en, [[pN]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
+// Optionen = vs-senologie-tnm-n-kategorie-mamma, je mit SNOMED-CT-Äquivalent (alternate-codes)
+* insert TnmAnswerOption([[NX]], [[NX — Regionäre LK können nicht beurteilt werden]], 1352605004, [[pNX (UICC)]])
+* insert TnmAnswerOption([[N0]], [[N0 — Keine regionären LK-Metastasen]], 1352621009, [[pN0 (UICC)]])
+* insert TnmAnswerOption([[N1]], [[N1 — Bewegliche ipsilaterale axilläre LK Level I/II]], 1352614009, [[pN1 (UICC)]])
+* insert TnmAnswerOption([[N1mi]], [[N1 (mi) — Mikrometastasen (> 0,2 mm und/oder > 200 Zellen, aber ≤ 2 mm)]], 1352620005, [[pN1mi (UICC)]])
+* insert TnmAnswerOption([[N1a]], [[N1a — 1–3 axilläre LK]], 1352619004, [[pN1a (UICC)]])
+* insert TnmAnswerOption([[N1b]], [[N1b — Mammaria-interna-LK ohne axilläre]], 1352616006, [[pN1b (UICC)]])
+* insert TnmAnswerOption([[N1c]], [[N1c — N1a + N1b]], 1352617002, [[pN1c (UICC)]])
+* insert TnmAnswerOption([[N2]], [[N2 — Fixierte/verbackene axilläre oder klinisch erkennbare A. mammaria interna]], 1352610000, [[pN2 (UICC)]])
+* insert TnmAnswerOption([[N2a]], [[N2a — 4–9 axilläre LK]], 1352608002, [[pN2a (UICC)]])
+* insert TnmAnswerOption([[N2b]], [[N2b — Klinisch erkennbare Mammaria-interna-LK ohne axilläre]], 1352612008, [[pN2b (UICC)]])
+* insert TnmAnswerOption([[N3]], [[N3 — Infraklavikuläre / supraklavikuläre / Kombinationen]], 1352622002, [[pN3 (UICC)]])
+* insert TnmAnswerOption([[N3a]], [[N3a — ≥ 10 axilläre LK oder infraklavikuläre LK]], 1352618007, [[pN3a (UICC)]])
+* insert TnmAnswerOption([[N3b]], [[N3b — Klinisch erkennbare A. mammaria interna + axilläre LK]], 1352623007, [[pN3b (UICC)]])
+* insert TnmAnswerOption([[N3c]], [[N3c — Supraklavikuläre LK]], 1352606003, [[pN3c (UICC)]])
 
 // pM (postoperatives M)
 * item[=].item[+].linkId = "pm"
 * item[=].item[=].text = "pM"
+* insert Translation(item[=].item[=].text, en, [[pM]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-m-kategorie-mamma"
+// Optionen = vs-senologie-tnm-m-kategorie-mamma, je mit SNOMED-CT-Äquivalent (alternate-codes)
+* insert TnmAnswerOptionUiccOnly([[M0]], [[M0 — Keine Fernmetastasen]])
+* insert TnmAnswerOption([[M1]], [[M1 — Fernmetastasen vorhanden]], 1352583000, [[pM1 (UICC)]])
 
 // L-Kategorie (Lymphangiosis)
 * item[=].item[+].linkId = "l-kategorie"
 * item[=].item[=].text = "L (Lymphangiosis carcinomatosa)"
+* insert Translation(item[=].item[=].text, en, [[L (Lymphovascular Invasion)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-l-kategorie"
 
 // V-Kategorie (Vasoinvasion)
 * item[=].item[+].linkId = "v-kategorie"
 * item[=].item[=].text = "V (Venöse Invasion)"
+* insert Translation(item[=].item[=].text, en, [[V (Venous Invasion)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-v-kategorie"
 
 // Pn-Kategorie (Perineuralinvasion)
 * item[=].item[+].linkId = "pn-perineural"
 * item[=].item[=].text = "Pn (Perineuralinvasion)"
+* insert Translation(item[=].item[=].text, en, [[Pn (Perineural Invasion)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-pn-kategorie"
 
 // R-Status (Resektionsstatus, SCT-codiert)
 * item[=].item[+].linkId = "r-status"
 * item[=].item[=].text = "R-Status (Resektionsstatus)"
+* insert Translation(item[=].item[=].text, en, [[R Status (Resection Status)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
+
+// UICC-Gesamtstadium (Aggregat aus pT+pN+pM)
+* item[=].item[+].linkId = "ptnm-uicc"
+* item[=].item[=].text = "UICC-Gesamtstadium (pathologisch)"
+* insert Translation(item[=].item[=].text, en, [[UICC Overall Stage (Pathological)]])
+* item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
+* item[=].item[=].required = false
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma"
 
 // ============================================================
 // Group 3: Immunhistochemie / Rezeptorstatus (Observation)
 // ============================================================
 * item[+].linkId = "ihc"
 * item[=].text = "Immunhistochemie / Rezeptorstatus"
+* insert Translation(item[=].text, en, [[Immunohistochemistry / Receptor Status]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -634,6 +865,7 @@ Usage: #definition
 // ER Prozent positiv → component[AnteilPositiveZellen].valueQuantity
 * item[=].item[+].linkId = "ihc-er-prozent"
 * item[=].item[=].text = "ER Prozent positiv (%)"
+* insert Translation(item[=].item[=].text, en, [[ER Percent Positive (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1234804006 "Percent of cells with estrogen receptor"
@@ -641,6 +873,7 @@ Usage: #definition
 // ER IRS Score → component[irsScore].valueQuantity
 * item[=].item[+].linkId = "ihc-er-irs"
 * item[=].item[=].text = "ER IRS Score (0–12, Remmele-Stegner, DE-Standard)"
+* insert Translation(item[=].item[=].text, en, [[ER IRS Score (0-12, Remmele-Stegner)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
@@ -648,14 +881,18 @@ Usage: #definition
 // ER Allred Score → component[allredScore].valueQuantity
 * item[=].item[+].linkId = "ihc-er-allred"
 * item[=].item[=].text = "ER Allred Score (0–8, international)"
+* insert Translation(item[=].item[=].text, en, [[ER Allred Score (0-8)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* item[=].item[=].code[+] = $SCT#445104009 "Allred score for neoplasm"
 
 // ER Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-er-intensitaet"
 * item[=].item[=].text = "ER Färbeintensität"
+* insert Translation(item[=].item[=].text, en, [[ER Staining Intensity]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1236874005 "Intensity of stain of estrogen receptor"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ihc-intensitaet"
@@ -663,6 +900,7 @@ Usage: #definition
 // PR Prozent positiv → component[AnteilPositiveZellen].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-prozent"
 * item[=].item[=].text = "PR Prozent positiv (%)"
+* insert Translation(item[=].item[=].text, en, [[PR Percent Positive (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1234803000 "Percent of cells with progesterone receptor"
@@ -670,6 +908,7 @@ Usage: #definition
 // PR IRS Score → component[irsScore].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-irs"
 * item[=].item[=].text = "PR IRS Score (0–12)"
+* insert Translation(item[=].item[=].text, en, [[PR IRS Score (0-12)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $CS_Senologie_Biomarker#irs-score "IRS (Remmele-Stegner)"
@@ -677,14 +916,18 @@ Usage: #definition
 // PR Allred Score → component[allredScore].valueQuantity
 * item[=].item[+].linkId = "ihc-pr-allred"
 * item[=].item[=].text = "PR Allred Score (0–8)"
+* insert Translation(item[=].item[=].text, en, [[PR Allred Score (0-8)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $CS_Senologie_Biomarker#allred-score "Allred Score"
+* item[=].item[=].code[+] = $SCT#445104009 "Allred score for neoplasm"
 
 // PR Färbeintensität → component[Faerbeintensitaet].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-pr-intensitaet"
 * item[=].item[=].text = "PR Färbeintensität"
+* insert Translation(item[=].item[=].text, en, [[PR Staining Intensity]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#1237278006 "Intensity of stain of progesterone receptor"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ihc-intensitaet"
@@ -692,7 +935,10 @@ Usage: #definition
 // HER2 IHC Score → component[IHCScore].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-score"
 * item[=].item[=].text = "HER2 IHC Score"
+* insert Translation(item[=].item[=].text, en, [[HER2 IHC Score]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85319-2 "HER2 [Presence] in Breast cancer specimen"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-ihc-score"
@@ -700,14 +946,29 @@ Usage: #definition
 // HER2-Gesamtstatus nach Leitlinie → value[x].coding[DefinitionLeitlinie]
 * item[=].item[+].linkId = "ihc-her2-gesamt"
 * item[=].item[=].text = "HER2-Gesamtstatus (Leitlinie, inkl. HER2-low / HER2-ultralow)"
+* insert Translation(item[=].item[=].text, en, [[HER2 Overall Status (Guideline)]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-her2-gesamt"
+// Optionen = MII-Onko-Leitliniencodes; HER2-low und HER2-ultralow tragen das SNOMED-CT-Aequivalent (alternate-codes)
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#positiv "HER2-positiv"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#low "HER2-low"
+* item[=].item[=].answerOption[=].valueCoding.extension.url = "http://hl7.org/fhir/StructureDefinition/alternate-codes"
+* item[=].item[=].answerOption[=].valueCoding.extension.valueCodeableConcept = $SCT#1381317004 "Human epidermal growth factor receptor 2 low"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#ultralow "HER2-ultralow"
+* item[=].item[=].answerOption[=].valueCoding.extension.url = "http://hl7.org/fhir/StructureDefinition/alternate-codes"
+* item[=].item[=].answerOption[=].valueCoding.extension.valueCodeableConcept = $SCT#1381318009 "Human epidermal growth factor receptor 2 ultralow"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#negativ "HER2-negativ"
+* item[=].item[=].answerOption[+].valueCoding = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-leitlinie#equivocal "equivocal"
 
 // HER2 ISH/FISH (bei HER2 IHC = 2+) → component[ISHResult].valueCodeableConcept
 * item[=].item[+].linkId = "ihc-her2-fish"
 * item[=].item[=].text = "HER2 ISH/FISH"
+* insert Translation(item[=].item[=].text, en, [[HER2 ISH/FISH]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#85318-4 "ERBB2 gene duplication"
 * item[=].item[=].enableWhen[+].question = "ihc-her2-score"
@@ -718,7 +979,10 @@ Usage: #definition
 // HER2 ISH-Methode (FISH/CISH/DISH/SISH) — Senologie-Erweiterung
 * item[=].item[+].linkId = "ihc-her2-ish-methode"
 * item[=].item[=].text = "HER2 ISH-Methode"
+* insert Translation(item[=].item[=].text, en, [[HER2 ISH Method]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
 * item[=].item[=].enableWhen[=].operator = #exists
@@ -728,6 +992,7 @@ Usage: #definition
 // HER2/CEP17 Ratio (quantitativ aus ISH) — Senologie-Erweiterung, im MII MTB modelliert
 * item[=].item[+].linkId = "ihc-her2-ratio"
 * item[=].item[=].text = "HER2/CEP17 Ratio (FISH/CISH, Cutoff ≥ 2.0 = amplifiziert)"
+* insert Translation(item[=].item[=].text, en, [[HER2/CEP17 Ratio (FISH/CISH)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
@@ -737,6 +1002,7 @@ Usage: #definition
 // HER2 Kopienzahl pro Zelle — Senologie-Erweiterung
 * item[=].item[+].linkId = "ihc-her2-kopienzahl"
 * item[=].item[=].text = "HER2-Kopienzahl pro Zelle (Cutoff ≥ 6 = amplifiziert)"
+* insert Translation(item[=].item[=].text, en, [[HER2 Copy Number per Cell (Cutoff >= 6)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "ihc-her2-fish"
@@ -746,25 +1012,29 @@ Usage: #definition
 // Ki-67 Index % → valueQuantity
 * item[=].item[+].linkId = "ihc-ki67"
 * item[=].item[=].text = "Ki-67 Index (%)"
+* insert Translation(item[=].item[=].text, en, [[Ki-67 Index (%)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
-* item[=].item[=].code[+] = $LOINC#29593-1 "Ki-67 [Percentile] in Tissue"
+* item[=].item[=].code[+] = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 
 // PD-L1 TPS (Tumor Proportion Score)
 * item[=].item[+].linkId = "ihc-pdl1-tps"
 * item[=].item[=].text = "PD-L1 TPS (Tumor Proportion Score, %)"
+* insert Translation(item[=].item[=].text, en, [[PD-L1 TPS (Tumour Proportion Score, %)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // PD-L1 CPS (Combined Positive Score)
 * item[=].item[+].linkId = "ihc-pdl1-cps"
 * item[=].item[=].text = "PD-L1 CPS (Combined Positive Score)"
+* insert Translation(item[=].item[=].text, en, [[PD-L1 CPS (Combined Positive Score)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // PD-L1 IC (Immune Cell Score)
 * item[=].item[+].linkId = "ihc-pdl1-ic"
 * item[=].item[=].text = "PD-L1 IC (Immune Cell Score, %)"
+* insert Translation(item[=].item[=].text, en, [[PD-L1 IC (Immune Cell Score, %)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
@@ -773,6 +1043,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "beurteilung"
 * item[=].text = "Gesamtbeurteilung"
+* insert Translation(item[=].text, en, [[Overall Assessment]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -784,11 +1055,13 @@ Usage: #definition
 // pTNM Staging
 * item[=].item[+].linkId = "beurteilung-ptnm"
 * item[=].item[=].text = "pTNM"
+* insert Translation(item[=].item[=].text, en, [[pTNM]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
 // Gesamtbeurteilung Freitext
 * item[=].item[+].linkId = "beurteilung-freitext"
 * item[=].item[=].text = "Gesamtbeurteilung (Freitext)"
+* insert Translation(item[=].item[=].text, en, [[Overall Assessment (Free Text)]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false

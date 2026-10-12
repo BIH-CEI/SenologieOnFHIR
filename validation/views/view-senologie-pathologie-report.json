@@ -1,0 +1,53 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-pathologie-report-flat",
+  "name": "senologie_pathologie_report_flat",
+  "title": "Senologie Pathologie-Befund Flat View",
+  "description": "Pathologie-Hauptberichte (DiagnosticReport) als flache Tabelle. Verbindung zwischen Specimen + Histologie + IHC + Befundtext.",
+  "status": "active",
+  "resource": "DiagnosticReport",
+  "where": [
+    {
+      "path": "code.coding.exists(system='http://loinc.org' and (code='60568-3' or code='11526-1' or code='22637-3'))",
+      "description": "60568-3 Pathology synoptic report, 11526-1 Pathology study, 22637-3 Path report final diagnosis."
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "name": "report_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)"
+        },
+        {
+          "name": "report_code",
+          "path": "code.coding.where(system='http://loinc.org').code.first()"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        },
+        {
+          "name": "effective_date",
+          "path": "effectiveDateTime"
+        },
+        {
+          "name": "issued",
+          "path": "issued"
+        },
+        {
+          "name": "specimen_id",
+          "path": "specimen.first().id"
+        },
+        {
+          "name": "conclusion",
+          "path": "conclusion"
+        }
+      ]
+    }
+  ]
+}

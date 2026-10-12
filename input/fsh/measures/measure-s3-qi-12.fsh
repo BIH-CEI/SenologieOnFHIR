@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-12: ER/PR-Bestimmung mit % und Intensität"
 Description: "ER/PR-Bestimmung mit % und Intensität (S3-Leitlinie Mammakarzinom Kapitel 8, QI-12)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-12"
 * version = "0.1.0"

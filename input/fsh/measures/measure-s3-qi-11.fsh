@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-11: R0-Resektion bei invasivem Mammakarzinom"
 Description: "R0-Resektion bei invasivem Mammakarzinom (S3-Leitlinie Mammakarzinom Kapitel 8, QI-11)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-11"
 * version = "0.1.0"

@@ -1,10 +1,10 @@
-# MII KDS Kompatibilität
+### MII KDS Kompatibilität
 
-## Grundprinzip
+#### Grundprinzip
 
 Die Profile dieses IG erben wo immer möglich direkt von den Profilen des MII Kerndatensatzes (KDS). Dadurch sind Senologie-Daten automatisch konform zu den MII-Vorgaben und können in den standortübergreifenden Datenintegrationszentren (DIZ) der Medizininformatik-Initiative verarbeitet werden.
 
-## Genutzte MII Module
+#### Genutzte MII Module
 
 | MII Modul | Version | Verwendung im Senologie-IG |
 |-----------|---------|---------------------------|
@@ -15,7 +15,7 @@ Die Profile dieses IG erben wo immer möglich direkt von den Profilen des MII Ke
 | MolGen | — | Genetische Varianten (BRCA1/2, PALB2), genetische Testungen |
 | Person | — | Vitalstatus, Todesursache |
 
-## Profil-Vererbung
+#### Profil-Vererbung
 
 | Senologie-Profil | Erbt von (MII KDS) |
 |-----------------|-------------------|
@@ -29,7 +29,7 @@ Die Profile dieses IG erben wo immer möglich direkt von den Profilen des MII Ke
 | Senologie_Pathologie_Befund | mii-pr-patho-report |
 | Senologie_Pathologie_Praeparat | mii-pr-patho-specimen |
 
-## Ergänzungen gegenüber MII KDS
+#### Ergänzungen gegenüber MII KDS
 
 Wo der MII KDS keine fachspezifischen Vorgaben macht, definiert der Senologie-IG eigene Profile — z.B. für:
 
@@ -43,7 +43,7 @@ Wo der MII KDS keine fachspezifischen Vorgaben macht, definiert der Senologie-IG
 
 Diese Profile sind so gestaltet, dass sie bei einer zukünftigen Aufnahme in den MII KDS kompatibel bleiben.
 
-## MII Kerndatensatz Gesamtübersicht
+#### MII Kerndatensatz Gesamtübersicht
 
 Der MII Kerndatensatz umfasst modulübergreifend die folgenden Bereiche. Der Senologie-IG nutzt primär die Module Onkologie, Pathologie, Bildgebung und Person.
 

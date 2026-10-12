@@ -42,6 +42,7 @@ Instance: bildgebung-befund-template
 InstanceOf: Observation
 Usage: #inline
 * id = "bildgebung-befund-template"
+* meta.profile = "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
 * status = #final
 * code = $LOINC#72018-2 "Breast Imaging-Reporting and Data System"
 * category = http://terminology.hl7.org/CodeSystem/observation-category#imaging
@@ -78,7 +79,7 @@ Usage: #inline
 * component[=].valueCodeableConcept.coding[=].system = $BG_CUSTOM
 
 // component[lk-status]
-* component[+].code = $SCT#82127004 "Axillary lymph node assessment"
+* component[+].code = $SCT#284429001 "Examination of axillary lymph nodes"
 * component[=].valueCodeableConcept.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * component[=].valueCodeableConcept.coding[=].extension.valueString = "%resource.item.where(linkId='befund').item.where(linkId='lk-status').answer.valueCoding"
 * component[=].valueCodeableConcept.coding[=].system = $BG_CUSTOM
@@ -102,8 +103,8 @@ Usage: #inline
 
 // component[herdbefund-groesse] in mm
 * component[+].code = $LOINC#33728-7 "Size of mass"
-* component[=].valueQuantity.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* component[=].valueQuantity.extension.valueString = "%resource.item.where(linkId='befund').item.where(linkId='herdbefund-groesse').answer.valueInteger"
+* component[=].valueQuantity.value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueQuantity.value.extension.valueString = "%resource.item.where(linkId='befund').item.where(linkId='herdbefund-groesse').answer.valueInteger"
 * component[=].valueQuantity.unit = "mm"
 * component[=].valueQuantity.system = "http://unitsofmeasure.org"
 * component[=].valueQuantity.code = #mm
@@ -127,7 +128,7 @@ Usage: #inline
 // Stabile Tumor-Entitäts-Identifier
 * identifier[+].system = "https://www.senologie.org/fhir/sid/tumor-entity"
 * identifier[=].value.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* identifier[=].value.extension.valueString = "iif(%NewBildgebungBsId.exists(), %NewBildgebungBsId.substring(9), '')"
+* identifier[=].value.extension.valueString = "iif(%NewBildgebungBsId.exists(), %NewBildgebungBsId.substring(9))"
 
 * patient.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * patient.reference.extension.valueString = "%resource.subject.reference"
@@ -180,10 +181,12 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Bildgebung Mamma"
 Description: "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-bildgebung"
 * name = "QuestBildgebung"
 * title = "Fragebogen: Bildgebung Mamma"
+* insert Translation(title, en, [[Form: Breast Imaging]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -231,6 +234,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "untersuchung"
 * item[=].text = "Untersuchung"
+* insert Translation(item[=].text, en, [[Examination]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -245,26 +249,34 @@ Usage: #definition
 // Untersuchungsdatum
 * item[=].item[+].linkId = "untersuchung-datum"
 * item[=].item[=].text = "Untersuchungsdatum"
+* insert Translation(item[=].item[=].text, en, [[Examination Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
 // Bildgebungsart (dotbase-aligned mit kombinierten Modalität+Seite-Codes)
 * item[=].item[+].linkId = "bildgebungsart"
 * item[=].item[=].text = "Bildgebungsart"
+* insert Translation(item[=].item[=].text, en, [[Imaging Modality]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-bildgebung-modalitaet"
 
 // Standort der Untersuchung (intern/extern)
 * item[=].item[+].linkId = "untersuchung-standort"
 * item[=].item[=].text = "Standort"
+* insert Translation(item[=].item[=].text, en, [[Location]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-standort"
 
 // Befundender Arzt
 * item[=].item[+].linkId = "befundender-arzt"
 * item[=].item[=].text = "Befundender Arzt"
+* insert Translation(item[=].item[=].text, en, [[Reporting Physician]])
 * item[=].item[=].type = #string
 * item[=].item[=].required = false
 
@@ -273,6 +285,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "lokalisation"
 * item[=].text = "Tumorlokalisation"
+* insert Translation(item[=].text, en, [[Tumour Localisation]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -292,6 +305,7 @@ Usage: #definition
 // Wenn leer: nur die neue BS wird referenziert (= Erst-Detektion).
 * item[=].item[+].linkId = "lokalisation-tumor-entitaet-bekannt"
 * item[=].item[=].text = "Existierende Tumor-Entität (für Re-Imaging)"
+* insert Translation(item[=].item[=].text, en, [[Existing Tumour Entity (for Re-Imaging)]])
 * item[=].item[=].type = #reference
 * item[=].item[=].required = false
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -301,27 +315,37 @@ Usage: #definition
 // Seite (korrigierte SCT-Codes für Brust-Seitenlokalisation)
 * item[=].item[+].linkId = "lokalisation-seite"
 * item[=].item[=].text = "Seite"
+* insert Translation(item[=].item[=].text, en, [[Laterality]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
 // Quadrant
 * item[=].item[+].linkId = "lokalisation-quadrant"
 * item[=].item[=].text = "Quadrant"
+* insert Translation(item[=].item[=].text, en, [[Quadrant]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-quadrant-mamma"
 
 // Uhrzeitposition (SNOMED CT 12-Uhr-Schema)
 * item[=].item[+].linkId = "lokalisation-uhrzeit"
 * item[=].item[=].text = "Uhrzeitposition"
+* insert Translation(item[=].item[=].text, en, [[Clock Position]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-clockface-position"
 
 // Abstand von Mamille (mm)
 * item[=].item[+].linkId = "lokalisation-mamillenabstand"
 * item[=].item[=].text = "Abstand von Mamille (mm)"
+* insert Translation(item[=].item[=].text, en, [[Distance from Nipple (mm)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
@@ -330,6 +354,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "befund"
 * item[=].text = "Befund"
+* insert Translation(item[=].text, en, [[Findings]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -344,7 +369,10 @@ Usage: #definition
 // BI-RADS Kategorie
 * item[=].item[+].linkId = "birads-kategorie"
 * item[=].item[=].text = "BI-RADS Kategorie"
+* insert Translation(item[=].item[=].text, en, [[BI-RADS Category]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#72018-2 "BI-RADS"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-birads"
@@ -352,7 +380,10 @@ Usage: #definition
 // ACR Brustdichte (SCT-codiert; nur bei Mammographie/Tomosynthese sinnvoll)
 * item[=].item[+].linkId = "acr-brustdichte"
 * item[=].item[=].text = "ACR Brustdichte"
+* insert Translation(item[=].item[=].text, en, [[ACR Breast Density]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $LOINC#89180-4 "Breast density"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-acr-brustdichte"
@@ -360,25 +391,31 @@ Usage: #definition
 // Herdbefund Größe (mm)
 * item[=].item[+].linkId = "herdbefund-groesse"
 * item[=].item[=].text = "Herdbefund Größe (mm)"
+* insert Translation(item[=].item[=].text, en, [[Mass Size (mm)]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
 // Herdbefund Beschreibung
 * item[=].item[+].linkId = "herdbefund-beschreibung"
 * item[=].item[=].text = "Herdbefund Beschreibung"
+* insert Translation(item[=].item[=].text, en, [[Mass Description]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 // Mikrokalkifikationen (3-Choice statt boolean — Ja suspekt / Ja nicht-suspekt / Nein)
 * item[=].item[+].linkId = "mikrokalk"
 * item[=].item[=].text = "Mikrokalkifikationen"
+* insert Translation(item[=].item[=].text, en, [[Microcalcifications]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-mikrokalk-triage"
 
 // Mikrokalk Beschreibung (conditional)
 * item[=].item[+].linkId = "mikrokalk-beschreibung"
 * item[=].item[=].text = "Mikrokalkifikationen Beschreibung"
+* insert Translation(item[=].item[=].text, en, [[Microcalcifications Description]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "mikrokalk"
@@ -388,13 +425,17 @@ Usage: #definition
 // LK-Status (axilläre Lymphknoten in der Bildgebung)
 * item[=].item[+].linkId = "lk-status"
 * item[=].item[=].text = "Axilläre Lymphknoten"
+* insert Translation(item[=].item[=].text, en, [[Axillary Lymph Nodes]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lk-status-bildgebung"
 
 // Anzahl suspekter LK (bei LK-Status=suspekt)
 * item[=].item[+].linkId = "lk-anzahl-suspekt"
 * item[=].item[=].text = "Anzahl suspekter Lymphknoten"
+* insert Translation(item[=].item[=].text, en, [[Number of Suspicious Lymph Nodes]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "lk-status"
@@ -404,14 +445,20 @@ Usage: #definition
 // US-DEGUM (nur bei Sonographie sinnvoll — enableWhen auf bildgebungsart)
 * item[=].item[+].linkId = "us-degum"
 * item[=].item[=].text = "US-DEGUM Klassifikation"
+* insert Translation(item[=].item[=].text, en, [[US-DEGUM Classification]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-us-degum"
 
 // Beurteilbarkeit (typisch Sonographie)
 * item[=].item[+].linkId = "beurteilbarkeit"
 * item[=].item[=].text = "Beurteilbarkeit"
+* insert Translation(item[=].item[=].text, en, [[Assessability]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-beurteilbarkeit"
 
@@ -427,11 +474,13 @@ Usage: #definition
 // Gesamtbeurteilung
 * item[=].item[+].linkId = "gesamtbeurteilung"
 * item[=].item[=].text = "Gesamtbeurteilung"
+* insert Translation(item[=].item[=].text, en, [[Overall Assessment]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
 // Empfehlung
 * item[=].item[+].linkId = "empfehlung"
 * item[=].item[=].text = "Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false

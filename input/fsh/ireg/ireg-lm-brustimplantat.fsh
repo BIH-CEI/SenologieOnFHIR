@@ -28,6 +28,7 @@ Mapping-Uebersicht:
 - Artikelidentifikation (ARI_* + ARB_* + ABI_*) -> Device
 - Zubehoer (ZUB_* + ZBI_*) -> Device
 - Entlassung (ENT_* + DBI_*) -> Encounter.hospitalization + Condition"""
+* insert SenoCRMILogicalModel
 
 * ^url = "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung"
 * ^version = "0.1.0"

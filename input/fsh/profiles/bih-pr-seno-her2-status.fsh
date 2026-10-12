@@ -12,6 +12,7 @@ Parent: $MII_PR_Onko_Mamma_Her2neu_Status
 Id: senologie-her2-status
 Title: "BIH Senologie HER2-Status (IHC)"
 Description: "HER2-Status aus Immunhistochemie — erbt MII Onko Mamma Her2neu Status (oBDS + Leitlinien-Slicing inkl. HER2-low/HER2-ultralow, IHC-Score + ISH-Ergebnis). Quantitative ISH-Details (Ratio/Kopienzahl) werden über MII MTB INSITUHYBRIDIZATION_HER2 abgebildet."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

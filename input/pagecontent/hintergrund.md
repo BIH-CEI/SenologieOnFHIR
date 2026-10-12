@@ -1,20 +1,18 @@
-# Hintergrund & Motivation
-
-## Ausgangslage
+### Ausgangslage
 
 Zertifizierte Brustzentren dokumentieren die Versorgung ihrer Patientinnen in erster Linie, um eine kontinuierliche, sichere und nachvollziehbare klinische Behandlung zu gewährleisten: Bereits bei der Erstvorstellung werden Befunde, Einschätzungen und Empfehlungen so festgehalten, dass bei allen weiteren Kontakten jederzeit klar ist, um welche Patientin es sich handelt, welche Diagnosen vorliegen, welche Maßnahmen bereits erfolgt sind und welche weiteren Schritte geplant sind. Auf dieser essenziellen Primärdokumentation bauen anschließend die weiterführenden Dokumentationspflichten auf: die DKG-Zertifizierung (OnkoZert), die Krebsregistermeldung (oBDS), die gesetzliche Qualitätssicherung (IQTIG), das Implantatregister und die klinische Forschung. Obwohl sich die inhaltlichen Anforderungen dieser Meldewege weitgehend überschneiden, werden die Daten häufig redundant erfasst, in unterschiedlichen Formaten vorgehalten und separat ausgeleitet. Da die Datenanforderungen jeweils von den Empfängern her definiert werden, entsteht ein erheblicher Aufwand bei der Zuordnung und Transformation der klinischen Daten in die jeweiligen Zielformate. Hinzu kommen eigene und standortübergreifende Studien, die ihrerseits spezifische Datenanforderungen mitbringen. Die parallele Pflege all dieser Dokumentationsstränge führt zu Inkonsistenzen, Fehleranfälligkeit und einem Aufwand, der mit den verfügbaren Ressourcen kaum zu bewältigen ist.
 
-## Zielsetzung
+### Zielsetzung
 
 <img src="senologie-meldewege-uebersicht.png" alt="Klinische Dokumentation → FHIR → Meldewege" style="max-width:100%"/>
 
 Dieser Implementation Guide definiert ein gemeinsames Datenmodell für die strukturierte Dokumentation der Brustkrebsversorgung. Ziel ist es, klinische Informationen einmalig zu erfassen und daraus die verschiedenen Meldungen und Berichte abzuleiten. Anstatt für jeden Meldeweg ein eigenes System zu pflegen, wird ein geteiltes Modell geschaffen, das die Anforderungen aller Beteiligten abdeckt.
 
-## Analyse der Meldewege
+### Analyse der Meldewege
 
 Ein wesentlicher Beitrag dieses IG ist die systematische Gegenüberstellung der verschiedenen Meldedatensätze. Die Anforderungen von oBDS, OncoBox, IQTIG und Implantatregister überlappen in weiten Teilen, unterscheiden sich jedoch in Details — etwa bei Kodierungen, Granularität oder Pflichtfeldern. Durch die explizite Dokumentation dieser Unterschiede entsteht eine Grundlage, auf der mittelfristig an einer stärkeren Harmonisierung der Meldewege gearbeitet werden kann.
 
-## Weitergehende Perspektiven
+### Weitergehende Perspektiven
 
 Ein standortübergreifend einheitliches Datenmodell für die Senologie eröffnet Möglichkeiten, die über die reine Meldepflicht hinausgehen:
 
@@ -23,7 +21,7 @@ Ein standortübergreifend einheitliches Datenmodell für die Senologie eröffnet
 - **Automatisierte Qualitätsindikatoren**: DKG-Kennzahlen und IQTIG-Indikatoren lassen sich direkt aus dem Datenmodell berechnen, ohne manuelle Aggregation.
 - **Standortübergreifende Auswertungen**: Einheitlich strukturierte Daten sind die Voraussetzung für Versorgungsforschung, Registerstudien und Benchmarking zwischen Zentren.
 
-## Zielgruppen
+### Zielgruppen
 
 Dieser Implementation Guide richtet sich an unterschiedliche Nutzergruppen:
 
@@ -32,11 +30,11 @@ Dieser Implementation Guide richtet sich an unterschiedliche Nutzergruppen:
 - **Interoperabilitäts-Community**: Dieses Projekt möchte aufzeigen, wie aus der Community heraus — in Zusammenarbeit mit Fachgesellschaften — grundlegende fachspezifische Spezifikationen entstehen können, die die Roadmap des Interop Councils ergänzen und konkretisieren.
 - **Institutionen der Qualitätssicherung und Registrierung**: Für Krebsregister, Zertifizierungsstellen, die gesetzliche Qualitätssicherung und Leitlinienorganisationen kann dieses Projekt als konkreter Ausgangspunkt dienen, bestehende Meldewege auf eine gemeinsame FHIR-basierte Grundlage zu stellen. Insbesondere eine Einigung auf einheitliche semantische Annotationen — also die durchgängige Kodierung klinischer Konzepte mit internationalen Terminologien wie SNOMED CT, LOINC und ICD — hätte einen erheblichen Mehrwert: Sie würde nicht nur die Transformation zwischen Meldewegen vereinfachen, sondern auch die Anschlussfähigkeit an den European Health Data Space (EHDS) und die europäische Harmonisierung klinischer Datensätze sicherstellen.
 
-## Einordnung
+### Einordnung
 
 Dieses Datenmodell baut auf dem Kerndatensatz der Medizininformatik-Initiative (MII KDS Onkologie) auf und ist kompatibel mit den Informationstechnischen Systemen im Krankenhaus (ISiK). Die Konformität mit europäischen Standards (EHDS, European Patient Summary) wird angestrebt.
 
-## Inhaltlich unterstützt durch
+### Inhaltlich unterstützt durch
 
 | Person | Institution / Funktion |
 |--------|----------------------|
@@ -49,6 +47,6 @@ Dieses Datenmodell baut auf dem Kerndatensatz der Medizininformatik-Initiative (
 | Prof. Dr. med. Maria Margarete Karsten | Leitung Brustzentrum, Charité — Universitätsmedizin Berlin |
 | Prof. Dr. med. Dipl.-Ing. Sylvia Thun | Berlin Institute of Health at Charité (BIH) |
 
-## Hinweis zum Status
+### Hinweis zum Status
 
 Die vorliegende Spezifikation ist nicht als normative Vorgabe zu verstehen, sondern als wissenschaftliche Einladung zur gemeinsamen, intersektoralen Ausgestaltung eines einzelnen medizinischen Fachgebietes in seiner gesamten Granularität. Rückmeldungen, Korrekturen und Erweiterungsvorschläge sind ausdrücklich erwünscht.

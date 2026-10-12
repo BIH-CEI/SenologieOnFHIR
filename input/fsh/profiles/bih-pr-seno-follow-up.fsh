@@ -13,6 +13,7 @@ Parent: MII_PR_Onko_Verlauf
 Id: senologie-follow-up
 Title: "BIH Senologie Follow-Up (Verlaufsmeldung)"
 Description: "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

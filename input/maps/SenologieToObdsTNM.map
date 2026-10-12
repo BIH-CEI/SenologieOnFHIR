@@ -80,7 +80,7 @@ group MapTNM(source src : Observation, target tgt : BackboneElement) {
   src.component as comp where code.coding.exists(code = '21905-5') then {
     comp -> tgt.cpuPraefixT = 'c' "SetCPrefixT";
     comp.value as val then {
-      val.coding as c then {
+      val.coding as c where system = 'https://www.uicc.org/resources/tnm' then {
         c.code as cd -> tgt.t = cd "SetTClinical";
       } "ExtractTClinCode";
     } "MapTClinValue";
@@ -90,7 +90,7 @@ group MapTNM(source src : Observation, target tgt : BackboneElement) {
   src.component as comp where code.coding.exists(code = '21899-0') then {
     comp -> tgt.cpuPraefixT = 'p' "SetPPrefixT";
     comp.value as val then {
-      val.coding as c then {
+      val.coding as c where system = 'https://www.uicc.org/resources/tnm' then {
         c.code as cd -> tgt.t = cd "SetTPathological";
       } "ExtractTPathCode";
     } "MapTPathValue";
@@ -111,7 +111,7 @@ group MapTNM(source src : Observation, target tgt : BackboneElement) {
   src.component as comp where code.coding.exists(code = '21906-3') then {
     comp -> tgt.cpuPraefixN = 'c' "SetCPrefixN";
     comp.value as val then {
-      val.coding as c then {
+      val.coding as c where system = 'https://www.uicc.org/resources/tnm' then {
         c.code as cd -> tgt.n = cd "SetNClinical";
       } "ExtractNClinCode";
     } "MapNClinValue";
@@ -121,7 +121,7 @@ group MapTNM(source src : Observation, target tgt : BackboneElement) {
   src.component as comp where code.coding.exists(code = '21900-6') then {
     comp -> tgt.cpuPraefixN = 'p' "SetPPrefixN";
     comp.value as val then {
-      val.coding as c then {
+      val.coding as c where system = 'https://www.uicc.org/resources/tnm' then {
         c.code as cd -> tgt.n = cd "SetNPathological";
       } "ExtractNPathCode";
     } "MapNPathValue";
@@ -133,7 +133,7 @@ group MapTNM(source src : Observation, target tgt : BackboneElement) {
   src.component as comp where code.coding.exists(code = '21907-1') then {
     comp -> tgt.cpuPraefixM = 'c' "SetCPrefixM";
     comp.value as val then {
-      val.coding as c then {
+      val.coding as c where system = 'https://www.uicc.org/resources/tnm' then {
         c.code as cd -> tgt.m = cd "SetMClinical";
       } "ExtractMClinCode";
     } "MapMClinValue";
@@ -143,7 +143,7 @@ group MapTNM(source src : Observation, target tgt : BackboneElement) {
   src.component as comp where code.coding.exists(code = '21901-4') then {
     comp -> tgt.cpuPraefixM = 'p' "SetPPrefixM";
     comp.value as val then {
-      val.coding as c then {
+      val.coding as c where system = 'https://www.uicc.org/resources/tnm' then {
         c.code as cd -> tgt.m = cd "SetMPathological";
       } "ExtractMPathCode";
     } "MapMPathValue";

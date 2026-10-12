@@ -1,0 +1,7 @@
+This profile records whether a social services consultation took place for a breast cancer patient during the course of care, and if so, when it occurred.
+
+The profile constrains the FHIR `Procedure` resource because a social services contact is an enacted clinical activity — not a plan or request — and `Procedure` is the appropriate resource for documenting that a discrete intervention or consultation was performed (or explicitly not performed). It maps to the OncoBox 2.0 data field L02 and the DKG documentation form OF-14.
+
+Three elements are marked Must Support: `status`, `code`, and `subject`, together with `performedDateTime`. The `status` element carries the primary clinical meaning: `completed` indicates that a consultation took place (`L02 = yes`), while `not-done` documents the absence of contact (`L02 = no`). The `code` is fixed to SNOMED CT concept 310134006 ("Social services"), ensuring unambiguous identification of the procedure type across systems. `subject` is constrained to `Patient` references. `performedDateTime` records the exact date of the consultation when it occurred.
+
+In the breast cancer care pathway, this profile sits within the psychosocial support domain. It enables multidisciplinary teams and cancer registries to document compliance with guideline requirements for social services provision, and supports quality indicator reporting at certified breast cancer centres.

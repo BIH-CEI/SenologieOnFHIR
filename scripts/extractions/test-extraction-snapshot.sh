@@ -135,7 +135,7 @@ print(json.dumps(d, indent=2, sort_keys=True, ensure_ascii=False))
     pass=$((pass + 1))
   else
     echo "  ✗ [$target] $case_name: diff to expected snapshot"
-    diff -u "$expected" "$actual" | head -40
+    diff -u "$expected" "$actual" | head -40 || true   # diff liefert 1 bei Abweichung — unter set -e/pipefail sonst Abbruch nach dem ersten Fall
     fail=$((fail + 1))
   fi
 done

@@ -6,26 +6,180 @@
   "title": "VS Senologie R-Status (Resektionsstatus)",
   "description": "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes.",
   "url": "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status",
-  "version": "0.9.2-rc.2",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "shareable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "publishable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "computable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "package",
+            "system": "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+            "version": "3.0.0",
+            "display": "Package"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "code": "semver",
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "display": "SemVer"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+            "code": "C4872",
+            "display": "Breast Carcinoma"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-author",
+      "valueContactDetail": {
+        "name": "Berlin Institute of Health at Charité (BIH)",
+        "telecom": [
+          {
+            "system": "email",
+            "value": "thomas.debertshaeuser@charite.de"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+      "valueContactDetail": {
+        "name": "Berlin Institute of Health at Charité (BIH)",
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.bihealth.org"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+      "valueContactDetail": {
+        "name": "Deutsche Gesellschaft für Senologie (DGS)",
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+      "valueContactDetail": {
+        "name": "Deutsche Gesellschaft für Senologie (DGS)",
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ]
+      }
+    }
+  ],
+  "version": "0.10.0",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablevalueset",
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablevalueset",
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-computablevalueset"
+    ],
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+        "valueCode": "CC-BY-4.0"
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/package-source",
+        "extension": [
+          {
+            "url": "packageId",
+            "valueId": "kds-senologie"
+          },
+          {
+            "url": "version",
+            "valueString": "0.10.0"
+          },
+          {
+            "url": "uri",
+            "valueUri": "https://www.senologie.org/fhir"
+          }
+        ]
+      }
+    ]
+  },
+  "experimental": false,
+  "date": "2026-10-12",
+  "expansion": {
+    "identifier": "urn:uuid:efe0a41a-7a30-5e66-9881-cd0ad3ba0ae4",
+    "timestamp": "2026-10-06T00:00:00Z",
+    "total": 4,
+    "contains": [
+      {
+        "system": "https://www.senologie.org/fhir/CodeSystem/form-helper",
+        "code": "r-0",
+        "display": "R0 — kein Residualtumor"
+      },
+      {
+        "system": "https://www.senologie.org/fhir/CodeSystem/form-helper",
+        "code": "r-1",
+        "display": "R1 — mikroskopischer Residualtumor"
+      },
+      {
+        "system": "https://www.senologie.org/fhir/CodeSystem/form-helper",
+        "code": "r-2",
+        "display": "R2 — makroskopischer Residualtumor"
+      },
+      {
+        "system": "https://www.senologie.org/fhir/CodeSystem/form-helper",
+        "code": "r-x",
+        "display": "RX — nicht beurteilbar"
+      }
+    ]
+  },
   "compose": {
     "include": [
       {
-        "system": "http://snomed.info/sct",
+        "system": "https://www.senologie.org/fhir/CodeSystem/form-helper",
         "concept": [
           {
-            "code": "395536008",
+            "code": "r-0",
             "display": "R0 — kein Residualtumor"
           },
           {
-            "code": "395537004",
+            "code": "r-1",
             "display": "R1 — mikroskopischer Residualtumor"
           },
           {
-            "code": "395538009",
+            "code": "r-2",
             "display": "R2 — makroskopischer Residualtumor"
           },
           {
-            "code": "395539001",
+            "code": "r-x",
             "display": "RX — nicht beurteilbar"
           }
         ]

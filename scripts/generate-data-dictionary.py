@@ -55,7 +55,7 @@ SYSTEM_SHORT = {
     "http://terminology.hl7.org/CodeSystem/condition-ver-status": "condition-ver-status",
     "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-primaertumor-diagnosesicherung": "MII Onko Diagnosesicherung",
     "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation": "MII Onko Seitenlokalisation",
-    "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom": "Senologie Diagnose-Mamma-Custom",
+    "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom": "Senologie Diagnose-Mamma-Custom",
 }
 
 

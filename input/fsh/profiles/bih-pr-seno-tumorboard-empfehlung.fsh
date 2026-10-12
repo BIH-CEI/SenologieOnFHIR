@@ -3,6 +3,7 @@ Parent: CarePlan
 Id: senologie-tumorboard-empfehlung
 Title: "BIH Senologie Tumorboard Empfehlung"
 Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -35,6 +36,13 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * period.start MS
 * period.start ^short = "Datum des Tumorboard"
 * period.start ^comment = "'Datum'"
+
+// Art der Tumorkonferenz (praeth/postop/postth/ther) — gleiches VS wie MII Onko Tumorkonferenz
+* category MS
+* category 1..1
+* category from https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-therapieplanung-typ (required)
+* category ^short = "Art der Tumorkonferenz / Therapieplanung"
+* category ^comment = "Codiert nach MII Onko therapieplanung-typ (1:1 wiederverwendet — praeth/postop/postth/ther)"
 
 * careTeam ^short = "Beteiligte Fachgruppen"
 * careTeam ^comment = "References zu CareTeam mit verschiedenen Fachdisziplinen (Chirurgie, Onkologie, Radiologie, Pathologie, etc.)"
@@ -79,7 +87,7 @@ Description: "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz 
 * activity[chemotherapy].detail.kind = #MedicationRequest
 
 // Radiotherapie/Strahlentherapie
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code ^short = "Empfohlene Strahlentherapie"
 * activity[radiotherapy].detail.code ^comment = "Strahlentherapie: (choice)"
 * activity[radiotherapy].detail.kind = #ServiceRequest

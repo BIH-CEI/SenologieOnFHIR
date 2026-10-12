@@ -13,6 +13,7 @@ Usage: #definition
 
 Title: "MII Verlauf Gesamtbeurteilung zu OncoBox Verlauf-Ereignis"
 Description: "Mapping der MII Onko Verlauf-Gesamtbeurteilung auf OncoBox Verlauf_Ereignis. Stabile Zustaende (V, T, K, B, R) erzeugen kein Verlaufsereignis. P (Progression) wird auf 6 (Progress) gemappt, Y (Rezidiv) auf 1 (Lokalrezidiv als Default). D (divergent) und U/X (unbekannt/fehlend) werden nicht gemappt."
+* insert SenoCRMIConceptMap
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-oncobox-verlauf-gesamtbeurteilung-ereignis"
 * insert Version
 * status = #draft

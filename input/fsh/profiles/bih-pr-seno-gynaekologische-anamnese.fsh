@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-gynaekologische-anamnese
 Title: "BIH Senologie Gynäkologische Anamnese"
 Description: "Observation für gynäkologische Anamnese (Menarche, Menopause, Schwangerschaften, HRT)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

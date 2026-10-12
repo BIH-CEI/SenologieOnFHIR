@@ -5,8 +5,8 @@ Title: "Checkliste erbliche Belastung — durchgeführt (Score 3)"
 Description: "Beispiel: Checkliste wurde durchgeführt mit Score 3"
 
 * status = #final
-* code = $SCT#445039002 "Assessment using risk assessment tool"
-* subject = Reference(Fall1-Patient-Erika-Gabler)
+* code = $SCT#225338004 "Risk assessment"
+* subject = Reference(Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2024-03-10"
 * valueBoolean = true
 * component[score].code = $SCT#246514001 "Score"
@@ -19,7 +19,7 @@ Title: "Checkliste erbliche Belastung — nicht durchgeführt"
 Description: "Beispiel: Checkliste wurde nicht durchgeführt"
 
 * status = #final
-* code = $SCT#445039002 "Assessment using risk assessment tool"
-* subject = Reference(Fall1-Patient-Erika-Gabler)
+* code = $SCT#225338004 "Risk assessment"
+* subject = Reference(Fall1-Patient-Erika-Neumann)
 * effectiveDateTime = "2024-03-10"
 * valueBoolean = false

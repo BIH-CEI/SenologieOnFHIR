@@ -1,65 +1,145 @@
 {
   "resourceType": "Questionnaire",
   "id": "senologie-verlauf",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablequestionnaire",
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablequestionnaire"
+    ],
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+        "valueCode": "CC-BY-4.0"
+      },
+      {
+        "extension": [
+          {
+            "url": "packageId",
+            "valueId": "kds-senologie"
+          },
+          {
+            "url": "version",
+            "valueString": "0.10.0"
+          },
+          {
+            "url": "uri",
+            "valueUri": "https://www.senologie.org/fhir"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/package-source"
+      }
+    ]
+  },
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf",
   "title": "Fragebogen: Verlaufsdokumentation / Nachsorge",
-  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus.",
-  "subjectType": [
-    "Patient"
-  ],
-  "contained": [
-    {
-      "resourceType": "Observation",
-      "id": "verlauf-klinisch-template",
-      "code": {
-        "coding": [
+  "_title": {
+    "extension": [
+      {
+        "extension": [
           {
-            "code": "11323-3",
-            "system": "http://loinc.org",
-            "display": "Health status"
+            "url": "lang",
+            "valueCode": "en"
+          },
+          {
+            "url": "content",
+            "valueString": "Form: Follow-Up Documentation"
           }
         ],
-        "text": "Klinischer Status Verlauf"
-      },
-      "subject": {
-        "_reference": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-              "valueString": "%resource.subject.reference"
-            }
-          ]
-        }
-      },
-      "status": "final"
+        "url": "http://hl7.org/fhir/StructureDefinition/translation"
+      }
+    ]
+  },
+  "description": "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus.",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "shareable"
     },
     {
-      "resourceType": "Observation",
-      "id": "verlauf-tumorstatus-template",
-      "code": {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "publishable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+      "valueCodeableConcept": {
         "coding": [
           {
-            "code": "88040-1",
-            "system": "http://loinc.org",
-            "display": "Response to cancer treatment"
+            "code": "package",
+            "system": "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+            "version": "3.0.0",
+            "display": "Package"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "code": "semver",
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "display": "SemVer"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "C4872",
+            "system": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+            "display": "Breast Carcinoma"
+          }
+        ]
+      }
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "email",
+            "value": "thomas.debertshaeuser@charite.de"
           }
         ],
-        "text": "Tumorstatus Verlauf"
+        "name": "Berlin Institute of Health at Charité (BIH)"
       },
-      "subject": {
-        "_reference": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
-              "valueString": "%resource.subject.reference"
-            }
-          ]
-        }
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-author"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.bihealth.org"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
       },
-      "status": "final"
-    }
-  ],
-  "extension": [
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-editor"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-reviewer"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-endorser"
+    },
     {
       "extension": [
         {
@@ -98,25 +178,282 @@
       "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
     }
   ],
+  "subjectType": [
+    "Patient"
+  ],
+  "contained": [
+    {
+      "resourceType": "Observation",
+      "id": "verlauf-klinisch-template",
+      "code": {
+        "coding": [
+          {
+            "code": "11323-3",
+            "system": "http://loinc.org",
+            "display": "Health status"
+          }
+        ],
+        "text": "Klinischer Status Verlauf"
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "component": [
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-allgemeinzustand').answer.valueCoding"
+                  }
+                ]
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "365275006",
+                "system": "http://snomed.info/sct",
+                "display": "General well-being finding"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-lokalbefund').answer.valueCoding"
+                  }
+                ]
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "116339002",
+                "system": "http://snomed.info/sct",
+                "display": "Breast finding"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-lymphoedem').answer.valueCoding"
+                  }
+                ]
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "449620005",
+                "system": "http://snomed.info/sct",
+                "display": "Lymphedema of upper limb"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "final",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='kontrolltermin').item.where(linkId='kontrolltermin-datum').answer.valueDate"
+          }
+        ]
+      }
+    },
+    {
+      "resourceType": "Observation",
+      "id": "verlauf-tumorstatus-template",
+      "code": {
+        "coding": [
+          {
+            "code": "88040-1",
+            "system": "http://loinc.org",
+            "display": "Response to cancer treatment"
+          }
+        ],
+        "text": "Tumorstatus Verlauf"
+      },
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-gesamtbeurteilung').answer.valueCoding"
+              }
+            ]
+          }
+        ]
+      },
+      "component": [
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "395709001",
+                "system": "http://snomed.info/sct",
+                "display": "Locoregional recurrence"
+              }
+            ]
+          },
+          "_valueBoolean": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-lokalrezidiv').answer.valueBoolean"
+              }
+            ]
+          }
+        },
+        {
+          "code": {
+            "coding": [
+              {
+                "code": "373572006",
+                "system": "http://snomed.info/sct",
+                "display": "Clinical state of distant metastases"
+              }
+            ]
+          },
+          "_valueBoolean": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-fernmetastasen').answer.valueBoolean"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "final",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='kontrolltermin').item.where(linkId='kontrolltermin-datum').answer.valueDate"
+          }
+        ]
+      }
+    }
+  ],
   "item": [
     {
       "item": [
         {
           "linkId": "kontrolltermin-datum",
           "text": "Datum Vorstellung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Date of Presentation"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "date",
           "required": true
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "kontrolltermin-art",
           "text": "Art der Kontrolle",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Type of Follow-Up"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": true,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrolltermin-art"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "kontrolltermin-art-nachsorge",
           "text": "Art der Nachsorge",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Type of Aftercare"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": true,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
@@ -124,12 +461,46 @@
         {
           "linkId": "kontrolltermin-monate-seit-ed",
           "text": "Monate seit Erstdiagnose",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Months Since Initial Diagnosis"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         }
       ],
       "linkId": "kontrolltermin",
       "text": "Kontrolltermin",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Follow-Up Appointment"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": true
     },
@@ -149,6 +520,12 @@
       ],
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "365275006",
@@ -158,11 +535,34 @@
           ],
           "linkId": "klinisch-allgemeinzustand",
           "text": "Allgemeinzustand",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "General Condition"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "116339002",
@@ -172,6 +572,23 @@
           ],
           "linkId": "klinisch-lokalbefund",
           "text": "Lokalbefund Brust",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Local Breast Finding"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
@@ -188,10 +605,33 @@
           ],
           "linkId": "klinisch-lokalbefund-beschreibung",
           "text": "Lokalbefund Beschreibung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Local Finding Description"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "449620005",
@@ -201,6 +641,23 @@
           ],
           "linkId": "klinisch-lymphoedem",
           "text": "Lymphödem",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Lymphoedema"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
@@ -215,6 +672,23 @@
           ],
           "linkId": "klinisch-armumfangsdifferenz",
           "text": "Armumfangsdifferenz (cm)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Arm Circumference Difference (cm)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "decimal",
           "required": false
         },
@@ -228,12 +702,46 @@
           ],
           "linkId": "klinisch-schmerzen",
           "text": "Schmerzen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Pain"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "boolean",
           "required": false
         }
       ],
       "linkId": "klinischer-status",
       "text": "Klinischer Status",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Clinical Status"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     },
@@ -264,13 +772,53 @@
           ],
           "linkId": "verlauf-tumor-entitaet",
           "text": "Beurteilte Tumor-Entität(en)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Assessed Tumour Entity/Entities"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "reference",
           "repeats": true,
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "tumorstatus-gesamtbeurteilung",
           "text": "Gesamtbeurteilung Verlauf",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Overall Assessment Follow-Up"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
@@ -285,6 +833,23 @@
           ],
           "linkId": "tumorstatus-lokalrezidiv",
           "text": "Lokalrezidiv",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Local Recurrence"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "boolean",
           "required": false
         },
@@ -305,6 +870,23 @@
           ],
           "linkId": "tumorstatus-rezidiv-datum",
           "text": "Datum Rezidiv",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recurrence Date"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "date",
           "required": false
         },
@@ -318,10 +900,33 @@
           ],
           "linkId": "tumorstatus-fernmetastasen",
           "text": "Fernmetastasen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Distant Metastases"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "boolean",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "385421009",
@@ -338,6 +943,23 @@
           ],
           "linkId": "tumorstatus-metastasen-lokalisation",
           "text": "Metastasenlokalisation",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Metastasis Location"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "repeats": true,
@@ -346,6 +968,23 @@
       ],
       "linkId": "tumorstatus",
       "text": "Tumorstatus",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Tumour Status"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     },
@@ -354,24 +993,76 @@
         {
           "linkId": "vorgehen-naechster-termin",
           "text": "Nächster Kontrolltermin",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Next Follow-Up Appointment"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "date",
           "required": false
         },
         {
           "linkId": "vorgehen-empfehlung",
           "text": "Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "weiteres-vorgehen",
       "text": "Weiteres Vorgehen",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Further Management"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     }
   ],
+  "experimental": true,
+  "version": "0.10.0",
+  "date": "2026-10-12",
   "name": "QuestVerlauf",
-  "status": "draft",
-  "version": "0.9.2-rc.2",
-  "experimental": true
+  "status": "draft"
 }

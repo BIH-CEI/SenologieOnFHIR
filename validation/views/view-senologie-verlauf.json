@@ -1,0 +1,62 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-verlauf-flat",
+  "name": "senologie_verlauf_flat",
+  "title": "Senologie Verlauf/Follow-Up Flat View",
+  "description": "Verlaufs-Observations (LOINC 88040-1 Response to cancer treatment) als flache Tabelle. RECIST-Response + Tumornachweis-Status + Lymphoedem-Grad + Allgemeinzustand pro Kontrolltermin.",
+  "status": "active",
+  "resource": "Observation",
+  "where": [
+    {
+      "path": "code.coding.exists(system='http://loinc.org' and (code='88040-1' or code='8693-4' or code='21849-5'))",
+      "description": "88040-1 Response to cancer treatment, 8693-4 Mental status, 21849-5 Cancer disease status."
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "name": "observation_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)"
+        },
+        {
+          "name": "diagnose_id",
+          "path": "focus.first().id"
+        },
+        {
+          "name": "code_loinc",
+          "path": "code.coding.where(system='http://loinc.org').code.first()"
+        },
+        {
+          "name": "response_sct",
+          "path": "valueCodeableConcept.coding.where(system='http://snomed.info/sct').code.first()",
+          "description": "RECIST-Response (CR/PR/SD/PD)."
+        },
+        {
+          "name": "response_display",
+          "path": "valueCodeableConcept.coding.where(system='http://snomed.info/sct').display.first()"
+        },
+        {
+          "name": "lokoregionaer_recurrence",
+          "path": "component.where(code.coding.code='395709001').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "metastasen_status",
+          "path": "component.where(code.coding.code='373572006').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "effective_date",
+          "path": "effectiveDateTime"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        }
+      ]
+    }
+  ]
+}

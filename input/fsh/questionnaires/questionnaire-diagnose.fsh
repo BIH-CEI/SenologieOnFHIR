@@ -7,7 +7,7 @@
 // Verlauf (Restaging).
 // ============================================================
 
-Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom
+Alias: $DIAG_CUSTOM = https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom
 
 // --- Contained template: Condition (klinische Anker-Diagnose) ---
 Instance: diagnose-condition-template
@@ -17,6 +17,13 @@ Usage: #inline
 
 // clinicalStatus: 'recurrence' wenn Diagnose = bc-recurrence, sonst 'active'
 // Konvention: status + assertedDate gehören gemeinsam kuratiert
+// ACHTUNG dotbase: hier stand ein Placeholder-Code ('active'), weil strenge
+// Server (dotbase Aidbox) das Template ohne code ablehnen. Er ist entfernt, weil
+// Aidbox (2605/stable/edge) ihn bei $extract NICHT ueberschreibt, sondern den
+// extrahierten Wert zusaetzlich in ein ungueltiges _code-Feld schreibt. Ob
+// dotbase das Template ohne Placeholder annimmt, ist nicht geprueft.
+// Kein statischer Platzhalter neben templateExtractValue: Aidbox laesst ihn stehen
+// und schreibt den extrahierten Wert in ein ungueltiges _-Feld (siehe se-3ul).
 * clinicalStatus.coding[+].code.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * clinicalStatus.coding[=].code.extension.valueString = "iif(%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.code = 'bc-recurrence', 'recurrence', 'active')"
 * clinicalStatus.coding[=].system = "http://terminology.hl7.org/CodeSystem/condition-clinical"
@@ -30,7 +37,10 @@ Usage: #inline
 * subject.reference.extension.valueString = "%resource.subject.reference"
 
 // verificationStatus ← diagnose-sicherheit (FHIR ver-status CS)
-* verificationStatus.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+// Placeholder 'confirmed' damit Server-Validierung das contained Template
+// akzeptiert — wird beim Extract durch das gewaehlte Coding ueberschrieben.
+* verificationStatus.coding[+].code = #confirmed
+* verificationStatus.coding[=].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * verificationStatus.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sicherheit').answer.valueCoding"
 * verificationStatus.coding[=].system = "http://terminology.hl7.org/CodeSystem/condition-ver-status"
 
@@ -41,8 +51,8 @@ Usage: #inline
 * code.coding[=].system = "http://snomed.info/sct"
 
 * code.coding[+].extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
-* code.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.where(system='https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom')"
-* code.coding[=].system = "https://www.senologie.org/fhir/CodeSystem/diagnose-mamma-custom"
+* code.coding[=].extension.valueString = "%resource.item.where(linkId='diagnose-gruppe').item.where(linkId='diagnose-sct').answer.valueCoding.where(system='https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom')"
+* code.coding[=].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 
 // ICD-10-GM Slice — auskommentiert weil FormBox kein FHIRPath translate() unterstützt.
 // Stattdessen: Mapping via ConceptMap-Lookup server-seitig (Subscription/Webhook)
@@ -89,10 +99,12 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Diagnose Mamma"
 Description: "Klinische Anker-Diagnose der Senologie (Mammakarzinom, in-situ, B3-Läsion, benigne Befunde, kosmetische/funktionelle Anomalien). Bewusst schlank: TNM, Grading und detailliertes Staging werden in den Folge-Formularen Bildgebung, Pathologie und Verlauf erhoben."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-diagnose"
 * name = "QuestDiagnose"
 * title = "Fragebogen: Diagnose Mamma"
+* insert Translation(title, en, [[Form: Breast Diagnosis]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -132,6 +144,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "diagnose-gruppe"
 * item[=].text = "Diagnose Mamma"
+* insert Translation(item[=].text, en, [[Breast Diagnosis]])
 * item[=].type = #group
 * item[=].required = true
 
@@ -139,14 +152,20 @@ Usage: #definition
 // (Maligne/Prämaligne zuerst, dann häufige benigne, dann seltene/Spezialfälle)
 * item[=].item[+].linkId = "diagnose-sct"
 * item[=].item[=].text = "Diagnose"
+* insert Translation(item[=].item[=].text, en, [[Diagnosis]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-mamma-24"
 
 // Details B3-Läsion (enableWhen Diagnose = B3-Läsion)
 * item[=].item[+].linkId = "diagnose-b3-detail"
 * item[=].item[=].text = "Details B3-Läsion"
+* insert Translation(item[=].item[=].text, en, [[B3 Lesion Details]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "diagnose-sct"
 * item[=].item[=].enableWhen[=].operator = #=
@@ -156,13 +175,17 @@ Usage: #definition
 // Diagnostische Sicherheit (Werte des konsentierten Datensatzes)
 * item[=].item[+].linkId = "diagnose-sicherheit"
 * item[=].item[=].text = "Diagnostische Sicherheit"
+* insert Translation(item[=].item[=].text, en, [[Diagnostic Certainty]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-diagnose-sicherheit"
 
 // Details (Freitext)
 * item[=].item[+].linkId = "diagnose-details"
 * item[=].item[=].text = "Details"
+* insert Translation(item[=].item[=].text, en, [[Details]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 
@@ -171,13 +194,17 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "lokalisation-zeit"
 * item[=].text = "Lokalisation & Zeitpunkt"
+* insert Translation(item[=].text, en, [[Localisation & Date]])
 * item[=].type = #group
 * item[=].required = true
 
 // Seite
 * item[=].item[+].linkId = "diagnose-seite"
 * item[=].item[=].text = "Seitenlokalisation"
+* insert Translation(item[=].item[=].text, en, [[Laterality]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
@@ -185,5 +212,6 @@ Usage: #definition
 // bei Rezidiv-Diagnose: Datum der Rezidiv-Feststellung)
 * item[=].item[+].linkId = "diagnose-datum"
 * item[=].item[=].text = "Datum"
+* insert Translation(item[=].item[=].text, en, [[Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true

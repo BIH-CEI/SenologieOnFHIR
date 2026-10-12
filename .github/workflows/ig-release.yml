@@ -49,14 +49,16 @@ jobs:
         id: cache-publisher
         with:
           path: input-cache/publisher.jar
-          key: ig-publisher-latest
+          key: ig-publisher-${{ vars.IG_PUBLISHER_VERSION || '3.0.0' }}
 
+      # Version gepinnt (lokal mit diesem Stand getestet); Anheben ueber die
+      # Repo-Variable IG_PUBLISHER_VERSION oder den Default hier.
       - name: Download IG Publisher
         if: steps.cache-publisher.outputs.cache-hit != 'true'
         run: |
           mkdir -p input-cache
           curl -L -o input-cache/publisher.jar \
-            https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar
+            https://github.com/HL7/fhir-ig-publisher/releases/download/${{ vars.IG_PUBLISHER_VERSION || '3.0.0' }}/publisher.jar
 
       - name: Setup TX Proxy (MII Ontoserver)
         env:
@@ -103,7 +105,18 @@ jobs:
       - name: Build IG
         run: |
           chmod +x _genonce.sh
-          ./_genonce.sh -tx http://localhost:8090/fhir
+          # Der IG Publisher lehnt seit 2.x Terminologieserver ueber http ab
+          # ("Refusing to fetch from non-https URL"). Der TX-Proxy laeuft lokal
+          # im Runner unter http://localhost:8090 — nur diesen Server freigeben,
+          # der uebrige Schutz bleibt an.
+          cat > "$RUNNER_TEMP/fhir-settings.json" <<'JSON'
+          {
+            "servers": [
+              { "url": "http://localhost:8090", "type": "fhir", "allowHttp": true, "allowPrivateNetwork": true }
+            ]
+          }
+          JSON
+          ./_genonce.sh -tx http://localhost:8090/fhir -fhir-settings "$RUNNER_TEMP/fhir-settings.json"
 
       - name: Deploy Release to GitHub Pages
         run: |

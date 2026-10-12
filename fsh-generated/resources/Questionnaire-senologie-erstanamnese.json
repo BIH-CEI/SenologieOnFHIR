@@ -1,9 +1,162 @@
 {
   "resourceType": "Questionnaire",
   "id": "senologie-erstanamnese",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablequestionnaire",
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablequestionnaire"
+    ],
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+        "valueCode": "CC-BY-4.0"
+      },
+      {
+        "extension": [
+          {
+            "url": "packageId",
+            "valueId": "kds-senologie"
+          },
+          {
+            "url": "version",
+            "valueString": "0.10.0"
+          },
+          {
+            "url": "uri",
+            "valueUri": "https://www.senologie.org/fhir"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/package-source"
+      }
+    ]
+  },
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-erstanamnese",
   "title": "Fragebogen: Erstanamnese",
+  "_title": {
+    "extension": [
+      {
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "en"
+          },
+          {
+            "url": "content",
+            "valueString": "Form: Initial Anamnesis"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/translation"
+      }
+    ]
+  },
   "description": "Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese, Raucherstatus und Familienanamnese. Nutzt SDC Template-based Extraction.",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "shareable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "publishable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "package",
+            "system": "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+            "version": "3.0.0",
+            "display": "Package"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "code": "semver",
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "display": "SemVer"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "C4872",
+            "system": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+            "display": "Breast Carcinoma"
+          }
+        ]
+      }
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "email",
+            "value": "thomas.debertshaeuser@charite.de"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-author"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.bihealth.org"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-editor"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-reviewer"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-endorser"
+    },
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    }
+  ],
   "subjectType": [
     "Patient"
   ],
@@ -11,6 +164,11 @@
     {
       "resourceType": "Observation",
       "id": "anamnese-gynaek-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
+        ]
+      },
       "code": {
         "coding": [
           {
@@ -19,7 +177,24 @@
             "display": "Gynecology History and physical note"
           }
         ],
-        "text": "Gynäkologische Anamnese"
+        "text": "Gynäkologische Anamnese",
+        "_text": {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "lang",
+                  "valueCode": "en"
+                },
+                {
+                  "url": "content",
+                  "valueString": "Gynaecological History"
+                }
+              ],
+              "url": "http://hl7.org/fhir/StructureDefinition/translation"
+            }
+          ]
+        }
       },
       "subject": {
         "_reference": {
@@ -36,6 +211,21 @@
     {
       "resourceType": "Observation",
       "id": "anamnese-raucher-template",
+      "meta": {
+        "profile": [
+          "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus"
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "code": "social-history",
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+            }
+          ]
+        }
+      ],
       "code": {
         "coding": [
           {
@@ -47,6 +237,18 @@
             "code": "77176002",
             "system": "http://snomed.info/sct",
             "display": "Smoker"
+          }
+        ]
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='raucherstatus').item.where(linkId='raucherstatus-wert').answer.valueCoding"
+              }
+            ]
           }
         ]
       },
@@ -65,6 +267,11 @@
     {
       "resourceType": "FamilyMemberHistory",
       "id": "anamnese-familie-template",
+      "meta": {
+        "profile": [
+          "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+        ]
+      },
       "patient": {
         "_reference": {
           "extension": [
@@ -87,43 +294,88 @@
       }
     }
   ],
-  "extension": [
-    {
-      "extension": [
-        {
-          "url": "name",
-          "valueCoding": {
-            "code": "patient",
-            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
-          }
-        },
-        {
-          "url": "type",
-          "valueCode": "Patient"
-        }
-      ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-    }
-  ],
   "item": [
     {
       "item": [
         {
           "linkId": "datum-vorstellung",
           "text": "Datum der Vorstellung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Date of Presentation"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "date",
           "required": true
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "vorstellungsgrund",
           "text": "Vorstellungsgrund",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Reason for Presentation"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": true,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "screeningstatus",
           "text": "Screeningstatus",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Screening Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-detektion-modus"
@@ -138,6 +390,23 @@
           ],
           "linkId": "groesse",
           "text": "Körpergröße (cm)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Height (cm)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         },
@@ -151,10 +420,33 @@
           ],
           "linkId": "gewicht",
           "text": "Körpergewicht (kg)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Weight (kg)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "89247-1",
@@ -164,6 +456,23 @@
           ],
           "linkId": "ecog",
           "text": "ECOG Leistungsstatus",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "ECOG Performance Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ecog"
@@ -171,6 +480,23 @@
       ],
       "linkId": "allgemeine-anamnese",
       "text": "Allgemeine Anamnese",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "General Medical History"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": true
     },
@@ -190,6 +516,12 @@
       ],
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "72166-2",
@@ -199,6 +531,23 @@
           ],
           "linkId": "raucherstatus-wert",
           "text": "Raucherstatus",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Smoking Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "definition": "https://gematik.de/fhir/isik/StructureDefinition/ISiKRaucherStatus#Observation.valueCodeableConcept",
@@ -207,6 +556,23 @@
       ],
       "linkId": "raucherstatus",
       "text": "Raucherstatus",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Smoking Status"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     },
@@ -235,10 +601,33 @@
           ],
           "linkId": "menarchealter",
           "text": "Menarchealter (Jahre)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Menarche Age (Years)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "42802-9",
@@ -248,6 +637,23 @@
           ],
           "linkId": "menopausenstatus",
           "text": "Menopausenstatus",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Menopausal Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-menopausenstatus-erweitert"
@@ -262,6 +668,23 @@
           ],
           "linkId": "gravida",
           "text": "Gravida (Schwangerschaften)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Gravida (Pregnancies)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         },
@@ -275,10 +698,33 @@
           ],
           "linkId": "para",
           "text": "Para (Geburten)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Parity (Deliveries)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "code": [
             {
               "code": "266717002",
@@ -288,13 +734,53 @@
           ],
           "linkId": "hormonersatztherapie",
           "text": "Hormonersatztherapie (HRT)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Hormone Replacement Therapy (HRT)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ja-nein"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "orale-kontrazeption",
           "text": "Hormonelle Verhütung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Hormonal Contraception"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
@@ -302,12 +788,46 @@
         {
           "linkId": "stilldauer",
           "text": "Stilldauer (Monate)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Breastfeeding Duration (Months)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "integer",
           "required": false
         }
       ],
       "linkId": "gynaekologische-anamnese",
       "text": "Gynäkologische Anamnese",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Gynaecological History"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     },
@@ -329,15 +849,61 @@
           ],
           "item": [
             {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+                  "valueCode": "optionsOnly"
+                }
+              ],
               "linkId": "verwandtschaftsgrad",
               "text": "Verwandtschaftsgrad",
+              "_text": {
+                "extension": [
+                  {
+                    "extension": [
+                      {
+                        "url": "lang",
+                        "valueCode": "en"
+                      },
+                      {
+                        "url": "content",
+                        "valueString": "Degree of Relationship"
+                      }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                  }
+                ]
+              },
               "type": "choice",
               "required": true,
               "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-verwandtschaftsgrad"
             },
             {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+                  "valueCode": "optionsOnly"
+                }
+              ],
               "linkId": "erkrankung",
               "text": "Erkrankung",
+              "_text": {
+                "extension": [
+                  {
+                    "extension": [
+                      {
+                        "url": "lang",
+                        "valueCode": "en"
+                      },
+                      {
+                        "url": "content",
+                        "valueString": "Condition"
+                      }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                  }
+                ]
+              },
               "type": "choice",
               "required": true,
               "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-familien-erkrankung"
@@ -345,12 +911,46 @@
             {
               "linkId": "erkrankungsalter",
               "text": "Erkrankungsalter (Jahre)",
+              "_text": {
+                "extension": [
+                  {
+                    "extension": [
+                      {
+                        "url": "lang",
+                        "valueCode": "en"
+                      },
+                      {
+                        "url": "content",
+                        "valueString": "Age at Diagnosis (Years)"
+                      }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                  }
+                ]
+              },
               "type": "integer",
               "required": false
             }
           ],
           "linkId": "familienmitglied",
           "text": "Familienmitglied",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Family Member"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "group",
           "required": false,
           "repeats": true
@@ -358,12 +958,30 @@
       ],
       "linkId": "familienanamnese",
       "text": "Familienanamnese",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Family History"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     }
   ],
+  "experimental": true,
+  "version": "0.10.0",
+  "date": "2026-10-12",
   "name": "QuestErstanamnese",
-  "status": "draft",
-  "version": "0.9.2-rc.2",
-  "experimental": true
+  "status": "draft"
 }

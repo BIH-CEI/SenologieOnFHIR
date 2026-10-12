@@ -1,9 +1,190 @@
 {
   "resourceType": "Questionnaire",
   "id": "senologie-tumorboard",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablequestionnaire",
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablequestionnaire"
+    ],
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+        "valueCode": "CC-BY-4.0"
+      },
+      {
+        "extension": [
+          {
+            "url": "packageId",
+            "valueId": "kds-senologie"
+          },
+          {
+            "url": "version",
+            "valueString": "0.10.0"
+          },
+          {
+            "url": "uri",
+            "valueUri": "https://www.senologie.org/fhir"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/package-source"
+      }
+    ]
+  },
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard",
   "title": "Fragebogen: Tumorboard Empfehlung",
+  "_title": {
+    "extension": [
+      {
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "en"
+          },
+          {
+            "url": "content",
+            "valueString": "Form: Tumour Board Recommendation"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/translation"
+      }
+    ]
+  },
   "description": "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinaeren Tumorkonferenz. Pro Therapie-Empfehlung mit Beschluss-Status (empfohlen/bedingt/nicht/nicht diskutiert) und Begruendung. SDC Template-based Extraction zu CarePlan.",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "shareable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "publishable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "package",
+            "system": "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+            "version": "3.0.0",
+            "display": "Package"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "code": "semver",
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "display": "SemVer"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "C4872",
+            "system": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+            "display": "Breast Carcinoma"
+          }
+        ]
+      }
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "email",
+            "value": "thomas.debertshaeuser@charite.de"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-author"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.bihealth.org"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-editor"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-reviewer"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-endorser"
+    },
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis",
+            "display": "Diagnose (Anker-Condition)"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "url": "template",
+          "valueReference": {
+            "reference": "#careplan-template"
+          }
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }
+  ],
   "subjectType": [
     "Patient"
   ],
@@ -18,7 +199,6 @@
       },
       "addresses": [
         {
-          "reference": "placeholder",
           "_reference": {
             "extension": [
               {
@@ -27,6 +207,20 @@
               }
             ]
           }
+        }
+      ],
+      "category": [
+        {
+          "coding": [
+            {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                  "valueString": "%resource.item.where(linkId='tumorboard-typ').answer.valueCoding"
+                }
+              ]
+            }
+          ]
         }
       ],
       "subject": {
@@ -40,7 +234,6 @@
         }
       },
       "period": {
-        "start": "2024-01-01",
         "_start": {
           "extension": [
             {
@@ -85,7 +278,7 @@
                 }
               ]
             },
-            "description": "Operative Therapie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -93,8 +286,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-op-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -125,13 +317,13 @@
             "code": {
               "coding": [
                 {
-                  "code": "108290001",
+                  "code": "1287742003",
                   "system": "http://snomed.info/sct",
-                  "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+                  "display": "Radiotherapy (procedure)"
                 }
               ]
             },
-            "description": "Strahlentherapie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -139,8 +331,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -177,7 +368,7 @@
                 }
               ]
             },
-            "description": "Endokrine Therapie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -185,8 +376,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-endokrin-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -223,7 +413,7 @@
                 }
               ]
             },
-            "description": "Chemotherapie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -231,8 +421,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -269,7 +458,7 @@
                 }
               ]
             },
-            "description": "Zielgerichtete Therapie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -277,8 +466,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -315,7 +503,7 @@
                 }
               ]
             },
-            "description": "Immuntherapie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -323,8 +511,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -361,7 +548,7 @@
                 }
               ]
             },
-            "description": "Weitere Diagnostik",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -369,8 +556,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-diagnostik-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -407,7 +593,7 @@
                 }
               ]
             },
-            "description": "Klinische Studie",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -415,8 +601,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-studie-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -453,7 +638,7 @@
                 }
               ]
             },
-            "description": "Genetische Untersuchung",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -461,8 +646,7 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-genetik-begruendung').answer.valueString"
                 }
               ]
-            },
-            "status": "not-started"
+            }
           }
         },
         {
@@ -499,7 +683,7 @@
                 }
               ]
             },
-            "description": "Nachsorge",
+            "status": "not-started",
             "_description": {
               "extension": [
                 {
@@ -507,14 +691,264 @@
                   "valueString": "%resource.item.descendants().where(linkId='empfehlung-nachsorge-begruendung').answer.valueString"
                 }
               ]
+            }
+          }
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext",
+              "valueString": "%resource.item.descendants().where(linkId='empfehlung-op-optionen').answer.value"
+            }
+          ],
+          "detail": {
+            "code": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "code"
+                      }
+                    ]
+                  },
+                  "_display": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "display"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
+            "kind": "ServiceRequest",
+            "status": "not-started"
+          }
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext",
+              "valueString": "%resource.item.descendants().where(linkId='empfehlung-strahlentherapie-optionen').answer.value"
+            }
+          ],
+          "detail": {
+            "code": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "code"
+                      }
+                    ]
+                  },
+                  "_display": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "display"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "kind": "ServiceRequest",
+            "status": "not-started"
+          }
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext",
+              "valueString": "%resource.item.descendants().where(linkId='empfehlung-chemotherapie-optionen').answer.value"
+            }
+          ],
+          "detail": {
+            "code": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "code"
+                      }
+                    ]
+                  },
+                  "_display": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "display"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "kind": "MedicationRequest",
+            "status": "not-started"
+          }
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext",
+              "valueString": "%resource.item.descendants().where(linkId='empfehlung-endokrin-optionen').answer.value"
+            }
+          ],
+          "detail": {
+            "code": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "code"
+                      }
+                    ]
+                  },
+                  "_display": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "display"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "kind": "MedicationRequest",
+            "status": "not-started"
+          }
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext",
+              "valueString": "%resource.item.descendants().where(linkId='empfehlung-zielgerichtet-optionen').answer.value"
+            }
+          ],
+          "detail": {
+            "code": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "code"
+                      }
+                    ]
+                  },
+                  "_display": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "display"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "kind": "MedicationRequest",
+            "status": "not-started"
+          }
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractContext",
+              "valueString": "%resource.item.descendants().where(linkId='empfehlung-immuntherapie-optionen').answer.value"
+            }
+          ],
+          "detail": {
+            "code": {
+              "coding": [
+                {
+                  "_system": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "system"
+                      }
+                    ]
+                  },
+                  "_code": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "code"
+                      }
+                    ]
+                  },
+                  "_display": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                        "valueString": "display"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "kind": "MedicationRequest",
             "status": "not-started"
           }
         }
       ],
       "note": [
         {
-          "text": "Sonstige Anmerkungen",
           "_text": {
             "extension": [
               {
@@ -527,7 +961,6 @@
       ],
       "status": "active",
       "intent": "plan",
-      "title": "Tumorboard Empfehlung",
       "_title": {
         "extension": [
           {
@@ -536,7 +969,6 @@
           }
         ]
       },
-      "description": "Zusammenfassung",
       "_description": {
         "extension": [
           {
@@ -545,52 +977,6 @@
           }
         ]
       }
-    }
-  ],
-  "extension": [
-    {
-      "extension": [
-        {
-          "url": "name",
-          "valueCoding": {
-            "code": "patient",
-            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
-          }
-        },
-        {
-          "url": "type",
-          "valueCode": "Patient"
-        }
-      ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-    },
-    {
-      "extension": [
-        {
-          "valueCoding": {
-            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
-            "code": "diagnosis",
-            "display": "Diagnose (Anker-Condition)"
-          },
-          "url": "name"
-        },
-        {
-          "url": "type",
-          "valueCode": "Condition"
-        }
-      ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-    },
-    {
-      "extension": [
-        {
-          "url": "template",
-          "valueReference": {
-            "reference": "#careplan-template"
-          }
-        }
-      ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
     }
   ],
   "item": [
@@ -640,152 +1026,1481 @@
       ],
       "linkId": "bezugsdiagnose",
       "text": "Bezugsdiagnose (Seite)",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Reference Diagnosis (Laterality)"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "reference",
       "required": true
     },
     {
       "linkId": "tumorboard-datum",
       "text": "Datum des Tumorboards",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Tumour Board Date"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "date",
+      "required": true
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+          "valueCode": "optionsOnly"
+        }
+      ],
+      "answerOption": [
+        {
+          "valueCoding": {
+            "code": "praeth",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ",
+            "display": "prätherapeutische Tumorkonferenz (Festlegung der Therapiestrategie)"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "postop",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ",
+            "display": "postoperative Tumorkonferenz (Planung der postoperativen Therapie, z. B. zur Frage adjuvante Therapie)"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "postth",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ",
+            "display": "posttherapeutische Tumorkonferenz (manche Tumore werden nicht operiert)"
+          }
+        },
+        {
+          "valueCoding": {
+            "code": "ther",
+            "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ",
+            "display": "Therapieplanung ohne Tumorkonferenz"
+          }
+        }
+      ],
+      "linkId": "tumorboard-typ",
+      "text": "Art der Tumorkonferenz",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Type of Tumour Board"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
+      "type": "choice",
       "required": true
     },
     {
       "linkId": "tumorboard-titel",
       "text": "Titel der Empfehlung",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Recommendation Title"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "string",
       "required": false
     },
     {
       "linkId": "tumorboard-beschreibung",
       "text": "Zusammenfassung der Empfehlung",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Recommendation Summary"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "text",
       "required": false
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-op-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
         },
         {
+          "enableWhen": [
+            {
+              "question": "empfehlung-op-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            },
+            {
+              "question": "empfehlung-op-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "bedingt-empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "392021009",
+                "system": "http://snomed.info/sct",
+                "display": "Brusterhaltende Operation (BET)",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Lumpectomy of breast"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "172043006",
+                "system": "http://snomed.info/sct",
+                "display": "Mastektomie",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Simple mastectomy"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "428564008",
+                "system": "http://snomed.info/sct",
+                "display": "Hautsparende Mastektomie",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Skin sparing mastectomy"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "1380209001",
+                "system": "http://snomed.info/sct",
+                "display": "Nipple-sparing Mastektomie",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Nipple preserving subcutaneous mastectomy"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "406505007",
+                "system": "http://snomed.info/sct",
+                "display": "Modifiziert radikale Mastektomie",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Modified radical mastectomy"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "395165008",
+                "system": "http://snomed.info/sct",
+                "display": "Nachresektion",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Re-excision of breast for clearance of tumour margins"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "396487001",
+                "system": "http://snomed.info/sct",
+                "display": "Sentinel-Lymphknoten-Biopsie",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Sentinel lymph node biopsy"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "1396322000",
+                "system": "http://snomed.info/sct",
+                "display": "Targeted Axillary Dissection (TAD)",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Targeted axillary dissection"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "79544006",
+                "system": "http://snomed.info/sct",
+                "display": "Axilladissektion",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Complete axillary lymphadenectomy"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "302343007",
+                "system": "http://snomed.info/sct",
+                "display": "Rekonstruktion mit Implantat",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Insertion of prosthesis for breast"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "303445008",
+                "system": "http://snomed.info/sct",
+                "display": "Rekonstruktion mit Eigengewebe (Lappen)",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Reconstruction of breast with flap"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "linkId": "empfehlung-op-optionen",
+          "text": "Empfohlene Verfahren",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommended procedures"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "repeats": true,
+          "required": false,
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "empfehlung-op-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-op-group",
       "text": "Operative Therapie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Surgical Therapy"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-strahlentherapie-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
         },
         {
+          "enableWhen": [
+            {
+              "question": "empfehlung-strahlentherapie-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            },
+            {
+              "question": "empfehlung-strahlentherapie-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "bedingt-empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "428923005",
+                "system": "http://snomed.info/sct",
+                "display": "Ganze Brust",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Radiotherapy to breast"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "428624002",
+                "system": "http://snomed.info/sct",
+                "display": "Brustwand",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Radiotherapy to chest wall"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "429579007",
+                "system": "http://snomed.info/sct",
+                "display": "Axilla",
+                "_display": {
+                  "extension": [
+                    {
+                      "extension": [
+                        {
+                          "url": "lang",
+                          "valueCode": "en"
+                        },
+                        {
+                          "url": "content",
+                          "valueString": "Radiotherapy to axilla"
+                        }
+                      ],
+                      "url": "http://hl7.org/fhir/StructureDefinition/translation"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "linkId": "empfehlung-strahlentherapie-optionen",
+          "text": "Zielvolumen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Target volume"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "repeats": true,
+          "required": false,
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "empfehlung-strahlentherapie-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-strahlentherapie-group",
       "text": "Strahlentherapie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Radiotherapy"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-endokrin-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
         },
         {
+          "enableWhen": [
+            {
+              "question": "empfehlung-endokrin-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            },
+            {
+              "question": "empfehlung-endokrin-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "bedingt-empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "373345002",
+                "system": "http://snomed.info/sct",
+                "display": "Tamoxifen"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "386911004",
+                "system": "http://snomed.info/sct",
+                "display": "Letrozole"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "386910003",
+                "system": "http://snomed.info/sct",
+                "display": "Anastrozole"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "387017005",
+                "system": "http://snomed.info/sct",
+                "display": "Exemestane"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "385519002",
+                "system": "http://snomed.info/sct",
+                "display": "Fulvestrant"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "108771008",
+                "system": "http://snomed.info/sct",
+                "display": "Goserelin"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "397198002",
+                "system": "http://snomed.info/sct",
+                "display": "Leuprorelin"
+              }
+            }
+          ],
+          "linkId": "empfehlung-endokrin-optionen",
+          "text": "Empfohlene Substanzen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommended agents"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "repeats": true,
+          "required": false,
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "empfehlung-endokrin-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-endokrin-group",
       "text": "Endokrine Therapie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Endocrine Therapy"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-chemotherapie-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
         },
         {
+          "enableWhen": [
+            {
+              "question": "empfehlung-chemotherapie-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            },
+            {
+              "question": "empfehlung-chemotherapie-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "bedingt-empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "417916005",
+                "system": "http://snomed.info/sct",
+                "display": "Epirubicin"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "372817009",
+                "system": "http://snomed.info/sct",
+                "display": "Doxorubicin"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "387420009",
+                "system": "http://snomed.info/sct",
+                "display": "Cyclophosphamide"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "387374002",
+                "system": "http://snomed.info/sct",
+                "display": "Paclitaxel"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "426653008",
+                "system": "http://snomed.info/sct",
+                "display": "Albumin bound paclitaxel"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "386918005",
+                "system": "http://snomed.info/sct",
+                "display": "Docetaxel"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "386905002",
+                "system": "http://snomed.info/sct",
+                "display": "Carboplatin"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "386906001",
+                "system": "http://snomed.info/sct",
+                "display": "Capecitabine"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "708166000",
+                "system": "http://snomed.info/sct",
+                "display": "Eribulin"
+              }
+            }
+          ],
+          "linkId": "empfehlung-chemotherapie-optionen",
+          "text": "Empfohlene Substanzen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommended agents"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "repeats": true,
+          "required": false,
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "empfehlung-chemotherapie-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-chemotherapie-group",
       "text": "Chemotherapie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Chemotherapy"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-zielgerichtet-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
         },
         {
+          "enableWhen": [
+            {
+              "question": "empfehlung-zielgerichtet-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            },
+            {
+              "question": "empfehlung-zielgerichtet-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "bedingt-empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "387003001",
+                "system": "http://snomed.info/sct",
+                "display": "Trastuzumab"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "704226002",
+                "system": "http://snomed.info/sct",
+                "display": "Pertuzumab"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "702836004",
+                "system": "http://snomed.info/sct",
+                "display": "Trastuzumab emtansine"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "838469001",
+                "system": "http://snomed.info/sct",
+                "display": "Trastuzumab deruxtecan"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "715958001",
+                "system": "http://snomed.info/sct",
+                "display": "Palbociclib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "732257004",
+                "system": "http://snomed.info/sct",
+                "display": "Ribociclib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "761851004",
+                "system": "http://snomed.info/sct",
+                "display": "Abemaciclib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "432162002",
+                "system": "http://snomed.info/sct",
+                "display": "Olaparib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "782199007",
+                "system": "http://snomed.info/sct",
+                "display": "Talazoparib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "871701001",
+                "system": "http://snomed.info/sct",
+                "display": "Sacituzumab govitecan"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "871698009",
+                "system": "http://snomed.info/sct",
+                "display": "Tucatinib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "425820005",
+                "system": "http://snomed.info/sct",
+                "display": "Lapatinib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "736632003",
+                "system": "http://snomed.info/sct",
+                "display": "Neratinib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "788050002",
+                "system": "http://snomed.info/sct",
+                "display": "Alpelisib"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "428698007",
+                "system": "http://snomed.info/sct",
+                "display": "Everolimus"
+              }
+            }
+          ],
+          "linkId": "empfehlung-zielgerichtet-optionen",
+          "text": "Empfohlene Substanzen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommended agents"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "repeats": true,
+          "required": false,
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "empfehlung-zielgerichtet-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-zielgerichtet-group",
       "text": "Zielgerichtete Therapie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Targeted Therapy"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-immuntherapie-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
         },
         {
+          "enableWhen": [
+            {
+              "question": "empfehlung-immuntherapie-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            },
+            {
+              "question": "empfehlung-immuntherapie-status",
+              "operator": "=",
+              "answerCoding": {
+                "code": "bedingt-empfohlen",
+                "system": "https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "716125002",
+                "system": "http://snomed.info/sct",
+                "display": "Pembrolizumab"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "719371003",
+                "system": "http://snomed.info/sct",
+                "display": "Atezolizumab"
+              }
+            }
+          ],
+          "linkId": "empfehlung-immuntherapie-optionen",
+          "text": "Empfohlene Substanzen",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommended agents"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "repeats": true,
+          "required": false,
+          "enableBehavior": "any"
+        },
+        {
           "linkId": "empfehlung-immuntherapie-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-immuntherapie-group",
       "text": "Immuntherapie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Immunotherapy"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-diagnostik-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
@@ -793,19 +2508,76 @@
         {
           "linkId": "empfehlung-diagnostik-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-diagnostik-group",
       "text": "Weitere Diagnostik",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Further Diagnostics"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-studie-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
@@ -813,19 +2585,76 @@
         {
           "linkId": "empfehlung-studie-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-studie-group",
       "text": "Klinische Studie",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Clinical Trial"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-genetik-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
@@ -833,19 +2662,76 @@
         {
           "linkId": "empfehlung-genetik-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-genetik-group",
       "text": "Genetische Untersuchung",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Genetic Testing"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "empfehlung-nachsorge-status",
           "text": "Status der Empfehlung",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Recommendation Status"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumorboard-empfehlung-status"
@@ -853,23 +2739,75 @@
         {
           "linkId": "empfehlung-nachsorge-begruendung",
           "text": "Begruendung / Details (optional)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Rationale / Details (Optional)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "empfehlung-nachsorge-group",
       "text": "Nachsorge",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Follow-Up"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "linkId": "empfehlung-sonstiges",
       "text": "Sonstige Anmerkungen",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Other Remarks"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "text",
       "required": false
     }
   ],
-  "name": "QuestTumorboard",
-  "status": "draft",
   "experimental": true,
-  "version": "0.9.2-rc.2"
+  "version": "0.10.0",
+  "date": "2026-10-12",
+  "name": "QuestTumorboard",
+  "status": "draft"
 }

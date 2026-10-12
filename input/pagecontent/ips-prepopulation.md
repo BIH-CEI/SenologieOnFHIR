@@ -1,8 +1,8 @@
-# IPS/EPS-Prepopulation
+### IPS/EPS-Prepopulation
 
 Dieses Kapitel dokumentiert, welche Datenpunkte der senologischen Dokumentation potenziell aus einer **International Patient Summary (IPS)** bzw. **European Patient Summary (EPS)** vorbelegt werden können.
 
-### Hintergrund
+#### Hintergrund
 
 Die Allgemeine Anamnese im Brustzentrum erhebt umfangreiche Daten zu Vorerkrankungen, Medikation, Allergien und sozialem Hintergrund. Viele dieser Informationen liegen bei Patientinnen mit bestehender digitaler Gesundheitsakte bereits strukturiert vor — insbesondere über die IPS, die als FHIR-Dokument (Bundle) standardisiert ist.
 
@@ -11,7 +11,7 @@ Eine Vorbelegung (Prepopulation) dieser Felder kann:
 - **Datenqualität** verbessern (kodierte Vorerkrankungen statt Freitext)
 - **Internationale Patientinnen** unterstützen, deren Vorbefunde über die EPS bereitgestellt werden
 
-### Prepopulation-Modell
+#### Prepopulation-Modell
 
 Die Vorbelegung ist **nicht deterministisch** — sie liefert Vorschläge, die klinisch bestätigt oder korrigiert werden müssen:
 
@@ -21,9 +21,9 @@ Die Vorbelegung ist **nicht deterministisch** — sie liefert Vorschläge, die k
 
 Technisch kann die Vorbelegung über `sdc-questionnaire-initialExpression` (FHIRPath) im SDC-Questionnaire erfolgen.
 
-### Mapping: Anamnese-Felder → IPS-Sektionen
+#### Mapping: Anamnese-Felder → IPS-Sektionen
 
-#### Vollständig prepopulierbar
+##### Vollständig prepopulierbar
 
 | Anamnese-Datenpunkt | IPS-Sektion | IPS-Ressource | Anmerkung |
 |---|---|---|---|
@@ -37,7 +37,7 @@ Technisch kann die Vorbelegung über `sdc-questionnaire-initialExpression` (FHIR
 | Raucherstatus | Social History | Observation | IPS-Sektion. Detailgrad (Pack Years, Zigaretten/Tag) variiert. |
 | Patientenverfügung / Vorsorgevollmacht | Advance Directives | Consent | IPS-Sektion. Inhalt und Gültigkeit prüfen. |
 
-#### Teilweise prepopulierbar
+##### Teilweise prepopulierbar
 
 | Anamnese-Datenpunkt | IPS-Sektion | Einschränkung |
 |---|---|---|
@@ -47,7 +47,7 @@ Technisch kann die Vorbelegung über `sdc-questionnaire-initialExpression` (FHIR
 | Blutgerinnungsstörung | Past Illness History | Als Condition vorhanden, aber Detailfragen (Zahnfleischbluten, Nachblutung) fehlen |
 | Geschlecht bei Geburt | Patient | `Patient.gender` bzw. Geburtsgeschlecht-Extension — Semantik kann abweichen |
 
-#### Nicht prepopulierbar (nicht in IPS)
+##### Nicht prepopulierbar (nicht in IPS)
 
 | Anamnese-Datenpunkt | Grund |
 |---|---|
@@ -61,7 +61,7 @@ Technisch kann die Vorbelegung über `sdc-questionnaire-initialExpression` (FHIR
 | Hör-/Sehbeeinträchtigung | Nicht als eigene IPS-Sektion |
 | Detailfragen (z.B. NYHA-Schweregrad bei Herzinsuffizienz, Diabetische Organschäden) | IPS liefert die Diagnose, aber nicht den klinischen Detailgrad |
 
-### Implikationen für den IG
+#### Implikationen für den IG
 
 {:.stu-note}
 Die Allgemeine Anamnese wird bewusst **nicht** im Scope dieses Moduls profiliert. Die Datenpunkte sind nicht senologiespezifisch und sollten aus übergreifenden Quellen (IPS/EPS, KIS-Stammdaten) übernommen werden. Das Senologie-Modul definiert lediglich die **senologiespezifischen** Anamnese-Profile (Gynäkologische Anamnese, Familienanamnese).
@@ -79,7 +79,7 @@ Mittelfristig sollte die Prepopulation über IPS als SDC-Feature implementiert w
     * expression = "%patient.reverseResolve(AllergyIntolerance.patient).exists()"
 ```
 
-### Relevante Standards
+#### Relevante Standards
 
 Für die Prepopulation kommen mehrere Quellen in Frage:
 
@@ -95,7 +95,7 @@ Die MIO PKA (Patientenkurzakte / Notfalldatensatz) ist als deutsche IPS-Umsetzun
 
 Langfristig werden die **DE Basisprofile**, **ISiK** und die **ePA-Spezifikation** die Prepopulation standardisieren. Dieses Modul definiert keine eigene Prepopulation-Logik, sondern dokumentiert lediglich, welche Felder prinzipiell vorbelegbar sind — die technische Umsetzung wird durch die übergeordneten Standards geregelt.
 
-### Referenzen
+#### Referenzen
 
 - [HL7 IPS Implementation Guide](http://hl7.org/fhir/uv/ips/)
 - [European Patient Summary (EPS) — eHDSI](https://art-decor.ehdsi.eu/publication/epSOS/)

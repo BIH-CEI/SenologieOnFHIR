@@ -17,6 +17,18 @@ Usage: #inline
 * code.text = "Klinischer Status Verlauf"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "%resource.item.where(linkId='kontrolltermin').item.where(linkId='kontrolltermin-datum').answer.valueDate"
+// Components: Allgemeinzustand, Lokalbefund, Lymphoedem
+* component[+].code = $SCT#365275006 "General well-being finding"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-allgemeinzustand').answer.valueCoding"
+* component[+].code = $SCT#116339002 "Breast finding"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-lokalbefund').answer.valueCoding"
+* component[+].code = $SCT#449620005 "Lymphedema of upper limb"
+* component[=].valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='klinischer-status').item.where(linkId='klinisch-lymphoedem').answer.valueCoding"
 
 // --- Contained template: Observation (Tumorstatus / Follow-Up) ---
 Instance: verlauf-tumorstatus-template
@@ -28,6 +40,18 @@ Usage: #inline
 * code.text = "Tumorstatus Verlauf"
 * subject.reference.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
 * subject.reference.extension.valueString = "%resource.subject.reference"
+* effectiveDateTime.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* effectiveDateTime.extension.valueString = "%resource.item.where(linkId='kontrolltermin').item.where(linkId='kontrolltermin-datum').answer.valueDate"
+// Gesamtbeurteilung (RECIST)
+* valueCodeableConcept.coding.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* valueCodeableConcept.coding.extension.valueString = "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-gesamtbeurteilung').answer.valueCoding"
+// Komponenten: Lokalrezidiv, Fernmetastasen-Status
+* component[+].code = $SCT#395709001 "Locoregional recurrence"
+* component[=].valueBoolean.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueBoolean.extension.valueString = "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-lokalrezidiv').answer.valueBoolean"
+* component[+].code = $SCT#373572006 "Clinical state of distant metastases"
+* component[=].valueBoolean.extension.url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue"
+* component[=].valueBoolean.extension.valueString = "%resource.item.where(linkId='tumorstatus').item.where(linkId='tumorstatus-fernmetastasen').answer.valueBoolean"
 
 // --- Questionnaire ---
 Instance: senologie-verlauf
@@ -35,10 +59,12 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: Verlaufsdokumentation / Nachsorge"
 Description: "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-verlauf"
 * name = "QuestVerlauf"
 * title = "Fragebogen: Verlaufsdokumentation / Nachsorge"
+* insert Translation(title, en, [[Form: Follow-Up Documentation]])
 * status = #draft
 * insert Version
 * experimental = true
@@ -72,28 +98,37 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "kontrolltermin"
 * item[=].text = "Kontrolltermin"
+* insert Translation(item[=].text, en, [[Follow-Up Appointment]])
 * item[=].type = #group
 * item[=].required = true
 
 * item[=].item[+].linkId = "kontrolltermin-datum"
 * item[=].item[=].text = "Datum Vorstellung"
+* insert Translation(item[=].item[=].text, en, [[Date of Presentation]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = true
 
 * item[=].item[+].linkId = "kontrolltermin-art"
 * item[=].item[=].text = "Art der Kontrolle"
+* insert Translation(item[=].item[=].text, en, [[Type of Follow-Up]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrolltermin-art"
 
 * item[=].item[+].linkId = "kontrolltermin-art-nachsorge"
 * item[=].item[=].text = "Art der Nachsorge"
+* insert Translation(item[=].item[=].text, en, [[Type of Aftercare]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = true
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-nachsorge-modus"
 
 * item[=].item[+].linkId = "kontrolltermin-monate-seit-ed"
 * item[=].item[=].text = "Monate seit Erstdiagnose"
+* insert Translation(item[=].item[=].text, en, [[Months Since Initial Diagnosis]])
 * item[=].item[=].type = #integer
 * item[=].item[=].required = false
 
@@ -102,6 +137,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "klinischer-status"
 * item[=].text = "Klinischer Status"
+* insert Translation(item[=].text, en, [[Clinical Status]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -112,20 +148,27 @@ Usage: #definition
 
 * item[=].item[+].linkId = "klinisch-allgemeinzustand"
 * item[=].item[=].text = "Allgemeinzustand"
+* insert Translation(item[=].item[=].text, en, [[General Condition]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#365275006 "General well-being finding"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
 
 * item[=].item[+].linkId = "klinisch-lokalbefund"
 * item[=].item[=].text = "Lokalbefund Brust"
+* insert Translation(item[=].item[=].text, en, [[Local Breast Finding]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#116339002 "Breast finding"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
 
 * item[=].item[+].linkId = "klinisch-lokalbefund-beschreibung"
 * item[=].item[=].text = "Lokalbefund Beschreibung"
+* insert Translation(item[=].item[=].text, en, [[Local Finding Description]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false
 * item[=].item[=].enableWhen[+].question = "klinisch-lokalbefund"
@@ -134,19 +177,24 @@ Usage: #definition
 
 * item[=].item[+].linkId = "klinisch-lymphoedem"
 * item[=].item[=].text = "Lymphödem"
+* insert Translation(item[=].item[=].text, en, [[Lymphoedema]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#449620005 "Lymphedema of upper limb"
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-lymphoedem-grad"
 
 * item[=].item[+].linkId = "klinisch-armumfangsdifferenz"
 * item[=].item[=].text = "Armumfangsdifferenz (cm)"
+* insert Translation(item[=].item[=].text, en, [[Arm Circumference Difference (cm)]])
 * item[=].item[=].type = #decimal
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#301712009 "Arm circumference"
 
 * item[=].item[+].linkId = "klinisch-schmerzen"
 * item[=].item[=].text = "Schmerzen"
+* insert Translation(item[=].item[=].text, en, [[Pain]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#22253000 "Pain"
@@ -156,6 +204,7 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "tumorstatus"
 * item[=].text = "Tumorstatus"
+* insert Translation(item[=].text, en, [[Tumour Status]])
 * item[=].type = #group
 * item[=].required = false
 
@@ -168,6 +217,7 @@ Usage: #definition
 // Beurteilung gilt pro picked BS; ggf. mehrere BS für getrennte Response-Bewertungen
 * item[=].item[+].linkId = "verlauf-tumor-entitaet"
 * item[=].item[=].text = "Beurteilte Tumor-Entität(en)"
+* insert Translation(item[=].item[=].text, en, [[Assessed Tumour Entity/Entities]])
 * item[=].item[=].type = #reference
 * item[=].item[=].repeats = true
 * item[=].item[=].required = false
@@ -177,18 +227,23 @@ Usage: #definition
 
 * item[=].item[+].linkId = "tumorstatus-gesamtbeurteilung"
 * item[=].item[=].text = "Gesamtbeurteilung Verlauf"
+* insert Translation(item[=].item[=].text, en, [[Overall Assessment Follow-Up]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
 
 * item[=].item[+].linkId = "tumorstatus-lokalrezidiv"
 * item[=].item[=].text = "Lokalrezidiv"
+* insert Translation(item[=].item[=].text, en, [[Local Recurrence]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#363346000 "Malignant neoplastic disease"
 
 * item[=].item[+].linkId = "tumorstatus-rezidiv-datum"
 * item[=].item[=].text = "Datum Rezidiv"
+* insert Translation(item[=].item[=].text, en, [[Recurrence Date]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#432213005 "Date of diagnosis"
@@ -198,13 +253,17 @@ Usage: #definition
 
 * item[=].item[+].linkId = "tumorstatus-fernmetastasen"
 * item[=].item[=].text = "Fernmetastasen"
+* insert Translation(item[=].item[=].text, en, [[Distant Metastases]])
 * item[=].item[=].type = #boolean
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#399409002 "Distant metastasis present"
 
 * item[=].item[+].linkId = "tumorstatus-metastasen-lokalisation"
 * item[=].item[=].text = "Metastasenlokalisation"
+* insert Translation(item[=].item[=].text, en, [[Metastasis Location]])
 * item[=].item[=].type = #choice
+* item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].repeats = true
 * item[=].item[=].code[+] = $SCT#385421009 "Site of distant metastasis"
@@ -219,15 +278,18 @@ Usage: #definition
 // ============================================================
 * item[+].linkId = "weiteres-vorgehen"
 * item[=].text = "Weiteres Vorgehen"
+* insert Translation(item[=].text, en, [[Further Management]])
 * item[=].type = #group
 * item[=].required = false
 
 * item[=].item[+].linkId = "vorgehen-naechster-termin"
 * item[=].item[=].text = "Nächster Kontrolltermin"
+* insert Translation(item[=].item[=].text, en, [[Next Follow-Up Appointment]])
 * item[=].item[=].type = #date
 * item[=].item[=].required = false
 
 * item[=].item[+].linkId = "vorgehen-empfehlung"
 * item[=].item[=].text = "Empfehlung"
+* insert Translation(item[=].item[=].text, en, [[Recommendation]])
 * item[=].item[=].type = #text
 * item[=].item[=].required = false

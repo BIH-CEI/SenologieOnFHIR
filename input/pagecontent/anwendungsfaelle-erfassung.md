@@ -1,12 +1,12 @@
-# Anwendungsfall: Erfassung
+### Anwendungsfall: Erfassung
 
-### Überblick
+#### Überblick
 
 Die Datenerfassung im Kerndatensatz Senologie folgt dem **Formular-First-Prinzip**: Klinische Dokumentation erfolgt über strukturierte SDC-Questionnaires, die den gewohnten klinischen Workflow abbilden. Im Hintergrund werden die Formulardaten über **Template-based Extraction** automatisch in domänenbasierte FHIR-Ressourcen überführt.
 
 Jedes Formular enthält ein oder mehrere **Blueprints** — contained FHIR-Ressourcen, die als Vorlage für die Extraktion dienen. Ein einzelnes Formular kann so mehrere Ziel-Ressourcen gleichzeitig erzeugen (z.B. eine Procedure und eine Observation aus einer OP-Dokumentation).
 
-### Klinischer Workflow
+#### Klinischer Workflow
 
 Die Erfassung folgt dem klinischen Versorgungspfad. Die Diagnose bildet den Ankerpunkt, an den alle weiteren Befundungen und Therapien geknüpft werden:
 
@@ -15,7 +15,7 @@ Die Erfassung folgt dem klinischen Versorgungspfad. Die Diagnose bildet den Anke
 <p><em>Klinischer Erfassungsworkflow — von der Diagnose über Befundungen und Therapie bis zur Nachsorge</em></p>
 </div>
 
-### Wie ein Formular funktioniert
+#### Wie ein Formular funktioniert
 
 Jedes Formular durchläuft beim Öffnen und Ausfüllen vier Phasen:
 
@@ -32,7 +32,7 @@ Jedes Formular durchläuft beim Öffnen und Ausfüllen vier Phasen:
 
 **Phase 4 — Template-based Extraction:** Beim Absenden werden die Formulardaten über **Blueprints** in FHIR-Ressourcen überführt. Ein Blueprint ist eine contained FHIR-Ressource im Questionnaire, die als Vorlage dient — mit Platzhaltern, die durch die Formularantworten ersetzt werden. Ein Formular kann mehrere Blueprints enthalten und so mehrere Ressourcen gleichzeitig erzeugen.
 
-### Blueprints: Vom Formular zu FHIR-Ressourcen
+#### Blueprints: Vom Formular zu FHIR-Ressourcen
 
 Ein Blueprint ist ein **contained Template** innerhalb des Questionnaires. Er definiert die Struktur der Ziel-Ressource und verwendet `templateExtractValue`-Ausdrücke, um Formularantworten in die richtigen Felder zu übernehmen.
 
@@ -45,7 +45,7 @@ Beispiel: Der Fragebogen *Postoperative Dokumentation* enthält zwei Blueprints:
 
 Die Bezugsdiagnose wird aus der Kontextauswahl übernommen und automatisch als `Procedure.reasonReference` in die erzeugte Ressource geschrieben.
 
-### Formulare
+#### Formulare
 
 | Formular | Klinischer Kontext | Blueprints → Ressourcen |
 |---|---|---|
@@ -61,7 +61,7 @@ Die Bezugsdiagnose wird aus der Kontextauswahl übernommen und automatisch als `
 | [Strahlentherapie](Questionnaire-senologie-strahlentherapie-quest.html) | Bestrahlung, Dosierung | Procedure |
 | [Verlauf](Questionnaire-senologie-verlauf.html) | Nachsorge, Tumorstatus, Follow-Up | Observation |
 
-### Formular-First: Warum?
+#### Formular-First: Warum?
 
 Der Formular-First-Ansatz löst ein zentrales Problem der FHIR-Profilierung in der klinischen Praxis:
 
@@ -71,7 +71,7 @@ Der Formular-First-Ansatz löst ein zentrales Problem der FHIR-Profilierung in d
 - **Mehrere Ressourcen aus einem Formular** — ein einziger Dokumentationsschritt kann beliebig viele FHIR-Ressourcen erzeugen, ohne dass der Kliniker davon etwas mitbekommt.
 - **Bezugsdiagnose als roter Faden** — alle Befundungen und Therapien referenzieren die Diagnose, die der Kliniker beim Öffnen des Formulars auswählt.
 
-### Technische Umsetzung
+#### Technische Umsetzung
 
 Die Questionnaires nutzen folgende SDC-Features:
 
@@ -84,6 +84,6 @@ Die Questionnaires nutzen folgende SDC-Features:
 | `enableWhen` / `enableBehavior` | Kontextabhängige Anzeige |
 | `answerValueSet` | Terminologiebindung |
 
-### Quellsystem
+#### Quellsystem
 
 Die Formulare werden als SDC-Questionnaires definiert und können in beliebigen FHIR-fähigen Dokumentationssystemen eingesetzt werden. Der Kerndatensatz definiert die FHIR-Zielstruktur (Profile), die Blueprints (contained Templates) und die Terminologie (ValueSets) — das Zusammenspiel dieser drei Komponenten macht die Extraktion vollständig reproduzierbar.

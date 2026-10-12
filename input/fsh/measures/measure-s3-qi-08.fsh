@@ -6,6 +6,7 @@ InstanceOf: Measure
 Title: "Senologie Measure S3-QI-08: Strahlentherapie nach BET"
 Description: "Strahlentherapie nach BET (S3-Leitlinie Mammakarzinom Kapitel 8, QI-08)"
 Usage: #definition
+* insert SenoCRMIMeasure
 
 * url = "https://www.senologie.org/fhir/Measure/senologie-measure-s3-qi-08"
 * version = "0.1.0"

@@ -1,9 +1,189 @@
 {
   "resourceType": "Questionnaire",
   "id": "senologie-klinische-untersuchung",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablequestionnaire",
+      "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablequestionnaire"
+    ],
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+        "valueCode": "CC-BY-4.0"
+      },
+      {
+        "extension": [
+          {
+            "url": "packageId",
+            "valueId": "kds-senologie"
+          },
+          {
+            "url": "version",
+            "valueString": "0.10.0"
+          },
+          {
+            "url": "uri",
+            "valueUri": "https://www.senologie.org/fhir"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/package-source"
+      }
+    ]
+  },
   "url": "https://www.senologie.org/fhir/Questionnaire/senologie-klinische-untersuchung",
   "title": "Fragebogen: Klinische Untersuchung Mamma",
+  "_title": {
+    "extension": [
+      {
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "en"
+          },
+          {
+            "url": "content",
+            "valueString": "Form: Clinical Breast Examination"
+          }
+        ],
+        "url": "http://hl7.org/fhir/StructureDefinition/translation"
+      }
+    ]
+  },
   "description": "Klinische Inspektion, Palpation und klinisches TNM-Staging der Senologie. Bewusst ohne Sonographie/Bildgebung (→ Bildgebung-Form) und Biopsie-Doku (→ Pathologie-Form).",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "shareable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+      "valueCode": "publishable"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "package",
+            "system": "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+            "version": "3.0.0",
+            "display": "Package"
+          }
+        ]
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "code": "semver",
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "display": "SemVer"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "C4872",
+            "system": "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+            "display": "Breast Carcinoma"
+          }
+        ]
+      }
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "email",
+            "value": "thomas.debertshaeuser@charite.de"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-author"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.bihealth.org"
+          }
+        ],
+        "name": "Berlin Institute of Health at Charité (BIH)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-editor"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-reviewer"
+    },
+    {
+      "valueContactDetail": {
+        "telecom": [
+          {
+            "system": "url",
+            "value": "https://www.senologie.org"
+          }
+        ],
+        "name": "Deutsche Gesellschaft für Senologie (DGS)"
+      },
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-endorser"
+    },
+    {
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "code": "patient",
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "valueCoding": {
+            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
+            "code": "diagnosis"
+          },
+          "url": "name"
+        },
+        {
+          "url": "type",
+          "valueCode": "Condition"
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+    },
+    {
+      "extension": [
+        {
+          "url": "template",
+          "valueReference": {
+            "reference": "#klin-unt-obs-template"
+          }
+        }
+      ],
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }
+  ],
   "subjectType": [
     "Patient"
   ],
@@ -100,7 +280,7 @@
                     }
                   }
                 ],
-                "code": "225289005",
+                "code": "46662001",
                 "system": "http://snomed.info/sct",
                 "display": "Examination of breast"
               }
@@ -140,7 +320,7 @@
                     }
                   }
                 ],
-                "code": "225289005",
+                "code": "46662001",
                 "system": "http://snomed.info/sct",
                 "display": "Examination of breast"
               }
@@ -228,9 +408,9 @@
                     }
                   }
                 ],
-                "code": "15955021000119100",
+                "code": "248804005",
                 "system": "http://snomed.info/sct",
-                "display": "Ptosis of breast"
+                "display": "Ptotic breast"
               }
             ]
           },
@@ -266,9 +446,9 @@
                     }
                   }
                 ],
-                "code": "15955021000119100",
+                "code": "248804005",
                 "system": "http://snomed.info/sct",
-                "display": "Ptosis of breast"
+                "display": "Ptotic breast"
               }
             ]
           },
@@ -457,6 +637,14 @@
                   }
                 ],
                 "system": "https://www.uicc.org/resources/tnm"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+                  }
+                ]
               }
             ]
           },
@@ -481,6 +669,14 @@
                   }
                 ],
                 "system": "https://www.uicc.org/resources/tnm"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+                  }
+                ]
               }
             ]
           },
@@ -549,51 +745,177 @@
           }
         ]
       }
-    }
-  ],
-  "extension": [
-    {
-      "extension": [
-        {
-          "url": "name",
-          "valueCoding": {
-            "code": "patient",
-            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"
-          }
-        },
-        {
-          "url": "type",
-          "valueCode": "Patient"
-        }
-      ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
     },
     {
-      "extension": [
-        {
-          "valueCoding": {
-            "system": "https://www.senologie.org/fhir/CodeSystem/launchContext",
-            "code": "diagnosis"
+      "resourceType": "Observation",
+      "id": "klin-unt-ctnm-template",
+      "meta": {
+        "profile": [
+          "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation"
+        ]
+      },
+      "code": {
+        "coding": [
+          {
+            "code": "399537006",
+            "system": "http://snomed.info/sct",
+            "display": "Clinical TNM stage grouping"
           },
-          "url": "name"
-        },
+          {
+            "code": "21908-9",
+            "system": "http://loinc.org",
+            "display": "Stage group.clinical Cancer"
+          }
+        ]
+      },
+      "category": [
         {
-          "url": "type",
-          "valueCode": "Condition"
+          "coding": [
+            {
+              "code": "exam",
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category"
+            }
+          ]
         }
       ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
-    },
-    {
-      "extension": [
+      "subject": {
+        "_reference": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+              "valueString": "%resource.subject.reference"
+            }
+          ]
+        }
+      },
+      "focus": [
         {
-          "url": "template",
-          "valueReference": {
-            "reference": "#klin-unt-obs-template"
+          "_reference": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%diagnosis.reference"
+              }
+            ]
           }
         }
       ],
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                "valueString": "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ctnm-uicc').answer.valueCoding"
+              }
+            ]
+          }
+        ]
+      },
+      "component": [
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.valueCoding"
+                  }
+                ]
+              },
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='ct').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+                  }
+                ]
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "21905-5",
+                "system": "http://loinc.org",
+                "display": "Primary tumor.clinical [Class] Cancer"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.valueCoding"
+                  }
+                ]
+              },
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='cn').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+                  }
+                ]
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "21906-3",
+                "system": "http://loinc.org",
+                "display": "Regional lymph nodes.clinical [Class] Cancer"
+              }
+            ]
+          }
+        },
+        {
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%resource.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answer.valueCoding"
+                  }
+                ]
+              },
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+                    "valueString": "%questionnaire.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answerOption.value.where(code = %resource.item.where(linkId='klinisches-tnm').item.where(linkId='cm').answer.value.code).extension('http://hl7.org/fhir/StructureDefinition/alternate-codes').value.coding"
+                  }
+                ]
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "code": "21907-1",
+                "system": "http://loinc.org",
+                "display": "Distant metastases.clinical [Class] Cancer"
+              }
+            ]
+          }
+        }
+      ],
+      "status": "final",
+      "_effectiveDateTime": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString": "%resource.item.where(linkId='datum').answer.valueDate"
+          }
+        ]
+      }
     }
   ],
   "item": [
@@ -613,6 +935,23 @@
       ],
       "linkId": "patient-ref",
       "text": "Patient",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Patient"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "reference",
       "required": true,
       "readOnly": true
@@ -620,12 +959,46 @@
     {
       "linkId": "datum",
       "text": "Untersuchungsdatum",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Examination Date"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "date",
       "required": true
     },
     {
       "linkId": "detailliert",
       "text": "Detailliert anlegen?",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Create Detailed Entry?"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "boolean",
       "required": false
     },
@@ -634,12 +1007,52 @@
         {
           "linkId": "inspektion-mamma-rechts-vorhanden",
           "text": "Mamma rechts vorhanden",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Right Breast Present"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "boolean",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "inspektion-mamma-rechts",
           "text": "Inspektion Mamma rechts",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Inspection Right Breast"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
@@ -647,24 +1060,93 @@
         {
           "linkId": "inspektion-mamma-links-vorhanden",
           "text": "Mamma links vorhanden",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Left Breast Present"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "boolean",
           "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "inspektion-mamma-links",
           "text": "Inspektion Mamma links",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Inspection Left Breast"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "symmetrie",
           "text": "Symmetrie Mammae",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Breast Symmetry"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-symmetrie"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "enableWhen": [
             {
               "question": "symmetrie",
@@ -677,20 +1159,83 @@
           ],
           "linkId": "asymmetrisch-zugunsten",
           "text": "Asymmetrisch zugunsten",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Asymmetric in Favour of"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "ptosis-rechts",
           "text": "Ptosis rechts (Regnault)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Ptosis Right (Regnault)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "ptosis-links",
           "text": "Ptosis links (Regnault)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Ptosis Left (Regnault)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-ptosis-grad"
@@ -698,40 +1243,166 @@
         {
           "linkId": "inspektion-details",
           "text": "Details Inspektion",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Inspection Details"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "inspektion",
       "text": "Inspektion",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Inspection"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "palpation-mamma-rechts",
           "text": "Palpation Mamma/Thoraxwand rechts",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Palpation Breast/Chest Wall Right"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "palpation-mamma-links",
           "text": "Palpation Mamma/Thoraxwand links",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Palpation Breast/Chest Wall Left"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "palpation-axilla-rechts",
           "text": "Palpation Axilla/LAW rechts",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Palpation Axilla/LAW Right"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "palpation-axilla-links",
           "text": "Palpation Axilla/LAW links",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Palpation Axilla/LAW Left"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-auffaellig-unauffaellig"
@@ -739,41 +1410,916 @@
         {
           "linkId": "palpation-details",
           "text": "Details Palpation",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Palpation Details"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "palpation",
       "text": "Palpation",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Palpation"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group"
     },
     {
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "template",
+              "valueReference": {
+                "reference": "#klin-unt-ctnm-template"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+        }
+      ],
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352975000",
+                          "system": "http://snomed.info/sct",
+                          "display": "cTX (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "TX",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "TX — Primärtumor kann nicht beurteilt werden"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352986003",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT0 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T0",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T0 — Kein Anhalt für Primärtumor"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352984000",
+                          "system": "http://snomed.info/sct",
+                          "display": "cTis (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "Tis",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "Tis — Carcinoma in situ"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352965003",
+                          "system": "http://snomed.info/sct",
+                          "display": "cTis(DCIS) (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "Tis(DCIS)",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "Tis (DCIS) — Ductales Carcinoma in situ"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352987007",
+                          "system": "http://snomed.info/sct",
+                          "display": "cTis(Paget) (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "Tis(Paget)",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "Tis (Paget) — M. Paget der Mamille ohne nachweisbaren Tumor"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352996007",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT1 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T1",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T1 — Tumor ≤ 2 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352979006",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT1mi (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T1mi",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T1mi — Mikroinvasion ≤ 0,1 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352983006",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT1a (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T1a",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T1a — > 0,1 cm und ≤ 0,5 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352968001",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT1b (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T1b",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T1b — > 0,5 cm und ≤ 1 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352973007",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT1c (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T1c",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T1c — > 1 cm und ≤ 2 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352993004",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT2 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T2",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T2 — > 2 cm und ≤ 5 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352966002",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT3 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T3",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T3 — > 5 cm"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352997003",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT4 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T4",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T4 — jede Größe mit Ausdehnung auf Brustwand/Haut"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352982001",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT4a (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T4a",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T4a — Ausdehnung auf Brustwand"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352960008",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT4b (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T4b",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T4b — Hautulzeration / -ödem / Satellitenmetastasen"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352980009",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT4c (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T4c",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T4c — T4a + T4b"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352963005",
+                          "system": "http://snomed.info/sct",
+                          "display": "cT4d (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "T4d",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "T4d — Inflammatorisches Karzinom"
+              }
+            }
+          ],
           "linkId": "ct",
           "text": "cT",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "cT"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
-          "required": false,
-          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-t-kategorie-mamma"
+          "required": false
         },
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353039008",
+                          "system": "http://snomed.info/sct",
+                          "display": "cNX (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "NX",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "NX — Regionäre LK können nicht beurteilt werden"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353041009",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN0 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N0",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N0 — Keine regionären LK-Metastasen"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353043007",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN1 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N1",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N1 — Bewegliche ipsilaterale axilläre LK Level I/II"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "N1mi",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N1 (mi) — Mikrometastasen (> 0,2 mm und/oder > 200 Zellen, aber ≤ 2 mm)"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353046004",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN1a (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N1a",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N1a — 1–3 axilläre LK"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353048003",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN1b (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N1b",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N1b — Mammaria-interna-LK ohne axilläre"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353044001",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN1c (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N1c",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N1c — N1a + N1b"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353047008",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN2 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N2",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N2 — Fixierte/verbackene axilläre oder klinisch erkennbare A. mammaria interna"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353050006",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN2a (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N2a",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N2a — 4–9 axilläre LK"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353055001",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN2b (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N2b",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N2b — Klinisch erkennbare Mammaria-interna-LK ohne axilläre"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353053008",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN3 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N3",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N3 — Infraklavikuläre / supraklavikuläre / Kombinationen"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353057009",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN3a (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N3a",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N3a — ≥ 10 axilläre LK oder infraklavikuläre LK"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353054002",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN3b (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N3b",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N3b — Klinisch erkennbare A. mammaria interna + axilläre LK"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1353051005",
+                          "system": "http://snomed.info/sct",
+                          "display": "cN3c (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "N3c",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "N3c — Supraklavikuläre LK"
+              }
+            }
+          ],
           "linkId": "cn",
           "text": "cN",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "cN"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "required": false
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352512001",
+                          "system": "http://snomed.info/sct",
+                          "display": "cM0 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "M0",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "M0 — Keine Fernmetastasen"
+              }
+            },
+            {
+              "valueCoding": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/alternate-codes",
+                    "valueCodeableConcept": {
+                      "coding": [
+                        {
+                          "code": "1352513006",
+                          "system": "http://snomed.info/sct",
+                          "display": "cM1 (UICC)"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "code": "M1",
+                "system": "https://www.uicc.org/resources/tnm",
+                "display": "M1 — Fernmetastasen vorhanden"
+              }
+            }
+          ],
+          "linkId": "cm",
+          "text": "cM",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "cM"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
+          "type": "choice",
+          "required": false
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
+          "linkId": "ctnm-uicc",
+          "text": "cUICC-Gesamtstadium (klinisch)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "cUICC Overall Stage (Clinical)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
-          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tnm-n-kategorie-mamma"
+          "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma"
         }
       ],
       "linkId": "klinisches-tnm",
       "text": "Klinisches TNM (Einschätzung des Untersuchers)",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Clinical TNM (Examiner Assessment)"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     },
     {
       "item": [
         {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+              "valueCode": "optionsOnly"
+            }
+          ],
           "linkId": "tumornachweis",
           "text": "Tumornachweis",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Tumour Evidence"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "choice",
           "required": false,
           "answerValueSet": "https://www.senologie.org/fhir/ValueSet/vs-senologie-tumornachweis-status"
@@ -781,18 +2327,53 @@
         {
           "linkId": "zusammenfassung-text",
           "text": "Zusammenfassung (Freitext)",
+          "_text": {
+            "extension": [
+              {
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "en"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Summary (Free Text)"
+                  }
+                ],
+                "url": "http://hl7.org/fhir/StructureDefinition/translation"
+              }
+            ]
+          },
           "type": "text",
           "required": false
         }
       ],
       "linkId": "zusammenfassung",
       "text": "Zusammenfassung",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "en"
+              },
+              {
+                "url": "content",
+                "valueString": "Summary"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
       "type": "group",
       "required": false
     }
   ],
-  "name": "QuestKlinischeUntersuchung",
-  "status": "draft",
   "experimental": true,
-  "version": "0.9.2-rc.2"
+  "version": "0.10.0",
+  "date": "2026-10-12",
+  "name": "QuestKlinischeUntersuchung",
+  "status": "draft"
 }

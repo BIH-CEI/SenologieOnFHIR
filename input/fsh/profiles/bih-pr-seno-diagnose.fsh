@@ -3,6 +3,7 @@ Parent: MII_PR_Onko_Diagnose_Primaertumor
 Id: senologie-diagnose-maligne
 Title: "BIH PR Seno Diagnose Maligne"
 Description: "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Basiert auf MII PR Onko Diagnose Primärtumor mit oBDS-konformer Diagnosesicherung und Staging."
+* insert SenoCRMIProfileDerived
 
 * insert PR_CS_VS_Version
 * ^status = #draft

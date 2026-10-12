@@ -271,7 +271,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
-* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#praeth "prätherapeutisch"
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#praeth "prätherapeutische Tumorkonferenz (Festlegung der Therapiestrategie)"
 
 * title = "Tumorboard-Empfehlung Lena Hoffmann — Erstvorstellung"
 * description = "Empfehlung: Neoadjuvante Chemotherapie (Carboplatin/Paclitaxel) + Pembrolizumab (KEYNOTE-522), dann modifiziert radikale Mastektomie rechts + Axilladissektion, adjuvante Thoraxwandbestrahlung + supraklavikulär, Pembrolizumab Maintenance, MTB-Überweisung für Genompanel."
@@ -301,7 +301,7 @@ Usage: #example
 
 // Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
-* activity[radiotherapy].detail.code = $SCT#108290001 "Radiation oncology AND/OR radiotherapy (procedure)"
+* activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
 * activity[radiotherapy].detail.code.text = "Adjuvante Bestrahlung Thoraxwand + supraklavikulär 50 Gy"
 * activity[radiotherapy].detail.status = #scheduled
 
@@ -321,7 +321,7 @@ Usage: #example
 
 * status = #active
 * intent = #plan
-* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ#postth "posttherapeutisch"
+* category = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ#postth "posttherapeutische Tumorkonferenz (manche Tumore werden nicht operiert)"
 
 * title = "Tumorboard-Empfehlung Lena Hoffmann — Progression"
 * description = "Hepatische Metastasen nach 18 Monaten. Empfehlung: Umstellung auf palliatives Therapiekonzept. Sacituzumab govitecan als Zweitlinientherapie. Best Supportive Care."
@@ -524,8 +524,8 @@ Usage: #example
 // OPS-Code Mastektomie
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "Mastektomie rechts"
 
 // Lateralität
@@ -608,7 +608,7 @@ Usage: #example
 * focus = Reference(Procedure/Fall2-Operation-Mastektomie)
 
 * component[komplikationsart].code = $SCT#116224001 "Complication of procedure"
-* component[komplikationsart].valueCodeableConcept = $SCT#285345009 "Seroma"
+* component[komplikationsart].valueCodeableConcept = $SCT#715068009 "Seroma"
 * component[komplikationsart].valueCodeableConcept.text = "Serom"
 
 * note.text = "Serom axillär rechts, konservative Behandlung mit Punktion, kein operativer Eingriff erforderlich"
@@ -765,3 +765,28 @@ Usage: #example
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
 * dosage.doseAndRate.doseQuantity.code = #mg
+
+// --- TNM-Klassifikation (kodiert): UICC + SNOMED CT je Kategorie ---
+Instance: Fall2-TNM-Klassifikation
+InstanceOf: https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation
+Title: "Fall 2: TNM-Klassifikation cT3 cN2a cM1"
+Description: "TNM-Klassifikation cT3 cN2a cM1, UICC IV. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent."
+Usage: #example
+
+* status = #final
+* code.coding[0] = $SCT#399537006 "Clinical TNM stage grouping"
+* code.coding[1] = $LOINC#21908-9 "Stage group.clinical Cancer"
+* subject = Reference(Patient/Fall2-Patient-Lena-Hoffmann)
+* focus = Reference(Fall2-Diagnose-Mammakarzinom)
+* effectiveDateTime = "2025-02-10"
+* method = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version#8 "8. Auflage"
+* valueCodeableConcept = https://www.uicc.org/resources/tnm#IV "Stadium IV — Jedes T, jedes N, M1"
+* component[+].code = $LOINC#21905-5 "Primary tumor.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#T3 "T3 — > 5 cm"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352966002 "cT3 (UICC)"
+* component[+].code = $LOINC#21906-3 "Regional lymph nodes.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#N2a "N2a — 4–9 axilläre LK"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1353050006 "cN2a (UICC)"
+* component[+].code = $LOINC#21907-1 "Distant metastases.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#M1 "M1 — Fernmetastasen vorhanden"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352513006 "cM1 (UICC)"

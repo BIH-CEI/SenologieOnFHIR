@@ -23,7 +23,7 @@ Diese Seite listet tabellarisch alle Datenelemente auf, die in den Senologie-Pro
 | Palpationsbefund | Klinische Untersuchung | `component[palpationsbefund].code` | SNOMED CT | `118242002` | Finding by palpation |
 | Hautveränderungen | Klinische Untersuchung | `component[hautveraenderungen].code` | SNOMED CT | `115951000119105` | Breast symptom of change in skin |
 | Mamillenbefund | Klinische Untersuchung | `component[mamillenbefund].code` | SNOMED CT | `248819006` | Nipple finding |
-| Lymphknotenstatus | Klinische Untersuchung | `component[lymphknotenstatus].code` | SNOMED CT | `301782006` | Finding of lymph node of axillary region |
+| Lymphknotenstatus | Klinische Untersuchung | `component[lymphknotenstatus].code` | SNOMED CT | `284429001` | Examination of axillary lymph nodes |
 
 #### Gynäkologische Anamnese
 
@@ -50,14 +50,14 @@ Diese Seite listet tabellarisch alle Datenelemente auf, die in den Senologie-Pro
 | Datenelement | Profil | FHIR-Pfad | Code-System | Code | Display |
 |-------------|--------|-----------|-------------|------|---------|
 | BI-RADS (LOINC) | Bildgebung Observation | `code.coding[biRadsLoinc]` | LOINC | `72018-2` | BI-RADS Category |
-| BI-RADS (SNOMED) | Bildgebung Observation | `code.coding[biRadsSnomed]` | SNOMED CT | `241736003` | BI-RADS Classification |
+| BI-RADS (SNOMED) | Bildgebung Observation | `code.coding[biRadsSnomed]` | SNOMED CT | `146611000146107` | Breast Imaging Reporting and Data System assessment category |
 | ACR-Dichte (LOINC) | Bildgebung Observation | `code.coding[acrDensityLoinc]` | LOINC | `18794-8` | ACR Breast Density |
 | ACR-Dichte (RadLex) | Bildgebung Observation | `code.coding[acrDensityRadlex]` | RadLex | `RID28536` | ACR Breast Density |
-| Herdbefund (SNOMED) | Bildgebung Observation | `code.coding[herdbefundSnomed]` | SNOMED CT | `300886002` | Mass/Lesion |
+| Herdbefund (SNOMED) | Bildgebung Observation | `code.coding[herdbefundSnomed]` | SNOMED CT | `290073004` | Lesion of breast |
 | Herdbefund (RadLex) | Bildgebung Observation | `code.coding[herdbefundRadlex]` | RadLex | `RID3933` | Mass/Lesion |
-| Mikrokalk (SNOMED) | Bildgebung Observation | `code.coding[mikrokalkSnomed]` | SNOMED CT | `373945005` | Microcalcification |
+| Mikrokalk (SNOMED) | Bildgebung Observation | `code.coding[mikrokalkSnomed]` | SNOMED CT | `44771000` | Microcalcifications of the breast |
 | Mikrokalk (RadLex) | Bildgebung Observation | `code.coding[mikrokalkRadlex]` | RadLex | `RID4002` | Microcalcification |
-| Lymphknoten (SNOMED) | Bildgebung Observation | `code.coding[lymphknotenSnomed]` | SNOMED CT | `301782006` | Lymph Node Status |
+| Lymphknoten (SNOMED) | Bildgebung Observation | `code.coding[lymphknotenSnomed]` | SNOMED CT | `284429001` | Examination of axillary lymph nodes |
 | Lymphknoten (RadLex) | Bildgebung Observation | `code.coding[lymphknotenRadlex]` | RadLex | `RID58844` | Lymph Node Status |
 
 #### Bildgebung — Sonstige
@@ -93,7 +93,7 @@ Diese Seite listet tabellarisch alle Datenelemente auf, die in den Senologie-Pro
 | Drainage | Brust-Operation | `followUp[drainage]` | SNOMED CT | `122462000` | Drainage procedure |
 | Verband | Brust-Operation | `followUp[verband]` | SNOMED CT | `182531007` | Dressing of wound |
 | Antibiotika | Brust-Operation | `followUp[antibiotika]` | SNOMED CT | `281789004` | Antibiotic therapy (procedure) |
-| Mobilisation | Brust-Operation | `followUp[mobilisation]` | SNOMED CT | `183040004` | Mobilization (procedure) |
+| Mobilisation | Brust-Operation | `followUp[mobilisation]` | SNOMED CT | `74923002` | Mobilization |
 | Laborkontrolle | Brust-Operation | `followUp[laborkontrolle]` | SNOMED CT | `15220000` | Laboratory test (procedure) |
 
 #### Systemtherapie
@@ -114,7 +114,7 @@ Diese Seite listet tabellarisch alle Datenelemente auf, die in den Senologie-Pro
 |-------------|--------|-----------|-------------|------|---------|
 | Operative Therapie | Tumorboard Empfehlung | `activity[operativeTherapy].detail.code` | SNOMED CT | `387713003` | Surgical procedure (procedure) |
 | Chemotherapie | Tumorboard Empfehlung | `activity[chemotherapy].detail.code` | SNOMED CT | `385786002` | Chemotherapy care (regime/therapy) |
-| Strahlentherapie | Tumorboard Empfehlung | `activity[radiotherapy].detail.code` | SNOMED CT | `108290001` | Radiation oncology AND/OR radiotherapy |
+| Strahlentherapie | Tumorboard Empfehlung | `activity[radiotherapy].detail.code` | SNOMED CT | `1287742003` | Radiotherapy |
 | Endokrine Therapie | Tumorboard Empfehlung | `activity[endocrineTherapy].detail.code` | SNOMED CT | `169413002` | Hormone therapy (procedure) |
 | Zielgerichtete Therapie | Tumorboard Empfehlung | `activity[targetedTherapy].detail.code` | SNOMED CT | `416608005` | Drug therapy |
 | Immuntherapie | Tumorboard Empfehlung | `activity[immunotherapy].detail.code` | SNOMED CT | `76334006` | Immunotherapy (procedure) |

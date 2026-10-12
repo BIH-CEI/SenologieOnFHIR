@@ -1,8 +1,8 @@
-# Einordnung in EU- und internationale Standards
+### Einordnung in EU- und internationale Standards
 
 Der Kerndatensatz Senologie ist als nationale Spezifikation für die Brustkrebsversorgung konzipiert, nimmt aber bewusst Bezug auf den europäischen und internationalen Kontext. Diese Seite ordnet den Kerndatensatz in die relevanten Spezifikationsebenen ein.
 
-### European Health Data Space (EHDS)
+#### European Health Data Space (EHDS)
 
 Die [EHDS-Verordnung](https://health.ec.europa.eu/ehealth-digital-health-and-care/european-health-data-space-regulation-ehds_en) (in Kraft seit März 2025) definiert prioritäre Kategorien von Gesundheitsdaten, die EU-weit interoperabel ausgetauscht werden sollen. [HL7 Europe](https://www.hl7europe.org/new-hl7-europe-fhir-implementation-guides-to-support-the-european-health-data-space/) entwickelt dafür FHIR Implementation Guides:
 
@@ -15,7 +15,7 @@ Die [EHDS-Verordnung](https://health.ec.europa.eu/ehealth-digital-health-and-car
 | **ePrescription / eDispensation** | HL7 Europe eP/eD | STU | Ambulante Verordnungen: endokrine Therapie (Tamoxifen, Letrozol), orale Chemotherapie (Capecitabin), supportive Medikation. Nicht relevant für stationär/tagesklinisch administrierte i.v.-Chemotherapie. |
 | **Pathology Report** | *(noch kein EU IG)* | — | Wird national über MII Patho abgebildet; EU-IG mittelfristig zu erwarten |
 
-### Bezug des Kerndatensatzes zu EU-Kategorien
+#### Bezug des Kerndatensatzes zu EU-Kategorien
 
 Der Kerndatensatz bildet Inhalte ab, die mehrere EU-Kategorien berühren:
 
@@ -27,7 +27,7 @@ Der Kerndatensatz bildet Inhalte ab, die mehrere EU-Kategorien berühren:
 
 **Patientenzusammenfassung** — Die Allgemeine Anamnese (Vorerkrankungen, Medikation, Allergien) ist bewusst nicht im Senologie-Scope. Sie soll über die [IPS-/EPS-basierte Prepopulation](ips-prepopulation.html) aus der ePA oder einer EU Patient Summary bezogen werden.
 
-### Nationale Spezifikationsebenen
+#### Nationale Spezifikationsebenen
 
 Der Kerndatensatz positioniert sich zwischen den nationalen Basisstandards und der klinischen Domäne:
 
@@ -50,7 +50,7 @@ Der Kerndatensatz positioniert sich zwischen den nationalen Basisstandards und d
 
 Jede Ebene erbt von der darüberliegenden und spezialisiert sie für den jeweiligen Kontext. Der Kerndatensatz Senologie ist die **unterste, fachspezifischste Ebene** — er setzt die S3-Leitlinie und die Anforderungen der Brustzentren technisch um, nutzt dabei aber durchgängig die Standards der darüberliegenden Ebenen.
 
-### Terminologie-Kontext
+#### Terminologie-Kontext
 
 | Terminologie | Ebene | Verwendung im Senologie-KDS |
 |---|---|---|
@@ -67,7 +67,7 @@ Jede Ebene erbt von der darüberliegenden und spezialisiert sie für den jeweili
 
 Wo internationale Terminologien Lücken aufweisen, werden [Vorschläge für das BfArM](terminologie-uebersicht.html) als nationales SNOMED-CT-Release-Center dokumentiert.
 
-### Kompatibilitätsziele
+#### Kompatibilitätsziele
 
 | Standard | Kompatibilitätsziel | Status |
 |---|---|---|
@@ -78,7 +78,7 @@ Wo internationale Terminologien Lücken aufweisen, werden [Vorschläge für das 
 | **EU Laboratory Report** | Laborwerte aus EU Lab beziehbar | Noch nicht integriert (MII Labor-Modul als Zwischenschritt) |
 | **EHDS Sekundärnutzung** | Daten für Forschung über EHDS nutzbar | Vorbereitet (SQL on FHIR, CQL) |
 
-### Patient-Reported Outcomes (PROMs)
+#### Patient-Reported Outcomes (PROMs)
 
 Die Erfassung patientenberichteter Endpunkte gewinnt in der onkologischen Versorgung und in der EU-weiten Qualitätsmessung zunehmend an Bedeutung. Relevante Instrumente für die Senologie:
 
@@ -95,7 +95,7 @@ PROMs werden im Senologie-Kerndatensatz **nicht eigenständig profiliert**, sond
 
 Auf EU-Ebene arbeiten [PaRIS (OECD)](https://www.oecd.org/health/paris/) und das [EU-PROM-Network](https://www.ciph.cam.ac.uk/research/eu-prom/) an der Standardisierung von PROMs für die Sekundärnutzung im EHDS. Eine zukünftige Integration standardisierter PROM-Daten über den EHDS ist denkbar.
 
-### Weiterentwicklung
+#### Weiterentwicklung
 
 Mit dem Fortschreiten der EU-Implementing-Acts (erwartet Anfang 2027) und der Veröffentlichung weiterer EU FHIR IGs wird die Kompatibilität des Kerndatensatzes regelmäßig geprüft. Insbesondere:
 

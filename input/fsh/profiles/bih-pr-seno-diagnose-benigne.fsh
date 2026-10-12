@@ -5,6 +5,7 @@ Parent: Condition
 Id: senologie-diagnose-benigne
 Title: "BIH PR Seno Diagnose Benigne"
 Description: "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankungen. ISiK-kompatibel für Krankenhaus-Interoperabilität ohne Krebsregister-Anforderungen."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -51,7 +52,7 @@ Description: "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankun
 
 // Senologie local codes (optional)
 * code.coding contains senologie 0..1 MS
-* code.coding[senologie] ^patternCoding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-lokal"
+* code.coding[senologie] ^patternCoding.system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
 * code.coding[senologie] ^short = "Senologie-spezifischer Code"
 * code.coding[senologie].system 1..1
 

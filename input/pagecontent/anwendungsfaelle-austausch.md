@@ -1,12 +1,12 @@
-# Anwendungsfall: Austausch
+### Anwendungsfall: Austausch
 
-### Überblick
+#### Überblick
 
 Das Senologie-Modul ermöglicht den interoperablen Datenaustausch zwischen den beteiligten Systemen der Brustkrebsversorgung. Die FHIR-Profile definieren eine gemeinsame Sprache für den Datentransfer — unabhängig davon, in welchem System die Daten ursprünglich erfasst wurden.
 
-### Austauschszenarien
+#### Austauschszenarien
 
-#### 1. Klinisches Informationssystem ↔ Dokumentationssystem
+##### 1. Klinisches Informationssystem ↔ Dokumentationssystem
 
 Der Datenaustausch zwischen KIS und Dokumentationssystem ist **bidirektional**:
 
@@ -15,7 +15,7 @@ Der Datenaustausch zwischen KIS und Dokumentationssystem ist **bidirektional**:
 
 Die technischen Schnittstellen für diesen Austausch werden durch **ISiK** geregelt — insbesondere die ISiK-Module Basismodul (Patient, Encounter, Condition), Dokumentenaustausch und Terminplanung. Dieses Modul definiert lediglich die senologiespezifischen Inhalte, nicht die Transportmechanismen.
 
-#### 2. Klinisches Informationssystem ↔ Datenintegrationszentrum
+##### 2. Klinisches Informationssystem ↔ Datenintegrationszentrum
 
 Das DIZ erhält die klinischen Daten zur Aufbereitung für die Forschungsdatenbereitstellung. Die Senologie-Profile stellen sicher, dass die Daten in einheitlicher Struktur und Kodierung vorliegen.
 
@@ -23,7 +23,7 @@ Das DIZ erhält die klinischen Daten zur Aufbereitung für die Forschungsdatenbe
 - **Daten**: Pseudonymisierter klinischer Datensatz
 - **Verwendung**: Forschungsdatenrepository, Machbarkeitsabfragen
 
-#### 3. Standortübergreifender Austausch (MII)
+##### 3. Standortübergreifender Austausch (MII)
 
 Standortübergreifende Abfragen werden über die Datenintegrationszentren ermöglicht. Das Senologie-Modul nutzt MII-Kerndatensatzprofile als technische Basis, um strukturelle Kompatibilität mit der MII-Infrastruktur sicherzustellen — es ist jedoch ein eigenständiger Kerndatensatz der Senologie, kein MII-Modul.
 
@@ -31,11 +31,11 @@ Standortübergreifende Abfragen werden über die Datenintegrationszentren ermög
 - **Daten**: Aggregierte oder pseudonymisierte Einzeldaten
 - **Infrastruktur**: MII-Forschungsdatenportal
 
-#### 4. Klinik ↔ Krebsregister
+##### 4. Klinik ↔ Krebsregister
 
 Strukturierte Meldungen an klinische Krebsregister. Siehe [Meldedatensätze](anwendungsfaelle-meldedatensaetze.html).
 
-### Kompatibilität
+#### Kompatibilität
 
 Die Profile sind so gestaltet, dass sie mit folgenden Standards kompatibel sind:
 
@@ -46,14 +46,14 @@ Die Profile sind so gestaltet, dass sie mit folgenden Standards kompatibel sind:
 | **oBDS** | Onkologischer Basisdatensatz für Krebsregistermeldungen |
 | **HL7 SDC** | Formularbasierte Erfassung und Extraktion |
 
-### Datenfluss
+#### Datenfluss
 
 <div>
 <img src="austausch-datenfluss.svg" alt="Datenaustausch im Kerndatensatz Senologie" style="width:100%"/>
 <p><em>Datenaustausch — vom Dokumentationssystem über KIS und DIZ zu Meldewegen und MII</em></p>
 </div>
 
-### Terminologie-Mapping
+#### Terminologie-Mapping
 
 Für den Datenaustausch ist eine konsistente Terminologie entscheidend. Das Modul stellt [ConceptMaps](terminologie-medikation.html) bereit, die Übersetzungen zwischen den verwendeten Kodiersystemen ermöglichen:
 

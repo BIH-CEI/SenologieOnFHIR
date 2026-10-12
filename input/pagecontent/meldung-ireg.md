@@ -1,6 +1,6 @@
-# IRegG-Meldungstransformation (Brustimplantate)
+### IRegG-Meldungstransformation (Brustimplantate)
 
-### Überblick
+#### Überblick
 
 Das Implantateregistergesetz (IRegG) verpflichtet Gesundheitseinrichtungen zur Meldung bei Einsatz, Wechsel oder Entfernung von Brustimplantaten an das Deutsche Institut für Medizinische Dokumentation und Information (DIMDI). Diese Transformation erzeugt **IRegG-konforme XML-Meldungen aus klinischen FHIR-Daten**, die auf den Senologie-Profilen dieses IGs basieren.
 
@@ -10,7 +10,7 @@ Das Implantateregistergesetz (IRegG) verpflichtet Gesundheitseinrichtungen zur M
 - **Ausführung**: [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke
 - **Scope**: Nur Brustimplantate -- keine Endoprothesen, keine Aortenklappen
 
-### Architektur
+#### Architektur
 
 Die Transformation folgt dem gleichen Muster wie die [oBDS-Transformation](meldung-obds.html): FHIR-Ressourcen werden über StructureMaps auf ein Logical Model abgebildet, das anschliessend als XML serialisiert wird.
 
@@ -41,7 +41,7 @@ Die Transformation folgt dem gleichen Muster wie die [oBDS-Transformation](meldu
 
 Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne GEMeldung pro Behandlungsfall** (statt mehrerer Meldungen pro klinischem Ereignis). Alle relevanten Informationen (Patient, Operation, Implantat, Entlassung) werden in einer Meldung zusammengefasst.
 
-### StructureMap-Übersicht
+#### StructureMap-Übersicht
 
 | StructureMap | Aufgabe | Qüll-Profile | Ziel (Logical Model) |
 |---|---|---|---|
@@ -50,9 +50,9 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | **SenologieToIRegOperation** | OP-Daten + Artikelidentifikation | Procedure + Device | Operation (OPE_* + OBI_*) + Artikelidentifikation (ARI_* + ARB_* + ABI_*) |
 | **SenologieToIRegEntlassung** | Entlassung + Diagnosen | Encounter + Condition | Entlassung (ENT_* + DBI_*) |
 
-### Mapping-Tabelle: FHIR-Elemente zu IRegG-XML
+#### Mapping-Tabelle: FHIR-Elemente zu IRegG-XML
 
-#### Meldungskopf (MEL_*)
+##### Meldungskopf (MEL_*)
 
 | IRegG-Feld | FHIR-Qülle | Anmerkung |
 |---|---|---|
@@ -62,7 +62,7 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | MEL_IrdSpezVersion | fest: 4.1.1 | Version der Spezifikation |
 | MEL_SwName / SwHersteller / SwVersion | Bundle.meta / fest | Softwarekennung |
 
-#### Fall (FAL_*)
+##### Fall (FAL_*)
 
 | IRegG-Feld | FHIR-Qülle | Anmerkung |
 |---|---|---|
@@ -72,7 +72,7 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | FAL_DatumZeitSatzErstellung | now() | Zeitpunkt der Transformation |
 | ALR_ProzedurenSchluessel | Procedure.code.coding (OPS) | Ausloesende OPS-Prozedur |
 
-#### Patientenaufnahme (PAT_* + PAB_*)
+##### Patientenaufnahme (PAT_* + PAB_*)
 
 | IRegG-Feld | FHIR-Qülle | Anmerkung |
 |---|---|---|
@@ -84,7 +84,7 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | PAB_VerlaufAutoimmunerkrankungSchluessel | Patient.extension (ireg-verlauf-autoimmunerkrankung) | enum_0123 |
 | PAB_GeschlechtGeburtSchluessel | Patient.extension (patient-birthsex) | enum_0170 |
 
-#### Operation (OPE_* + OBI_*)
+##### Operation (OPE_* + OBI_*)
 
 | IRegG-Feld | FHIR-Qülle | Anmerkung |
 |---|---|---|
@@ -100,7 +100,7 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | OBI_ZugangSchluessel | Procedure.extension | enum_0118 |
 | PBI_ProzedurenSchluessel | Procedure.code.coding (OPS) | OPS-Kodes |
 
-#### Artikelidentifikation (ARI_* + ARB_* + ABI_*)
+##### Artikelidentifikation (ARI_* + ARB_* + ABI_*)
 
 | IRegG-Feld | FHIR-Qülle | Anmerkung |
 |---|---|---|
@@ -118,7 +118,7 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | ABI_FüllungSchluessel | Device.extension (ireg-implantat-füllung) | enum_0124 |
 | ABI_Volumen | Device.extension (ireg-implantat-volumen) | in ml |
 
-#### Entlassung (ENT_* + DBI_*)
+##### Entlassung (ENT_* + DBI_*)
 
 | IRegG-Feld | FHIR-Qülle | Anmerkung |
 |---|---|---|
@@ -126,7 +126,7 @@ Im Unterschied zur oBDS-Transformation erzeugt die IRegG-Meldung **eine einzelne
 | ENT_GrundSchluessel | Encounter.hospitalization.dischargeDisposition | 2-stellig nach Paragraph 301 SGB V |
 | DBI_IcdSchluessel | Condition.code.coding (ICD-10-GM) | Mit optionaler Seitenlokalisation (:R/:L/:B) |
 
-### Code-Übersetzung
+#### Code-Übersetzung
 
 Die IRegG-Meldung verwendet eigene Enumerationen (enum_0044, enum_0050, enum_0065, etc.) statt SNOMED CT oder anderer Standardterminologien. Die Übersetzung erfolgt direkt in den StructureMaps:
 
@@ -138,7 +138,7 @@ Die IRegG-Meldung verwendet eigene Enumerationen (enum_0044, enum_0050, enum_006
 | Art des Eingriffs | Senologie CodeSystem | enum_0100 | CodeSystem-Binding |
 | Implantat-Eigenschaften | Device Extensions | enum_0124/0126/0128 | CodeSystem-Binding |
 
-### Datenverfügbarkeit und offene Lücken
+#### Datenverfügbarkeit und offene Lücken
 
 {:.stu-note}
 Nicht alle IRegG-Pflichtfelder können aus den Senologie-Profilen abgeleitet werden. Für eine vollständige IRegG-Meldung müssen zusätzliche Datenqüllen eingebunden werden.
@@ -162,7 +162,7 @@ Die folgende Tabelle zeigt, welche IRegG-Daten aus welcher Qülle kommen:
 | Entlassungsdatum, -grund | KIS / Encounter | **Externe Qülle** — ISiK-Encounter |
 | IRegG-Befundcodes (Infektion, Kapselfibrose, BIA-ALCL etc.) | Senologie_Operative_Komplikation | **Teilweise** — Mapping auf enum_0121 nötig |
 
-#### Handlungsoptionen
+##### Handlungsoptionen
 
 Für die fehlenden Daten gibt es drei Ansätze:
 
@@ -174,7 +174,7 @@ Für die fehlenden Daten gibt es drei Ansätze:
 
 **Empfehlung**: Kombination aus Option 1 (Profilerweiterung für klinisch relevante Implantatdaten) und Option 3 (ETL für administrative Daten). Die konkreten Anforderungen sollten mit der GB IT des Standorts abgestimmt werden.
 
-### IRegG-Spezifikation
+#### IRegG-Spezifikation
 
 Die Transformation basiert auf der IRegG-Spezifikation V4.1.1 (XML-Schema):
 
@@ -184,7 +184,7 @@ Die Transformation basiert auf der IRegG-Spezifikation V4.1.1 (XML-Schema):
 
 > **Hinweis**: Die IRegG-Spezifikation deckt drei Produktgruppen ab: Brustimplantate, Endoprothesen und Aortenklappen. Dieser IG bildet ausschliesslich den **Brustimplantat-Anteil** ab. Die weiteren Produktgruppen werden durch andere IGs oder Erweiterungen abgedeckt.
 
-### Ausführung
+#### Ausführung
 
 Die Transformation wird analog zur oBDS-Transformation über [Matchbox](https://github.com/ahdis/matchbox) als lokale ETL-Strecke ausgeführt.
 
@@ -211,7 +211,7 @@ Content-Type: application/fhir+json
 
 Das Ergebnis ist eine Instanz des IRegG Logical Models, die als XML serialisiert und an das DIMDI übermittelt werden kann.
 
-### Validierung der Transformationsergebnisse
+#### Validierung der Transformationsergebnisse
 
 {:.stu-note}
 Die folgenden Pflichtfelder werden durch die StructureMaps nicht befüllt und müssen durch das lokale KIS oder die ETL-Strecke ergänzt werden.

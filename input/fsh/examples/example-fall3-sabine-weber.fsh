@@ -241,7 +241,7 @@ Usage: #example
 * collection.bodySite = $SCT#73056007 "Right breast structure"
 * collection.bodySite.text = "Rechte Brust, Mastektomie mit Axilladissektion"
 * collection.collectedDateTime = "2025-04-08"
-* collection.method = $SCT#5884001 "Mastectomy"
+* collection.method = $SCT#406505007 "Modified radical mastectomy"
 
 
 // --- Operation ---
@@ -259,8 +259,8 @@ Usage: #example
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "(Modifizierte radikale) Mastektomie"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "Mastektomie rechts"
 
 * bodySite = $SCT#73056007 "Right breast structure"
@@ -369,3 +369,28 @@ Usage: #example
 * dosage.doseAndRate.doseQuantity.unit = "mg"
 * dosage.doseAndRate.doseQuantity.system = "http://unitsofmeasure.org"
 * dosage.doseAndRate.doseQuantity.code = #mg
+
+// --- TNM-Klassifikation (kodiert): UICC + SNOMED CT je Kategorie ---
+Instance: Fall3-TNM-Klassifikation
+InstanceOf: https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation
+Title: "Fall 3: TNM-Klassifikation cT2 pN1a cM0"
+Description: "TNM-Klassifikation cT2 pN1a cM0, UICC IIA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent."
+Usage: #example
+
+* status = #final
+* code.coding[0] = $SCT#399390009 "TNM stage grouping"
+* code.coding[1] = $LOINC#21908-9 "Stage group.clinical Cancer"
+* subject = Reference(Patient/Fall3-Patient-Sabine-Weber)
+* focus = Reference(Fall3-Diagnose-Mammakarzinom)
+* effectiveDateTime = "2025-03-10"
+* method = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version#8 "8. Auflage"
+* valueCodeableConcept = https://www.uicc.org/resources/tnm#IIA "Stadium IIA — T0/1 N1 M0 oder T2 N0 M0"
+* component[+].code = $LOINC#21905-5 "Primary tumor.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#T2 "T2 — > 2 cm und ≤ 5 cm"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352993004 "cT2 (UICC)"
+* component[+].code = $LOINC#21900-6 "Regional lymph nodes.pathology [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#N1a "N1a — 1–3 axilläre LK"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352619004 "pN1a (UICC)"
+* component[+].code = $LOINC#21907-1 "Distant metastases.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#M0 "M0 — Keine Fernmetastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352512001 "cM0 (UICC)"

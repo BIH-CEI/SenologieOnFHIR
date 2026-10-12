@@ -17,8 +17,8 @@
             "coding": [
               {
                 "code": "praeth",
-                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapie-typ",
-                "display": "prätherapeutisch"
+                "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-therapieplanung-typ",
+                "display": "prätherapeutische Tumorkonferenz (Festlegung der Therapiestrategie)"
               }
             ]
           }
@@ -53,9 +53,9 @@
               "code": {
                 "coding": [
                   {
-                    "code": "108290001",
+                    "code": "1287742003",
                     "system": "http://snomed.info/sct",
-                    "display": "Radiation oncology AND/OR radiotherapy (procedure)"
+                    "display": "Radiotherapy (procedure)"
                   }
                 ],
                 "text": "Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 10 Gy"
@@ -195,6 +195,17 @@
                 }
               ]
             }
+          }
+        ],
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "55342001",
+                "display": "Neoplastic disease"
+              }
+            ]
           }
         ],
         "clinicalStatus": {
@@ -856,8 +867,9 @@
             "code": {
               "coding": [
                 {
-                  "code": "allred-score",
-                  "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
+                  "code": "445104009",
+                  "system": "http://snomed.info/sct",
+                  "display": "Allred score for neoplasm"
                 }
               ]
             }
@@ -1054,6 +1066,11 @@
               "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-mamma-her2neu-status-obds",
               "code": "N",
               "display": "negativ"
+            },
+            {
+              "code": "1381317004",
+              "system": "http://snomed.info/sct",
+              "display": "Human epidermal growth factor receptor 2 low"
             }
           ]
         },
@@ -1064,14 +1081,14 @@
                 {
                   "system": "http://loinc.org",
                   "code": "85319-2",
-                  "display": "HER2 [Presence] in Breast cancer specimen by Immune stain"
+                  "display": "HER2 Ag [Presence] in Breast cancer specimen by Immune stain"
                 }
               ]
             },
             "valueCodeableConcept": {
               "coding": [
                 {
-                  "code": "LA26333-6",
+                  "code": "LA11841-6",
                   "system": "http://loinc.org",
                   "display": "1+"
                 }
@@ -1085,7 +1102,7 @@
             {
               "code": "48676-1",
               "system": "http://loinc.org",
-              "display": "HER2 [Interpretation] in Tissue"
+              "display": "HER2 Ag [Interpretation] in Tissue"
             }
           ]
         },
@@ -1159,9 +1176,9 @@
             "code": {
               "coding": [
                 {
-                  "code": "301782006",
+                  "code": "284429001",
                   "system": "http://snomed.info/sct",
-                  "display": "Finding of lymph node of axillary region"
+                  "display": "Examination of axillary lymph nodes"
                 }
               ]
             },
@@ -1384,8 +1401,9 @@
             "code": {
               "coding": [
                 {
-                  "code": "allred-score",
-                  "system": "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
+                  "code": "445104009",
+                  "system": "http://snomed.info/sct",
+                  "display": "Allred score for neoplasm"
                 }
               ]
             }
@@ -1722,6 +1740,141 @@
       "request": {
         "method": "PUT",
         "url": "Observation/Fall1-Somatische-Mutation-PALB2"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:Fall1-TNM-Klassifikation",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "Fall1-TNM-Klassifikation",
+        "meta": {
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation"
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "code": "399537006",
+              "system": "http://snomed.info/sct",
+              "display": "Clinical TNM stage grouping"
+            },
+            {
+              "code": "21908-9",
+              "system": "http://loinc.org",
+              "display": "Stage group.clinical Cancer"
+            }
+          ]
+        },
+        "focus": [
+          {
+            "reference": "Condition/Fall1-Diagnose-Mammakarzinom"
+          }
+        ],
+        "component": [
+          {
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "code": "T1c",
+                  "system": "https://www.uicc.org/resources/tnm",
+                  "display": "T1c — > 1 cm und ≤ 2 cm"
+                },
+                {
+                  "code": "1352973007",
+                  "system": "http://snomed.info/sct",
+                  "display": "cT1c (UICC)"
+                }
+              ]
+            },
+            "code": {
+              "coding": [
+                {
+                  "code": "21905-5",
+                  "system": "http://loinc.org",
+                  "display": "Primary tumor.clinical [Class] Cancer"
+                }
+              ]
+            }
+          },
+          {
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "code": "N0",
+                  "system": "https://www.uicc.org/resources/tnm",
+                  "display": "N0 — Keine regionären LK-Metastasen"
+                },
+                {
+                  "code": "1353041009",
+                  "system": "http://snomed.info/sct",
+                  "display": "cN0 (UICC)"
+                }
+              ]
+            },
+            "code": {
+              "coding": [
+                {
+                  "code": "21906-3",
+                  "system": "http://loinc.org",
+                  "display": "Regional lymph nodes.clinical [Class] Cancer"
+                }
+              ]
+            }
+          },
+          {
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "code": "M0",
+                  "system": "https://www.uicc.org/resources/tnm",
+                  "display": "M0 — Keine Fernmetastasen"
+                },
+                {
+                  "code": "1352512001",
+                  "system": "http://snomed.info/sct",
+                  "display": "cM0 (UICC)"
+                }
+              ]
+            },
+            "code": {
+              "coding": [
+                {
+                  "code": "21907-1",
+                  "system": "http://loinc.org",
+                  "display": "Distant metastases.clinical [Class] Cancer"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "final",
+        "subject": {
+          "reference": "Patient/Fall1-Patient-Erika-Neumann"
+        },
+        "effectiveDateTime": "2025-01-15",
+        "method": {
+          "coding": [
+            {
+              "code": "8",
+              "system": "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version",
+              "display": "8. Auflage"
+            }
+          ]
+        },
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "code": "IA",
+              "system": "https://www.uicc.org/resources/tnm",
+              "display": "Stadium IA — T1 N0 M0"
+            }
+          ]
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/Fall1-TNM-Klassifikation"
       }
     },
     {
@@ -2561,8 +2714,8 @@
             "url": "https://www.senologie.org/fhir/StructureDefinition/ex-senologie-pre-op-markierung"
           }
         ],
-        "status": "draft",
         "intent": "plan",
+        "status": "draft",
         "subject": {
           "reference": "Patient/Fall1-Patient-Erika-Neumann"
         }

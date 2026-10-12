@@ -3,6 +3,7 @@ InstanceOf: ConceptMap
 Title: "ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie)"
 Description: "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf ATC (BfArM 2026). Validiert über fhir-terminology MCP Server gegen lokale Snowstorm- und ATC-Instanz."
 Usage: #definition
+* insert SenoCRMIConceptMap
 
 * status = #draft
 * version = "0.1.0"

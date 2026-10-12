@@ -161,7 +161,7 @@ Usage: #example
 
 * status = #available
 
-* type.coding[sct] = $SCT#119380005 "Specimen from breast obtained by biopsy"
+* type.coding[sct] = $SCT#122601001 "Specimen from breast obtained by biopsy"
 * type.text = "Vakuumbiopsie"
 
 * subject = Reference(Patient/Fall6-Patient-Petra-Schneider)

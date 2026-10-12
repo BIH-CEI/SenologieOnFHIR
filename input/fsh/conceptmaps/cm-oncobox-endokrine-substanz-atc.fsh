@@ -12,6 +12,7 @@ Usage: #definition
 
 Title: "OncoBox Endokrine Substanzklasse zu ATC"
 Description: "Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxifen, 2=Aromatasehemmer, 3=GnRH-Analogon, 4=Fulvestrant, 5=CDK4/6-Inhibitor)"
+* insert SenoCRMIConceptMap
 * url = "https://www.senologie.org/fhir/ConceptMap/cm-oncobox-endokrine-substanz-atc"
 * insert Version
 * status = #draft

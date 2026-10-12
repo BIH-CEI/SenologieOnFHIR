@@ -138,8 +138,8 @@ Usage: #example
 
 * code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
 * code.coding[=].version = "2025"
-* code.coding[=].code = #5-872
-* code.coding[=].display = "Mastektomie mit Entfernung von axillären Lymphknoten"
+* code.coding[=].code = #5-872.1
+* code.coding[=].display = "(Modifizierte radikale) Mastektomie: Mit Resektion der M. pectoralis-Faszie"
 * code.text = "SSM rechts mit ALND Level I-II"
 
 * subject = Reference(Patient/Fall13-Patient-Margarete-Schreiber)
@@ -227,10 +227,60 @@ Usage: #example
 * item[=].text = "Geplante Operation"
 * item[=].answer[+].valueString = "SSM rechts mit ALND Level I-II"
 
-* item[+].linkId = "op-seite"
+* item[+].linkId = "seitenlokalisation"
 * item[=].text = "Seite"
 * item[=].answer[+].valueCoding = $SCT#73056007 "Right breast structure"
 
-* item[+].linkId = "op-datum"
-* item[=].text = "Geplantes OP-Datum"
-* item[=].answer[+].valueDate = "2025-04-02"
+* item[+].linkId = "notes"
+* item[=].text = "Notizen"
+* item[=].answer[+].valueString = "Geplantes OP-Datum 2025-04-02"
+
+// --- TNM-Klassifikation (kodiert): UICC + SNOMED CT je Kategorie ---
+Instance: Fall13-TNM-Klassifikation-Links
+InstanceOf: https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation
+Title: "Fall 13: TNM-Klassifikation pT1c pN0 cM0"
+Description: "TNM-Klassifikation pT1c pN0 cM0, UICC IA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent."
+Usage: #example
+
+* status = #final
+* code.coding[0] = $SCT#399588009 "Pathologic TNM stage grouping"
+* code.coding[1] = $LOINC#21902-2 "Stage group.pathology Cancer"
+* subject = Reference(Patient/Fall13-Patient-Margarete-Schreiber)
+* focus = Reference(Fall13-Diagnose-Links)
+* effectiveDateTime = "2025-03-10"
+* method = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version#8 "8. Auflage"
+* valueCodeableConcept = https://www.uicc.org/resources/tnm#IA "Stadium IA — T1 N0 M0"
+* component[+].code = $LOINC#21899-0 "Primary tumor.pathology Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#T1c "T1c — > 1 cm und ≤ 2 cm"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352537006 "pT1c (UICC)"
+* component[+].code = $LOINC#21900-6 "Regional lymph nodes.pathology [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#N0 "N0 — Keine regionären LK-Metastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352621009 "pN0 (UICC)"
+* component[+].code = $LOINC#21907-1 "Distant metastases.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#M0 "M0 — Keine Fernmetastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352512001 "cM0 (UICC)"
+
+// --- TNM-Klassifikation (kodiert): UICC + SNOMED CT je Kategorie ---
+Instance: Fall13-TNM-Klassifikation-Rechts
+InstanceOf: https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-tnm-klassifikation
+Title: "Fall 13: TNM-Klassifikation pT2 pN1a cM0"
+Description: "TNM-Klassifikation pT2 pN1a cM0, UICC IIB. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent."
+Usage: #example
+
+* status = #final
+* code.coding[0] = $SCT#399588009 "Pathologic TNM stage grouping"
+* code.coding[1] = $LOINC#21902-2 "Stage group.pathology Cancer"
+* subject = Reference(Patient/Fall13-Patient-Margarete-Schreiber)
+* focus = Reference(Fall13-Diagnose-Rechts)
+* effectiveDateTime = "2025-03-10"
+* method = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-tnm-version#8 "8. Auflage"
+* valueCodeableConcept = https://www.uicc.org/resources/tnm#IIB "Stadium IIB — T2 N1 M0 oder T3 N0 M0"
+* component[+].code = $LOINC#21899-0 "Primary tumor.pathology Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#T2 "T2 — > 2 cm und ≤ 5 cm"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352545001 "pT2 (UICC)"
+* component[+].code = $LOINC#21900-6 "Regional lymph nodes.pathology [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#N1a "N1a — 1–3 axilläre LK"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352619004 "pN1a (UICC)"
+* component[+].code = $LOINC#21907-1 "Distant metastases.clinical [Class] Cancer"
+* component[=].valueCodeableConcept.coding[0] = https://www.uicc.org/resources/tnm#M0 "M0 — Keine Fernmetastasen"
+* component[=].valueCodeableConcept.coding[1] = $SCT#1352512001 "cM0 (UICC)"

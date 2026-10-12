@@ -1,8 +1,6 @@
-# Nachsorge & Verlauf
-
 <img src="senologie-nachsorge.png" alt="UML Nachsorge & Verlauf" style="max-width:100%"/>
 
-## Klinische Nachsorge vs. Verlaufsmeldung
+### Klinische Nachsorge vs. Verlaufsmeldung
 
 In der Senologie treffen zwei unterschiedliche Perspektiven auf den Verlauf zusammen:
 
@@ -11,7 +9,7 @@ In der Senologie treffen zwei unterschiedliche Perspektiven auf den Verlauf zusa
 
 Beide Perspektiven greifen auf teilweise gleiche Informationen zurück, bedienen aber unterschiedliche Zwecke und Empfänger.
 
-## Klinische Nachsorge
+### Klinische Nachsorge
 
 Die Nachsorge folgt den S3-Leitlinien-Empfehlungen und umfasst typischerweise:
 
@@ -22,7 +20,7 @@ Die Nachsorge folgt den S3-Leitlinien-Empfehlungen und umfasst typischerweise:
 
 Die klinischen Befunde aus der Nachsorge fließen in die Verlaufsbeurteilung ein.
 
-## Verlaufsmeldung
+### Verlaufsmeldung
 
 Für Krebsregister (oBDS) und DKG-Zertifizierung (OncoBox) ist eine strukturierte Verlaufsmeldung erforderlich:
 
@@ -36,13 +34,13 @@ Für Krebsregister (oBDS) und DKG-Zertifizierung (OncoBox) ist eine strukturiert
 
 Diese Beurteilung wird durch den behandelnden Arzt auf Basis der verfügbaren klinischen Informationen vorgenommen.
 
-## Abgrenzung und offene Fragen
+### Abgrenzung und offene Fragen
 
 Einige Datenpunkte der Verlaufsmeldung — etwa die Art der Nachsorge (aktiv: Patientin persönlich untersucht vs. passiv: Information aus Akten oder Registern) — liegen zwischen klinischer Dokumentation und Meldewesen. Sie werden im Verlauf-Questionnaire als Feld erfasst, da die Unterscheidung zum Zeitpunkt der Dokumentation bekannt ist.
 
 Die genaue Abgrenzung, welche Verlaufsinformationen klinisch dokumentiert und welche erst bei der Meldungserstellung ergänzt werden, ist Gegenstand der weiteren Ausgestaltung dieses Moduls.
 
-## Zugehörige Ressourcen
+### Zugehörige Ressourcen
 
 | Typ | Ressource |
 |-----|-----------|

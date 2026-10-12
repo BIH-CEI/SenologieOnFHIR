@@ -1,0 +1,78 @@
+{
+  "resourceType": "ViewDefinition",
+  "id": "senologie-tnm-flat",
+  "name": "senologie_tnm_flat",
+  "title": "Senologie TNM Flat View",
+  "description": "TNM-Klassifikations-Observations (klinisch c/pathologisch p) als flache Tabelle. Eine Zeile pro TNM-Observation mit allen Komponenten T/N/M/L/V/Pn/G und UICC-Stage. Auf MII-Onko-TNM-Klassifikation-Profil gestuetzt.",
+  "status": "active",
+  "resource": "Observation",
+  "where": [
+    {
+      "path": "code.coding.exists(system='http://loinc.org' and (code='21908-9' or code='21902-2'))",
+      "description": "LOINC 21908-9 (cTNM klinisch) und 21902-2 (pTNM pathologisch)."
+    }
+  ],
+  "select": [
+    {
+      "column": [
+        {
+          "name": "observation_id",
+          "path": "id"
+        },
+        {
+          "name": "patient_id",
+          "path": "subject.getReferenceKey(Patient)"
+        },
+        {
+          "name": "diagnose_id",
+          "path": "focus.first().id"
+        },
+        {
+          "name": "tnm_typ",
+          "path": "code.coding.where(system='http://loinc.org').code.first()",
+          "description": "21908-9=cTNM, 21902-2=pTNM."
+        },
+        {
+          "name": "t_kategorie",
+          "path": "component.where(code.coding.code='21905-5').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "n_kategorie",
+          "path": "component.where(code.coding.code='21906-3').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "m_kategorie",
+          "path": "component.where(code.coding.code='21907-1').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "l_kategorie",
+          "path": "component.where(code.coding.code='33739-4').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "v_kategorie",
+          "path": "component.where(code.coding.code='33740-2').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "pn_kategorie",
+          "path": "component.where(code.coding.code='92837-4').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "r_symbol",
+          "path": "component.where(code.coding.code='33742-8' or code.coding.code='r-symbol').valueCodeableConcept.coding.code.first()"
+        },
+        {
+          "name": "uicc_stage",
+          "path": "valueCodeableConcept.coding.where(system='http://snomed.info/sct').code.first()"
+        },
+        {
+          "name": "effective_date",
+          "path": "effectiveDateTime"
+        },
+        {
+          "name": "status",
+          "path": "status"
+        }
+      ]
+    }
+  ]
+}

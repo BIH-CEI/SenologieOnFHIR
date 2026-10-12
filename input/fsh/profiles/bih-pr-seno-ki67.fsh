@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-ki67-proliferationsindex
 Title: "BIH Senologie Ki-67 Proliferationsindex"
 Description: "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchung. Kein MII-Onko-Profil vorhanden — senologiespezifisch, orientiert am MII ER/PR-Muster (LOINC-Code + valueQuantity %)."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft
@@ -19,7 +20,7 @@ Description: "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchun
 
 * code MS
 * code.coding MS
-* code.coding = $LOINC#29593-1 "Cells.Ki-67 nuclear Ag/cells in Tissue by Immune stain"
+* code.coding = $LOINC#85330-9 "Ki67 [Presence] in Tissue by Immune stain"
 * code.coding ^short = "Ki-67-Proliferationsindex"
 
 * subject MS

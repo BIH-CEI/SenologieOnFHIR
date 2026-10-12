@@ -3,6 +3,7 @@ Parent: DiagnosticReport
 Id: senologie-bildgebung-befund
 Title: "BIH Senologie Bildgebung Befund"
 Description: "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.)"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

@@ -30,10 +30,12 @@ InstanceOf: Questionnaire
 Title: "Fragebogen: OP Planung"
 Description: "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel."
 Usage: #definition
+* insert SenoCRMIQuestionnaire
 
 * url = "https://www.senologie.org/fhir/Questionnaire/senologie-op-planung"
 * name = "QuestOPPlanung"
 * title = "Fragebogen: OP Planung"
+* insert Translation(title, en, [[Form: Surgical Planning]])
 * status = #draft
 * experimental = true
 * subjectType = #Patient
@@ -72,6 +74,7 @@ Usage: #definition
 // Bezugsdiagnose: SDC Condition-Auswahl (bei bilateralem Karzinom)
 * item[+].linkId = "bezugsdiagnose"
 * item[=].text = "Bezugsdiagnose (Seite)"
+* insert Translation(item[=].text, en, [[Reference Diagnosis (Laterality)]])
 * item[=].type = #reference
 * item[=].required = true
 * item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression"
@@ -95,19 +98,24 @@ Usage: #definition
 // Art der Operation
 * item[+].linkId = "op-art"
 * item[=].text = "Art der geplanten Operation"
+* insert Translation(item[=].text, en, [[Planned Surgery Type]])
 * item[=].type = #string
 * item[=].required = true
 
 // Seite (korrigierte SCT-Codes)
 * item[+].linkId = "seitenlokalisation"
 * item[=].text = "Seite"
+* insert Translation(item[=].text, en, [[Laterality]])
 * item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
 * item[=].required = true
 * item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
 
 // Tumor-Entität(en) — User picked die zu operierenden BodyStructures
 * item[+].linkId = "op-tumor-entitaet"
 * item[=].text = "Zu operierende Tumor-Entität(en)"
+* insert Translation(item[=].text, en, [[Tumour Entity/Entities to Operate]])
 * item[=].type = #reference
 * item[=].repeats = true
 * item[=].required = false
@@ -118,31 +126,38 @@ Usage: #definition
 // Intention / Grund der OP
 * item[+].linkId = "intention"
 * item[=].text = "Intention / Grund der OP"
+* insert Translation(item[=].text, en, [[Surgical Intention / Indication]])
 * item[=].type = #string
 * item[=].required = false
 
 // OP-Dauer (Minuten)
 * item[+].linkId = "op-dauer-min"
 * item[=].text = "Geplante OP-Dauer (Minuten)"
+* insert Translation(item[=].text, en, [[Planned Surgery Duration (Minutes)]])
 * item[=].type = #integer
 * item[=].required = false
 
 // CA-Behandlung / Tumorkonferenz-Zustimmung
 * item[+].linkId = "tumor-conference-consent"
 * item[=].text = "CA-Behandlung / Tumorkonferenz-Zustimmung erteilt"
+* insert Translation(item[=].text, en, [[CA Treatment / Tumour Board Consent Granted]])
 * item[=].type = #boolean
 * item[=].required = false
 
 // Präoperative Markierung
 * item[+].linkId = "pre-op-markierung"
 * item[=].text = "Präoperative Markierung geplant"
+* insert Translation(item[=].text, en, [[Preoperative Marking Planned]])
 * item[=].type = #choice
+* item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
+* item[=].extension[=].valueCode = #optionsOnly
 * item[=].required = false
 * item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 
 // Planungsdetails / Notes
 * item[+].linkId = "notes"
 * item[=].text = "Planungsdetails / Freitext"
+* insert Translation(item[=].text, en, [[Planning Details / Free Text]])
 * item[=].type = #text
 * item[=].required = false
 * item[=].repeats = true
@@ -150,11 +165,13 @@ Usage: #definition
 // Präoperative Blutabnahme
 * item[+].linkId = "pre-op-blutabnahme"
 * item[=].text = "Präoperative Blutabnahme geplant"
+* insert Translation(item[=].text, en, [[Preoperative Blood Draw Planned]])
 * item[=].type = #boolean
 * item[=].required = false
 
 // Präoperative Antibiotikatherapie
 * item[+].linkId = "pre-op-antibiotika"
 * item[=].text = "Präoperative Antibiotikatherapie"
+* insert Translation(item[=].text, en, [[Preoperative Antibiotic Therapy]])
 * item[=].type = #string
 * item[=].required = false

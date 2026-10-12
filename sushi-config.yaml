@@ -9,27 +9,104 @@ name: Senologie-KDS
 title: Kerndatensatz Senologie
 description: Kerndatensatz für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus
 status: draft # draft | active | retired | unknown
-version: 0.9.2-rc.2
+version: 0.10.0
 fhirVersion: 4.0.1 # https://www.hl7.org/fhir/valueset-FHIR-version.html
 copyrightYear: 2025+
 releaseLabel: ci-build
-# license: CC0-1.0 # https://www.hl7.org/fhir/valueset-spdx-license.html
+license: CC-BY-4.0 # https://www.hl7.org/fhir/valueset-spdx-license.html
+# crmi-publishableimplementationguide verlangt date 1..1 — bei jedem Release mitziehen
+# (zusammen mit CRMIDate in input/fsh/rulesets/version.fsh).
+date: "2026-10-12"
 # jurisdiction: urn:iso:std:iso:3166#US "United States of America" # https://www.hl7.org/fhir/valueset-jurisdiction.html
 publisher:
   name: Berlin Institute of Health at Charité (BIH)
   url: https://www.bihealth.org
   # email: test@example.org
 
+# CRMI-Konformitaet: die IG-Ressource claimt die CRMI-Profile shareable,
+# publishable und crmi-implementationguide (wie die MII-KDS-Module). Die
+# einzelnen Artefakte claimen ihre CRMI-Profile ueber input/fsh/rulesets/crmi.fsh.
+meta:
+  profile:
+    - http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareableimplementationguide
+    - http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishableimplementationguide
+    - http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-implementationguide
+experimental: false
+extension:
+  - url: http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability
+    valueCode: shareable
+  - url: http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability
+    valueCode: publishable
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy
+    valueCodeableConcept:
+      coding:
+        - system: http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes
+          version: "3.0.0"   # siehe Kommentar in input/fsh/rulesets/crmi.fsh
+          code: package
+          display: Package
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm
+    valueCoding:
+      system: http://hl7.org/fhir/version-algorithm
+      code: semver
+      display: SemVer
+  # Paket-Herkunft: wiederholt id (= packageId), version und canonical.
+  - url: http://hl7.org/fhir/StructureDefinition/package-source
+    extension:
+      - url: packageId
+        valueId: kds-senologie
+      - url: version
+        valueString: "0.10.0"
+      - url: uri
+        valueUri: https://www.senologie.org/fhir
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-topic
+    valueCodeableConcept:
+      coding:
+        - system: http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl
+          code: C4872
+          display: Breast Carcinoma
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-author
+    valueContactDetail:
+      name: Berlin Institute of Health at Charité (BIH)
+      telecom:
+        - system: email
+          value: thomas.debertshaeuser@charite.de
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-editor
+    valueContactDetail:
+      name: Berlin Institute of Health at Charité (BIH)
+      telecom:
+        - system: url
+          value: https://www.bihealth.org
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-reviewer
+    valueContactDetail:
+      name: Deutsche Gesellschaft für Senologie (DGS)
+      telecom:
+        - system: url
+          value: https://www.senologie.org
+  - url: http://hl7.org/fhir/StructureDefinition/artifact-endorser
+    valueContactDetail:
+      name: Deutsche Gesellschaft für Senologie (DGS)
+      telecom:
+        - system: url
+          value: https://www.senologie.org
+
 # The dependencies property corresponds to IG.dependsOn. The key is the
 # package id and the value is the version (or dev/current). For advanced
 # use cases, the value can be an object with keys for id, uri, and version.
 #
 dependencies:
-   de.medizininformatikinitiative.kerndatensatz.onkologie: 2026.0.3
-   de.medizininformatikinitiative.kerndatensatz.patho: 2026.0.2
-   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
-   de.medizininformatikinitiative.kerndatensatz.mtb: 2026.0.1
-   de.gematik.isik: 5.1.1
+   de.medizininformatikinitiative.kerndatensatz.onkologie: 2027.0.0-ballot.1
+   de.medizininformatikinitiative.kerndatensatz.patho: 2027.0.0-ballot.rc2
+   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2027.0.0-ballot.rc2
+   de.medizininformatikinitiative.kerndatensatz.mtb: 2027.0.0-ballot.1
+   de.gematik.isik: 6.0.0
+   hl7.fhir.uv.crmi: 2.0.0
+   # HL7 Terminology und Extensions-Pack direkt gepinnt (wie die MII-Module):
+   # ohne direkten Pin zieht der IG Publisher bei jedem Build die jeweils neueste
+   # Fassung. Die aelteren Fassungen, die andere Pakete transitiv mitbringen,
+   # werden dadurch NICHT verdraengt (getestet 2026-10-09) — deshalb traegt das
+   # versionPolicy-Coding zusaetzlich seine CodeSystem-Version.
+   hl7.terminology.r4: 7.4.0
+   hl7.fhir.uv.extensions.r4: 5.3.0
    hl7.fhir.uv.sdc: 4.0.0
    hl7.fhir.uv.xver-r5.r4: 0.1.0
 #   hl7.fhir.us.mcode:
@@ -69,6 +146,11 @@ dependencies:
 # http://build.fhir.org/ig/FHIR/fhir-tools-ig/branches/master/CodeSystem-ig-parameters.html
 #
 parameters:
+  i18n-default-lang: de
+  i18n-lang:
+    - en
+  translation-sources:
+    - input/translations/en
   excludettl: true
   excludexml: true
   excludemap: true
@@ -84,6 +166,8 @@ parameters:
 pages:
   index.md:
     title: Home
+  english-summary.md:
+    title: English Summary
   hintergrund.md:
     title: Hintergrund & Motivation
     GeneralRemarks.md:
@@ -172,48 +256,9 @@ pages:
       title: Offene Fragen
   roadmap.md:
     title: Roadmap
-  english-summary.md:
-    title: English Summary
 
-menu:
-  Home: index.html
-  Hintergrund: hintergrund.html
-  Datenmodell:
-    Übersicht: datenmodell.html
-    Vorgeschichte & Anamnese: anamnese.html
-    Diagnose & Staging: diagnose-staging.html
-    Tumorkonferenz: tumorkonferenz.html
-    Bildgebung & Pathologie: bildgebung-pathologie.html
-    Operative Therapie: operative-therapie.html
-    Systemtherapie: systemtherapie.html
-    Strahlentherapie: strahlentherapie-seite.html
-    Nachsorge & Verlauf: nachsorge-verlauf.html
-    Alle Profile: profilbeschreibungen.html
-  Beispielfall: beispielfall.html
-  Anwendungsfälle:
-    Übersicht: anwendungsfaelle-uebersicht.html
-    Erfassung: anwendungsfaelle-erfassung.html
-    Austausch: anwendungsfaelle-austausch.html
-    Auswertung: anwendungsfaelle-auswertung.html
-  Meldewege:
-    Übersicht: anwendungsfaelle-meldedatensaetze.html
-    oBDS / Krebsregister: meldung-obds.html
-    OncoBox / DKG: meldung-oncobox.html
-    IQTIG QS: meldung-iqtig.html
-    Implantatregister: meldung-ireg.html
-  Interoperabilität:
-    Übersicht: interoperabilitaet.html
-    MII KDS: mii-kds.html
-    ISiK: isik.html
-    EU-Standards & IPS: eu-standards.html
-  Terminologie:
-    Übersicht: terminologie-uebersicht.html
-    SNOMED Übersetzungen: snomed-german-translations.html
-    Semantische Annotation: semantische-annotation.html
-  Technisches: testumgebungen.html
-  Roadmap: roadmap.html
-  English: english-summary.html
-  Artifacts: artifacts.html
+# Das Menue wird als Datei gepflegt (input/includes/menu.xml und
+# input/translations/en/includes/menu.xml), damit es uebersetzbar ist. Kein menu:-Block.
 
 # ╭───────────────────────────Less Common Implementation Guide Properties──────────────────────────╮
 # │  Uncomment the properties below to configure additional properties on the ImplementationGuide  │

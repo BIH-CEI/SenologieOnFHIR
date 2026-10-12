@@ -3,6 +3,7 @@ Parent: Observation
 Id: senologie-operative-komplikation
 Title: "BIH Senologie Operative Komplikation"
 Description: "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent)."
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

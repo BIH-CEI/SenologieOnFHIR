@@ -3,6 +3,7 @@ Parent: MII_PR_Patho_Specimen
 Id: senologie-pathologie-praeparat
 Title: "BIH Senologie Pathologisches Präparat"
 Description: "Specimen für pathologische Präparate (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details"
+* insert SenoCRMIProfile
 
 * insert PR_CS_VS_Version
 * ^status = #draft

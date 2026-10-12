@@ -1,10 +1,10 @@
-# ISiK Kompatibilität
+### ISiK Kompatibilität
 
-## Grundprinzip
+#### Grundprinzip
 
 Die ISiK-Spezifikation (Informationstechnische Systeme im Krankenhaus) der gematik definiert Basisprofile für den stationären Versorgungskontext in Deutschland. ISiK wird derzeit in Stufe 6 kommentiert. Der Senologie-IG nutzt ISiK-kompatible Profile wo diese den fachlichen Anforderungen entsprechen. Dies umfasst sowohl den Austausch von Patientenstammdaten und Fallzuordnung als auch das ISiK-Formularmodul für patienten- und personalbefüllte Fragebögen.
 
-## ISiK-kompatible Elemente
+#### ISiK-kompatible Elemente
 
 | Konzept | ISiK-Profil | Verwendung im Senologie-IG |
 |---------|------------|---------------------------|
@@ -14,7 +14,7 @@ Die ISiK-Spezifikation (Informationstechnische Systeme im Krankenhaus) der gemat
 | Condition | ISiKDiagnose | ICD-10-GM Kodierung kompatibel |
 | Procedure | ISiKProzedur | OPS-Kodierung kompatibel |
 
-## Abgrenzung
+#### Abgrenzung
 
 ISiK definiert bewusst generische Profile für den breiten Einsatz in Krankenhausinformationssystemen. Die fachspezifische Tiefe der Senologie — etwa TNM-Staging, Rezeptorstatus oder Tumorboard-Empfehlungen — geht über den ISiK-Scope hinaus. Hier greifen die MII KDS Profile als fachliche Erweiterung.
 
