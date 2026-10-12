@@ -23,6 +23,12 @@ fi
 
 SRC="fsh-generated/resources"
 
+# Abhaengigkeiten aus sushi-config.yaml uebernehmen (frueher hier fest eingetragen und veraltet)
+DEPS="$(awk '/^dependencies:/{p=1;next} p&&/^[A-Za-z#]/{p=0} p' sushi-config.yaml \
+  | grep -E '^[[:space:]]+[a-z0-9.-]+:[[:space:]]*[^[:space:]#]+' \
+  | sed -E 's/^[[:space:]]+([a-z0-9.-]+):[[:space:]]*([^[:space:]#]+).*/,\n    "\1": "\2"/')"
+DEPS="$(printf '%b' "$DEPS")"
+
 # Run SUSHI with snapshots so downstream consumers don't have to regenerate
 echo "→ Running sushi build -s (with snapshots)..."
 sushi build -s . > /tmp/sushi-package.log 2>&1 || {
@@ -59,14 +65,7 @@ cat > "$STAGE/package/package.json" <<EOF
   "fhirVersions": ["${FHIR_VERSION}"],
   "type": "IG",
   "dependencies": {
-    "hl7.fhir.r4.core": "${FHIR_VERSION}",
-    "de.medizininformatikinitiative.kerndatensatz.onkologie": "2026.0.3",
-    "de.medizininformatikinitiative.kerndatensatz.patho": "2026.0.2",
-    "de.medizininformatikinitiative.kerndatensatz.bildgebung": "2026.0.0",
-    "de.medizininformatikinitiative.kerndatensatz.mtb": "2026.0.1",
-    "de.gematik.isik": "5.1.1",
-    "hl7.fhir.uv.sdc": "4.0.0",
-    "hl7.fhir.uv.xver-r5.r4": "0.1.0"
+    "hl7.fhir.r4.core": "${FHIR_VERSION}"${DEPS}
   }
 }
 EOF
