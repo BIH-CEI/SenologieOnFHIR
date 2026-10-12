@@ -529,37 +529,8 @@ Usage: #example
 * reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
 
 
-// --- Strahlentherapie ---
-Instance: Fall10-Strahlentherapie
-InstanceOf: Senologie_Strahlentherapie
-Title: "Fall 10: Adjuvante Bestrahlung Thoraxwand rechts 50 Gy"
-Description: "Adjuvante Thoraxwandbestrahlung rechts nach therapeutischer Mastektomie"
-Usage: #example
-
-* status = #completed
-* category = $SCT#1287742003 "Radiotherapy (procedure)"
-
-* code.coding[+].system = "http://fhir.de/CodeSystem/bfarm/ops"
-* code.coding[=].version = "2025"
-* code.coding[=].code = #8-522.d1
-* code.coding[=].display = "Hochvoltstrahlentherapie: Linearbeschleuniger mehr als 6 MeV Photonen oder schnelle Elektronen, 3D-geplante Bestrahlung: Mit bildgestützter Einstellung"
-
-* subject = Reference(Patient/Fall10-Patient-Christina-Becker)
-
-* performedPeriod.start = "2025-12-01"
-* performedPeriod.end = "2026-01-09"
-
-* bodySite.coding[+] = $SCT#78904004 "Chest wall structure"
-* bodySite.text = "Thoraxwand rechts"
-
-* extension[Intention].valueCodeableConcept = https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-intention#K "kurativ"
-
-* extension[sessionCount].valueQuantity.value = 25
-* extension[sessionCount].valueQuantity.unit = "Sitzungen"
-
-* reasonReference = Reference(Condition/Fall10-Diagnose-Mammakarzinom)
-
-* note.text = "Thoraxwand rechts 50 Gy in 25 Fraktionen. Nur therapeutische Seite bestrahlt."
+// Keine Strahlentherapie: nach Mastektomie mit pT1c pN0(sn), R0 besteht keine Indikation
+// zur Thoraxwandbestrahlung (S3-Leitlinie); die Instanz wurde am 2026-10-12 entfernt.
 
 
 // ============================================================
@@ -599,17 +570,19 @@ Usage: #example
 * activity[chemotherapy].detail.code.text = "Adjuvant Carboplatin + Paclitaxel, 6 Zyklen"
 * activity[chemotherapy].detail.status = #scheduled
 
-// Strahlentherapie
+// Keine Strahlentherapie
 * activity[radiotherapy].detail.kind = #ServiceRequest
 * activity[radiotherapy].detail.code = $SCT#1287742003 "Radiotherapy (procedure)"
-* activity[radiotherapy].detail.code.text = "Bestrahlung der Thoraxwand nach Abschluss der Chemotherapie"
-* activity[radiotherapy].detail.status = #scheduled
+* activity[radiotherapy].detail.code.text = "Keine Strahlentherapie (Mastektomie geplant, cT1c cN0: keine Indikation)"
+* activity[radiotherapy].detail.status = #not-started
+* activity[radiotherapy].detail.statusReason = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#nicht-empfohlen "Nicht empfohlen"
 
 // Keine endokrine Therapie
 * activity[endocrineTherapy].detail.kind = #MedicationRequest
 * activity[endocrineTherapy].detail.code = $SCT#169413002 "Hormone therapy (procedure)"
 * activity[endocrineTherapy].detail.code.text = "Keine endokrine Therapie (hormonrezeptor-negativ)"
 * activity[endocrineTherapy].detail.status = #not-started
+* activity[endocrineTherapy].detail.statusReason = https://www.senologie.org/fhir/CodeSystem/tumorboard-empfehlung#nicht-empfohlen "Nicht empfohlen"
 * activity[endocrineTherapy].detail.doNotPerform = true
 
 
@@ -643,7 +616,7 @@ Usage: #example
 Instance: Fall10-Verlauf-PostTherapie
 InstanceOf: Senologie_FollowUp
 Title: "Fall 10: Verlaufskontrolle nach Abschluss der Therapie"
-Description: "Nachsorge-Untersuchung nach Mastektomie, Chemotherapie und Bestrahlung, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor."
+Description: "Nachsorge-Untersuchung nach Mastektomie und Chemotherapie, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor."
 Usage: #example
 
 * status = #final

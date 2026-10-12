@@ -69,7 +69,7 @@ Usage: #example
 Instance: QR-Tumorboard-Fall10
 InstanceOf: QuestionnaireResponse
 Title: "Fall 10 — QR Tumorboard"
-Description: "Tumorboard 2025-06-03: Mastektomie mit Sofortrekonstruktion und adjuvante Chemotherapie empfohlen, Bestrahlung empfohlen, endokrine Therapie nicht empfohlen (hormonrezeptor-negativ)."
+Description: "Tumorboard 2025-06-03: Mastektomie mit Sofortrekonstruktion und adjuvante Chemotherapie empfohlen, Strahlentherapie und endokrine Therapie nicht empfohlen (hormonrezeptor-negativ)."
 Usage: #example
 
 * questionnaire = "https://www.senologie.org/fhir/Questionnaire/senologie-tumorboard"
@@ -100,11 +100,9 @@ Usage: #example
 
 * item[+].linkId = "empfehlung-strahlentherapie-group"
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-status"
-* item[=].item[=].answer.valueCoding = $TBE#empfohlen "Empfohlen"
-* item[=].item[+].linkId = "empfehlung-strahlentherapie-optionen"
-* item[=].item[=].answer[+].valueCoding = $SCT#428624002 "Brustwand"
+* item[=].item[=].answer.valueCoding = $TBE#nicht-empfohlen "Nicht empfohlen"
 * item[=].item[+].linkId = "empfehlung-strahlentherapie-begruendung"
-* item[=].item[=].answer.valueString = "Bestrahlung der Thoraxwand nach Abschluss der Chemotherapie."
+* item[=].item[=].answer.valueString = "Keine Indikation bei geplanter Mastektomie und klinisch freier Axilla (cT1c cN0)."
 
 * item[+].linkId = "empfehlung-endokrin-group"
 * item[=].item[+].linkId = "empfehlung-endokrin-status"

@@ -96,7 +96,6 @@
 [QR-Diagnose-Fall10-Verdacht]: QuestionnaireResponse-QR-Diagnose-Fall10-Verdacht.html
 [QR-Systemtherapie-Fall10]: QuestionnaireResponse-QR-Systemtherapie-Fall10.html
 [QR-Tumorboard-Fall10]: QuestionnaireResponse-QR-Tumorboard-Fall10.html
-[Fall10-Strahlentherapie]: Procedure-Fall10-Strahlentherapie.html
 [Fall10-Systemtherapie-Adjuvant]: Procedure-Fall10-Systemtherapie-Adjuvant.html
 [Fall10-BiRADS-Rechts]: Observation-Fall10-BiRADS-Rechts.html
 [Fall10-Implantat-Links]: Device-Fall10-Implantat-Links.html
