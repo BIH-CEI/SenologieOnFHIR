@@ -1,0 +1,256 @@
+# VS Senologie UICC-Stadium (Mamma) - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **VS Senologie UICC-Stadium (Mamma)**
+
+## ValueSet: VS Senologie UICC-Stadium (Mamma) 
+
+| | |
+| :--- | :--- |
+| *Official URL*:https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma | *Version*:0.10.0 |
+| Draft as of 2026-10-12 | *Computable Name*:VS_Senologie_UICC_Stadium_Mamma |
+
+ 
+UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Primärkodierung über https://www.uicc.org/resources/tnm (MII_CS_Onko_TNM_UICC, auf MII-OntoServer verfügbar); alternativ SCT-Qualifier-Values (HDB-866). Binding: extensible. 
+
+ **References** 
+
+* [Fragebogen: Klinische Untersuchung Mamma](Questionnaire-senologie-klinische-untersuchung.md)
+* [Fragebogen: Pathologie Befund](Questionnaire-senologie-pathologie.md)
+
+### Logical Definition (CLD)
+
+ 
+
+### Expansion
+
+-------
+
+ [Description of the above table(s)](http://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#terminology). 
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "ValueSet",
+  "id" : "vs-senologie-uicc-stadium-mamma",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablevalueset",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablevalueset",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-computablevalueset"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "computable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  }],
+  "url" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-uicc-stadium-mamma",
+  "version" : "0.10.0",
+  "name" : "VS_Senologie_UICC_Stadium_Mamma",
+  "title" : "VS Senologie UICC-Stadium (Mamma)",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Primärkodierung über https://www.uicc.org/resources/tnm (MII_CS_Onko_TNM_UICC, auf MII-OntoServer verfügbar); alternativ SCT-Qualifier-Values (HDB-866). Binding: extensible.",
+  "compose" : {
+    "include" : [{
+      "system" : "https://www.uicc.org/resources/tnm",
+      "concept" : [{
+        "code" : "0",
+        "display" : "Stadium 0 — Tis N0 M0"
+      },
+      {
+        "code" : "IA",
+        "display" : "Stadium IA — T1 N0 M0"
+      },
+      {
+        "code" : "IB",
+        "display" : "Stadium IB — T0/1 N1mi M0"
+      },
+      {
+        "code" : "IIA",
+        "display" : "Stadium IIA — T0/1 N1 M0 oder T2 N0 M0"
+      },
+      {
+        "code" : "IIB",
+        "display" : "Stadium IIB — T2 N1 M0 oder T3 N0 M0"
+      },
+      {
+        "code" : "IIIA",
+        "display" : "Stadium IIIA — T0–2 N2 M0 oder T3 N1/2 M0"
+      },
+      {
+        "code" : "IIIB",
+        "display" : "Stadium IIIB — T4 N0–2 M0"
+      },
+      {
+        "code" : "IIIC",
+        "display" : "Stadium IIIC — Jedes T N3 M0"
+      },
+      {
+        "code" : "IV",
+        "display" : "Stadium IV — Jedes T, jedes N, M1"
+      }]
+    },
+    {
+      "system" : "http://snomed.info/sct",
+      "concept" : [{
+        "code" : "1352916008",
+        "display" : "0 (UICC)"
+      },
+      {
+        "code" : "1352843004",
+        "display" : "IA (UICC)"
+      },
+      {
+        "code" : "1352911003",
+        "display" : "IB (UICC)"
+      },
+      {
+        "code" : "1352856006",
+        "display" : "IIA (UICC)"
+      },
+      {
+        "code" : "1352861008",
+        "display" : "IIB (UICC)"
+      },
+      {
+        "code" : "1352915007",
+        "display" : "IIIA (UICC)"
+      },
+      {
+        "code" : "1352896008",
+        "display" : "IIIB (UICC)"
+      },
+      {
+        "code" : "1352848008",
+        "display" : "IIIC (UICC)"
+      },
+      {
+        "code" : "1352913000",
+        "display" : "IV (UICC)"
+      }]
+    }]
+  }
+}
+
+```

@@ -1,0 +1,580 @@
+# Senologie Meldungs-Bundle - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Senologie Meldungs-Bundle**
+
+## : Senologie Meldungs-Bundle 
+
+| | |
+| :--- | :--- |
+| **:https://www.senologie.org/fhir/StructureDefinition/senologie-meldungs-bundle | **:0.10.0 |
+| Active | **:Senologie_Meldungs_Bundle |
+
+ 
+Kanonischer Bundle für einen vollständigen SenologieOnFHIR-Datensatz einer Brustkrebspatientin. Enthält Pflicht- und optionale Ressourcen gemäß den SenologieOnFHIR-Profilen. 
+
+**Usages:**
+
+* This Profil is not used by any profiles in this Specification
+
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/kds-senologie|current/StructureDefinition/StructureDefinition-senologie-meldungs-bundle.json)
+
+### 
+
+ . 
+
+*   
+*   
+*   
+*   
+*   
+
+#### Terminology Bindings
+
+#### Constraints
+
+#### Terminology Bindings
+
+#### Constraints
+
+#### Terminology Bindings
+
+#### Constraints
+
+ **View** 
+
+#### Terminology Bindings
+
+#### Constraints
+
+ 
+
+ ,  
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "senologie-meldungs-bundle",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablestructuredefinition"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-usage",
+    "valueMarkdown" : "Use this profile as the technical FHIR representation of the corresponding element group of the Senologie core dataset logical model. The profile constrains a base FHIR resource for the documentation of breast cancer care by specifying how elements are used, which elements are required, and which extensions and terminology bindings apply. Implementers should produce and consume resource instances that conform to this profile when exchanging Senologie core dataset data."
+  }],
+  "url" : "https://www.senologie.org/fhir/StructureDefinition/senologie-meldungs-bundle",
+  "version" : "0.10.0",
+  "name" : "Senologie_Meldungs_Bundle",
+  "title" : "Senologie Meldungs-Bundle",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Kanonischer Bundle für einen vollständigen SenologieOnFHIR-Datensatz einer Brustkrebspatientin. Enthält Pflicht- und optionale Ressourcen gemäß den SenologieOnFHIR-Profilen.",
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "cda",
+    "uri" : "http://hl7.org/v3/cda",
+    "name" : "CDA (R2)"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Bundle",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Bundle",
+      "path" : "Bundle"
+    },
+    {
+      "id" : "Bundle.type",
+      "path" : "Bundle.type",
+      "patternCode" : "collection"
+    },
+    {
+      "id" : "Bundle.entry",
+      "path" : "Bundle.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "resource"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      },
+      "min" : 2
+    },
+    {
+      "id" : "Bundle.entry:patient",
+      "path" : "Bundle.entry",
+      "sliceName" : "patient",
+      "short" : "Patientin (Pflicht)",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:patient.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Patient"
+      }]
+    },
+    {
+      "id" : "Bundle.entry:diagnose",
+      "path" : "Bundle.entry",
+      "sliceName" : "diagnose",
+      "short" : "Mammakarzinom-Diagnose (Pflicht) — Profil: Senologie_Diagnose_Maligne",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:diagnose.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Condition",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:er-status",
+      "path" : "Bundle.entry",
+      "sliceName" : "er-status",
+      "short" : "Östrogenrezeptor-Status — Profil: Senologie_ER_Status",
+      "min" : 0,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:er-status.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-er-status"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:pr-status",
+      "path" : "Bundle.entry",
+      "sliceName" : "pr-status",
+      "short" : "Progesteronrezeptor-Status — Profil: Senologie_PR_Status",
+      "min" : 0,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:pr-status.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:her2-status",
+      "path" : "Bundle.entry",
+      "sliceName" : "her2-status",
+      "short" : "HER2-Rezeptor-Status — Profil: Senologie_HER2_Status",
+      "min" : 0,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:her2-status.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:ki67",
+      "path" : "Bundle.entry",
+      "sliceName" : "ki67",
+      "short" : "Ki-67-Proliferationsindex — Profil: Senologie_Ki67_Proliferationsindex",
+      "min" : 0,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:ki67.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:grading",
+      "path" : "Bundle.entry",
+      "sliceName" : "grading",
+      "short" : "Histopathologisches Grading (G1–G3) — Profil: MII_PR_Onko_Grading",
+      "min" : 0,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:grading.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-pr-onko-grading"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:tumorlokalisation",
+      "path" : "Bundle.entry",
+      "sliceName" : "tumorlokalisation",
+      "short" : "Tumorlokalisation (Quadrant, Seite) — BodyStructure",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:tumorlokalisation.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "BodyStructure",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-tumorlokalisation"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:bildgebung",
+      "path" : "Bundle.entry",
+      "sliceName" : "bildgebung",
+      "short" : "Bildgebungsbefunde (Mammographie, MRT, US) — DiagnosticReport",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Bundle.entry:bildgebung.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "DiagnosticReport",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:pathologie-befund",
+      "path" : "Bundle.entry",
+      "sliceName" : "pathologie-befund",
+      "short" : "Pathologiebefund (MII PathoReport) — DiagnosticReport",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Bundle.entry:pathologie-befund.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "DiagnosticReport",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:operation",
+      "path" : "Bundle.entry",
+      "sliceName" : "operation",
+      "short" : "Operative Eingriffe (BET, Mastektomie, SLNB)",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:operation.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Procedure",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-operation"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:strahlentherapie",
+      "path" : "Bundle.entry",
+      "sliceName" : "strahlentherapie",
+      "short" : "Strahlentherapie",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:strahlentherapie.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Procedure",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:systemtherapie",
+      "path" : "Bundle.entry",
+      "sliceName" : "systemtherapie",
+      "short" : "Systemtherapie (CHT, HO, Immuntherapie, Targeted)",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:systemtherapie.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Procedure",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:tumorboard",
+      "path" : "Bundle.entry",
+      "sliceName" : "tumorboard",
+      "short" : "Tumorboard-Empfehlung (prä-/posttherapeutisch)",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:tumorboard.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "CarePlan",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:follow-up",
+      "path" : "Bundle.entry",
+      "sliceName" : "follow-up",
+      "short" : "Follow-Up / Verlaufsbeobachtung",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Bundle.entry:follow-up.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:pdl1-status",
+      "path" : "Bundle.entry",
+      "sliceName" : "pdl1-status",
+      "short" : "PD-L1-Status (relevant bei TNBC)",
+      "min" : 0,
+      "max" : "1"
+    },
+    {
+      "id" : "Bundle.entry:pdl1-status.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-pdl1-status"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:somatische-mutation",
+      "path" : "Bundle.entry",
+      "sliceName" : "somatische-mutation",
+      "short" : "Somatische Mutationen (BRCA1/2 somatisch, PIK3CA)",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Bundle.entry:somatische-mutation.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Observation",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:genexpressionstest",
+      "path" : "Bundle.entry",
+      "sliceName" : "genexpressionstest",
+      "short" : "Genexpressionstest (Oncotype DX, MammaPrint, Prosigna) — RiskAssessment",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Bundle.entry:genexpressionstest.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "RiskAssessment",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressionstest"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:psychoonkologie",
+      "path" : "Bundle.entry",
+      "sliceName" : "psychoonkologie",
+      "short" : "Psychoonkologisches Assessment — Procedure",
+      "min" : 0,
+      "max" : "1"
+    },
+    {
+      "id" : "Bundle.entry:psychoonkologie.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Procedure",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-psychoonkologie"]
+      }]
+    },
+    {
+      "id" : "Bundle.entry:sozialdienst",
+      "path" : "Bundle.entry",
+      "sliceName" : "sozialdienst",
+      "short" : "Sozialdienstberatung — Procedure",
+      "min" : 0,
+      "max" : "1"
+    },
+    {
+      "id" : "Bundle.entry:sozialdienst.resource",
+      "path" : "Bundle.entry.resource",
+      "type" : [{
+        "code" : "Procedure",
+        "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-sozialdienst"]
+      }]
+    }]
+  }
+}
+
+```
