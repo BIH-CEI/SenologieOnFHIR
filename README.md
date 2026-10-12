@@ -9,7 +9,7 @@ registry, certification, quality assurance and implant registry.
 - **Implementation Guide, German:** <https://bih-cei.github.io/SenologieOnFHIR/ci-build/de/index.html>
 - **Released versions:** <https://bih-cei.github.io/SenologieOnFHIR/> (redirects to the latest release)
 - **Canonical:** `https://www.senologie.org/fhir`
-- **Package:** `kds-senologie`, version 0.9.3
+- **Package:** `kds-senologie`, version 0.10.0
 - **Status:** draft. Public commenting ran in May 2026; version 1.0 is in preparation.
 
 The guide is written in German, because its first audience are German breast
