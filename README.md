@@ -5,20 +5,24 @@ care at certified breast centres in Germany. The idea is to document once, coded
 at the point of care, and to derive every report from that one record: cancer
 registry, certification, quality assurance and implant registry.
 
-- **Implementation Guide, English summary:** <https://bih-cei.github.io/SenologieOnFHIR/english-summary.html>
-- **Implementation Guide, German (full guide):** <https://bih-cei.github.io/SenologieOnFHIR/>
+- **Implementation Guide, English:** <https://bih-cei.github.io/SenologieOnFHIR/ci-build/en/index.html>
+- **Implementation Guide, German:** <https://bih-cei.github.io/SenologieOnFHIR/ci-build/de/index.html>
+- **Released versions:** <https://bih-cei.github.io/SenologieOnFHIR/> (redirects to the latest release)
 - **Canonical:** `https://www.senologie.org/fhir`
 - **Package:** `kds-senologie`, version 0.9.3
 - **Status:** draft. Public commenting ran in May 2026; version 1.0 is in preparation.
 
 The guide is written in German, because its first audience are German breast
-centres and their reporting duties. The English summary page explains the
-dataset and the German reporting context for international readers. An English
-translation of all pages is part of this repository (`input/translations/en`)
-but is not published as a separate site yet.
+centres and their reporting duties, and it is published in German and English
+side by side; a language switch sits in the top right corner of every page. The
+English pages are a translation (`input/translations/en`); where a page or an
+artefact description has no translation yet, the German text is shown. For a
+quick start, the English site has a one-page
+[summary](https://bih-cei.github.io/SenologieOnFHIR/ci-build/en/english-summary.html)
+that also explains the German reporting context.
 
-Deutsch: Der vollständige Leitfaden ist auf Deutsch veröffentlicht und beginnt
-auf der [Startseite](https://bih-cei.github.io/SenologieOnFHIR/).
+Deutsch: Der Leitfaden ist zweisprachig veröffentlicht; die deutsche Fassung
+beginnt [hier](https://bih-cei.github.io/SenologieOnFHIR/ci-build/de/index.html).
 
 ## Who is behind it
 
@@ -40,7 +44,7 @@ and provides the guide and this repository on behalf of the DGS.
 | Export maps | `input/maps/` | 31 FHIR Mapping Language maps that turn the record into four reports: oBDS (cancer registry), OncoBox Brust (DKG certification), IQTIG 18/1 (quality assurance) and IRegG (implant registry). |
 | Quality indicators | `input/cql/` | Indicators from the German S3 guideline and certification, written in CQL and run on the same record. |
 | Example patients | `input/fsh/examples/` | 17 synthetic patients covering different pathways. No real patient data. |
-| Pages | `input/pagecontent/` | The narrative of the guide, with the English translation in `input/translations/en/`. |
+| Pages | `input/pagecontent/` | The narrative of the guide in German, with the English translation in `input/translations/en/`. The menu is kept as files (`input/includes/menu.xml` and its English counterpart) so that it can be translated. |
 | Tests | `validation/`, `scripts/` | Snapshot tests for the exports and the quality indicators. |
 
 Terminology: SNOMED CT and LOINC for clinical meaning, next to the code systems
@@ -103,8 +107,19 @@ The content of this repository is licensed under
 See [LICENSE](LICENSE). Suggested attribution: "Kerndatensatz Senologie,
 Deutsche Gesellschaft für Senologie (DGS), provided by BIH at Charité, CC BY 4.0".
 
-The licence does not cover third-party terminologies and specifications that the
-guide refers to. SNOMED CT, LOINC, the UICC TNM classification, ICD-10-GM, OPS
-and the registry specifications (oBDS, OncoBox, IQTIG, IRegG) remain under the
-terms of their owners. Using SNOMED CT codes in particular requires a SNOMED
-International affiliate licence or membership of your country.
+### Third-party standards and terminologies
+
+The licence above does not cover the standards and terminologies the guide
+builds on. The full notices are in [NOTICE.md](NOTICE.md); in short:
+
+- **HL7 FHIR:** HL7® and FHIR® are registered trademarks of Health Level Seven
+  International. The FHIR specification is published under CC0.
+- **SNOMED CT:** includes SNOMED Clinical Terms® (SNOMED CT®), used by
+  permission of SNOMED International. Implementers need a SNOMED CT Affiliate
+  Licence; in Germany it is issued free of charge through the BfArM.
+- **LOINC:** contains content from LOINC® (<https://loinc.org>), copyright ©
+  Regenstrief Institute, Inc. and the LOINC Committee, available at no cost
+  under the licence at <https://loinc.org/license>.
+- **Others:** ICD-10-GM and OPS (BfArM), ICD-O-3 (WHO), UICC TNM, BI-RADS® (ACR),
+  and the reporting specifications oBDS, OncoBox, IQTIG and IRegG remain under
+  the terms of their owners.

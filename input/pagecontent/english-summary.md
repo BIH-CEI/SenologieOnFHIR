@@ -56,7 +56,12 @@ For interoperability questions or international collaboration, see [Interoperabi
 
 #### Rights and licence
 
-© Deutsche Gesellschaft für Senologie (DGS). The guide and its repository are provided by the Berlin Institute of Health at Charité (BIH) and licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Third-party terminologies (SNOMED CT, LOINC, UICC TNM, ICD-10-GM, OPS) remain under the terms of their owners.
+© Deutsche Gesellschaft für Senologie (DGS). The guide and its repository are provided by the Berlin Institute of Health at Charité (BIH) and licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). It builds on standards and terminologies owned by others, which that licence does not cover:
+
+- **HL7 FHIR:** HL7® and FHIR® are registered trademarks of Health Level Seven International.
+- **SNOMED CT:** This material includes SNOMED Clinical Terms® (SNOMED CT®), which is used by permission of SNOMED International. All rights reserved. "SNOMED" and "SNOMED CT" are registered trademarks of SNOMED International. Implementers must have the appropriate SNOMED CT Affiliate Licence.
+- **LOINC:** This material contains content from LOINC® (<https://loinc.org>). LOINC is copyright © 1995-2026, Regenstrief Institute, Inc. and the LOINC Committee, and is available at no cost under the licence at <https://loinc.org/license>.
+- **Others:** ICD-10-GM and OPS (BfArM), ICD-O-3 (WHO), the UICC TNM classification and the reporting specifications remain under the terms of their owners.
 
 #### Contact
 
