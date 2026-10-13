@@ -118,6 +118,13 @@ jobs:
           JSON
           ./_genonce.sh -tx http://localhost:8090/fhir -fhir-settings "$RUNNER_TEMP/fhir-settings.json"
 
+      # fhir2.base.template 0.1.0 liefert eine Sprachweiche, die nur die erste Sprache prueft;
+      # Browser in jeder anderen Sprache sehen sonst eine leere Einstiegsseite.
+      - name: Fix language redirect
+        run: |
+          find output -name lang-redirects.js -exec cp scripts/ig/lang-redirects.js {} \;
+          grep -q "target = langs" output/assets/js/lang-redirects.js
+
       - name: Deploy Release to GitHub Pages
         run: |
           VERSION="${{ steps.version.outputs.version }}"
