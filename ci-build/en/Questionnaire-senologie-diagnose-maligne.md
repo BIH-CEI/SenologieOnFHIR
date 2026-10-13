@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/Questionnaire/senologie-diagnose-maligne | *Version*:0.10.0 |
-| Draft as of 2026-10-12 | *Computable Name*:QuestionnaireSenologieDiagnose |
+| Draft as of 2026-10-13 | *Computable Name*:QuestionnaireSenologieDiagnose |
 
 *  [Tree view](#tabs-tree) 
 *  [Sample Rendering](#tabs-sample) 
@@ -184,7 +184,7 @@ There are currently no QuestionnaireResponse instances for this Questionnaire de
   "title" : "Fragebogen: Senologie Diagnose",
   "status" : "draft",
   "subjectType" : ["Patient"],
-  "date" : "2026-10-12T09:27:54+00:00",
+  "date" : "2026-10-13T14:29:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

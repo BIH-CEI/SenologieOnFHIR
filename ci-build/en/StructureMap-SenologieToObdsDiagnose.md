@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsDiagnose | *Version*:0.10.0 |
-| Draft as of 2026-10-12 | *Computable Name*:SenologieToObdsDiagnose |
+| Draft as of 2026-10-13 | *Computable Name*:SenologieToObdsDiagnose |
 
  
 title: Senologie Diagnose Bundle to oBDS Diagnosemeldung status: draft 
@@ -26,7 +26,7 @@ title: Senologie Diagnose Bundle to oBDS Diagnosemeldung status: draft
   "version" : "0.10.0",
   "name" : "SenologieToObdsDiagnose",
   "status" : "draft",
-  "date" : "2026-10-12T09:27:54+00:00",
+  "date" : "2026-10-13T14:29:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

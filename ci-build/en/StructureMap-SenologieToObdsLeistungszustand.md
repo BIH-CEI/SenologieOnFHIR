@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsLeistungszustand | *Version*:0.10.0 |
-| Draft as of 2026-10-12 | *Computable Name*:SenologieToObdsLeistungszustand |
+| Draft as of 2026-10-13 | *Computable Name*:SenologieToObdsLeistungszustand |
 
  
 title: Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand status: draft 
@@ -26,7 +26,7 @@ title: Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand status: d
   "version" : "0.10.0",
   "name" : "SenologieToObdsLeistungszustand",
   "status" : "draft",
-  "date" : "2026-10-12T09:27:54+00:00",
+  "date" : "2026-10-13T14:29:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

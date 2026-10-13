@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIqtigMammachirurgie181 | *Version*:0.10.0 |
-| Draft as of 2026-10-12 | *Computable Name*:SenologieToIqtigMammachirurgie181 |
+| Draft as of 2026-10-13 | *Computable Name*:SenologieToIqtigMammachirurgie181 |
 
  
 title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator) targetSpec: IQTIG QS-Basisspezifikation Spez 2026 V06 (Modul 18n1) XSD-Quelle: https://iqtig.org/downloads/spezifikation/fdok/sj2026/v06/2026_XML_Schema_V06.zip Beispiele: 2026_XML_Schema_V06/XML-Beispiele/interface_LE/indirekt/LQS_DeQS_18n1.xml senologieVersion: 0.9.0 status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator) targ
   "version" : "0.10.0",
   "name" : "SenologieToIqtigMammachirurgie181",
   "status" : "draft",
-  "date" : "2026-10-12T09:27:54+00:00",
+  "date" : "2026-10-13T14:29:54+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{
