@@ -1,19 +1,19 @@
-# S3-Leitlinie v5.0 - Kapitel 5: Das rezidivierte oder metastasierte Mammakarzinom
+### S3-Leitlinie v5.0 - Kapitel 5: Das rezidivierte oder metastasierte Mammakarzinom
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 207-264
 > Kapitelstruktur: 5.1 Lokoregionales Rezidiv | 5.2 Systemische Therapie metastasiertes MaCa | 5.3 Spezifische Metastasenlokalisationen
 
 ---
 
-## 5.1 Das lokale/lokoregionale Rezidiv
+#### 5.1 Das lokale/lokoregionale Rezidiv
 
-### 5.1.1 Definition und Prognose
+##### 5.1.1 Definition und Prognose
 
 Hintergrundtext ohne nummerierte Empfehlung. Definiert Lokalrezidiv als Wiederauftreten in ipsilateraler Brust, Thoraxwand, regionaeren Lymphknoten der Axilla, Supra-/Infraklavikularregion, entlang Mammaria-interna-Gefaesse. Prognostische Faktoren: Resektionsstatus, Multifokalitaet, Tumorgroesse, Lokalisation, Fokalitaet, Grading, HR/HER2-Status, krankheitsfreies Intervall, primaerer LK-Status, Vortherapie.
 
-### 5.1.2 Diagnostik des lokalen/lokoregionalen Rezidivs
+##### 5.1.2 Diagnostik des lokalen/lokoregionalen Rezidivs
 
-### Empfehlung 5.1
+##### Empfehlung 5.1
 
 ```yaml
 id: S3-5.0-5.1
@@ -59,7 +59,7 @@ referenzen:
   s3_literatur: ["21", "945"]
 ```
 
-### Empfehlung 5.2
+##### Empfehlung 5.2
 
 ```yaml
 id: S3-5.0-5.2
@@ -108,7 +108,7 @@ referenzen:
   s3_literatur: ["1114", "1115"]
 ```
 
-### Empfehlung 5.3
+##### Empfehlung 5.3
 
 ```yaml
 id: S3-5.0-5.3
@@ -147,7 +147,7 @@ referenzen:
   s3_literatur: ["254", "1116", "1117"]
 ```
 
-### Empfehlung 5.4
+##### Empfehlung 5.4
 
 ```yaml
 id: S3-5.0-5.4
@@ -182,7 +182,7 @@ referenzen:
   verwandte_empfehlungen: ["Kapitel 4.1"]
 ```
 
-### Empfehlung 5.5
+##### Empfehlung 5.5
 
 ```yaml
 id: S3-5.0-5.5
@@ -220,7 +220,7 @@ referenzen:
   verwandte_empfehlungen: ["Kapitel 4.1"]
 ```
 
-### Empfehlung 5.6
+##### Empfehlung 5.6
 
 ```yaml
 id: S3-5.0-5.6
@@ -259,11 +259,11 @@ referenzen:
   s3_literatur: ["261", "311"]
 ```
 
-### 5.1.3 Therapie des lokalen/lokoregionalen Rezidivs
+##### 5.1.3 Therapie des lokalen/lokoregionalen Rezidivs
 
-#### 5.1.3.1 Lokales (intramammäres) Rezidiv
+###### 5.1.3.1 Lokales (intramammäres) Rezidiv
 
-### Empfehlung 5.7
+##### Empfehlung 5.7
 
 ```yaml
 id: S3-5.0-5.7
@@ -347,7 +347,7 @@ referenzen:
   verwandte_empfehlungen: ["4.71", "4.72", "4.73", "4.75"]
 ```
 
-### Empfehlung 5.8
+##### Empfehlung 5.8
 
 ```yaml
 id: S3-5.0-5.8
@@ -385,7 +385,7 @@ referenzen:
   s3_literatur: ["1132"]
 ```
 
-### Empfehlung 5.9
+##### Empfehlung 5.9
 
 ```yaml
 id: S3-5.0-5.9
@@ -418,7 +418,7 @@ referenzen:
   s3_literatur: ["1127", "1128", "1129", "1130", "1131"]
 ```
 
-### Empfehlung 5.10
+##### Empfehlung 5.10
 
 ```yaml
 id: S3-5.0-5.10
@@ -459,7 +459,7 @@ referenzen:
   verwandte_empfehlungen: ["5.9"]
 ```
 
-### Empfehlung 5.11
+##### Empfehlung 5.11
 
 ```yaml
 id: S3-5.0-5.11
@@ -487,9 +487,9 @@ fhir_mapping:
   anmerkung: "Aufklaerungsdokumentation nicht in FHIR modelliert."
 ```
 
-#### 5.1.3.2 Lokalrezidiv nach Mastektomie
+###### 5.1.3.2 Lokalrezidiv nach Mastektomie
 
-### Empfehlung 5.12
+##### Empfehlung 5.12
 
 ```yaml
 id: S3-5.0-5.12
@@ -539,7 +539,7 @@ referenzen:
   s3_literatur: ["1146", "1147", "1150", "1151"]
 ```
 
-### Empfehlung 5.13
+##### Empfehlung 5.13
 
 ```yaml
 id: S3-5.0-5.13
@@ -582,9 +582,9 @@ fhir_mapping:
   anmerkung: "Therapie-Intent (kurativ vs. palliativ) als Differenzierung noetig."
 ```
 
-#### 5.1.3.3 Axillaeres Lymphknotenrezidiv
+###### 5.1.3.3 Axillaeres Lymphknotenrezidiv
 
-### Empfehlung 5.14
+##### Empfehlung 5.14
 
 ```yaml
 id: S3-5.0-5.14
@@ -621,9 +621,9 @@ referenzen:
   s3_literatur: ["1153", "1154", "1155"]
 ```
 
-#### 5.1.3.4 Medikamentoese Therapie
+###### 5.1.3.4 Medikamentoese Therapie
 
-### Empfehlung 5.15
+##### Empfehlung 5.15
 
 ```yaml
 id: S3-5.0-5.15
@@ -682,9 +682,9 @@ referenzen:
   s3_literatur: ["1156", "1157", "1158", "1159", "1160", "1161", "1162", "1163", "1164"]
 ```
 
-#### 5.1.3.5 Strahlentherapie
+###### 5.1.3.5 Strahlentherapie
 
-### Empfehlung 5.16
+##### Empfehlung 5.16
 
 ```yaml
 id: S3-5.0-5.16
@@ -719,7 +719,7 @@ fhir_mapping:
   anmerkung: "RT-Profil vorhanden, Re-Bestrahlung vs. Erstbestrahlung nicht differenziert."
 ```
 
-### Empfehlung 5.17
+##### Empfehlung 5.17
 
 ```yaml
 id: S3-5.0-5.17
@@ -752,7 +752,7 @@ fhir_mapping:
   anmerkung: "Therapie-Intent (palliativ) als Extension noetig."
 ```
 
-### Empfehlung 5.18
+##### Empfehlung 5.18
 
 ```yaml
 id: S3-5.0-5.18
@@ -779,7 +779,7 @@ referenzen:
   verwandte_empfehlungen: ["Kapitel 4.6 Strahlentherapie"]
 ```
 
-### Empfehlung 5.19
+##### Empfehlung 5.19
 
 ```yaml
 id: S3-5.0-5.19
@@ -803,7 +803,7 @@ fhir_mapping:
   anmerkung: "Re-Bestrahlung nach Vorbestrahlung, Dokumentation Spaetfolgen fehlt."
 ```
 
-### Empfehlung 5.20
+##### Empfehlung 5.20
 
 ```yaml
 id: S3-5.0-5.20
@@ -826,7 +826,7 @@ fhir_mapping:
   anmerkung: "Siehe 5.19"
 ```
 
-### Empfehlung 5.21
+##### Empfehlung 5.21
 
 ```yaml
 id: S3-5.0-5.21
@@ -851,7 +851,7 @@ fhir_mapping:
   anmerkung: "Risikofaktor-basierte Re-Bestrahlungsindikation."
 ```
 
-### Empfehlung 5.22
+##### Empfehlung 5.22
 
 ```yaml
 id: S3-5.0-5.22
@@ -874,7 +874,7 @@ fhir_mapping:
   anmerkung: "Bestrahlung bei R1/R2 ohne Vorbestrahlung."
 ```
 
-### Empfehlung 5.23
+##### Empfehlung 5.23
 
 ```yaml
 id: S3-5.0-5.23
@@ -901,11 +901,11 @@ fhir_mapping:
 
 ---
 
-## 5.2 Systemische Therapie metastasiertes Mammakarzinom
+#### 5.2 Systemische Therapie metastasiertes Mammakarzinom
 
-### 5.2.1 Systemische Therapie HER2-positives Mammakarzinom
+##### 5.2.1 Systemische Therapie HER2-positives Mammakarzinom
 
-### Empfehlung 5.24
+##### Empfehlung 5.24
 
 ```yaml
 id: S3-5.0-5.24
@@ -961,7 +961,7 @@ referenzen:
   s3_literatur: ["1172", "1173", "1168"]
 ```
 
-### Empfehlung 5.25
+##### Empfehlung 5.25
 
 ```yaml
 id: S3-5.0-5.25
@@ -1029,7 +1029,7 @@ referenzen:
   s3_literatur: ["1172", "1168", "1174"]
 ```
 
-### Empfehlung 5.26
+##### Empfehlung 5.26
 
 ```yaml
 id: S3-5.0-5.26
@@ -1084,7 +1084,7 @@ referenzen:
   s3_literatur: ["1175"]
 ```
 
-### Empfehlung 5.27
+##### Empfehlung 5.27
 
 ```yaml
 id: S3-5.0-5.27
@@ -1151,7 +1151,7 @@ referenzen:
   s3_literatur: ["1176", "1177", "1178", "1179", "1180", "1175"]
 ```
 
-### Empfehlung 5.28
+##### Empfehlung 5.28
 
 ```yaml
 id: S3-5.0-5.28
@@ -1213,9 +1213,9 @@ referenzen:
   s3_literatur: ["1177", "1187", "1179"]
 ```
 
-### 5.2.2 Prä-/perimenopausale Patientinnen, HR+/HER2-
+##### 5.2.2 Prä-/perimenopausale Patientinnen, HR+/HER2-
 
-### Empfehlung 5.29
+##### Empfehlung 5.29
 
 ```yaml
 id: S3-5.0-5.29
@@ -1242,7 +1242,7 @@ referenzen:
   s3_literatur: ["1190", "1191"]
 ```
 
-### Empfehlung 5.30
+##### Empfehlung 5.30
 
 ```yaml
 id: S3-5.0-5.30
@@ -1301,7 +1301,7 @@ referenzen:
   s3_literatur: ["1192", "1193"]
 ```
 
-### Empfehlung 5.31
+##### Empfehlung 5.31
 
 ```yaml
 id: S3-5.0-5.31
@@ -1342,7 +1342,7 @@ referenzen:
   s3_literatur: ["1192", "1193"]
 ```
 
-### Empfehlung 5.32
+##### Empfehlung 5.32
 
 ```yaml
 id: S3-5.0-5.32
@@ -1365,9 +1365,9 @@ fhir_mapping:
   anmerkung: "Therapiesequenz-Dokumentation ueber therapy-line Extension moeglich."
 ```
 
-### 5.2.3 Erstlinientherapie
+##### 5.2.3 Erstlinientherapie
 
-### Empfehlung 5.33
+##### Empfehlung 5.33
 
 ```yaml
 id: S3-5.0-5.33
@@ -1408,9 +1408,9 @@ referenzen:
   s3_literatur: ["1192", "1193", "1211", "1212"]
 ```
 
-### 5.2.4 Postmenopausale Patientinnen HR+/HER2-
+##### 5.2.4 Postmenopausale Patientinnen HR+/HER2-
 
-### Empfehlung 5.34
+##### Empfehlung 5.34
 
 ```yaml
 id: S3-5.0-5.34
@@ -1451,7 +1451,7 @@ referenzen:
   s3_literatur: ["1192", "1193", "1212"]
 ```
 
-### Empfehlung 5.35
+##### Empfehlung 5.35
 
 ```yaml
 id: S3-5.0-5.35
@@ -1477,9 +1477,9 @@ referenzen:
   s3_literatur: ["1190", "1191"]
 ```
 
-#### 5.2.4.1 Zweit- und Folgelinientherapie
+###### 5.2.4.1 Zweit- und Folgelinientherapie
 
-### Empfehlung 5.36
+##### Empfehlung 5.36
 
 ```yaml
 id: S3-5.0-5.36
@@ -1504,7 +1504,7 @@ referenzen:
   s3_literatur: ["1192", "1193", "1211", "1212"]
 ```
 
-### Empfehlung 5.37
+##### Empfehlung 5.37
 
 ```yaml
 id: S3-5.0-5.37
@@ -1576,7 +1576,7 @@ referenzen:
   s3_literatur: ["1242", "1243"]
 ```
 
-### Empfehlung 5.38
+##### Empfehlung 5.38
 
 ```yaml
 id: S3-5.0-5.38
@@ -1626,7 +1626,7 @@ referenzen:
   s3_literatur: ["1244", "1175"]
 ```
 
-### Empfehlung 5.39
+##### Empfehlung 5.39
 
 ```yaml
 id: S3-5.0-5.39
@@ -1685,7 +1685,7 @@ referenzen:
   s3_literatur: ["1245"]
 ```
 
-### Empfehlung 5.40
+##### Empfehlung 5.40
 
 ```yaml
 id: S3-5.0-5.40
@@ -1731,7 +1731,7 @@ fhir_mapping:
   anmerkung: "Medikamente ueber ATC abbildbar."
 ```
 
-### Empfehlung 5.41
+##### Empfehlung 5.41
 
 ```yaml
 id: S3-5.0-5.41
@@ -1775,9 +1775,9 @@ referenzen:
   verwandte_empfehlungen: ["5.37", "5.38", "5.39", "5.40"]
 ```
 
-### 5.2.5 ADC-Therapie HR+/HER2-
+##### 5.2.5 ADC-Therapie HR+/HER2-
 
-### Empfehlung 5.42
+##### Empfehlung 5.42
 
 ```yaml
 id: S3-5.0-5.42
@@ -1828,7 +1828,7 @@ referenzen:
   s3_literatur: ["1255", "1175"]
 ```
 
-### Empfehlung 5.43
+##### Empfehlung 5.43
 
 ```yaml
 id: S3-5.0-5.43
@@ -1866,7 +1866,7 @@ referenzen:
   s3_literatur: ["1256"]
 ```
 
-### Empfehlung 5.44
+##### Empfehlung 5.44
 
 ```yaml
 id: S3-5.0-5.44
@@ -1906,7 +1906,7 @@ referenzen:
   s3_literatur: ["1257", "1168", "1175"]
 ```
 
-### Empfehlung 5.45
+##### Empfehlung 5.45
 
 ```yaml
 id: S3-5.0-5.45
@@ -1945,9 +1945,9 @@ referenzen:
   s3_literatur: ["1260"]
 ```
 
-### 5.2.6 HER2-negativ mit BRCA1/2-Keimbahn-Mutation
+##### 5.2.6 HER2-negativ mit BRCA1/2-Keimbahn-Mutation
 
-### Empfehlung 5.46
+##### Empfehlung 5.46
 
 ```yaml
 id: S3-5.0-5.46
@@ -2009,9 +2009,9 @@ referenzen:
   s3_literatur: ["1168", "1261", "1262", "1263", "1264", "1265", "1175"]
 ```
 
-### 5.2.7 Triple-negativ fortgeschritten/metastasiert
+##### 5.2.7 Triple-negativ fortgeschritten/metastasiert
 
-### Empfehlung 5.47
+##### Empfehlung 5.47
 
 ```yaml
 id: S3-5.0-5.47
@@ -2098,7 +2098,7 @@ referenzen:
   s3_literatur: ["1168", "1273", "583", "1274", "582", "1275", "1276", "1175"]
 ```
 
-### Empfehlung 5.48
+##### Empfehlung 5.48
 
 ```yaml
 id: S3-5.0-5.48
@@ -2137,9 +2137,9 @@ referenzen:
   s3_literatur: ["1168", "1286", "1287", "1175"]
 ```
 
-### 5.2.8 Chemotherapie des metastasierten Mammakarzinoms
+##### 5.2.8 Chemotherapie des metastasierten Mammakarzinoms
 
-### Empfehlung 5.49
+##### Empfehlung 5.49
 
 ```yaml
 id: S3-5.0-5.49
@@ -2178,7 +2178,7 @@ fhir_mapping:
   anmerkung: "ECOG als Observation moeglich. Vortherapien ueber Procedure-Referenzen."
 ```
 
-### Empfehlung 5.50
+##### Empfehlung 5.50
 
 ```yaml
 id: S3-5.0-5.50
@@ -2222,7 +2222,7 @@ fhir_mapping:
   anmerkung: "Toxizitaetserfassung und Therapieevaluation nicht als eigene Observations modelliert."
 ```
 
-### Empfehlung 5.51
+##### Empfehlung 5.51
 
 ```yaml
 id: S3-5.0-5.51
@@ -2259,7 +2259,7 @@ fhir_mapping:
   anmerkung: "therapy-status Extension vorhanden, Abbruchgrund nicht detailliert."
 ```
 
-### Empfehlung 5.52
+##### Empfehlung 5.52
 
 ```yaml
 id: S3-5.0-5.52
@@ -2310,7 +2310,7 @@ referenzen:
   s3_literatur: ["1291", "1292"]
 ```
 
-### Empfehlung 5.53
+##### Empfehlung 5.53
 
 ```yaml
 id: S3-5.0-5.53
@@ -2350,11 +2350,11 @@ referenzen:
 
 ---
 
-## 5.3 Spezifische Metastasenlokalisationen
+#### 5.3 Spezifische Metastasenlokalisationen
 
-### 5.3.1 Grundsaetzliches Vorgehen bei Fernmetastasierung
+##### 5.3.1 Grundsaetzliches Vorgehen bei Fernmetastasierung
 
-### Empfehlung 5.54
+##### Empfehlung 5.54
 
 ```yaml
 id: S3-5.0-5.54
@@ -2400,11 +2400,11 @@ fhir_mapping:
   anmerkung: "Metastasenlokalisation ueber cs-senologie-metastasierung. Lokale Metastasentherapie als Procedure-Subtyp nicht modelliert."
 ```
 
-### 5.3.2 Skelettmetastasen
+##### 5.3.2 Skelettmetastasen
 
-#### 5.3.2.1 Indikationen zur Strahlentherapie
+###### 5.3.2.1 Indikationen zur Strahlentherapie
 
-### Empfehlung 5.55
+##### Empfehlung 5.55
 
 ```yaml
 id: S3-5.0-5.55
@@ -2440,9 +2440,9 @@ fhir_mapping:
   anmerkung: "RT bei Knochenmetastasen. Indikation als CodeableConcept ergaenzbar."
 ```
 
-#### 5.3.2.2 Indikationen zur operativen Therapie
+###### 5.3.2.2 Indikationen zur operativen Therapie
 
-### Empfehlung 5.56
+##### Empfehlung 5.56
 
 ```yaml
 id: S3-5.0-5.56
@@ -2467,9 +2467,9 @@ fhir_mapping:
   anmerkung: "Operation bei Skelettmetastasen nicht spezifisch modelliert."
 ```
 
-### 5.3.3 Behandlung von Hirnmetastasen
+##### 5.3.3 Behandlung von Hirnmetastasen
 
-### Empfehlung 5.57
+##### Empfehlung 5.57
 
 ```yaml
 id: S3-5.0-5.57
@@ -2508,7 +2508,7 @@ referenzen:
   s3_literatur: ["1312"]
 ```
 
-### Empfehlung 5.58
+##### Empfehlung 5.58
 
 ```yaml
 id: S3-5.0-5.58
@@ -2533,7 +2533,7 @@ referenzen:
   s3_literatur: ["1312"]
 ```
 
-### Empfehlung 5.59
+##### Empfehlung 5.59
 
 ```yaml
 id: S3-5.0-5.59
@@ -2555,7 +2555,7 @@ fhir_mapping:
   anmerkung: "Neurochirurgische Intervention nicht im Senologie-Profil."
 ```
 
-### Empfehlung 5.60
+##### Empfehlung 5.60
 
 ```yaml
 id: S3-5.0-5.60
@@ -2582,7 +2582,7 @@ referenzen:
   s3_literatur: ["1312"]
 ```
 
-### Empfehlung 5.61
+##### Empfehlung 5.61
 
 ```yaml
 id: S3-5.0-5.61
@@ -2605,7 +2605,7 @@ fhir_mapping:
   anmerkung: "Stereotaktische RT bei multiplen Hirnmetastasen."
 ```
 
-### Empfehlung 5.62
+##### Empfehlung 5.62
 
 ```yaml
 id: S3-5.0-5.62
@@ -2627,7 +2627,7 @@ fhir_mapping:
   anmerkung: "Ganzhirnbestrahlung als Fallback-Option."
 ```
 
-### Empfehlung 5.63
+##### Empfehlung 5.63
 
 ```yaml
 id: S3-5.0-5.63
@@ -2653,7 +2653,7 @@ referenzen:
   s3_literatur: ["1312"]
 ```
 
-### Empfehlung 5.64
+##### Empfehlung 5.64
 
 ```yaml
 id: S3-5.0-5.64
@@ -2675,7 +2675,7 @@ fhir_mapping:
   anmerkung: "Negative Empfehlung."
 ```
 
-### Empfehlung 5.65
+##### Empfehlung 5.65
 
 ```yaml
 id: S3-5.0-5.65
@@ -2699,9 +2699,9 @@ fhir_mapping:
   anmerkung: "IMRT-Technik mit Hippocampus-Schonung."
 ```
 
-### 5.3.4 Behandlung von Lebermetastasen
+##### 5.3.4 Behandlung von Lebermetastasen
 
-### Empfehlung 5.66
+##### Empfehlung 5.66
 
 ```yaml
 id: S3-5.0-5.66
@@ -2736,9 +2736,9 @@ referenzen:
   s3_literatur: ["1355", "1356", "1357", "1358", "1359", "1360", "1361", "1362", "1363", "1364", "1365"]
 ```
 
-### 5.3.5 Behandlung von Lungenmetastasen
+##### 5.3.5 Behandlung von Lungenmetastasen
 
-### Empfehlung 5.67
+##### Empfehlung 5.67
 
 ```yaml
 id: S3-5.0-5.67
@@ -2766,9 +2766,9 @@ referenzen:
   s3_literatur: ["1362", "1368", "1363", "1364", "1365"]
 ```
 
-#### 5.3.5.1 Maligner Pleuraerguss
+###### 5.3.5.1 Maligner Pleuraerguss
 
-### Empfehlung 5.68
+##### Empfehlung 5.68
 
 ```yaml
 id: S3-5.0-5.68
@@ -2813,9 +2813,9 @@ referenzen:
   s3_literatur: ["1373"]
 ```
 
-### 5.3.6 Haut- und Weichteilmetastasen
+##### 5.3.6 Haut- und Weichteilmetastasen
 
-### Empfehlung 5.69
+##### Empfehlung 5.69
 
 ```yaml
 id: S3-5.0-5.69
@@ -2839,9 +2839,9 @@ fhir_mapping:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 5
+#### Zusammenfassung: Gap-Analyse Kapitel 5
 
-### Medikamenten-Referenz (ATC-Codes)
+##### Medikamenten-Referenz (ATC-Codes)
 
 | Medikament | ATC-Code | Indikation (Kapitel) |
 |-----------|----------|---------------------|
@@ -2882,7 +2882,7 @@ fhir_mapping:
 
 *ATC-Codes mit * sind Vorschlaege und muessen validiert werden.
 
-### Biomarker-Stratifizierung
+##### Biomarker-Stratifizierung
 
 | Biomarker | Bestimmungsmethode | Therapieentscheidung |
 |-----------|-------------------|---------------------|
@@ -2895,7 +2895,7 @@ fhir_mapping:
 | PIK3CA/AKT1/PTEN-Alteration | NGS | Capivasertib |
 | ESR1-Mutation | Liquid Biopsy (ctDNA) | Elacestrant |
 
-### FHIR-Mapping Gap-Analyse
+##### FHIR-Mapping Gap-Analyse
 
 | Empf. | Thema | FHIR-Status | Handlungsbedarf |
 |-------|-------|-------------|-----------------|
@@ -2925,7 +2925,7 @@ fhir_mapping:
 | 5.67-5.68 | Lungenmetastasen/Pleuraerguss | **gap** | Pulmonale/pleurale Interventionen |
 | 5.69 | Hautmetastasen | **gap** | Hautmetastasen-Therapie |
 
-### Priorisierte Gaps
+##### Priorisierte Gaps
 
 1. **Genomics Reporting** (PIK3CA, ESR1, BRCA1/2, AKT1/PTEN): Erforderlich fuer biomarker-gesteuerte Therapieentscheidungen in 5.37-5.39, 5.46. HL7 Genomics Reporting IG als Basis.
 2. **HER2-low/ultralow Kategorie**: Neue therapeutisch relevante Biomarker-Klassifikation (5.42-5.43). Erweiterung des HER2-ValueSets noetig.

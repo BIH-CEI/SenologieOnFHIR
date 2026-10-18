@@ -1,13 +1,13 @@
-# S3-Leitlinie v5.0 - Kapitel 4.5: Pathologie
+### S3-Leitlinie v5.0 - Kapitel 4.5: Pathologie
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 124-144
 > Kapitelstruktur: 4.5.1 Allgemeines | 4.5.2 Diagnostik Primärtumor | 4.5.3 Diagnostik Metastase | 4.5.4 Details Biomarker-Diagnostik | 4.5.5 Prognose und Prädiktion | 4.5.6 Molekulares Tumorboard
 
 ---
 
-## 4.5.1 Allgemeines
+#### 4.5.1 Allgemeines
 
-### Empfehlung 4.65
+##### Empfehlung 4.65
 
 ```yaml
 id: S3-5.0-4.65
@@ -60,7 +60,7 @@ referenzen:
   verwandte_empfehlungen: ["4.66", "4.67", "4.68"]
 ```
 
-### Empfehlung 4.66
+##### Empfehlung 4.66
 
 ```yaml
 id: S3-5.0-4.66
@@ -118,7 +118,7 @@ referenzen:
   verwandte_empfehlungen: ["4.76"]
 ```
 
-### Empfehlung 4.67
+##### Empfehlung 4.67
 
 ```yaml
 id: S3-5.0-4.67
@@ -173,7 +173,7 @@ referenzen:
   s3_literatur: ["566", "567"]
 ```
 
-### Empfehlung 4.69
+##### Empfehlung 4.69
 
 ```yaml
 id: S3-5.0-4.69
@@ -254,9 +254,9 @@ referenzen:
 
 ---
 
-## 4.5.2 Diagnostik Primärtumor
+#### 4.5.2 Diagnostik Primärtumor
 
-### Empfehlung 4.70
+##### Empfehlung 4.70
 
 ```yaml
 id: S3-5.0-4.70
@@ -404,9 +404,9 @@ referenzen:
 
 ---
 
-## 4.5.3 Diagnostik Metastase
+#### 4.5.3 Diagnostik Metastase
 
-### Empfehlung 4.71
+##### Empfehlung 4.71
 
 ```yaml
 id: S3-5.0-4.71
@@ -505,9 +505,9 @@ referenzen:
 
 ---
 
-## 4.5.4 Details Biomarker-Diagnostik
+#### 4.5.4 Details Biomarker-Diagnostik
 
-### Empfehlung 4.72
+##### Empfehlung 4.72
 
 ```yaml
 id: S3-5.0-4.72
@@ -588,7 +588,7 @@ referenzen:
   verwandte_empfehlungen: ["4.70", "4.73"]
 ```
 
-### Empfehlung 4.73
+##### Empfehlung 4.73
 
 ```yaml
 id: S3-5.0-4.73
@@ -667,7 +667,7 @@ referenzen:
   verwandte_empfehlungen: ["4.70", "4.71", "4.76"]
 ```
 
-### Empfehlung 4.74
+##### Empfehlung 4.74
 
 ```yaml
 id: S3-5.0-4.74
@@ -714,7 +714,7 @@ referenzen:
   verwandte_empfehlungen: ["4.70", "4.82"]
 ```
 
-### Empfehlung 4.75
+##### Empfehlung 4.75
 
 ```yaml
 id: S3-5.0-4.75
@@ -771,7 +771,7 @@ referenzen:
   verwandte_empfehlungen: ["4.71"]
 ```
 
-### Empfehlung 4.76
+##### Empfehlung 4.76
 
 ```yaml
 id: S3-5.0-4.76
@@ -812,9 +812,9 @@ referenzen:
 
 ---
 
-## 4.5.5 Prognose und Prädiktion
+#### 4.5.5 Prognose und Prädiktion
 
-### Empfehlung 4.77
+##### Empfehlung 4.77
 
 ```yaml
 id: S3-5.0-4.77
@@ -860,7 +860,7 @@ referenzen:
   verwandte_empfehlungen: ["4.70", "4.78", "4.79", "4.80", "4.81", "4.82"]
 ```
 
-### Empfehlungen 4.78-4.82 (Prognose-Parameter)
+##### Empfehlungen 4.78-4.82 (Prognose-Parameter)
 
 ```yaml
 # Zusammenfassung der Prognosefaktoren (4.78-4.82)
@@ -906,7 +906,7 @@ prognosefaktoren_obligat:
       Triple-negativ: ER- und PR- und HER2-
 ```
 
-### Empfehlung 4.83
+##### Empfehlung 4.83
 
 ```yaml
 id: S3-5.0-4.83
@@ -953,7 +953,7 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 4.5
+#### Zusammenfassung: Gap-Analyse Kapitel 4.5
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|

@@ -3,6 +3,10 @@ name: Build IG & Publish to GitHub Pages
 on:
   push:
     branches: [main]
+  # Review-Preview: jeder PR gegen main wird nach gh-pages/branches/<slug>/
+  # deployt, ci-build/ bleibt dem main-Stand vorbehalten.
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -10,7 +14,11 @@ permissions:
   pages: write
   id-token: write
   checks: write
+  pull-requests: write
 
+# Alle Builds pushen auf denselben gh-pages-Branch, daher global serialisiert:
+# ein ref-spezifischer Gruppenname wuerde PR- und main-Build parallel laufen
+# und beim Push kollidieren lassen.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -229,8 +237,21 @@ jobs:
           find output -name lang-redirects.js -exec cp scripts/ig/lang-redirects.js {} \;
           grep -q "target = langs" output/assets/js/lang-redirects.js
 
-      - name: Deploy CI Build to GitHub Pages
+      # Ziel: main -> ci-build/, Pull Request -> branches/<slug>/.
+      # output/ ist gitignored und ueberlebt daher den Branch-Wechsel
+      # (git stash --include-untracked laesst ignorierte Pfade liegen).
+      - name: Deploy to GitHub Pages
+        id: deploy
         run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            SLUG=$(echo "${{ github.head_ref }}" | tr '/' '-' | tr -cd '[:alnum:]._-')
+            TARGET="branches/$SLUG"
+          else
+            TARGET="ci-build"
+          fi
+          echo "target=$TARGET" >> $GITHUB_OUTPUT
+          echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/$TARGET/index.html" >> $GITHUB_OUTPUT
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git stash --include-untracked
@@ -240,13 +261,38 @@ jobs:
             git checkout --orphan gh-pages
             git rm -rf . 2>/dev/null || true
           fi
-          # Keep existing release versions, replace ci-build
-          rm -rf ci-build
-          cp -r output ci-build
+          # Keep existing release versions and foreign previews, replace only $TARGET
+          rm -rf "$TARGET"
+          mkdir -p "$(dirname "$TARGET")"
+          cp -r output "$TARGET"
           # Create index redirect if not exists
           if [ ! -f index.html ]; then
             echo '<html><head><meta http-equiv="refresh" content="0; url=ci-build/index.html"></head><body>Redirecting to <a href="ci-build/index.html">CI Build</a></body></html>' > index.html
           fi
-          git add ci-build/ index.html
-          git commit -m "ci-build: $(date -u +%Y-%m-%dT%H:%M:%SZ)" --allow-empty
-          git push origin gh-pages
+          git add "$TARGET" index.html
+          git commit -m "$TARGET: $(date -u +%Y-%m-%dT%H:%M:%SZ)" --allow-empty
+          # ig-release.yml pusht ebenfalls auf gh-pages; bei Kollision rebasen
+          for attempt in 1 2 3; do
+            if git push origin gh-pages; then
+              exit 0
+            fi
+            echo "Push abgelehnt (Versuch $attempt) — rebase auf origin/gh-pages"
+            git pull --rebase origin gh-pages
+          done
+          exit 1
+
+      # Darf den Build nicht roetlich machen: der Preview steht auch ohne Kommentar.
+      - name: Comment preview URL on the pull request
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ steps.deploy.outputs.url }}
+          PR: ${{ github.event.number }}
+        run: |
+          printf '%s\n\n%s\n' \
+            "IG-Preview dieses Branches: $URL" \
+            "Wird bei jedem Push auf den PR neu gebaut und beim Schliessen des PR entfernt. Der main-Stand bleibt unter \`/ci-build/\`." \
+            > comment.md
+          gh pr comment "$PR" --body-file comment.md --edit-last --create-if-none \
+            || gh pr comment "$PR" --body-file comment.md
