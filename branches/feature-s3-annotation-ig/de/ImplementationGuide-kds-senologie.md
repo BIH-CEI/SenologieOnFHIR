@@ -1,0 +1,10384 @@
+# Resource Kerndatensatz Senologie
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "ImplementationGuide",
+  "id" : "kds-senologie",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareableimplementationguide",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishableimplementationguide",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-implementationguide"]
+  },
+  "language" : "de",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "packageId",
+      "valueId" : "kds-senologie"
+    },
+    {
+      "url" : "version",
+      "valueString" : "0.10.0"
+    },
+    {
+      "url" : "uri",
+      "valueUri" : "https://www.senologie.org/fhir"
+    }],
+    "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  }],
+  "url" : "https://www.senologie.org/fhir/ImplementationGuide/kds-senologie",
+  "version" : "0.10.0",
+  "name" : "SenologieKDS",
+  "title" : "Kerndatensatz Senologie",
+  "_title" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Senologie Core Dataset"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Kerndatensatz für die strukturierte Dokumentation der Brustkrebsversorgung an zertifizierten Brustzentren und darüber hinaus",
+  "packageId" : "kds-senologie",
+  "license" : "CC-BY-4.0",
+  "fhirVersion" : ["4.0.1"],
+  "dependsOn" : [{
+    "id" : "de_medizininformatikinitiative_kerndatensatz_onkologie",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ImplementationGuide/mii-ig-onko-de",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.onkologie",
+    "version" : "2027.0.0-ballot.1"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_patho",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-patho",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.patho",
+    "version" : "2027.0.0-ballot.rc2"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_bildgebung",
+    "uri" : "http://fhir.org/packages/de.medizininformatikinitiative.kerndatensatz.bildgebung/ImplementationGuide/de.medizininformatikinitiative.kerndatensatz.bildgebung",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.bildgebung",
+    "version" : "2027.0.0-ballot.rc2"
+  },
+  {
+    "id" : "de_medizininformatikinitiative_kerndatensatz_mtb",
+    "uri" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-mtb/ImplementationGuide/mii-ig-mtb",
+    "packageId" : "de.medizininformatikinitiative.kerndatensatz.mtb",
+    "version" : "2027.0.0-ballot.1"
+  },
+  {
+    "id" : "de_gematik_isik",
+    "uri" : "http://fhir.org/packages/de.gematik.isik/ImplementationGuide/de.gematik.isik",
+    "packageId" : "de.gematik.isik",
+    "version" : "6.0.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_crmi",
+    "uri" : "http://hl7.org/fhir/uv/crmi/ImplementationGuide/hl7.fhir.uv.crmi",
+    "packageId" : "hl7.fhir.uv.crmi",
+    "version" : "2.0.0"
+  },
+  {
+    "id" : "hl7_terminology_r4",
+    "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
+    "packageId" : "hl7.terminology.r4",
+    "version" : "7.4.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_extensions_r4",
+    "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
+    "packageId" : "hl7.fhir.uv.extensions.r4",
+    "version" : "5.3.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_sdc",
+    "uri" : "http://hl7.org/fhir/uv/sdc/ImplementationGuide/hl7.fhir.uv.sdc",
+    "packageId" : "hl7.fhir.uv.sdc",
+    "version" : "4.0.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_xver_r5_r4",
+    "uri" : "http://hl7.org/fhir/uv/xver/ImplementationGuide/hl7.fhir.uv.xver-r5.r4",
+    "packageId" : "hl7.fhir.uv.xver-r5.r4",
+    "version" : "0.1.0"
+  }],
+  "definition" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
+      "valueCode" : "hl7.fhir.uv.tools.r4#1.3.0"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "copyrightyear"
+      },
+      {
+        "url" : "value",
+        "valueString" : "2025+"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "releaselabel"
+      },
+      {
+        "url" : "value",
+        "valueString" : "ci-build"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "i18n-default-lang"
+      },
+      {
+        "url" : "value",
+        "valueString" : "de"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "i18n-lang"
+      },
+      {
+        "url" : "value",
+        "valueString" : "en"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "translation-sources"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/translations/en"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "excludettl"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "excludexml"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "excludemap"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "autoload-resources"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-liquid"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template/liquid"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-liquid"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/liquid"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-qa"
+      },
+      {
+        "url" : "value",
+        "valueString" : "temp/qa"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-temp"
+      },
+      {
+        "url" : "value",
+        "valueString" : "temp/pages"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-output"
+      },
+      {
+        "url" : "value",
+        "valueString" : "output"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-suppressed-warnings"
+      },
+      {
+        "url" : "value",
+        "valueString" : "input/ignoreWarnings.txt"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "path-history"
+      },
+      {
+        "url" : "value",
+        "valueString" : "https://www.senologie.org/fhir/history.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "template-html"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template-page.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "template-md"
+      },
+      {
+        "url" : "value",
+        "valueString" : "template-page-md.html"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-contact"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-context"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-copyright"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-jurisdiction"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-license"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-publisher"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-version"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "apply-wg"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "active-tables"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "fmm-definition"
+      },
+      {
+        "url" : "value",
+        "valueString" : "http://hl7.org/fhir/versions.html#maturity"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "propagate-status"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "excludelogbinaryformat"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "tabbed-snapshots"
+      },
+      {
+        "url" : "value",
+        "valueString" : "true"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "wantGen-ttl"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "wantGen-ttl-html"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "wantGen-xml"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "wantGen-xml-html"
+      },
+      {
+        "url" : "value",
+        "valueString" : "false"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    }],
+    "resource" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-session-count.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-session-count"
+      },
+      "name" : "Anzahl Bestrahlungssitzungen",
+      "description" : "Anzahl der Bestrahlungssitzungen — MII Onko hat kein Fraktionszahl-Element",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-aufklaerungsdatum.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-aufklaerungsdatum"
+      },
+      "name" : "Aufklärungsdatum",
+      "description" : "Datum der Aufklärung der Patientin über die Studie",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Example-Bildgebung-Skelettszintigraphie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Example-Bildgebung-Skelettszintigraphie"
+      },
+      "name" : "Beispiel Skelettszintigraphie (Staging)",
+      "description" : "Skelettszintigraphie im Rahmen des Stagings bei Mammakarzinom — kein Hinweis auf ossäre Metastasen.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ResearchStudy"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ResearchStudy-Example-ResearchStudy-ADAPT-HER2.html"
+      }],
+      "reference" : {
+        "reference" : "ResearchStudy/Example-ResearchStudy-ADAPT-HER2"
+      },
+      "name" : "Beispiel: ADAPT-HER2 Studie",
+      "description" : "Fiktive klinische Studie ADAPT-HER2 für Mammakarzinom",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Example-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Example-Strahlentherapie"
+      },
+      "name" : "Beispiel: Adjuvante Bestrahlung 50 Gy / 25 Fraktionen",
+      "description" : "Adjuvante Ganzbrustbestrahlung links mit 50 Gy in 25 Fraktionen nach BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Example-Begleitmedikation-Metoprolol.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Example-Begleitmedikation-Metoprolol"
+      },
+      "name" : "Beispiel: Begleitmedikation Metoprolol 47,5 mg",
+      "description" : "Patientin nimmt Metoprolol 47,5 mg 1x täglich wegen arterieller Hypertonie.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Example-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Example-Operation-BET"
+      },
+      "name" : "Beispiel: BET links mit Sentinel-LK-Biopsie",
+      "description" : "Brusterhaltende Therapie (BET) links mit intraoperativer Sentinel-Lymphknoten-Biopsie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Example-Bildgebung-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Example-Bildgebung-BiRADS-Rechts"
+      },
+      "name" : "Beispiel: BI-RADS 1 rechts",
+      "description" : "BI-RADS 1 Befund der rechten Brust bei Mammographie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Example-Bildgebung-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Example-Bildgebung-BiRADS-Links"
+      },
+      "name" : "Beispiel: BI-RADS 5 links",
+      "description" : "BI-RADS 5 Befund der linken Brust bei Mammographie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Example-Diagnose-DCIS.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Example-Diagnose-DCIS"
+      },
+      "name" : "Beispiel: DCIS rechts",
+      "description" : "Duktales Carcinoma in situ der rechten Brust, mammographisch entdeckt",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Example-Medikation-Epirubicin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Example-Medikation-Epirubicin"
+      },
+      "name" : "Beispiel: Epirubicin 90 mg/m², Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Epirubicin im Rahmen des EC-T Schemas, Zyklus 1, Tag 1",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Example-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Example-Pathologie-Befund"
+      },
+      "name" : "Beispiel: Invasiv-duktales Karzinom G2, ER+/PR+/HER2-",
+      "description" : "Pathologischer Befund nach Stanzbiopsie: invasiv-duktales Karzinom, G2, Hormonrezeptor-positiv, HER2-negativ",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Example-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Example-Diagnose-Mammakarzinom"
+      },
+      "name" : "Beispiel: Mammakarzinom links",
+      "description" : "Primäres Mammakarzinom der linken Brust, Stadium II, histologisch gesichert",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Example-Diagnose-Rezidiv.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Example-Diagnose-Rezidiv"
+      },
+      "name" : "Beispiel: Mammakarzinom-Rezidiv",
+      "description" : "Lokalrezidiv eines Mammakarzinoms nach brusterhaltender Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Example-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Example-Bildgebung-Mammographie"
+      },
+      "name" : "Beispiel: Mammographie bilateral, BI-RADS 5 links",
+      "description" : "Mammographie bilateral mit suspektem Herdbefund links (BI-RADS 5) und unauffälligem Befund rechts (BI-RADS 1)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Example-Systemtherapie-ECT.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Example-Systemtherapie-ECT"
+      },
+      "name" : "Beispiel: Neoadjuvante Chemotherapie EC-T",
+      "description" : "Neoadjuvante Chemotherapie mit Epirubicin/Cyclophosphamid gefolgt von Docetaxel (EC-T Schema)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Example-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Example-Patho-Conclusion"
+      },
+      "name" : "Beispiel: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-example-patient.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/example-patient"
+      },
+      "name" : "Beispiel: Patientin",
+      "description" : "Beispiel-Patientin für Senologie-Instanzen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Example-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Example-Operation-SLNB"
+      },
+      "name" : "Beispiel: Sentinel-Lymphknoten-Biopsie links",
+      "description" : "SLNB als Subprozedur der BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Example-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Example-Pathologie-Praeparat"
+      },
+      "name" : "Beispiel: Stanzbiopsie-Präparat links OAQ",
+      "description" : "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ResearchSubject"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ResearchSubject-Example-Studienteilnahme.html"
+      }],
+      "reference" : {
+        "reference" : "ResearchSubject/Example-Studienteilnahme"
+      },
+      "name" : "Beispiel: Studienteilnahme ADAPT-HER2",
+      "description" : "Beispiel einer Patientin, die in der ADAPT-HER2-Studie im Interventionsarm teilnimmt",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-studienteilnahme"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-implantat.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-implantat"
+      },
+      "name" : "BIH LM Senologie Brustimplantat",
+      "description" : "Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senologie",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-operation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-operation"
+      },
+      "name" : "BIH LM Senologie Brustwand-Operation",
+      "description" : "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie. Erbt Intention, PräoperativeMarkierung und IntraoperativesImaging von MII Onko Mamma Operation.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-LogicalModelSenologie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/LogicalModelSenologie"
+      },
+      "name" : "BIH LM Senologie LogicalModel",
+      "description" : "Vollständiges LogicalModel der BIH-Spezifikation des Moduls Senologie. Bildet alle klinischen Datenpunkte des Kerndatensatzes Senologie ab.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-operation-art.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-operation-art"
+      },
+      "name" : "BIH LM Senologie Operation",
+      "description" : "Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-diagnose-benigne.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-diagnose-benigne"
+      },
+      "name" : "BIH PR Seno Diagnose Benigne",
+      "description" : "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankungen. ISiK-kompatibel für Krankenhaus-Interoperabilität ohne Krebsregister-Anforderungen.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-diagnose-maligne.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-diagnose-maligne"
+      },
+      "name" : "BIH PR Seno Diagnose Maligne",
+      "description" : "Maligne Mamma-Diagnosen (C50, D05) für Krebsregister-Meldung. Basiert auf MII PR Onko Diagnose Primärtumor mit oBDS-konformer Diagnosesicherung und Staging.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-genexpressions-score.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-genexpressions-score"
+      },
+      "name" : "BIH PR Seno Genexpressions-Score",
+      "description" : "Observation für den numerischen Score-Wert eines Genexpressionstests (Oncotype DX Recurrence Score, MammaPrint Index, Prosigna ROR Score, EndoPredict EPclin Score)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-genexpressionstest.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-genexpressionstest"
+      },
+      "name" : "BIH PR Seno Genexpressionstest",
+      "description" : "RiskAssessment für genomische Risikoscores bei Mammakarzinom (Oncotype DX, MammaPrint, Prosigna, EndoPredict). Bildet die Risikoklassifikation ab und referenziert die Score-Observation.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-begleitmedikation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-begleitmedikation"
+      },
+      "name" : "BIH Senologie Begleitmedikation",
+      "description" : "Begleitmedikation der Patientin – aktuelle Dauermedikation und sonstige Medikamente, die nicht Teil der onkologischen Systemtherapie sind (z. B. Antihypertensiva, Schilddrüsenhormone, Antikoagulantien).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-bildgebung-befund.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-bildgebung-befund"
+      },
+      "name" : "BIH Senologie Bildgebung Befund",
+      "description" : "DiagnosticReport für Befunde bildgebender Verfahren (Mammographie, Sonographie, MRT, Tomosynthese, etc.)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-bildgebung-observation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-bildgebung-observation"
+      },
+      "name" : "BIH Senologie Bildgebung Observation",
+      "description" : "Observation für einzelne Bildgebungs-Befunde (BI-RADS, ACR, Herdbefund, Mikrokalk, LK-Status)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-bildgebung-sonstige.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-bildgebung-sonstige"
+      },
+      "name" : "BIH Senologie Bildgebung Sonstige",
+      "description" : "DiagnosticReport für nicht-mammaspezifische Bildgebung im Rahmen des Stagings oder der Verlaufskontrolle (z.B. Skelettszintigraphie, CT, PET-CT, Röntgen Thorax, Lebersonographie).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-checkliste-erbliche-belastung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-checkliste-erbliche-belastung"
+      },
+      "name" : "BIH Senologie Checkliste Erbliche Belastung",
+      "description" : "Observation für die DKG-Checkliste zur Identifikation erblicher Tumorbelastung (D24/D25). Erfasst ob die Checkliste durchgeführt wurde und ggf. den Score.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-er-status.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-er-status"
+      },
+      "name" : "BIH Senologie ER-Status",
+      "description" : "Östrogenrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Estrogen (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS (Remmele-Stegner) und Allred-Score als Senologie-Erweiterung. Erlaubt ER-low-Analysen.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-familienanamnese.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-familienanamnese"
+      },
+      "name" : "BIH Senologie Familienanamnese",
+      "description" : "FamilyMemberHistory für familiäre Belastung mit Mamma- und Ovarialkarzinom",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-follow-up.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-follow-up"
+      },
+      "name" : "BIH Senologie Follow-Up (Verlaufsmeldung)",
+      "description" : "Verlaufsmeldung mit Meldedatum (M01), Melder (M02), Nachsorge-Art als method (M03), Tumorstatus lokal/LK/FM (M05-M07, geerbt von MII Verlauf), und Zweittumor-Flag (M08). Vitalstatus (M04) wird ueber Patient.deceased abgebildet. Zweittumor-Details (M09-M10) werden als eigene Condition dokumentiert.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-geplante-systemtherapie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-geplante-systemtherapie"
+      },
+      "name" : "BIH Senologie Geplante Systemtherapie",
+      "description" : "MedicationRequest für geplante Systemtherapie",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-gynaekologische-anamnese.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-gynaekologische-anamnese"
+      },
+      "name" : "BIH Senologie Gynäkologische Anamnese",
+      "description" : "Observation für gynäkologische Anamnese (Menarche, Menopause, Schwangerschaften, HRT)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-her2-status.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-her2-status"
+      },
+      "name" : "BIH Senologie HER2-Status (IHC)",
+      "description" : "HER2-Status aus Immunhistochemie — erbt MII Onko Mamma Her2neu Status (oBDS + Leitlinien-Slicing inkl. HER2-low/HER2-ultralow, IHC-Score + ISH-Ergebnis). Quantitative ISH-Details (Ratio/Kopienzahl) werden über MII MTB INSITUHYBRIDIZATION_HER2 abgebildet.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-ki67-proliferationsindex.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-ki67-proliferationsindex"
+      },
+      "name" : "BIH Senologie Ki-67 Proliferationsindex",
+      "description" : "Ki-67-Proliferationsindex (%) aus immunhistochemischer Untersuchung. Kein MII-Onko-Profil vorhanden — senologiespezifisch, orientiert am MII ER/PR-Muster (LOINC-Code + valueQuantity %).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-klinische-untersuchung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-klinische-untersuchung"
+      },
+      "name" : "BIH Senologie Klinische Untersuchung",
+      "description" : "Observation für klinische Brustuntersuchung (Mammabefund pro Seite)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-nebenwirkung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-nebenwirkung"
+      },
+      "name" : "BIH Senologie Nebenwirkung",
+      "description" : "AdverseEvent für CTCAE-Nebenwirkungsgrading unter Systemtherapie. Erbt MedDRA-Kodierung und CTCAE-Grad von MII Onko Nebenwirkung.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-op-planung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-op-planung"
+      },
+      "name" : "BIH Senologie OP Planung",
+      "description" : "ServiceRequest für OP Planung",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-operative-komplikation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-operative-komplikation"
+      },
+      "name" : "BIH Senologie Operative Komplikation",
+      "description" : "Observation für postoperative Komplikationen mit Clavien-Dindo-Klassifikation. Folgt dem MII Prostata Clavien-Dindo Muster (Observation statt AdverseEvent).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-pathologie-befund.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-pathologie-befund"
+      },
+      "name" : "BIH Senologie Pathologie Befund",
+      "description" : "DiagnosticReport für pathologische Befunde. Basiert auf MII Patho Report — Specimen- und Lokalisationsdetails sind in Senologie_Pathologie_Praeparat und Senologie_Tumorlokalisation ausgelagert.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-pathologie-praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-pathologie-praeparat"
+      },
+      "name" : "BIH Senologie Pathologisches Präparat",
+      "description" : "Specimen für pathologische Präparate (Biopsie, Resektat, etc.) mit Lokalisations- und Entnahme-Details",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-pdl1-status.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-pdl1-status"
+      },
+      "name" : "BIH Senologie PD-L1 Status",
+      "description" : "PD-L1 Immunhistochemie-Befund für Mamma-Karzinom. Erbt TPS, CPS, ICS und TC-Score Slices vom MII MTB PD-L1 Profil. Klinisch relevant bei TNBC (Pembrolizumab-Indikation bei CPS >= 10, KEYNOTE-522).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-pr-status.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-pr-status"
+      },
+      "name" : "BIH Senologie PR-Status",
+      "description" : "Progesteronrezeptor-Status — erbt MII Onko Mamma Rezeptorstatus Progesteron (oBDS + Leitlinien-Slicing, AnteilPositiveZellen + Färbeintensität) und ergänzt IRS und Allred-Score als Senologie-Erweiterung.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-psychoonkologie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-psychoonkologie"
+      },
+      "name" : "BIH Senologie Psychoonkologische Mitbetreuung",
+      "description" : "Procedure fuer psychoonkologische Mitbetreuung (OncoBox KB-9). status=completed + performedDateTime zeigt 'erfolgt=ja' an, status=not-done zeigt 'erfolgt=nein' an.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-somatische-mutation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-somatische-mutation"
+      },
+      "name" : "BIH Senologie Somatische Mutation",
+      "description" : "Somatischer Mutationsstatus für BRCA1, BRCA2 und PALB2 im Tumorgewebe. Erbt Gen-Kodierung und Ausprägung von MII Onko Genetische Variante.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-sozialdienst.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-sozialdienst"
+      },
+      "name" : "BIH Senologie Sozialdienst-Kontakt",
+      "description" : "Procedure für Sozialdienst-Kontakt (OncoBox 2.0 L02, DKG OF-14). Erfasst ob eine Sozialdienst-Beratung stattgefunden hat und wann.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-strahlentherapie"
+      },
+      "name" : "BIH Senologie Strahlentherapie",
+      "description" : "Procedure für Strahlentherapie. Erbt Gesamtdosis, Boost und Seitenlokalisation von MII Onko Bestrahlung.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-studienteilnahme.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-studienteilnahme"
+      },
+      "name" : "BIH Senologie Studienteilnahme",
+      "description" : "ResearchSubject für klinische Studienteilnahme in der Senologie. Bildet Studienname, Screeningstatus, Studienscreening, Studienarm, Aufklärungsdatum, Teilnahmestatus und Kontaktperson ab.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-systemtherapie-procedure.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-systemtherapie-procedure"
+      },
+      "name" : "BIH Senologie Systemtherapie (übergeordnet)",
+      "description" : "Procedure für übergeordnete Systemtherapie-Dokumentation. Erbt Intention, outcome und usedCode von MII Onko Systemtherapie.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-systemtherapie-medikation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-systemtherapie-medikation"
+      },
+      "name" : "BIH Senologie Systemtherapie Medikation (einzelne Gabe)",
+      "description" : "MedicationStatement für einzelne Medikamentengaben. Erbt ATC/UNII-Codierung und partOf:systemischeTherapie von MII Onko.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-tumorboard-empfehlung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-tumorboard-empfehlung"
+      },
+      "name" : "BIH Senologie Tumorboard Empfehlung",
+      "description" : "CarePlan für Empfehlungen der interdisziplinären Tumorkonferenz (Tumorboard)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-tumorlokalisation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-tumorlokalisation"
+      },
+      "name" : "BIH Senologie Tumorlokalisation",
+      "description" : "BodyStructure für die Tumorlokalisation in der Brust (Seite, Quadrant, Uhrzeitposition, Mamillenabstand)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Organization"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Organization-Brustzentrum-Charite.html"
+      }],
+      "reference" : {
+        "reference" : "Organization/Brustzentrum-Charite"
+      },
+      "name" : "Brustzentrum Charité — Universitätsmedizin Berlin",
+      "description" : "Zertifiziertes Brustzentrum der Charité",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-tumor-conference-consent.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-tumor-conference-consent"
+      },
+      "name" : "CA-Behandlung/Tumorkonferenz-Zustimmung",
+      "description" : "CA-Behandlung / Tumorkonferenz-Zustimmung (Ja/Nein) — kein natives FHIR-Äquivalent",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Example-Checkliste-Erbliche-Belastung-Ja.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Example-Checkliste-Erbliche-Belastung-Ja"
+      },
+      "name" : "Checkliste erbliche Belastung — durchgeführt (Score 3)",
+      "description" : "Beispiel: Checkliste wurde durchgeführt mit Score 3",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-checkliste-erbliche-belastung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Example-Checkliste-Erbliche-Belastung-Nein.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Example-Checkliste-Erbliche-Belastung-Nein"
+      },
+      "name" : "Checkliste erbliche Belastung — nicht durchgeführt",
+      "description" : "Beispiel: Checkliste wurde nicht durchgeführt",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-checkliste-erbliche-belastung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-senologie-diagnose-sct-to-icd10.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-senologie-diagnose-sct-to-icd10"
+      },
+      "name" : "CM Senologie Diagnose SCT → ICD-10-GM",
+      "description" : "Mapping der Mamma-Diagnose-Choices (SNOMED CT + Senologie-Custom) zu ICD-10-GM-Codes. Eingesetzt im Diagnose-Questionnaire-Extract zur automatischen Befüllung der ICD-10-Slice.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-icdo3-mamma-topographie.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-icdo3-mamma-topographie"
+      },
+      "name" : "CM SNOMED CT Brustquadrant zu ICD-O-3 Topographie",
+      "description" : "Übersetzung der SNOMED-CT-kodierten Brustquadranten in ICD-O-3 Topographie-Codes (C50.0–C50.9) für die oBDS-Krebsregistermeldung. Quelle: BodyStructure.locationQualifier[quadrant].",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-diagnosesicherung.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-diagnosesicherung"
+      },
+      "name" : "CodeSystem Diagnosesicherung",
+      "description" : "Diagnosesicherung gemäß oBDS (Onkologischer Basisdatensatz)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-CM-Senologie-Medikation-SCT-ASK.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/CM-Senologie-Medikation-SCT-ASK"
+      },
+      "name" : "ConceptMap: SNOMED CT → ASK (Senologie Systemtherapie)",
+      "description" : "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf Arzneistoffkatalog (ASK, BfArM 2026). Validiert über fhir-terminology MCP Server.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-CM-Senologie-Medikation-SCT-ATC.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/CM-Senologie-Medikation-SCT-ATC"
+      },
+      "name" : "ConceptMap: SNOMED CT → ATC (Senologie Systemtherapie)",
+      "description" : "Mapping der Senologie-Systemtherapie-Wirkstoffe von SNOMED CT auf ATC (BfArM 2026). Validiert über fhir-terminology MCP Server gegen lokale Snowstorm- und ATC-Instanz.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-oncobox-primaerfallart.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-oncobox-primaerfallart"
+      },
+      "name" : "CS OncoBox Primaerfallart",
+      "description" : "Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-bildgebung-custom.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-bildgebung-custom"
+      },
+      "name" : "CS Senologie Bildgebung Custom",
+      "description" : "Custom Codes für radiologische Befunde der Senologie (LK-Status, Standort, Beurteilbarkeit, US-DEGUM) ohne passendes SNOMED-Mapping.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-biomarker.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-biomarker"
+      },
+      "name" : "CS Senologie Biomarker Erweiterungen",
+      "description" : "Codes für zusätzliche IHC-Components am MII Onko Mamma Rezeptorstatus (ER/PR): IRS (Remmele-Stegner) und Allred Score. Backport-Kandidaten für MII Onko.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-clinical-findings-custom.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-clinical-findings-custom"
+      },
+      "name" : "CS Senologie Clinical Findings Custom",
+      "description" : "Custom Codes für klinische Senologie-Befunde ohne direktes SNOMED-Mapping (Ptosis-Grad, Tumornachweis-Erstdiagnose-Mammakarzinom).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-diagnose-custom.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-diagnose-custom"
+      },
+      "name" : "CS Senologie Diagnose Custom",
+      "description" : "Senologie-spezifische Diagnose-Codes fuer Mamma-Konzepte ohne eindeutiges SNOMED-CT-Mapping (Rezidiv, Mamillensekretion, kosmetische/funktionelle Anomalien, Befund unklarer Dignitaet, Sonstiges).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-follow-up.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-follow-up"
+      },
+      "name" : "CS Senologie Follow-Up",
+      "description" : "Lokale Codes für Senologie-Verlaufsmeldungen (OncoBox M01-M10). Enthält Codes für Observation.method (Nachsorge-Art), Zweittumor-Komponentencode und Wertcodes.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-form-helper.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-form-helper"
+      },
+      "name" : "CS Senologie Form-Helper-Codes",
+      "description" : "Lokale Codes für Form-Antworten ohne eindeutige SCT-Entsprechung (Kontrazeption-Status, Nachsorge-Modus, Allgemeinzustand-vereinfacht, Lymphödem-Grad nach ISL).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-genexpressionstest.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-genexpressionstest"
+      },
+      "name" : "CS Senologie Genexpressionstest",
+      "description" : "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-metastasierung.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-metastasierung"
+      },
+      "name" : "CS Senologie Metastasierung",
+      "description" : "Metastasierungsstatus fuer Senologie (M0 / primaer / sekundaer metastasiert).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-launchcontext.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-launchcontext"
+      },
+      "name" : "CS Senologie SDC LaunchContext",
+      "description" : "Senologie-spezifische SDC launchContext-Variablennamen. Ergänzt den SDC-Default-CS um 'diagnosis' (Condition als Anker für nachgelagerte Questionnaires).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-tumorboard-empfehlung.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-tumorboard-empfehlung"
+      },
+      "name" : "CS Senologie Tumorboard Empfehlung",
+      "description" : "Beschlusszustand pro Therapie-Empfehlung im Tumorboard.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CodeSystem-cs-senologie-tumormanifestation.html"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/cs-senologie-tumormanifestation"
+      },
+      "name" : "CS Senologie Tumormanifestation",
+      "description" : "Klassifikation der Tumormanifestation bei Diagnosestellung",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-einzeldosis.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-einzeldosis"
+      },
+      "name" : "Einzeldosis pro Fraktion",
+      "description" : "Einzeldosis pro Bestrahlungsfraktion in Gy — OncoBox 2.0 H10, oBDS Einzeldosis",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-extract-diagnose.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/extract-diagnose"
+      },
+      "name" : "Extract Senologie Diagnose from QuestionnaireResponse",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Bildgebung-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Bildgebung-Fall1"
+      },
+      "name" : "Fall 1 — QR Bildgebung",
+      "description" : "Mammographie bilateral 2025-01-15, BI-RADS 5 links OAQ, ACR C, kein Mikrokalk, LK unauffaellig.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Diagnose-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Diagnose-Fall1"
+      },
+      "name" : "Fall 1 — QR Diagnose",
+      "description" : "Antworten auf senologie-diagnose fuer Fall 1 (C50.4 links OAQ, gesichert).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Erstanamnese-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Erstanamnese-Fall1"
+      },
+      "name" : "Fall 1 — QR Erstanamnese",
+      "description" : "Allgemeine + Gyn + Familienanamnese fuer Fall 1 (Erstvorstellung, postmenopausal, Mutter Mammakarzinom 52J).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-KlinUntersuchung-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-KlinUntersuchung-Fall1"
+      },
+      "name" : "Fall 1 — QR Klinische Untersuchung",
+      "description" : "Klinische Untersuchung Fall 1: tastbarer Knoten OAQ links, Inspektion unauffaellig, cT1c cN0 cM0 IA.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-OPPlanung-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-OPPlanung-Fall1"
+      },
+      "name" : "Fall 1 — QR OP-Planung",
+      "description" : "OP-Planung Fall 1: BET links + Sentinel-LK-Biopsie, kurativ, 90 min, Drahtmarkierung.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Pathologie-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Pathologie-Fall1"
+      },
+      "name" : "Fall 1 — QR Pathologie",
+      "description" : "Stanzbiopsie 2025-01-20: NST G2, ER+ IRS 12, PR+ IRS 8, HER2- 1+, Ki67 15%, pT1c pN0(sn) (postoperative pTNM).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-PostOP-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-PostOP-Fall1"
+      },
+      "name" : "Fall 1 — QR PostOP",
+      "description" : "PostOP Fall 1: BET + SLNB links 2025-02-05, R0, Sentinel 0/2, keine Komplikation.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Strahlentherapie-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Strahlentherapie-Fall1"
+      },
+      "name" : "Fall 1 — QR Strahlentherapie",
+      "description" : "Adjuvante Strahlentherapie 2025-03-10 bis 2025-04-18: Ganzbrust 50 Gy (25 Fraktionen) + Boost 10 Gy (5 Fraktionen).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Systemtherapie-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Systemtherapie-Fall1"
+      },
+      "name" : "Fall 1 — QR Systemtherapie",
+      "description" : "Endokrine adjuvante Therapie ab 2025-04-25: Letrozol 2,5 mg oral, laufend.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Tumorboard-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Tumorboard-Fall1"
+      },
+      "name" : "Fall 1 — QR Tumorboard",
+      "description" : "Tumorboard 2025-01-28: BET + SLNB empfohlen, adjuvante RT empfohlen, endokrine Therapie empfohlen, Chemotherapie nicht empfohlen (Oncotype DX RS 18).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Verlauf-Fall1.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Verlauf-Fall1"
+      },
+      "name" : "Fall 1 — QR Verlauf 6-Monats-Kontrolle",
+      "description" : "6-Monats-Kontrolle 2025-07-15: aktive Nachsorge, AZ gut, Lokalbefund unauffaellig, kein Lymphoedem, kein Rezidiv, keine Fernmetastasen.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Raucherstatus.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Raucherstatus"
+      },
+      "name" : "Fall 1 — Raucherstatus: Nie geraucht",
+      "description" : "OncoBox 2.0 C03: Raucherstatus der Patientin (ISiK-kompatibel)",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall1-Sozialdienst.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall1-Sozialdienst"
+      },
+      "name" : "Fall 1 — Sozialdienst-Kontakt durchgeführt",
+      "description" : "OncoBox 2.0 L02: Sozialdienst-Beratung stattgefunden",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-sozialdienst"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Diagnose-Fall10.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Diagnose-Fall10"
+      },
+      "name" : "Fall 10 — QR Diagnose (gesichert)",
+      "description" : "Antworten auf senologie-diagnose nach dem Pathologiebefund: Mammakarzinom rechts gesichert (C50.4, triple-negativ, G3).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Diagnose-Fall10-Verdacht.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Diagnose-Fall10-Verdacht"
+      },
+      "name" : "Fall 10 — QR Diagnose (Verdacht)",
+      "description" : "Antworten auf senologie-diagnose am Tag der Bildgebung: Verdacht auf Mammakarzinom rechts (BI-RADS 4c), vor der histologischen Sicherung.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Systemtherapie-Fall10.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Systemtherapie-Fall10"
+      },
+      "name" : "Fall 10 — QR Systemtherapie",
+      "description" : "Adjuvante Chemotherapie ab 2025-07-21: Carboplatin + Paclitaxel, 6 Zyklen, abgeschlossen 2025-11-10.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-QR-Tumorboard-Fall10.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/QR-Tumorboard-Fall10"
+      },
+      "name" : "Fall 10 — QR Tumorboard",
+      "description" : "Tumorboard 2025-06-03: Mastektomie mit Sofortrekonstruktion und adjuvante Chemotherapie empfohlen, Strahlentherapie und endokrine Therapie nicht empfohlen (hormonrezeptor-negativ).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall10-Systemtherapie-Adjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall10-Systemtherapie-Adjuvant"
+      },
+      "name" : "Fall 10: Adjuvante Chemotherapie Carboplatin + Paclitaxel",
+      "description" : "Adjuvante Chemotherapie mit Carboplatin + Paclitaxel bei TNBC + PALB2",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-BiRADS-Rechts"
+      },
+      "name" : "Fall 10: BI-RADS 4c rechts",
+      "description" : "BI-RADS 4c Befund der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Device"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Device-Fall10-Implantat-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Device/Fall10-Implantat-Links"
+      },
+      "name" : "Fall 10: Brustimplantat links (Sofortrekonstruktion)",
+      "description" : "Brustimplantat links nach prophylaktischer Mastektomie, Sofortrekonstruktion",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-implantat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Device"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Device-Fall10-Implantat-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Device/Fall10-Implantat-Rechts"
+      },
+      "name" : "Fall 10: Brustimplantat rechts (Sofortrekonstruktion)",
+      "description" : "Brustimplantat rechts nach therapeutischer Mastektomie, Sofortrekonstruktion",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-implantat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall10-Medikation-Carboplatin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall10-Medikation-Carboplatin"
+      },
+      "name" : "Fall 10: Carboplatin AUC5, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Carboplatin im Rahmen der adjuvanten Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-ECOG-PostTherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-ECOG-PostTherapie"
+      },
+      "name" : "Fall 10: ECOG-Leistungszustand nach Abschluss der Therapie",
+      "description" : "ECOG 0 — vollständig aktiv, keine Einschränkung",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-ER-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-ER-Status"
+      },
+      "name" : "Fall 10: ER-Status — negativ, IRS 0",
+      "description" : "Östrogenrezeptor negativ (0 % positive Zellen).",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "FamilyMemberHistory"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "FamilyMemberHistory-Fall10-Familienanamnese-Mutter.html"
+      }],
+      "reference" : {
+        "reference" : "FamilyMemberHistory/Fall10-Familienanamnese-Mutter"
+      },
+      "name" : "Fall 10: Familienanamnese — Mutter Mammakarzinom 41 J.",
+      "description" : "Mutter mit Mammakarzinom im Alter von 41 Jahren",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "FamilyMemberHistory"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "FamilyMemberHistory-Fall10-Familienanamnese-Schwester.html"
+      }],
+      "reference" : {
+        "reference" : "FamilyMemberHistory/Fall10-Familienanamnese-Schwester"
+      },
+      "name" : "Fall 10: Familienanamnese — Schwester Ovarialkarzinom 39 J.",
+      "description" : "Schwester mit Ovarialkarzinom im Alter von 39 Jahren",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-HER2-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-HER2-Status"
+      },
+      "name" : "Fall 10: HER2-Status — HER2-low (IHC 1+)",
+      "description" : "HER2 IHC 1+. Im oBDS-Slice 'negativ' (damit triple-negativ im Register), im Leitlinien-Slice 'HER2-low'.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-Ki67.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-Ki67"
+      },
+      "name" : "Fall 10: Ki-67 55 %",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall10-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall10-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 10: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit suspektem Herdbefund rechts BI-RADS 4c",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AdverseEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AdverseEvent-Fall10-Nebenwirkung-Nausea.html"
+      }],
+      "reference" : {
+        "reference" : "AdverseEvent/Fall10-Nebenwirkung-Nausea"
+      },
+      "name" : "Fall 10: Nausea CTCAE Grad 2 unter Carboplatin + Paclitaxel",
+      "description" : "Nausea Grad 2 (moderat) im zweiten Zyklus der adjuvanten Chemotherapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-nebenwirkung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall10-Medikation-Paclitaxel.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall10-Medikation-Paclitaxel"
+      },
+      "name" : "Fall 10: Paclitaxel 175 mg/m2, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Paclitaxel im Rahmen der adjuvanten Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-PALB2-Keimbahn-Mutation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-PALB2-Keimbahn-Mutation"
+      },
+      "name" : "Fall 10: PALB2-Keimbahnmutation — pathogen",
+      "description" : "Nachweis einer pathogenen PALB2-Keimbahnvariante bei Christina Becker (c.509_510del, Paneldiagnostik)",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall10-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall10-Pathologie-Befund"
+      },
+      "name" : "Fall 10: Pathologie — Invasives Karzinom NST, G3, TNBC, Ki-67 55%",
+      "description" : "Pathologischer Befund: Invasives Karzinom NST, G3, ER- PR- HER2-, Ki-67 55%, PALB2-Keimbahnmutation",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-Patho-Conclusion"
+      },
+      "name" : "Fall 10: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall10-Patient-Christina-Becker.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall10-Patient-Christina-Becker"
+      },
+      "name" : "Fall 10: Patientin Christina Becker",
+      "description" : "Synthetische Testpatientin — PALB2-Mutationsträgerin, TNBC rechts, bilaterale Mastektomie mit Implantatrekonstruktion",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-PDL1-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-PDL1-Status"
+      },
+      "name" : "Fall 10: PD-L1 Status — CPS 25, positiv (SP142)",
+      "description" : "PD-L1 IHC bei TNBC + BRCA1: CPS 25, IC 5% (Atezolizumab-Indikation per IMpassion130)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pdl1-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-PR-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-PR-Status"
+      },
+      "name" : "Fall 10: PR-Status — negativ, IRS 0",
+      "description" : "Progesteronrezeptor negativ (0 % positive Zellen).",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall10-Operation-Mastektomie-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall10-Operation-Mastektomie-Links"
+      },
+      "name" : "Fall 10: Prophylaktische Mastektomie links (risikoreduktiv)",
+      "description" : "Prophylaktische kontralaterale Mastektomie links bei PALB2-Keimbahnmutation",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall10-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall10-Operation-SLNB"
+      },
+      "name" : "Fall 10: Sentinel-Lymphknoten-Biopsie rechts",
+      "description" : "SLNB als Subprozedur der therapeutischen Mastektomie rechts",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall10-Rekonstruktion-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall10-Rekonstruktion-Links"
+      },
+      "name" : "Fall 10: Sofortrekonstruktion links mit Implantat",
+      "description" : "Implantatrekonstruktion links als Subprozedur der prophylaktischen Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall10-Rekonstruktion-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall10-Rekonstruktion-Rechts"
+      },
+      "name" : "Fall 10: Sofortrekonstruktion rechts mit Implantat",
+      "description" : "Implantatrekonstruktion rechts als Subprozedur der therapeutischen Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall10-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall10-Pathologie-Praeparat"
+      },
+      "name" : "Fall 10: Stanzbiopsie-Präparat rechts OAQ",
+      "description" : "Stanzbiopsie aus dem oberen äußeren Quadranten der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Encounter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Encounter-Fall10-Encounter-Stationaer.html"
+      }],
+      "reference" : {
+        "reference" : "Encounter/Fall10-Encounter-Stationaer"
+      },
+      "name" : "Fall 10: Stationärer Aufenthalt (Mastektomie mit Implantatrekonstruktion)",
+      "description" : "Stationärer Aufenthalt für Mastektomie beidseits mit Sofortrekonstruktion durch Implantate",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall10-Operation-Mastektomie-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall10-Operation-Mastektomie-Rechts"
+      },
+      "name" : "Fall 10: Therapeutische Mastektomie rechts + SLNB",
+      "description" : "Therapeutische Mastektomie rechts mit SLNB, R0, pN0(sn)(0/2)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall10-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall10-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 10: TNBC rechts, cT1c cN0 cM0",
+      "description" : "Triple-negatives invasives Mammakarzinom NST rechts, G3, UICC IA, PALB2-Mutationsträgerin",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-TNM-Klassifikation"
+      },
+      "name" : "Fall 10: TNM-Klassifikation cT1c cN0 cM0",
+      "description" : "TNM-Klassifikation cT1c cN0 cM0, UICC IA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall10-Tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall10-Tumorboard"
+      },
+      "name" : "Fall 10: Tumorboard-Empfehlung",
+      "description" : "Empfehlung: Mastektomie rechts mit SLNB, risikoreduzierende Mastektomie links, Sofortrekonstruktion mit Implantaten, adjuvante Chemotherapie, keine endokrine Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-Verlauf-PostTherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-Verlauf-PostTherapie"
+      },
+      "name" : "Fall 10: Verlaufskontrolle nach Abschluss der Therapie",
+      "description" : "Nachsorge-Untersuchung nach Mastektomie und Chemotherapie, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall10-Vitalstatus-Lebend.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall10-Vitalstatus-Lebend"
+      },
+      "name" : "Fall 10: Vitalstatus — lebend",
+      "description" : "Vitalstatus-Observation gemäß MII Person-Modul: Patientin Christina Becker lebt zum Zeitpunkt der Nachsorge.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall11-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall11-BiRADS-Links"
+      },
+      "name" : "Fall 11: BI-RADS 3 links",
+      "description" : "BI-RADS 3 Befund der linken Brust — wahrscheinlich gutartig",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall11-Diagnose-Fibroadenom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall11-Diagnose-Fibroadenom"
+      },
+      "name" : "Fall 11: Fibroadenom links oben außen",
+      "description" : "Fibroadenom der linken Brust — benigne Diagnose, histologisch bestätigt",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-benigne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall11-Klinische-Untersuchung.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall11-Klinische-Untersuchung"
+      },
+      "name" : "Fall 11: Klinische Brustuntersuchung",
+      "description" : "Klinische Untersuchung mit tastbarem Knoten links oben außen, 15 mm, glatt begrenzt",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall11-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall11-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 11: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit BI-RADS 3 links",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall11-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall11-Pathologie-Befund"
+      },
+      "name" : "Fall 11: Pathologie — Fibroadenom, keine Atypie",
+      "description" : "Pathologischer Befund der Stanzbiopsie: Fibroadenom, keine Atypie, B2",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall11-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall11-Patho-Conclusion"
+      },
+      "name" : "Fall 11: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen — benigne",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall11-Patient-Hannah-Klein.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall11-Patient-Hannah-Klein"
+      },
+      "name" : "Fall 11: Patientin Hannah Klein",
+      "description" : "Synthetische Testpatientin — Fibroadenom der Brust (benigne), keine Therapie",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall11-Bildgebung-Sonographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall11-Bildgebung-Sonographie"
+      },
+      "name" : "Fall 11: Sonographie links",
+      "description" : "Sonographie links mit glatt begrenztem, ovalem, echoarmem Knoten",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall11-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall11-Pathologie-Praeparat"
+      },
+      "name" : "Fall 11: Stanzbiopsie-Präparat links oben außen",
+      "description" : "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall12-Diagnose-ADH.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall12-Diagnose-ADH"
+      },
+      "name" : "Fall 12: ADH (B3-Läsion), D48.6",
+      "description" : "Atypische duktale Hyperplasie (ADH), B3-Läsion, ICD-10 D48.6 (meldepflichtig)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall12-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall12-BiRADS-Links"
+      },
+      "name" : "Fall 12: BI-RADS 4a links",
+      "description" : "BI-RADS 4a Befund der linken Brust — geringe Malignitätswahrscheinlichkeit",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall12-Pathologie-Praeparat-Nachresektion.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall12-Pathologie-Praeparat-Nachresektion"
+      },
+      "name" : "Fall 12: Exzisionspräparat Nachresektion links OIQ",
+      "description" : "Exzisionspräparat aus dem oberen inneren Quadranten der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall12-Operation-Nachresektion.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall12-Operation-Nachresektion"
+      },
+      "name" : "Fall 12: Nachresektion / offene Biopsie links",
+      "description" : "Offene Biopsie / Nachresektion links OIQ bei B3-Läsion (ADH), R0, kein Upgrade",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall12-Pathologie-Befund-Nachresektion.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall12-Pathologie-Befund-Nachresektion"
+      },
+      "name" : "Fall 12: Pathologie Nachresektion — ADH, kein Upgrade, R0",
+      "description" : "Pathologischer Befund der Nachresektion: ADH bestätigt, kein DCIS, kein invasives Karzinom, R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall12-Pathologie-Befund-Vakuumbiopsie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall12-Pathologie-Befund-Vakuumbiopsie"
+      },
+      "name" : "Fall 12: Pathologie Vakuumbiopsie — ADH, B3",
+      "description" : "Pathologischer Befund der Vakuumbiopsie: Atypische duktale Hyperplasie, B3-Kategorie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall12-Patho-Conclusion-Nachresektion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall12-Patho-Conclusion-Nachresektion"
+      },
+      "name" : "Fall 12: Pathologische Diagnose Nachresektion",
+      "description" : "Diagnostische Schlussfolgerung: ADH bestätigt, kein Upgrade, R0",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall12-Patho-Conclusion-Vakuumbiopsie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall12-Patho-Conclusion-Vakuumbiopsie"
+      },
+      "name" : "Fall 12: Pathologische Diagnose Vakuumbiopsie",
+      "description" : "Diagnostische Schlussfolgerung: ADH, B3",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall12-Patient-Renate-Vogel.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall12-Patient-Renate-Vogel"
+      },
+      "name" : "Fall 12: Patientin Renate Vogel",
+      "description" : "Synthetische Testpatientin — B3-Läsion (ADH), Nachresektion ohne Upgrade",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall12-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall12-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 12: Screening-Mammographie bilateral",
+      "description" : "Screening-Mammographie mit Mikrokalzifikationen links BI-RADS 4a",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall12-Tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall12-Tumorboard"
+      },
+      "name" : "Fall 12: Tumorboard-Empfehlung — Nachresektion empfohlen",
+      "description" : "Empfehlung: offene Biopsie / Nachresektion zum Ausschluss eines Upgrades bei B3-Läsion",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall12-Pathologie-Praeparat-Vakuumbiopsie.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall12-Pathologie-Praeparat-Vakuumbiopsie"
+      },
+      "name" : "Fall 12: Vakuumbiopsie-Präparat links OIQ",
+      "description" : "Vakuumbiopsie aus dem oberen inneren Quadranten der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall13-Systemtherapie-EC-Pac-H.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall13-Systemtherapie-EC-Pac-H"
+      },
+      "name" : "Fall 13: Adjuvante Chemotherapie EC-Pac-H (rechts, HER2+)",
+      "description" : "Adjuvante Chemotherapie EC gefolgt von Paclitaxel + Trastuzumab für HER2-positives Karzinom rechts",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall13-Operation-BET-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall13-Operation-BET-Links"
+      },
+      "name" : "Fall 13: BET links + SLNB",
+      "description" : "Brusterhaltende Therapie der linken Brust mit Sentinel-LK-Biopsie, R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall13-Diagnose-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall13-Diagnose-Links"
+      },
+      "name" : "Fall 13: Mammakarzinom LINKS — pT1c pN0 cM0, ER+/PR+/HER2-, G2",
+      "description" : "Invasives Karzinom NST der linken Brust, oberer äußerer Quadrant. Frühes Stadium, triple-positiv (HR+/HER2-)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall13-Diagnose-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall13-Diagnose-Rechts"
+      },
+      "name" : "Fall 13: Mammakarzinom RECHTS — pT2 pN1a cM0, ER+/PR-/HER2+, G3",
+      "description" : "Invasives Karzinom NST der rechten Brust, oberer innerer Quadrant. Lokal fortgeschritten, HER2-positiv",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall13-Operation-Mastektomie-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall13-Operation-Mastektomie-Rechts"
+      },
+      "name" : "Fall 13: Mastektomie rechts + ALND",
+      "description" : "Hautschonende Mastektomie der rechten Brust mit axillärer Lymphknotendissektion, R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall13-Patient-Margarete-Schreiber.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall13-Patient-Margarete-Schreiber"
+      },
+      "name" : "Fall 13: Patientin Margarete Schreiber",
+      "description" : "Synthetische Testpatientin — synchrones bilaterales Mammakarzinom",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "QuestionnaireResponse"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "QuestionnaireResponse-Fall13-QR-Bezugsdiagnose-Selection.html"
+      }],
+      "reference" : {
+        "reference" : "QuestionnaireResponse/Fall13-QR-Bezugsdiagnose-Selection"
+      },
+      "name" : "Fall 13: QR — Bezugsdiagnose-Auswahl (SDC Choice Selection)",
+      "description" : "Demonstriert das SDC Choice Selection Pattern: Bei bilateralem Karzinom wählt der Arzt die Bezugsdiagnose (Seite) für eine Procedure aus einer candidateExpression-basierten Liste aktiver Mamma-Conditions.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Encounter"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Encounter-Fall13-Encounter-Stationaer.html"
+      }],
+      "reference" : {
+        "reference" : "Encounter/Fall13-Encounter-Stationaer"
+      },
+      "name" : "Fall 13: Stationärer Aufenthalt (bilaterale OP)",
+      "description" : "Stationärer Aufenthalt für simultane bilaterale Operation",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall13-TNM-Klassifikation-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall13-TNM-Klassifikation-Links"
+      },
+      "name" : "Fall 13: TNM-Klassifikation pT1c pN0 cM0",
+      "description" : "TNM-Klassifikation pT1c pN0 cM0, UICC IA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall13-TNM-Klassifikation-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall13-TNM-Klassifikation-Rechts"
+      },
+      "name" : "Fall 13: TNM-Klassifikation pT2 pN1a cM0",
+      "description" : "TNM-Klassifikation pT2 pN1a cM0, UICC IIB. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall14-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall14-Strahlentherapie"
+      },
+      "name" : "Fall 14: Adjuvante Bestrahlung Brust links 40 Gy",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall14-Systemtherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall14-Systemtherapie"
+      },
+      "name" : "Fall 14: Adjuvante endokrine Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall14-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall14-Operation-BET"
+      },
+      "name" : "Fall 14: BET + Sentinel-LK-Biopsie links",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-ER-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-ER-Status"
+      },
+      "name" : "Fall 14: ER positiv, IRS 12, 90 %",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-FollowUp.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-FollowUp"
+      },
+      "name" : "Fall 14: Follow-Up nach Therapie — PR",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-Grading.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-Grading"
+      },
+      "name" : "Fall 14: Grading G2",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-HER2-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-HER2-Status"
+      },
+      "name" : "Fall 14: HER2 IHC 2+ (equivocal)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-Ki67.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-Ki67"
+      },
+      "name" : "Fall 14: Ki-67 10 %",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-ki67-proliferationsindex"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall14-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall14-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 14: Mammakarzinom links C50.3, cT2 cN0 cM0 → pT4b pN1a",
+      "description" : "Invasives Mammakarzinom NST der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-Raucherstatus.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-Raucherstatus"
+      },
+      "name" : "Fall 14: Nie-Raucher",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall14-Patient-OncoBox-Beispiel.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall14-Patient-OncoBox-Beispiel"
+      },
+      "name" : "Fall 14: OncoBox-Beispielpatient (re-engineered)",
+      "description" : "Synthetischer Testpatient aus dem offiziellen OncoBox-Brust-2.0-Beispieldatensatz, re-engineered nach FHIR. Mann, 79J, Mamma-Ca links.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall14-Tumorboard-Postop.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall14-Tumorboard-Postop"
+      },
+      "name" : "Fall 14: Postoperatives Tumorboard 2025-02-23",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall14-PR-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall14-PR-Status"
+      },
+      "name" : "Fall 14: PR positiv, IRS 9, 73 %",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall14-Tumorboard-Praetherapeutisch.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall14-Tumorboard-Praetherapeutisch"
+      },
+      "name" : "Fall 14: Prätherapeutisches Tumorboard 2025-02-12",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall15-Fernmetastase-Leber.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall15-Fernmetastase-Leber"
+      },
+      "name" : "Fall 15: Fernmetastase Leber",
+      "description" : "Lebermetastase (HEP) detektiert 2021-09-14 im Verlauf-Restaging.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall15-Fernmetastase-Lunge.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall15-Fernmetastase-Lunge"
+      },
+      "name" : "Fall 15: Fernmetastase Lunge",
+      "description" : "Lungenmetastase (PUL) detektiert 2021-09-14 im Verlauf-Restaging.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall15-Histologie-Rebiopsie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall15-Histologie-Rebiopsie"
+      },
+      "name" : "Fall 15: Histologie 2021-09-14 (Re-Biopsie)",
+      "description" : "Invasives duktales Karzinom NOS (ICD-O 8500/3), Grading G3. Histologie-Einsendung H23201/2021.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall15-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall15-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 15: Mammakarzinom rechts C50.4 cT1c",
+      "description" : "Invasives duktales Karzinom NOS (ICD-O 8500/3), rechts, Grading 3, TNM 8 cT1c. Erstdiagnose 2020-02-16.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall15-Patient-Michaela-Musterfrau.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall15-Patient-Michaela-Musterfrau"
+      },
+      "name" : "Fall 15: Patientin Michaela van Musterfrau (oBDS-Testpatient)",
+      "description" : "Re-engineered aus oBDS XML v3.0.1 Testpatient_Mamma.xml. Verstorben 2021 nach Verlauf mit Fernmetastasen.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall15-Todesursache.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall15-Todesursache"
+      },
+      "name" : "Fall 15: Todesursache — Mammakarzinom (C50.4)",
+      "description" : "Patientin verstorben 2021-11-27, tumorbedingt durch Mammakarzinom (C50.4).",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall15-Verlauf-Progression.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall15-Verlauf-Progression"
+      },
+      "name" : "Fall 15: Verlauf 2021-09-14 — Progression mit Fernmetastasen",
+      "description" : "Statusänderung 2021-09-14: lokaler/regionärer/distanter Rezidiv-Status, Leber- und Lungenmetastasen. r-Symbol.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall1-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall1-Strahlentherapie"
+      },
+      "name" : "Fall 1: Adjuvante Bestrahlung 50 Gy + 10 Gy Boost",
+      "description" : "Adjuvante Ganzbrustbestrahlung links 50 Gy in 25 Fraktionen + 10 Gy Boost",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall1-Begleitmedikation-LThyroxin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall1-Begleitmedikation-LThyroxin"
+      },
+      "name" : "Fall 1: Begleitmedikation L-Thyroxin 75 µg",
+      "description" : "L-Thyroxin 75 µg 1x täglich wegen Hypothyreose",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall1-Begleitmedikation-Metoprolol.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall1-Begleitmedikation-Metoprolol"
+      },
+      "name" : "Fall 1: Begleitmedikation Metoprolol 47,5 mg",
+      "description" : "Metoprolol 47,5 mg 1x täglich wegen arterieller Hypertonie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall1-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall1-Operation-BET"
+      },
+      "name" : "Fall 1: BET links + SLNB",
+      "description" : "Brusterhaltende Therapie links mit Sentinel-LK-Biopsie, R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-BiRADS-Links"
+      },
+      "name" : "Fall 1: BI-RADS 5 links",
+      "description" : "BI-RADS 5 Befund der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Somatische-Mutation-BRCA1.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Somatische-Mutation-BRCA1"
+      },
+      "name" : "Fall 1: BRCA1 somatisch — Wildtyp",
+      "description" : "BRCA1 somatische Mutation nicht nachgewiesen (Wildtyp)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Somatische-Mutation-BRCA2.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Somatische-Mutation-BRCA2"
+      },
+      "name" : "Fall 1: BRCA2 somatisch — Wildtyp",
+      "description" : "BRCA2 somatische Mutation nicht nachgewiesen (Wildtyp)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-ECOG-6Monate.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-ECOG-6Monate"
+      },
+      "name" : "Fall 1: ECOG-Leistungszustand 6 Monate postoperativ",
+      "description" : "ECOG 0 — vollständig aktiv, keine Einschränkung",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-ER-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-ER-Status"
+      },
+      "name" : "Fall 1: ER-Status — positiv, IRS 12, 95 % / Strong",
+      "description" : "Östrogenrezeptor positiv, hochpositive Expression. Demonstriert die Senologie-Erweiterung mit IRS und Allred zusätzlich zum MII-Onko-Standard (% + Intensität).",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-er-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "FamilyMemberHistory"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "FamilyMemberHistory-Fall1-Familienanamnese.html"
+      }],
+      "reference" : {
+        "reference" : "FamilyMemberHistory/Fall1-Familienanamnese"
+      },
+      "name" : "Fall 1: Familienanamnese — Mutter Mammakarzinom",
+      "description" : "Mutter mit Mammakarzinom im Alter von 52 Jahren",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-familienanamnese"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Verlauf-PostTherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Verlauf-PostTherapie"
+      },
+      "name" : "Fall 1: Gesamtbeurteilung nach definitiver Therapie (D27)",
+      "description" : "Gesamtbeurteilung Tumorstatus nach BET + Strahlentherapie: Vollremission (CR). Kein Residualtumor. D27-Kontext (post-definitive Therapie).",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Gynaekologische-Anamnese.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Gynaekologische-Anamnese"
+      },
+      "name" : "Fall 1: Gynäkologische Anamnese",
+      "description" : "Postmenopausale Patientin, Menarche mit 13, Menopause mit 54",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-gynaekologische-anamnese"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-HER2-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-HER2-Status"
+      },
+      "name" : "Fall 1: HER2-Status — HER2-low (IHC 1+, KEINE ISH nötig)",
+      "description" : "HER2 IHC 1+. Im oBDS-Slice 'negativ', aber im Leitlinien-Slice korrekt als 'HER2-low' klassifiziert — damit potenzielle T-DXd-Kandidatin bei späterer Metastasierung (DESTINY-Breast04). Demonstriert den Mehrwert der granularen Erfassung gegenüber binärem oBDS.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-her2-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Klinische-Untersuchung.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Klinische-Untersuchung"
+      },
+      "name" : "Fall 1: Klinische Brustuntersuchung",
+      "description" : "Klinische Untersuchung mit tastbarem Knoten links OAQ",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-klinische-untersuchung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall1-Komorbiditaet-Hypertonie.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall1-Komorbiditaet-Hypertonie"
+      },
+      "name" : "Fall 1: Komorbidität — Arterielle Hypertonie",
+      "description" : "Vorbestehende arterielle Hypertonie unter Metoprolol-Therapie",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall1-Komorbiditaet-Hypothyreose.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall1-Komorbiditaet-Hypothyreose"
+      },
+      "name" : "Fall 1: Komorbidität — Hypothyreose",
+      "description" : "Vorbestehende Hypothyreose unter L-Thyroxin-Substitution",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall1-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall1-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 1: Mammakarzinom links OAQ, cT1c cN0 cM0",
+      "description" : "Invasives Mammakarzinom NST der linken Brust, oberer äußerer Quadrant, UICC IA",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall1-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall1-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 1: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit suspektem Herdbefund links BI-RADS 5",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Genexpressions-Score.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Genexpressions-Score"
+      },
+      "name" : "Fall 1: Oncotype DX Recurrence Score 18",
+      "description" : "Oncotype DX Recurrence Score von 18 (niedrig)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressions-score"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "RiskAssessment"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "RiskAssessment-Fall1-Genexpressionstest.html"
+      }],
+      "reference" : {
+        "reference" : "RiskAssessment/Fall1-Genexpressionstest"
+      },
+      "name" : "Fall 1: Oncotype DX Risikobewertung",
+      "description" : "Oncotype DX: niedriges Risiko, 10-Jahres-Fernrezidivrisiko 12%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-genexpressionstest"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ServiceRequest"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ServiceRequest-Fall1-OP-Planung.html"
+      }],
+      "reference" : {
+        "reference" : "ServiceRequest/Fall1-OP-Planung"
+      },
+      "name" : "Fall 1: OP-Planung BET + SLNB",
+      "description" : "Geplante brusterhaltende Therapie links mit Sentinel-LK-Biopsie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-op-planung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Somatische-Mutation-PALB2.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Somatische-Mutation-PALB2"
+      },
+      "name" : "Fall 1: PALB2 somatisch — Wildtyp",
+      "description" : "PALB2 somatische Mutation nicht nachgewiesen (Wildtyp)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-PALB2-Keimbahn-Wildtyp.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-PALB2-Keimbahn-Wildtyp"
+      },
+      "name" : "Fall 1: PALB2-Keimbahnmutation — Wildtyp",
+      "description" : "Kein Nachweis einer pathogenen PALB2-Keimbahnvariante bei Erika Neumann (Familienanamnese positiv, Mutter Mammakarzinom 52 J.)",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall1-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall1-Pathologie-Befund"
+      },
+      "name" : "Fall 1: Pathologie — Invasives Karzinom NST, G2, ER+/PR+/HER2-",
+      "description" : "Pathologischer Befund der Stanzbiopsie: invasives Karzinom NST, G2, hormonrezeptor-positiv, HER2-negativ",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Patho-Conclusion"
+      },
+      "name" : "Fall 1: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall1-Patient-Erika-Neumann.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall1-Patient-Erika-Neumann"
+      },
+      "name" : "Fall 1: Patientin Erika Neumann",
+      "description" : "Synthetische Testpatientin — frühes Mammakarzinom, kurative Behandlung",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-PR-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-PR-Status"
+      },
+      "name" : "Fall 1: PR-Status — positiv, IRS 8, 60 % / Moderate",
+      "description" : "Progesteronrezeptor positiv, mittelgradige Expression.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pr-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall1-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall1-Operation-SLNB"
+      },
+      "name" : "Fall 1: Sentinel-Lymphknoten-Biopsie links",
+      "description" : "SLNB als Subprozedur der BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall1-Bildgebung-Skelettszintigraphie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall1-Bildgebung-Skelettszintigraphie"
+      },
+      "name" : "Fall 1: Skelettszintigraphie (Staging)",
+      "description" : "Skelettszintigraphie im Rahmen des Stagings — kein Hinweis auf ossäre Metastasen",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall1-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall1-Pathologie-Praeparat"
+      },
+      "name" : "Fall 1: Stanzbiopsie-Präparat links OAQ",
+      "description" : "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-TNM-Klassifikation"
+      },
+      "name" : "Fall 1: TNM-Klassifikation cT1c cN0 cM0",
+      "description" : "TNM-Klassifikation cT1c cN0 cM0, UICC IA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall1-Tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall1-Tumorboard"
+      },
+      "name" : "Fall 1: Tumorboard-Empfehlung",
+      "description" : "Empfehlung: BET + SLNB, adjuvante RT, endokrine Therapie, keine Chemotherapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Verlauf-6Monate.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Verlauf-6Monate"
+      },
+      "name" : "Fall 1: Verlaufskontrolle 6 Monate postoperativ",
+      "description" : "Nachsorge-Untersuchung nach BET und Strahlentherapie, kein Rezidivhinweis. Aktive Nachsorge, kein Zweittumor.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall1-Vitalstatus-Lebend.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall1-Vitalstatus-Lebend"
+      },
+      "name" : "Fall 1: Vitalstatus — lebend",
+      "description" : "Vitalstatus-Observation gemäß MII Person-Modul: Patientin Erika Neumann lebt zum Zeitpunkt der 6-Monats-Nachsorge.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall2-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall2-Strahlentherapie"
+      },
+      "name" : "Fall 2: Adjuvante Bestrahlung Thoraxwand + supraklavikulär 50 Gy",
+      "description" : "Adjuvante Bestrahlung der Thoraxwand und supraklavikulärer Lymphabflusswege",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall2-Systemtherapie-Adjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall2-Systemtherapie-Adjuvant"
+      },
+      "name" : "Fall 2: Adjuvante Pembrolizumab Maintenance",
+      "description" : "Adjuvante Pembrolizumab Maintenance nach Operation",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall2-Operation-Axilladissektion.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall2-Operation-Axilladissektion"
+      },
+      "name" : "Fall 2: Axilladissektion rechts Level I-III",
+      "description" : "Axilladissektion als Subprozedur der Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall2-Begleitmedikation-Ondansetron.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall2-Begleitmedikation-Ondansetron"
+      },
+      "name" : "Fall 2: Begleitmedikation Ondansetron 8 mg",
+      "description" : "Ondansetron 8 mg als Antiemetikum supportiv bei Chemotherapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall2-Begleitmedikation-Zoledronat.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall2-Begleitmedikation-Zoledronat"
+      },
+      "name" : "Fall 2: Begleitmedikation Zoledronat 4 mg",
+      "description" : "Zoledronat 4 mg i.v. alle 4 Wochen wegen ossärer Metastase",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-BiRADS-Rechts"
+      },
+      "name" : "Fall 2: BI-RADS 5 rechts",
+      "description" : "BI-RADS 5 Befund der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall2-Medikation-Carboplatin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall2-Medikation-Carboplatin"
+      },
+      "name" : "Fall 2: Carboplatin AUC5, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Carboplatin im Rahmen der neoadjuvanten Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall2-Bildgebung-CT.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall2-Bildgebung-CT"
+      },
+      "name" : "Fall 2: CT Thorax/Abdomen (Staging)",
+      "description" : "CT Thorax und Abdomen im Rahmen des Stagings",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-ECOG-Progression.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-ECOG-Progression"
+      },
+      "name" : "Fall 2: ECOG-Leistungszustand bei Progression",
+      "description" : "ECOG 2 — deutliche Einschränkung bei Progression mit Lebermetastasen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AdverseEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AdverseEvent-Fall2-Nebenwirkung-Fatigue.html"
+      }],
+      "reference" : {
+        "reference" : "AdverseEvent/Fall2-Nebenwirkung-Fatigue"
+      },
+      "name" : "Fall 2: Fatigue CTCAE Grad 2 unter Chemotherapie",
+      "description" : "Fatigue Grad 2 (moderat) unter neoadjuvanter EC-Chemotherapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-nebenwirkung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall2-Tumorboard-Initial.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall2-Tumorboard-Initial"
+      },
+      "name" : "Fall 2: Initiales Tumorboard",
+      "description" : "Empfehlung: neoadjuvante Chemotherapie + Immuntherapie, dann Mastektomie + Axilladissektion, adjuvante RT, MTB-Überweisung",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ResearchStudy"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ResearchStudy-Fall2-ResearchStudy-KEYNOTE522.html"
+      }],
+      "reference" : {
+        "reference" : "ResearchStudy/Fall2-ResearchStudy-KEYNOTE522"
+      },
+      "name" : "Fall 2: KEYNOTE-522 Studie",
+      "description" : "Fiktive klinische Studie KEYNOTE-522 für triple-negatives Mammakarzinom",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall2-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall2-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 2: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit großem Herdbefund rechts BI-RADS 5",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall2-Operation-Mastektomie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall2-Operation-Mastektomie"
+      },
+      "name" : "Fall 2: Mastektomie rechts + Axilladissektion",
+      "description" : "Modifiziert radikale Mastektomie rechts mit Axilladissektion Level I-III, ypT1a ypN0(0/14) R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall2-Bildgebung-MRT.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall2-Bildgebung-MRT"
+      },
+      "name" : "Fall 2: MRT Mamma",
+      "description" : "MRT der Brust zur Ausdehnungsbeurteilung",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall2-Systemtherapie-Neoadjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall2-Systemtherapie-Neoadjuvant"
+      },
+      "name" : "Fall 2: Neoadjuvante Chemotherapie + Immuntherapie",
+      "description" : "Neoadjuvante Therapie mit Carboplatin/Paclitaxel + Pembrolizumab",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall2-Medikation-Paclitaxel.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall2-Medikation-Paclitaxel"
+      },
+      "name" : "Fall 2: Paclitaxel 80 mg/m2, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Paclitaxel im Rahmen der neoadjuvanten Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall2-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall2-Pathologie-Befund"
+      },
+      "name" : "Fall 2: Pathologie — Invasiv-duktales Karzinom G3, triple-negativ",
+      "description" : "Pathologischer Befund der Stanzbiopsie: invasiv-duktales Karzinom G3, triple-negativ, Ki-67 70%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-Patho-Conclusion"
+      },
+      "name" : "Fall 2: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall2-Patient-Lena-Hoffmann.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall2-Patient-Lena-Hoffmann"
+      },
+      "name" : "Fall 2: Patientin Lena Hoffmann",
+      "description" : "Synthetische Testpatientin — lokal fortgeschrittenes triple-negatives Mammakarzinom, palliativ",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall2-Patient-Lena-Hoffmann-Verstorben.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall2-Patient-Lena-Hoffmann-Verstorben"
+      },
+      "name" : "Fall 2: Patientin Lena Hoffmann (verstorben)",
+      "description" : "Variante der Testpatientin Lena Hoffmann mit deceasedDateTime — Tod durch hepatische Metastasen bei triple-negativem Mammakarzinom.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-PDL1-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-PDL1-Status"
+      },
+      "name" : "Fall 2: PD-L1 Status — CPS 15, positiv (22C3)",
+      "description" : "PD-L1 IHC bei TNBC: CPS 15 (≥10 → Pembrolizumab-Indikation per KEYNOTE-522)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pdl1-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall2-Medikation-Pembrolizumab.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall2-Medikation-Pembrolizumab"
+      },
+      "name" : "Fall 2: Pembrolizumab 200 mg, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Pembrolizumab im Rahmen der neoadjuvanten Immuntherapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-Komplikation-Serom.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-Komplikation-Serom"
+      },
+      "name" : "Fall 2: Postoperative Komplikation — Serom, Clavien-Dindo I",
+      "description" : "Postoperatives Serom nach Mastektomie, Clavien-Dindo Grad I",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall2-Diagnose-Progression.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall2-Diagnose-Progression"
+      },
+      "name" : "Fall 2: Progression — hepatische Metastasen",
+      "description" : "Hepatische Metastasierung nach 18 Monaten, klinischer Status Rezidiv",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall2-Bildgebung-Skelettszintigraphie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall2-Bildgebung-Skelettszintigraphie"
+      },
+      "name" : "Fall 2: Skelettszintigraphie — ossäre Metastase BWK 12",
+      "description" : "Skelettszintigraphie mit Nachweis einer ossären Metastase BWK 12",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-sonstige"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall2-Bildgebung-Sonographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall2-Bildgebung-Sonographie"
+      },
+      "name" : "Fall 2: Sonographie bilateral",
+      "description" : "Sonographie bilateral mit Herdbefund rechts und suspekten axillären Lymphknoten",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall2-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall2-Pathologie-Praeparat"
+      },
+      "name" : "Fall 2: Stanzbiopsie-Präparat rechts zentral",
+      "description" : "Stanzbiopsie aus dem zentralen Drüsenkörper der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ResearchSubject"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ResearchSubject-Fall2-Studienteilnahme.html"
+      }],
+      "reference" : {
+        "reference" : "ResearchSubject/Fall2-Studienteilnahme"
+      },
+      "name" : "Fall 2: Studienteilnahme KEYNOTE-522",
+      "description" : "Teilnahme an KEYNOTE-522, Interventionsarm (Pembrolizumab)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-studienteilnahme"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-TNM-Klassifikation"
+      },
+      "name" : "Fall 2: TNM-Klassifikation cT3 cN2a cM1",
+      "description" : "TNM-Klassifikation cT3 cN2a cM1, UICC IV. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-Tod-Tumorbedingt.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-Tod-Tumorbedingt"
+      },
+      "name" : "Fall 2: Tod tumorbedingt",
+      "description" : "Onko-Tod-Observation gemäß MII Onko-Modul: Patientin ist an Tumorerkrankung (Mammakarzinom mit Lebermetastasen) verstorben. Todesursache C78.7.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall2-Todesursache.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall2-Todesursache"
+      },
+      "name" : "Fall 2: Todesursache — sekundäre Leberkarzinose",
+      "description" : "Todesursache gemäß MII Person-Modul: sekundäre bösartige Neubildung der Leber (ICD-10-GM C78.7) bei metastasiertem triple-negativen Mammakarzinom.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall2-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall2-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 2: Triple-negatives Mammakarzinom rechts, cT3 cN2a cM1(OSS)",
+      "description" : "Triple-negatives invasiv-duktales Mammakarzinom rechts, zentraler Drüsenkörper, G3, UICC IV",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall2-Tumorboard-Progression.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall2-Tumorboard-Progression"
+      },
+      "name" : "Fall 2: Tumorboard bei Progression",
+      "description" : "Empfehlung: Palliativkonzept bei hepatischer Metastasierung",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-Verlauf-Progression.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-Verlauf-Progression"
+      },
+      "name" : "Fall 2: Verlaufskontrolle bei Progression",
+      "description" : "Progression mit neuen hepatischen Metastasen nach 18 Monaten adjuvanter Therapie. Aktive Nachsorge, kein Zweittumor.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-Verlauf-Tod.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-Verlauf-Tod"
+      },
+      "name" : "Fall 2: Verlaufsmeldung bei Tod",
+      "description" : "Abschließende Verlaufsmeldung für Lena Hoffmann: Patientin verstorben an hepatischen Metastasen. Passive Nachsorge (Totenschein/Register).",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall2-Vitalstatus-Verstorben.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall2-Vitalstatus-Verstorben"
+      },
+      "name" : "Fall 2: Vitalstatus — verstorben",
+      "description" : "Vitalstatus-Observation gemäß MII Person-Modul: Patientin Lena Hoffmann ist am Tumorleiden verstorben.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall3-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall3-Strahlentherapie"
+      },
+      "name" : "Fall 3: Adjuvante Bestrahlung Thoraxwand 50 Gy",
+      "description" : "Adjuvante Bestrahlung der Thoraxwand rechts nach Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall3-Operation-Axilladissektion.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall3-Operation-Axilladissektion"
+      },
+      "name" : "Fall 3: Axilladissektion rechts Level I-II",
+      "description" : "Axilladissektion als Subprozedur der Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall3-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall3-BiRADS-Rechts"
+      },
+      "name" : "Fall 3: BI-RADS 4 rechts",
+      "description" : "BI-RADS 4 Befund der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall3-Begleitmedikation-Anastrozol.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall3-Begleitmedikation-Anastrozol"
+      },
+      "name" : "Fall 3: Endokrine Therapie Anastrozol 1 mg",
+      "description" : "Anastrozol 1 mg/d als adjuvante endokrine Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall3-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall3-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 3: Mammakarzinom rechts, cT2 pN1a cM0",
+      "description" : "Invasives Mammakarzinom NST der rechten Brust, UICC IIA, HR+/HER2-",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall3-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall3-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 3: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit suspektem Herdbefund rechts BI-RADS 4",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall3-Operation-Mastektomie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall3-Operation-Mastektomie"
+      },
+      "name" : "Fall 3: Mastektomie rechts + Axilladissektion",
+      "description" : "Mastektomie rechts mit Axilladissektion Level I-II, R0, pN1a(2/12)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall3-Pathologie-Praeparat-OP.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall3-Pathologie-Praeparat-OP"
+      },
+      "name" : "Fall 3: Mastektomie-Präparat rechts",
+      "description" : "Mastektomie-Resektat rechte Brust mit Axilla-Lymphknoten",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall3-Pathologie-Befund-OP.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall3-Pathologie-Befund-OP"
+      },
+      "name" : "Fall 3: Pathologie OP-Präparat — pT2 pN1a(2/12)",
+      "description" : "Pathologischer Befund des Mastektomie-Präparats mit Axilladissektion",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall3-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall3-Pathologie-Befund"
+      },
+      "name" : "Fall 3: Pathologie — Invasives Karzinom NST, G2, ER+/PR+/HER2-",
+      "description" : "Pathologischer Befund: invasives Karzinom NST, G2, ER+ IRS 10, PR+ IRS 6, HER2- Score 0, Ki-67 12%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall3-Patho-Conclusion-OP.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall3-Patho-Conclusion-OP"
+      },
+      "name" : "Fall 3: Pathologische Diagnose OP-Präparat",
+      "description" : "Diagnostische Schlussfolgerung OP-Präparat",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall3-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall3-Patho-Conclusion"
+      },
+      "name" : "Fall 3: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall3-Patient-Sabine-Weber.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall3-Patient-Sabine-Weber"
+      },
+      "name" : "Fall 3: Patientin Sabine Weber",
+      "description" : "Synthetische Testpatientin — HR+/HER2- Mammakarzinom, Stadium IIA, N1",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall3-Pathologie-Praeparat-Stanze.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall3-Pathologie-Praeparat-Stanze"
+      },
+      "name" : "Fall 3: Stanzbiopsie-Präparat rechts",
+      "description" : "Stanzbiopsie aus der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall3-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall3-TNM-Klassifikation"
+      },
+      "name" : "Fall 3: TNM-Klassifikation cT2 pN1a cM0",
+      "description" : "TNM-Klassifikation cT2 pN1a cM0, UICC IIA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall4-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall4-Strahlentherapie"
+      },
+      "name" : "Fall 4: Adjuvante Ganzbrustbestrahlung 50 Gy + Boost",
+      "description" : "Adjuvante Ganzbrustbestrahlung links nach BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall4-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall4-Operation-BET"
+      },
+      "name" : "Fall 4: BET links + SLNB nach neoadjuvanter Therapie",
+      "description" : "Brusterhaltende Therapie links mit Sentinel-LK-Biopsie, ypT0 ypN0 (pCR), R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall4-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall4-BiRADS-Links"
+      },
+      "name" : "Fall 4: BI-RADS 5 links",
+      "description" : "BI-RADS 5 Befund der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall4-Medikation-Carboplatin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall4-Medikation-Carboplatin"
+      },
+      "name" : "Fall 4: Carboplatin AUC6, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Carboplatin im Rahmen der neoadjuvanten TCHP",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall4-Medikation-Docetaxel.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall4-Medikation-Docetaxel"
+      },
+      "name" : "Fall 4: Docetaxel 75 mg/m2, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Docetaxel im Rahmen der neoadjuvanten TCHP",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall4-ECOG-PostTherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall4-ECOG-PostTherapie"
+      },
+      "name" : "Fall 4: ECOG-Leistungszustand nach neoadjuvanter Therapie",
+      "description" : "ECOG 1 — leichte Einschränkung nach Chemotherapie",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall4-Verlauf-PostTherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall4-Verlauf-PostTherapie"
+      },
+      "name" : "Fall 4: Gesamtbeurteilung nach neoadjuvanter Chemotherapie (D27)",
+      "description" : "Gesamtbeurteilung Tumorstatus nach Abschluss der neoadjuvanten Systemtherapie: Teilremission (PR). Lokaler Tumorrückgang, LK und FM stabil. D27-Kontext (post-definitive Therapie).",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall4-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall4-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 4: HER2+ Mammakarzinom links, cT2 cN1 cM0",
+      "description" : "Invasives Mammakarzinom NST links, HER2+, UICC IIB",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall4-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall4-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 4: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit Herdbefund links BI-RADS 5",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall4-Systemtherapie-Neoadjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall4-Systemtherapie-Neoadjuvant"
+      },
+      "name" : "Fall 4: Neoadjuvante TCHP",
+      "description" : "Neoadjuvante Therapie mit Docetaxel, Carboplatin, Trastuzumab, Pertuzumab",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall4-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall4-Pathologie-Befund"
+      },
+      "name" : "Fall 4: Pathologie — Invasives Karzinom NST, G3, HER2+",
+      "description" : "Pathologischer Befund: invasives Karzinom NST, G3, ER- PR- HER2+ (FISH amplifiziert), Ki-67 45%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall4-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall4-Patho-Conclusion"
+      },
+      "name" : "Fall 4: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall4-Patient-Julia-Fischer.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall4-Patient-Julia-Fischer"
+      },
+      "name" : "Fall 4: Patientin Julia Fischer",
+      "description" : "Synthetische Testpatientin — HER2+ Mammakarzinom, neoadjuvant TCHP, pCR",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall4-Medikation-Pertuzumab.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall4-Medikation-Pertuzumab"
+      },
+      "name" : "Fall 4: Pertuzumab, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Pertuzumab im Rahmen der neoadjuvanten TCHP",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall4-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall4-Operation-SLNB"
+      },
+      "name" : "Fall 4: Sentinel-Lymphknoten-Biopsie links",
+      "description" : "SLNB als Subprozedur der BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall4-Bildgebung-Sonographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall4-Bildgebung-Sonographie"
+      },
+      "name" : "Fall 4: Sonographie bilateral",
+      "description" : "Sonographie bilateral mit Herdbefund links und suspekten axillären LK",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall4-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall4-Pathologie-Praeparat"
+      },
+      "name" : "Fall 4: Stanzbiopsie-Präparat links",
+      "description" : "Stanzbiopsie aus der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall4-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall4-TNM-Klassifikation"
+      },
+      "name" : "Fall 4: TNM-Klassifikation cT2 cN1 cM0",
+      "description" : "TNM-Klassifikation cT2 cN1 cM0, UICC IIB. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall4-Medikation-Trastuzumab.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall4-Medikation-Trastuzumab"
+      },
+      "name" : "Fall 4: Trastuzumab, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Trastuzumab im Rahmen der neoadjuvanten TCHP",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall4-Tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall4-Tumorboard"
+      },
+      "name" : "Fall 4: Tumorboard — Neoadjuvante Therapie empfohlen",
+      "description" : "Empfehlung: neoadjuvante TCHP, dann BET + SLNB, adjuvant Trastuzumab/Pertuzumab + RT",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall5-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall5-Strahlentherapie"
+      },
+      "name" : "Fall 5: Adjuvante Ganzbrustbestrahlung 50 Gy + Boost 16 Gy",
+      "description" : "Adjuvante Ganzbrustbestrahlung rechts nach BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall5-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall5-Operation-BET"
+      },
+      "name" : "Fall 5: BET rechts + SLNB",
+      "description" : "Brusterhaltende Therapie rechts mit SLNB, ypT1a ypN0(sn)(0/3), R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall5-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall5-BiRADS-Rechts"
+      },
+      "name" : "Fall 5: BI-RADS 5 rechts",
+      "description" : "BI-RADS 5 Befund der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall5-Somatische-Mutation-BRCA1.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall5-Somatische-Mutation-BRCA1"
+      },
+      "name" : "Fall 5: BRCA1 somatisch — Mutation nachgewiesen",
+      "description" : "BRCA1 somatische Mutation nachgewiesen im Tumorgewebe",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-somatische-mutation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall5-Begleitmedikation-Letrozol.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall5-Begleitmedikation-Letrozol"
+      },
+      "name" : "Fall 5: Endokrine Therapie Letrozol 2,5 mg",
+      "description" : "Letrozol 2,5 mg/d als adjuvante endokrine Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall5-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall5-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 5: HR+/HER2+ Mammakarzinom rechts, cT3 cN1 cM0",
+      "description" : "Invasives Mammakarzinom NST rechts, HR+/HER2+, UICC IIIA",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall5-Komorbiditaet-Diabetes.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall5-Komorbiditaet-Diabetes"
+      },
+      "name" : "Fall 5: Komorbidität — Diabetes mellitus Typ 2",
+      "description" : "Vorbestehender Diabetes mellitus Typ 2, diätetisch eingestellt",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall5-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall5-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 5: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit großem Herdbefund rechts BI-RADS 5",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall5-Bildgebung-MRT.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall5-Bildgebung-MRT"
+      },
+      "name" : "Fall 5: MRT Mamma",
+      "description" : "MRT der Brust zur Ausdehnungsbeurteilung bei cT3",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "AdverseEvent"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "AdverseEvent-Fall5-Nebenwirkung-Nausea.html"
+      }],
+      "reference" : {
+        "reference" : "AdverseEvent/Fall5-Nebenwirkung-Nausea"
+      },
+      "name" : "Fall 5: Nausea CTCAE Grad 1 unter Docetaxel",
+      "description" : "Nausea Grad 1 (mild) unter neoadjuvantem Docetaxel + Trastuzumab",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-nebenwirkung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall5-Systemtherapie-Neoadjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall5-Systemtherapie-Neoadjuvant"
+      },
+      "name" : "Fall 5: Neoadjuvante EC → Docetaxel + Trastuzumab",
+      "description" : "Neoadjuvante Therapie: EC x4 gefolgt von Docetaxel + Trastuzumab x4",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall5-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall5-Pathologie-Befund"
+      },
+      "name" : "Fall 5: Pathologie — Invasives Karzinom NST, G2, HR+/HER2+",
+      "description" : "Pathologischer Befund: invasives Karzinom NST, G2, ER+ IRS 8, PR+ IRS 4, HER2+ Score 3+, Ki-67 30%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall5-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall5-Patho-Conclusion"
+      },
+      "name" : "Fall 5: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall5-Patient-Monika-Braun.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall5-Patient-Monika-Braun"
+      },
+      "name" : "Fall 5: Patientin Monika Braun",
+      "description" : "Synthetische Testpatientin — HR+/HER2+ Mammakarzinom, Stadium IIIA, neoadjuvant",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall5-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall5-Operation-SLNB"
+      },
+      "name" : "Fall 5: Sentinel-Lymphknoten-Biopsie rechts",
+      "description" : "SLNB als Subprozedur der BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall5-Bildgebung-Sonographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall5-Bildgebung-Sonographie"
+      },
+      "name" : "Fall 5: Sonographie bilateral",
+      "description" : "Sonographie bilateral mit Herdbefund rechts und suspekten axillären LK",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall5-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall5-Pathologie-Praeparat"
+      },
+      "name" : "Fall 5: Stanzbiopsie-Präparat rechts",
+      "description" : "Stanzbiopsie aus der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall5-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall5-TNM-Klassifikation"
+      },
+      "name" : "Fall 5: TNM-Klassifikation cT3 cN1 cM0",
+      "description" : "TNM-Klassifikation cT3 cN1 cM0, UICC IIIA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall5-Tumorboard-Neoadjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall5-Tumorboard-Neoadjuvant"
+      },
+      "name" : "Fall 5: Tumorboard — Neoadjuvante Therapie",
+      "description" : "Empfehlung: EC → Docetaxel + Trastuzumab neoadjuvant, dann OP, adjuvant Trastuzumab + RT + Letrozol",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall5-Tumorboard-Postoperativ.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall5-Tumorboard-Postoperativ"
+      },
+      "name" : "Fall 5: Tumorboard — Postoperativ",
+      "description" : "Postoperative Tumorboard-Empfehlung: Bestätigung adjuvante Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall6-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall6-Strahlentherapie"
+      },
+      "name" : "Fall 6: Adjuvante Bestrahlung 50 Gy (kein Boost)",
+      "description" : "Adjuvante Ganzbrustbestrahlung links nach BET bei DCIS",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall6-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall6-Operation-BET"
+      },
+      "name" : "Fall 6: BET links",
+      "description" : "Brusterhaltende Therapie links bei DCIS, R0 knapp",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall6-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall6-BiRADS-Links"
+      },
+      "name" : "Fall 6: BI-RADS 4 links",
+      "description" : "BI-RADS 4 Befund links — Mikrokalzifikationen",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall6-Diagnose-DCIS.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall6-Diagnose-DCIS"
+      },
+      "name" : "Fall 6: DCIS links",
+      "description" : "Duktales Carcinoma in situ (DCIS) links, G2, ER+",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall6-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall6-Pathologie-Befund"
+      },
+      "name" : "Fall 6: Pathologie Vakuumbiopsie — DCIS G2, ER+",
+      "description" : "Pathologischer Befund der Vakuumbiopsie: DCIS G2, ER+, kein invasiver Anteil",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall6-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall6-Patho-Conclusion"
+      },
+      "name" : "Fall 6: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall6-Patient-Petra-Schneider.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall6-Patient-Petra-Schneider"
+      },
+      "name" : "Fall 6: Patientin Petra Schneider",
+      "description" : "Synthetische Testpatientin — DCIS, Screening-Detektion, Stadium 0",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall6-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall6-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 6: Screening-Mammographie bilateral",
+      "description" : "Screening-Mammographie mit Mikrokalzifikationen links BI-RADS 4",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall6-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall6-Pathologie-Praeparat"
+      },
+      "name" : "Fall 6: Vakuumbiopsie-Präparat links",
+      "description" : "Stereotaktische Vakuumbiopsie aus der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall7-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall7-Strahlentherapie"
+      },
+      "name" : "Fall 7: Adjuvante Bestrahlung 50 Gy + Boost 16 Gy",
+      "description" : "Adjuvante Ganzbrustbestrahlung rechts mit Boost auf Tumorbett",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall7-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall7-Operation-BET"
+      },
+      "name" : "Fall 7: BET rechts + SLNB",
+      "description" : "Brusterhaltende Therapie rechts mit SLNB, ypT0 ypN0(sn)(0/2) = pCR, R0",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall7-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall7-BiRADS-Rechts"
+      },
+      "name" : "Fall 7: BI-RADS 5 rechts",
+      "description" : "BI-RADS 5 Befund der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall7-Medikation-Carboplatin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall7-Medikation-Carboplatin"
+      },
+      "name" : "Fall 7: Carboplatin, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Carboplatin im Rahmen der neoadjuvanten Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall7-Medikation-Epirubicin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall7-Medikation-Epirubicin"
+      },
+      "name" : "Fall 7: Epirubicin 90 mg/m2, Zyklus 1 (EC), Tag 1",
+      "description" : "Einzelgabe Epirubicin im Rahmen der neoadjuvanten EC-Phase",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall7-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall7-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 7: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit Herdbefund rechts BI-RADS 5",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall7-Systemtherapie-Neoadjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall7-Systemtherapie-Neoadjuvant"
+      },
+      "name" : "Fall 7: Neoadjuvante Carboplatin/Paclitaxel → EC",
+      "description" : "Neoadjuvante Therapie: Carboplatin/Paclitaxel weekly x12, dann EC q3w x4",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall7-Medikation-Paclitaxel.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall7-Medikation-Paclitaxel"
+      },
+      "name" : "Fall 7: Paclitaxel 80 mg/m2, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Paclitaxel im Rahmen der neoadjuvanten Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall7-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall7-Pathologie-Befund"
+      },
+      "name" : "Fall 7: Pathologie — Invasives Karzinom NST, G3, TNBC",
+      "description" : "Pathologischer Befund: invasives Karzinom NST, G3, ER- PR- HER2-, Ki-67 65%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall7-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall7-Patho-Conclusion"
+      },
+      "name" : "Fall 7: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall7-Patient-Kathrin-Mueller.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall7-Patient-Kathrin-Mueller"
+      },
+      "name" : "Fall 7: Patientin Kathrin Mueller",
+      "description" : "Synthetische Testpatientin — TNBC, neoadjuvant, pCR",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall7-PDL1-Status.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall7-PDL1-Status"
+      },
+      "name" : "Fall 7: PD-L1 Status — CPS 2, negativ (22C3)",
+      "description" : "PD-L1 IHC bei TNBC: CPS 2 (<10 → kein Pembrolizumab)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pdl1-status"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall7-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall7-Operation-SLNB"
+      },
+      "name" : "Fall 7: Sentinel-Lymphknoten-Biopsie rechts",
+      "description" : "SLNB als Subprozedur der BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall7-Bildgebung-Sonographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall7-Bildgebung-Sonographie"
+      },
+      "name" : "Fall 7: Sonographie bilateral",
+      "description" : "Sonographie bilateral mit Herdbefund rechts, keine suspekten LK",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall7-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall7-Pathologie-Praeparat"
+      },
+      "name" : "Fall 7: Stanzbiopsie-Präparat rechts",
+      "description" : "Stanzbiopsie aus der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall7-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall7-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 7: TNBC rechts, cT2 cN0 cM0",
+      "description" : "Invasives Mammakarzinom NST rechts, triple-negativ, UICC IIA",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall7-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall7-TNM-Klassifikation"
+      },
+      "name" : "Fall 7: TNM-Klassifikation cT2 cN0 cM0",
+      "description" : "TNM-Klassifikation cT2 cN0 cM0, UICC IIA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall7-Tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall7-Tumorboard"
+      },
+      "name" : "Fall 7: Tumorboard — Neoadjuvante Therapie empfohlen",
+      "description" : "Empfehlung: neoadjuvante Carboplatin/Paclitaxel → EC, dann BET + SLNB, adjuvante RT",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall8-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall8-Strahlentherapie"
+      },
+      "name" : "Fall 8: Adjuvante Bestrahlung Thoraxwand rechts 50 Gy",
+      "description" : "Adjuvante Thoraxwandbestrahlung rechts nach Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall8-BiRADS-Rechts.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall8-BiRADS-Rechts"
+      },
+      "name" : "Fall 8: BI-RADS 5 rechts",
+      "description" : "BI-RADS 5 Befund der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall8-Begleitmedikation-Tamoxifen.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall8-Begleitmedikation-Tamoxifen"
+      },
+      "name" : "Fall 8: Endokrine Therapie Tamoxifen 20 mg",
+      "description" : "Tamoxifen 20 mg/d — Standard bei männlichem Mammakarzinom (NICHT Aromataseinhibitor)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall8-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall8-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 8: Mammakarzinom rechts, cT2 pN0(sn) cM0",
+      "description" : "Invasives Mammakarzinom NST rechts, zentraler Drüsenkörper, männlich, UICC IIA",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall8-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall8-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 8: Mammographie rechts",
+      "description" : "Mammographie mit suspektem Herdbefund rechts BI-RADS 5",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall8-Operation-Mastektomie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall8-Operation-Mastektomie"
+      },
+      "name" : "Fall 8: Mastektomie rechts + SLNB",
+      "description" : "Mastektomie rechts (Standard bei männlichem Mammakarzinom) + Sentinel-LK-Biopsie, R0, pN0(sn)(0/3)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall8-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall8-Pathologie-Befund"
+      },
+      "name" : "Fall 8: Pathologie — Invasives Karzinom NST, G2, HR+/HER2-",
+      "description" : "Pathologischer Befund: Invasives Karzinom NST, G2, ER+ IRS 12, PR+ IRS 6, HER2- Score 1+, Ki-67 18%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall8-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall8-Patho-Conclusion"
+      },
+      "name" : "Fall 8: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall8-Patient-Klaus-Hartmann.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall8-Patient-Klaus-Hartmann"
+      },
+      "name" : "Fall 8: Patient Klaus Hartmann",
+      "description" : "Synthetischer Testpatient — männliches Mammakarzinom rechts, HR+/HER2-, UICC IIA",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall8-Operation-SLNB.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall8-Operation-SLNB"
+      },
+      "name" : "Fall 8: Sentinel-Lymphknoten-Biopsie rechts",
+      "description" : "SLNB als Subprozedur der Mastektomie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall8-Bildgebung-Sonographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall8-Bildgebung-Sonographie"
+      },
+      "name" : "Fall 8: Sonographie rechts",
+      "description" : "Sonographie mit hypoechogenem Herdbefund rechts retromamillär",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall8-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall8-Pathologie-Praeparat"
+      },
+      "name" : "Fall 8: Stanzbiopsie-Präparat rechts retromamillär",
+      "description" : "Stanzbiopsie aus dem retromamillären Bereich der rechten Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall8-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall8-TNM-Klassifikation"
+      },
+      "name" : "Fall 8: TNM-Klassifikation cT2 pN0 cM0",
+      "description" : "TNM-Klassifikation cT2 pN0 cM0, UICC IIA. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall9-Strahlentherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall9-Strahlentherapie"
+      },
+      "name" : "Fall 9: Adjuvante Bestrahlung 50 Gy + Boost + Lymphabfluss",
+      "description" : "Adjuvante Bestrahlung Restbrust links 50 Gy + Boost 10 Gy + Lymphabflusswege",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-strahlentherapie"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall9-Systemtherapie-Adjuvant.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall9-Systemtherapie-Adjuvant"
+      },
+      "name" : "Fall 9: Adjuvante Chemotherapie EC → Paclitaxel",
+      "description" : "Adjuvante Chemotherapie EC q3w x4 → Paclitaxel wöchentlich x12",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-procedure"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall9-Operation-Axilladissektion.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall9-Operation-Axilladissektion"
+      },
+      "name" : "Fall 9: Axilladissektion links Level I-III",
+      "description" : "Axilladissektion als Subprozedur der BET",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Procedure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Procedure-Fall9-Operation-BET.html"
+      }],
+      "reference" : {
+        "reference" : "Procedure/Fall9-Operation-BET"
+      },
+      "name" : "Fall 9: BET links + Axilladissektion Level I-III",
+      "description" : "Brusterhaltende Therapie links + Axilladissektion Level I-III, R0, pN3a(12/18)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall9-BiRADS-Links.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall9-BiRADS-Links"
+      },
+      "name" : "Fall 9: BI-RADS 5 links",
+      "description" : "BI-RADS 5 Befund der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-observation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall9-ECOG-12Monate.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall9-ECOG-12Monate"
+      },
+      "name" : "Fall 9: ECOG-Leistungszustand 12 Monate postoperativ",
+      "description" : "ECOG 1 — leicht eingeschränkt (Residual-Lymphödem nach Axilladissektion)",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall9-Begleitmedikation-Tamoxifen.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall9-Begleitmedikation-Tamoxifen"
+      },
+      "name" : "Fall 9: Endokrine Therapie Tamoxifen 20 mg (initial, prämenopausal)",
+      "description" : "Tamoxifen 20 mg/d, prämenopausal, nach 2 Jahren Umstellung auf AI + GnRH geplant",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-begleitmedikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall9-Medikation-Epirubicin.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall9-Medikation-Epirubicin"
+      },
+      "name" : "Fall 9: Epirubicin, Zyklus 1, Tag 1",
+      "description" : "Einzelgabe Epirubicin im Rahmen der adjuvanten EC-Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall9-Komorbiditaet-Adipositas.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall9-Komorbiditaet-Adipositas"
+      },
+      "name" : "Fall 9: Komorbidität — Adipositas",
+      "description" : "Adipositas Grad I (BMI 32)",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall9-Komorbiditaet-COPD.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall9-Komorbiditaet-COPD"
+      },
+      "name" : "Fall 9: Komorbidität — COPD",
+      "description" : "Chronisch obstruktive Lungenerkrankung GOLD II",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Condition"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Condition-Fall9-Diagnose-Mammakarzinom.html"
+      }],
+      "reference" : {
+        "reference" : "Condition/Fall9-Diagnose-Mammakarzinom"
+      },
+      "name" : "Fall 9: Lobuläres Mammakarzinom links, cT2 pN3a cM0",
+      "description" : "Invasives lobuläres Mammakarzinom links, G2, UICC IIIC, pN3a(12/18)",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-maligne"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall9-Bildgebung-Mammographie.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall9-Bildgebung-Mammographie"
+      },
+      "name" : "Fall 9: Mammographie bilateral",
+      "description" : "Mammographie bilateral mit Herdbefund links OAQ",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-bildgebung-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "MedicationStatement"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "MedicationStatement-Fall9-Medikation-Paclitaxel.html"
+      }],
+      "reference" : {
+        "reference" : "MedicationStatement/Fall9-Medikation-Paclitaxel"
+      },
+      "name" : "Fall 9: Paclitaxel 80 mg/m2 wöchentlich, Woche 1",
+      "description" : "Einzelgabe Paclitaxel im Rahmen der adjuvanten wöchentlichen Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-systemtherapie-medikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "DiagnosticReport"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "DiagnosticReport-Fall9-Pathologie-Befund.html"
+      }],
+      "reference" : {
+        "reference" : "DiagnosticReport/Fall9-Pathologie-Befund"
+      },
+      "name" : "Fall 9: Pathologie — Invasives lobuläres Karzinom, G2, HR+/HER2-",
+      "description" : "Pathologischer Befund: Invasives lobuläres Karzinom, G2, ER+ IRS 12, PR+ IRS 10, HER2-, Ki-67 20%",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-befund"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall9-Patho-Conclusion.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall9-Patho-Conclusion"
+      },
+      "name" : "Fall 9: Pathologische Diagnose/Conclusion",
+      "description" : "Diagnostische Schlussfolgerung des Pathologen",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Patient"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Patient-Fall9-Patient-Andrea-Wolf.html"
+      }],
+      "reference" : {
+        "reference" : "Patient/Fall9-Patient-Andrea-Wolf"
+      },
+      "name" : "Fall 9: Patientin Andrea Wolf",
+      "description" : "Synthetische Testpatientin — lobuläres Mammakarzinom links, UICC IIIC, LK-positiv, Komplikation",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall9-Komplikation-Lymphoedem.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall9-Komplikation-Lymphoedem"
+      },
+      "name" : "Fall 9: Postoperative Komplikation — Lymphödem Arm links, Clavien-Dindo II",
+      "description" : "Lymphödem Arm links nach Axilladissektion, Clavien-Dindo Grad II",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Specimen"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Specimen-Fall9-Pathologie-Praeparat.html"
+      }],
+      "reference" : {
+        "reference" : "Specimen/Fall9-Pathologie-Praeparat"
+      },
+      "name" : "Fall 9: Stanzbiopsie-Präparat links OAQ",
+      "description" : "Stanzbiopsie aus dem oberen äußeren Quadranten der linken Brust",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-pathologie-praeparat"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall9-TNM-Klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall9-TNM-Klassifikation"
+      },
+      "name" : "Fall 9: TNM-Klassifikation cT2 pN3a cM0",
+      "description" : "TNM-Klassifikation cT2 pN3a cM0, UICC IIIC. Jede Kategorie trägt den UICC-Code und das SNOMED-CT-Äquivalent.",
+      "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CarePlan"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "CarePlan-Fall9-Tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "CarePlan/Fall9-Tumorboard"
+      },
+      "name" : "Fall 9: Tumorboard-Empfehlung",
+      "description" : "Empfehlung: adjuvante Chemotherapie EC→Paclitaxel, BET + Axilladissektion, RT, endokrine Therapie",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-tumorboard-empfehlung"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Observation"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Observation-Fall9-Verlauf-12Monate.html"
+      }],
+      "reference" : {
+        "reference" : "Observation/Fall9-Verlauf-12Monate"
+      },
+      "name" : "Fall 9: Verlaufskontrolle 12 Monate postoperativ",
+      "description" : "Nachsorge nach BET + Axilladissektion + Chemo + RT, unter Tamoxifen-Therapie. Aktive Nachsorge, kein Zweittumor.",
+      "exampleCanonical" : "https://www.senologie.org/fhir/StructureDefinition/senologie-follow-up"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-first-line-therapy.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-first-line-therapy"
+      },
+      "name" : "First-Line-Therapie bei Metastasierung",
+      "description" : "Flag ob es sich um die First-Line-Therapie bei metastasierter Situation handelt (OncoBox I02 / KB-8)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-bildgebung.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-bildgebung"
+      },
+      "name" : "Fragebogen: Bildgebung Mamma",
+      "description" : "Fragebogen zur strukturierten Dokumentation der Bildgebung Mamma (Mammographie, Sonographie, MRT, Tomosynthese). Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Observation und BodyStructure.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-diagnose.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-diagnose"
+      },
+      "name" : "Fragebogen: Diagnose Mamma",
+      "description" : "Klinische Anker-Diagnose der Senologie (Mammakarzinom, in-situ, B3-Läsion, benigne Befunde, kosmetische/funktionelle Anomalien). Bewusst schlank: TNM, Grading und detailliertes Staging werden in den Folge-Formularen Bildgebung, Pathologie und Verlauf erhoben.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-erstanamnese.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-erstanamnese"
+      },
+      "name" : "Fragebogen: Erstanamnese",
+      "description" : "Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese, Raucherstatus und Familienanamnese. Nutzt SDC Template-based Extraction.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-klinische-untersuchung.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-klinische-untersuchung"
+      },
+      "name" : "Fragebogen: Klinische Untersuchung Mamma",
+      "description" : "Klinische Inspektion, Palpation und klinisches TNM-Staging der Senologie. Bewusst ohne Sonographie/Bildgebung (→ Bildgebung-Form) und Biopsie-Doku (→ Pathologie-Form).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-op-planung.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-op-planung"
+      },
+      "name" : "Fragebogen: OP Planung",
+      "description" : "Fragebogen zur ärztlichen OP-Planung in der Senologie. Nutzt SDC Template-based Extraction mit dem Senologie_OP_Planung-Profil (ServiceRequest) als Ziel.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-pathologie.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-pathologie"
+      },
+      "name" : "Fragebogen: Pathologie Befund",
+      "description" : "Fragebogen zur strukturierten Dokumentation des pathologischen Befunds. Nutzt SDC Template-based Extraction mit contained Templates für DiagnosticReport, Specimen, Histologie-Observation und IHC-Observation.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-postop.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-postop"
+      },
+      "name" : "Fragebogen: Postoperative Dokumentation",
+      "description" : "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-strahlentherapie-quest.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-strahlentherapie-quest"
+      },
+      "name" : "Fragebogen: Strahlentherapie",
+      "description" : "Fragebogen zur strukturierten Dokumentation der Strahlentherapie. Nutzt SDC Template-based Extraction mit contained Procedure-Template.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-systemtherapie.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-systemtherapie"
+      },
+      "name" : "Fragebogen: Systemische Therapie",
+      "description" : "Fragebogen zur Dokumentation der systemischen Therapie (Chemotherapie, Endokrine Therapie, Zielgerichtete Therapie, Immuntherapie). Nutzt SDC Template-based Extraction mit contained Templates für Procedure und MedicationStatement.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-tumorboard.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-tumorboard"
+      },
+      "name" : "Fragebogen: Tumorboard Empfehlung",
+      "description" : "Fragebogen zur strukturierten Dokumentation der Empfehlung einer interdisziplinaeren Tumorkonferenz. Pro Therapie-Empfehlung mit Beschluss-Status (empfohlen/bedingt/nicht/nicht diskutiert) und Begruendung. SDC Template-based Extraction zu CarePlan.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-verlauf.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-verlauf"
+      },
+      "name" : "Fragebogen: Verlaufsdokumentation / Nachsorge",
+      "description" : "Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge. Nutzt SDC Template-based Extraction mit contained Templates für Klinischen Status und Tumorstatus.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-operations-duration.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-operations-duration"
+      },
+      "name" : "Geplante OP-Dauer",
+      "description" : "Geplante OP-Dauer in Minuten — ServiceRequest hat kein duration-Element",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-iqtig-mammachirurgie-181.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/iqtig-mammachirurgie-181"
+      },
+      "name" : "IQTIG QS 18.1 Mammachirurgie (Logical Model)",
+      "description" : "Logisches Modell des IQTIG-Datensatzes fuer das QS-Verfahren 18.1 Mammachirurgie\n(Spezifikation 2024 V05).\n\nDer Datensatz besteht aus drei Teildatensaetzen:\n- Teildatensatz Basis (B): Patienten- und Falldaten\n- Teildatensatz Brust (BRUST): Brustspezifische Diagnose- und Befunddaten\n- Teildatensatz Operation (O): Operation, Histologie, Pathologie, Resektionsstatus\n\nDieses Modell dient als Zielstruktur der FHIR StructureMaps fuer die Ableitung\neiner IQTIG-konformen QS-Meldung aus einem Senologie-FHIR-Bundle. Die\nSerialisierung (CSV / XML) ist nicht Bestandteil dieses Modells.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ireg-brustimplantat-meldung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ireg-brustimplantat-meldung"
+      },
+      "name" : "IRegG Brustimplantat Meldung (Logical Model)",
+      "description" : "Logisches Modell der GEMeldung fuer Brustimplantate gemaess IRegD XML-Spezifikation V4.1.1.\n\nDieses Modell bildet die Hierarchie der XML-Nachricht ab, beschraenkt auf den\nBrustimplantat-Anteil (ohne Endoprothese und Aortenklappe). Es dient als\nStructureMap-Target fuer die Erzeugung von IRegG-XML-Meldungen aus FHIR-Ressourcen.\n\nMapping-Uebersicht:\n- Meldung (MEL_*) -> MessageHeader + Organization\n- Fall (FAL_*) -> Encounter\n- PatientenaufnahmeBrustimplantat (PAT_* + PAB_*) -> Patient + Observations\n- Operation (OPE_* + OBI_*) -> Procedure\n- Artikelidentifikation (ARI_* + ARB_* + ABI_*) -> Device\n- Zubehoer (ZUB_* + ZBI_*) -> Device\n- Entlassung (ENT_* + DBI_*) -> Encounter.hospitalization + Condition",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-studienkontakt.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-studienkontakt"
+      },
+      "name" : "Kontaktperson Studie",
+      "description" : "Kontaktperson für die klinische Studie — kein natives FHIR-Äquivalent in ResearchSubject",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Library"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Library-MinimalMeasureLib.html"
+      }],
+      "reference" : {
+        "reference" : "Library/MinimalMeasureLib"
+      },
+      "name" : "Library: MinimalMeasureLib",
+      "description" : "Minimale Debug-Library mit drei konstanten true-Defines",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Library"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Library-OncoBoxBrustKennzahlen.html"
+      }],
+      "reference" : {
+        "reference" : "Library/OncoBoxBrustKennzahlen"
+      },
+      "name" : "Library: OncoBoxBrustKennzahlen",
+      "description" : "OncoBox Brust 2.0 Kennzahlen (KB-1 bis KB-20, DKG-Zertifizierung)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Library"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Library-QualitaetsindikatorenLeitlinie.html"
+      }],
+      "reference" : {
+        "reference" : "Library/QualitaetsindikatorenLeitlinie"
+      },
+      "name" : "Library: QualitaetsindikatorenLeitlinie",
+      "description" : "S3-Leitlinien-Qualitätsindikatoren (17 QIs aus S3 Mammakarzinom v5.0, Kapitel 8)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-loinc-rezeptorstatus-to-obds.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-loinc-rezeptorstatus-to-obds"
+      },
+      "name" : "LOINC Rezeptorstatus zu oBDS/OncoBox/IQTIG P/N/U",
+      "description" : "Mapping: LOINC Answer-Codes LA6576-8/LA6577-6/LA4489-6 (Positive/Negative/Unknown) → P/N/U Single-Code (oBDS, OncoBox, IQTIG).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-her2-leitlinie-to-obds.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-her2-leitlinie-to-obds"
+      },
+      "name" : "MII HER2 Leitlinien-Klassifikation zu oBDS/OncoBox/IQTIG P/N/U",
+      "description" : "Mapping: MII Her2neu-Leitlinien-Codes (positiv/low/ultralow/negativ/equivocal) → P/N/U. HER2-low und HER2-ultralow werden zu 'N' subsumiert (oBDS-Spec-Limitation).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-oncobox-verlauf-gesamtbeurteilung-ereignis.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-oncobox-verlauf-gesamtbeurteilung-ereignis"
+      },
+      "name" : "MII Verlauf Gesamtbeurteilung zu OncoBox Verlauf-Ereignis",
+      "description" : "Mapping der MII Onko Verlauf-Gesamtbeurteilung auf OncoBox Verlauf_Ereignis. Stabile Zustaende (V, T, K, B, R) erzeugen kein Verlaufsereignis. P (Progression) wird auf 6 (Progress) gemappt, Y (Rezidiv) auf 1 (Lokalrezidiv als Default). D (divergent) und U/X (unbekannt/fehlend) werden nicht gemappt.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-obds-meldung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/obds-meldung"
+      },
+      "name" : "oBDS Meldung",
+      "description" : "Logisches Modell einer oBDS-Meldung (Onkologischer Basisdatensatz v3.0.5). Bildet die XML-Struktur einer einzelnen Meldung ab, wie sie von Meldestellen an die Krebsregister übermittelt wird.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-oncobox-brust-meldung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/oncobox-brust-meldung"
+      },
+      "name" : "OncoBox Brust 2.0 Meldung (Logical Model)",
+      "description" : "OncoBox Brust 2.0 (Auditjahr 2026 v2.1.1) Meldungsstruktur — generiert aus dem offiziellen XSD.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-oncobox-endokrine-substanz-atc.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-oncobox-endokrine-substanz-atc"
+      },
+      "name" : "OncoBox Endokrine Substanzklasse zu ATC",
+      "description" : "Mapping von ATC-Codes endokriner Substanzen zu OncoBox-Substanzklassen (1=Tamoxifen, 2=Aromatasehemmer, 3=GnRH-Analogon, 4=Fulvestrant, 5=CDK4/6-Inhibitor)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-operating-table-setup.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-operating-table-setup"
+      },
+      "name" : "OP-Lagerung/Tischanordnung",
+      "description" : "OP-Lagerung und Tischanordnung — kein natives FHIR-Äquivalent",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-primaerfallart.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-primaerfallart"
+      },
+      "name" : "Primaerfallart",
+      "description" : "OnkoZert-Primaerfallart als expliziter Override (OncoBox 2.0 D01). Ergänzt die ICD-basierte Ableitung im SM für Fälle wie Rezidiv (Code 3), die nicht aus dem ICD-Prefix ableitbar sind.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-pre-op-antibiotikatherapie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-pre-op-antibiotikatherapie"
+      },
+      "name" : "Präoperative Antibiotikatherapie",
+      "description" : "Präoperative Antibiotikatherapie — kein natives FHIR-Äquivalent",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-pre-op-blutabnahme.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-pre-op-blutabnahme"
+      },
+      "name" : "Präoperative Blutabnahme",
+      "description" : "Präoperative Blutabnahme geplant — kein natives FHIR-Äquivalent",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-pre-op-markierung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-pre-op-markierung"
+      },
+      "name" : "Präoperative Markierung",
+      "description" : "Präoperative Markierung geplant — ServiceRequest hat kein usedCode",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-studienscreening.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-studienscreening"
+      },
+      "name" : "Screening zur Studienteilnahme",
+      "description" : "OncoBox 2.0 K03: Wurde ein Screening zur Studienteilnahme durchgeführt? Erfasst, ob die Patientin aktiv auf eine mögliche Studienteilnahme geprüft wurde — unabhängig vom Ergebnis (Screeningstatus).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-screeningstatus.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-screeningstatus"
+      },
+      "name" : "Screeningstatus",
+      "description" : "Screeningstatus der Studienteilnahme — kein natives FHIR-Äquivalent in ResearchSubject",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-minimal.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-minimal"
+      },
+      "name" : "Senologie Measure Minimal (Debug)",
+      "description" : "Trivialste Measure — ip/denominator/numerator immer true. Erwartetes Ergebnis bei N Patienten: N/N (100 %). Nutzt MinimalMeasureLib.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-oncobox-kb-12.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-oncobox-kb-12"
+      },
+      "name" : "Senologie Measure OncoBox KB-12: Präoperative histologische Sicherung",
+      "description" : "Anteil mit präoperativer histologischer Sicherung (Stanze/Vakuum) vor Ersteingriff. OncoBox Brust 2.0 KB-12 (DKG-Audit-Kennzahl).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-02.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-02"
+      },
+      "name" : "Senologie Measure S3-QI-02: Prätherapeutische histologische Sicherung",
+      "description" : "Prätherapeutische histologische Sicherung (S3-Leitlinie Mammakarzinom Kapitel 8, QI-02)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-04.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-04"
+      },
+      "name" : "Senologie Measure S3-QI-04: Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut)",
+      "description" : "Axilläre LK-Entfernung bei DCIS (invers, niedrig=gut) (S3-Leitlinie Mammakarzinom Kapitel 8, QI-04)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-06.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-06"
+      },
+      "name" : "Senologie Measure S3-QI-06: Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz",
+      "description" : "Sentinel-Lymphknoten-Biopsie bei pN0 ohne Neoadjuvanz (S3-Leitlinie Mammakarzinom Kapitel 8, QI-06)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-08.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-08"
+      },
+      "name" : "Senologie Measure S3-QI-08: Strahlentherapie nach BET",
+      "description" : "Strahlentherapie nach BET (S3-Leitlinie Mammakarzinom Kapitel 8, QI-08)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-09.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-09"
+      },
+      "name" : "Senologie Measure S3-QI-09: Endokrine Therapie bei rezeptorpositivem Befund",
+      "description" : "Endokrine Therapie bei rezeptorpositivem Befund (S3-Leitlinie Mammakarzinom Kapitel 8, QI-09)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-11.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-11"
+      },
+      "name" : "Senologie Measure S3-QI-11: R0-Resektion bei invasivem Mammakarzinom",
+      "description" : "R0-Resektion bei invasivem Mammakarzinom (S3-Leitlinie Mammakarzinom Kapitel 8, QI-11)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-12.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-12"
+      },
+      "name" : "Senologie Measure S3-QI-12: ER/PR-Bestimmung mit % und Intensität",
+      "description" : "ER/PR-Bestimmung mit % und Intensität (S3-Leitlinie Mammakarzinom Kapitel 8, QI-12)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Measure"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Measure-senologie-measure-s3-qi-13.html"
+      }],
+      "reference" : {
+        "reference" : "Measure/senologie-measure-s3-qi-13"
+      },
+      "name" : "Senologie Measure S3-QI-13: HER2 Score nach ASCO/CAP",
+      "description" : "HER2 Score nach ASCO/CAP (S3-Leitlinie Mammakarzinom Kapitel 8, QI-13)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-senologie-meldungs-bundle.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/senologie-meldungs-bundle"
+      },
+      "name" : "Senologie Meldungs-Bundle",
+      "description" : "Kanonischer Bundle für einen vollständigen SenologieOnFHIR-Datensatz einer Brustkrebspatientin. Enthält Pflicht- und optionale Ressourcen gemäß den SenologieOnFHIR-Profilen.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-simultane-radiochemotherapie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-simultane-radiochemotherapie"
+      },
+      "name" : "Simultane Radiochemotherapie",
+      "description" : "Flag ob die Strahlentherapie simultan mit Chemotherapie durchgeführt wurde (OncoBox 2.0 H03)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-diagnosesicherung.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-diagnosesicherung"
+      },
+      "name" : "SNOMED CT Diagnostik-Procedure zu oBDS Diagnosesicherung",
+      "description" : "Mapping: SNOMED CT Biopsie-Codes → oBDS-Diagnosesicherungscode (5.7). Stützt CQL-QI-2 mit Datenquellen-Agnostik.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-fm-lokalisation.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-fm-lokalisation"
+      },
+      "name" : "SNOMED CT to oBDS Fernmetastasen-Lokalisation",
+      "description" : "Mapping von SNOMED CT Koerperstruktur-Codes zu oBDS Fernmetastasen-Lokalisation (PUL, OSS, HEP, BRA, etc.)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-grading.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-grading"
+      },
+      "name" : "SNOMED CT to oBDS Grading",
+      "description" : "Mapping von SNOMED CT Gradingcodes zu oBDS Grading (1, 2, 3, 4, X, L, M, H, B)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-intention.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-intention"
+      },
+      "name" : "SNOMED CT to oBDS Intention",
+      "description" : "Mapping von SNOMED CT Intentionscodes zu oBDS Intention (K, P, D, R, S, X)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-residualstatus.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-residualstatus"
+      },
+      "name" : "SNOMED CT to oBDS Residualstatus",
+      "description" : "Mapping von SNOMED CT UICC R-Klassifikation zu oBDS Residualstatus (R0, R1, R2, RX)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-seitenlokalisation.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-seitenlokalisation"
+      },
+      "name" : "SNOMED CT to oBDS Seitenlokalisation",
+      "description" : "Mapping von SNOMED CT Lateralitaetscodes zu oBDS Seitenlokalisation (R, L, B, M, T, U)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-therapiestellung.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-therapiestellung"
+      },
+      "name" : "SNOMED CT to oBDS Therapie-Stellung zur OP",
+      "description" : "Mapping von SNOMED CT Codes zu oBDS Stellung zur OP (O, A, N, I, Z, S)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-therapieart.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-therapieart"
+      },
+      "name" : "SNOMED CT to oBDS Therapieart",
+      "description" : "Mapping von SNOMED CT Therapieart-Codes zu oBDS Therapieart (CH, HO, IM, ZS, SO, ST)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ConceptMap-cm-sct-to-obds-verlauf-gesamtbeurteilung.html"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/cm-sct-to-obds-verlauf-gesamtbeurteilung"
+      },
+      "name" : "SNOMED CT to oBDS Verlauf Gesamtbeurteilung",
+      "description" : "Mapping von SNOMED CT Tumorstatusbewertungen zu oBDS Gesamtbeurteilung Tumorstatus (V, T, K, P, U, X)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-examination-location.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-examination-location"
+      },
+      "name" : "Standort der Untersuchung",
+      "description" : "Standort/Einrichtung der bildgebenden Untersuchung — DiagnosticReport hat kein location-Element",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-day-in-cycle.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-day-in-cycle"
+      },
+      "name" : "Tag im Zyklus",
+      "description" : "Tag innerhalb eines Therapie-Zyklus — MII Onko hat kein day-in-cycle",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-therapy-cycle.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-therapy-cycle"
+      },
+      "name" : "Therapie-Zyklus",
+      "description" : "Nummer des Therapie-Zyklus (1, 2, 3, etc.) — MII Onko hat kein cycle tracking",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-therapy-line.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-therapy-line"
+      },
+      "name" : "Therapielinie",
+      "description" : "Therapielinie (1. Linie, 2. Linie, etc.) — kein natives FHIR-Äquivalent",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnosesicherung.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnosesicherung"
+      },
+      "name" : "ValueSet Diagnosesicherung",
+      "description" : "Art der Diagnosesicherung gemäß oBDS für onkologische Diagnosen",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-icd10.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-icd10"
+      },
+      "name" : "ValueSet Senologie ICD-10-GM",
+      "description" : "ICD-10-GM Codes für Mamma-Erkrankungen (maligne und benigne) basierend auf Dotbase Codebook",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-oncobox-primaerfallart.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-oncobox-primaerfallart"
+      },
+      "name" : "VS OncoBox Primaerfallart",
+      "description" : "Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-acr-brustdichte.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-acr-brustdichte"
+      },
+      "name" : "VS Senologie ACR Brustdichte",
+      "description" : "ACR Brustdichte-Kategorien A-D als SNOMED-Codes.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-allgemeinzustand.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-allgemeinzustand"
+      },
+      "name" : "VS Senologie Allgemeinzustand",
+      "description" : "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht). Fuer detaillierte Erfassung ECOG verwenden.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-applikationsart.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-applikationsart"
+      },
+      "name" : "VS Senologie Applikationsart",
+      "description" : "Applikationsroute der Medikation (intravenoes / subkutan / oral / intramuskulaer).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-auffaellig-unauffaellig.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-auffaellig-unauffaellig"
+      },
+      "name" : "VS Senologie Auffällig/Unauffällig",
+      "description" : "Klinischer Befundstatus 'auffällig' / 'unauffällig' für Inspektion und Palpation.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-b-klassifikation.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-b-klassifikation"
+      },
+      "name" : "VS Senologie B-Klassifikation (NHSBSP)",
+      "description" : "Histopathologische B-Klassifikation der Mamma-Biopsie nach NHSBSP (B0-B5b) als SNOMED-Codes.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnose-b3.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnose-b3"
+      },
+      "name" : "VS Senologie B3 Läsionen",
+      "description" : "B3 Läsionen der Mamma nach S3-Leitlinie",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-b3-subtypen.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-b3-subtypen"
+      },
+      "name" : "VS Senologie B3-Subtypen",
+      "description" : "Sub-Klassifikation der B3-Läsion (ADH, FEA, Papillom, Radiäre Narbe, LIN-ALH, LCIS klassisch/pleomorph).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-beurteilbarkeit.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-beurteilbarkeit"
+      },
+      "name" : "VS Senologie Beurteilbarkeit",
+      "description" : "Beurteilbarkeit einer Bildgebung (gut / eingeschränkt).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-birads.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-birads"
+      },
+      "name" : "VS Senologie BI-RADS Kategorie",
+      "description" : "BI-RADS Mammographie-Assessment-Kategorien 0-6 als SNOMED-Codes.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-bildgebung-modalitaet.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-bildgebung-modalitaet"
+      },
+      "name" : "VS Senologie Bildgebungs-Modalität",
+      "description" : "Bildgebende Verfahren (Mammographie/Sonographie/Tomosynthese/MRT) mit Seitenlokalisation.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-clavien-dindo.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-clavien-dindo"
+      },
+      "name" : "VS Senologie Clavien-Dindo Grade",
+      "description" : "Clavien-Dindo Klassifikation operativer Komplikationen (Grad I-V).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-clockface-position.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-clockface-position"
+      },
+      "name" : "VS Senologie Clock-Face Position (Uhrzeitposition)",
+      "description" : "12 Uhrzeitpositionen (1-12 Uhr) als SNOMED CT Codes für die Mamma-Lokalisation im Uhrzeitschema.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnose.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnose"
+      },
+      "name" : "VS Senologie Diagnose",
+      "description" : "Diagnosen für Mamma-Erkrankungen basierend auf Dotbase Codebook - SNOMED CT und lokale Codes",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnose-lokal.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnose-lokal"
+      },
+      "name" : "VS Senologie Diagnose Lokal",
+      "description" : "Lokale Senologie-Codes ohne SNOMED CT Mapping (Binding für senologie-Slice)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnose-mamma-24.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnose-mamma-24"
+      },
+      "name" : "VS Senologie Diagnose Mamma (24 Choices)",
+      "description" : "24 Mamma-Diagnose-Choices entsprechend dem konsentierten Senologie-Datensatz (Mischung SNOMED + bz-* Custom-Codes), klinisch sortiert nach Häufigkeit.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnose-sct.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnose-sct"
+      },
+      "name" : "VS Senologie Diagnose SNOMED CT",
+      "description" : "SNOMED CT Diagnosen für maligne Mamma-Erkrankungen (Binding für sct-Slice)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-diagnose-sicherheit.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-diagnose-sicherheit"
+      },
+      "name" : "VS Senologie Diagnostische Sicherheit",
+      "description" : "Diagnostische Sicherheits-Stati: Verdacht auf / Gesichert / Ausschluss / Z.n. (FHIR condition-ver-status).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-dosis-einheit.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-dosis-einheit"
+      },
+      "name" : "VS Senologie Dosis-Einheit",
+      "description" : "Standard-Dosis-Einheiten fuer Onkologie-Medikation (UCUM).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-ecog.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-ecog"
+      },
+      "name" : "VS Senologie ECOG-Performance-Status",
+      "description" : "ECOG-Performance-Status 0-4.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-familien-erkrankung.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-familien-erkrankung"
+      },
+      "name" : "VS Senologie Familienanamnese-Erkrankung",
+      "description" : "Erkrankungen, die in der Familienanamnese erfasst werden (Mamma- und Ovarialkarzinom-Fokus).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-fernmetastasen-lokalisation.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-fernmetastasen-lokalisation"
+      },
+      "name" : "VS Senologie Fernmetastasen-Lokalisation",
+      "description" : "Häufige Fernmetastasen-Lokalisationen beim Mammakarzinom (Lunge/Leber/Knochen/Hirn).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-genexpressionstest.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-genexpressionstest"
+      },
+      "name" : "VS Senologie Genexpressionstest",
+      "description" : "Genexpressionstests zur Abschätzung des Rezidivrisikos bei Mammakarzinom",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-grading-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-grading-mamma"
+      },
+      "name" : "VS Senologie Grading Mamma (Elston-Ellis)",
+      "description" : "Histologic Grading nach Elston-Ellis (G1/G2/G3) als SNOMED-Codes.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-her2-fish.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-her2-fish"
+      },
+      "name" : "VS Senologie HER2 FISH-Ergebnis",
+      "description" : "FISH-Ergebnis bei HER2-Amplifikationstestung.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-her2-gesamt.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-her2-gesamt"
+      },
+      "name" : "VS Senologie HER2 Gesamtbewertung (Leitlinie)",
+      "description" : "HER2-Gesamtbewertung nach Leitlinie 2024 (positiv/low/ultralow/negativ/equivocal).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-her2-ihc-score.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-her2-ihc-score"
+      },
+      "name" : "VS Senologie HER2 IHC-Score",
+      "description" : "IHC-Score-Werte für HER2 (0/1+/2+/3+) nach Standardpathologie. Codes aus MII MTB INSITUHYBRIDIZATION.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-histologie-typ.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-histologie-typ"
+      },
+      "name" : "VS Senologie Histologie-Typ Mamma",
+      "description" : "Histologische Subtypen des Mamma-Befunds (NST, lobulär, DCIS).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-ihc-intensitaet.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-ihc-intensitaet"
+      },
+      "name" : "VS Senologie IHC-Färbeintensität",
+      "description" : "IHC-Färbeintensität für ER/PR-Beurteilung (negative/weak/moderate/strong).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-ish-methode.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-ish-methode"
+      },
+      "name" : "VS Senologie ISH-Methode",
+      "description" : "In-situ-Hybridisierungs-Methode für HER2.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-ja-nein.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-ja-nein"
+      },
+      "name" : "VS Senologie Ja/Nein",
+      "description" : "Generisches Ja/Nein als SNOMED-Codes (Hormonersatztherapie, andere Boolean-Fragen).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-komplikation-zeitpunkt.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-komplikation-zeitpunkt"
+      },
+      "name" : "VS Senologie Komplikations-Zeitpunkt",
+      "description" : "Phase der OP-Komplikation (intraoperativ / postoperativ direkt / stationaerer Aufenthalt).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-kontrazeption-status.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-kontrazeption-status"
+      },
+      "name" : "VS Senologie Kontrazeption Status",
+      "description" : "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-kontrolltermin-art.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-kontrolltermin-art"
+      },
+      "name" : "VS Senologie Kontrolltermin-Art",
+      "description" : "Art einer Verlaufs-/Nachsorge-Kontrolle.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-l-kategorie.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-l-kategorie"
+      },
+      "name" : "VS Senologie L-Kategorie (Lymphangiosis)",
+      "description" : "L-Kategorie (Lymphangiosis carcinomatosa) nach UICC TNM (L0/L1/LX).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-lk-status-bildgebung.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-lk-status-bildgebung"
+      },
+      "name" : "VS Senologie LK-Status (Bildgebung)",
+      "description" : "Axillärer Lymphknoten-Status: unauffällig/unklar/suspekt/kein LK abgebildet.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-lymphoedem-grad.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-lymphoedem-grad"
+      },
+      "name" : "VS Senologie Lymphoedem Grad",
+      "description" : "Schweregrad eines Lymphoedems (kein / Grad I / II / III) nach ISL-Kriterien.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-menopausenstatus.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-menopausenstatus"
+      },
+      "name" : "VS Senologie Menopausenstatus",
+      "description" : "Menopausenstatus für Anamnese.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-menopausenstatus-erweitert.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-menopausenstatus-erweitert"
+      },
+      "name" : "VS Senologie Menopausenstatus (mit ext. Codes)",
+      "description" : "Menopausenstatus mit den im Form genutzten Codes (inkl. 309606002 und 161541000119104).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-metastasierung.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-metastasierung"
+      },
+      "name" : "VS Senologie Metastasierung",
+      "description" : "Metastasierungsstatus - lokale Codes basierend auf Dotbase",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-mikrokalk-triage.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-mikrokalk-triage"
+      },
+      "name" : "VS Senologie Mikrokalk-Triage",
+      "description" : "Mikrokalk-Auswahl: Ja-suspekt / Ja-nicht-suspekt / Nein.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-nachsorge-art.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-nachsorge-art"
+      },
+      "name" : "VS Senologie Nachsorge Art",
+      "description" : "Art der Nachsorge: aktiv (persönliche Untersuchung) oder passiv (Akten/Register) — OncoBox M03",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-nachsorge-modus.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-nachsorge-modus"
+      },
+      "name" : "VS Senologie Nachsorge-Modus",
+      "description" : "Nachsorge-Erhebung aktiv (persoenlich) vs passiv (Aktenlage/Register).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-pn-kategorie.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-pn-kategorie"
+      },
+      "name" : "VS Senologie Pn-Kategorie (Perineural)",
+      "description" : "Pn-Kategorie (Perineuralinvasion) nach UICC TNM (Pn0/Pn1/PnX).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-preop-markierung.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-preop-markierung"
+      },
+      "name" : "VS Senologie Pre-OP-Markierung",
+      "description" : "Methode der präoperativen Markierung der Mamma-Läsion.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-praeparat-art.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-praeparat-art"
+      },
+      "name" : "VS Senologie Präparat-Art",
+      "description" : "Material-Art für Patho-Specimen (Stanze/Vakuum/Punch/Resektat/Zytologie/FNA). Treibt den oBDS-Diagnosesicherungs-Code.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-ptosis-grad.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-ptosis-grad"
+      },
+      "name" : "VS Senologie Ptosis-Grad (Regnault)",
+      "description" : "Ptosis-Grad nach Regnault (0/I/II/III) für die Inspektion.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-quadrant-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-quadrant-mamma"
+      },
+      "name" : "VS Senologie Quadrant Mamma",
+      "description" : "Quadranten-Lokalisation der Brust (oben-aussen/innen, unten-aussen/innen, Mamille, Zentral).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-r-status.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-r-status"
+      },
+      "name" : "VS Senologie R-Status (Resektionsstatus)",
+      "description" : "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-raucherstatus.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-raucherstatus"
+      },
+      "name" : "VS Senologie Raucherstatus",
+      "description" : "Tobacco smoking status (LOINC LA codes für Antworten zur Frage 72166-2).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-recist-response.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-recist-response"
+      },
+      "name" : "VS Senologie RECIST-Response",
+      "description" : "Reine Response-Assessment-Werte (SD/PR/CR/PD/Mixed) für die Verlaufs-Dokumentation, ohne Erst-Diagnose-Stati.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-risikoklasse.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-risikoklasse"
+      },
+      "name" : "VS Senologie Risikoklasse",
+      "description" : "Risikokategorien für Genexpressionstests (low, intermediate, high)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-detektion-modus.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-detektion-modus"
+      },
+      "name" : "VS Senologie Screening-Status",
+      "description" : "Art der Detektion (Screening-detektiert / Intervallkarzinom / Selbstuntersuchung / Zufallsbefund).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-screeningstatus.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-screeningstatus"
+      },
+      "name" : "VS Senologie Screeningstatus",
+      "description" : "Screeningstatus einer klinischen Studienteilnahme",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-seite.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-seite"
+      },
+      "name" : "VS Senologie Seite",
+      "description" : "Lateralität der Mamma-Erkrankung",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-seite-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-seite-mamma"
+      },
+      "name" : "VS Senologie Seitenlokalisation Mamma",
+      "description" : "Brust-Seitenlokalisation (Rechts/Links/Beidseits) als SNOMED-CT-Codes für alle Formulare der Senologie-IG.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-standort.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-standort"
+      },
+      "name" : "VS Senologie Standort (intern / extern)",
+      "description" : "Standort einer Untersuchung: intern (eigene Klinik) / extern (externe Praxis/Klinik).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-rt-applikationsart.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-rt-applikationsart"
+      },
+      "name" : "VS Senologie Strahlentherapie-Applikationsart",
+      "description" : "Applikationsmodus der Strahlentherapie (3D-konformal/IMRT/Brachytherapie).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-rt-zielvolumen.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-rt-zielvolumen"
+      },
+      "name" : "VS Senologie Strahlentherapie-Zielvolumen",
+      "description" : "Zielvolumen der Mamma-Strahlentherapie.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-symmetrie.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-symmetrie"
+      },
+      "name" : "VS Senologie Symmetrie der Brüste",
+      "description" : "Symmetrie-Bewertung: Symmetrisch / Asymmetrisch.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-systemtherapie-medikation.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-systemtherapie-medikation"
+      },
+      "name" : "VS Senologie Systemtherapie Medikation",
+      "description" : "Medikamente der Mamma-Systemtherapie — SNOMED CT Codes, validiert über Terminologieserver (International Edition 2025-12-01)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-systemtherapie-art.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-systemtherapie-art"
+      },
+      "name" : "VS Senologie Systemtherapie-Art",
+      "description" : "Art der Systemtherapie (Chemo/Endokrin/Zielgerichtet/Immuntherapie).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-therapie-intention.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-therapie-intention"
+      },
+      "name" : "VS Senologie Therapie-Intention",
+      "description" : "Therapeutische Intention (Adjuvant/Neoadjuvant/Palliativ/Kurativ/Revision/Diagnostisch). Verwendet für OP-Planung, Postop, Strahlen- und Systemtherapie.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-therapie-status.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-therapie-status"
+      },
+      "name" : "VS Senologie Therapie-Status",
+      "description" : "Status einer Therapieeinheit (Strahlen- oder Systemtherapie).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-tnm-m-kategorie-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-tnm-m-kategorie-mamma"
+      },
+      "name" : "VS Senologie TNM M-Kategorie (Mamma)",
+      "description" : "M-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). MX wurde mit TNM 8 abgeschafft, M1a/b/c/d sind keine Mamma-Differenzierung.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-tnm-n-kategorie-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-tnm-n-kategorie-mamma"
+      },
+      "name" : "VS Senologie TNM N-Kategorie (Mamma)",
+      "description" : "N-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). N2c ist beim Mamma-Ca nicht vorgesehen und wurde ausgeschlossen.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-tnm-t-kategorie-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-tnm-t-kategorie-mamma"
+      },
+      "name" : "VS Senologie TNM T-Kategorie (Mamma)",
+      "description" : "T-Kategorien nach TNM 8 für Mammakarzinom (S3-Leitlinie). Schließt T1c1-T1c3, T1d, Tis(LAMN/LCIS/pu/pd) und andere nicht-mammarelevante Codes der MII-Onko-Liste aus. Tis(LCIS) wird in TNM 8 für Mamma nicht mehr als Tis kodiert.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-tumorboard-empfehlung-status.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-tumorboard-empfehlung-status"
+      },
+      "name" : "VS Senologie Tumorboard Empfehlung Status",
+      "description" : "Beschlusszustand pro Therapie-Empfehlung im Tumorboard (empfohlen / bedingt empfohlen / nicht empfohlen / nicht diskutiert).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-tumormanifestation.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-tumormanifestation"
+      },
+      "name" : "VS Senologie Tumormanifestation",
+      "description" : "Tumormanifestation bei Diagnosestellung (Mehrfachauswahl möglich)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-tumornachweis-status.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-tumornachweis-status"
+      },
+      "name" : "VS Senologie Tumornachweis-Status",
+      "description" : "Diagnostische Stati + RECIST-Response-Assessment für die klinische Untersuchung. Mischung aus Diagnose-Stage (Abklärungsbedürftig, Erstdiagnose) und Verlaufs-Response-Werten (SD/PR/CR/PD/Mixed).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-uicc-stadium-mamma.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-uicc-stadium-mamma"
+      },
+      "name" : "VS Senologie UICC-Stadium (Mamma)",
+      "description" : "UICC-Stadien für Mammakarzinom nach TNM 8 / AJCC 8. Primärkodierung über https://www.uicc.org/resources/tnm (MII_CS_Onko_TNM_UICC, auf MII-OntoServer verfügbar); alternativ SCT-Qualifier-Values (HDB-866). Binding: extensible.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-us-degum.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-us-degum"
+      },
+      "name" : "VS Senologie US-DEGUM Klassifikation",
+      "description" : "DEGUM-Sonographie-Klassifikation 0-6 für Mamma-Sono.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-v-kategorie.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-v-kategorie"
+      },
+      "name" : "VS Senologie V-Kategorie (Vasoinvasion)",
+      "description" : "V-Kategorie (Venöse Invasion) nach UICC TNM (V0/V1/V2/VX).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-verlauf-tumorstatus-gesamt.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-verlauf-tumorstatus-gesamt"
+      },
+      "name" : "VS Senologie Verlauf Tumorstatus Gesamtbeurteilung",
+      "description" : "Gesamtbeurteilung des Tumorstatus im Verlauf (CR/PR/SD/Progression). Unterscheidet sich von RECIST-Response durch Disease-State-Sicht (langfristig).",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-verwandtschaftsgrad.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-verwandtschaftsgrad"
+      },
+      "name" : "VS Senologie Verwandtschaftsgrad",
+      "description" : "Verwandtschaftsgrad (mütterlicher-/väterlicher-Stamm) für Familienanamnese.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-vorstellungsgrund.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-vorstellungsgrund"
+      },
+      "name" : "VS Senologie Vorstellungsgrund",
+      "description" : "Grund der Erst- oder Folge-Vorstellung in der Senologie.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "ValueSet-vs-senologie-zweittumor.html"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/vs-senologie-zweittumor"
+      },
+      "name" : "VS Senologie Zweittumor",
+      "description" : "Zweittumor diagnostiziert: ja/nein/unbekannt — OncoBox M08",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureDefinition-ex-senologie-zentrumsfall.html"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ex-senologie-zentrumsfall"
+      },
+      "name" : "Zentrumsfall",
+      "description" : "DKG-Zertifizierungsstatus: true = Zentrumsfall/Primärfall, false = kein Primärfall (OncoBox 2.0 D01)",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIRegEntlassung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIRegEntlassung"
+      },
+      "name" : "SenologieToIRegEntlassung",
+      "description" : "title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplantat\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIRegMeldung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIRegMeldung"
+      },
+      "name" : "SenologieToIRegMeldung",
+      "description" : "title: Senologie FHIR Bundle to IRegG Brustimplantat-Meldung (Orchestrator)\r\ntargetSpec: IRegG XML-Spezifikation V4.1.1\r\nXSD-Quelle: implantateregister-deutschland.de / IRD_XML_Spezifikation_V4.1.1.zip\r\nMaster-Schema: IRD_XML_Spezifikation.xsd, Meldungen: GEMeldung.xsd\r\nsenologieVersion: 0.9.0\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIRegOperation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIRegOperation"
+      },
+      "name" : "SenologieToIRegOperation",
+      "description" : "title: Senologie Procedure + Device to IRegG Operation + Artikelidentifikation\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIRegPatient.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIRegPatient"
+      },
+      "name" : "SenologieToIRegPatient",
+      "description" : "title: Senologie Patient + Observations to IRegG Patientenaufnahme\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIqtigBasis.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIqtigBasis"
+      },
+      "name" : "SenologieToIqtigBasis",
+      "description" : "title: Senologie Patient + Encounter to IQTIG 18.1 Teildatensatz Basis\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIqtigBrust.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIqtigBrust"
+      },
+      "name" : "SenologieToIqtigBrust",
+      "description" : "title: Senologie Condition + Pathologie to IQTIG 18.1 Teildatensatz Brust\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIqtigMammachirurgie181.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIqtigMammachirurgie181"
+      },
+      "name" : "SenologieToIqtigMammachirurgie181",
+      "description" : "title: Senologie FHIR Bundle to IQTIG QS 18.1 Mammachirurgie (Orchestrator)\r\ntargetSpec: IQTIG QS-Basisspezifikation Spez 2026 V06 (Modul 18n1)\r\nXSD-Quelle: https://iqtig.org/downloads/spezifikation/fdok/sj2026/v06/2026_XML_Schema_V06.zip\r\nBeispiele: 2026_XML_Schema_V06/XML-Beispiele/interface_LE/indirekt/LQS_DeQS_18n1.xml\r\nsenologieVersion: 0.9.0\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToIqtigOperation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToIqtigOperation"
+      },
+      "name" : "SenologieToIqtigOperation",
+      "description" : "title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsDiagnose.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsDiagnose"
+      },
+      "name" : "SenologieToObdsDiagnose",
+      "description" : "title: Senologie Diagnose Bundle to oBDS Diagnosemeldung\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsFernmetastasen.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsFernmetastasen"
+      },
+      "name" : "SenologieToObdsFernmetastasen",
+      "description" : "title: Senologie Fernmetastasen Observations to oBDS Fernmetastasen BackboneElement\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsHistologie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsHistologie"
+      },
+      "name" : "SenologieToObdsHistologie",
+      "description" : "title: Senologie Histologie Observations to oBDS Histologie BackboneElement\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsLeistungszustand.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsLeistungszustand"
+      },
+      "name" : "SenologieToObdsLeistungszustand",
+      "description" : "title: Senologie ECOG Observation to oBDS Allgemeiner Leistungszustand\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsMeldung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsMeldung"
+      },
+      "name" : "SenologieToObdsMeldung",
+      "description" : "title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator)\r\ntargetSpec: oBDS XML-Datensatz v3.0.5 (22.09.2025)\r\nXSD-Quelle: https://www.basisdatensatz.de/xml/oBDS_v3.0.5.xsd\r\nabwaertskompatibel zu v3.0.1 (Testpatient_Mamma.xml)\r\nsenologieVersion: 0.9.0\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsModulMamma.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsModulMamma"
+      },
+      "name" : "SenologieToObdsModulMamma",
+      "description" : "title: Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsNebenwirkung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsNebenwirkung"
+      },
+      "name" : "SenologieToObdsNebenwirkung",
+      "description" : "title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsOP.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsOP"
+      },
+      "name" : "SenologieToObdsOP",
+      "description" : "title: Senologie Operation Bundle to oBDS OP-Meldung\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsResidualstatus.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsResidualstatus"
+      },
+      "name" : "SenologieToObdsResidualstatus",
+      "description" : "title: Senologie Residualstatus Observation to oBDS Residualstatus BackboneElement\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsST.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsST"
+      },
+      "name" : "SenologieToObdsST",
+      "description" : "title: Senologie FHIR to oBDS Strahlentherapie (ST)\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsSYST.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsSYST"
+      },
+      "name" : "SenologieToObdsSYST",
+      "description" : "title: Senologie FHIR to oBDS Systemische Therapie (SYST)\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsTNM.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsTNM"
+      },
+      "name" : "SenologieToObdsTNM",
+      "description" : "title: Senologie TNM Observations to oBDS TNM BackboneElement\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsTod.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsTod"
+      },
+      "name" : "SenologieToObdsTod",
+      "description" : "title: Senologie Patient + Conditions to oBDS Todesmeldung\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsTumorkonferenz.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsTumorkonferenz"
+      },
+      "name" : "SenologieToObdsTumorkonferenz",
+      "description" : "title: Senologie FHIR to oBDS Tumorkonferenz\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsTumorzuordnung.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsTumorzuordnung"
+      },
+      "name" : "SenologieToObdsTumorzuordnung",
+      "description" : "title: Senologie Diagnose to oBDS Tumorzuordnung\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToObdsVerlauf.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToObdsVerlauf"
+      },
+      "name" : "SenologieToObdsVerlauf",
+      "description" : "title: Senologie Verlauf Bundle to oBDS Verlaufsmeldung\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrust.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrust"
+      },
+      "name" : "SenologieToOncoBoxBrust",
+      "description" : "title: Senologie FHIR Bundle to OncoBox Brust 2.0 (Master Orchestrator)\r\ntargetSpec: OncoBox Brust 2.0 — Auditjahr 2026, Spezifikation v2.1.1\r\nXSD-Quelle: https://xml-oncobox.de/de/Home/FuerHersteller (Brust2/26_1_oncobox-brust xsd-schema dkgzert (251110).xsd)\r\nersetzt Vorgaengerversion 1.0 / N1.1.1\r\nsenologieVersion: 0.9.0\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrustKennzahlen.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrustKennzahlen"
+      },
+      "name" : "SenologieToOncoBoxBrustKennzahlen",
+      "description" : "title: Senologie Bundle to OncoBox Brust DKG-Kennzahlen (KB-1 bis KB-20)\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrustOperation.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrustOperation"
+      },
+      "name" : "SenologieToOncoBoxBrustOperation",
+      "description" : "title: Senologie Procedure + Specimen to OncoBox Brust Operation\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrustPrimaerfall.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrustPrimaerfall"
+      },
+      "name" : "SenologieToOncoBoxBrustPrimaerfall",
+      "description" : "title: Senologie Condition + Patient + Encounter to OncoBox Brust Primaerfall\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrustTherapie.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrustTherapie"
+      },
+      "name" : "SenologieToOncoBoxBrustTherapie",
+      "description" : "title: Senologie Procedure (Syst / RT) to OncoBox Brust Therapie\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrustVerlauf.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrustVerlauf"
+      },
+      "name" : "SenologieToOncoBoxBrustVerlauf",
+      "description" : "title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J03-J05)\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureMap"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "StructureMap-SenologieToOncoBoxBrustZentrum.html"
+      }],
+      "reference" : {
+        "reference" : "StructureMap/SenologieToOncoBoxBrustZentrum"
+      },
+      "name" : "SenologieToOncoBoxBrustZentrum",
+      "description" : "title: Senologie Organization to OncoBox Brust Zentrum\r\nstatus: draft"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      },
+      {
+        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+        "valueUri" : "Questionnaire-senologie-diagnose-maligne.html"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/senologie-diagnose-maligne"
+      },
+      "name" : "Fragebogen: Senologie Diagnose"
+    }],
+    "page" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+        "valueUrl" : "toc.html"
+      }],
+      "nameUrl" : "toc.html",
+      "title" : "Table of Contents",
+      "generation" : "html",
+      "page" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "index.html"
+        }],
+        "nameUrl" : "index.html",
+        "title" : "Home",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Home"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "english-summary.html"
+        }],
+        "nameUrl" : "english-summary.html",
+        "title" : "English Summary",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "English Summary"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown"
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "hintergrund.html"
+        }],
+        "nameUrl" : "hintergrund.html",
+        "title" : "Hintergrund & Motivation",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Background & Motivation"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "GeneralRemarks.html"
+          }],
+          "nameUrl" : "GeneralRemarks.html",
+          "title" : "Allgemeines",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "General"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "datenmodell.html"
+        }],
+        "nameUrl" : "datenmodell.html",
+        "title" : "Datenmodell",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Data Model"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "anamnese.html"
+          }],
+          "nameUrl" : "anamnese.html",
+          "title" : "Vorgeschichte & Anamnese",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Medical History & Anamnesis"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "diagnose-staging.html"
+          }],
+          "nameUrl" : "diagnose-staging.html",
+          "title" : "Diagnose & Staging",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Diagnosis & Staging"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown",
+          "page" : [{
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "walkthrough-tumorformel.html"
+            }],
+            "nameUrl" : "walkthrough-tumorformel.html",
+            "title" : "Walkthrough — TNM und IHC",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Walkthrough — TNM and IHC"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          }]
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "tumorkonferenz.html"
+          }],
+          "nameUrl" : "tumorkonferenz.html",
+          "title" : "Tumorkonferenz",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Multidisciplinary Tumour Board"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "bildgebung-pathologie.html"
+          }],
+          "nameUrl" : "bildgebung-pathologie.html",
+          "title" : "Bildgebung & Pathologie",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Imaging & Pathology"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown",
+          "page" : [{
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "biomarker-backport.html"
+            }],
+            "nameUrl" : "biomarker-backport.html",
+            "title" : "Biomarker-Erweiterungen (MII Onko Backport)",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Biomarker Extensions (MII Onko Backport)"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "tumor-entitaet-lifecycle.html"
+            }],
+            "nameUrl" : "tumor-entitaet-lifecycle.html",
+            "title" : "Tumor-Entitäts-Lifecycle (BodyStructure-Anker)",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Tumour Entity Lifecycle (BodyStructure Anchor)"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          }]
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "operative-therapie.html"
+          }],
+          "nameUrl" : "operative-therapie.html",
+          "title" : "Operative Therapie",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Surgical Therapy"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "systemtherapie.html"
+          }],
+          "nameUrl" : "systemtherapie.html",
+          "title" : "Systemtherapie & Medikation",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Systemic Therapy & Medication"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown",
+          "page" : [{
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "terminologie-medikation.html"
+            }],
+            "nameUrl" : "terminologie-medikation.html",
+            "title" : "Medikations-Terminologie",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Medication Terminology"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          }]
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "strahlentherapie-seite.html"
+          }],
+          "nameUrl" : "strahlentherapie-seite.html",
+          "title" : "Strahlentherapie",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Radiotherapy"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "nachsorge-verlauf.html"
+          }],
+          "nameUrl" : "nachsorge-verlauf.html",
+          "title" : "Nachsorge & Verlauf",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Follow-up & Disease Course"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "profilbeschreibungen.html"
+          }],
+          "nameUrl" : "profilbeschreibungen.html",
+          "title" : "Alle Profile (Referenz)",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "All Profiles (Reference)"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "sdc-condition-selection.html"
+          }],
+          "nameUrl" : "sdc-condition-selection.html",
+          "title" : "SDC Bezugsdiagnose-Auswahl",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "SDC Condition Selection"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "beispielfall.html"
+        }],
+        "nameUrl" : "beispielfall.html",
+        "title" : "Beispielfall",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Case Example"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "testpatientinnen.html"
+          }],
+          "nameUrl" : "testpatientinnen.html",
+          "title" : "Alle Testpatientinnen",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "All Test Patients"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "anwendungsfaelle-uebersicht.html"
+        }],
+        "nameUrl" : "anwendungsfaelle-uebersicht.html",
+        "title" : "Anwendungsfälle",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Use Cases"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "anwendungsfaelle-erfassung.html"
+          }],
+          "nameUrl" : "anwendungsfaelle-erfassung.html",
+          "title" : "Erfassung",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Clinical Capture"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "anwendungsfaelle-austausch.html"
+          }],
+          "nameUrl" : "anwendungsfaelle-austausch.html",
+          "title" : "Austausch",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Data Exchange"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "anwendungsfaelle-auswertung.html"
+          }],
+          "nameUrl" : "anwendungsfaelle-auswertung.html",
+          "title" : "Auswertung",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Analytics & Secondary Use"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown",
+          "page" : [{
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "cql-measures.html"
+            }],
+            "nameUrl" : "cql-measures.html",
+            "title" : "Qualitätsindikatoren (CQL & FHIR Measure)",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Quality Indicators (CQL & FHIR Measure)"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "conceptmap-audit.html"
+            }],
+            "nameUrl" : "conceptmap-audit.html",
+            "title" : "ConceptMap-Audit (SNOMED als CDM)",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "ConceptMap Audit (SNOMED as CDM)"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "data-dictionary.html"
+            }],
+            "nameUrl" : "data-dictionary.html",
+            "title" : "Data Dictionary (Flat Views / CSV)",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Data Dictionary (Flat Views / CSV)"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "spec-versionierung.html"
+            }],
+            "nameUrl" : "spec-versionierung.html",
+            "title" : "Spec-Versionierung der Ausleitungen",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "Spec Versioning of Derived Datasets"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          }]
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "anwendungsfaelle-meldedatensaetze.html"
+        }],
+        "nameUrl" : "anwendungsfaelle-meldedatensaetze.html",
+        "title" : "Meldewege",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Reporting Pathways"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "meldung-obds.html"
+          }],
+          "nameUrl" : "meldung-obds.html",
+          "title" : "oBDS / Krebsregister",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "oBDS / Cancer Registry"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "meldung-oncobox.html"
+          }],
+          "nameUrl" : "meldung-oncobox.html",
+          "title" : "OncoBox / DKG-Zertifizierung",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "OncoBox / DKG Certification"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "meldung-iqtig.html"
+          }],
+          "nameUrl" : "meldung-iqtig.html",
+          "title" : "IQTIG QS (18.1 Mammachirurgie)",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "IQTIG Quality Assurance (18.1 Breast Surgery)"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "meldung-ireg.html"
+          }],
+          "nameUrl" : "meldung-ireg.html",
+          "title" : "Implantatregister (IRegG)",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Implant Registry (IRegG)"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "interoperabilitaet.html"
+        }],
+        "nameUrl" : "interoperabilitaet.html",
+        "title" : "Interoperabilität",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Interoperability"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "mii-kds.html"
+          }],
+          "nameUrl" : "mii-kds.html",
+          "title" : "MII KDS",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "MII Core Dataset"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "isik.html"
+          }],
+          "nameUrl" : "isik.html",
+          "title" : "ISiK",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "ISiK"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "eu-standards.html"
+          }],
+          "nameUrl" : "eu-standards.html",
+          "title" : "EU-Standards & IPS",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "EU Standards & IPS"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown",
+          "page" : [{
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "ips-prepopulation.html"
+            }],
+            "nameUrl" : "ips-prepopulation.html",
+            "title" : "IPS-Prepopulation",
+            "_title" : {
+              "extension" : [{
+                "extension" : [{
+                  "url" : "lang",
+                  "valueCode" : "en"
+                },
+                {
+                  "url" : "content",
+                  "valueString" : "IPS Pre-population"
+                }],
+                "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+              }]
+            },
+            "generation" : "markdown"
+          }]
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "terminologie-uebersicht.html"
+        }],
+        "nameUrl" : "terminologie-uebersicht.html",
+        "title" : "Terminologie",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Terminology"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "snomed-german-translations.html"
+          }],
+          "nameUrl" : "snomed-german-translations.html",
+          "title" : "SNOMED Übersetzungen",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "SNOMED German Translations"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "semantische-annotation.html"
+          }],
+          "nameUrl" : "semantische-annotation.html",
+          "title" : "Semantische Annotation",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Semantic Annotation"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "glossar-s3-snomed.html"
+          }],
+          "nameUrl" : "glossar-s3-snomed.html",
+          "title" : "Glossar (SNOMED + S3)",
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "leitlinien-abdeckung.html"
+          }],
+          "nameUrl" : "leitlinien-abdeckung.html",
+          "title" : "S3-Leitlinien-Abdeckung",
+          "generation" : "markdown",
+          "page" : [{
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "leitlinien-annotation-schema.html"
+            }],
+            "nameUrl" : "leitlinien-annotation-schema.html",
+            "title" : "Annotations-Schema",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "leitlinien-gap-analyse.html"
+            }],
+            "nameUrl" : "leitlinien-gap-analyse.html",
+            "title" : "Konsolidierte Gap-Analyse",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-3-allgemeines.html"
+            }],
+            "nameUrl" : "s3-kap-3-allgemeines.html",
+            "title" : "Kap. 3 — Allgemeines, Früherkennung, familiäres Risiko",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-4-1-diagnostik.html"
+            }],
+            "nameUrl" : "s3-kap-4-1-diagnostik.html",
+            "title" : "Kap. 4.1 — Diagnostik, Bildgebung, Biopsie, Staging",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-4-2-4-3-dcis-risikolaesionen.html"
+            }],
+            "nameUrl" : "s3-kap-4-2-4-3-dcis-risikolaesionen.html",
+            "title" : "Kap. 4.2–4.3 — DCIS und Risikoläsionen (B3)",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-4-4-operative-therapie.html"
+            }],
+            "nameUrl" : "s3-kap-4-4-operative-therapie.html",
+            "title" : "Kap. 4.4 — Operative Therapie",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-4-5-pathologie.html"
+            }],
+            "nameUrl" : "s3-kap-4-5-pathologie.html",
+            "title" : "Kap. 4.5 — Pathologie, Biomarker, Prognose",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-4-6-strahlentherapie.html"
+            }],
+            "nameUrl" : "s3-kap-4-6-strahlentherapie.html",
+            "title" : "Kap. 4.6 — Adjuvante Strahlentherapie",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-4-8-systemische-therapie.html"
+            }],
+            "nameUrl" : "s3-kap-4-8-systemische-therapie.html",
+            "title" : "Kap. 4.8 — Systemische Therapie, frühes Mammakarzinom",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-5-rezidiv-metastasiert.html"
+            }],
+            "nameUrl" : "s3-kap-5-rezidiv-metastasiert.html",
+            "title" : "Kap. 5 — Rezidiv und metastasierte Erkrankung",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-6-betreuung.html"
+            }],
+            "nameUrl" : "s3-kap-6-betreuung.html",
+            "title" : "Kap. 6 — Betreuung, Nachsorge, Palliativversorgung",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-7-spezielle-situationen.html"
+            }],
+            "nameUrl" : "s3-kap-7-spezielle-situationen.html",
+            "title" : "Kap. 7 — Spezielle Situationen",
+            "generation" : "markdown"
+          },
+          {
+            "extension" : [{
+              "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+              "valueUrl" : "s3-kap-8-qualitaetsindikatoren.html"
+            }],
+            "nameUrl" : "s3-kap-8-qualitaetsindikatoren.html",
+            "title" : "Kap. 8 — Qualitätsindikatoren",
+            "generation" : "markdown"
+          }]
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "testumgebungen.html"
+        }],
+        "nameUrl" : "testumgebungen.html",
+        "title" : "Technisches",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Technical Details"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown",
+        "page" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "bekannte-fehler.html"
+          }],
+          "nameUrl" : "bekannte-fehler.html",
+          "title" : "Bekannte Fehler & Limitierungen",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Known Issues & Limitations"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        },
+        {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+            "valueUrl" : "offene-fragen.html"
+          }],
+          "nameUrl" : "offene-fragen.html",
+          "title" : "Offene Fragen",
+          "_title" : {
+            "extension" : [{
+              "extension" : [{
+                "url" : "lang",
+                "valueCode" : "en"
+              },
+              {
+                "url" : "content",
+                "valueString" : "Open Questions"
+              }],
+              "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+            }]
+          },
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-page-name",
+          "valueUrl" : "roadmap.html"
+        }],
+        "nameUrl" : "roadmap.html",
+        "title" : "Roadmap",
+        "_title" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "Roadmap"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "generation" : "markdown"
+      }]
+    },
+    "parameter" : [{
+      "code" : "path-resource",
+      "value" : "input/capabilities"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/examples"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/extensions"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/models"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/operations"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/profiles"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/resources"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/vocabulary"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/maps"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/testing"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "input/history"
+    },
+    {
+      "code" : "path-resource",
+      "value" : "fsh-generated/resources"
+    },
+    {
+      "code" : "path-pages",
+      "value" : "template/config"
+    },
+    {
+      "code" : "path-pages",
+      "value" : "input/images"
+    },
+    {
+      "code" : "path-tx-cache",
+      "value" : "input-cache/txcache"
+    }]
+  }
+}
+
+```

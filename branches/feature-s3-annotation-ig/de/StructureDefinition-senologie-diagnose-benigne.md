@@ -1,0 +1,398 @@
+# BIH PR Seno Diagnose Benigne - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **BIH PR Seno Diagnose Benigne**
+
+## : BIH PR Seno Diagnose Benigne 
+
+| | |
+| :--- | :--- |
+| **:https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-benigne | **:0.10.0 |
+| Draft | **:Senologie_Diagnose_Benigne |
+
+ 
+Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankungen. ISiK-kompatibel für Krankenhaus-Interoperabilität ohne Krebsregister-Anforderungen. 
+
+**Usages:**
+
+* Examples for this Profil: [Condition/Fall11-Diagnose-Fibroadenom](Condition-Fall11-Diagnose-Fibroadenom.md)
+
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/kds-senologie|current/StructureDefinition/StructureDefinition-senologie-diagnose-benigne.json)
+
+### 
+
+ . 
+
+*   
+*   
+*   
+*   
+*   
+
+#### Terminology Bindings
+
+#### Constraints
+
+#### Terminology Bindings
+
+#### Constraints
+
+#### Terminology Bindings
+
+#### Constraints
+
+ **View** 
+
+#### Terminology Bindings
+
+#### Constraints
+
+ 
+
+ ,  
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "senologie-diagnose-benigne",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablestructuredefinition"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-usage",
+    "valueMarkdown" : "Use this profile as the technical FHIR representation of the corresponding element group of the Senologie core dataset logical model. The profile constrains a base FHIR resource for the documentation of breast cancer care by specifying how elements are used, which elements are required, and which extensions and terminology bindings apply. Implementers should produce and consume resource instances that conform to this profile when exchanging Senologie core dataset data."
+  }],
+  "url" : "https://www.senologie.org/fhir/StructureDefinition/senologie-diagnose-benigne",
+  "version" : "0.10.0",
+  "name" : "Senologie_Diagnose_Benigne",
+  "title" : "BIH PR Seno Diagnose Benigne",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Benigne Mamma-Diagnosen (D24, N60-N64) und entzündliche Erkrankungen. ISiK-kompatibel für Krankenhaus-Interoperabilität ohne Krebsregister-Anforderungen.",
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Bezugselement im Logischen Modell: Diagnose"
+  },
+  {
+    "identity" : "workflow",
+    "uri" : "http://hl7.org/fhir/workflow",
+    "name" : "Workflow Pattern"
+  },
+  {
+    "identity" : "sct-concept",
+    "uri" : "http://snomed.info/conceptdomain",
+    "name" : "SNOMED CT Concept Domain Binding"
+  },
+  {
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  },
+  {
+    "identity" : "sct-attr",
+    "uri" : "http://snomed.org/attributebinding",
+    "name" : "SNOMED CT Attribute Binding"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Condition",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Condition",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Condition",
+      "path" : "Condition"
+    },
+    {
+      "id" : "Condition.clinicalStatus",
+      "path" : "Condition.clinicalStatus",
+      "short" : "Klinischer Status",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.verificationStatus",
+      "path" : "Condition.verificationStatus",
+      "short" : "Diagnosestatus (bestätigt/vorläufig)",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.code",
+      "path" : "Condition.code",
+      "short" : "Benigne Mamma-Diagnose",
+      "definition" : "Diagnosestellung für benigne Mamma-Erkrankungen (nicht krebsregister-pflichtig)",
+      "min" : 1,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.code.coding",
+      "path" : "Condition.code.coding",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "pattern",
+          "path" : "$this"
+        }],
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Condition.code.coding:icd10gm",
+      "path" : "Condition.code.coding",
+      "sliceName" : "icd10gm",
+      "short" : "ICD-10-GM Code (D24, N60-N64)",
+      "min" : 0,
+      "max" : "1",
+      "patternCoding" : {
+        "system" : "http://fhir.de/CodeSystem/bfarm/icd-10-gm"
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.code.coding:icd10gm.system",
+      "path" : "Condition.code.coding.system",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.code.coding:icd10gm.code",
+      "path" : "Condition.code.coding.code",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.code.coding:sct",
+      "path" : "Condition.code.coding",
+      "sliceName" : "sct",
+      "short" : "SNOMED CT Diagnose (benigne)",
+      "min" : 0,
+      "max" : "1",
+      "patternCoding" : {
+        "system" : "http://snomed.info/sct"
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.code.coding:sct.system",
+      "path" : "Condition.code.coding.system",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.code.coding:sct.code",
+      "path" : "Condition.code.coding.code",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.code.coding:icd11",
+      "path" : "Condition.code.coding",
+      "sliceName" : "icd11",
+      "short" : "ICD-11 Code (optional, Dual-Coding)",
+      "min" : 0,
+      "max" : "1",
+      "patternCoding" : {
+        "system" : "http://id.who.int/icd/release/11/mms"
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.code.coding:icd11.system",
+      "path" : "Condition.code.coding.system",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.code.coding:icd11.code",
+      "path" : "Condition.code.coding.code",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.code.coding:senologie",
+      "path" : "Condition.code.coding",
+      "sliceName" : "senologie",
+      "short" : "Senologie-spezifischer Code",
+      "min" : 0,
+      "max" : "1",
+      "patternCoding" : {
+        "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-diagnose-custom"
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.code.coding:senologie.system",
+      "path" : "Condition.code.coding.system",
+      "min" : 1
+    },
+    {
+      "id" : "Condition.bodySite",
+      "path" : "Condition.bodySite",
+      "short" : "Seite/Lateralität",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.bodySite.coding",
+      "path" : "Condition.bodySite.coding",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.subject",
+      "path" : "Condition.subject",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.org/fhir/StructureDefinition/Patient"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.encounter",
+      "path" : "Condition.encounter",
+      "short" : "Zugehöriger Fall/Kontakt",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.onset[x]",
+      "path" : "Condition.onset[x]",
+      "short" : "Beginn der Erkrankung",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Condition.recordedDate",
+      "path" : "Condition.recordedDate",
+      "short" : "Dokumentationsdatum",
+      "mustSupport" : true
+    }]
+  }
+}
+
+```

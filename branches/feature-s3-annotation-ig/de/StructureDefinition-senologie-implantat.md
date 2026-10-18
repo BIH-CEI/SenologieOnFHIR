@@ -1,0 +1,261 @@
+# BIH LM Senologie Brustimplantat - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **BIH LM Senologie Brustimplantat**
+
+## : BIH LM Senologie Brustimplantat 
+
+| | |
+| :--- | :--- |
+| **:https://www.senologie.org/fhir/StructureDefinition/senologie-implantat | **:0.10.0 |
+| Draft | **:Senologie_Implantat |
+
+ 
+Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senologie 
+
+**Usages:**
+
+* Examples for this Profil: [Device/Fall10-Implantat-Links](Device-Fall10-Implantat-Links.md) and [Device/Fall10-Implantat-Rechts](Device-Fall10-Implantat-Rechts.md)
+
+You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/resource/kds-senologie|current/StructureDefinition/StructureDefinition-senologie-implantat.json)
+
+### 
+
+ . 
+
+*   
+*   
+*   
+*   
+*   
+
+#### Terminology Bindings
+
+#### Constraints
+
+#### Terminology Bindings
+
+#### Constraints
+
+#### Terminology Bindings
+
+#### Constraints
+
+ **View** 
+
+#### Terminology Bindings
+
+#### Constraints
+
+ 
+
+ ,  
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "senologie-implantat",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablestructuredefinition"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-usage",
+    "valueMarkdown" : "Use this profile as the technical FHIR representation of the corresponding element group of the Senologie core dataset logical model. The profile constrains a base FHIR resource for the documentation of breast cancer care by specifying how elements are used, which elements are required, and which extensions and terminology bindings apply. Implementers should produce and consume resource instances that conform to this profile when exchanging Senologie core dataset data."
+  }],
+  "url" : "https://www.senologie.org/fhir/StructureDefinition/senologie-implantat",
+  "version" : "0.10.0",
+  "name" : "Senologie_Implantat",
+  "title" : "BIH LM Senologie Brustimplantat",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Brustimplantate im Rahmen der BIH-Spezifikation des Moduls Senologie",
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "lm",
+    "uri" : "https://www.senologie.org/fhir/StructureDefinition/LogicalModelSenologie",
+    "name" : "BIH LM Senologie",
+    "comment" : "Bezugselement im Logischen Modell: Operation.Implantat"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  },
+  {
+    "identity" : "udi",
+    "uri" : "http://fda.gov/UDI",
+    "name" : "UDI Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Device",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Device",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Device",
+      "path" : "Device"
+    },
+    {
+      "id" : "Device.status",
+      "path" : "Device.status",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Device.manufacturer",
+      "path" : "Device.manufacturer",
+      "short" : "Hersteller des Implantats",
+      "definition" : "Hersteller des Implantats, hier als String und somit abweichend vom Auswahlfeld",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Device.lotNumber",
+      "path" : "Device.lotNumber",
+      "short" : "REF-Nummer des Implantats",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Device.serialNumber",
+      "path" : "Device.serialNumber",
+      "short" : "Seriennummer des Implantats",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Device.type",
+      "path" : "Device.type",
+      "short" : "Art des Implantats",
+      "mustSupport" : true
+    }]
+  }
+}
+
+```

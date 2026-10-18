@@ -1,0 +1,890 @@
+# Fragebogen: Postoperative Dokumentation - Kerndatensatz Senologie v0.10.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Fragebogen: Postoperative Dokumentation**
+
+## Questionnaire: Fragebogen: Postoperative Dokumentation () 
+
+| | |
+| :--- | :--- |
+| **:https://www.senologie.org/fhir/Questionnaire/senologie-postop | **:0.10.0 |
+| Draft | **:QuestPostOPDokumentation |
+
+ 
+Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation). 
+
+*   
+*   
+*   
+
+### 
+
+### 
+
+* [PostOP Fall 1: BET + SLNB links 2025-02-05, R0, Sentinel 0/2, keine Komplikation.](QuestionnaireResponse-QR-PostOP-Fall1.md)
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Questionnaire",
+  "id" : "senologie-postop",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-license",
+      "valueCode" : "CC-BY-4.0"
+    },
+    {
+      "extension" : [{
+        "url" : "packageId",
+        "valueId" : "kds-senologie"
+      },
+      {
+        "url" : "version",
+        "valueString" : "0.10.0"
+      },
+      {
+        "url" : "uri",
+        "valueUri" : "https://www.senologie.org/fhir"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/package-source"
+    }],
+    "profile" : ["http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablequestionnaire",
+    "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-publishablequestionnaire"]
+  },
+  "contained" : [{
+    "resourceType" : "Procedure",
+    "id" : "postop-procedure-template",
+    "meta" : {
+      "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-operation"]
+    },
+    "extension" : [{
+      "url" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/StructureDefinition/mii-ex-onko-operation-intention",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString" : "%resource.item.where(linkId='operation').item.where(linkId='op-intention').answer.valueCoding"
+          }]
+        }]
+      }
+    }],
+    "status" : "completed",
+    "code" : {
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='operation').item.where(linkId='op-kategorie').answer.valueCoding"
+        }]
+      }],
+      "_text" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='operation').item.where(linkId='op-code-text').answer.valueString"
+        }]
+      }
+    },
+    "subject" : {
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.subject.reference"
+        }]
+      }
+    },
+    "_performedDateTime" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+        "valueString" : "%resource.item.where(linkId='operation').item.where(linkId='op-datum').answer.valueDate"
+      }]
+    },
+    "reasonReference" : [{
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='bezugsdiagnose').answer.valueReference.reference"
+        }]
+      }
+    }],
+    "bodySite" : [{
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding"
+        }]
+      },
+      {
+        "system" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/CodeSystem/mii-cs-onko-seitenlokalisation",
+        "_code" : {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString" : "iif(%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding.code = '24028007', 'R', iif(%resource.item.where(linkId='operation').item.where(linkId='op-seite').answer.valueCoding.code = '7771000', 'L', 'B'))"
+          }]
+        }
+      }]
+    }],
+    "outcome" : {
+      "coding" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.item.where(linkId='operation').item.where(linkId='op-r-status').answer.valueCoding"
+        }]
+      }]
+    }
+  },
+  {
+    "resourceType" : "Procedure",
+    "id" : "postop-ops-subprocedure-template",
+    "meta" : {
+      "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-operation"]
+    },
+    "partOf" : [{
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "Procedure/postop-procedure-template"
+        }]
+      }
+    }],
+    "status" : "completed",
+    "code" : {
+      "coding" : [{
+        "system" : "http://fhir.de/CodeSystem/bfarm/ops",
+        "_code" : {
+          "extension" : [{
+            "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+            "valueString" : "%context.item.where(linkId='ops-code').answer.valueString"
+          }]
+        }
+      }],
+      "_text" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%context.item.where(linkId='ops-beschreibung').answer.valueString"
+        }]
+      }
+    },
+    "subject" : {
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.subject.reference"
+        }]
+      }
+    }
+  },
+  {
+    "resourceType" : "Observation",
+    "id" : "postop-komplikation-template",
+    "meta" : {
+      "profile" : ["https://www.senologie.org/fhir/StructureDefinition/senologie-operative-komplikation"]
+    },
+    "status" : "final",
+    "code" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "789279006",
+        "display" : "Clavien-Dindo classification grade"
+      }]
+    },
+    "subject" : {
+      "_reference" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtractValue",
+          "valueString" : "%resource.subject.reference"
+        }]
+      }
+    }
+  }],
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionPolicy",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/artifact-version-policy-codes",
+        "version" : "3.0.0",
+        "code" : "package",
+        "display" : "Package"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+    "valueCoding" : {
+      "system" : "http://hl7.org/fhir/version-algorithm",
+      "code" : "semver",
+      "display" : "SemVer"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-topic",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl",
+        "code" : "C4872",
+        "display" : "Breast Carcinoma"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-author",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "email",
+        "value" : "thomas.debertshaeuser@charite.de"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-editor",
+    "valueContactDetail" : {
+      "name" : "Berlin Institute of Health at Charité (BIH)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.bihealth.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-reviewer",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/artifact-endorser",
+    "valueContactDetail" : {
+      "name" : "Deutsche Gesellschaft für Senologie (DGS)",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.senologie.org"
+      }]
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "name",
+      "valueCoding" : {
+        "system" : "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+        "code" : "patient"
+      }
+    },
+    {
+      "url" : "type",
+      "valueCode" : "Patient"
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+  },
+  {
+    "extension" : [{
+      "url" : "name",
+      "valueCoding" : {
+        "system" : "https://www.senologie.org/fhir/CodeSystem/launchContext",
+        "code" : "diagnosis",
+        "display" : "Diagnose (Anker-Condition)"
+      }
+    },
+    {
+      "url" : "type",
+      "valueCode" : "Condition"
+    },
+    {
+      "url" : "description",
+      "valueString" : "Anker-Diagnose (Condition) für Pre-Population. Vom Frontend nach Diagnose-Choice gesetzt."
+    }],
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"
+  }],
+  "url" : "https://www.senologie.org/fhir/Questionnaire/senologie-postop",
+  "version" : "0.10.0",
+  "name" : "QuestPostOPDokumentation",
+  "title" : "Fragebogen: Postoperative Dokumentation",
+  "_title" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Form: Postoperative Documentation"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "status" : "draft",
+  "experimental" : true,
+  "subjectType" : ["Patient"],
+  "date" : "2026-10-12",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "_publisher" : {
+    "extension" : [{
+      "extension" : [{
+        "url" : "lang",
+        "valueCode" : "en"
+      },
+      {
+        "url" : "content",
+        "valueString" : "Berlin Institute of Health at Charité (BIH)"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+    }]
+  },
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "Fragebogen zur postoperativen Dokumentation (Operative Therapie, Komplikationen, Postoperative Anordnungen/Follow-up). Nutzt SDC Template-based Extraction mit zwei contained Templates: Procedure (Senologie_Operation) und Observation (Senologie_Operative_Komplikation).",
+  "item" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
+      "valueExpression" : {
+        "language" : "application/x-fhir-query",
+        "expression" : "Condition?patient={{%patient.id}}&clinical-status=active"
+      }
+    },
+    {
+      "extension" : [{
+        "url" : "path",
+        "valueString" : "code.coding.first().display"
+      },
+      {
+        "url" : "label",
+        "valueString" : "Diagnose"
+      },
+      {
+        "url" : "forDisplay",
+        "valueBoolean" : true
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+    },
+    {
+      "extension" : [{
+        "url" : "path",
+        "valueString" : "bodySite.coding.first().display"
+      },
+      {
+        "url" : "label",
+        "valueString" : "Seite"
+      },
+      {
+        "url" : "forDisplay",
+        "valueBoolean" : true
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
+    }],
+    "linkId" : "bezugsdiagnose",
+    "text" : "Bezugsdiagnose (Seite)",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Reference Diagnosis (Laterality)"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "reference",
+    "required" : true
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#postop-procedure-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
+    "linkId" : "operation",
+    "text" : "Operative Therapie",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Surgical Therapy"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "group",
+    "required" : true,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "op-kategorie",
+      "text" : "Art der Operation",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Surgery Type"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : true,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-operation-art"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "op-seite",
+      "text" : "Seite",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Laterality"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : true,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-seite-mamma"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
+        "valueExpression" : {
+          "language" : "application/x-fhir-query",
+          "expression" : "BodyStructure?patient={{%patient.id}}&active=true"
+        }
+      }],
+      "linkId" : "op-tumor-entitaet",
+      "text" : "Operierte Tumor-Entität(en)",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Operated Tumour Entity/Entities"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "reference",
+      "required" : false,
+      "repeats" : true
+    },
+    {
+      "linkId" : "op-datum",
+      "text" : "OP-Datum",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Surgery Date"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "date",
+      "required" : true
+    },
+    {
+      "linkId" : "op-code-text",
+      "text" : "Beschreibung der OP (Freitext, z.B. \"BET links, Sentinel-LK-Biopsie\")",
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "extension" : [{
+          "url" : "template",
+          "valueReference" : {
+            "reference" : "#postop-ops-subprocedure-template"
+          }
+        }],
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+      }],
+      "linkId" : "ops-subprozeduren",
+      "text" : "OPS-Subprozeduren (BfArM-Katalog, optional, vom Kodierer)",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "OPS Sub-Procedures (Optional)"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "group",
+      "required" : false,
+      "repeats" : true,
+      "item" : [{
+        "linkId" : "ops-code",
+        "text" : "OPS-Code (z.B. 5-870.21)",
+        "_text" : {
+          "extension" : [{
+            "extension" : [{
+              "url" : "lang",
+              "valueCode" : "en"
+            },
+            {
+              "url" : "content",
+              "valueString" : "OPS Code"
+            }],
+            "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+          }]
+        },
+        "type" : "string",
+        "required" : true
+      },
+      {
+        "linkId" : "ops-beschreibung",
+        "text" : "Beschreibung (optional, z.B. \"BET mit Drahtmarkierung\")",
+        "type" : "string",
+        "required" : false
+      }]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "op-intention",
+      "text" : "OP-Intention",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Surgical Intention"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.medizininformatik-initiative.de/fhir/ext/modul-onko/ValueSet/mii-vs-onko-operation-intention"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "op-r-status",
+      "text" : "Resektionsstatus (R)",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Resection Status (R)"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
+    },
+    {
+      "linkId" : "op-sentinel-anzahl-befallen",
+      "text" : "Sentinel-LK: Anzahl befallen (von Anzahl entnommen)",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Sentinel LN: Number Positive (of Number Removed)"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "linkId" : "followup-drainage",
+      "text" : "Drainage",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Drainage"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "linkId" : "followup-verband",
+      "text" : "Verband",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Wound Dressing"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "linkId" : "followup-antibiotika",
+      "text" : "Antibiotikatherapie",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Antibiotic Therapy"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "linkId" : "followup-mobilisation",
+      "text" : "Mobilisation",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Mobilisation"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "linkId" : "followup-labor",
+      "text" : "Laborkontrolle",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Laboratory Check"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    }]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "template",
+        "valueReference" : {
+          "reference" : "#postop-komplikation-template"
+        }
+      }],
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-templateExtract"
+    }],
+    "linkId" : "komplikation",
+    "text" : "Operative Komplikation",
+    "_text" : {
+      "extension" : [{
+        "extension" : [{
+          "url" : "lang",
+          "valueCode" : "en"
+        },
+        {
+          "url" : "content",
+          "valueString" : "Surgical Complication"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+      }]
+    },
+    "type" : "group",
+    "required" : false,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "clavien-dindo",
+      "text" : "Clavien-Dindo-Grad",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Clavien-Dindo Grade"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-clavien-dindo"
+    },
+    {
+      "linkId" : "komplikation-datum",
+      "text" : "Datum der Komplikation",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Date of Complication"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "date",
+      "required" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint",
+        "valueCode" : "optionsOnly"
+      }],
+      "linkId" : "komplikation-zeitpunkt",
+      "text" : "Zeitpunkt",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Timing"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "choice",
+      "required" : false,
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-komplikation-zeitpunkt"
+    },
+    {
+      "linkId" : "komplikation-art",
+      "text" : "Art der Komplikation (Freitext)",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Type of Complication (Free Text)"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "string",
+      "required" : false
+    },
+    {
+      "linkId" : "komplikation-kommentar",
+      "text" : "Konsequenz / Kommentar",
+      "_text" : {
+        "extension" : [{
+          "extension" : [{
+            "url" : "lang",
+            "valueCode" : "en"
+          },
+          {
+            "url" : "content",
+            "valueString" : "Consequence / Comment"
+          }],
+          "url" : "http://hl7.org/fhir/StructureDefinition/translation"
+        }]
+      },
+      "type" : "text",
+      "required" : false
+    }]
+  }]
+}
+
+```

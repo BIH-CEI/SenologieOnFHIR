@@ -1,0 +1,354 @@
+{
+  "resourceType" : "StructureMap",
+  "id" : "SenologieToIRegPatient",
+  "language" : "de",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xml:lang=\"de\" lang=\"de\"><hr/><p><b>German</b></p><hr/><p class=\"res-header-id\"><b>Generated Narrative: StructureMap SenologieToIRegPatient</b></p><a name=\"SenologieToIRegPatient\"> </a><a name=\"hcSenologieToIRegPatient\"> </a><pre class=\"fml\">\r\n<b>map</b><span style=\"color: navy\"> &quot;</span>https://www.senologie.org/fhir/StructureMap/SenologieToIRegPatient<span style=\"color: navy\">&quot; = &quot;</span>SenologieToIRegPatient<span style=\"color: navy\">&quot;\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">title: Senologie Patient + Observations to IRegG Patientenaufnahme</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">status: draft</span>\r\n\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/bundle.html\" title=\"Bundle\">http://hl7.org/fhir/StructureDefinition/Bundle</a><span style=\"color: navy\">&quot; </span><b>alias </b>Bundle <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/patient.html\" title=\"Patient\">http://hl7.org/fhir/StructureDefinition/Patient</a><span style=\"color: navy\">&quot; </span><b>alias </b>Patient <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"http://hl7.org/fhir/R4/observation.html\" title=\"Observation\">http://hl7.org/fhir/StructureDefinition/Observation</a><span style=\"color: navy\">&quot; </span><b>alias </b>Observation <b>as </b><b>source</b>\r\n<b>uses</b><span style=\"color: navy\"> &quot;</span><a href=\"StructureDefinition-ireg-brustimplantat-meldung.html\" title=\"IRegG Brustimplantat Meldung (Logical Model)\">https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung</a><span style=\"color: navy\">&quot; </span><b>alias </b>IRegMeldung <b>as </b><b>target</b>\r\n\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Known limitation: Sub-groups use `target tgt : BackboneElement` because FML</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">has no syntax to declare the Logical Model sub-path for BackboneElement</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">slices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">errors. The element names are correct per the IRegG Brustimplantat LM.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Patientenaufnahme: Patient + Observations -&gt; PAT_* + PAB_*</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Demografische und klinische Patientendaten bei Aufnahme.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">PAT_Alter wird aus Patient.birthDate berechnet (Differenz zu heute).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">PAT_Groesse und PAT_Gewicht kommen aus Observations (LOINC-kodiert).</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">PAB_* Brustimplantat-spezifische Daten kommen aus Extensions am Patient.</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapPatientenaufnahme<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Patient, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">--- PAT_* Basisdaten ---</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">PAT_GeschlechtSchluessel (enum_0070): aus Patient.gender</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">male = 1, female = 2, other = 3, unknown = 9</span>\r\n  src.gender<b> as </b><span style=\"color: maroon\">g</span><b> where </b><span style=\"color: navy\">(</span>$this = 'male'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtSchluessel = <span style=\"color: blue\">'1'</span> <i>&quot;SetGeschlechtMale&quot;</i><span style=\"color: navy\">;</span>\r\n  src.gender<b> as </b><span style=\"color: maroon\">g</span><b> where </b><span style=\"color: navy\">(</span>$this = 'female'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtSchluessel = <span style=\"color: blue\">'2'</span> <i>&quot;SetGeschlechtFemale&quot;</i><span style=\"color: navy\">;</span>\r\n  src.gender<b> as </b><span style=\"color: maroon\">g</span><b> where </b><span style=\"color: navy\">(</span>$this = 'other'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtSchluessel = <span style=\"color: blue\">'3'</span> <i>&quot;SetGeschlechtOther&quot;</i><span style=\"color: navy\">;</span>\r\n  src.gender<b> as </b><span style=\"color: maroon\">g</span><b> where </b><span style=\"color: navy\">(</span>$this = 'unknown'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtSchluessel = <span style=\"color: blue\">'9'</span> <i>&quot;SetGeschlechtUnknown&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">PAT_Alter: berechnet aus Patient.birthDate</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">FML truncate() berechnet Differenz in Jahren</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Ohne aeusseres truncate(): Matchbox akzeptiert keine verschachtelten</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Transformationen (&quot;Found ( expecting ,&quot;) und lud diese Map deshalb nie.</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Der Ausdruck liefert bereits eine ganze Zahl.</span>\r\n  src.birthDate<b> as </b><span style=\"color: maroon\">bd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.alter = evaluate<span style=\"color: navy\">(</span>src<span style=\"color: navy\">, </span>today().toString().substring(0, 4).toInteger() - birthDate.toString().substring(0, 4).toInteger()<span style=\"color: navy\">)</span> <i>&quot;SetAlter&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">PAT_Groesse and PAT_Gewicht bundle lookups moved to calling group.</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">--- PAB_* Brustimplantat-spezifische Patientendaten ---</span>\r\n  src<span style=\"color: navy\"><b> -&gt; </b></span>tgt.brustimplantat<b> as </b><span style=\"color: maroon\">pab</span><b> then </b>MapPatientBrustimplantat<span style=\"color: navy\">(</span><span style=\"color: maroon\">src</span><span style=\"color: navy\">, </span><span style=\"color: maroon\">pab</span><span style=\"color: navy\">)</span> <i>&quot;CallMapPAB&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span><span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Brustimplantat-spezifische Patientendaten: Patient -&gt; PAB_*</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">Autoimmunerkrankung, Verlauf, biologisches Geschlecht bei Geburt</span>\r\n<span style=\"color: navy\">// </span><span style=\"color: green\">============================================================================</span>\r\n<b>group </b>MapPatientBrustimplantat<span style=\"color: navy\">(</span><b>source</b> <span style=\"color: maroon\">src</span><span style=\"color: navy\"> : </span>Patient, <b>target</b> <span style=\"color: maroon\">tgt</span><span style=\"color: navy\"> : </span>BackboneElement<span style=\"color: navy\">)</span><span style=\"color: navy\"> {\r\n</span>  <span style=\"color: navy\">// </span><span style=\"color: green\">PAB_AutoimmunerkrankungSchluessel (enum_0122): aus Extension</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b><span style=\"color: navy\">(</span>url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-autoimmunerkrankung'<span style=\"color: navy\">)</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.autoimmunerkrankungSchluessel = <span style=\"color: maroon\">cd</span> <i>&quot;SetAutoimmunCode&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapAutoimmunCoding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapAutoimmunValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapAutoimmunerkrankung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Fallback: wenn keine Extension vorhanden, setze Standardwert &quot;unbekannt&quot;</span>\r\n  src<b> where </b><span style=\"color: navy\">(</span>extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-autoimmunerkrankung').exists().not()<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.autoimmunerkrankungSchluessel = <span style=\"color: blue\">'9'</span> <i>&quot;SetAutoimmunDefault&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">PAB_VerlaufAutoimmunerkrankungSchluessel (enum_0123): aus Extension</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b><span style=\"color: navy\">(</span>url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-verlauf-autoimmunerkrankung'<span style=\"color: navy\">)</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val.coding<b> as </b><span style=\"color: maroon\">c</span><b> then</b><span style=\"color: navy\"> {\r\n</span>        c.code<b> as </b><span style=\"color: maroon\">cd</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.verlaufAutoimmunerkrankungSchluessel = <span style=\"color: maroon\">cd</span> <i>&quot;SetVerlaufAutoimmunCode&quot;</i><span style=\"color: navy\">;</span>\r\n      <span style=\"color: navy\">}</span> <i>&quot;MapVerlaufCoding&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapVerlaufValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapVerlaufAutoimmunerkrankung&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">PAB_GeschlechtGeburtSchluessel (enum_0170): aus birthsex Extension</span>\r\n  <span style=\"color: navy\">// </span><span style=\"color: green\">Biologisches Geschlecht bei Geburt</span>\r\n  src.extension<b> as </b><span style=\"color: maroon\">ext</span><b> where </b><span style=\"color: navy\">(</span>url = 'http://hl7.org/fhir/StructureDefinition/patient-birthsex'<span style=\"color: navy\">)</span><b> then</b><span style=\"color: navy\"> {\r\n</span>    ext.value<b> as </b><span style=\"color: maroon\">val</span><b> then</b><span style=\"color: navy\"> {\r\n</span>      val<b> where </b><span style=\"color: navy\">(</span>$this = 'M'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtGeburtSchluessel = <span style=\"color: blue\">'1'</span> <i>&quot;SetGeburtGeschlechtMale&quot;</i><span style=\"color: navy\">;</span>\r\n      val<b> where </b><span style=\"color: navy\">(</span>$this = 'F'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtGeburtSchluessel = <span style=\"color: blue\">'2'</span> <i>&quot;SetGeburtGeschlechtFemale&quot;</i><span style=\"color: navy\">;</span>\r\n      val<b> where </b><span style=\"color: navy\">(</span>$this = 'UNK'<span style=\"color: navy\">)</span><span style=\"color: navy\"><b> -&gt; </b></span>tgt.geschlechtGeburtSchluessel = <span style=\"color: blue\">'9'</span> <i>&quot;SetGeburtGeschlechtUnknown&quot;</i><span style=\"color: navy\">;</span>\r\n    <span style=\"color: navy\">}</span> <i>&quot;MapBirthsexValue&quot;</i><span style=\"color: navy\">;</span>\r\n  <span style=\"color: navy\">}</span> <i>&quot;MapGeschlechtGeburt&quot;</i><span style=\"color: navy\">;</span>\r\n<span style=\"color: navy\">}\r\n\r\n</span></pre></div>"
+  },
+  "url" : "https://www.senologie.org/fhir/StructureMap/SenologieToIRegPatient",
+  "version" : "0.10.0",
+  "name" : "SenologieToIRegPatient",
+  "status" : "draft",
+  "date" : "2026-10-18T23:31:26+00:00",
+  "publisher" : "Berlin Institute of Health at Charité (BIH)",
+  "contact" : [{
+    "name" : "Berlin Institute of Health at Charité (BIH)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.bihealth.org"
+    }]
+  }],
+  "description" : "title: Senologie Patient + Observations to IRegG Patientenaufnahme\r\nstatus: draft",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "source",
+    "alias" : "Bundle"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Patient",
+    "mode" : "source",
+    "alias" : "Patient"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Observation",
+    "mode" : "source",
+    "alias" : "Observation"
+  },
+  {
+    "url" : "https://www.senologie.org/fhir/StructureDefinition/ireg-brustimplantat-meldung",
+    "mode" : "target",
+    "alias" : "IRegMeldung"
+  }],
+  "group" : [{
+    "name" : "MapPatientenaufnahme",
+    "typeMode" : "none",
+    "documentation" : "Known limitation: Sub-groups use `target tgt : BackboneElement` because FML\r\nhas no syntax to declare the Logical Model sub-path for BackboneElement\r\nslices passed from parent groups. The IG Publisher may produce SM_TARGET_PATH\r\nerrors. The element names are correct per the IRegG Brustimplantat LM.\r\n============================================================================\r\nPatientenaufnahme: Patient + Observations -> PAT_* + PAB_*\r\nDemografische und klinische Patientendaten bei Aufnahme.\r\nPAT_Alter wird aus Patient.birthDate berechnet (Differenz zu heute).\r\nPAT_Groesse und PAT_Gewicht kommen aus Observations (LOINC-kodiert).\r\nPAB_* Brustimplantat-spezifische Daten kommen aus Extensions am Patient.\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Patient",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "SetGeschlechtMale",
+      "source" : [{
+        "context" : "src",
+        "element" : "gender",
+        "variable" : "g",
+        "condition" : "$this = 'male'"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "geschlechtSchluessel",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "1"
+        }]
+      }],
+      "documentation" : "--- PAT_* Basisdaten ---\r\nPAT_GeschlechtSchluessel (enum_0070): aus Patient.gender\r\nmale = 1, female = 2, other = 3, unknown = 9"
+    },
+    {
+      "name" : "SetGeschlechtFemale",
+      "source" : [{
+        "context" : "src",
+        "element" : "gender",
+        "variable" : "g",
+        "condition" : "$this = 'female'"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "geschlechtSchluessel",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "2"
+        }]
+      }]
+    },
+    {
+      "name" : "SetGeschlechtOther",
+      "source" : [{
+        "context" : "src",
+        "element" : "gender",
+        "variable" : "g",
+        "condition" : "$this = 'other'"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "geschlechtSchluessel",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "3"
+        }]
+      }]
+    },
+    {
+      "name" : "SetGeschlechtUnknown",
+      "source" : [{
+        "context" : "src",
+        "element" : "gender",
+        "variable" : "g",
+        "condition" : "$this = 'unknown'"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "geschlechtSchluessel",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "9"
+        }]
+      }]
+    },
+    {
+      "name" : "SetAlter",
+      "source" : [{
+        "context" : "src",
+        "element" : "birthDate",
+        "variable" : "bd"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "alter",
+        "transform" : "evaluate",
+        "parameter" : [{
+          "valueId" : "src"
+        },
+        {
+          "valueString" : "today().toString().substring(0, 4).toInteger() - birthDate.toString().substring(0, 4).toInteger()"
+        }]
+      }],
+      "documentation" : "PAT_Alter: berechnet aus Patient.birthDate\r\nFML truncate() berechnet Differenz in Jahren\r\nOhne aeusseres truncate(): Matchbox akzeptiert keine verschachtelten\r\nTransformationen (\"Found ( expecting ,\") und lud diese Map deshalb nie.\r\nDer Ausdruck liefert bereits eine ganze Zahl."
+    },
+    {
+      "name" : "CallMapPAB",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "brustimplantat",
+        "variable" : "pab"
+      }],
+      "dependent" : [{
+        "name" : "MapPatientBrustimplantat",
+        "variable" : ["src",
+        "pab"]
+      }],
+      "documentation" : "PAT_Groesse and PAT_Gewicht bundle lookups moved to calling group.\r\n--- PAB_* Brustimplantat-spezifische Patientendaten ---"
+    }]
+  },
+  {
+    "name" : "MapPatientBrustimplantat",
+    "typeMode" : "none",
+    "documentation" : "============================================================================\r\nBrustimplantat-spezifische Patientendaten: Patient -> PAB_*\r\nAutoimmunerkrankung, Verlauf, biologisches Geschlecht bei Geburt\r\n============================================================================",
+    "input" : [{
+      "name" : "src",
+      "type" : "Patient",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "BackboneElement",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "MapAutoimmunerkrankung",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-autoimmunerkrankung'"
+      }],
+      "rule" : [{
+        "name" : "MapAutoimmunValue",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapAutoimmunCoding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetAutoimmunCode",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "autoimmunerkrankungSchluessel",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }],
+      "documentation" : "PAB_AutoimmunerkrankungSchluessel (enum_0122): aus Extension"
+    },
+    {
+      "name" : "SetAutoimmunDefault",
+      "source" : [{
+        "context" : "src",
+        "condition" : "extension.where(url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-autoimmunerkrankung').exists().not()"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "autoimmunerkrankungSchluessel",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "9"
+        }]
+      }],
+      "documentation" : "Fallback: wenn keine Extension vorhanden, setze Standardwert \"unbekannt\""
+    },
+    {
+      "name" : "MapVerlaufAutoimmunerkrankung",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'https://www.senologie.org/fhir/StructureDefinition/ireg-verlauf-autoimmunerkrankung'"
+      }],
+      "rule" : [{
+        "name" : "MapVerlaufValue",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "MapVerlaufCoding",
+          "source" : [{
+            "context" : "val",
+            "element" : "coding",
+            "variable" : "c"
+          }],
+          "rule" : [{
+            "name" : "SetVerlaufAutoimmunCode",
+            "source" : [{
+              "context" : "c",
+              "element" : "code",
+              "variable" : "cd"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "verlaufAutoimmunerkrankungSchluessel",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "cd"
+              }]
+            }]
+          }]
+        }]
+      }],
+      "documentation" : "PAB_VerlaufAutoimmunerkrankungSchluessel (enum_0123): aus Extension"
+    },
+    {
+      "name" : "MapGeschlechtGeburt",
+      "source" : [{
+        "context" : "src",
+        "element" : "extension",
+        "variable" : "ext",
+        "condition" : "url = 'http://hl7.org/fhir/StructureDefinition/patient-birthsex'"
+      }],
+      "rule" : [{
+        "name" : "MapBirthsexValue",
+        "source" : [{
+          "context" : "ext",
+          "element" : "value",
+          "variable" : "val"
+        }],
+        "rule" : [{
+          "name" : "SetGeburtGeschlechtMale",
+          "source" : [{
+            "context" : "val",
+            "condition" : "$this = 'M'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "geschlechtGeburtSchluessel",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "1"
+            }]
+          }]
+        },
+        {
+          "name" : "SetGeburtGeschlechtFemale",
+          "source" : [{
+            "context" : "val",
+            "condition" : "$this = 'F'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "geschlechtGeburtSchluessel",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "2"
+            }]
+          }]
+        },
+        {
+          "name" : "SetGeburtGeschlechtUnknown",
+          "source" : [{
+            "context" : "val",
+            "condition" : "$this = 'UNK'"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "geschlechtGeburtSchluessel",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "9"
+            }]
+          }]
+        }]
+      }],
+      "documentation" : "PAB_GeschlechtGeburtSchluessel (enum_0170): aus birthsex Extension\r\nBiologisches Geschlecht bei Geburt"
+    }]
+  }]
+}
