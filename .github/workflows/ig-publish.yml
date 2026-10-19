@@ -24,7 +24,41 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Redaktionelle PRs (nur Seitentexte, Menues, Bilder) brauchen weder den
+  # Java-Validator noch einen Terminologieserver: an den Profilen und
+  # ValueSets aendert sich nichts. Sobald FSH, sushi-config oder Workflows
+  # betroffen sind, laeuft der volle Build.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      docs_only: ${{ steps.check.outputs.docs_only }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: check
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "Kein Pull Request — voller Build."
+            echo "docs_only=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          git fetch -q origin "${{ github.base_ref }}"
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")
+          echo "Geaenderte Dateien:"; echo "$CHANGED" | sed 's/^/  /'
+          # Eine Zeile ausserhalb der redaktionellen Pfade genuegt fuer den vollen Build.
+          if echo "$CHANGED" | grep -qvE '^(input/pagecontent/|input/translations/|input/includes/|input/images/|docs/|exports/[^/]+\.csv$|scripts/generate-glossar\.py$|README\.md$|NOTICE\.md$)'; then
+            echo "-> nicht nur redaktionell: voller Build mit Terminologieserver."
+            echo "docs_only=false" >> $GITHUB_OUTPUT
+          else
+            echo "-> rein redaktionell: Validator uebersprungen, Build mit -tx n/a."
+            echo "docs_only=true" >> $GITHUB_OUTPUT
+          fi
+
   validate:
+    needs: changes
+    if: needs.changes.outputs.docs_only != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -135,8 +169,11 @@ jobs:
             validation.json
           retention-days: 7
 
+  # Haengt bewusst NICHT an validate: der Job laeuft mit if: always(), konnte
+  # den Build also nie verhindern — die Abhaengigkeit hat nur 15 Minuten
+  # Wartezeit erzeugt. Jetzt laufen beide parallel.
   build:
-    needs: validate
+    needs: changes
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -175,6 +212,19 @@ jobs:
           path: input-cache/publisher.jar
           key: ig-publisher-${{ vars.IG_PUBLISHER_VERSION || '3.0.0' }}
 
+      # Der Terminologie-Cache des Publishers. Fuer -tx n/a entscheidend:
+      # ohne ihn bleiben ValueSet-Expansionen im redaktionellen Preview leer.
+      # Der Key laeuft pro Lauf weiter, restore-keys waermt ihn aus dem
+      # letzten vollen Build.
+      - name: Cache terminology cache
+        uses: actions/cache@v4
+        with:
+          path: input-cache/txcache
+          key: ig-txcache-${{ hashFiles('sushi-config.yaml') }}-${{ github.run_id }}
+          restore-keys: |
+            ig-txcache-${{ hashFiles('sushi-config.yaml') }}-
+            ig-txcache-
+
       # Version gepinnt (lokal mit diesem Stand getestet); Anheben ueber die
       # Repo-Variable IG_PUBLISHER_VERSION oder den Default hier.
       - name: Download IG Publisher
@@ -185,6 +235,7 @@ jobs:
             https://github.com/HL7/fhir-ig-publisher/releases/download/${{ vars.IG_PUBLISHER_VERSION || '3.0.0' }}/publisher.jar
 
       - name: Setup TX Proxy (MII Ontoserver)
+        if: needs.changes.outputs.docs_only != 'true'
         env:
           MII_TERMSERV_CERT: ${{ secrets.MII_TERMSERV_CERT }}
           MII_TERMSERV_PW: ${{ secrets.MII_TERMSERV_PW }}
@@ -214,7 +265,17 @@ jobs:
             sleep 2
           done
 
+      # Redaktioneller Preview: ohne Terminologieserver, nur aus dem txcache.
+      # ValueSet-Seiten koennen dadurch unvollstaendig sein — der PR-Kommentar
+      # weist darauf hin.
+      - name: Build IG (redaktionell, ohne Terminologieserver)
+        if: needs.changes.outputs.docs_only == 'true'
+        run: |
+          chmod +x _genonce.sh
+          ./_genonce.sh -tx n/a
+
       - name: Build IG
+        if: needs.changes.outputs.docs_only != 'true'
         run: |
           chmod +x _genonce.sh
           # Der IG Publisher lehnt seit 2.x Terminologieserver ueber http ab
@@ -290,8 +351,14 @@ jobs:
           URL: ${{ steps.deploy.outputs.url }}
           PR: ${{ github.event.number }}
         run: |
-          printf '%s\n\n%s\n' \
+          if [ "${{ needs.changes.outputs.docs_only }}" = "true" ]; then
+            MODE="Redaktioneller Build: Java-Validator uebersprungen, IG Publisher mit \`-tx n/a\` gelaufen. **ValueSet-Expansionen koennen unvollstaendig sein** — sie stammen nur aus dem Terminologie-Cache, nicht vom Ontoserver. Fuer die Pruefung von Seitentexten gedacht, nicht fuer Terminologie."
+          else
+            MODE="Voller Build mit Terminologieserver (MII Ontoserver)."
+          fi
+          printf '%s\n\n%s\n\n%s\n' \
             "IG-Preview dieses Branches: $URL" \
+            "$MODE" \
             "Wird bei jedem Push auf den PR neu gebaut und beim Schliessen des PR entfernt. Der main-Stand bleibt unter \`/ci-build/\`." \
             > comment.md
           gh pr comment "$PR" --body-file comment.md --edit-last --create-if-none \
