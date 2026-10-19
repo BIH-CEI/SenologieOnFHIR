@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrustOperation | *Version*:0.10.0 |
-| Draft as of 2026-10-18 | *Computable Name*:SenologieToOncoBoxBrustOperation |
+| Draft as of 2026-10-19 | *Computable Name*:SenologieToOncoBoxBrustOperation |
 
  
 title: Senologie Procedure + Specimen to OncoBox Brust Operation status: draft 
@@ -26,7 +26,7 @@ title: Senologie Procedure + Specimen to OncoBox Brust Operation status: draft
   "version" : "0.10.0",
   "name" : "SenologieToOncoBoxBrustOperation",
   "status" : "draft",
-  "date" : "2026-10-18T23:31:26+00:00",
+  "date" : "2026-10-19T00:09:05+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsResidualstatus | *Version*:0.10.0 |
-| Draft as of 2026-10-18 | *Computable Name*:SenologieToObdsResidualstatus |
+| Draft as of 2026-10-19 | *Computable Name*:SenologieToObdsResidualstatus |
 
  
 title: Senologie Residualstatus Observation to oBDS Residualstatus BackboneElement status: draft 
@@ -26,7 +26,7 @@ title: Senologie Residualstatus Observation to oBDS Residualstatus BackboneEleme
   "version" : "0.10.0",
   "name" : "SenologieToObdsResidualstatus",
   "status" : "draft",
-  "date" : "2026-10-18T23:31:26+00:00",
+  "date" : "2026-10-19T00:09:05+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{
