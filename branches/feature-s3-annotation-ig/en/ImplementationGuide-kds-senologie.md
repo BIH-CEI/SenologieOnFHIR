@@ -7474,22 +7474,6 @@
       },
       {
         "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
-        "valueUri" : "ValueSet-vs-senologie-allgemeinzustand.html"
-      }],
-      "reference" : {
-        "reference" : "ValueSet/vs-senologie-allgemeinzustand"
-      },
-      "name" : "VS Senologie Allgemeinzustand",
-      "description" : "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht). Fuer detaillierte Erfassung ECOG verwenden.",
-      "exampleBoolean" : false
-    },
-    {
-      "extension" : [{
-        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "ValueSet"
-      },
-      {
-        "url" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
         "valueUri" : "ValueSet-vs-senologie-applikationsart.html"
       }],
       "reference" : {

@@ -510,7 +510,7 @@ Fragebogen zur strukturierten Dokumentation der Verlaufskontrolle und Nachsorge.
       },
       "type" : "choice",
       "required" : false,
-      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
+      "answerValueSet" : "https://www.senologie.org/fhir/ValueSet/vs-senologie-ecog"
     },
     {
       "extension" : [{

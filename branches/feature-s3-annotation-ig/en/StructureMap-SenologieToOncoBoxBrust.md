@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to OncoBox Brust 2.0 (Master Orchestrator) targetSp
   "version" : "0.10.0",
   "name" : "SenologieToOncoBoxBrust",
   "status" : "draft",
-  "date" : "2026-10-20T05:19:36+00:00",
+  "date" : "2026-10-20T05:42:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

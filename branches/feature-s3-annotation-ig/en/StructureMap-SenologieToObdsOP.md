@@ -26,7 +26,7 @@ title: Senologie Operation Bundle to oBDS OP-Meldung status: draft
   "version" : "0.10.0",
   "name" : "SenologieToObdsOP",
   "status" : "draft",
-  "date" : "2026-10-20T05:19:36+00:00",
+  "date" : "2026-10-20T05:42:12+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

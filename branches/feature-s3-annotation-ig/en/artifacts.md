@@ -156,7 +156,6 @@ These define sets of codes used by systems conforming to this implementation gui
 | [ BIH LM Senologie Operation  ](ValueSet-vs-senologie-operation-art.md) | Operationen im Rahmen der BIH-Spezifikation des Moduls Senologie |
 | [ VS OncoBox Primaerfallart  ](ValueSet-vs-oncobox-primaerfallart.md) | Primaerfallart nach OnkoZert-Systematik (OncoBox 2.0 D01) |
 | [ VS Senologie ACR Brustdichte  ](ValueSet-vs-senologie-acr-brustdichte.md) | ACR Brustdichte-Kategorien A-D als SNOMED-Codes. |
-| [ VS Senologie Allgemeinzustand  ](ValueSet-vs-senologie-allgemeinzustand.md) | Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht). Fuer detaillierte Erfassung ECOG verwenden. |
 | [ VS Senologie Applikationsart  ](ValueSet-vs-senologie-applikationsart.md) | Applikationsroute der Medikation (intravenoes / subkutan / oral / intramuskulaer). |
 | [ VS Senologie Auffällig/Unauffällig  ](ValueSet-vs-senologie-auffaellig-unauffaellig.md) | Klinischer Befundstatus 'auffällig' / 'unauffällig' für Inspektion und Palpation. |
 | [ VS Senologie B-Klassifikation (NHSBSP)  ](ValueSet-vs-senologie-b-klassifikation.md) | Histopathologische B-Klassifikation der Mamma-Biopsie nach NHSBSP (B0-B5b) als SNOMED-Codes. |
