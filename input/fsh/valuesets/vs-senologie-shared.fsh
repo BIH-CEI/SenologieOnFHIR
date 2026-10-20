@@ -198,36 +198,36 @@ Description: "Reine Response-Assessment-Werte (SD/PR/CR/PD/Mixed) für die Verla
 ValueSet: VS_Senologie_R_Status
 Id: vs-senologie-r-status
 Title: "VS Senologie R-Status (Resektionsstatus)"
-Description: "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes."
+Description: "Resektionsstatus R0/R1/R2/RX nach UICC, kodiert mit SNOMED CT (SCT#135252x00x)."
 * insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-r-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* https://www.senologie.org/fhir/CodeSystem/form-helper#r-0 "R0 — kein Residualtumor"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#r-1 "R1 — mikroskopischer Residualtumor"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#r-2 "R2 — makroskopischer Residualtumor"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#r-x "RX — nicht beurteilbar"
+* $SCT#1352526005 "R0 — kein Residualtumor"
+* $SCT#1352529003 "R1 — mikroskopischer Residualtumor"
+* $SCT#1352528006 "R2 — makroskopischer Residualtumor"
+* $SCT#1352527001 "RX — nicht beurteilbar"
 
 // ============================================================
 // Ptosis-Grad (Regnault-Klassifikation)
 // ============================================================
 
-// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:efe0a41a-7a30-5e66-9881-cd0ad3ba0ae4"
-* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-20
+* ^expansion.identifier = "urn:uuid:efe0a41a-7a30-5e66-9881-cd0ad3ba0ae5"
+* ^expansion.timestamp = "2026-10-20T00:00:00Z"
 * ^expansion.total = 4
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #r-0
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352526005
 * ^expansion.contains[=].display = "R0 — kein Residualtumor"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #r-1
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352529003
 * ^expansion.contains[=].display = "R1 — mikroskopischer Residualtumor"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #r-2
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352528006
 * ^expansion.contains[=].display = "R2 — makroskopischer Residualtumor"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #r-x
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1352527001
 * ^expansion.contains[=].display = "RX — nicht beurteilbar"
 
 ValueSet: VS_Senologie_Ptosis_Grad
@@ -1263,37 +1263,37 @@ Description: "FISH-Ergebnis bei HER2-Amplifikationstestung."
 ValueSet: VS_Senologie_ISH_Methode
 Id: vs-senologie-ish-methode
 Title: "VS Senologie ISH-Methode"
-Description: "In-situ-Hybridisierungs-Methode für HER2."
+Description: "In-situ-Hybridisierungs-Methode für HER2. FISH/CISH/SISH als SNOMED-CT kodiert; DISH ohne SNOMED-Konzept als lokaler Code."
 * insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ish-methode"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker#fish "FISH"
-* https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker#cish "CISH"
+* $SCT#1303773004 "FISH (Fluoreszenz-in-situ-Hybridisierung)"
+* $SCT#787997001 "CISH (Chromogene in-situ-Hybridisierung)"
 * https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker#dish "DISH"
-* https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker#sish "SISH"
+* $SCT#787998006 "SISH (Silber-verstärkte in-situ-Hybridisierung)"
 
 // ============================================================
 // IHC-Intensität (negative/weak/moderate/strong)
 // ============================================================
 
-// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:ad4c4d49-116b-59b9-9601-e1af892d1065"
-* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-20
+* ^expansion.identifier = "urn:uuid:ad4c4d49-116b-59b9-9601-e1af892d1066"
+* ^expansion.timestamp = "2026-10-20T00:00:00Z"
 * ^expansion.total = 4
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
-* ^expansion.contains[=].code = #fish
-* ^expansion.contains[=].display = "FISH"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
-* ^expansion.contains[=].code = #cish
-* ^expansion.contains[=].display = "CISH"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1303773004
+* ^expansion.contains[=].display = "FISH (Fluoreszenz-in-situ-Hybridisierung)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #787997001
+* ^expansion.contains[=].display = "CISH (Chromogene in-situ-Hybridisierung)"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
 * ^expansion.contains[=].code = #dish
 * ^expansion.contains[=].display = "DISH"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker"
-* ^expansion.contains[=].code = #sish
-* ^expansion.contains[=].display = "SISH"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #787998006
+* ^expansion.contains[=].display = "SISH (Silber-verstärkte in-situ-Hybridisierung)"
 
 ValueSet: VS_Senologie_IHC_Intensitaet
 Id: vs-senologie-ihc-intensitaet
@@ -1994,32 +1994,33 @@ Description: "Beschlusszustand pro Therapie-Empfehlung im Tumorboard (empfohlen 
 ValueSet: VS_Senologie_Kontrazeption_Status
 Id: vs-senologie-kontrazeption-status
 Title: "VS Senologie Kontrazeption Status"
-Description: "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell)."
+Description: "Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell)."
 * insert SenoCRMIValueSet
 
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
 // Lokale Codes — SCT hat kein passendes Tripel (473387004 'Never used
-// contraception' deckt nur "nie" ab, "frueher" und "aktuell" fehlen.)
+// contraception' deckt nur "nie" ab; 161772002/5935008 sind oral-spezifisch
+// und passen semantisch nicht für "hormonelle Kontrazeption allgemein".)
 * https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-nie "Nie"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-frueher "Frueher"
+* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-frueher "Früher"
 * https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-aktuell "Aktuell"
 
 // ============================================================
 // Komplikations-Zeitpunkt (Intraoperativ / Postoperativ / Stationaer)
 // ============================================================
 
-// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:5e19e10c-a250-54e4-b0c9-42c3d2bddf58"
-* ^expansion.timestamp = "2026-10-06T00:00:00Z"
+// Pre-built expansion for Aidbox/$expand — generated 2026-10-20
+* ^expansion.identifier = "urn:uuid:5e19e10c-a250-54e4-b0c9-42c3d2bddf59"
+* ^expansion.timestamp = "2026-10-20T00:00:00Z"
 * ^expansion.total = 3
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #kontrazeption-nie
 * ^expansion.contains[=].display = "Nie"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #kontrazeption-frueher
-* ^expansion.contains[=].display = "Frueher"
+* ^expansion.contains[=].display = "Früher"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #kontrazeption-aktuell
 * ^expansion.contains[=].display = "Aktuell"
