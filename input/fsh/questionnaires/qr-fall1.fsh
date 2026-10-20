@@ -265,7 +265,7 @@ Usage: #example
 * item[=].item[+].linkId = "histo-dcis-anteil"
 * item[=].item[=].answer.valueString = "Kein begleitendes DCIS"
 * item[=].item[+].linkId = "histo-resektionsrand"
-* item[=].item[=].answer.valueCoding = $FH#r-0 "R0"
+* item[=].item[=].answer.valueCoding = $SCT#1352526005 "R0 — kein Residualtumor"
 * item[=].item[+].linkId = "histo-sentinel-anzahl"
 * item[=].item[=].answer.valueInteger = 2
 * item[=].item[+].linkId = "histo-sentinel-befallen"
@@ -285,7 +285,7 @@ Usage: #example
 * item[=].item[+].linkId = "pn-perineural"
 * item[=].item[=].answer.valueCoding = $TNM#Pn0 "Pn0"
 * item[=].item[+].linkId = "r-status"
-* item[=].item[=].answer.valueCoding = $FH#r-0 "R0"
+* item[=].item[=].answer.valueCoding = $SCT#1352526005 "R0 — kein Residualtumor"
 * item[=].item[+].linkId = "ptnm-uicc"
 * item[=].item[=].answer.valueCoding = $TNM#IA "Stadium IA"
 
@@ -381,7 +381,7 @@ Usage: #example
 * item[=].item[+].linkId = "op-intention"
 * item[=].item[=].answer.valueCoding = $MIIINT#K "kurativ"
 * item[=].item[+].linkId = "op-r-status"
-* item[=].item[=].answer.valueCoding = $FH#r-0 "R0 - kein Residualtumor"
+* item[=].item[=].answer.valueCoding = $SCT#1352526005 "R0 — kein Residualtumor"
 * item[=].item[+].linkId = "op-sentinel-anzahl-befallen"
 * item[=].item[=].answer.valueString = "0/2"
 * item[=].item[+].linkId = "followup-drainage"
