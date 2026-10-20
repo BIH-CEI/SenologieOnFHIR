@@ -573,7 +573,7 @@ Usage: #example
 
 * item[+].linkId = "klinischer-status"
 * item[=].item[+].linkId = "klinisch-allgemeinzustand"
-* item[=].item[=].answer.valueCoding = $FH#ag-gut "Gut"
+* item[=].item[=].answer.valueCoding = $LOINC#LA9623-5 "1 — Einschränkung bei Anstrengung"
 * item[=].item[+].linkId = "klinisch-lokalbefund"
 * item[=].item[=].answer.valueCoding = $SCT#17621005 "unauffaellig"
 * item[=].item[+].linkId = "klinisch-lokalbefund-beschreibung"

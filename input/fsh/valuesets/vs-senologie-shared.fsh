@@ -2153,39 +2153,9 @@ Description: "Nachsorge-Erhebung aktiv (persoenlich) vs passiv (Aktenlage/Regist
 * ^expansion.contains[=].code = #nachsorge-passiv
 * ^expansion.contains[=].display = "Passiv (Aktenlage/Register)"
 
-ValueSet: VS_Senologie_Allgemeinzustand
-Id: vs-senologie-allgemeinzustand
-Title: "VS Senologie Allgemeinzustand"
-Description: "Vereinfachte Allgemeinzustands-Skala (gut/eingeschraenkt/schlecht). Fuer detaillierte Erfassung ECOG verwenden."
-* insert SenoCRMIValueSet
-
-* ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
-* ^status = #draft
-* insert PR_CS_VS_Version
-// Lokale Codes — die SCT-Picks waren falsch (102500002 = 'Good neonatal
-// condition', 162653009 = ungueltig). Fuer praezise Allgemeinzustands-
-// Erfassung ECOG verwenden (vs-senologie-ecog).
-* https://www.senologie.org/fhir/CodeSystem/form-helper#ag-gut "Gut"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#ag-eingeschraenkt "Eingeschraenkt"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#ag-schlecht "Schlecht"
-
 // ============================================================
 // Lymphoedem-Grad (Kein / I / II / III)
 // ============================================================
-
-// Pre-built expansion for Aidbox/$expand — generated 2026-10-06
-* ^expansion.identifier = "urn:uuid:288a5c4f-8bca-5eaf-a73f-2f4707a6564a"
-* ^expansion.timestamp = "2026-10-06T00:00:00Z"
-* ^expansion.total = 3
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #ag-gut
-* ^expansion.contains[=].display = "Gut"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #ag-eingeschraenkt
-* ^expansion.contains[=].display = "Eingeschraenkt"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #ag-schlecht
-* ^expansion.contains[=].display = "Schlecht"
 
 ValueSet: VS_Senologie_Lymphoedem_Grad
 Id: vs-senologie-lymphoedem-grad
