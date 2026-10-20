@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsMeldung | *Version*:0.10.0 |
-| Draft as of 2026-10-19 | *Computable Name*:SenologieToObdsMeldung |
+| Draft as of 2026-10-20 | *Computable Name*:SenologieToObdsMeldung |
 
  
 title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) targetSpec: oBDS XML-Datensatz v3.0.5 (22.09.2025) XSD-Quelle: https://www.basisdatensatz.de/xml/oBDS_v3.0.5.xsd abwaertskompatibel zu v3.0.1 (Testpatient_Mamma.xml) senologieVersion: 0.9.0 status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to oBDS Meldung (Master Orchestrator) targetSpec: o
   "version" : "0.10.0",
   "name" : "SenologieToObdsMeldung",
   "status" : "draft",
-  "date" : "2026-10-19T00:09:05+00:00",
+  "date" : "2026-10-20T05:01:53+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

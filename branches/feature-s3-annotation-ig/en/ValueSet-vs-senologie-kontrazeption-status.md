@@ -12,7 +12,7 @@
 | Draft as of 2026-10-12 | *Computable Name*:VS_Senologie_Kontrazeption_Status |
 
  
-Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell). 
+Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell). 
 
  **References** 
 
@@ -169,7 +169,7 @@ Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell).
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell).",
+  "description" : "Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell).",
   "compose" : {
     "include" : [{
       "system" : "https://www.senologie.org/fhir/CodeSystem/form-helper",
@@ -179,7 +179,7 @@ Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell).
       },
       {
         "code" : "kontrazeption-frueher",
-        "display" : "Frueher"
+        "display" : "Früher"
       },
       {
         "code" : "kontrazeption-aktuell",

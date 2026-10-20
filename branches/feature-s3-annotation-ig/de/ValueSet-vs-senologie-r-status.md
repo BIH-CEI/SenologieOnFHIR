@@ -12,7 +12,7 @@
 | Draft | **:VS_Senologie_R_Status |
 
  
-Resektionsstatus R0/R1/R2/RX als SNOMED-Codes. 
+Resektionsstatus R0/R1/R2/RX nach UICC, kodiert mit SNOMED CT (SCT#135252x00x). 
 
  **References** 
 
@@ -170,24 +170,24 @@ Resektionsstatus R0/R1/R2/RX als SNOMED-Codes.
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes.",
+  "description" : "Resektionsstatus R0/R1/R2/RX nach UICC, kodiert mit SNOMED CT (SCT#135252x00x).",
   "compose" : {
     "include" : [{
-      "system" : "https://www.senologie.org/fhir/CodeSystem/form-helper",
+      "system" : "http://snomed.info/sct",
       "concept" : [{
-        "code" : "r-0",
+        "code" : "1352526005",
         "display" : "R0 — kein Residualtumor"
       },
       {
-        "code" : "r-1",
+        "code" : "1352529003",
         "display" : "R1 — mikroskopischer Residualtumor"
       },
       {
-        "code" : "r-2",
+        "code" : "1352528006",
         "display" : "R2 — makroskopischer Residualtumor"
       },
       {
-        "code" : "r-x",
+        "code" : "1352527001",
         "display" : "RX — nicht beurteilbar"
       }]
     }]

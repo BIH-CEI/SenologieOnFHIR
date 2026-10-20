@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToOncoBoxBrust | *Version*:0.10.0 |
-| Draft as of 2026-10-19 | *Computable Name*:SenologieToOncoBoxBrust |
+| Draft as of 2026-10-20 | *Computable Name*:SenologieToOncoBoxBrust |
 
  
 title: Senologie FHIR Bundle to OncoBox Brust 2.0 (Master Orchestrator) targetSpec: OncoBox Brust 2.0 — Auditjahr 2026, Spezifikation v2.1.1 XSD-Quelle: https://xml-oncobox.de/de/Home/FuerHersteller (Brust2/26_1_oncobox-brust xsd-schema dkgzert (251110).xsd) ersetzt Vorgaengerversion 1.0 / N1.1.1 senologieVersion: 0.9.0 status: draft 
@@ -26,7 +26,7 @@ title: Senologie FHIR Bundle to OncoBox Brust 2.0 (Master Orchestrator) targetSp
   "version" : "0.10.0",
   "name" : "SenologieToOncoBoxBrust",
   "status" : "draft",
-  "date" : "2026-10-19T00:09:05+00:00",
+  "date" : "2026-10-20T05:01:53+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

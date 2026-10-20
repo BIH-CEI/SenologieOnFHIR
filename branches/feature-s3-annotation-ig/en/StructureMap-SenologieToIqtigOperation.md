@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIqtigOperation | *Version*:0.10.0 |
-| Draft as of 2026-10-19 | *Computable Name*:SenologieToIqtigOperation |
+| Draft as of 2026-10-20 | *Computable Name*:SenologieToIqtigOperation |
 
  
 title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation status: draft 
@@ -26,7 +26,7 @@ title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation stat
   "version" : "0.10.0",
   "name" : "SenologieToIqtigOperation",
   "status" : "draft",
-  "date" : "2026-10-19T00:09:05+00:00",
+  "date" : "2026-10-20T05:01:53+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

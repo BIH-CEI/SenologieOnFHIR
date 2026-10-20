@@ -12,7 +12,7 @@
 | Draft as of 2026-10-12 | *Computable Name*:VS_Senologie_ISH_Methode |
 
  
-In-situ-Hybridisierungs-Methode für HER2. 
+In-situ-Hybridisierungs-Methode für HER2. FISH/CISH/SISH als SNOMED-CT kodiert; DISH ohne SNOMED-Konzept als lokaler Code. 
 
  **References** 
 
@@ -169,25 +169,28 @@ In-situ-Hybridisierungs-Methode für HER2.
       "value" : "https://www.bihealth.org"
     }]
   }],
-  "description" : "In-situ-Hybridisierungs-Methode für HER2.",
+  "description" : "In-situ-Hybridisierungs-Methode für HER2. FISH/CISH/SISH als SNOMED-CT kodiert; DISH ohne SNOMED-Konzept als lokaler Code.",
   "compose" : {
     "include" : [{
+      "system" : "http://snomed.info/sct",
+      "concept" : [{
+        "code" : "1303773004",
+        "display" : "FISH (Fluoreszenz-in-situ-Hybridisierung)"
+      },
+      {
+        "code" : "787997001",
+        "display" : "CISH (Chromogene in-situ-Hybridisierung)"
+      },
+      {
+        "code" : "787998006",
+        "display" : "SISH (Silber-verstärkte in-situ-Hybridisierung)"
+      }]
+    },
+    {
       "system" : "https://www.senologie.org/fhir/CodeSystem/cs-senologie-biomarker",
       "concept" : [{
-        "code" : "fish",
-        "display" : "FISH"
-      },
-      {
-        "code" : "cish",
-        "display" : "CISH"
-      },
-      {
         "code" : "dish",
         "display" : "DISH"
-      },
-      {
-        "code" : "sish",
-        "display" : "SISH"
       }]
     }]
   }

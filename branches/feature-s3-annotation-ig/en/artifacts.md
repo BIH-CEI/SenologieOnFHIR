@@ -183,10 +183,10 @@ These define sets of codes used by systems conforming to this implementation gui
 | [ VS Senologie HER2 IHC-Score  ](ValueSet-vs-senologie-her2-ihc-score.md) | IHC-Score-Werte für HER2 (0/1+/2+/3+) nach Standardpathologie. Codes aus MII MTB INSITUHYBRIDIZATION. |
 | [ VS Senologie Histologie-Typ Mamma  ](ValueSet-vs-senologie-histologie-typ.md) | Histologische Subtypen des Mamma-Befunds (NST, lobulär, DCIS). |
 | [ VS Senologie IHC-Färbeintensität  ](ValueSet-vs-senologie-ihc-intensitaet.md) | IHC-Färbeintensität für ER/PR-Beurteilung (negative/weak/moderate/strong). |
-| [ VS Senologie ISH-Methode  ](ValueSet-vs-senologie-ish-methode.md) | In-situ-Hybridisierungs-Methode für HER2. |
+| [ VS Senologie ISH-Methode  ](ValueSet-vs-senologie-ish-methode.md) | In-situ-Hybridisierungs-Methode für HER2. FISH/CISH/SISH als SNOMED-CT kodiert; DISH ohne SNOMED-Konzept als lokaler Code. |
 | [ VS Senologie Ja/Nein  ](ValueSet-vs-senologie-ja-nein.md) | Generisches Ja/Nein als SNOMED-Codes (Hormonersatztherapie, andere Boolean-Fragen). |
 | [ VS Senologie Komplikations-Zeitpunkt  ](ValueSet-vs-senologie-komplikation-zeitpunkt.md) | Phase der OP-Komplikation (intraoperativ / postoperativ direkt / stationaerer Aufenthalt). |
-| [ VS Senologie Kontrazeption Status  ](ValueSet-vs-senologie-kontrazeption-status.md) | Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell). |
+| [ VS Senologie Kontrazeption Status  ](ValueSet-vs-senologie-kontrazeption-status.md) | Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell). |
 | [ VS Senologie Kontrolltermin-Art  ](ValueSet-vs-senologie-kontrolltermin-art.md) | Art einer Verlaufs-/Nachsorge-Kontrolle. |
 | [ VS Senologie L-Kategorie (Lymphangiosis)  ](ValueSet-vs-senologie-l-kategorie.md) | L-Kategorie (Lymphangiosis carcinomatosa) nach UICC TNM (L0/L1/LX). |
 | [ VS Senologie LK-Status (Bildgebung)  ](ValueSet-vs-senologie-lk-status-bildgebung.md) | Axillärer Lymphknoten-Status: unauffällig/unklar/suspekt/kein LK abgebildet. |
@@ -202,7 +202,7 @@ These define sets of codes used by systems conforming to this implementation gui
 | [ VS Senologie Präparat-Art  ](ValueSet-vs-senologie-praeparat-art.md) | Material-Art für Patho-Specimen (Stanze/Vakuum/Punch/Resektat/Zytologie/FNA). Treibt den oBDS-Diagnosesicherungs-Code. |
 | [ VS Senologie Ptosis-Grad (Regnault)  ](ValueSet-vs-senologie-ptosis-grad.md) | Ptosis-Grad nach Regnault (0/I/II/III) für die Inspektion. |
 | [ VS Senologie Quadrant Mamma  ](ValueSet-vs-senologie-quadrant-mamma.md) | Quadranten-Lokalisation der Brust (oben-aussen/innen, unten-aussen/innen, Mamille, Zentral). |
-| [ VS Senologie R-Status (Resektionsstatus)  ](ValueSet-vs-senologie-r-status.md) | Resektionsstatus R0/R1/R2/RX als SNOMED-Codes. |
+| [ VS Senologie R-Status (Resektionsstatus)  ](ValueSet-vs-senologie-r-status.md) | Resektionsstatus R0/R1/R2/RX nach UICC, kodiert mit SNOMED CT (SCT#135252x00x). |
 | [ VS Senologie RECIST-Response  ](ValueSet-vs-senologie-recist-response.md) | Reine Response-Assessment-Werte (SD/PR/CR/PD/Mixed) für die Verlaufs-Dokumentation, ohne Erst-Diagnose-Stati. |
 | [ VS Senologie Raucherstatus  ](ValueSet-vs-senologie-raucherstatus.md) | Tobacco smoking status (LOINC LA codes für Antworten zur Frage 72166-2). |
 | [ VS Senologie Risikoklasse  ](ValueSet-vs-senologie-risikoklasse.md) | Risikokategorien für Genexpressionstests (low, intermediate, high) |

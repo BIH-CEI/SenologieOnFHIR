@@ -7912,7 +7912,7 @@
         "reference" : "ValueSet/vs-senologie-ish-methode"
       },
       "name" : "VS Senologie ISH-Methode",
-      "description" : "In-situ-Hybridisierungs-Methode für HER2.",
+      "description" : "In-situ-Hybridisierungs-Methode für HER2. FISH/CISH/SISH als SNOMED-CT kodiert; DISH ohne SNOMED-Konzept als lokaler Code.",
       "exampleBoolean" : false
     },
     {
@@ -7960,7 +7960,7 @@
         "reference" : "ValueSet/vs-senologie-kontrazeption-status"
       },
       "name" : "VS Senologie Kontrazeption Status",
-      "description" : "Nutzungs-Status hormoneller Kontrazeption (nie / frueher / aktuell).",
+      "description" : "Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell).",
       "exampleBoolean" : false
     },
     {
@@ -8216,7 +8216,7 @@
         "reference" : "ValueSet/vs-senologie-r-status"
       },
       "name" : "VS Senologie R-Status (Resektionsstatus)",
-      "description" : "Resektionsstatus R0/R1/R2/RX als SNOMED-Codes.",
+      "description" : "Resektionsstatus R0/R1/R2/RX nach UICC, kodiert mit SNOMED CT (SCT#135252x00x).",
       "exampleBoolean" : false
     },
     {

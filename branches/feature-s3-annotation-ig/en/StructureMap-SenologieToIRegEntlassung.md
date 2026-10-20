@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToIRegEntlassung | *Version*:0.10.0 |
-| Draft as of 2026-10-19 | *Computable Name*:SenologieToIRegEntlassung |
+| Draft as of 2026-10-20 | *Computable Name*:SenologieToIRegEntlassung |
 
  
 title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplantat status: draft 
@@ -26,7 +26,7 @@ title: Senologie Encounter + Condition to IRegG Entlassung + DiagnoseBrustimplan
   "version" : "0.10.0",
   "name" : "SenologieToIRegEntlassung",
   "status" : "draft",
-  "date" : "2026-10-19T00:09:05+00:00",
+  "date" : "2026-10-20T05:01:53+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

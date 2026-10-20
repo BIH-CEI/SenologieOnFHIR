@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsModulMamma | *Version*:0.10.0 |
-| Draft as of 2026-10-19 | *Computable Name*:SenologieToObdsModulMamma |
+| Draft as of 2026-10-20 | *Computable Name*:SenologieToObdsModulMamma |
 
  
 title: Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement status: draft 
@@ -26,7 +26,7 @@ title: Senologie Mamma-Observations to oBDS Modul_Mamma BackboneElement status: 
   "version" : "0.10.0",
   "name" : "SenologieToObdsModulMamma",
   "status" : "draft",
-  "date" : "2026-10-19T00:09:05+00:00",
+  "date" : "2026-10-20T05:01:53+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

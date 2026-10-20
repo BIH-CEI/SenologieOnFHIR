@@ -21,7 +21,6 @@ Lokale Codes für Form-Antworten ohne eindeutige SCT-Entsprechung (Kontrazeption
 * [VS Senologie Lymphoedem Grad](ValueSet-vs-senologie-lymphoedem-grad.md)
 * [VS Senologie Nachsorge-Modus](ValueSet-vs-senologie-nachsorge-modus.md)
 * [VS Senologie Pre-OP-Markierung](ValueSet-vs-senologie-preop-markierung.md)
-* [VS Senologie R-Status (Resektionsstatus)](ValueSet-vs-senologie-r-status.md)
 * [VS Senologie Therapie-Intention](ValueSet-vs-senologie-therapie-intention.md)
 * [VS Senologie Therapie-Status](ValueSet-vs-senologie-therapie-status.md)
 * [VS Senologie Vorstellungsgrund](ValueSet-vs-senologie-vorstellungsgrund.md)
