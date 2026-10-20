@@ -26,7 +26,7 @@ title: Senologie Histologie Observations to oBDS Histologie BackboneElement stat
   "version" : "0.10.0",
   "name" : "SenologieToObdsHistologie",
   "status" : "draft",
-  "date" : "2026-10-20T05:01:53+00:00",
+  "date" : "2026-10-20T05:19:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

@@ -26,7 +26,7 @@ title: Senologie Procedure + Specimen to IQTIG 18.1 Teildatensatz Operation stat
   "version" : "0.10.0",
   "name" : "SenologieToIqtigOperation",
   "status" : "draft",
-  "date" : "2026-10-20T05:01:53+00:00",
+  "date" : "2026-10-20T05:19:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

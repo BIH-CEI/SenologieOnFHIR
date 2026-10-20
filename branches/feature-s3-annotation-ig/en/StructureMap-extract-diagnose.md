@@ -24,7 +24,7 @@
   "name" : "ExtractSenologieDiagnose",
   "title" : "Extract Senologie Diagnose from QuestionnaireResponse",
   "status" : "draft",
-  "date" : "2026-10-20T05:01:53+00:00",
+  "date" : "2026-10-20T05:19:36+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{
