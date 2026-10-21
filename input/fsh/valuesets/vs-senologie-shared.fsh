@@ -1134,7 +1134,7 @@ Description: "Status einer Therapieeinheit (Strahlen- oder Systemtherapie)."
 * ^status = #draft
 * insert PR_CS_VS_Version
 * https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-laufend "Laufend"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-abgeschlossen "Abgeschlossen"
+* $SCT#182992009 "Abgeschlossen (Treatment completed)"
 * https://www.senologie.org/fhir/CodeSystem/form-helper#therapie-abgebrochen "Abgebrochen"
 
 // ============================================================
@@ -1148,9 +1148,9 @@ Description: "Status einer Therapieeinheit (Strahlen- oder Systemtherapie)."
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #therapie-laufend
 * ^expansion.contains[=].display = "Laufend"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #therapie-abgeschlossen
-* ^expansion.contains[=].display = "Abgeschlossen"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #182992009
+* ^expansion.contains[=].display = "Abgeschlossen (Treatment completed)"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #therapie-abgebrochen
 * ^expansion.contains[=].display = "Abgebrochen"
@@ -1240,7 +1240,7 @@ Description: "FISH-Ergebnis bei HER2-Amplifikationstestung."
 * insert PR_CS_VS_Version
 * $SCT#10828004 "positiv"
 * $SCT#260385009 "negativ"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#her2-fish-nicht-durchgefuehrt "nicht durchgefuehrt"
+* $SCT#416237000 "Nicht durchgeführt (Procedure not done)"
 
 // ============================================================
 // ISH-Methode (FISH/CISH/DISH/SISH)
@@ -1256,9 +1256,9 @@ Description: "FISH-Ergebnis bei HER2-Amplifikationstestung."
 * ^expansion.contains[+].system = "http://snomed.info/sct"
 * ^expansion.contains[=].code = #260385009
 * ^expansion.contains[=].display = "negativ"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #her2-fish-nicht-durchgefuehrt
-* ^expansion.contains[=].display = "nicht durchgefuehrt"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #416237000
+* ^expansion.contains[=].display = "Nicht durchgeführt (Procedure not done)"
 
 ValueSet: VS_Senologie_ISH_Methode
 Id: vs-senologie-ish-methode
@@ -1623,7 +1623,7 @@ Description: "Methode der präoperativen Markierung der Mamma-Läsion."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-preop-markierung"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* https://www.senologie.org/fhir/CodeSystem/form-helper#markierung-draht "Drahtmarkierung (Wire guided)"
+* $SCT#712639003 "Drahtmarkierung (Hook wire localisation)"
 * https://www.senologie.org/fhir/CodeSystem/form-helper#markierung-clip "Clip-Markierung"
 * $SCT#77343006 "Angiographische Markierung"
 
@@ -1635,9 +1635,9 @@ Description: "Methode der präoperativen Markierung der Mamma-Läsion."
 * ^expansion.identifier = "urn:uuid:45087b90-9628-501e-9287-fd866381523d"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 3
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #markierung-draht
-* ^expansion.contains[=].display = "Drahtmarkierung (Wire guided)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #712639003
+* ^expansion.contains[=].display = "Drahtmarkierung (Hook wire localisation)"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #markierung-clip
 * ^expansion.contains[=].display = "Clip-Markierung"
@@ -1724,9 +1724,9 @@ Description: "Grund der Erst- oder Folge-Vorstellung in der Senologie."
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-vorstellungsgrund"
 * ^status = #draft
 * insert PR_CS_VS_Version
-* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-erstvorstellung "Erstvorstellung"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-zweitmeinung "Zweitmeinung"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-nachsorge "Nachsorge"
+* $SCT#185387006 "Erstvorstellung (New patient consultation)"
+* $SCT#77406008 "Zweitmeinung (Confirmatory medical consultation)"
+* $SCT#185389009 "Nachsorge (Follow-up visit)"
 * https://www.senologie.org/fhir/CodeSystem/form-helper#vorstellung-wiedervorstellung "Wiedervorstellung"
 
 // ============================================================
@@ -1737,15 +1737,15 @@ Description: "Grund der Erst- oder Folge-Vorstellung in der Senologie."
 * ^expansion.identifier = "urn:uuid:e4788881-8b16-5faf-b592-212948fb2b58"
 * ^expansion.timestamp = "2026-10-06T00:00:00Z"
 * ^expansion.total = 4
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #vorstellung-erstvorstellung
-* ^expansion.contains[=].display = "Erstvorstellung"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #vorstellung-zweitmeinung
-* ^expansion.contains[=].display = "Zweitmeinung"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #vorstellung-nachsorge
-* ^expansion.contains[=].display = "Nachsorge"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #185387006
+* ^expansion.contains[=].display = "Erstvorstellung (New patient consultation)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #77406008
+* ^expansion.contains[=].display = "Zweitmeinung (Confirmatory medical consultation)"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #185389009
+* ^expansion.contains[=].display = "Nachsorge (Follow-up visit)"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #vorstellung-wiedervorstellung
 * ^expansion.contains[=].display = "Wiedervorstellung"
@@ -2000,12 +2000,11 @@ Description: "Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell
 * ^url = "https://www.senologie.org/fhir/ValueSet/vs-senologie-kontrazeption-status"
 * ^status = #draft
 * insert PR_CS_VS_Version
-// Lokale Codes — SCT hat kein passendes Tripel (473387004 'Never used
-// contraception' deckt nur "nie" ab; 161772002/5935008 sind oral-spezifisch
-// und passen semantisch nicht für "hormonelle Kontrazeption allgemein".)
-* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-nie "Nie"
+// kontrazeption-frueher bleibt custom — kein pre-koordiniertes SCT-Konzept für
+// "ehemalige Nutzerin hormoneller Kontrazeption" (SCT#392521001 nur post-koordinierbar).
+* $SCT#473387004 "Nie (Never used contraception)"
 * https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-frueher "Früher"
-* https://www.senologie.org/fhir/CodeSystem/form-helper#kontrazeption-aktuell "Aktuell"
+* $SCT#1237404009 "Aktuell (Uses hormonal contraception)"
 
 // ============================================================
 // Komplikations-Zeitpunkt (Intraoperativ / Postoperativ / Stationaer)
@@ -2015,15 +2014,15 @@ Description: "Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell
 * ^expansion.identifier = "urn:uuid:5e19e10c-a250-54e4-b0c9-42c3d2bddf59"
 * ^expansion.timestamp = "2026-10-20T00:00:00Z"
 * ^expansion.total = 3
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #kontrazeption-nie
-* ^expansion.contains[=].display = "Nie"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #473387004
+* ^expansion.contains[=].display = "Nie (Never used contraception)"
 * ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
 * ^expansion.contains[=].code = #kontrazeption-frueher
 * ^expansion.contains[=].display = "Früher"
-* ^expansion.contains[+].system = "https://www.senologie.org/fhir/CodeSystem/form-helper"
-* ^expansion.contains[=].code = #kontrazeption-aktuell
-* ^expansion.contains[=].display = "Aktuell"
+* ^expansion.contains[+].system = "http://snomed.info/sct"
+* ^expansion.contains[=].code = #1237404009
+* ^expansion.contains[=].display = "Aktuell (Uses hormonal contraception)"
 
 ValueSet: VS_Senologie_Komplikation_Zeitpunkt
 Id: vs-senologie-komplikation-zeitpunkt

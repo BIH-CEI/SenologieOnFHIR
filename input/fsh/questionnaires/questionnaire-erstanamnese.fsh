@@ -222,6 +222,7 @@ Usage: #definition
 * item[=].item[=].text = "Hormonelle Verhütung"
 * insert Translation(item[=].item[=].text, en, [[Hormonal Contraception]])
 * item[=].item[=].type = #choice
+* item[=].item[=].code[+] = $SCT#161771009 "Contraceptive history"
 * item[=].item[=].extension[+].url = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerConstraint"
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
