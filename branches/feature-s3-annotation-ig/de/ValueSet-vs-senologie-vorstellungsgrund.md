@@ -172,20 +172,23 @@ Grund der Erst- oder Folge-Vorstellung in der Senologie.
   "description" : "Grund der Erst- oder Folge-Vorstellung in der Senologie.",
   "compose" : {
     "include" : [{
+      "system" : "http://snomed.info/sct",
+      "concept" : [{
+        "code" : "185387006",
+        "display" : "Erstvorstellung (New patient consultation)"
+      },
+      {
+        "code" : "77406008",
+        "display" : "Zweitmeinung (Confirmatory medical consultation)"
+      },
+      {
+        "code" : "185389009",
+        "display" : "Nachsorge (Follow-up visit)"
+      }]
+    },
+    {
       "system" : "https://www.senologie.org/fhir/CodeSystem/form-helper",
       "concept" : [{
-        "code" : "vorstellung-erstvorstellung",
-        "display" : "Erstvorstellung"
-      },
-      {
-        "code" : "vorstellung-zweitmeinung",
-        "display" : "Zweitmeinung"
-      },
-      {
-        "code" : "vorstellung-nachsorge",
-        "display" : "Nachsorge"
-      },
-      {
         "code" : "vorstellung-wiedervorstellung",
         "display" : "Wiedervorstellung"
       }]

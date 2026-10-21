@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsFernmetastasen | *Version*:0.10.0 |
-| Draft as of 2026-10-20 | *Computable Name*:SenologieToObdsFernmetastasen |
+| Draft as of 2026-10-21 | *Computable Name*:SenologieToObdsFernmetastasen |
 
  
 title: Senologie Fernmetastasen Observations to oBDS Fernmetastasen BackboneElement status: draft 
@@ -26,7 +26,7 @@ title: Senologie Fernmetastasen Observations to oBDS Fernmetastasen BackboneElem
   "version" : "0.10.0",
   "name" : "SenologieToObdsFernmetastasen",
   "status" : "draft",
-  "date" : "2026-10-20T05:42:12+00:00",
+  "date" : "2026-10-21T03:03:58+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

@@ -26,7 +26,7 @@ title: Senologie Bundle to OncoBox Brust Verlauf (inkl. OncoBox 2.0 FM-Felder J0
   "version" : "0.10.0",
   "name" : "SenologieToOncoBoxBrustVerlauf",
   "status" : "draft",
-  "date" : "2026-10-20T05:42:12+00:00",
+  "date" : "2026-10-21T03:03:58+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

@@ -20,7 +20,7 @@ OncoBox Brust 2.0 Kennzahlen (KB-1 bis KB-20, DKG-Zertifizierung)
 
 -------
 
-**Exception parsing generated Narrative (see /tmp/liquid-746df380-faba-4160-993a-38fd77620a02.html): Malformed XHTML: Found "</code>" expecting "</Kennzahlen>" at line 362 column 8**
+**Exception parsing generated Narrative (see /tmp/liquid-c7d59d75-5b4f-4e4a-9052-192ca1543b2a.html): Malformed XHTML: Found "</code>" expecting "</Kennzahlen>" at line 362 column 8**
 
 
 

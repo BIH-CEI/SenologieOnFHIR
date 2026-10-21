@@ -9,7 +9,7 @@
 | | |
 | :--- | :--- |
 | *Official URL*:https://www.senologie.org/fhir/StructureMap/SenologieToObdsNebenwirkung | *Version*:0.10.0 |
-| Draft as of 2026-10-20 | *Computable Name*:SenologieToObdsNebenwirkung |
+| Draft as of 2026-10-21 | *Computable Name*:SenologieToObdsNebenwirkung |
 
  
 title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElement status: draft 
@@ -26,7 +26,7 @@ title: Senologie Nebenwirkung Observations to oBDS Nebenwirkungen BackboneElemen
   "version" : "0.10.0",
   "name" : "SenologieToObdsNebenwirkung",
   "status" : "draft",
-  "date" : "2026-10-20T05:42:12+00:00",
+  "date" : "2026-10-21T03:03:58+00:00",
   "publisher" : "Berlin Institute of Health at Charité (BIH)",
   "_publisher" : {
     "extension" : [{

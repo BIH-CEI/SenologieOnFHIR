@@ -675,6 +675,11 @@ Fragebogen zur Erstanamnese mit Allgemeiner Anamnese, Gynäkologischer Anamnese,
         "valueCode" : "optionsOnly"
       }],
       "linkId" : "orale-kontrazeption",
+      "code" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "161771009",
+        "display" : "Contraceptive history"
+      }],
       "text" : "Hormonelle Verhütung",
       "_text" : {
         "extension" : [{

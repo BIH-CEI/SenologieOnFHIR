@@ -179,12 +179,15 @@ Status einer Therapieeinheit (Strahlen- oder Systemtherapie).
         "display" : "Laufend"
       },
       {
-        "code" : "therapie-abgeschlossen",
-        "display" : "Abgeschlossen"
-      },
-      {
         "code" : "therapie-abgebrochen",
         "display" : "Abgebrochen"
+      }]
+    },
+    {
+      "system" : "http://snomed.info/sct",
+      "concept" : [{
+        "code" : "182992009",
+        "display" : "Abgeschlossen (Treatment completed)"
       }]
     }]
   }

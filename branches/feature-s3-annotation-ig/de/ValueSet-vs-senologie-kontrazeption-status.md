@@ -172,18 +172,21 @@ Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell).
   "description" : "Nutzungs-Status hormoneller Kontrazeption (nie / früher / aktuell).",
   "compose" : {
     "include" : [{
+      "system" : "http://snomed.info/sct",
+      "concept" : [{
+        "code" : "473387004",
+        "display" : "Nie (Never used contraception)"
+      },
+      {
+        "code" : "1237404009",
+        "display" : "Aktuell (Uses hormonal contraception)"
+      }]
+    },
+    {
       "system" : "https://www.senologie.org/fhir/CodeSystem/form-helper",
       "concept" : [{
-        "code" : "kontrazeption-nie",
-        "display" : "Nie"
-      },
-      {
         "code" : "kontrazeption-frueher",
         "display" : "Früher"
-      },
-      {
-        "code" : "kontrazeption-aktuell",
-        "display" : "Aktuell"
       }]
     }]
   }

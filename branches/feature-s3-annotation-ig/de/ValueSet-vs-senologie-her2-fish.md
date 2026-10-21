@@ -180,13 +180,10 @@ FISH-Ergebnis bei HER2-Amplifikationstestung.
       {
         "code" : "260385009",
         "display" : "negativ"
-      }]
-    },
-    {
-      "system" : "https://www.senologie.org/fhir/CodeSystem/form-helper",
-      "concept" : [{
-        "code" : "her2-fish-nicht-durchgefuehrt",
-        "display" : "nicht durchgefuehrt"
+      },
+      {
+        "code" : "416237000",
+        "display" : "Nicht durchgeführt (Procedure not done)"
       }]
     }]
   }

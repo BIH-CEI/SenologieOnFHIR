@@ -17,7 +17,6 @@ Lokale Codes für Form-Antworten ohne eindeutige SCT-Entsprechung (Kontrazeption
 This Code system is referenced in the definition of the following value sets:
 
 * [VS Senologie B-Klassifikation (NHSBSP)](ValueSet-vs-senologie-b-klassifikation.md)
-* [VS Senologie HER2 FISH-Ergebnis](ValueSet-vs-senologie-her2-fish.md)
 * [VS Senologie Kontrazeption Status](ValueSet-vs-senologie-kontrazeption-status.md)
 * [VS Senologie Lymphoedem Grad](ValueSet-vs-senologie-lymphoedem-grad.md)
 * [VS Senologie Nachsorge-Modus](ValueSet-vs-senologie-nachsorge-modus.md)
