@@ -1,17 +1,17 @@
-# S3-Leitlinie v5.0 - Kapitel 4.2: DCIS & Kapitel 4.3: Risikolaesionen
+### S3-Leitlinie v5.0 - Kapitel 4.2: DCIS & Kapitel 4.3: Risikolaesionen
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 96-110
 > Kapitelstruktur: 4.2.1 Klinische Praesentation, Risiko und Verlauf | 4.2.2 Operative Therapie | 4.2.3 Radiotherapie | 4.2.4 Antihormonelle Therapie | 4.2.5 Active Surveillance | 4.2.6 Nachsorge beim DCIS | 4.3.1 ADH in Stanz-/Vakuumbiopsie | 4.3.2 LN in Stanz-/Vakuumbiopsie | 4.3.3 FEA in Stanz-/Vakuumbiopsie | 4.3.4 ADH, LN, FEA in offener Biopsie | 4.3.5 Papillom in Stanz-/Vakuumbiopsie | 4.3.6 Papillom in offener Biopsie
 
 ---
 
-## 4.2 Duktales Carcinoma in situ (DCIS)
+#### 4.2 Duktales Carcinoma in situ (DCIS)
 
 > ICD-10-GM-2025: D05.- Carcinoma in situ der Brustdruese
 
-## 4.2.1 Klinische Praesentation, Risiko und Verlauf beim DCIS
+#### 4.2.1 Klinische Praesentation, Risiko und Verlauf beim DCIS
 
-### Empfehlung 4.29
+##### Empfehlung 4.29
 
 ```yaml
 id: S3-5.0-4.29
@@ -67,9 +67,9 @@ referenzen:
 
 ---
 
-## 4.2.2 Operative Therapie des DCIS
+#### 4.2.2 Operative Therapie des DCIS
 
-### Empfehlung 4.30
+##### Empfehlung 4.30
 
 ```yaml
 id: S3-5.0-4.30
@@ -171,7 +171,7 @@ referenzen:
   verwandte_empfehlungen: ["4.29", "4.31", "4.32"]
 ```
 
-### Empfehlung 4.31
+##### Empfehlung 4.31
 
 ```yaml
 id: S3-5.0-4.31
@@ -238,9 +238,9 @@ referenzen:
 
 ---
 
-## 4.2.3 Radiotherapie des DCIS
+#### 4.2.3 Radiotherapie des DCIS
 
-### Empfehlung 4.32
+##### Empfehlung 4.32
 
 ```yaml
 id: S3-5.0-4.32
@@ -297,7 +297,7 @@ referenzen:
   verwandte_empfehlungen: ["4.30", "4.33", "4.34", "4.35"]
 ```
 
-### Empfehlung 4.33
+##### Empfehlung 4.33
 
 ```yaml
 id: S3-5.0-4.33
@@ -366,7 +366,7 @@ referenzen:
   verwandte_empfehlungen: ["4.32", "4.34", "4.35"]
 ```
 
-### Empfehlung 4.34
+##### Empfehlung 4.34
 
 ```yaml
 id: S3-5.0-4.34
@@ -411,7 +411,7 @@ referenzen:
   verwandte_empfehlungen: ["4.32", "4.33"]
 ```
 
-### Empfehlung 4.35
+##### Empfehlung 4.35
 
 ```yaml
 id: S3-5.0-4.35
@@ -494,9 +494,9 @@ referenzen:
 
 ---
 
-## 4.2.4 Antihormonelle Therapie beim DCIS
+#### 4.2.4 Antihormonelle Therapie beim DCIS
 
-### Empfehlung 4.36
+##### Empfehlung 4.36
 
 ```yaml
 id: S3-5.0-4.36
@@ -568,7 +568,7 @@ referenzen:
 
 ---
 
-## 4.2.5 Active Surveillance (Verzicht auf Behandlung)
+#### 4.2.5 Active Surveillance (Verzicht auf Behandlung)
 
 > Hinweis: Kein eigener Empfehlungskasten in v5.0. Die Leitlinie stellt fest, dass mehrere
 > Studien (LORIS/UK, LORD/Europa, COMET/USA, LORETTA/Japan) untersuchen, ob eine
@@ -607,7 +607,7 @@ referenzen:
 
 ---
 
-## 4.2.6 Nachsorge beim DCIS
+#### 4.2.6 Nachsorge beim DCIS
 
 > Hinweis: Kein eigener Empfehlungskasten, sondern Hintergrundtext in der Leitlinie.
 
@@ -678,7 +678,7 @@ referenzen:
 
 ---
 
-## 4.3 Risikolaesionen
+#### 4.3 Risikolaesionen
 
 > Vorbemerkung: Risikolaesionen sind benigne Veraenderungen mit unsicherem malignem Potential
 > (B3-Laesionen). Sie sind meist klinisch unauffaellig und werden im Screening detektiert.
@@ -686,7 +686,7 @@ referenzen:
 > das lobulaere Carcinoma in situ (LCIS) mit einem residuellen Lebenszeitrisiko >= 20%.
 > Zur Dokumentation hat das ICCR-Konsortium einen einheitlichen Datensatz entwickelt.
 
-### Empfehlung 4.37
+##### Empfehlung 4.37
 
 ```yaml
 id: S3-5.0-4.37
@@ -761,9 +761,9 @@ referenzen:
 
 ---
 
-## 4.3.1 Atypische duktale Hyperplasie (ADH) in der Stanz- oder Vakuumbiopsie
+#### 4.3.1 Atypische duktale Hyperplasie (ADH) in der Stanz- oder Vakuumbiopsie
 
-### Empfehlung 4.38
+##### Empfehlung 4.38
 
 ```yaml
 id: S3-5.0-4.38
@@ -833,9 +833,9 @@ referenzen:
 
 ---
 
-## 4.3.2 Lobulaere Neoplasie (LN) in der Stanz- oder Vakuumbiopsie
+#### 4.3.2 Lobulaere Neoplasie (LN) in der Stanz- oder Vakuumbiopsie
 
-### Empfehlung 4.39
+##### Empfehlung 4.39
 
 ```yaml
 id: S3-5.0-4.39
@@ -914,9 +914,9 @@ referenzen:
 
 ---
 
-## 4.3.3 Flache Epithelatypie (FEA) in der Stanz- oder Vakuumbiopsie
+#### 4.3.3 Flache Epithelatypie (FEA) in der Stanz- oder Vakuumbiopsie
 
-### Empfehlung 4.40
+##### Empfehlung 4.40
 
 ```yaml
 id: S3-5.0-4.40
@@ -989,9 +989,9 @@ referenzen:
 
 ---
 
-## 4.3.4 ADH, LN, FEA in der offenen Biopsie
+#### 4.3.4 ADH, LN, FEA in der offenen Biopsie
 
-### Empfehlung 4.41
+##### Empfehlung 4.41
 
 ```yaml
 id: S3-5.0-4.41
@@ -1055,9 +1055,9 @@ referenzen:
 
 ---
 
-## 4.3.5 Papillom in der Stanz- oder Vakuumbiopsie
+#### 4.3.5 Papillom in der Stanz- oder Vakuumbiopsie
 
-### Empfehlung 4.42
+##### Empfehlung 4.42
 
 ```yaml
 id: S3-5.0-4.42
@@ -1143,9 +1143,9 @@ referenzen:
 
 ---
 
-## 4.3.6 Papillom in der offenen Biopsie
+#### 4.3.6 Papillom in der offenen Biopsie
 
-### Empfehlung 4.43
+##### Empfehlung 4.43
 
 ```yaml
 id: S3-5.0-4.43
@@ -1198,9 +1198,9 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 4.2 und 4.3
+#### Zusammenfassung: Gap-Analyse Kapitel 4.2 und 4.3
 
-### DCIS (Kapitel 4.2)
+##### DCIS (Kapitel 4.2)
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -1215,7 +1215,7 @@ referenzen:
 | 4.2.5 | Active Surveillance | **gap** | ResearchStudy/ResearchSubject fuer DCIS-Studien nicht modelliert |
 | 4.2.6 | Nachsorge DCIS | **gap** | Nachsorge-CarePlan fehlt |
 
-### Risikolaesionen (Kapitel 4.3)
+##### Risikolaesionen (Kapitel 4.3)
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -1227,7 +1227,7 @@ referenzen:
 | 4.42 | Papillom in Stanzbiopsie | partial | Papillom im VS; Groesse/Atypie-Differenzierung fehlt als Datenobjekt |
 | 4.43 | Papillom in offener Biopsie | partial | Atypien am Resektionsrand nicht als eigenes Element |
 
-### Uebergreifende Gaps
+##### Uebergreifende Gaps
 
 | Gap-Kategorie | Beschreibung | Betroffene Empfehlungen | Prioritaet |
 |--------------|-------------|------------------------|-----------|

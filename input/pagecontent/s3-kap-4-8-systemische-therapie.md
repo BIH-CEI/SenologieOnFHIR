@@ -1,13 +1,13 @@
-# S3-Leitlinie v5.0 - Kapitel 4.8: Systemische Therapie fruhes Mammakarzinom
+### S3-Leitlinie v5.0 - Kapitel 4.8: Systemische Therapie fruhes Mammakarzinom
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 179-206
 > Kapitelstruktur: 4.8.1 Allgemeine Empfehlungen und Therapieentscheidungen | 4.8.2 Hormonrezeptor-positives Mammakarzinom (HR+) | 4.8.3 Chemotherapie Triple-negatives Mammakarzinom (TNBC) | 4.8.4 HER2-positives Mammakarzinom (HER2+) | 4.8.5 Knochengerichtete Therapie
 
 ---
 
-## 4.8.1 Allgemeine Empfehlungen und Therapieentscheidungen
+#### 4.8.1 Allgemeine Empfehlungen und Therapieentscheidungen
 
-### Empfehlung 4.137
+##### Empfehlung 4.137
 
 ```yaml
 id: S3-5.0-4.137
@@ -54,7 +54,7 @@ referenzen:
   verwandte_empfehlungen: ["4.138", "4.139"]
 ```
 
-### Empfehlung 4.138
+##### Empfehlung 4.138
 
 ```yaml
 id: S3-5.0-4.138
@@ -107,7 +107,7 @@ referenzen:
   verwandte_empfehlungen: ["4.137", "4.139"]
 ```
 
-### Empfehlung 4.139
+##### Empfehlung 4.139
 
 ```yaml
 id: S3-5.0-4.139
@@ -170,9 +170,9 @@ referenzen:
 
 ---
 
-## 4.8.2 Hormonrezeptor-positives Mammakarzinom (HR+)
+#### 4.8.2 Hormonrezeptor-positives Mammakarzinom (HR+)
 
-### Empfehlung 4.140
+##### Empfehlung 4.140
 
 ```yaml
 id: S3-5.0-4.140
@@ -234,7 +234,7 @@ referenzen:
   verwandte_empfehlungen: ["4.141", "4.142", "4.143"]
 ```
 
-### Empfehlung 4.141
+##### Empfehlung 4.141
 
 ```yaml
 id: S3-5.0-4.141
@@ -268,7 +268,7 @@ referenzen:
   verwandte_empfehlungen: ["4.140"]
 ```
 
-### Empfehlung 4.142
+##### Empfehlung 4.142
 
 ```yaml
 id: S3-5.0-4.142
@@ -322,7 +322,7 @@ referenzen:
   verwandte_empfehlungen: ["4.140", "4.146"]
 ```
 
-### Empfehlung 4.143
+##### Empfehlung 4.143
 
 ```yaml
 id: S3-5.0-4.143
@@ -371,7 +371,7 @@ referenzen:
   verwandte_empfehlungen: ["4.140", "4.148"]
 ```
 
-### Empfehlung 4.144
+##### Empfehlung 4.144
 
 ```yaml
 id: S3-5.0-4.144
@@ -407,7 +407,7 @@ referenzen:
   verwandte_empfehlungen: ["4.140", "4.145"]
 ```
 
-### Empfehlung 4.145
+##### Empfehlung 4.145
 
 ```yaml
 id: S3-5.0-4.145
@@ -457,7 +457,7 @@ referenzen:
   verwandte_empfehlungen: ["4.144"]
 ```
 
-### Empfehlung 4.146
+##### Empfehlung 4.146
 
 ```yaml
 id: S3-5.0-4.146
@@ -514,7 +514,7 @@ referenzen:
   verwandte_empfehlungen: ["4.140", "4.142", "4.147"]
 ```
 
-### Empfehlung 4.147
+##### Empfehlung 4.147
 
 ```yaml
 id: S3-5.0-4.147
@@ -554,7 +554,7 @@ referenzen:
   verwandte_empfehlungen: ["4.146"]
 ```
 
-### Empfehlung 4.148
+##### Empfehlung 4.148
 
 ```yaml
 id: S3-5.0-4.148
@@ -597,7 +597,7 @@ referenzen:
   verwandte_empfehlungen: ["4.143"]
 ```
 
-### Empfehlung 4.149 (CDK4/6-Inhibitoren)
+##### Empfehlung 4.149 (CDK4/6-Inhibitoren)
 
 ```yaml
 id: S3-5.0-4.149
@@ -670,7 +670,7 @@ referenzen:
   verwandte_empfehlungen: ["4.140", "4.146", "4.150"]
 ```
 
-### Empfehlung 4.150 (Olaparib bei HR+/HER2-)
+##### Empfehlung 4.150 (Olaparib bei HR+/HER2-)
 
 ```yaml
 id: S3-5.0-4.150
@@ -734,9 +734,9 @@ referenzen:
 
 ---
 
-## 4.8.3 Chemotherapie Triple-negatives Mammakarzinom (TNBC)
+#### 4.8.3 Chemotherapie Triple-negatives Mammakarzinom (TNBC)
 
-### Empfehlung 4.151
+##### Empfehlung 4.151
 
 ```yaml
 id: S3-5.0-4.151
@@ -800,7 +800,7 @@ referenzen:
   verwandte_empfehlungen: ["4.152", "4.153", "4.154"]
 ```
 
-### Empfehlung 4.152
+##### Empfehlung 4.152
 
 ```yaml
 id: S3-5.0-4.152
@@ -851,7 +851,7 @@ referenzen:
   verwandte_empfehlungen: ["4.151"]
 ```
 
-### Empfehlung 4.153 (Dosisdichte Chemotherapie)
+##### Empfehlung 4.153 (Dosisdichte Chemotherapie)
 
 ```yaml
 id: S3-5.0-4.153
@@ -906,7 +906,7 @@ referenzen:
   verwandte_empfehlungen: ["4.137", "4.151"]
 ```
 
-### Empfehlung 4.154 (Immuncheckpoint-Inhibitoren)
+##### Empfehlung 4.154 (Immuncheckpoint-Inhibitoren)
 
 ```yaml
 id: S3-5.0-4.154
@@ -970,7 +970,7 @@ referenzen:
   verwandte_empfehlungen: ["4.151", "4.155", "4.156"]
 ```
 
-### Empfehlung 4.155 (Capecitabin-Erhaltung)
+##### Empfehlung 4.155 (Capecitabin-Erhaltung)
 
 ```yaml
 id: S3-5.0-4.155
@@ -1024,7 +1024,7 @@ referenzen:
   verwandte_empfehlungen: ["4.154", "4.156"]
 ```
 
-### Empfehlung 4.156 (Olaparib bei TNBC)
+##### Empfehlung 4.156 (Olaparib bei TNBC)
 
 ```yaml
 id: S3-5.0-4.156
@@ -1087,9 +1087,9 @@ referenzen:
 
 ---
 
-## 4.8.4 HER2-positives Mammakarzinom (HER2+)
+#### 4.8.4 HER2-positives Mammakarzinom (HER2+)
 
-### Empfehlung 4.157
+##### Empfehlung 4.157
 
 ```yaml
 id: S3-5.0-4.157
@@ -1150,7 +1150,7 @@ referenzen:
   verwandte_empfehlungen: ["4.158", "4.159", "4.160", "4.161"]
 ```
 
-### Empfehlung 4.158
+##### Empfehlung 4.158
 
 ```yaml
 id: S3-5.0-4.158
@@ -1184,7 +1184,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.160"]
 ```
 
-### Empfehlung 4.159
+##### Empfehlung 4.159
 
 ```yaml
 id: S3-5.0-4.159
@@ -1231,7 +1231,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.164"]
 ```
 
-### Empfehlung 4.160 (Deeskalation bei kleinen Tumoren)
+##### Empfehlung 4.160 (Deeskalation bei kleinen Tumoren)
 
 ```yaml
 id: S3-5.0-4.160
@@ -1281,7 +1281,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.158", "4.164"]
 ```
 
-### Empfehlung 4.161 (Neoadjuvante Therapie mit Pertuzumab)
+##### Empfehlung 4.161 (Neoadjuvante Therapie mit Pertuzumab)
 
 ```yaml
 id: S3-5.0-4.161
@@ -1350,7 +1350,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.162", "4.163"]
 ```
 
-### Empfehlung 4.162
+##### Empfehlung 4.162
 
 ```yaml
 id: S3-5.0-4.162
@@ -1395,7 +1395,7 @@ referenzen:
   verwandte_empfehlungen: ["4.161", "4.165"]
 ```
 
-### Empfehlung 4.163
+##### Empfehlung 4.163
 
 ```yaml
 id: S3-5.0-4.163
@@ -1439,7 +1439,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.161"]
 ```
 
-### Empfehlung 4.164 (Trastuzumab-Dauer)
+##### Empfehlung 4.164 (Trastuzumab-Dauer)
 
 ```yaml
 id: S3-5.0-4.164
@@ -1493,7 +1493,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.159", "4.160"]
 ```
 
-### Empfehlung 4.165 (T-DM1 bei non-pCR)
+##### Empfehlung 4.165 (T-DM1 bei non-pCR)
 
 ```yaml
 id: S3-5.0-4.165
@@ -1552,7 +1552,7 @@ referenzen:
   verwandte_empfehlungen: ["4.162"]
 ```
 
-### Empfehlung 4.166 (Neratinib)
+##### Empfehlung 4.166 (Neratinib)
 
 ```yaml
 id: S3-5.0-4.166
@@ -1602,7 +1602,7 @@ referenzen:
   verwandte_empfehlungen: ["4.157", "4.165"]
 ```
 
-### Empfehlung 4.167
+##### Empfehlung 4.167
 
 ```yaml
 id: S3-5.0-4.167
@@ -1652,9 +1652,9 @@ referenzen:
 
 ---
 
-## 4.8.5 Knochengerichtete Therapie
+#### 4.8.5 Knochengerichtete Therapie
 
-### Empfehlung 4.168
+##### Empfehlung 4.168
 
 ```yaml
 id: S3-5.0-4.168
@@ -1709,7 +1709,7 @@ referenzen:
   verwandte_empfehlungen: ["4.169", "4.170", "4.171"]
 ```
 
-### Empfehlung 4.169
+##### Empfehlung 4.169
 
 ```yaml
 id: S3-5.0-4.169
@@ -1747,7 +1747,7 @@ referenzen:
   verwandte_empfehlungen: ["4.168", "4.170"]
 ```
 
-### Empfehlung 4.170
+##### Empfehlung 4.170
 
 ```yaml
 id: S3-5.0-4.170
@@ -1796,7 +1796,7 @@ referenzen:
   verwandte_empfehlungen: ["4.168", "4.169", "4.171", "4.175"]
 ```
 
-### Empfehlung 4.171
+##### Empfehlung 4.171
 
 ```yaml
 id: S3-5.0-4.171
@@ -1829,7 +1829,7 @@ referenzen:
   verwandte_empfehlungen: ["4.170"]
 ```
 
-### Empfehlung 4.172
+##### Empfehlung 4.172
 
 ```yaml
 id: S3-5.0-4.172
@@ -1885,7 +1885,7 @@ referenzen:
   verwandte_empfehlungen: ["4.170", "4.173"]
 ```
 
-### Empfehlung 4.173
+##### Empfehlung 4.173
 
 ```yaml
 id: S3-5.0-4.173
@@ -1917,7 +1917,7 @@ referenzen:
   verwandte_empfehlungen: ["4.170", "4.172"]
 ```
 
-### Empfehlung 4.174
+##### Empfehlung 4.174
 
 ```yaml
 id: S3-5.0-4.174
@@ -1961,7 +1961,7 @@ referenzen:
   verwandte_empfehlungen: ["4.168", "4.175"]
 ```
 
-### Empfehlung 4.175 (Adjuvante Bisphosphonat-Therapie)
+##### Empfehlung 4.175 (Adjuvante Bisphosphonat-Therapie)
 
 ```yaml
 id: S3-5.0-4.175
@@ -2014,7 +2014,7 @@ referenzen:
   verwandte_empfehlungen: ["4.170", "4.172"]
 ```
 
-### Empfehlung 4.176
+##### Empfehlung 4.176
 
 ```yaml
 id: S3-5.0-4.176
@@ -2050,9 +2050,9 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 4.8
+#### Zusammenfassung: Gap-Analyse Kapitel 4.8
 
-### Medikamenten-Uebersicht mit ATC-Codes
+##### Medikamenten-Uebersicht mit ATC-Codes
 
 | Substanz | ATC-Code | Substanzklasse | Empfehlungen |
 |----------|----------|----------------|-------------|
@@ -2085,7 +2085,7 @@ referenzen:
 | Ibandronat | M05BA06 | Bisphosphonat | 4.175 |
 | Clodronat | M05BA02 | Bisphosphonat | 4.175 |
 
-### FHIR-Mapping-Status
+##### FHIR-Mapping-Status
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -2130,7 +2130,7 @@ referenzen:
 | 4.175 | Adjuvante Bisphosphonattherapie | **gap** | Off-Label-MedicationRequest |
 | 4.176 | Zahnaerztliche Vorstellung | **gap** | ServiceRequest Zahnarzt-Konsultation |
 
-### Zentrale Gaps und Handlungsempfehlungen
+##### Zentrale Gaps und Handlungsempfehlungen
 
 | Prioritaet | Gap | Betroffene Empfehlungen | Vorgeschlagene Loesung |
 |-----------|-----|------------------------|----------------------|

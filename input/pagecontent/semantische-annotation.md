@@ -2,6 +2,8 @@
 
 Diese Seite listet tabellarisch alle Datenelemente auf, die in den Senologie-Profilen mit semantischen Codes annotiert sind. Die Tabelle ist direkt aus den FSH-Profildefinitionen ableitbar.
 
+Diese Seite geht vom **Profil** aus: welche Elemente der Senologie-Profile sind kodiert? Die Gegenrichtung — welche Begriffe die S3-Leitlinie fordert und wie sie kodiert sind — steht im [Glossar (SNOMED + S3)](glossar-s3-snomed.html), abgeleitet aus der [Leitlinien-Annotation](leitlinien-abdeckung.html). Die beiden Tabellen sind nicht zeilenweise aufeinander abbildbar: hier stehen Slice- und Elementnamen, dort Datenobjekte in klinischer Sprache.
+
 #### Legende
 
 | Spalte | Bedeutung |

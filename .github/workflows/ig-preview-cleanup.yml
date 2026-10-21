@@ -1,0 +1,59 @@
+name: Remove IG Preview of a closed PR
+
+# Gegenstueck zum PR-Preview in ig-publish.yml: entfernt gh-pages/branches/<slug>,
+# damit geschlossene PRs keine veralteten IG-Staende hinterlassen, die im Review
+# als aktuell zitiert werden koennten.
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Preview-Slug unter branches/ (z.B. feature-dotbase-adoption)'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+
+      - name: Remove preview directory
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            SLUG=$(echo "${{ inputs.slug }}" | tr '/' '-' | tr -cd '[:alnum:]._-')
+          else
+            SLUG=$(echo "${{ github.head_ref }}" | tr '/' '-' | tr -cd '[:alnum:]._-')
+          fi
+          if [ -z "$SLUG" ]; then
+            echo "Kein Slug ermittelt — nichts zu tun."
+            exit 0
+          fi
+          if [ ! -d "branches/$SLUG" ]; then
+            echo "branches/$SLUG existiert nicht — nichts zu tun."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git rm -rq "branches/$SLUG"
+          git commit -m "preview entfernt: branches/$SLUG"
+          for attempt in 1 2 3; do
+            if git push origin gh-pages; then
+              exit 0
+            fi
+            echo "Push abgelehnt (Versuch $attempt) — rebase auf origin/gh-pages"
+            git pull --rebase origin gh-pages
+          done
+          exit 1

@@ -154,7 +154,7 @@ Usage: #definition
 * item[=].item[=].extension[=].valueCode = #optionsOnly
 * item[=].item[=].required = false
 * item[=].item[=].code[+] = $SCT#365275006 "General well-being finding"
-* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-allgemeinzustand"
+* item[=].item[=].answerValueSet = "https://www.senologie.org/fhir/ValueSet/vs-senologie-ecog"
 
 * item[=].item[+].linkId = "klinisch-lokalbefund"
 * item[=].item[=].text = "Lokalbefund Brust"
