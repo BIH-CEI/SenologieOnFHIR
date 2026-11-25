@@ -1,15 +1,15 @@
-# S3-Leitlinie v5.0 - Kapitel 7: Spezielle Situationen bei Mammakarzinom
+### S3-Leitlinie v5.0 - Kapitel 7: Spezielle Situationen bei Mammakarzinom
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 298-342
 > Kapitelstruktur: 7.1 Fertilitaetserhalt/Schwangerschaft | 7.2 Aeltere Patientin | 7.3 Mammakarzinom des Mannes | 7.4 Transgender und Brustkrebs | 7.5 Brustrekonstruktion | 7.6 Spezielle Tumorentitaeten
 
 ---
 
-## 7.1 Fertilitaetserhalt, Schwangerschaft nach Mammakarzinom, Mammakarzinom in Schwangerschaft und Stillzeit
+#### 7.1 Fertilitaetserhalt, Schwangerschaft nach Mammakarzinom, Mammakarzinom in Schwangerschaft und Stillzeit
 
-### 7.1.1 Fertilitaetserhalt
+##### 7.1.1 Fertilitaetserhalt
 
-#### Empfehlung 7.1
+###### Empfehlung 7.1
 
 ```yaml
 id: S3-5.0-7.1
@@ -55,7 +55,7 @@ referenzen:
   querschnittsleitlinien: ["S2/3-Leitlinie Fertilitaetserhalt"]
 ```
 
-#### Empfehlung 7.2
+###### Empfehlung 7.2
 
 ```yaml
 id: S3-5.0-7.2
@@ -93,7 +93,7 @@ referenzen:
   s3_literatur: ["1568", "1569", "1570", "1571"]
 ```
 
-#### Empfehlung 7.3
+###### Empfehlung 7.3
 
 ```yaml
 id: S3-5.0-7.3
@@ -136,9 +136,9 @@ referenzen:
   verwandte_empfehlungen: ["7.1", "7.2"]
 ```
 
-### 7.1.2 Schwangerschaft nach Mammakarzinom
+##### 7.1.2 Schwangerschaft nach Mammakarzinom
 
-#### Empfehlung 7.4
+###### Empfehlung 7.4
 
 ```yaml
 id: S3-5.0-7.4
@@ -170,7 +170,7 @@ referenzen:
   verwandte_empfehlungen: ["7.5", "7.6", "7.7"]
 ```
 
-#### Empfehlung 7.5 (Statement)
+###### Empfehlung 7.5 (Statement)
 
 ```yaml
 id: S3-5.0-7.5
@@ -197,7 +197,7 @@ referenzen:
   s3_literatur: ["1573", "1574", "1575"]
 ```
 
-#### Empfehlung 7.6
+###### Empfehlung 7.6
 
 ```yaml
 id: S3-5.0-7.6
@@ -234,7 +234,7 @@ referenzen:
   verwandte_empfehlungen: ["7.4", "7.7"]
 ```
 
-#### Empfehlung 7.7
+###### Empfehlung 7.7
 
 ```yaml
 id: S3-5.0-7.7
@@ -273,7 +273,7 @@ referenzen:
   verwandte_empfehlungen: ["7.4", "7.6"]
 ```
 
-#### Empfehlung 7.8
+###### Empfehlung 7.8
 
 ```yaml
 id: S3-5.0-7.8
@@ -309,7 +309,7 @@ referenzen:
   s3_literatur: ["1579", "1580"]
 ```
 
-#### Empfehlung 7.9 (Statement)
+###### Empfehlung 7.9 (Statement)
 
 ```yaml
 id: S3-5.0-7.9
@@ -337,9 +337,9 @@ referenzen:
   s3_literatur: ["1578", "1579"]
 ```
 
-### 7.1.3 Mammakarzinom waehrend der Schwangerschaft
+##### 7.1.3 Mammakarzinom waehrend der Schwangerschaft
 
-#### Empfehlung 7.10
+###### Empfehlung 7.10
 
 ```yaml
 id: S3-5.0-7.10
@@ -392,7 +392,7 @@ referenzen:
   verwandte_empfehlungen: ["7.11", "7.12", "7.13", "7.14", "7.15", "7.16"]
 ```
 
-#### Empfehlung 7.11
+###### Empfehlung 7.11
 
 ```yaml
 id: S3-5.0-7.11
@@ -421,7 +421,7 @@ referenzen:
   verwandte_empfehlungen: ["7.10", "7.12", "7.13", "7.14"]
 ```
 
-#### Empfehlung 7.12
+###### Empfehlung 7.12
 
 ```yaml
 id: S3-5.0-7.12
@@ -458,7 +458,7 @@ referenzen:
   s3_literatur: ["1581", "1582", "1583", "1584", "340"]
 ```
 
-#### Empfehlung 7.13
+###### Empfehlung 7.13
 
 ```yaml
 id: S3-5.0-7.13
@@ -489,7 +489,7 @@ referenzen:
   s3_literatur: ["1585", "1586"]
 ```
 
-#### Empfehlung 7.14
+###### Empfehlung 7.14
 
 ```yaml
 id: S3-5.0-7.14
@@ -520,7 +520,7 @@ referenzen:
   s3_literatur: ["1587"]
 ```
 
-#### Empfehlung 7.15
+###### Empfehlung 7.15
 
 ```yaml
 id: S3-5.0-7.15
@@ -552,7 +552,7 @@ referenzen:
   verwandte_empfehlungen: ["7.13", "7.14"]
 ```
 
-#### Empfehlung 7.16
+###### Empfehlung 7.16
 
 ```yaml
 id: S3-5.0-7.16
@@ -581,11 +581,11 @@ referenzen:
 
 ---
 
-## 7.2 Mammakarzinom der aelteren Patientin
+#### 7.2 Mammakarzinom der aelteren Patientin
 
-### 7.2.1 Allgemein
+##### 7.2.1 Allgemein
 
-#### Empfehlung 7.17
+###### Empfehlung 7.17
 
 ```yaml
 id: S3-5.0-7.17
@@ -627,9 +627,9 @@ referenzen:
   verwandte_empfehlungen: ["7.18", "7.19"]
 ```
 
-### 7.2.2 Geriatrie
+##### 7.2.2 Geriatrie
 
-#### Empfehlung 7.18
+###### Empfehlung 7.18
 
 ```yaml
 id: S3-5.0-7.18
@@ -682,7 +682,7 @@ referenzen:
   verwandte_empfehlungen: ["7.19", "7.20", "7.21"]
 ```
 
-#### Empfehlung 7.19
+###### Empfehlung 7.19
 
 ```yaml
 id: S3-5.0-7.19
@@ -719,7 +719,7 @@ referenzen:
   verwandte_empfehlungen: ["7.18", "7.20"]
 ```
 
-#### Empfehlung 7.20
+###### Empfehlung 7.20
 
 ```yaml
 id: S3-5.0-7.20
@@ -768,7 +768,7 @@ referenzen:
   querschnittsleitlinien: ["S3-Leitlinie CGA, AWMF 084-003"]
 ```
 
-#### Empfehlung 7.21
+###### Empfehlung 7.21
 
 ```yaml
 id: S3-5.0-7.21
@@ -805,7 +805,7 @@ referenzen:
   querschnittsleitlinien: ["S3-Leitlinie CGA, AWMF 084-003"]
 ```
 
-#### Empfehlung 7.22
+###### Empfehlung 7.22
 
 ```yaml
 id: S3-5.0-7.22
@@ -835,9 +835,9 @@ referenzen:
   querschnittsleitlinien: ["S3-Leitlinie CGA, AWMF 084-003"]
 ```
 
-### 7.2.3 Lokale Therapie
+##### 7.2.3 Lokale Therapie
 
-#### Empfehlung 7.23 (Statement)
+###### Empfehlung 7.23 (Statement)
 
 ```yaml
 id: S3-5.0-7.23
@@ -864,7 +864,7 @@ referenzen:
   verwandte_empfehlungen: ["7.24", "7.25"]
 ```
 
-#### Empfehlung 7.24
+###### Empfehlung 7.24
 
 ```yaml
 id: S3-5.0-7.24
@@ -907,7 +907,7 @@ referenzen:
   s3_literatur: ["1617"]
 ```
 
-#### Empfehlung 7.25
+###### Empfehlung 7.25
 
 ```yaml
 id: S3-5.0-7.25
@@ -943,9 +943,9 @@ referenzen:
   verwandte_empfehlungen: ["7.24"]
 ```
 
-### 7.2.4 Adjuvante endokrine Therapie
+##### 7.2.4 Adjuvante endokrine Therapie
 
-#### Empfehlung 7.26
+###### Empfehlung 7.26
 
 ```yaml
 id: S3-5.0-7.26
@@ -978,9 +978,9 @@ referenzen:
   s3_literatur: ["1618", "1619"]
 ```
 
-### 7.2.5 Adjuvante Chemotherapie
+##### 7.2.5 Adjuvante Chemotherapie
 
-#### Empfehlung 7.27 (Statement)
+###### Empfehlung 7.27 (Statement)
 
 ```yaml
 id: S3-5.0-7.27
@@ -1007,7 +1007,7 @@ referenzen:
   s3_literatur: ["1621", "1622"]
 ```
 
-#### Empfehlung 7.28
+###### Empfehlung 7.28
 
 ```yaml
 id: S3-5.0-7.28
@@ -1050,7 +1050,7 @@ referenzen:
   s3_literatur: ["1623", "1624", "1625", "1626", "1627", "1628", "1629", "1630"]
 ```
 
-#### Empfehlung 7.29 (Statement)
+###### Empfehlung 7.29 (Statement)
 
 ```yaml
 id: S3-5.0-7.29
@@ -1079,9 +1079,9 @@ referenzen:
 
 ---
 
-## 7.3 Mammakarzinom des Mannes
+#### 7.3 Mammakarzinom des Mannes
 
-#### Empfehlung 7.30
+###### Empfehlung 7.30
 
 ```yaml
 id: S3-5.0-7.30
@@ -1121,7 +1121,7 @@ referenzen:
   s3_literatur: ["1631"]
 ```
 
-#### Empfehlung 7.31
+###### Empfehlung 7.31
 
 ```yaml
 id: S3-5.0-7.31
@@ -1156,7 +1156,7 @@ referenzen:
   verwandte_empfehlungen: ["7.32"]
 ```
 
-#### Empfehlung 7.32
+###### Empfehlung 7.32
 
 ```yaml
 id: S3-5.0-7.32
@@ -1184,7 +1184,7 @@ referenzen:
   verwandte_empfehlungen: ["7.31"]
 ```
 
-#### Empfehlung 7.33
+###### Empfehlung 7.33
 
 ```yaml
 id: S3-5.0-7.33
@@ -1217,7 +1217,7 @@ referenzen:
   s3_literatur: ["1635"]
 ```
 
-#### Empfehlung 7.34
+###### Empfehlung 7.34
 
 ```yaml
 id: S3-5.0-7.34
@@ -1241,7 +1241,7 @@ fhir_mapping:
   anmerkung: "Axilla-OP analog zu Frauen."
 ```
 
-#### Empfehlung 7.35
+###### Empfehlung 7.35
 
 ```yaml
 id: S3-5.0-7.35
@@ -1268,7 +1268,7 @@ referenzen:
   s3_literatur: ["1636"]
 ```
 
-#### Empfehlung 7.36
+###### Empfehlung 7.36
 
 ```yaml
 id: S3-5.0-7.36
@@ -1292,7 +1292,7 @@ fhir_mapping:
   anmerkung: "Systemtherapie analog zu Frauen."
 ```
 
-#### Empfehlung 7.37
+###### Empfehlung 7.37
 
 ```yaml
 id: S3-5.0-7.37
@@ -1335,7 +1335,7 @@ referenzen:
   s3_literatur: ["1640", "1641", "1642", "1643", "1034"]
 ```
 
-#### Empfehlung 7.38
+###### Empfehlung 7.38
 
 ```yaml
 id: S3-5.0-7.38
@@ -1364,7 +1364,7 @@ referenzen:
   s3_literatur: ["1645"]
 ```
 
-#### Empfehlung 7.39
+###### Empfehlung 7.39
 
 ```yaml
 id: S3-5.0-7.39
@@ -1388,7 +1388,7 @@ fhir_mapping:
   anmerkung: "Studienteilnahme als ResearchSubject modellierbar."
 ```
 
-#### Empfehlung 7.40
+###### Empfehlung 7.40
 
 ```yaml
 id: S3-5.0-7.40
@@ -1418,7 +1418,7 @@ referenzen:
   s3_literatur: ["1633", "1634"]
 ```
 
-#### Empfehlung 7.41
+###### Empfehlung 7.41
 
 ```yaml
 id: S3-5.0-7.41
@@ -1442,7 +1442,7 @@ fhir_mapping:
   anmerkung: "Nachsorge analog zu Frauen."
 ```
 
-#### Empfehlung 7.42
+###### Empfehlung 7.42
 
 ```yaml
 id: S3-5.0-7.42
@@ -1468,7 +1468,7 @@ fhir_mapping:
   anmerkung: "Informationsempfehlung, kein FHIR-Datenobjekt."
 ```
 
-#### Empfehlung 7.43
+###### Empfehlung 7.43
 
 ```yaml
 id: S3-5.0-7.43
@@ -1498,7 +1498,7 @@ referenzen:
   s3_literatur: ["1644"]
 ```
 
-#### Empfehlung 7.44
+###### Empfehlung 7.44
 
 ```yaml
 id: S3-5.0-7.44
@@ -1531,7 +1531,7 @@ referenzen:
   s3_literatur: ["1637", "1638"]
 ```
 
-#### Empfehlung 7.45
+###### Empfehlung 7.45
 
 ```yaml
 id: S3-5.0-7.45
@@ -1557,9 +1557,9 @@ fhir_mapping:
 
 ---
 
-## 7.4 Transgender und Brustkrebs
+#### 7.4 Transgender und Brustkrebs
 
-#### Empfehlung 7.46 (Statement)
+###### Empfehlung 7.46 (Statement)
 
 ```yaml
 id: S3-5.0-7.46
@@ -1599,7 +1599,7 @@ referenzen:
   s3_literatur: ["1646", "1647", "1648", "1649", "1650"]
 ```
 
-#### Empfehlung 7.47
+###### Empfehlung 7.47
 
 ```yaml
 id: S3-5.0-7.47
@@ -1638,7 +1638,7 @@ referenzen:
   s3_literatur: ["1651", "1652"]
 ```
 
-#### Empfehlung 7.48
+###### Empfehlung 7.48
 
 ```yaml
 id: S3-5.0-7.48
@@ -1678,9 +1678,9 @@ referenzen:
 
 ---
 
-## 7.5 Brustrekonstruktion
+#### 7.5 Brustrekonstruktion
 
-#### Empfehlung 7.49
+###### Empfehlung 7.49
 
 ```yaml
 id: S3-5.0-7.49
@@ -1721,7 +1721,7 @@ referenzen:
   s3_literatur: ["1653", "1654", "1655", "1656", "1657", "1658", "1659"]
 ```
 
-#### Empfehlung 7.50
+###### Empfehlung 7.50
 
 ```yaml
 id: S3-5.0-7.50
@@ -1753,7 +1753,7 @@ referenzen:
   s3_literatur: ["1660", "1661", "1662", "1663", "1664", "1665", "1666", "1667", "1668", "1669", "1670", "1671"]
 ```
 
-#### Empfehlung 7.51
+###### Empfehlung 7.51
 
 ```yaml
 id: S3-5.0-7.51
@@ -1799,7 +1799,7 @@ referenzen:
   s3_literatur: ["1675", "1676", "1677", "1678", "1679", "1680", "1681", "1682", "1683", "1684", "1685", "1686", "1687"]
 ```
 
-#### Empfehlung 7.52
+###### Empfehlung 7.52
 
 ```yaml
 id: S3-5.0-7.52
@@ -1832,7 +1832,7 @@ referenzen:
   s3_literatur: ["1696", "1697", "1698", "1699", "1700", "1701", "1702", "1703"]
 ```
 
-#### Empfehlung 7.53
+###### Empfehlung 7.53
 
 ```yaml
 id: S3-5.0-7.53
@@ -1856,7 +1856,7 @@ fhir_mapping:
   anmerkung: "Operationstechnik-Detail, nicht spezifisch kodiert."
 ```
 
-#### Empfehlung 7.54
+###### Empfehlung 7.54
 
 ```yaml
 id: S3-5.0-7.54
@@ -1891,7 +1891,7 @@ referenzen:
   s3_literatur: ["1711", "1712", "1713", "1714", "1715", "1716", "1717", "1718", "1719", "1720", "1721", "1722", "1723", "1724", "1725", "1726", "1727", "1728", "1729", "1730", "1731", "1732", "1733", "1734", "1735"]
 ```
 
-#### Empfehlung 7.55
+###### Empfehlung 7.55
 
 ```yaml
 id: S3-5.0-7.55
@@ -1930,7 +1930,7 @@ referenzen:
   s3_literatur: ["1744", "1745", "1746", "1747", "1748", "1749", "1750", "1751", "1752", "1753", "1754", "1755", "1756", "1757", "1758", "1759", "1760", "1761", "1762", "1763", "1764", "1765", "1766", "1767", "1768", "1769", "1770", "1771", "1772", "1773", "1774", "1775", "1776", "1777", "1778", "1779", "1780", "1781", "1782", "1783"]
 ```
 
-#### Empfehlung 7.56
+###### Empfehlung 7.56
 
 ```yaml
 id: S3-5.0-7.56
@@ -1962,7 +1962,7 @@ fhir_mapping:
   anmerkung: "Indikation Platzhalter vs. dauerhafte Rekonstruktion nicht spezifisch kodiert."
 ```
 
-#### Empfehlung 7.57
+###### Empfehlung 7.57
 
 ```yaml
 id: S3-5.0-7.57
@@ -1988,7 +1988,7 @@ fhir_mapping:
   anmerkung: "Konversion von Implantat auf autologe Rekonstruktion nicht spezifisch modelliert."
 ```
 
-#### Empfehlung 7.58
+###### Empfehlung 7.58
 
 ```yaml
 id: S3-5.0-7.58
@@ -2023,7 +2023,7 @@ referenzen:
   s3_literatur: ["508", "1788", "1789", "1790", "1791", "1792", "1793", "1794", "1795", "1796", "1797", "1798", "1799", "1800", "1801", "1802", "1803", "1804", "1674", "1805", "1806"]
 ```
 
-#### Empfehlung 7.59
+###### Empfehlung 7.59
 
 ```yaml
 id: S3-5.0-7.59
@@ -2060,11 +2060,11 @@ referenzen:
 
 ---
 
-## 7.6 Spezielle Tumorentitaeten
+#### 7.6 Spezielle Tumorentitaeten
 
-### 7.6.1 Metaplastisches Mammakarzinom
+##### 7.6.1 Metaplastisches Mammakarzinom
 
-#### Empfehlung 7.60
+###### Empfehlung 7.60
 
 ```yaml
 id: S3-5.0-7.60
@@ -2102,7 +2102,7 @@ referenzen:
   s3_literatur: ["1832", "1833", "1834"]
 ```
 
-#### Empfehlung 7.61
+###### Empfehlung 7.61
 
 ```yaml
 id: S3-5.0-7.61
@@ -2131,9 +2131,9 @@ referenzen:
   s3_literatur: ["1838", "1839"]
 ```
 
-### 7.6.2 Phylloidestumor
+##### 7.6.2 Phylloidestumor
 
-#### Empfehlung 7.62
+###### Empfehlung 7.62
 
 ```yaml
 id: S3-5.0-7.62
@@ -2177,7 +2177,7 @@ referenzen:
   s3_literatur: ["1844", "1845", "1846", "1847", "1848", "1849", "1850"]
 ```
 
-#### Empfehlung 7.63
+###### Empfehlung 7.63
 
 ```yaml
 id: S3-5.0-7.63
@@ -2210,7 +2210,7 @@ referenzen:
   s3_literatur: ["1851", "1852", "1853", "1854"]
 ```
 
-#### Empfehlung 7.64 (Statement)
+###### Empfehlung 7.64 (Statement)
 
 ```yaml
 id: S3-5.0-7.64
@@ -2237,9 +2237,9 @@ referenzen:
   s3_literatur: ["1842"]
 ```
 
-### 7.6.3 Angiosarkom
+##### 7.6.3 Angiosarkom
 
-#### Empfehlung 7.65
+###### Empfehlung 7.65
 
 ```yaml
 id: S3-5.0-7.65
@@ -2274,7 +2274,7 @@ referenzen:
   querschnittsleitlinien: ["S3-Leitlinie Adulte Weichgewebesarkome, AWMF 032/044OL"]
 ```
 
-#### Empfehlung 7.66
+###### Empfehlung 7.66
 
 ```yaml
 id: S3-5.0-7.66
@@ -2321,7 +2321,7 @@ referenzen:
   s3_literatur: ["1880", "1881", "1882", "1883", "1884"]
 ```
 
-#### Empfehlung 7.67
+###### Empfehlung 7.67
 
 ```yaml
 id: S3-5.0-7.67
@@ -2349,7 +2349,7 @@ referenzen:
   s3_literatur: ["1886", "1887", "1888"]
 ```
 
-#### Empfehlung 7.68
+###### Empfehlung 7.68
 
 ```yaml
 id: S3-5.0-7.68
@@ -2378,9 +2378,9 @@ referenzen:
   s3_literatur: ["1871", "1878", "1889", "1890"]
 ```
 
-### 7.6.4 Brustimplantat-assoziiertes anaplastisches grosszelliges Lymphom (BIA-ALCL)
+##### 7.6.4 Brustimplantat-assoziiertes anaplastisches grosszelliges Lymphom (BIA-ALCL)
 
-#### Empfehlung 7.69
+###### Empfehlung 7.69
 
 ```yaml
 id: S3-5.0-7.69
@@ -2452,7 +2452,7 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 7
+#### Zusammenfassung: Gap-Analyse Kapitel 7
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -2485,7 +2485,7 @@ referenzen:
 | 7.65-7.68 | Angiosarkom | partial/**gap** | Angiosarkom-Typ (primaer/postradiogen), Sarkomzentrum |
 | 7.69 | BIA-ALCL | partial | CD30/ALK-Diagnostik, BfArM-Meldepflicht, eigene Condition |
 
-### Priorisierung fuer FHIR-Profilierung
+##### Priorisierung fuer FHIR-Profilierung
 
 **Hohe Prioritaet (direkte Profilrelevanz):**
 1. **Senologie_Brustimplantat**: Erweiterung um Verfahren (einzeitig/zweizeitig), Indikation (Platzhalter/dauerhaft), BIA-ALCL als Komplikation

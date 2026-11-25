@@ -428,7 +428,6 @@
 [VSSenologieICD10]: ValueSet-vs-senologie-icd10.html
 [VS_OncoBox_Primaerfallart]: ValueSet-vs-oncobox-primaerfallart.html
 [VS_Senologie_ACR_Brustdichte]: ValueSet-vs-senologie-acr-brustdichte.html
-[VS_Senologie_Allgemeinzustand]: ValueSet-vs-senologie-allgemeinzustand.html
 [VS_Senologie_Applikationsart]: ValueSet-vs-senologie-applikationsart.html
 [VS_Senologie_Auffaellig_Unauffaellig]: ValueSet-vs-senologie-auffaellig-unauffaellig.html
 [VS_Senologie_B_Klassifikation]: ValueSet-vs-senologie-b-klassifikation.html

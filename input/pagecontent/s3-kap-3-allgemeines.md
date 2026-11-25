@@ -1,15 +1,15 @@
-# S3-Leitlinie v5.0 - Kapitel 3: Allgemeines
+### S3-Leitlinie v5.0 - Kapitel 3: Allgemeines
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 39-81
 > Kapitelstruktur: 3.1 Informations- und Gesundheitskompetenz | 3.2 Brustkrebsfrueherkennung | 3.3 Familiaeres Mammakarzinom | 3.4 Versorgungsstrukturen
 
 ---
 
-## 3.1 Informations- und Gesundheitskompetenz
+#### 3.1 Informations- und Gesundheitskompetenz
 
-### 3.1.1 Patientenzentrierte Kommunikation
+##### 3.1.1 Patientenzentrierte Kommunikation
 
-### Empfehlung 3.1
+##### Empfehlung 3.1
 
 ```yaml
 id: S3-5.0-3.1
@@ -44,7 +44,7 @@ referenzen:
   querschnittsleitlinien: ["S3-Querschnittleitlinie Psychoonkologie"]
 ```
 
-### Empfehlung 3.2
+##### Empfehlung 3.2
 
 ```yaml
 id: S3-5.0-3.2
@@ -78,7 +78,7 @@ referenzen:
   verwandte_empfehlungen: ["3.1", "3.3"]
 ```
 
-### Empfehlung 3.3
+##### Empfehlung 3.3
 
 ```yaml
 id: S3-5.0-3.3
@@ -121,9 +121,9 @@ referenzen:
   querschnittsleitlinien: ["S3-Querschnittleitlinie Psychoonkologie v2.1"]
 ```
 
-### 3.1.2 Information und Aufklärung
+##### 3.1.2 Information und Aufklärung
 
-### Empfehlung 3.4
+##### Empfehlung 3.4
 
 ```yaml
 id: S3-5.0-3.4
@@ -174,7 +174,7 @@ referenzen:
   s3_literatur: ["21", "22"]
 ```
 
-### Empfehlung 3.5
+##### Empfehlung 3.5
 
 ```yaml
 id: S3-5.0-3.5
@@ -205,9 +205,9 @@ referenzen:
   verwandte_empfehlungen: ["3.4"]
 ```
 
-### 3.1.3 E-Health und digitale Gesundheitsanwendungen (DiGA)
+##### 3.1.3 E-Health und digitale Gesundheitsanwendungen (DiGA)
 
-### Empfehlung 3.6
+##### Empfehlung 3.6
 
 ```yaml
 id: S3-5.0-3.6
@@ -236,9 +236,9 @@ referenzen:
 
 ---
 
-## 3.2 Brustkrebsfrüherkennung
+#### 3.2 Brustkrebsfrüherkennung
 
-### Empfehlung 3.7
+##### Empfehlung 3.7
 
 ```yaml
 id: S3-5.0-3.7
@@ -275,7 +275,7 @@ fhir_mapping:
 referenzen: {}
 ```
 
-### Empfehlung 3.8
+##### Empfehlung 3.8
 
 ```yaml
 id: S3-5.0-3.8
@@ -315,7 +315,7 @@ referenzen:
   verwandte_empfehlungen: ["7.3"]
 ```
 
-### Empfehlung 3.9
+##### Empfehlung 3.9
 
 ```yaml
 id: S3-5.0-3.9
@@ -344,7 +344,7 @@ fhir_mapping:
 referenzen: {}
 ```
 
-### Empfehlung 3.10
+##### Empfehlung 3.10
 
 ```yaml
 id: S3-5.0-3.10
@@ -386,9 +386,9 @@ referenzen:
   verwandte_empfehlungen: ["3.41"]
 ```
 
-### 3.2.1 Maßnahmen zur Brustkrebsfrüherkennung
+##### 3.2.1 Maßnahmen zur Brustkrebsfrüherkennung
 
-### Empfehlung 3.11
+##### Empfehlung 3.11
 
 ```yaml
 id: S3-5.0-3.11
@@ -438,7 +438,7 @@ referenzen:
   verwandte_empfehlungen: ["3.13", "3.27"]
 ```
 
-### Empfehlung 3.12
+##### Empfehlung 3.12
 
 ```yaml
 id: S3-5.0-3.12
@@ -465,7 +465,7 @@ referenzen:
   s3_literatur: ["49", "50"]
 ```
 
-### Empfehlung 3.13
+##### Empfehlung 3.13
 
 ```yaml
 id: S3-5.0-3.13
@@ -514,7 +514,7 @@ referenzen:
   verwandte_empfehlungen: ["3.11", "3.19", "3.27"]
 ```
 
-### Empfehlung 3.14
+##### Empfehlung 3.14
 
 ```yaml
 id: S3-5.0-3.14
@@ -556,9 +556,9 @@ referenzen:
   verwandte_empfehlungen: ["3.12"]
 ```
 
-### 3.2.2 Mammographiescreening
+##### 3.2.2 Mammographiescreening
 
-### Empfehlung 3.15
+##### Empfehlung 3.15
 
 ```yaml
 id: S3-5.0-3.15
@@ -585,7 +585,7 @@ referenzen:
   s3_literatur: ["50", "51", "30", "52", "53", "33", "43", "54", "36"]
 ```
 
-### Empfehlung 3.16
+##### Empfehlung 3.16
 
 ```yaml
 id: S3-5.0-3.16
@@ -630,7 +630,7 @@ referenzen:
   s3_literatur: ["53", "33", "63", "64", "59"]
 ```
 
-### Empfehlung 3.17
+##### Empfehlung 3.17
 
 ```yaml
 id: S3-5.0-3.17
@@ -665,7 +665,7 @@ referenzen:
   verwandte_empfehlungen: ["3.16"]
 ```
 
-### Empfehlung 3.18
+##### Empfehlung 3.18
 
 ```yaml
 id: S3-5.0-3.18
@@ -693,7 +693,7 @@ referenzen:
   s3_literatur: ["50", "52", "67", "64", "68"]
 ```
 
-### Empfehlung 3.19
+##### Empfehlung 3.19
 
 ```yaml
 id: S3-5.0-3.19
@@ -741,9 +741,9 @@ referenzen:
   verwandte_empfehlungen: ["3.13", "3.27", "3.35"]
 ```
 
-### 3.2.2 Mammographiescreening (Fortsetzung) - Tomosynthese
+##### 3.2.2 Mammographiescreening (Fortsetzung) - Tomosynthese
 
-### Empfehlung 3.20
+##### Empfehlung 3.20
 
 ```yaml
 id: S3-5.0-3.20
@@ -771,7 +771,7 @@ referenzen:
   s3_literatur: ["73", "74", "33", "75", "76", "77"]
 ```
 
-### Empfehlung 3.21
+##### Empfehlung 3.21
 
 ```yaml
 id: S3-5.0-3.21
@@ -828,9 +828,9 @@ referenzen:
   verwandte_empfehlungen: ["3.25"]
 ```
 
-### 3.2.3 Sonographie und Kontrastmittel-MRT
+##### 3.2.3 Sonographie und Kontrastmittel-MRT
 
-### Empfehlung 3.22
+##### Empfehlung 3.22
 
 ```yaml
 id: S3-5.0-3.22
@@ -856,7 +856,7 @@ fhir_mapping:
 referenzen: {}
 ```
 
-### Empfehlung 3.23
+##### Empfehlung 3.23
 
 ```yaml
 id: S3-5.0-3.23
@@ -883,7 +883,7 @@ referenzen:
   verwandte_empfehlungen: ["3.35"]
 ```
 
-### Empfehlung 3.24
+##### Empfehlung 3.24
 
 ```yaml
 id: S3-5.0-3.24
@@ -911,9 +911,9 @@ fhir_mapping:
 referenzen: {}
 ```
 
-### 3.2.4 Mammographische Dichte
+##### 3.2.4 Mammographische Dichte
 
-### Empfehlung 3.25
+##### Empfehlung 3.25
 
 ```yaml
 id: S3-5.0-3.25
@@ -958,7 +958,7 @@ referenzen:
   verwandte_empfehlungen: ["3.21", "3.26"]
 ```
 
-### Empfehlung 3.26
+##### Empfehlung 3.26
 
 ```yaml
 id: S3-5.0-3.26
@@ -992,9 +992,9 @@ referenzen:
 
 ---
 
-## 3.3 Familiäres Mammakarzinom
+#### 3.3 Familiäres Mammakarzinom
 
-### Empfehlung 3.27
+##### Empfehlung 3.27
 
 ```yaml
 id: S3-5.0-3.27
@@ -1070,7 +1070,7 @@ referenzen:
   verwandte_empfehlungen: ["3.28", "3.31", "3.35"]
 ```
 
-### Empfehlung 3.28
+##### Empfehlung 3.28
 
 ```yaml
 id: S3-5.0-3.28
@@ -1129,7 +1129,7 @@ referenzen:
   verwandte_empfehlungen: ["3.27"]
 ```
 
-### Empfehlung 3.29
+##### Empfehlung 3.29
 
 ```yaml
 id: S3-5.0-3.29
@@ -1185,7 +1185,7 @@ referenzen:
   s3_literatur: ["142", "143", "144", "145", "17"]
 ```
 
-### Empfehlung 3.30
+##### Empfehlung 3.30
 
 ```yaml
 id: S3-5.0-3.30
@@ -1214,7 +1214,7 @@ referenzen:
   s3_literatur: ["151"]
 ```
 
-### Empfehlung 3.31
+##### Empfehlung 3.31
 
 ```yaml
 id: S3-5.0-3.31
@@ -1272,7 +1272,7 @@ referenzen:
   verwandte_empfehlungen: ["3.27", "3.32"]
 ```
 
-### Empfehlung 3.32
+##### Empfehlung 3.32
 
 ```yaml
 id: S3-5.0-3.32
@@ -1341,7 +1341,7 @@ referenzen:
   verwandte_empfehlungen: ["3.27", "3.31"]
 ```
 
-### Empfehlung 3.33
+##### Empfehlung 3.33
 
 ```yaml
 id: S3-5.0-3.33
@@ -1397,7 +1397,7 @@ referenzen:
   verwandte_empfehlungen: ["3.34"]
 ```
 
-### Empfehlung 3.34
+##### Empfehlung 3.34
 
 ```yaml
 id: S3-5.0-3.34
@@ -1432,7 +1432,7 @@ referenzen:
   verwandte_empfehlungen: ["3.33", "3.27"]
 ```
 
-### Empfehlung 3.35
+##### Empfehlung 3.35
 
 ```yaml
 id: S3-5.0-3.35
@@ -1513,7 +1513,7 @@ referenzen:
   verwandte_empfehlungen: ["3.27", "3.31", "3.37"]
 ```
 
-### Empfehlung 3.36
+##### Empfehlung 3.36
 
 ```yaml
 id: S3-5.0-3.36
@@ -1573,7 +1573,7 @@ referenzen:
   verwandte_empfehlungen: ["3.35", "3.37"]
 ```
 
-### Empfehlung 3.37
+##### Empfehlung 3.37
 
 ```yaml
 id: S3-5.0-3.37
@@ -1632,7 +1632,7 @@ referenzen:
   verwandte_empfehlungen: ["3.38", "3.39", "3.40"]
 ```
 
-### Empfehlung 3.38
+##### Empfehlung 3.38
 
 ```yaml
 id: S3-5.0-3.38
@@ -1689,7 +1689,7 @@ referenzen:
   verwandte_empfehlungen: ["3.37", "3.39"]
 ```
 
-### Empfehlung 3.39
+##### Empfehlung 3.39
 
 ```yaml
 id: S3-5.0-3.39
@@ -1751,7 +1751,7 @@ referenzen:
   verwandte_empfehlungen: ["3.37", "3.38"]
 ```
 
-### Empfehlung 3.40
+##### Empfehlung 3.40
 
 ```yaml
 id: S3-5.0-3.40
@@ -1794,9 +1794,9 @@ referenzen:
 
 ---
 
-## 3.4 Versorgungsstrukturen: Strukturmerkmale einer guten Versorgung
+#### 3.4 Versorgungsstrukturen: Strukturmerkmale einer guten Versorgung
 
-### Empfehlung 3.41
+##### Empfehlung 3.41
 
 ```yaml
 id: S3-5.0-3.41
@@ -1841,7 +1841,7 @@ referenzen:
   verwandte_empfehlungen: ["3.10", "3.42", "3.43"]
 ```
 
-### Empfehlung 3.42
+##### Empfehlung 3.42
 
 ```yaml
 id: S3-5.0-3.42
@@ -1887,7 +1887,7 @@ referenzen:
   verwandte_empfehlungen: ["3.27", "3.41"]
 ```
 
-### Empfehlung 3.43
+##### Empfehlung 3.43
 
 ```yaml
 id: S3-5.0-3.43
@@ -1940,7 +1940,7 @@ referenzen:
 
 ---
 
-## Gap-Analyse Kapitel 3
+#### Gap-Analyse Kapitel 3
 
 | Empfehlung | Thema | FHIR-Status | Gap-Beschreibung | Priorität |
 |------------|-------|-------------|------------------|-----------|
@@ -1973,7 +1973,7 @@ referenzen:
 | **3.42** | **Checkliste erbliche Belastung** | **gap** | **Questionnaire/QuestionnaireResponse fehlt** | **sehr hoch** |
 | 3.43 | Tumorkonferenz | gap | ClinicalImpression/Encounter fehlt | hoch |
 
-### Zusammenfassung
+##### Zusammenfassung
 
 - **Gesamtzahl Empfehlungen**: 43 (3.1-3.43)
 - **Davon Evidenzbasiert**: 14 (3.4, 3.12, 3.15, 3.16, 3.18, 3.20, 3.21, 3.25, 3.26, 3.27, 3.29, 3.35, 3.36, 3.37, 3.38, 3.39, 3.40)
@@ -1983,7 +1983,7 @@ referenzen:
 - **FHIR-Status partial**: 2 (3.33, 3.34 - Pathologie-Befund)
 - **FHIR-Status gap**: 39
 
-### Priorisierte FHIR-Profilierungs-Bedarfe
+##### Priorisierte FHIR-Profilierungs-Bedarfe
 
 1. **Genetische Testung und Befundung** (3.27, 3.28, 3.31, 3.35, 3.36): Genomics Reporting IG profilieren fuer BRCA1/2 und weitere Risikogene (PALB2, ATM, CHEK2, etc.) mit ACMG-Klassifikation
 2. **Familienanamnese Brust-/Eierstockkrebs** (3.11, 3.27, 3.42): FamilyMemberHistory-Profil mit Checkliste-Items

@@ -1,17 +1,17 @@
-# S3-Leitlinie v5.0 - Kapitel 6: Behandlung, Betreuung und Begleitung
+### S3-Leitlinie v5.0 - Kapitel 6: Behandlung, Betreuung und Begleitung
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 265-296
 > Kapitelstruktur: 6.1 Psychoonkologie | 6.2 Supportivtherapie | 6.3 Nachsorge und Langzeitbetreuung | 6.4 Rehabilitation | 6.5 Palliativmedizin | 6.6 Komplementaere Medizin
 
 ---
 
-## 6.1 Psychoonkologie
+#### 6.1 Psychoonkologie
 
-### 6.1.1 Versorgung
+##### 6.1.1 Versorgung
 
 > Die Empfehlungen 6.1-6.11 basieren auf der S3-Leitlinie Psychoonkologische Diagnostik, Beratung und Behandlung von erwachsenen Krebspatient\*innen, aktuelle Version 2.1, August 2023, AWMF-Registernummer: 032-051OL.
 
-### Empfehlung 6.1
+##### Empfehlung 6.1
 
 ```yaml
 id: S3-5.0-6.1
@@ -51,7 +51,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.2
+##### Empfehlung 6.2
 
 ```yaml
 id: S3-5.0-6.2
@@ -89,7 +89,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.3
+##### Empfehlung 6.3
 
 ```yaml
 id: S3-5.0-6.3
@@ -179,7 +179,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.4
+##### Empfehlung 6.4
 
 ```yaml
 id: S3-5.0-6.4
@@ -211,7 +211,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.5
+##### Empfehlung 6.5
 
 ```yaml
 id: S3-5.0-6.5
@@ -259,7 +259,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.6
+##### Empfehlung 6.6
 
 ```yaml
 id: S3-5.0-6.6
@@ -297,9 +297,9 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### 6.1.3 Psychoonkologische Interventionen
+##### 6.1.3 Psychoonkologische Interventionen
 
-### Empfehlung 6.7
+##### Empfehlung 6.7
 
 ```yaml
 id: S3-5.0-6.7
@@ -353,7 +353,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.8
+##### Empfehlung 6.8
 
 ```yaml
 id: S3-5.0-6.8
@@ -392,7 +392,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.9
+##### Empfehlung 6.9
 
 ```yaml
 id: S3-5.0-6.9
@@ -438,7 +438,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.10
+##### Empfehlung 6.10
 
 ```yaml
 id: S3-5.0-6.10
@@ -480,7 +480,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Psychoonkologie 032-051OL"]
 ```
 
-### Empfehlung 6.11
+##### Empfehlung 6.11
 
 ```yaml
 id: S3-5.0-6.11
@@ -526,9 +526,9 @@ referenzen:
 
 ---
 
-## 6.2 Supportivtherapie
+#### 6.2 Supportivtherapie
 
-### Empfehlung 6.12
+##### Empfehlung 6.12
 
 ```yaml
 id: S3-5.0-6.12
@@ -589,11 +589,11 @@ referenzen:
 
 ---
 
-## 6.3 Nachsorge und Langzeitbetreuung
+#### 6.3 Nachsorge und Langzeitbetreuung
 
-### 6.3.1 Ziele
+##### 6.3.1 Ziele
 
-### Empfehlung 6.13
+##### Empfehlung 6.13
 
 ```yaml
 id: S3-5.0-6.13
@@ -643,7 +643,7 @@ referenzen:
   s3_literatur: ["1474"]
 ```
 
-### Empfehlung 6.14
+##### Empfehlung 6.14
 
 ```yaml
 id: S3-5.0-6.14
@@ -684,9 +684,9 @@ referenzen:
   s3_literatur: ["1474"]
 ```
 
-### 6.3.2 Untersuchungen zum lokoregionalen/intramammären Rezidiv
+##### 6.3.2 Untersuchungen zum lokoregionalen/intramammären Rezidiv
 
-### Empfehlung 6.15
+##### Empfehlung 6.15
 
 ```yaml
 id: S3-5.0-6.15
@@ -742,7 +742,7 @@ referenzen:
   s3_literatur: ["1479", "340"]
 ```
 
-### Empfehlung 6.16
+##### Empfehlung 6.16
 
 ```yaml
 id: S3-5.0-6.16
@@ -784,7 +784,7 @@ referenzen:
   verwandte_empfehlungen: ["6.15"]
 ```
 
-### Empfehlung 6.17
+##### Empfehlung 6.17
 
 ```yaml
 id: S3-5.0-6.17
@@ -815,7 +815,7 @@ referenzen:
   verwandte_empfehlungen: ["6.15", "6.16"]
 ```
 
-### Empfehlung 6.18
+##### Empfehlung 6.18
 
 ```yaml
 id: S3-5.0-6.18
@@ -851,9 +851,9 @@ referenzen:
   s3_literatur: ["1485", "1486"]
 ```
 
-### 6.3.3 Maenner mit Brustkrebs
+##### 6.3.3 Maenner mit Brustkrebs
 
-### Empfehlung 6.19
+##### Empfehlung 6.19
 
 ```yaml
 id: S3-5.0-6.19
@@ -893,9 +893,9 @@ referenzen:
   s3_literatur: ["1487"]
 ```
 
-### 6.3.4 Untersuchung auf Metastasen
+##### 6.3.4 Untersuchung auf Metastasen
 
-### Empfehlung 6.20
+##### Empfehlung 6.20
 
 ```yaml
 id: S3-5.0-6.20
@@ -941,11 +941,11 @@ referenzen:
   verwandte_empfehlungen: ["6.15"]
 ```
 
-### 6.3.5 Diagnostik und Therapie von Neben- und Folgewirkungen
+##### 6.3.5 Diagnostik und Therapie von Neben- und Folgewirkungen
 
-#### 6.3.5.1 Lymphoedem
+###### 6.3.5.1 Lymphoedem
 
-### Empfehlung 6.21
+##### Empfehlung 6.21
 
 ```yaml
 id: S3-5.0-6.21
@@ -1001,7 +1001,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Diagnostik und Therapie der Lymphoedeme 058-001"]
 ```
 
-### Empfehlung 6.22
+##### Empfehlung 6.22
 
 ```yaml
 id: S3-5.0-6.22
@@ -1049,9 +1049,9 @@ referenzen:
   querschnittsleitlinien: ["S3 Supportive Therapie 032-054OL"]
 ```
 
-### 6.3.6 Haeufigkeit der Nachuntersuchungen
+##### 6.3.6 Haeufigkeit der Nachuntersuchungen
 
-### Empfehlung 6.23
+##### Empfehlung 6.23
 
 ```yaml
 id: S3-5.0-6.23
@@ -1119,7 +1119,7 @@ referenzen:
 >
 > Hinweis: Erste Mammographie nach BET: 1 Jahr nach initialer Mammographie oder mind. 6 Monate nach abgeschlossener Radiatio.
 
-### Empfehlung 6.24
+##### Empfehlung 6.24
 
 ```yaml
 id: S3-5.0-6.24
@@ -1185,9 +1185,9 @@ referenzen:
 
 ---
 
-## 6.4 Rehabilitation
+#### 6.4 Rehabilitation
 
-### Empfehlung 6.25
+##### Empfehlung 6.25
 
 ```yaml
 id: S3-5.0-6.25
@@ -1230,7 +1230,7 @@ fhir_mapping:
 referenzen: {}
 ```
 
-### Empfehlung 6.26
+##### Empfehlung 6.26
 
 ```yaml
 id: S3-5.0-6.26
@@ -1278,7 +1278,7 @@ referenzen:
   s3_literatur: ["945", "1517"]
 ```
 
-### Empfehlung 6.27
+##### Empfehlung 6.27
 
 ```yaml
 id: S3-5.0-6.27
@@ -1320,7 +1320,7 @@ referenzen:
   s3_literatur: ["1522", "1523"]
 ```
 
-### Empfehlung 6.28
+##### Empfehlung 6.28
 
 ```yaml
 id: S3-5.0-6.28
@@ -1371,7 +1371,7 @@ referenzen:
   querschnittsleitlinien: ["AWMF Diagnostik und Therapie der Lymphoedeme 058-001"]
 ```
 
-### Empfehlung 6.29
+##### Empfehlung 6.29
 
 ```yaml
 id: S3-5.0-6.29
@@ -1423,9 +1423,9 @@ referenzen:
 
 ---
 
-## 6.5 Palliativmedizin
+#### 6.5 Palliativmedizin
 
-### Empfehlung 6.30
+##### Empfehlung 6.30
 
 ```yaml
 id: S3-5.0-6.30
@@ -1475,9 +1475,9 @@ referenzen:
 
 ---
 
-## 6.6 Komplementaere Medizin
+#### 6.6 Komplementaere Medizin
 
-### Empfehlung 6.31
+##### Empfehlung 6.31
 
 ```yaml
 id: S3-5.0-6.31
@@ -1529,9 +1529,9 @@ referenzen:
   querschnittsleitlinien: ["S3 Komplementaermedizin 032-055OL"]
 ```
 
-### 6.6.1 Alternativmedizinische Diagnostik und Methoden
+##### 6.6.1 Alternativmedizinische Diagnostik und Methoden
 
-### Empfehlung 6.32
+##### Empfehlung 6.32
 
 ```yaml
 id: S3-5.0-6.32
@@ -1560,7 +1560,7 @@ referenzen:
   querschnittsleitlinien: ["S3 Komplementaermedizin 032-055OL"]
 ```
 
-### Empfehlung 6.33
+##### Empfehlung 6.33
 
 ```yaml
 id: S3-5.0-6.33
@@ -1589,9 +1589,9 @@ referenzen:
   querschnittsleitlinien: ["S3 Komplementaermedizin 032-055OL"]
 ```
 
-### 6.6.2 Integrative Onkologie: Komplementaermedizin
+##### 6.6.2 Integrative Onkologie: Komplementaermedizin
 
-### Empfehlung 6.34
+##### Empfehlung 6.34
 
 ```yaml
 id: S3-5.0-6.34
@@ -1634,7 +1634,7 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 6
+#### Zusammenfassung: Gap-Analyse Kapitel 6
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -1660,7 +1660,7 @@ referenzen:
 | 6.32-6.33 | Alternative Methoden (negativ) | **gap** | Negative Empfehlungen - primaer Beratungsdokumentation. |
 | 6.34 | Komplementaermedizin (Verweis) | **gap** | Verweis auf S3 Komplementaermedizin. |
 
-### Priorisierung fuer FHIR-Profil-Entwicklung
+##### Priorisierung fuer FHIR-Profil-Entwicklung
 
 1. **Hoechste Prioritaet**: Empfehlung 6.23 - Nachsorge-Schema mit konkreten Intervallen (Tabelle 9) als CarePlan
 2. **Hoch**: Empfehlungen 6.1-6.3 - Psychoonkologisches Screening (Questionnaire/QuestionnaireResponse)

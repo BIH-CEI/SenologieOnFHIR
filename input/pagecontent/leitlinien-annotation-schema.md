@@ -1,23 +1,23 @@
-# Leitlinien-Annotations-Schema
+### Leitlinien-Annotations-Schema
 
 > Version: 0.1.0-pilot | Stand: 2026-02-17
 > Basiert auf: S3-Leitlinie Mammakarzinom v5.0 (Dezember 2025), AWMF-Reg. 032-045OL
 
-## Zweck
+#### Zweck
 
 Dieses Schema definiert die Struktur zur Annotation von Leitlinien-Empfehlungen
 mit medizinischen Datenobjekten, versionierten Terminologien und FHIR-Bezug.
 Ziel ist ein maschinenlesbares Data Dictionary, das die Leitlinie als normative
 Grundlage der FHIR-Spezifikation nutzbar macht.
 
-## Quellen
+#### Quellen
 
 | Kürzel | Quelle | Version |
 |--------|--------|---------|
 | S3 | S3-Leitlinie Früherkennung, Diagnostik, Therapie und Nachsorge des Mammakarzinoms | v5.0, Dezember 2025 |
 | AGO | AGO-Empfehlungen Kommission Mamma | 2025 |
 
-## Empfehlungstypen in der S3-Leitlinie
+#### Empfehlungstypen in der S3-Leitlinie
 
 | Typ | Beschreibung | Empfehlungsgrad | Evidenzlevel |
 |-----|-------------|-----------------|--------------|
@@ -25,7 +25,7 @@ Grundlage der FHIR-Spezifikation nutzbar macht.
 | Konsensbasierte Empfehlung (EK) | Expertenkonsens | - (ergibt sich aus Formulierung soll/sollte/kann) | - |
 | Statement | Darlegung ohne Handlungsaufforderung | - | Oxford 1-5 oder GRADE |
 
-## Konsensstärke
+#### Konsensstärke
 
 | Bezeichnung | Zustimmung |
 |-------------|-----------|
@@ -33,7 +33,7 @@ Grundlage der FHIR-Spezifikation nutzbar macht.
 | Konsens | > 75-95% |
 | Mehrheitliche Zustimmung | > 50-75% |
 
-## Annotations-Schema pro Empfehlung
+#### Annotations-Schema pro Empfehlung
 
 ```yaml
 id: "S3-5.0-{Empfehlungsnummer}"      # z.B. S3-5.0-4.73
@@ -76,18 +76,26 @@ referenzen:
   verwandte_empfehlungen: []            # Verweis auf andere Empfehlungen in dieser LL
 ```
 
-## Verzeichnisstruktur
+#### Dateistruktur
+
+Die Annotation liegt als IG-Seiten in `input/pagecontent/`, eine Seite pro Kapitel:
 
 ```
-leitlinien-annotation/
-  00-schema.md                          # Dieses Dokument
-  01-uebersicht.md                      # Kapitelübersicht mit Empfehlungszählung
-  s3-kap-4.5-pathologie.md             # Annotation pro Kapitel
-  s3-kap-4.1-diagnostik.md
+input/pagecontent/
+  leitlinien-abdeckung.md               # Einstieg: Umfang, Kapiteltabelle, Mapping-Status
+  leitlinien-annotation-schema.md       # Dieses Dokument
+  leitlinien-gap-analyse.md             # Konsolidierte Gap-Analyse
+  glossar-s3-snomed.md                  # Generiert: kodierte Begriffe
+  s3-kap-3-allgemeines.md               # Annotation pro Kapitel
+  s3-kap-4-1-diagnostik.md
   ...
+scripts/generate-glossar.py             # Liest die YAML-Bloecke, erzeugt Glossar + CSV
+exports/glossar-s3-snomed.csv           # Maschinenlesbar, inkl. Begriffe ohne Code
 ```
 
-## Terminologie-Herkunft und Validierungsstatus
+Das Glossar und der CSV-Export werden aus den YAML-Blöcken erzeugt. Wer eine Annotation ändert, führt anschließend `python3 scripts/generate-glossar.py` aus; die Seite `glossar-s3-snomed.md` wird nicht von Hand editiert.
+
+#### Terminologie-Herkunft und Validierungsstatus
 
 Die Leitlinie selbst liefert **klinische Klassifikationen**, aber **keine digitalen Terminologie-Codes**:
 
@@ -102,7 +110,7 @@ Die Leitlinie selbst liefert **klinische Klassifikationen**, aber **keine digita
 | ICD-10-GM Codes (explizit benannt) | Direkt übernehmbar |
 | Formblattvorschläge (Kap. 10.2/10.3) | Strukturierte Datenelemente |
 
-### Terminologie-Mapping-Status pro Datenobjekt
+##### Terminologie-Mapping-Status pro Datenobjekt
 
 ```yaml
 terminologie:
@@ -121,7 +129,7 @@ terminologie:
 | `standard` | Etabliertes Standard-Mapping (z.B. LOINC für ER/PR/HER2 Biomarker) |
 | `vorschlag` | Von uns zugewiesen, **muss noch validiert werden** |
 
-## Konventionen
+#### Konventionen
 
 1. **Empfehlungs-ID**: `S3-5.0-{Nr}` bzw. `AGO-2025-{Kapitel}-{Nr}`
 2. **Terminologie-Versionen**: Immer die zum Zeitpunkt der Leitlinie gültige Version angeben

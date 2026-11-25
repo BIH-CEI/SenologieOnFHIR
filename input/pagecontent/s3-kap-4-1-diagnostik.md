@@ -1,13 +1,13 @@
-# S3-Leitlinie v5.0 - Kapitel 4.1: Diagnostik bei der Abklärung auffälliger Befunde sowie prätherapeutische Ausbreitungsdiagnostik
+### S3-Leitlinie v5.0 - Kapitel 4.1: Diagnostik bei der Abklärung auffälliger Befunde sowie prätherapeutische Ausbreitungsdiagnostik
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 82-95
 > Kapitelstruktur: 4.1.1 Basisdiagnostik | 4.1.2 Bildgebende Verfahren | 4.1.3 Diagnostische Sicherung | 4.1.4 Pathologische Sekretion | 4.1.5 Staging
 
 ---
 
-## 4.1.1 Basisdiagnostik
+#### 4.1.1 Basisdiagnostik
 
-### Empfehlung 4.1
+##### Empfehlung 4.1
 
 ```yaml
 id: S3-5.0-4.1
@@ -71,7 +71,7 @@ referenzen:
   verwandte_empfehlungen: ["4.3", "4.6", "4.7", "4.8", "4.9"]
 ```
 
-### Empfehlung 4.2
+##### Empfehlung 4.2
 
 ```yaml
 id: S3-5.0-4.2
@@ -125,9 +125,9 @@ referenzen:
 
 ---
 
-## 4.1.2 Bildgebende Verfahren
+#### 4.1.2 Bildgebende Verfahren
 
-### Mammographie (Empfehlungen 4.3-4.5)
+##### Mammographie (Empfehlungen 4.3-4.5)
 
 ```yaml
 # 4.3-4.5: Mammographie-Indikationen (zusammengefasst)
@@ -181,7 +181,7 @@ fhir_mapping:
     Tomosynthese als Modalität ergänzen.
 ```
 
-### Empfehlung 4.6
+##### Empfehlung 4.6
 
 ```yaml
 id: S3-5.0-4.6
@@ -215,7 +215,7 @@ referenzen:
   s3_literatur: ["117", "118", "247"]
 ```
 
-### Empfehlung 4.7
+##### Empfehlung 4.7
 
 ```yaml
 id: S3-5.0-4.7
@@ -256,7 +256,7 @@ referenzen:
   s3_literatur: ["248", "249"]
 ```
 
-### Empfehlung 4.8
+##### Empfehlung 4.8
 
 ```yaml
 id: S3-5.0-4.8
@@ -314,7 +314,7 @@ referenzen:
   verwandte_empfehlungen: ["4.21", "4.7"]
 ```
 
-### Sonographie (Empfehlungen 4.9-4.10)
+##### Sonographie (Empfehlungen 4.9-4.10)
 
 ```yaml
 id: S3-5.0-4.9
@@ -395,7 +395,7 @@ fhir_mapping:
   anmerkung: "DiagnosticReport für Bildgebungsbefunde vorhanden."
 ```
 
-### Kontrastmittel-Verfahren (Empfehlungen 4.11-4.14)
+##### Kontrastmittel-Verfahren (Empfehlungen 4.11-4.14)
 
 ```yaml
 # 4.11-4.14: KM-MRT und KM-Mammographie (zusammengefasst)
@@ -468,9 +468,9 @@ referenzen:
 
 ---
 
-## 4.1.3 Diagnostische Sicherung
+#### 4.1.3 Diagnostische Sicherung
 
-### Empfehlung 4.15
+##### Empfehlung 4.15
 
 ```yaml
 id: S3-5.0-4.15
@@ -523,7 +523,7 @@ referenzen:
   verwandte_empfehlungen: ["4.16", "4.17", "4.18", "4.20"]
 ```
 
-### Empfehlung 4.16
+##### Empfehlung 4.16
 
 ```yaml
 id: S3-5.0-4.16
@@ -569,7 +569,7 @@ referenzen:
   verwandte_empfehlungen: ["4.15", "4.25", "4.26"]
 ```
 
-### Empfehlungen 4.17-4.19 (Biopsie-Spezifika)
+##### Empfehlungen 4.17-4.19 (Biopsie-Spezifika)
 
 ```yaml
 # 4.17-4.19: Biopsie-Verfahrensspezifika (zusammengefasst)
@@ -607,7 +607,7 @@ referenzen:
   s3_literatur: ["283", "286", "292", "293", "294", "295"]
 ```
 
-### Empfehlung 4.20
+##### Empfehlung 4.20
 
 ```yaml
 id: S3-5.0-4.20
@@ -642,7 +642,7 @@ referenzen:
   verwandte_empfehlungen: ["4.15", "4.23"]
 ```
 
-### Empfehlung 4.21
+##### Empfehlung 4.21
 
 ```yaml
 id: S3-5.0-4.21
@@ -684,7 +684,7 @@ referenzen:
   verwandte_empfehlungen: ["4.8"]
 ```
 
-### Empfehlungen 4.22-4.24 (Probenqualität und Dokumentation)
+##### Empfehlungen 4.22-4.24 (Probenqualität und Dokumentation)
 
 ```yaml
 # 4.22-4.24: Probenqualität (zusammengefasst)
@@ -717,7 +717,7 @@ fhir_mapping:
   anmerkung: "Qualitätsdokumentation der Biopsie-Prozedur fehlt."
 ```
 
-### Empfehlungen 4.25-4.26 (Bildgebende Lokalisation)
+##### Empfehlungen 4.25-4.26 (Bildgebende Lokalisation)
 
 ```yaml
 # 4.25-4.26: Präoperative Markierung und Lokalisation
@@ -775,9 +775,9 @@ referenzen:
 
 ---
 
-## 4.1.4 Vorgehen bei pathologischer Sekretion
+#### 4.1.4 Vorgehen bei pathologischer Sekretion
 
-### Empfehlung 4.27
+##### Empfehlung 4.27
 
 ```yaml
 id: S3-5.0-4.27
@@ -832,9 +832,9 @@ referenzen:
 
 ---
 
-## 4.1.5 Staging
+#### 4.1.5 Staging
 
-### Empfehlung 4.28
+##### Empfehlung 4.28
 
 ```yaml
 id: S3-5.0-4.28
@@ -907,7 +907,7 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 4.1
+#### Zusammenfassung: Gap-Analyse Kapitel 4.1
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -929,7 +929,7 @@ referenzen:
 | 4.27 | Pathologische Sekretion | **gap** | Symptom-Observation, Diagnostischer Pfad |
 | 4.28 | Staging | partial | Staging-Indikation, Untersuchungs-Set |
 
-### Kernerkenntnisse Kapitel 4.1
+##### Kernerkenntnisse Kapitel 4.1
 
 1. **Biopsie-Workflow ist die größte Lücke**: Kein eigenständiges Biopsie-Procedure-Profil mit Details (Steuerung, Nadel, Proben, Marker, B-Klassifikation)
 2. **Radiologisch-pathologische Korrelation** (4.20) ist ein zentrales Qualitätsmerkmal das komplett fehlt

@@ -1,11 +1,11 @@
-# S3-Leitlinie v5.0 - Kapitel 8: Qualitaetsindikatoren
+### S3-Leitlinie v5.0 - Kapitel 8: Qualitaetsindikatoren
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 343-350
 > Das finale Set besteht aus 17 QI (QI 7 unbesetzt). 15 der 17 QI sind mit dem onkologischen Basisdatensatz der Krebsregister (Stand 11/2025) zu dokumentieren. Der Zaehler ist stets eine Teilmenge des Nenners.
 
 ---
 
-## QI 1: Weiterbehandlung der im Screening detektierten Mammakarzinome in zertifizierten Brustkrebszentren
+#### QI 1: Weiterbehandlung der im Screening detektierten Mammakarzinome in zertifizierten Brustkrebszentren
 
 ```yaml
 id: QI-1
@@ -63,7 +63,7 @@ fhir_mapping:
 
 ---
 
-## QI 2: Praetherapeutische histologische Sicherung
+#### QI 2: Praetherapeutische histologische Sicherung
 
 ```yaml
 id: QI-2
@@ -125,7 +125,7 @@ fhir_mapping:
 
 ---
 
-## QI 3: Intraoperative Praeparateradio-/-sonographie
+#### QI 3: Intraoperative Praeparateradio-/-sonographie
 
 ```yaml
 id: QI-3
@@ -181,7 +181,7 @@ fhir_mapping:
 
 ---
 
-## QI 4: Axillaere Lymphknotenentfernung bei DCIS
+#### QI 4: Axillaere Lymphknotenentfernung bei DCIS
 
 ```yaml
 id: QI-4
@@ -242,7 +242,7 @@ fhir_mapping:
 
 ---
 
-## QI 5: Endokrine Therapie als erste Therapieoption beim steroidrezeptorpositivem metastasierten Mammakarzinom
+#### QI 5: Endokrine Therapie als erste Therapieoption beim steroidrezeptorpositivem metastasierten Mammakarzinom
 
 ```yaml
 id: QI-5
@@ -309,7 +309,7 @@ fhir_mapping:
 
 ---
 
-## QI 6: Indikation zur Sentinel-Lymphknotenbiopsie
+#### QI 6: Indikation zur Sentinel-Lymphknotenbiopsie
 
 ```yaml
 id: QI-6
@@ -367,7 +367,7 @@ fhir_mapping:
 
 ---
 
-## QI 7: Therapie der axillären Lymphabflussgebiete bei pN1mi (unbesetzt 2025)
+#### QI 7: Therapie der axillären Lymphabflussgebiete bei pN1mi (unbesetzt 2025)
 
 ```yaml
 id: QI-7
@@ -395,7 +395,7 @@ fhir_mapping:
 
 ---
 
-## QI 8: Durchgefuehrte Strahlentherapie nach BET
+#### QI 8: Durchgefuehrte Strahlentherapie nach BET
 
 ```yaml
 id: QI-8
@@ -444,7 +444,7 @@ fhir_mapping:
 
 ---
 
-## QI 9: Endokrine Therapie bei rezeptorpositivem Befund
+#### QI 9: Endokrine Therapie bei rezeptorpositivem Befund
 
 ```yaml
 id: QI-9
@@ -495,7 +495,7 @@ fhir_mapping:
 
 ---
 
-## QI 10: Trastuzumab-basierte Therapie ueber ein Jahr bei HER2-positivem Befund
+#### QI 10: Trastuzumab-basierte Therapie ueber ein Jahr bei HER2-positivem Befund
 
 ```yaml
 id: QI-10
@@ -560,7 +560,7 @@ fhir_mapping:
 
 ---
 
-## QI 11: R0-Resektion bei invasivem Mammakarzinom
+#### QI 11: R0-Resektion bei invasivem Mammakarzinom
 
 ```yaml
 id: QI-11
@@ -613,7 +613,7 @@ fhir_mapping:
 
 ---
 
-## QI 12: Immunhistochemischer Befund des Oestrogen- u. Progesteronrezeptorstatus
+#### QI 12: Immunhistochemischer Befund des Oestrogen- u. Progesteronrezeptorstatus
 
 ```yaml
 id: QI-12
@@ -690,7 +690,7 @@ fhir_mapping:
 
 ---
 
-## QI 13: Immunhistochemischer Score des HER2-Status
+#### QI 13: Immunhistochemischer Score des HER2-Status
 
 ```yaml
 id: QI-13
@@ -750,7 +750,7 @@ fhir_mapping:
 
 ---
 
-## QI 14: Bestrahlung der regionalen Lymphabflussgebiete bei >= 4 befallenen axillären Lymphknoten
+#### QI 14: Bestrahlung der regionalen Lymphabflussgebiete bei >= 4 befallenen axillären Lymphknoten
 
 ```yaml
 id: QI-14
@@ -811,7 +811,7 @@ fhir_mapping:
 
 ---
 
-## QI 15: Trastuzumab-Emtansin bei nicht erreichter Komplettremission
+#### QI 15: Trastuzumab-Emtansin bei nicht erreichter Komplettremission
 
 ```yaml
 id: QI-15
@@ -877,7 +877,7 @@ fhir_mapping:
 
 ---
 
-## QI 16: Erfassung der moeglichen erblichen Belastung mittels Checkliste
+#### QI 16: Erfassung der moeglichen erblichen Belastung mittels Checkliste
 
 ```yaml
 id: QI-16
@@ -934,7 +934,7 @@ fhir_mapping:
 
 ---
 
-## QI 17: Praetherapeutische Tumorkonferenz
+#### QI 17: Praetherapeutische Tumorkonferenz
 
 ```yaml
 id: QI-17
@@ -990,7 +990,7 @@ fhir_mapping:
 
 ---
 
-## QI 18: Postoperative Tumorkonferenz
+#### QI 18: Postoperative Tumorkonferenz
 
 ```yaml
 id: QI-18
@@ -1050,7 +1050,7 @@ fhir_mapping:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 8 - Qualitaetsindikatoren
+#### Zusammenfassung: Gap-Analyse Kapitel 8 - Qualitaetsindikatoren
 
 | QI | Name | FHIR-Status | Zentrale FHIR-Datenobjekte | Handlungsbedarf |
 |----|------|-------------|---------------------------|-----------------|
@@ -1073,7 +1073,7 @@ fhir_mapping:
 | QI 17 | Praetherapeutische Tumorkonferenz | **gap** | Encounter, CarePlan | **NEU**: Tumorkonferenz-Encounter + zeitliche Abfolge |
 | QI 18 | Postoperative Tumorkonferenz | **gap** | Encounter, Procedure, CarePlan | **NEU**: Analog QI 17, nach OP |
 
-### Priorisierung fuer FHIR-Profil-Entwicklung
+##### Priorisierung fuer FHIR-Profil-Entwicklung
 
 1. **Hoechste Prioritaet** (direkt messbare Datenqualitaet):
    - QI 12 + QI 13: IHC-Details fuer ER/PR und HER2 - Ergaenzung bestehender Pathologie-Profile um Prozentsatz und Intensitaet
@@ -1085,7 +1085,7 @@ fhir_mapping:
 3. **Mittel** (bestehende QI mit partieller Abdeckung):
    - QI 2, 4, 6, 8, 9, 10, 14: Ergaenzung zeitlicher Bezuege und Therapielinie
 
-### Uebergreifende Datenobjekte fuer QI-Berechnung
+##### Uebergreifende Datenobjekte fuer QI-Berechnung
 
 Die folgenden Datenobjekte werden von MEHREREN QI benoetigt und sollten priorisiert modelliert werden:
 

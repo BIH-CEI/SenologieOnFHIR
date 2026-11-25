@@ -1,0 +1,2319 @@
+# PICO-annotierte Empfehlungen: AWMF 007-102OL (Speicheldrüsentumoren)
+# Leitlinie: S3-Leitlinie Speicheldrüsentumoren, AWMF-Reg.-Nr. 007-102OL, Version 1.0, Juli 2025
+# Quelle: Leitlinienprogramm Onkologie (DGfORL, DGMKG, DGHO u.a.)
+#
+# Felder:
+#   id          - Empfehlungsnummer aus der Leitlinie
+#   grade       - A | B | EK (Expertenkonsens) | Statement
+#   ev_level    - Evidenzlevel (1–5), leer bei EK
+#   consensus   - Konsensstärke
+#   text_de     - Empfehlungstext (Original)
+#   pico        - PICO-Annotation
+#     population    - P: ref auf EvidenceVariable-ID oder Freitext
+#     intervention  - I: Intervention (SNOMED-Code + Label)
+#     comparator    - C: Vergleich (kann leer sein)
+#     outcome       - O: Zielgröße(n)
+#   fhir_resource - Mapping zu ArtifactAssessment.artifactReference
+#   snomed_refs   - verwendete SNOMED-Codes
+#   notes         - Anmerkungen zur FHIR-Modellierung
+
+---
+# ══════════════════════════════════════════════════════
+# KAPITEL 3: DIAGNOSTIK
+# ══════════════════════════════════════════════════════
+
+- id: "3.1"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    PatientInnen mit einer schmerzlosen Schwellung oder Zeichen der Malignität der
+    Speicheldrüsen sollen beim primären, ambulanten Arztkontakt zur weiteren Abklärung
+    in eine spezialisierte Klinik überwiesen werden, die über eine Abteilung für MKG und/
+    oder HNO verfügt.
+  pico:
+    population:
+      ref: ev-spontaneous (nicht in Pilot-EVs)
+      description: >
+        PatientInnen mit schmerzloser Schwellung oder klinischen Malignitätszeichen
+        der Speicheldrüsenregion im primärärztlichen Erstkontakt
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Überweisung in spezialisierte MKG-/HNO-Klinik
+      snomed: []
+    comparator:
+      description: Weiterbehandlung im primärärztlichen Setting
+    outcome:
+      - Zeitnahigkeit der Diagnosestellung
+      - Differentialdiagnostische Trennschärfe
+  fhir_resource:
+    resourceType: ArtifactAssessment
+    artifactCanonical: https://www.awmf.org/leitlinien/detail/ll/007-102OL
+    content:
+      - type: comment
+        classifier:
+          - coding:
+              system: http://terminology.hl7.org/CodeSystem/certainty-type
+              code: overall
+        summary: "Starker Konsens; keine Evidenz vorhanden (EK)"
+  snomed_refs:
+    - 126787005  # Neoplasm of major salivary gland
+  notes: Überweisung als Prozedur nicht in SNOMED adressierbar; ArtifactAssessment.content.type=comment
+
+- id: "3.2"
+  grade: A
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Bei Raumforderungen der großen Speicheldrüsen soll die Sonografie als primäre
+    bildgebende Modalität gewählt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: PatientInnen mit Raumforderung einer großen Speicheldrüse
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Sonografie als primäre Bildgebung
+      snomed:
+        - code: "1671000087105"
+          display: "Ultrasonography of bilateral salivary glands"
+    comparator:
+      description: CT, MRT oder keine Bildgebung als Erstmodalität
+    outcome:
+      - Diagnostische Genauigkeit (Sensitivität/Spezifität)
+      - Verfügbarkeit und Strahlenexposition
+      - Differentialdiagnose benigne vs. maligne
+  fhir_resource:
+    resourceType: ArtifactAssessment
+    content:
+      - type: rating
+        classifier:
+          - coding:
+              system: http://terminology.hl7.org/CodeSystem/certainty-type
+              code: overallCertainty
+              display: Moderate certainty
+        summary: "Empfehlungsgrad A, Evidenzlevel 4; Sonografie Erstlinie"
+  snomed_refs:
+    - 126787005
+    - 1671000087105
+  notes: Empfehlungsgrad A trotz Evidenzlevel 4 aufgrund klinischer Plausibilität und Verfügbarkeit
+
+- id: "3.3"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Die Ultraschalluntersuchung sollte zur Beurteilung von zervikalen Lymphknoten
+    eingesetzt werden, da sie der CT und der PET-CT in Bezug auf Sensitivität und
+    Spezifität gleichwertig und der rein klinischen Untersuchung deutlich überlegen ist.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Speicheldrüsentumor und klinischer Frage nach zervikaler
+        Lymphknotenmetastasierung
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Ultraschall zervikaler Lymphknoten
+      snomed:
+        - code: "1671000087105"
+          display: "Ultrasonography of bilateral salivary glands"
+    comparator:
+      description: CT Hals oder FDG-PET/CT oder klinische Palpation
+      snomed:
+        - code: "1373815000"
+          display: "PET-CT using fluorodeoxyglucose (18-F)"
+    outcome:
+      - Sensitivität für N+ Detektion
+      - Spezifität
+      - Strahlenexposition
+  snomed_refs:
+    - 126787005
+    - 1671000087105
+    - 1373815000
+  notes: Stärke B wegen fehlender direkter Speicheldrüsen-Daten (Evidenz aus Hautkarzinomen extrapoliert)
+
+- id: "3.4"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Die MRT sollte bei bösartigen oder unklaren Läsionen insbesondere der kleinen
+    Speicheldrüsen und bei Tumoren, die den Zugang zum tiefen Parotislappen oder die
+    Schädelbasis betreffen, eingesetzt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Malignitätsverdacht oder Lokalisation tiefer Parotislappen /
+        kleine Speicheldrüsen / Schädelbasisbeteiligung
+      snomed:
+        - code: "126798006"
+          display: "Neoplasm of minor salivary gland"
+        - code: "45289007"
+          display: "Parotid gland structure"
+    intervention:
+      description: MRT der Speicheldrüsen (ggf. mit Kontrastmittel)
+      snomed:
+        - code: "241611001"
+          display: "MRI of salivary glands"
+    comparator:
+      description: CT oder alleinige Sonografie
+    outcome:
+      - Weichteilkontrast und Ausdehnungsbeurteilung
+      - Perineurale Ausbreitung (AdCC)
+      - Schädelbasisbeteiligung
+  snomed_refs:
+    - 126798006
+    - 45289007
+    - 241611001
+  notes: MRT besonders für AdCC-Perineuralausbreitung und kleine Speicheldrüsen
+
+- id: "3.5"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Bei High-grade-Karzinomen oder bei klinischem Verdacht auf Fernmetastasen sollte
+    eine FDG-PET/CT zur Ausbreitungsdiagnostik eingesetzt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-highgrade
+      description: Speicheldrüsenkarzinom High-grade oder klinischer Fernmetastasen-Verdacht
+      snomed:
+        - code: "397082006"
+          display: "Salivary duct carcinoma"
+    intervention:
+      description: FDG-PET/CT (Ganzkörper)
+      snomed:
+        - code: "1373815000"
+          display: "PET-CT using fluorodeoxyglucose (18-F)"
+    comparator:
+      description: CT Thorax/Abdomen allein
+    outcome:
+      - Fernmetastasen-Detektion (M-Staging)
+      - Einfluss auf Therapieentscheidung
+  snomed_refs:
+    - 397082006
+    - 1373815000
+    - 399409002
+
+- id: "3.8"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Tumoren der großen Speicheldrüsen ohne Verdacht auf Malignität sollte
+    primär eine operative Entfernung erfolgen.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: Raumforderung große Speicheldrüse ohne präoperativen Malignitätsverdacht
+      snomed:
+        - code: "255154009"
+          display: "Benign neoplasm of salivary gland"
+    intervention:
+      description: Operative Exzision (Exzisionsbiopsie / Parotidektomie)
+      snomed:
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Präoperative Zytologie/Histologie vor Operation
+    outcome:
+      - Vollständige histologische Aufarbeitung
+      - Komplikationsrate
+      - Rezidivrate
+  snomed_refs:
+    - 255154009
+    - 81870009
+
+- id: "3.9"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Tumoren der großen Speicheldrüsen mit Verdacht auf Malignität soll primär
+    entweder eine Feinnadelaspirationszytologie oder eine Hohlnadelbiopsie erfolgen.
+  pico:
+    population:
+      description: Raumforderung große Speicheldrüse mit Malignitätsverdacht
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: >
+        FNAC oder CNB zur histologischen/zytologischen Sicherung vor Operation
+      snomed:
+        - code: "323083008"
+          display: "Fine needle aspiration biopsy of salivary gland"
+        - code: "56872007"
+          display: "Core needle biopsy of salivary gland"
+    comparator:
+      description: Direkte operative Exzision ohne Vorsicherung
+    outcome:
+      - Therapieplanung (kurativ vs. palliativ)
+      - Differenzierte OP-Planung (Ausdehnung, Nerv)
+  snomed_refs:
+    - 126787005
+    - 323083008
+    - 56872007
+  notes: >
+    FNAC: hoch spezifisch (Statement 3.11), moderat sensitiv.
+    CNB: hoch sensitiv und spezifisch (Statement 3.12); bevorzugt bei Malignitätsverdacht.
+
+- id: "3.13"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Tumoren der kleinen Speicheldrüsen soll primär die vollständige Exzision erfolgen.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: Raumforderung der kleinen Speicheldrüsen (Mundhöhle/Rachen)
+      snomed:
+        - code: "87626005"
+          display: "Minor salivary gland structure"
+        - code: "126798006"
+          display: "Neoplasm of minor salivary gland"
+    intervention:
+      description: Vollständige Exzision (Exzisionsbiopsie)
+      snomed: []
+    comparator:
+      description: Inzisionsbiopsie oder Watch-and-Wait
+    outcome:
+      - Vollständige histologische Diagnose
+      - Rezidivfreiheit
+  snomed_refs:
+    - 87626005
+    - 126798006
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 4.1: CHIRURGIE – GUTARTIGE TUMOREN
+# ══════════════════════════════════════════════════════
+
+- id: "4.1"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei allen Eingriffen an der Gl. parotidea sollen Neuromonitoring und
+    Vergrößerungshilfen (Lupenbrille, Operationsmikroskop) verwendet werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: Alle PatientInnen mit geplantem operativen Eingriff an der Gl. parotidea
+      snomed:
+        - code: "45289007"
+          display: "Parotid gland structure"
+    intervention:
+      description: Intraoperatives Neuromonitoring N. facialis + Vergrößerungshilfen
+      snomed: []  # SNOMED-Lücke: kein Code für intraoperatives Neuromonitoring
+    comparator:
+      description: Operation ohne Neuromonitoring
+    outcome:
+      - Rate permanenter N.-facialis-Parese
+      - Rate transienter Parese
+  snomed_refs:
+    - 45289007
+  notes: >
+    Neuromonitoring: SNOMED-Lücke dokumentiert im Glossar.
+    N.-facialis-Parese-Rate ist das primäre Sicherheits-Outcome für Parotis-Chirurgie.
+
+- id: "4.2"
+  grade: B
+  ev_level: 2
+  consensus: Starker Konsens
+  text_de: >
+    Ist die Raumforderung in der Gl. parotidea klinisch benigne imponierend,
+    oberflächlich gelegen und verschieblich, sollte die extrakapsuläre Dissektion
+    einer lateralen Parotidektomie aufgrund des geringeren Komplikationsrisikos
+    bei gleicher Rezidivrate vorgezogen werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: >
+        Benigne Parotistumor: klinisch benigne, oberflächlich gelegen, verschieblich
+        (typisch: Pleomorphes Adenom, Warthin-Tumor)
+      snomed:
+        - code: "447888006"
+          display: "Pleomorphic adenoma of salivary gland"
+        - code: "448211002"
+          display: "Warthin's tumor of parotid gland"
+    intervention:
+      description: Extrakapsulare Dissektion (EKD)
+      snomed: []  # SNOMED-Lücke
+    comparator:
+      description: Laterale (partielle) Parotidektomie
+      snomed:
+        - code: "11150009"
+          display: "Partial parotidectomy"
+    outcome:
+      - Rezidivrate (Pleomorphes Adenom)
+      - Rate N.-facialis-Parese (transient + permanent)
+      - Frey-Syndrom-Rate
+      - Kosmetisches Ergebnis
+  snomed_refs:
+    - 447888006
+    - 448211002
+    - 11150009
+  notes: >
+    Evidenzlevel 2 (RCT-Daten und prospektive Studien);
+    EKD gleichwertig zur lateralen Parotidektomie bei Rezidivrate, weniger Komplikationen.
+    Variable concept_type=gap für EKD im Glossar.
+
+- id: "4.4"
+  grade: A
+  ev_level: 2
+  consensus: Starker Konsens
+  text_de: >
+    Die Enukleation eines Speicheldrüsentumors soll nicht durchgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: Benigne Speicheldrüsentumor (bes. Pleomorphes Adenom)
+      snomed:
+        - code: "447888006"
+          display: "Pleomorphic adenoma of salivary gland"
+    intervention:
+      description: Enukleation (isolierte Tumorentfernung ohne Sicherheitsabstand)
+      snomed: []
+    comparator:
+      description: EKD oder laterale Parotidektomie
+    outcome:
+      - Rezidivrate
+      - R0-Rate
+  snomed_refs:
+    - 447888006
+  notes: Negativempfehlung (nicht durchführen); höchste Rezidivrate durch Kapselrupturgefahr
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 4.2: CHIRURGIE – MALIGNE TUMOREN
+# ══════════════════════════════════════════════════════
+
+- id: "4.11"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Die Therapieempfehlung bei bösartigen Tumoren der Speicheldrüsen soll in der
+    interdisziplinären Tumorkonferenz, bestehend aus Vertretern der Fachrichtungen
+    MKG, HNO, Strahlentherapie, Onkologie, Radiologie und Pathologie, getroffen werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Alle PatientInnen mit histologisch gesichertem Speicheldrüsenkarzinom
+    intervention:
+      description: Interdisziplinäre Tumorkonferenz (Tumor Board) vor Therapiebeginn
+      snomed: []
+    comparator:
+      description: Unilaterale fachärztliche Therapieentscheidung
+    outcome:
+      - Therapiequalität (Leitlinienkonformität)
+      - Psychoonkologische Versorgung
+  notes: Prozessempfehlung (Strukturqualität); keine evidenzbasierte Vergleichsstudie
+
+- id: "4.14"
+  grade: A
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Die primäre Therapie eines Speicheldrüsenkarzinoms ohne Fernmetastasierung
+    besteht in der chirurgischen Resektion unter Mitnahme von umgebendem
+    Speicheldrüsenparenchym bis hin zur totalen Parotidektomie (R0-Resektion).
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Speicheldrüsenkarzinom ohne Fernmetastasierung (kurativ)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Chirurgische R0-Resektion (totale Parotidektomie bei Parotisbefall)
+      snomed:
+        - code: "13358001"
+          display: "Complete parotidectomy"
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Primäre Radiotherapie (definitiv)
+    outcome:
+      - Lokale Tumorkontrolle
+      - Gesamtüberleben
+      - R0-Rate
+  snomed_refs:
+    - 126787005
+    - 13358001
+    - 81870009
+    - 399409002
+  notes: >
+    Empfehlungsgrad A trotz Evidenzlevel 4: keine RCT-Evidenz für chirurgische Überlegenheit,
+    aber internationaler Expertenkonsens. Totale Parotidektomie bei fortgeschrittenen Tumoren,
+    High-grade, tiefem Pol.
+
+- id: "4.16"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Bei erhaltener präoperativer N.-facialis-Funktion und fehlender offensichtlicher
+    intraoperativer Tumorinfiltration sollte der Erhalt des N. facialis angestrebt werden.
+  pico:
+    population:
+      ref: ev-parotiskarzinom-fazialisinfiltration
+      description: >
+        Parotiskarzinom mit intakter präoperativer N.-facialis-Funktion
+        (kein Anhalt für Infiltration)
+      snomed:
+        - code: "45289007"
+          display: "Parotid gland structure"
+    intervention:
+      description: Nerverhaltende Parotidektomie
+      snomed:
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Radikale Parotidektomie mit Fazialisopferung
+    outcome:
+      - Lokale Tumorkontrolle
+      - Lebensqualität (Fazialisparese-Rate)
+      - Gesamtüberleben
+  snomed_refs:
+    - 45289007
+    - 81870009
+  notes: >
+    Mikroskopische Residuen an Fazialisästen durch adjuvante RT kontrollierbar (Hintergrund).
+
+- id: "4.25"
+  grade: A
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Bei einem positiven zervikalen Lymphknotenbefund in der prätherapeutischen Diagnostik
+    soll eine therapeutische, modifiziert radikale zervikale Lymphknotendissektion
+    durchgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Speicheldrüsenkarzinom mit positivem klinischen/bildgebenden LK-Befund (cN+)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Therapeutische modifiziert radikale Neck Dissection
+      snomed:
+        - code: "45685007"
+          display: "Radical neck dissection"
+    comparator:
+      description: Selektive Neck Dissection oder Watch-and-Wait
+    outcome:
+      - Regionäre Tumorkontrolle
+      - Gesamtüberleben
+      - Komplikationsrate
+  snomed_refs:
+    - 126787005
+    - 45685007
+
+- id: "4.26"
+  grade: A
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Bei High-grade-Histologien und Karzinomen mit High-grade-Transformation,
+    fortgeschrittener Tumorgröße (T3/T4) oder Tumoren der Ohrspeicheldrüse mit
+    extraparenchymalem Wachstum soll auch ohne Hinweis auf zervikale lymphogene
+    Aussaat (cN0) eine ipsilaterale elektive zervikale Lymphadenektomie erfolgen.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-highgrade
+      description: >
+        High-grade Karzinom ODER T3/T4 ODER extraparenchymatöses Wachstum, cN0
+      snomed:
+        - code: "397082006"
+          display: "Salivary duct carcinoma"
+        - code: "17264009"
+          display: "Carcinoma ex pleomorphic adenoma"
+    intervention:
+      description: Ipsilaterale elektive Neck Dissection (cN0)
+      snomed:
+        - code: "234246002"
+          display: "Selective neck dissection of cervical lymph nodes"
+    comparator:
+      description: Keine elektive ND (Beobachtung/Radiotherapie)
+    outcome:
+      - Regionäre Rezidivrate
+      - Gesamtüberleben
+      - Chirurgische Morbidität
+  snomed_refs:
+    - 397082006
+    - 17264009
+    - 234246002
+
+- id: "4.27"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Bei lokal fortgeschrittenen adenoid-zystischen Karzinomen (T3, T4) sollte
+    im cN0-Stadium eine elektive Neck Dissection durchgeführt werden.
+  pico:
+    population:
+      ref: ev-adcc-lokal-fortgeschritten
+      description: Adenoid-zystisches Karzinom T3/T4 cN0
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    intervention:
+      description: Elektive Neck Dissection bei AdCC T3/T4 cN0
+      snomed:
+        - code: "234246002"
+          display: "Selective neck dissection of cervical lymph nodes"
+    comparator:
+      description: Keine elektive ND / adjuvante RT des Halses
+    outcome:
+      - Regionäre Rezidivrate
+      - Fernmetastasen-freies Überleben
+      - Gesamtüberleben
+  snomed_refs:
+    - 11671000
+    - 234246002
+    - 396394004  # Perineuralscheideninfiltration als Effektmodifikator
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 4.3: NICHT-CHIRURGISCHE THERAPIE
+# ══════════════════════════════════════════════════════
+
+- id: "4.28"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Nach R1-Resektion oder bei Vorliegen von Risikofaktoren (High-grade, Perineuralscheideninfiltration,
+    T3/T4, positivem Lymphknotenbefall) sollte eine adjuvante Strahlentherapie
+    des Primärtumorbetts und der regionären Lymphabflusswege erfolgen.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-r1-indikation-rt
+      description: >
+        Speicheldrüsenkarzinom nach Resektion mit ≥1 Risikofaktor:
+        R1 / High-grade / PNI / T3-T4 / pN+
+      snomed:
+        - code: "396394004"
+          display: "Perineural invasion finding"
+    intervention:
+      description: Adjuvante Strahlentherapie (ggf. IMRT) des Tumorbetts + Hals
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Beobachtung / keine adjuvante Therapie nach Resektion
+    outcome:
+      - Lokoregionäre Kontrollrate (5 Jahre)
+      - Krankheitsfreies Überleben
+      - Gesamtüberleben
+      - Spättoxizitäten (Xerostomie, Trismus)
+  snomed_refs:
+    - 396394004
+    - 1287742003
+  notes: >
+    IMRT bevorzugt zur Schonung von Speicheldrüsen, Rückenmark, Hirnstamm
+    (SNOMED-Lücke dokumentiert im Glossar).
+
+- id: "4.29"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Inoperabilität soll eine definitive Strahlentherapie, ggf. in Kombination
+    mit einer Chemotherapie (Radiochemotherapie), durchgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Speicheldrüsenkarzinom, inoperabel (medizinisch oder lokal)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Definitive Radiotherapie ± Cisplatin (Radiochemotherapie)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+        - code: "387318005"
+          display: "Cisplatin"
+    comparator:
+      description: Systemtherapie allein / Best Supportive Care
+    outcome:
+      - Lokale Tumorkontrolle
+      - Gesamtüberleben
+      - Lebensqualität
+  snomed_refs:
+    - 126787005
+    - 1287742003
+    - 387318005
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 3: DIAGNOSTIK — weitere Empfehlungen
+# ══════════════════════════════════════════════════════
+
+- id: "3.6"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Verdacht auf eine Infiltration knöcherner Strukturen sollte eine
+    kontrastmittelverstärkte Computertomographie erfolgen.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: >
+        PatientInnen mit Speicheldrüsentumor und bildmorphologischem Verdacht
+        auf Infiltration knöcherner Strukturen (Mandibula, Schädelbasis)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Kontrastmittelverstärkte CT (Halsweichteile + Knochen)
+      snomed:
+        - code: "169069000"
+          display: "CT of head and neck"
+    comparator:
+      description: MRT allein ohne CT-Ergänzung
+    outcome:
+      - Nachweis/Ausschluss knöcherner Infiltration
+      - Therapieplanung (Resektionsausmaß)
+  snomed_refs:
+    - 126787005
+    - 169069000
+  notes: >
+    CT-Ergänzung zur MRT bei Verdacht auf Mandibula- oder Schädelbasisbeteiligung;
+    Weichteil- und Knochenfenster-Rekonstruktion erforderlich.
+
+- id: "3.7"
+  grade: Statement
+  ev_level: 2
+  consensus: Starker Konsens
+  text_de: >
+    Die PET-CT spielt in der Primärdiagnostik eine untergeordnete Rolle, kann jedoch
+    als ergänzende diagnostische Maßnahme eingesetzt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit klinischem Malignitätsverdacht eines Speicheldrüsentumors
+        in der Primärdiagnostik
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: FDG-PET/CT als Ergänzungsdiagnostik
+      snomed:
+        - code: "1373815000"
+          display: "PET-CT using fluorodeoxyglucose (18-F)"
+    comparator:
+      description: MRT + CT-Staging ohne PET
+    outcome:
+      - Diagnostische Genauigkeit (Sensitivität/Spezifität)
+      - Fernmetastasennachweis
+      - Therapeutische Konsequenz
+  snomed_refs:
+    - 126787005
+    - 1373815000
+  notes: >
+    Statement (kein Empfehlungsgrad): PET-CT ergänzend bei High-grade-Histologie,
+    Rezidivdiagnostik oder Fernmetastasensuche sinnvoll (Empf. 3.5 B).
+
+- id: "3.10"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Tumoren der großen Speicheldrüsen ohne Verdacht auf Malignität kann eine
+    Feinnadelaspirationszytologie oder eine Hohlnadelbiopsie präoperativ erwogen werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: >
+        PatientInnen mit Raumforderung der großen Speicheldrüse ohne präoperativen
+        Malignitätsverdacht
+      snomed:
+        - code: "255154009"
+          display: "Benign neoplasm of salivary gland"
+    intervention:
+      description: Optionale präoperative FNAC oder CNB
+      snomed:
+        - code: "323083008"
+          display: "Fine needle aspiration biopsy of salivary gland"
+        - code: "56872007"
+          display: "Core needle biopsy of salivary gland"
+    comparator:
+      description: Direkte operative Exzision ohne präoperative Biopsie
+    outcome:
+      - Histologische Diagnoserate
+      - Präoperative Therapieplanung
+  snomed_refs:
+    - 255154009
+    - 323083008
+    - 56872007
+  notes: >
+    "Kann" = keine obligate Empfehlung; präoperative Biopsie bei benignem Verdacht
+    ist optional, nicht Standard.
+
+- id: "3.11"
+  grade: Statement
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Die Feinnadelaspirationszytologie ist zum Nachweis von malignen Zellen aus
+    Tumoren der Glandula moderat sensitiv, aber hoch spezifisch.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Raumforderung der großen Speicheldrüse und durchgeführter FNAC
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Feinnadelaspirationszytologie (FNAC)
+      snomed:
+        - code: "323083008"
+          display: "Fine needle aspiration biopsy of salivary gland"
+    comparator:
+      description: Hohlnadelbiopsie (CNB) als Alternative
+    outcome:
+      - Sensitivität für Malignomnachweis
+      - Spezifität für Malignomnachweis
+  snomed_refs:
+    - 126787005
+    - 323083008
+  notes: >
+    Statement ohne Empfehlungsgrad; Sensitivität moderat (~74%), Spezifität hoch (~94%).
+    FHIR: DiagnosticReport.conclusion als narrativ; kein direkter SNOMED für Testkennzahlen.
+
+- id: "3.12"
+  grade: Statement
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Die Hohlnadelbiopsie ermöglicht eine histologische Untersuchung von Speicheldrüsentumoren
+    und ist daher zum Nachweis von malignen Tumoren hoch sensitiv und hoch spezifisch.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Raumforderung der Speicheldrüsen und durchgeführter Hohlnadelbiopsie
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Hohlnadelbiopsie (Core needle biopsy)
+      snomed:
+        - code: "56872007"
+          display: "Core needle biopsy of salivary gland"
+    comparator:
+      description: FNAC als Alternative
+    outcome:
+      - Sensitivität für Malignomnachweis
+      - Spezifität für Malignomnachweis
+      - Histologische Subtypisierbarkeit
+  snomed_refs:
+    - 126787005
+    - 56872007
+  notes: >
+    Statement ohne Empfehlungsgrad; CNB überlegen bei Histologietypisierung,
+    da Gewebearchitektur erhalten bleibt.
+
+- id: "3.14"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Wenn die vollständige Exzision nicht möglich ist, soll eine repräsentative Biopsie
+    bei Tumoren der kleinen Speicheldrüsen ohne größere begleitende Morbiditäten erfolgen.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Raumforderung der kleinen Speicheldrüsen, bei denen eine
+        vollständige Exzision nicht durchführbar ist (anatomisch ungünstige Lage, Ausdehnung)
+      snomed:
+        - code: "126798006"
+          display: "Neoplasm of minor salivary gland"
+    intervention:
+      description: Repräsentative Inzisionsbiopsie
+      snomed: []
+    comparator:
+      description: Feinnadelaspirationszytologie
+    outcome:
+      - Histologische Diagnoserate
+      - Therapieplanbarkeit
+  snomed_refs:
+    - 126798006
+  notes: >
+    Fallback-Empfehlung bei technisch nicht resezierbaren Raumforderungen
+    (z.B. Schädelbasisbeteiligung, sinunasaler Befall).
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 4.1: CHIRURGIE GUTARTIG — weitere Empfehlungen
+# ══════════════════════════════════════════════════════
+
+- id: "4.3"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Die Enukleation eines Speicheldrüsentumors soll nicht durchgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsentumor-benigne-parotis
+      description: >
+        PatientInnen mit benignem Parotistumor, Indikationsstellung zur operativen Therapie
+      snomed:
+        - code: "255154009"
+          display: "Benign neoplasm of salivary gland"
+    intervention:
+      description: Enukleation (intrakapsuläre Dissektion)
+      snomed:
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Extrakapsuläre Dissektion oder laterale Parotidektomie
+    outcome:
+      - Lokalrezidivrate (~40% bei Enukleation)
+      - Komplikationsrate N. facialis
+  snomed_refs:
+    - 255154009
+    - 81870009
+  notes: >
+    Enukleation heute als obsolet geltend; Rezidivrate ~40% aufgrund Kapselrisse.
+    Contraindication-Empfehlung: ArtifactAssessment.content.type=contraindication.
+
+- id: "4.5"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei unklarer Histologie im Schnellschnitt hinsichtlich der Malignität soll primär
+    keine Resektion des N. facialis durchgeführt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit intraoperativer Schnellschnittuntersuchung bei unklarer
+        Dignität des Parotistumors
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Nerverhalt bei unklarem Schnellschnitt
+      snomed: []
+    comparator:
+      description: Prophylaktische Nervresektion bei histologischer Unsicherheit
+    outcome:
+      - N.-facialis-Funktion
+      - Onkologische Sicherheit (R0-Rate)
+  snomed_refs:
+    - 126787005
+  notes: >
+    N.-facialis-Parese hat keine SNOMED-Lücken-Annotation (gap im Glossar);
+    klinische Befund-Observation (House-Brackmann).
+
+- id: "4.6"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei unerwarteter Diagnose eines Malignoms im Schnellschnitt sollte unmittelbar
+    eine totale (ggf. laterale) Parotidektomie, ggf. mit Neck Dissection durchgeführt
+    werden, sofern der Patient präoperativ über diese Option aufgeklärt wurde.
+  pico:
+    population:
+      description: >
+        PatientInnen mit intraoperativ gesichertem Malignom in der Schnellschnittuntersuchung,
+        präoperativ über Konsequenzen aufgeklärt
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: >
+        Unmittelbare komplettierende Parotidektomie + ggf. Neck Dissection in gleicher Sitzung
+      snomed:
+        - code: "13358001"
+          display: "Complete parotidectomy"
+        - code: "234246002"
+          display: "Selective neck dissection of cervical lymph nodes"
+    comparator:
+      description: Zweizeitiges Vorgehen (erster Eingriff, dann Komplettierung)
+    outcome:
+      - Lokalrezidivrate
+      - R0-Resektionsrate
+      - Morbidität (N. facialis, Wundheilung)
+  snomed_refs:
+    - 126787005
+    - 13358001
+    - 234246002
+  notes: >
+    Voraussetzung: präoperative Patientenaufklärung über mögliche Malignomdiagnose.
+    Einzeitiges Vorgehen reduziert Zweitmorbidität durch Vermeidung von Vernarbungen.
+
+- id: "4.7"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Beim Vorliegen eines Tumors in der Glandula submandibularis soll eine vollständige
+    Entfernung der Drüse im Sinne einer Submandibulektomie erfolgen.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Raumforderung der Glandula submandibularis (benigne oder maligne)
+      snomed:
+        - code: "385296007"
+          display: "Submandibular salivary gland structure"
+    intervention:
+      description: Submandibulektomie (vollständige Drüsenexstirpation)
+      snomed:
+        - code: "47227006"
+          display: "Excision of submandibular gland"
+    comparator:
+      description: Partielle Resektion / Exzisionsbiopsie
+    outcome:
+      - R0-Resektionsrate
+      - Lokalrezidivrate
+      - Komplikationen (N. lingualis, N. hypoglossus, Ramus marginalis)
+  snomed_refs:
+    - 385296007
+    - 47227006
+  notes: >
+    Submandibulektomie ist Standard für alle Tumoren der Gl. submandibularis;
+    kein Unterschied benigne/maligne in der Basisprozedur.
+
+- id: "4.8"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Ein gutartiger, von den Speicheldrüsen ausgehender Tumor am Gaumen kann auch ohne
+    knöcherne Resektion subperiostal reseziert werden. Liegt ein gutartiger Speicheldrüsentumor
+    im Weichgewebe vor, kann dieser mit knappem Sicherheitsabstand reseziert werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit gutartigem Tumor der kleinen Speicheldrüsen des Gaumens
+        oder anderer Weichgewebelokalisation
+      snomed:
+        - code: "255154009"
+          display: "Benign neoplasm of salivary gland"
+        - code: "87626005"
+          display: "Minor salivary gland structure"
+    intervention:
+      description: Subperiostale Resektion (Gaumen) oder Weichgewebsresektion mit Sicherheitsabstand
+      snomed: []
+    comparator:
+      description: Resektion mit knöchernem Anteil (Osteotomie)
+    outcome:
+      - R0-Resektionsrate
+      - Lokalrezidivrate
+      - Funktionserhalt (Schlucken, Sprechen)
+  snomed_refs:
+    - 255154009
+    - 87626005
+  notes: >
+    "Kann" = Ermessenspielraum; subperiostale Technik möglich bei gutartigem Gaumentumor
+    ohne Knochen-Invasion.
+
+- id: "4.9"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Rezidivierte benigne Speicheldrüsentumoren sollen primär chirurgisch therapiert werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Rezidiv eines benignen Speicheldrüsentumors nach Voroperation
+      snomed:
+        - code: "255154009"
+          display: "Benign neoplasm of salivary gland"
+    intervention:
+      description: Chirurgische Rezidivresektion
+      snomed:
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Adjuvante Strahlentherapie ohne chirurgische Resektion
+    outcome:
+      - Langfristige Rezidivfreiheit
+      - Komplikationsrate (Fazialisläsion bei Rezidiv-OP)
+  snomed_refs:
+    - 255154009
+    - 81870009
+  notes: >
+    Rezidiv-OP ist anspruchsvoll wegen Vernarbung; Fazialismonitoring obligat.
+
+- id: "4.10"
+  grade: EK
+  consensus: Konsens
+  text_de: >
+    Beim rezidivierten pleomorphen Adenom der Gl. parotidea sollte je nach Lokalisation
+    (lateral oder median) und Konfiguration (uni- oder multinodulär) eine laterale oder totale
+    Parotidektomie unter intraoperativem Neuromonitoring durchgeführt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Rezidiv eines pleomorphen Adenoms der Glandula parotidea,
+        ein- oder mehrfach rezidiviert
+      snomed:
+        - code: "447888006"
+          display: "Pleomorphic adenoma of salivary gland"
+    intervention:
+      description: >
+        Laterale oder totale Parotidektomie je nach Ausdehnung + intraoperatives Neuromonitoring
+      snomed:
+        - code: "11150009"
+          display: "Partial parotidectomy"
+        - code: "13358001"
+          display: "Complete parotidectomy"
+    comparator:
+      description: Erneute limitierte Resektion / Exzision
+    outcome:
+      - Rezidivfreiheit
+      - Fazialisläsionsrate
+  snomed_refs:
+    - 447888006
+    - 11150009
+    - 13358001
+  notes: >
+    Konsensgrad "Konsens" (nicht "Starker Konsens") wegen variablem Vorgehen.
+    Multilokuläre Rezidive erfordern oft totale Parotidektomie.
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 4.2: CHIRURGIE MALIGNE — weitere Empfehlungen
+# ══════════════════════════════════════════════════════
+
+- id: "4.12"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Ab der Diagnosestellung eines bösartigen Speicheldrüsentumors soll dem Patienten/
+    der Patientin eine Beratung durch die Psychoonkologie angeboten werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: >
+        PatientInnen mit gesicherter Erstdiagnose eines Speicheldrüsenmalignoms
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Psychoonkologische Erstberatung bei Diagnosestellung
+      snomed: []
+    comparator:
+      description: Keine psychoonkologische Beratung
+    outcome:
+      - Distress-Reduktion
+      - Therapieadhärenz
+      - Lebensqualität
+  snomed_refs:
+    - 126787005
+  notes: >
+    Psychoonkologie als strukturelles Versorgungselement; Qualitätsindikator (QI 3)
+    in der Leitlinie definiert.
+
+- id: "4.13"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Patient*innen sollen mehrfach und ausführlich über die Bedeutung der Diagnose,
+    die Möglichkeiten der Therapien, deren Alternativen mit Vor- und Nachteilen,
+    sowie mögliche Folgestörungen aufgeklärt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: PatientInnen mit Speicheldrüsenkarzinom vor und während Therapie
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Strukturierte, iterative Patientenaufklärung
+      snomed: []
+    comparator:
+      description: Einmalige Aufklärung
+    outcome:
+      - Patientenautonomie (informed consent)
+      - Shared decision making
+  snomed_refs:
+    - 126787005
+  notes: >
+    Aufklärung als Prozessqualitätsmerkmal; nicht über SNOMED abbildbar.
+    ArtifactAssessment.content.type=comment.
+
+- id: "4.15"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei histologisch gesicherten primären Speicheldrüsenkarzinomen der Gl. parotidea soll
+    die totale Parotidektomie erfolgen. Bei kleinen, niedrig-malignen Karzinomen im
+    superfiziellen Blatt ohne direkten Bezug zum N. facialis kann eine laterale Parotidektomie
+    ausreichend sein, sofern ein den Tumor umgebender Saum gesunden Parotisgewebes
+    gewährleistet werden kann.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: >
+        PatientInnen mit histologisch gesichertem Karzinom der Gl. parotidea
+        (alle Grading-Stufen, kurativer Ansatz)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Totale Parotidektomie (Standard) oder laterale Parotidektomie (small low-grade)
+      snomed:
+        - code: "13358001"
+          display: "Complete parotidectomy"
+        - code: "11150009"
+          display: "Partial parotidectomy"
+    comparator:
+      description: Partielle Resektion ohne Nervenidentifikation
+    outcome:
+      - R0-Resektionsrate
+      - Lokale Tumorkontrolle
+      - Fazialiserhalt
+  snomed_refs:
+    - 126787005
+    - 13358001
+    - 11150009
+  notes: >
+    "Kann"-Variante für kleine low-grade Tumoren im superfiziellen Blatt; erfordert
+    tumorumgebenden Sicherheitssaum aus gesundem Parenchym.
+
+- id: "4.17"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Im Falle eines adenoid-zystischen Karzinoms kann bei präoperativ eingeschränkter
+    Funktion des N. facialis und/oder intraoperativer Infiltration des Nervs durch die
+    selektive Entfernung infiltrierter Äste die lokale Kontrolle verbessert und somit
+    das Risiko eines Lokalrezidivs gesenkt werden.
+  pico:
+    population:
+      ref: ev-parotiskarzinom-fazialisinfiltration
+      description: >
+        PatientInnen mit adenoid-zystischem Karzinom der Gl. parotidea und
+        präoperativer Fazialisparese oder intraoperativer Nervinfiltrationszeichen
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    intervention:
+      description: Selektive Resektion infiltrierter N.-facialis-Äste
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    comparator:
+      description: Nerverhalt trotz Infiltration / adjuvante RT als alleinige Maßnahme
+    outcome:
+      - Lokale Tumorkontrollrate
+      - Lokalrezidivrisiko
+  snomed_refs:
+    - 11671000
+    - 396394004  # Perineuralscheideninfiltration
+  notes: >
+    "Kann"-Empfehlung wegen schwacher Evidenz (2 retrospektive Kohortenstudien, n<60);
+    selektive Nervresektion bei AdCC mit Fazialis-Infiltration sinnvoll.
+
+- id: "4.18"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Beim adenoid-zystischen Karzinom mit Infiltration des N. facialis sollte alternativ
+    zur Nervresektion eine adjuvante Strahlentherapie angeboten werden.
+  pico:
+    population:
+      ref: ev-parotiskarzinom-fazialisinfiltration
+      description: >
+        PatientInnen mit adenoid-zystischem Karzinom und Infiltration des N. facialis,
+        bei denen Nerverhalt angestrebt wird
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    intervention:
+      description: Adjuvante Strahlentherapie als Alternative zur Nervresektion
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Nervresektion (selektiv oder komplett)
+    outcome:
+      - Lokale Tumorkontrolle
+      - Fazialiserhalt und -funktion
+      - Lebensqualität
+  snomed_refs:
+    - 11671000
+    - 1287742003
+    - 396394004
+  notes: >
+    Adjuvante RT kann mikroskopischen Residualtumor an Fazialisästen kontrollieren;
+    ermöglicht Nerverhalt bei geringem Rezidivrisiko.
+
+- id: "4.19"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei unerwarteter postoperativer Histologie eines primären Speicheldrüsenkarzinoms
+    der Gl. parotidea kann bei oberflächlich gelegenem T1-2 low-grade Tumor, welcher
+    in sano entfernt wurde, auf eine Komplettierung in Form einer totalen Parotidektomie
+    verzichtet werden. Bei allen anderen Fällen einer unerwarteten Histologie eines
+    primären Speicheldrüsenkarzinoms soll eine komplettierende totale Parotidektomie erfolgen.
+  pico:
+    population:
+      description: >
+        PatientInnen mit postoperativ gesichertem Malignom nach initial als benigne
+        geplanter Parotisoperation
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Komplettierende totale Parotidektomie
+      snomed:
+        - code: "13358001"
+          display: "Complete parotidectomy"
+    comparator:
+      description: Nachsorge ohne Komplettierungsoperation (bei T1-2 low-grade, R0)
+    outcome:
+      - Lokale Tumorkontrollrate
+      - R0-Resektionsrate
+  snomed_refs:
+    - 126787005
+    - 13358001
+  notes: >
+    Ausnahme: T1-2, low-grade, R0, superfiziell gelegen → kein Komplettierungseingriff nötig.
+    Bei allen anderen: komplettierende OP obligat.
+
+- id: "4.20"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Bei einer Re-Operation zur Komplettierung sollte der Nervus facialis erhalten werden,
+    sofern er nicht adhärent erscheint, sondern sich gut vom Tumor lösen lässt.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Re-Operation zur Komplettierung nach initial unerwarteter
+        Malignomdiagnose (Parotis)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Nerverhaltende Re-Parotidektomie bei nicht-adhärentem N. facialis
+      snomed:
+        - code: "13358001"
+          display: "Complete parotidectomy"
+    comparator:
+      description: Nervresektion bei Re-Operation
+    outcome:
+      - Fazialiserhalt und -funktion
+      - Lokale Tumorkontrollrate
+  snomed_refs:
+    - 126787005
+    - 13358001
+  notes: >
+    Re-Operation nach Vernarbung erhöht Nervenrisiko; Nerverhalt wenn anatomisch möglich.
+
+- id: "4.21"
+  grade: Statement
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Im Falle eines ausgedehnten Primarius oder Rezidivs eines Malignoms der Glandula parotidea
+    kann die Entfernung von Anteilen des Schläfenbeins und/oder des Mastoids zur Darstellung
+    des proximalen Nervus facialis sowie einer möglichen Tumorinfiltration die onkologische
+    Sicherheit der Tumorresektion erhöhen. Der Erhalt des Nervus facialis ist in vielen dieser
+    Fälle nicht möglich.
+  pico:
+    population:
+      description: >
+        PatientInnen mit ausgedehntem Parotiskarzinom oder Rezidiv mit Schläfenbein-/
+        Mastoid-Beteiligung
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Schläfenbein-/Mastoidresektion zur Fazialisdarstellung
+      snomed: []
+    comparator:
+      description: Resektion ohne Schädelbasisbeteiligung
+    outcome:
+      - Onkologische Sicherheit (R0-Rate)
+      - Lokalrezidivrisiko
+  snomed_refs:
+    - 126787005
+  notes: >
+    Statement (kein Empfehlungsgrad); Schädelbasischirurgie bei fortgeschrittenen Tumoren.
+
+- id: "4.22"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Maligne intrakapsuläre Karzinome der Gl. submandibularis sollen in Form einer
+    Submandibulektomie mit Neck Dissection der Level I-III therapiert werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit intrakapsulär verbliebenem Karzinom der Glandula submandibularis
+      snomed:
+        - code: "385296007"
+          display: "Submandibular salivary gland structure"
+    intervention:
+      description: Submandibulektomie + ipsilaterale Neck Dissection Level I-III
+      snomed:
+        - code: "47227006"
+          display: "Excision of submandibular gland"
+        - code: "234246002"
+          display: "Selective neck dissection of cervical lymph nodes"
+    comparator:
+      description: Submandibulektomie ohne Neck Dissection
+    outcome:
+      - Regionäre Rezidivrate
+      - Gesamtüberleben
+  snomed_refs:
+    - 385296007
+    - 47227006
+    - 234246002
+  notes: >
+    Neck Dissection Level I-III bei Gl.-submandibularis-Karzinomen Standard;
+    Nervschonung (N. lingualis, N. hypoglossus, Ramus marginalis) angestrebt.
+
+- id: "4.23"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Beim Vorliegen eines Karzinoms der kleinen Speicheldrüsen oder der Glandula sublingualis
+    sollte dieses – sofern möglich – mit einem ausreichenden klinischen Sicherheitsabstand
+    en bloc reseziert werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Karzinom der kleinen Speicheldrüsen oder Glandula sublingualis
+      snomed:
+        - code: "126798006"
+          display: "Neoplasm of minor salivary gland"
+        - code: "88481005"
+          display: "Sublingual gland structure"
+    intervention:
+      description: En-bloc-Resektion mit klinischem Sicherheitsabstand
+      snomed: []
+    comparator:
+      description: Inzisionsbiopsie / Teilresektion
+    outcome:
+      - R0-Resektionsrate
+      - Lokalrezidivrate
+  snomed_refs:
+    - 126798006
+    - 88481005
+  notes: >
+    En-bloc mit Sicherheitsabstand; anatomische Nachbarschaft (Schädelbasis, Periorbita)
+    erschwert bei AdCC häufig R0.
+
+- id: "4.24"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Beim Vorliegen eines adenoid-zystischen Karzinoms der kleinen Speicheldrüsen oder der
+    Glandula sublingualis lässt das perineurale Wachstum in vielen Fällen keine R0-Resektion
+    zu, so dass diese Tumoren dann postoperativ radiotherapiert werden sollten.
+  pico:
+    population:
+      description: >
+        PatientInnen mit adenoid-zystischem Karzinom der kleinen Speicheldrüsen/
+        Glandula sublingualis mit perineuralem Wachstum
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+        - code: "396394004"
+          display: "Perineural invasion finding"
+    intervention:
+      description: Adjuvante Radiotherapie nach nicht-R0-Resektion
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Nachsorge ohne adjuvante RT
+    outcome:
+      - Lokale Tumorkontrolle
+      - Progressionsfreies Überleben
+  snomed_refs:
+    - 11671000
+    - 396394004
+    - 1287742003
+  notes: >
+    AdCC kleine Speicheldrüsen: perineurales Wachstum → R0 oft nicht erreichbar;
+    adjuvante RT obligat.
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 4.3: NICHT-CHIRURGISCHE THERAPIE — weitere
+# ══════════════════════════════════════════════════════
+
+- id: "4.28_pleom"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Beim Rezidiv eines pleomorphen Adenoms kann eine adjuvante Strahlentherapie
+    erwogen werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Rezidiv eines pleomorphen Adenoms (benigne), insbesondere
+        nach mehrfachen Voroperationen
+      snomed:
+        - code: "447888006"
+          display: "Pleomorphic adenoma of salivary gland"
+    intervention:
+      description: Adjuvante Strahlentherapie (50–59,4 Gy) nach Rezidivresektion
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Nur chirurgische Rezidivresektion ohne RT
+    outcome:
+      - Erneute Rezidivrate
+      - Komplikationen (Xerostomie, Trismus)
+  snomed_refs:
+    - 447888006
+    - 1287742003
+  notes: >
+    ID-Suffix "_pleom" zur Unterscheidung von 4.28 (adjuvante RT nach R1-Resektion);
+    Kapitel 4.3.1.1 der Leitlinie. Dosis 50,0–59,4 Gy normofraktioniert.
+
+- id: "4.29_postop_rt"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Eine postoperative Strahlentherapie soll durchgeführt werden bei: Vorliegen von mindestens
+    einem der folgenden Risikofaktoren: T3-4 Tumor, high-grade Tumor, Vorliegen von
+    Lymphknotenmetastasierung, positivem Resektionsrand (<1 mm), Perineuralscheideninfiltration,
+    Lymphgefäß- oder Blutgefäßinvasion (L1 oder V1); allen adenoidzystischen Karzinomen.
+    Eine postoperative Strahlentherapie kann durchgeführt werden bei Intermediate-grade Tumoren
+    und knappem Resektionsrand (1–3 mm).
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-r1-indikation-rt
+      description: >
+        Speicheldrüsenkarzinom nach Resektion mit ≥1 Risikofaktor (T3/T4, High-grade,
+        Lymphknotenbefall, R+ <1mm, PNI, L1/V1) oder AdCC jeder Lokalisation
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "396394004"
+          display: "Perineural invasion finding"
+    intervention:
+      description: Postoperative adjuvante Strahlentherapie (RT)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Nachsorge ohne adjuvante RT nach Resektion
+    outcome:
+      - Lokoregionäre Kontrollrate
+      - Krankheitsfreies Überleben
+      - Gesamtüberleben
+  snomed_refs:
+    - 126787005
+    - 396394004
+    - 1287742003
+    - 11671000
+  notes: >
+    Ausführlichste RT-Indikationsempfehlung der Leitlinie (Kapitel 4.3.1.2.1);
+    Qualitätsindikator (QI 8) in der Leitlinie. ID-Suffix zur Unterscheidung von
+    bestehendem 4.29 (definitiv RT bei Inoperabilität).
+
+- id: "4.30"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Eine definitive Strahlentherapie soll bei lokaler Inoperabilität oder bei
+    patientenbezogener Kontraindikation für eine Operation durchgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: >
+        PatientInnen mit Speicheldrüsenkarzinom, lokal inoperabel oder
+        allgemein operationskontraindiziert
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Definitive Strahlentherapie (Primärtherapie, kein OP)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Systemtherapie allein / Best Supportive Care
+    outcome:
+      - Lokale Tumorkontrolle
+      - Gesamtüberleben
+  snomed_refs:
+    - 126787005
+    - 1287742003
+  notes: >
+    Definitive RT bei Inoperabilität; Dosis ≥72 Gy normofraktioniert (Empf. 4.35).
+
+- id: "4.31"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Für die Definition des Zielvolumens in der postoperativen (adjuvanten) Situation sollen die
+    präoperative Bildgebung, der Operationsbericht, der histopathologische Befund, die
+    postoperative Bildgebung (Bestrahlungsplanungs-CT mit Kontrastmittel) oder bei
+    vorhandenem Resttumor ein postoperatives MRT mit Kontrastmittel berücksichtigt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-r1-indikation-rt
+      description: Speicheldrüsenkarzinom mit Indikation zur adjuvanten RT
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Zielvolumendefinition für adjuvante RT (multimodale Bildgebung)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Zielvolumendefinition nur anhand klinischer Untersuchung
+    outcome:
+      - Genauigkeit der Zielvolumenkonturierung
+      - Rate an marginalen Lokalrezidiven
+  snomed_refs:
+    - 126787005
+    - 1287742003
+  notes: >
+    Prozessempfehlung für Strahlentherapieplanung; Bestrahlungsplanungs-CT obligat.
+
+- id: "4.32"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Für die Definition des Zielvolumens zur definitiven Therapie sollen die prätherapeutische
+    Bildgebung, der histopathologische Befund, ein Bestrahlungsplanungs-CT mit Kontrastmittel
+    und ein MRT der Tumorregion mit Kontrastmittel berücksichtigt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Speicheldrüsenkarzinom mit Indikation zur definitiven RT
+        (inoperabel oder Kontraindikation OP)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Zielvolumendefinition für definitive RT (Planungs-CT + MRT)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Zielvolumendefinition nur anhand CT
+    outcome:
+      - Konturierungsgenauigkeit
+      - Lokale Tumorkontrollrate
+  snomed_refs:
+    - 126787005
+    - 1287742003
+
+- id: "4.33"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Das Zielvolumen in der postoperativen Situation soll die ehemalige Primärtumorregion,
+    die Resektionshöhle sowie befallene Lymphknotenlevel (high-risk clinical target volume)
+    enthalten. Darüber hinaus soll ein elektives clinical target volume ergänzt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-r1-indikation-rt
+      description: Speicheldrüsenkarzinom nach Resektion mit adjuvanter RT-Indikation
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Zielvolumendefinition high-risk CTV + elektives CTV
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Einheitliches Zielvolumen ohne Risikozonendifferenzierung
+    outcome:
+      - Lokale Tumorkontrollrate
+      - Kritische Organschonung
+  snomed_refs:
+    - 126787005
+    - 1287742003
+
+- id: "4.34"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Das Zielvolumen in der definitiven Situation soll den makroskopischen Tumor und die
+    regionären Lymphabflussgebiete einschließen (high-risk CTV). Ein elektives CTV soll
+    bei T3/T4 Tumoren, high-grade Tumoren, Mukoepidermoid- und Adenokarzinomen sowie
+    bei Lymphknotenbefall ergänzt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit inoperablem Speicheldrüsenkarzinom in definitiver RT-Situation
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Zielvolumendefinition für definitive RT mit makroskopischem Tumor
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Zielvolumen ohne elektive Lymphabflussbestrahlung
+    outcome:
+      - Regionäre Kontrollrate
+      - Fernmetastasenrate
+  snomed_refs:
+    - 126787005
+    - 1287742003
+
+- id: "4.35"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Dosisverschreibung in der postoperativen Situation: Im high-risk PTV sollte normofraktioniert
+    eine Dosis von mindestens 60 Gy und im Falle eines knappen/positiven Resektionsrandes
+    und/oder einer Perineuralscheideninfiltration mindestens 64–66 Gy appliziert werden.
+    Im elektiven PTV sollte eine Dosis von 50 Gy appliziert werden.
+    Dosisverschreibung in der definitiven Situation: Im high-risk PTV soll normofraktioniert
+    eine Dosis von mindestens 72 Gy appliziert werden. Im elektiven PTV soll eine Dosis
+    von 50 Gy appliziert werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-r1-indikation-rt
+      description: >
+        Speicheldrüsenkarzinom mit adjuvanter oder definitiver RT-Indikation
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Normofraktionierte Radiotherapie (60–66 Gy adjuvant; ≥72 Gy definitiv)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Hypofraktionierung / andere Dosisregimes
+    outcome:
+      - Lokale Tumorkontrollrate
+      - Spättoxizität (Xerostomie, Fibrose)
+  snomed_refs:
+    - 126787005
+    - 1287742003
+    - 396394004
+  notes: >
+    Qualitätsindikator (QI 10): ≥72 Gy im high-risk PTV bei definitiver RT.
+
+- id: "4.36"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Unabhängig vom Therapieziel sollen hochkonformale Bestrahlungstechniken (z.B. IMRT, VMAT)
+    angewendet werden, um die Dosis in der Tumorregion adäquat zu applizieren und das in der
+    Nähe gelegene Gewebe oder bestrahlungssensitive Organe zu schonen.
+    Zudem soll mittels adäquater Bildgebung die Patientenposition regelmäßig am
+    Bestrahlungsgerät kontrolliert werden.
+  pico:
+    population:
+      description: Speicheldrüsenkarzinom mit Strahlentherapieindikation (adjuvant oder definitiv)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: IMRT/VMAT-Technik mit bildgeführter Bestrahlung (IGRT)
+      snomed: []
+    comparator:
+      description: Konventionelle 3D-konformale Radiotherapie
+    outcome:
+      - Risikoorganbelastung (Xerostomie, Gehör)
+      - Lokale Tumorkontrolle
+  snomed_refs:
+    - 126787005
+    - 1287742003
+  notes: >
+    IMRT als SNOMED-Lücke dokumentiert im Glossar; hier über Freitext-Intervention modelliert.
+
+- id: "4.37"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Die Partikeltherapie kann als mögliche Alternative zur Bestrahlung mit Photonen
+    evaluiert werden, sofern eine bessere Dosisapplikation in der Nähe kritischer Risikoorgane
+    zu erreichen ist.
+  pico:
+    population:
+      description: >
+        Speicheldrüsenkarzinom mit RT-Indikation, insbesondere bei kritischer Lage
+        zu Risikoorganen (Hirnstamm, Rückenmark, Innenohr, Sehnerv)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Partikeltherapie (Protonen, Kohlenstoffionen)
+      snomed: []
+    comparator:
+      description: Photonenbasierte IMRT/VMAT
+    outcome:
+      - Lokale Tumorkontrolle
+      - Toxizität Risikoorgane
+  snomed_refs:
+    - 126787005
+  notes: >
+    "Kann"-Empfehlung; Partikeltherapie insbesondere bei AdCC in Schädelbassnähe evaluieren.
+
+- id: "4.38"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    In der adjuvanten Therapiesituation des Primarius kann eine Cisplatin-haltige kombinierte
+    Radiochemotherapie indiziert sein.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-r1-indikation-rt
+      description: >
+        Speicheldrüsenkarzinom nach Resektion mit adjuvanter RT-Indikation und
+        Eignung für kombinierte Radiochemotherapie
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Adjuvante Radiochemotherapie (RT + Cisplatin)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+        - code: "387318005"
+          display: "Cisplatin"
+    comparator:
+      description: Adjuvante RT allein ohne Chemotherapie
+    outcome:
+      - Lokale Tumorkontrolle
+      - Gesamtüberleben
+      - Toxizität
+  snomed_refs:
+    - 126787005
+    - 1287742003
+    - 387318005
+  notes: >
+    "Kann"-Empfehlung; kein prospektiver Überlebensvorteil belegt; mögliche Verbesserung
+    der lokalen Kontrolle bei AdCC unter Cisplatin-Zugabe.
+
+- id: "4.39"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    In der definitiven Therapiesituation kann simultan zur Radiotherapie eine
+    Cisplatin-haltige Chemotherapie angeboten werden.
+  pico:
+    population:
+      description: >
+        Inoperables Speicheldrüsenkarzinom mit Indikation zur definitiven RT,
+        geeignet für simultane Chemotherapie
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Definitive simultane Radiochemotherapie (RT + Cisplatin)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+        - code: "387318005"
+          display: "Cisplatin"
+    comparator:
+      description: Definitive RT allein
+    outcome:
+      - Lokoregionäre Kontrollrate
+      - Gesamtüberleben
+  snomed_refs:
+    - 126787005
+    - 1287742003
+    - 387318005
+
+# ══════════════════════════════════════════════════════
+# KAPITEL 5: NACHSORGE UND REZIDIV/METASTASIERUNG
+# ══════════════════════════════════════════════════════
+
+- id: "5.1"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Unabhängig vom Bestehen von Beschwerden soll bei Speicheldrüsenkarzinomen eine
+    regelmäßige klinische Kontrolluntersuchung stattfinden. Die zeitlichen Intervalle
+    sollten einer individuellen Risikoabwägung angepasst werden und in den ersten zwei
+    Jahren ein vierteljährliches Intervall nicht überschreiten.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Speicheldrüsenkarzinom nach Primärtherapie (adjuvante Phase)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Strukturierte klinische Nachsorge (≤3-monatlich in Jahren 1–2)
+      snomed: []
+    comparator:
+      description: Symptom-getriggerte Wiedervorstellung
+    outcome:
+      - Frühzeitige Rezidivdetektionsrate
+      - Fernmetastasennachweis-Latenz
+  snomed_refs:
+    - 126787005
+  notes: >
+    Vierteljährliche Nachsorge in den ersten 2 Jahren obligat;
+    danach individuelle Risikoabwägung.
+
+- id: "5.2"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Speicheldrüsenkarzinomen soll die Nachsorge unter Berücksichtigung der individuellen
+    Risikokonstellation über den Zeitraum von zehn Jahren und beim adenoidzystischen
+    Karzinom lebenslang fortgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: >
+        Speicheldrüsenkarzinom nach Primärtherapie; bei AdCC besonders:
+        Spätrezidive >10 Jahre bekannt
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    intervention:
+      description: Langzeit-Nachsorge (10 Jahre; AdCC lebenslang)
+      snomed: []
+    comparator:
+      description: 5-Jahres-Nachsorge (Standard bei anderen Kopf-Hals-Tumoren)
+    outcome:
+      - Spätrezidiv-Detektionsrate
+      - Fernmetastasen-Detektionsrate (pulmonal bei AdCC)
+  snomed_refs:
+    - 126787005
+    - 11671000
+  notes: >
+    AdCC: Spätrezidive und Fernmetastasen >10 Jahre nach Primärtherapie dokumentiert;
+    lebenslange Nachsorge notwendig.
+
+- id: "5.3"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    In den ersten zwei Jahren sollte neben der regelmäßigen Ultraschallkontrolle die
+    radiologische Verlaufsbildgebung (CT, MRT) von Kopf, Hals und Thorax mit Kontrastmittel
+    nach Abschluss der initialen Therapie halbjährlich erfolgen.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Speicheldrüsenkarzinom in den ersten 2 Jahren nach Primärtherapie
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Halbjährliches CT/MRT Kopf-Hals-Thorax + Ultraschall
+      snomed:
+        - code: "241611001"
+          display: "MRI of salivary glands"
+    comparator:
+      description: Nur klinische Untersuchung ohne Bildgebung
+    outcome:
+      - Rezidivdetektionsrate
+      - Zeit bis Diagnose Fernmetastasen
+  snomed_refs:
+    - 126787005
+    - 241611001
+    - 1671000087105
+
+- id: "5.4"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Ab dem dritten Jahr sollten jährliche radiologische Kontrollen (CT, MRT) von
+    Kopf, Hals und Thorax durchgeführt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: Speicheldrüsenkarzinom ab dem 3. Jahr nach Primärtherapie
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Jährliches CT/MRT Kopf-Hals-Thorax
+      snomed: []
+    comparator:
+      description: Halbjährliche Bildgebung oder keine Bildgebung nach Jahr 2
+    outcome:
+      - Spätrezidiv-Detektionsrate
+  snomed_refs:
+    - 126787005
+
+- id: "5.5"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Für eine Fortführung über das fünfte Jahr hinaus sollte die individuelle Risikokonstellation
+    mit den Grundsätzen des Strahlenschutzes abgewogen werden. Jährliche Thorax-CTs bei
+    Patienten mit high-grade-Histologien und negativen klinisch-pathologischen Kriterien
+    wie fortgeschrittenem Tumorstadium oder adenoidzystischem Karzinom sind zu erwägen.
+  pico:
+    population:
+      description: >
+        Speicheldrüsenkarzinom nach 5 Jahren; insbesondere high-grade Histologien und AdCC
+        mit erhöhtem Spätrezidivrisiko
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    intervention:
+      description: Jährliches Thorax-CT nach Jahr 5 (high-risk Gruppe)
+      snomed: []
+    comparator:
+      description: Keine Bildgebung nach Jahr 5
+    outcome:
+      - Fernmetastasen-Detektionsrate
+      - Strahlendosis (Strahlenexposition kumulativ)
+  snomed_refs:
+    - 126787005
+    - 11671000
+
+- id: "5.6"
+  grade: B
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Patienten mit resektablen, lokoregionären Rezidiven ohne Fernmetastasierung sollten
+    unabhängig der Vortherapie die erneute Tumorresektion mit entsprechender Rekonstruktion
+    angeboten werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit lokoregionärem Rezidiv eines Speicheldrüsenkarzinoms
+        ohne Fernmetastasierung, resektabel
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Erneute chirurgische Resektion + Rekonstruktion
+      snomed:
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Radiotherapie oder systemische Therapie ohne Resektion
+    outcome:
+      - Lokoregionäre Kontrollrate nach Rezidiv
+      - Gesamtüberleben
+      - Komplikationsrate
+  snomed_refs:
+    - 126787005
+    - 81870009
+
+- id: "5.7"
+  grade: Statement
+  ev_level: 3
+  consensus: Starker Konsens
+  text_de: >
+    Bei Patienten mit resektablem, lokoregionärem Rezidiv und langsam progredierender
+    Fernmetastasierung (z.B. adenoid-zystisches Karzinom) kann unabhängig von der
+    Vortherapie die palliative Tumorresektion mit entsprechender Rekonstruktion in
+    Erwägung gezogen werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit lokoregionärem Rezidiv + langsam progredienter Fernmetastasierung
+        (typisch AdCC pulmonal)
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+        - code: "399409002"
+          display: "Distant metastasis present"
+    intervention:
+      description: Palliative chirurgische Resektion des Lokalrezidivs trotz Fernmetastasen
+      snomed:
+        - code: "81870009"
+          display: "Parotidectomy"
+    comparator:
+      description: Systemtherapie / Best Supportive Care ohne Lokaleingriff
+    outcome:
+      - Lokale Tumorkontrolle
+      - Lebensqualität
+      - Gesamtüberleben
+  snomed_refs:
+    - 11671000
+    - 399409002
+  notes: >
+    "Kann"-Statement; typischer Fall: AdCC mit pulmonalen Spätmetastasen, langsamer Verlauf.
+
+- id: "5.8"
+  grade: Statement
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Beim rezidivierten adenoidzystischen Karzinom kann eine adjuvante Brachytherapie
+    erwogen werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit Rezidiv eines adenoid-zystischen Karzinoms nach Vortherapie
+      snomed:
+        - code: "11671000"
+          display: "Adenoid cystic carcinoma"
+    intervention:
+      description: Adjuvante Brachytherapie (interstitielle RT)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Externe Strahlentherapie (perkutan) allein
+    outcome:
+      - Lokale Tumorkontrollrate
+      - Morbidität
+  snomed_refs:
+    - 11671000
+    - 1287742003
+
+- id: "5.9"
+  grade: Statement
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Die Resektion von Metastasen kann zur Verlängerung des fernrezidivfreien Überlebens
+    in Erwägung gezogen werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit oligometastasiertem Speicheldrüsenkarzinom,
+        resektable Fernmetastasen (typisch pulmonal)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "399409002"
+          display: "Distant metastasis present"
+    intervention:
+      description: Metastasenchirurgie (Metastasenresektion)
+      snomed: []
+    comparator:
+      description: Systemtherapie / Watch-and-Wait
+    outcome:
+      - Fernrezidivfreies Überleben
+      - Gesamtüberleben
+  snomed_refs:
+    - 126787005
+    - 399409002
+
+- id: "5.10"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    In der oligometastasierten Situation können die Metastase/Metastasen durch chirurgische
+    Resektion oder durch andere lokal ablative Verfahren (z.B. Radiochirurgie oder
+    hypofraktioniert-stereotaktische Strahlentherapie) behandelt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit oligometastasiertem Speicheldrüsenkarzinom (1–5 Fernmetastasen,
+        alle sicher lokal behandelbar)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "399409002"
+          display: "Distant metastasis present"
+    intervention:
+      description: Lokale ablative Therapie (OP oder SBRT/Radiochirurgie)
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Systemtherapie ohne lokale Ablation
+    outcome:
+      - Lokale Kontrolle der Metastase
+      - Progressionsfreies Überleben
+  snomed_refs:
+    - 126787005
+    - 399409002
+    - 1287742003
+
+- id: "5.11"
+  grade: B
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Bei technisch schwieriger chirurgischer Metastasen-Entfernung oder bei Patienten mit
+    erhöhter Begleitmorbidität sollte die stereotaktische Bestrahlung erwogen werden.
+  pico:
+    population:
+      description: >
+        Oligometastasiertes Speicheldrüsenkarzinom; chirurgische Resektion risikobehaftet
+        (Lage, Komorbidität)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "399409002"
+          display: "Distant metastasis present"
+    intervention:
+      description: Stereotaktische Körperstrahlentherapie (SBRT) der Metastase
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Chirurgische Metastasenresektion
+    outcome:
+      - Lokale Metastasenkontrollrate
+      - Verträglichkeit / Toxizität
+  snomed_refs:
+    - 126787005
+    - 1287742003
+
+- id: "5.12"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Nicht vorbestrahlte Karzinomrezidive: Eine definitive Strahlen-(chemo-)therapie soll bei
+    nicht vorbestrahlten Rezidivtumoren sowie bei lokaler Inoperabilität oder
+    patientenbezogenen Kontraindikationen gegen einen chirurgischen Eingriff durchgeführt
+    werden. Eine postoperative Strahlen-(chemo-)therapie soll bei T3-4 Tumoren, high-grade
+    Tumoren, Lymphknotenfiliae, Perineuralscheideninfiltration, Lymphgefäß- oder
+    Blutgefäßinvasion, knappen oder positiven Resektionsrändern sowie allen adenoidzystischen
+    Karzinomen durchgeführt werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit lokoregionärem Rezidiv eines Speicheldrüsenkarzinoms
+        ohne Vorbestrahlung
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Definitive oder postoperative Radiochemotherapie bei Rezidiv
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+        - code: "387318005"
+          display: "Cisplatin"
+    comparator:
+      description: Systemtherapie allein / Best Supportive Care
+    outcome:
+      - Lokale Rezidivkontrolle
+      - Gesamtüberleben
+  snomed_refs:
+    - 126787005
+    - 1287742003
+    - 387318005
+    - 11671000
+
+- id: "5.13"
+  grade: A
+  ev_level: 4
+  consensus: Starker Konsens
+  text_de: >
+    Bei vorbestrahlten lokal fortgeschrittenen, inoperablen oder nicht komplett resezierten
+    Rezidiven soll eine Re-Bestrahlung geprüft werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit vorbestrahltem lokoregionärem Rezidiv eines Speicheldrüsenkarzinoms,
+        inoperabel oder R1/R2
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Re-Bestrahlung (Re-Irradiation) der Rezidivregion
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Systemtherapie allein bei Rezidiv nach Vorbestrahlung
+    outcome:
+      - Lokale Tumorkontrolle nach Re-Bestrahlung
+      - Toxizität (Mukositis, Osteoradionekrose)
+  snomed_refs:
+    - 126787005
+    - 1287742003
+
+- id: "5.14"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei metastasierten Karzinomen, die nicht dem adenoidzystischen Karzinom zuzuordnen sind,
+    sollte je nach Tumorentität eine molekulare Charakterisierung mit besonderer Betrachtung
+    der Expression von HER2, des Androgenrezeptors und TRK durchgeführt werden, um die
+    Erstellung eines zielgerichteten Therapiekonzepts zu ermöglichen.
+  pico:
+    population:
+      description: >
+        PatientInnen mit metastasierten Speicheldrüsenkarzinomen (non-AdCC),
+        systemtherapiebedürftig
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "399409002"
+          display: "Distant metastasis present"
+    intervention:
+      description: Molekulare Charakterisierung (HER2, AR, TRK/NTRK-Fusion)
+      snomed: []
+    comparator:
+      description: Systemtherapie ohne molekulare Testung
+    outcome:
+      - Rate an zielgerichteten Therapieoptionen identifiziert
+      - Progressionsfreies Überleben unter Zieltherapie
+  snomed_refs:
+    - 126787005
+    - 399409002
+  notes: >
+    Molekulare Charakterisierung für Speichelgangkarzinom (HER2, AR) und
+    sekretorisches Karzinom (NTRK) besonders relevant.
+
+- id: "5.15"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei inoperabel lokal fortgeschrittener oder metastasierter Erkrankung kann aufgrund des
+    teilweisen langsamen Progresses die Einleitung einer Systemtherapie oder einer
+    Strahlentherapie gegenüber einem abwartenden Verhalten mit regelmäßiger Nachsorge
+    abgewogen werden.
+  pico:
+    population:
+      description: >
+        PatientInnen mit inoperablem lokal fortgeschrittenem oder metastasiertem
+        Speicheldrüsenkarzinom; langsam progredienter Verlauf (insb. AdCC)
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+        - code: "399409002"
+          display: "Distant metastasis present"
+    intervention:
+      description: Aktive Systemtherapie oder Strahlentherapie
+      snomed:
+        - code: "1287742003"
+          display: "Radiotherapy"
+    comparator:
+      description: Watch-and-Wait / aktive Nachsorge ohne Therapiebeginn
+    outcome:
+      - Progressionsfreies Überleben
+      - Lebensqualität
+      - Gesamtüberleben
+  snomed_refs:
+    - 126787005
+    - 399409002
+    - 1287742003
+  notes: >
+    "Kann"-Empfehlung wegen heterogenem Verlauf; insbesondere AdCC progrediert langsam,
+    Watch-and-Wait kann vertretbar sein.
+
+- id: "5.16"
+  grade: EK
+  consensus: Starker Konsens
+  text_de: >
+    Bei Tumorkonferenz-relevanten Befundänderungen soll der Patient/die Patientin erneut
+    in der interdisziplinären Tumorkonferenz vorgestellt werden.
+  pico:
+    population:
+      ref: ev-speicheldrüsenkarzinom-allgemein
+      description: >
+        PatientInnen mit Speicheldrüsenkarzinom in Nachsorge oder Rezidivtherapie
+        mit signifikanter Befundänderung
+      snomed:
+        - code: "126787005"
+          display: "Neoplasm of major salivary gland"
+    intervention:
+      description: Wiedervorstellung interdisziplinäres Tumorboard bei Befundänderung
+      snomed: []
+    comparator:
+      description: Einzelfachärztliche Entscheidung ohne Tumorboard
+    outcome:
+      - Therapiequalität (Leitlinienadhärenz)
+      - Shared decision making
+  snomed_refs:
+    - 126787005
+  notes: >
+    Tumorboard-Vorstellung bei Rezidiv, Metastasierung oder Therapieänderung obligat.

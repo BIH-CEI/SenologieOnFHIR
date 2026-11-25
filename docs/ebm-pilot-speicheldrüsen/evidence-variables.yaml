@@ -1,0 +1,337 @@
+# EvidenceVariable resources for AWMF 007-102OL (Speicheldrüsentumoren)
+# Leitlinie: S3-Leitlinie Speicheldrüsentumoren, AWMF-Reg.-Nr. 007-102OL, Version 1.0, Juli 2025
+# Canonical base: https://www.senologie.org/fhir (Pilot; würde in eigenes IG wandern)
+# SNOMED version: http://snomed.info/sct/900000000000207008/version/20261001
+#
+# Mapping zu EvidenceVariable.variableRole:
+#   population   = Einschlusskriterien (P in PICO)
+#   exposure     = Intervention (I in PICO)
+#   referenceExposure = Vergleichsarm (C in PICO)
+#   outcome      = Ergebnismessung (O in PICO)
+#   measuredVariable = Effektmodifikator / Stratifikator
+
+---
+- resourceType: EvidenceVariable
+  id: ev-speicheldrüsentumor-benigne-parotis
+  url: https://www.senologie.org/fhir/EvidenceVariable/speicheldrüsentumor-benigne-parotis
+  version: "1.0.0"
+  name: SpLD_BenignePArotis
+  title: "Benigne Raumforderung der Gl. parotidea (klinisch, oberflächlich)"
+  status: draft
+  description: >
+    Population für Empfehlungen 4.2 und 4.3 (AWMF 007-102OL):
+    PatientInnen mit klinisch benigne imponierendem, oberflächlich gelegenem,
+    verschieblichem Tumor der Glandula parotidea ohne präoperativen Malignitätsverdacht.
+  variableDefinition:
+    - variableRole: population
+      description: Raumforderung der Gl. parotidea ohne Malignitätsverdacht
+      observed:
+        reference: CodeableConcept
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "255154009"
+            display: "Benign neoplasm of salivary gland"
+  characteristicCombination:
+    code: all-of
+  characteristic:
+    - description: Tumor der Gl. parotidea
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "45289007"
+            display: "Parotid gland structure"
+      exclude: false
+    - description: Klinisch benigne imponierend (kein Malignomverdacht)
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "255154009"
+            display: "Benign neoplasm of salivary gland"
+      exclude: false
+    - description: Ausschluss Fernmetastasen
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "399409002"
+            display: "Distant metastasis present"
+      exclude: true
+  note:
+    - text: >
+        Variiert mit Empfehlung 4.2 (B): oberflächlich + verschieblich → EKD-Vorzug.
+        Bei tiefer Lage oder klinischen Malignitätszeichen gilt EvidenceVariable
+        ev-speicheldrüsenkarzinom-parotis.
+
+---
+- resourceType: EvidenceVariable
+  id: ev-speicheldrüsenkarzinom-allgemein
+  url: https://www.senologie.org/fhir/EvidenceVariable/speicheldrüsenkarzinom-allgemein
+  version: "1.0.0"
+  name: SpLD_KarzinomAllgemein
+  title: "Speicheldrüsenkarzinom (alle Lokalisationen, kurativ resektabel)"
+  status: draft
+  description: >
+    Population für Empfehlung 4.14 (A) (AWMF 007-102OL):
+    PatientInnen mit histologisch gesichertem Karzinom einer Speicheldrüse
+    (groß oder klein) ohne Fernmetastasierung – kurativ-resektabler Ansatz.
+  variableDefinition:
+    - variableRole: population
+      description: Malignes Speicheldrüsentumor ohne Fernmetastasen
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "126787005"
+            display: "Neoplasm of major salivary gland"
+  characteristicCombination:
+    code: all-of
+  characteristic:
+    - description: Histologisch gesichertes Karzinom der Speicheldrüse
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "126787005"
+            display: "Neoplasm of major salivary gland"
+      exclude: false
+    - description: Ausschluss Fernmetastasen (M0)
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "399409002"
+            display: "Distant metastasis present"
+      exclude: true
+  note:
+    - text: >
+        Einschlusskriterium für Primärtherapie-Empfehlung: chirurgische Resektion (R0).
+        Spezialisierte Subpopulationen werden in separaten EVs abgebildet
+        (ev-speicheldrüsenkarzinom-highgrade, ev-adcc-lokal-fortgeschritten).
+
+---
+- resourceType: EvidenceVariable
+  id: ev-speicheldrüsenkarzinom-highgrade
+  url: https://www.senologie.org/fhir/EvidenceVariable/speicheldrüsenkarzinom-highgrade
+  version: "1.0.0"
+  name: SpLD_KarzinomHighGrade
+  title: "High-grade Speicheldrüsenkarzinom (inkl. High-grade-Transformation)"
+  status: draft
+  description: >
+    Population für Empfehlung 4.26 (A) und adjuvante RT-Indikation:
+    Speicheldrüsenkarzinom mit High-grade-Histologie oder High-grade-Transformation,
+    unabhängig von N-Status → Indikation für elektive ipsilaterale Neck Dissection
+    und adjuvante Strahlentherapie.
+  variableDefinition:
+    - variableRole: population
+      description: High-grade Karzinom der Speicheldrüse
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "126787005"
+            display: "Neoplasm of major salivary gland"
+  characteristicCombination:
+    code: all-of
+  characteristic:
+    - description: Karzinom der Speicheldrüse
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "126787005"
+            display: "Neoplasm of major salivary gland"
+      exclude: false
+    - description: >
+        High-grade Histologie ODER High-grade-Transformation (ICD-O G3/G4).
+        SNOMED-Lücke: kein allgemeiner High-grade-Code; Implementierung über
+        pathologische Befundstruktur (Observation.value mit ICD-O-3 Grade).
+      definitionByCombination:
+        code: any-of
+        characteristic:
+          - description: Speichelgangkarzinom (inherent high-grade)
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "397082006"
+                  display: "Salivary duct carcinoma"
+          - description: Karzinom ex pleomorphem Adenom
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "17264009"
+                  display: "Carcinoma ex pleomorphic adenoma"
+      exclude: false
+  note:
+    - text: >
+        Compound-Definition: umfasst histologisch high-grade Typen + strukturell
+        high-grade (Carcinoma ex PA). Grade-Angabe aus Pathologie-Befund
+        (ICD-O-3 G3/G4) ergänzt die SNOMED-Typzuordnung.
+
+---
+- resourceType: EvidenceVariable
+  id: ev-adcc-lokal-fortgeschritten
+  url: https://www.senologie.org/fhir/EvidenceVariable/adcc-lokal-fortgeschritten
+  version: "1.0.0"
+  name: SpLD_AdCC_T3T4
+  title: "Adenoid-zystisches Karzinom, lokal fortgeschritten (T3/T4, cN0)"
+  status: draft
+  description: >
+    Population für Empfehlung 4.27 (B) (AWMF 007-102OL):
+    PatientInnen mit adenoid-zystischem Karzinom im Stadium T3/T4 cN0 –
+    Frage: elektive Neck Dissection vs. Watch-and-Wait.
+    PICO: P=diese Population, I=elektive ND, C=keine ND, O=regionäre Rezidivrate / OS.
+  variableDefinition:
+    - variableRole: population
+      description: AdCC T3/T4 cN0
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "11671000"
+            display: "Adenoid cystic carcinoma"
+  characteristicCombination:
+    code: all-of
+  characteristic:
+    - description: Adenoid-zystisches Karzinom
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "11671000"
+            display: "Adenoid cystic carcinoma"
+      exclude: false
+    - description: T3 oder T4 (UICC-Stadien)
+      definitionByCombination:
+        code: any-of
+        characteristic:
+          - description: T3 (UICC)
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "1228882005"
+                  display: "pT3 category"
+          - description: T4 (UICC)
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "1228884006"
+                  display: "pT4 category"
+      exclude: false
+    - description: Kein klinischer LK-Befall (cN0)
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "1229947003"
+            display: "cN0 category"
+      exclude: false
+  note:
+    - text: >
+        Perineurales Wachstum des AdCC (SNOMED 396394004) relevant für Resektionsplanung,
+        wird als measuredVariable in verknüpften Evidence-Ressourcen modelliert.
+        T/N-Codes aus UICC/SNOMED-Mapping noch zu verifizieren.
+
+---
+- resourceType: EvidenceVariable
+  id: ev-parotiskarzinom-fazialisinfiltration
+  url: https://www.senologie.org/fhir/EvidenceVariable/parotiskarzinom-fazialisinfiltration
+  version: "1.0.0"
+  name: SpLD_ParotisKarzinom_Fazialis
+  title: "Parotiskarzinom mit präoperativer Fazialisparese"
+  status: draft
+  description: >
+    Population für PICO-Frage zu Fazialismanagement:
+    PatientInnen mit Karzinom der Gl. parotidea und präoperativer Fazialisparese –
+    negativer unabhängiger Prognosefaktor (Hintergrund Empf. 4.14/4.19).
+    PICO: I=Nerverhalt vs. C=Nerventfernung, O=lokale Tumorkontrolle + OS.
+  variableDefinition:
+    - variableRole: population
+      description: Parotiskarzinom mit Fazialisparese
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "45289007"
+            display: "Parotid gland structure"
+  characteristicCombination:
+    code: all-of
+  characteristic:
+    - description: Karzinom der Glandula parotidea
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "45289007"
+            display: "Parotid gland structure"
+      exclude: false
+    - description: >
+        Präoperative N.-facialis-Parese (Tumorinfiltration).
+        SNOMED-Lücke: nur kongenitaler/familiärer Code verfügbar.
+        Implementierung über klinische Befund-Observation (House-Brackmann-Score).
+      definitionCodeableConcept:
+        text: "Präoperative Fazialisparese (klinisch)"
+      exclude: false
+    - description: Ausschluss Fernmetastasen
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "399409002"
+            display: "Distant metastasis present"
+      exclude: true
+  note:
+    - text: >
+        Fazialisparese ist gemäß Studienlage (Hintergrund Empf. 4.14/4.19) ein negativer
+        unabhängiger Prognosefaktor mit höherer Aussagekraft als Perineuralscheideninfiltration.
+        Compound-Definition mit House-Brackmann-Grad ≥ III als Schwellenwert.
+
+---
+- resourceType: EvidenceVariable
+  id: ev-speicheldrüsenkarzinom-r1-indikation-rt
+  url: https://www.senologie.org/fhir/EvidenceVariable/speicheldrüsenkarzinom-r1-indikation-rt
+  version: "1.0.0"
+  name: SpLD_KarzinomR1_RT
+  title: "Speicheldrüsenkarzinom nach R1/R2-Resektion (Indikation adjuvante RT)"
+  status: draft
+  description: >
+    Population für PICO-Frage adjuvante Strahlentherapie (Kap. 4.3.1):
+    PatientInnen mit Karzinom der Speicheldrüse nach nicht-R0-Resektion (R1 oder R2)
+    und/oder High-grade / T3/T4 / PNI – Frage: adjuvante RT ja/nein, Dosis.
+    PICO: I=adjuvante RT, C=keine RT, O=lokoregionäre Kontrolle / DFS / OS.
+  variableDefinition:
+    - variableRole: population
+      description: Speicheldrüsenkarzinom nach Resektion mit Risikofaktoren für Lokalrezidiv
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "126787005"
+            display: "Neoplasm of major salivary gland"
+  characteristicCombination:
+    code: all-of
+  characteristic:
+    - description: Histologisch gesichertes Karzinom der Speicheldrüse, operiert
+      definitionCodeableConcept:
+        coding:
+          - system: http://snomed.info/sct
+            code: "126787005"
+            display: "Neoplasm of major salivary gland"
+      exclude: false
+    - description: >
+        Mindestens ein Risikofaktor (any-of):
+        R1/R2-Resektion ODER High-grade ODER T3/T4 ODER Perineuralscheideninfiltration.
+      definitionByCombination:
+        code: any-of
+        characteristic:
+          - description: Perineuralscheideninfiltration vorhanden
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "369731000"
+                  display: "Perineural invasion by tumor present"
+          - description: High-grade (Speichelgangkarzinom als proxy)
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "397082006"
+                  display: "Salivary duct carcinoma"
+          - description: Fernmetastasen vorhanden (Ausschluss anderer Intention)
+            definitionCodeableConcept:
+              coding:
+                - system: http://snomed.info/sct
+                  code: "399409002"
+                  display: "Distant metastasis present"
+      exclude: false
+  note:
+    - text: >
+        R-Status (R0/R1/R2) derzeit als SNOMED-Lücke markiert; Implementierung über
+        pathologische Befund-Observation mit LOINC 33756-8 (Surgical margin involvement).
+        High-grade als Risikofaktor nur über Histologie-Typen indirekt kodierbar.

@@ -1,13 +1,13 @@
-# S3-Leitlinie v5.0 - Kapitel 4.6: Adjuvante Strahlentherapie des Mammakarzinoms
+### S3-Leitlinie v5.0 - Kapitel 4.6: Adjuvante Strahlentherapie des Mammakarzinoms
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 145-170
 > Kapitelstruktur: 4.6 Allgemein | 4.6.1 Fraktionierung | 4.6.2 Teilbrustbestrahlung und IORT | 4.6.3 Postmastektomie-Radiotherapie (PMRT) | 4.6.4 PMRT nach PST | 4.6.5 Regionale Lymphknoten | 4.6.6 Axillaere Lymphknoten | 4.6.7 Dosis bei regionaler LK-Bestrahlung | 4.6.8 Lokal fortgeschritten | 4.6.9 Therapiesequenz
 
 ---
 
-## 4.6 Adjuvante Strahlentherapie - Allgemein
+#### 4.6 Adjuvante Strahlentherapie - Allgemein
 
-### Empfehlung 4.94
+##### Empfehlung 4.94
 
 ```yaml
 id: S3-5.0-4.94
@@ -92,9 +92,9 @@ referenzen:
 
 ---
 
-## 4.6.1 Fraktionierung
+#### 4.6.1 Fraktionierung
 
-### Empfehlung 4.95
+##### Empfehlung 4.95
 
 ```yaml
 id: S3-5.0-4.95
@@ -169,7 +169,7 @@ referenzen:
   verwandte_empfehlungen: ["4.94", "4.96", "4.97"]
 ```
 
-### Empfehlung 4.96
+##### Empfehlung 4.96
 
 ```yaml
 id: S3-5.0-4.96
@@ -227,7 +227,7 @@ referenzen:
   verwandte_empfehlungen: ["4.95", "4.107"]
 ```
 
-### Empfehlung 4.97
+##### Empfehlung 4.97
 
 ```yaml
 id: S3-5.0-4.97
@@ -293,9 +293,9 @@ referenzen:
 
 ---
 
-## 4.6.1 (Fortsetzung) Boost-Bestrahlung
+#### 4.6.1 (Fortsetzung) Boost-Bestrahlung
 
-### Empfehlung 4.98
+##### Empfehlung 4.98
 
 ```yaml
 id: S3-5.0-4.98
@@ -359,7 +359,7 @@ referenzen:
   verwandte_empfehlungen: ["4.94", "4.99", "4.100", "4.101", "4.102"]
 ```
 
-### Empfehlung 4.99
+##### Empfehlung 4.99
 
 ```yaml
 id: S3-5.0-4.99
@@ -399,7 +399,7 @@ referenzen:
   verwandte_empfehlungen: ["4.98", "4.100", "4.101"]
 ```
 
-### Empfehlung 4.100
+##### Empfehlung 4.100
 
 ```yaml
 id: S3-5.0-4.100
@@ -441,7 +441,7 @@ referenzen:
   verwandte_empfehlungen: ["4.98", "4.99", "4.101"]
 ```
 
-### Empfehlung 4.101
+##### Empfehlung 4.101
 
 ```yaml
 id: S3-5.0-4.101
@@ -474,7 +474,7 @@ referenzen:
   verwandte_empfehlungen: ["4.98", "4.99", "4.100"]
 ```
 
-### Empfehlung 4.102
+##### Empfehlung 4.102
 
 ```yaml
 id: S3-5.0-4.102
@@ -512,9 +512,9 @@ referenzen:
 
 ---
 
-## 4.6.2 Teilbrustbestrahlung und IORT
+#### 4.6.2 Teilbrustbestrahlung und IORT
 
-### Empfehlung 4.103
+##### Empfehlung 4.103
 
 ```yaml
 id: S3-5.0-4.103
@@ -570,7 +570,7 @@ referenzen:
   verwandte_empfehlungen: ["4.94", "4.104", "4.105", "4.106"]
 ```
 
-### Empfehlung 4.104
+##### Empfehlung 4.104
 
 ```yaml
 id: S3-5.0-4.104
@@ -619,7 +619,7 @@ referenzen:
   verwandte_empfehlungen: ["4.103", "4.105", "4.107"]
 ```
 
-### Empfehlung 4.105
+##### Empfehlung 4.105
 
 ```yaml
 id: S3-5.0-4.105
@@ -666,7 +666,7 @@ referenzen:
   verwandte_empfehlungen: ["4.103", "4.104", "4.106"]
 ```
 
-### Empfehlung 4.106
+##### Empfehlung 4.106
 
 ```yaml
 id: S3-5.0-4.106
@@ -701,7 +701,7 @@ referenzen:
   verwandte_empfehlungen: ["4.103", "4.104", "4.105"]
 ```
 
-### Empfehlung 4.107
+##### Empfehlung 4.107
 
 ```yaml
 id: S3-5.0-4.107
@@ -733,7 +733,7 @@ referenzen:
   verwandte_empfehlungen: ["4.96", "4.103", "4.104"]
 ```
 
-### Empfehlung 4.108
+##### Empfehlung 4.108
 
 ```yaml
 id: S3-5.0-4.108
@@ -768,9 +768,9 @@ referenzen:
 
 ---
 
-## 4.6.3 Postmastektomie-Radiotherapie (PMRT)
+#### 4.6.3 Postmastektomie-Radiotherapie (PMRT)
 
-### Empfehlung 4.109 (Statement)
+##### Empfehlung 4.109 (Statement)
 
 ```yaml
 id: S3-5.0-4.109
@@ -817,7 +817,7 @@ referenzen:
   verwandte_empfehlungen: ["4.110", "4.111"]
 ```
 
-### Empfehlung 4.110
+##### Empfehlung 4.110
 
 ```yaml
 id: S3-5.0-4.110
@@ -917,9 +917,9 @@ referenzen:
 
 ---
 
-## 4.6.4 Postmastektomie-Radiotherapie nach primaer systemischer Therapie
+#### 4.6.4 Postmastektomie-Radiotherapie nach primaer systemischer Therapie
 
-### Empfehlung 4.111
+##### Empfehlung 4.111
 
 ```yaml
 id: S3-5.0-4.111
@@ -991,9 +991,9 @@ referenzen:
 
 ---
 
-## 4.6.5 Radiotherapie der regionalen Lymphknoten
+#### 4.6.5 Radiotherapie der regionalen Lymphknoten
 
-### Empfehlung 4.112 (Statement)
+##### Empfehlung 4.112 (Statement)
 
 ```yaml
 id: S3-5.0-4.112
@@ -1037,7 +1037,7 @@ referenzen:
   verwandte_empfehlungen: ["4.113", "4.114", "4.115", "4.116", "4.117", "4.118"]
 ```
 
-### Empfehlung 4.113
+##### Empfehlung 4.113
 
 ```yaml
 id: S3-5.0-4.113
@@ -1082,7 +1082,7 @@ referenzen:
   verwandte_empfehlungen: ["4.112", "4.114", "4.110"]
 ```
 
-### Empfehlung 4.114
+##### Empfehlung 4.114
 
 ```yaml
 id: S3-5.0-4.114
@@ -1140,7 +1140,7 @@ referenzen:
   verwandte_empfehlungen: ["4.112", "4.113", "4.115"]
 ```
 
-### Empfehlung 4.115
+##### Empfehlung 4.115
 
 ```yaml
 id: S3-5.0-4.115
@@ -1201,7 +1201,7 @@ referenzen:
   verwandte_empfehlungen: ["4.112", "4.113", "4.114"]
 ```
 
-### Empfehlung 4.116
+##### Empfehlung 4.116
 
 ```yaml
 id: S3-5.0-4.116
@@ -1240,7 +1240,7 @@ referenzen:
   verwandte_empfehlungen: ["4.112", "4.113", "4.118"]
 ```
 
-### Empfehlung 4.117
+##### Empfehlung 4.117
 
 ```yaml
 id: S3-5.0-4.117
@@ -1274,7 +1274,7 @@ referenzen:
   verwandte_empfehlungen: ["4.112", "4.94", "4.109"]
 ```
 
-### Empfehlung 4.118
+##### Empfehlung 4.118
 
 ```yaml
 id: S3-5.0-4.118
@@ -1325,9 +1325,9 @@ referenzen:
 
 ---
 
-## 4.6.6 Bestrahlung der axillaeren Lymphknoten
+#### 4.6.6 Bestrahlung der axillaeren Lymphknoten
 
-### Empfehlung 4.119
+##### Empfehlung 4.119
 
 ```yaml
 id: S3-5.0-4.119
@@ -1381,7 +1381,7 @@ referenzen:
   verwandte_empfehlungen: ["4.112", "4.120"]
 ```
 
-### Empfehlung 4.120
+##### Empfehlung 4.120
 
 ```yaml
 id: S3-5.0-4.120
@@ -1433,9 +1433,9 @@ referenzen:
 
 ---
 
-## 4.6.7 Dosis und Fraktionierung bei Bestrahlung des regionalen Lymphabflusses
+#### 4.6.7 Dosis und Fraktionierung bei Bestrahlung des regionalen Lymphabflusses
 
-### Empfehlung 4.121
+##### Empfehlung 4.121
 
 ```yaml
 id: S3-5.0-4.121
@@ -1495,9 +1495,9 @@ referenzen:
 
 ---
 
-## 4.6.8 Radiotherapie bei lokal weit fortgeschrittenem Tumor und bei primaerer Inoperabilitaet
+#### 4.6.8 Radiotherapie bei lokal weit fortgeschrittenem Tumor und bei primaerer Inoperabilitaet
 
-### Empfehlung 4.122
+##### Empfehlung 4.122
 
 ```yaml
 id: S3-5.0-4.122
@@ -1560,9 +1560,9 @@ referenzen:
 
 ---
 
-## 4.6.9 Therapiesequenz von adjuvanter Systemtherapie und Radiotherapie
+#### 4.6.9 Therapiesequenz von adjuvanter Systemtherapie und Radiotherapie
 
-### Empfehlung 4.123
+##### Empfehlung 4.123
 
 ```yaml
 id: S3-5.0-4.123
@@ -1607,7 +1607,7 @@ referenzen:
   verwandte_empfehlungen: ["4.124", "4.125", "4.126"]
 ```
 
-### Empfehlung 4.124
+##### Empfehlung 4.124
 
 ```yaml
 id: S3-5.0-4.124
@@ -1643,7 +1643,7 @@ referenzen:
   verwandte_empfehlungen: ["4.123"]
 ```
 
-### Empfehlung 4.125
+##### Empfehlung 4.125
 
 ```yaml
 id: S3-5.0-4.125
@@ -1675,7 +1675,7 @@ referenzen:
   verwandte_empfehlungen: ["4.123"]
 ```
 
-### Empfehlung 4.126
+##### Empfehlung 4.126
 
 ```yaml
 id: S3-5.0-4.126
@@ -1723,7 +1723,7 @@ referenzen:
   verwandte_empfehlungen: ["4.118", "4.123", "4.127"]
 ```
 
-### Empfehlung 4.127
+##### Empfehlung 4.127
 
 ```yaml
 id: S3-5.0-4.127
@@ -1763,7 +1763,7 @@ referenzen:
   verwandte_empfehlungen: ["4.126"]
 ```
 
-### Empfehlung 4.128
+##### Empfehlung 4.128
 
 ```yaml
 id: S3-5.0-4.128
@@ -1795,7 +1795,7 @@ referenzen:
   verwandte_empfehlungen: ["4.126", "4.127"]
 ```
 
-### Empfehlung 4.129
+##### Empfehlung 4.129
 
 ```yaml
 id: S3-5.0-4.129
@@ -1840,7 +1840,7 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 4.6
+#### Zusammenfassung: Gap-Analyse Kapitel 4.6
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -1881,7 +1881,7 @@ referenzen:
 | 4.128 | Pembrolizumab waehrend RT | **gap** | Simultane Immuntherapie nicht modelliert |
 | 4.129 | CDK/PARP-Inhibitoren vermeiden | **gap** | Kontraindikation simultaner Medikation nicht modelliert |
 
-### Uebergreifende Gaps und Handlungsempfehlungen
+##### Uebergreifende Gaps und Handlungsempfehlungen
 
 | Thema | Betroffene Empfehlungen | Vorgeschlagene Massnahme |
 |-------|------------------------|--------------------------|

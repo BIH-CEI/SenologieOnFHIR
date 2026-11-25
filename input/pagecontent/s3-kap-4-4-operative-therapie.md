@@ -1,13 +1,13 @@
-# S3-Leitlinie v5.0 - Kapitel 4.4: Operative Therapie des invasiven Karzinoms
+### S3-Leitlinie v5.0 - Kapitel 4.4: Operative Therapie des invasiven Karzinoms
 
 > Quelle: S3-Leitlinie Mammakarzinom, Langversion 5.0, Dezember 2025, Seiten 111-123
 > Kapitelstruktur: 4.4.1 Generelle Empfehlung | 4.4.2 Brusterhaltende Operation (BET) | 4.4.3 Mastektomie | 4.4.4 Plastisch rekonstruktive Eingriffe | 4.4.5 Operative Therapie der Axilla
 
 ---
 
-## 4.4.1 Generelle Empfehlung
+#### 4.4.1 Generelle Empfehlung
 
-### Empfehlung 4.44
+##### Empfehlung 4.44
 
 ```yaml
 id: S3-5.0-4.44
@@ -54,7 +54,7 @@ referenzen:
   verwandte_empfehlungen: ["4.45", "4.46"]
 ```
 
-### Empfehlung 4.45 (Statement)
+##### Empfehlung 4.45 (Statement)
 
 ```yaml
 id: S3-5.0-4.45
@@ -106,9 +106,9 @@ referenzen:
 
 ---
 
-## 4.4.2 Brusterhaltende Operation
+#### 4.4.2 Brusterhaltende Operation
 
-### Empfehlung 4.46
+##### Empfehlung 4.46
 
 ```yaml
 id: S3-5.0-4.46
@@ -164,7 +164,7 @@ referenzen:
   verwandte_empfehlungen: ["4.44", "4.47", "4.48"]
 ```
 
-### Empfehlung 4.47
+##### Empfehlung 4.47
 
 ```yaml
 id: S3-5.0-4.47
@@ -209,7 +209,7 @@ referenzen:
   verwandte_empfehlungen: ["4.46", "4.51", "4.54"]
 ```
 
-### Empfehlung 4.48
+##### Empfehlung 4.48
 
 ```yaml
 id: S3-5.0-4.48
@@ -262,7 +262,7 @@ referenzen:
   verwandte_empfehlungen: ["4.46", "4.51"]
 ```
 
-### Empfehlung 4.49
+##### Empfehlung 4.49
 
 ```yaml
 id: S3-5.0-4.49
@@ -312,7 +312,7 @@ referenzen:
   verwandte_empfehlungen: ["4.50"]
 ```
 
-### Empfehlung 4.50
+##### Empfehlung 4.50
 
 ```yaml
 id: S3-5.0-4.50
@@ -355,9 +355,9 @@ referenzen:
 
 ---
 
-## 4.4.3 Mastektomie
+#### 4.4.3 Mastektomie
 
-### Empfehlung 4.51
+##### Empfehlung 4.51
 
 ```yaml
 id: S3-5.0-4.51
@@ -420,7 +420,7 @@ referenzen:
   verwandte_empfehlungen: ["4.46", "4.52", "4.54"]
 ```
 
-### Empfehlung 4.52
+##### Empfehlung 4.52
 
 ```yaml
 id: S3-5.0-4.52
@@ -471,7 +471,7 @@ referenzen:
   verwandte_empfehlungen: ["4.51", "4.54"]
 ```
 
-### Empfehlung 4.53
+##### Empfehlung 4.53
 
 ```yaml
 id: S3-5.0-4.53
@@ -523,9 +523,9 @@ referenzen:
 
 ---
 
-## 4.4.4 Plastisch rekonstruktive Eingriffe
+#### 4.4.4 Plastisch rekonstruktive Eingriffe
 
-### Empfehlung 4.54
+##### Empfehlung 4.54
 
 ```yaml
 id: S3-5.0-4.54
@@ -586,9 +586,9 @@ referenzen:
 
 ---
 
-## 4.4.5 Operative Therapie der Axilla
+#### 4.4.5 Operative Therapie der Axilla
 
-### Empfehlung 4.55
+##### Empfehlung 4.55
 
 ```yaml
 id: S3-5.0-4.55
@@ -629,9 +629,9 @@ referenzen:
   verwandte_empfehlungen: ["4.56", "4.57"]
 ```
 
-### 4.4.5.1 Primäre operative Therapie der Axilla
+##### 4.4.5.1 Primäre operative Therapie der Axilla
 
-### Empfehlung 4.56
+##### Empfehlung 4.56
 
 ```yaml
 id: S3-5.0-4.56
@@ -694,7 +694,7 @@ referenzen:
   verwandte_empfehlungen: ["4.55", "4.57", "4.59", "4.60"]
 ```
 
-### Empfehlung 4.57
+##### Empfehlung 4.57
 
 ```yaml
 id: S3-5.0-4.57
@@ -782,7 +782,7 @@ referenzen:
   verwandte_empfehlungen: ["4.56", "4.58"]
 ```
 
-### Empfehlung 4.58
+##### Empfehlung 4.58
 
 ```yaml
 id: S3-5.0-4.58
@@ -845,7 +845,7 @@ referenzen:
   verwandte_empfehlungen: ["4.57"]
 ```
 
-### Empfehlung 4.59
+##### Empfehlung 4.59
 
 ```yaml
 id: S3-5.0-4.59
@@ -889,7 +889,7 @@ referenzen:
   verwandte_empfehlungen: ["4.56", "4.60"]
 ```
 
-### Empfehlung 4.60
+##### Empfehlung 4.60
 
 ```yaml
 id: S3-5.0-4.60
@@ -960,7 +960,7 @@ referenzen:
   verwandte_empfehlungen: ["4.56", "4.59", "4.61"]
 ```
 
-### Empfehlung 4.61
+##### Empfehlung 4.61
 
 ```yaml
 id: S3-5.0-4.61
@@ -1025,9 +1025,9 @@ referenzen:
   verwandte_empfehlungen: ["4.60"]
 ```
 
-### 4.4.5.2 Operation der Axilla nach primär systemischer Therapie
+##### 4.4.5.2 Operation der Axilla nach primär systemischer Therapie
 
-### Empfehlung 4.62
+##### Empfehlung 4.62
 
 ```yaml
 id: S3-5.0-4.62
@@ -1077,7 +1077,7 @@ referenzen:
   verwandte_empfehlungen: ["4.56", "4.63", "4.64"]
 ```
 
-### Empfehlung 4.63
+##### Empfehlung 4.63
 
 ```yaml
 id: S3-5.0-4.63
@@ -1154,7 +1154,7 @@ referenzen:
   verwandte_empfehlungen: ["4.62", "4.64"]
 ```
 
-### Empfehlung 4.64
+##### Empfehlung 4.64
 
 ```yaml
 id: S3-5.0-4.64
@@ -1223,7 +1223,7 @@ referenzen:
 
 ---
 
-## Zusammenfassung: Gap-Analyse Kapitel 4.4
+#### Zusammenfassung: Gap-Analyse Kapitel 4.4
 
 | Empfehlung | Thema | FHIR-Status | Handlungsbedarf |
 |-----------|-------|-------------|-----------------|
@@ -1249,7 +1249,7 @@ referenzen:
 | 4.63 | TAD/ALND nach PST bei initialem cN+ -> ycN0 | partial | **TAD als neues Verfahren** in ValueSet ergänzen; LK-Markierung vor PST modellieren |
 | 4.64 | ALND bei persistierend cN+ nach PST | partial | Lymphknotenbefall-Verlauf (vor/nach PST) als strukturierte Observations |
 
-### Priorisierte Gaps
+##### Priorisierte Gaps
 
 | Priorität | Gap | Betroffene Empfehlungen | Vorgeschlagene Lösung |
 |-----------|-----|------------------------|----------------------|
